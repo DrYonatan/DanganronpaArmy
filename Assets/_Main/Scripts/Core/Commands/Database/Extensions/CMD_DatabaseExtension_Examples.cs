@@ -54,7 +54,13 @@ namespace TESTING
             database.AddCommand("ShowMovingImage", new Action<string[]>(ShowMovingImage)); //for now the other variables are meaningless, it was meant to be for the size of the image.
             database.AddCommand("HideMovingImage", new Action(HideMovingImage));
             database.AddCommand("HideCutscene", new Action(HideCutscene));
+            database.AddCommand("HideSceneCharacters", new Action(HideSceneCharacters));
 
+        }
+
+        private static void HideSceneCharacters()
+        {
+            WorldManager.instance.HideCharacters();
         }
 
         private static void HideCutscene()

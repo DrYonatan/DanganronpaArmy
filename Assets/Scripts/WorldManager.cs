@@ -43,6 +43,8 @@ public class WorldManager : MonoBehaviour
         
         else
         dialogueBox.SetActive(false);
+
+
         if(currentScene != null)
         {
             GameObject prefab = Resources.Load<GameObject>($"Scenes/{currentScene.name}/Characters");
@@ -68,6 +70,13 @@ public class WorldManager : MonoBehaviour
         
         CameraManager.instance.ZoomCamera("out");
 
+    }
+
+    public void HideCharacters()
+    {
+        GameObject characters = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/1.5 - World Objects/Scene/Characters");
+
+        Destroy(characters);
     }
 
     // Update is called once per frame

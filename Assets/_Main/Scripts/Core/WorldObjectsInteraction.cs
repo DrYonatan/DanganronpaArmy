@@ -20,7 +20,6 @@ public class WorldObjectsInteraction : MonoBehaviour
 
     private void OnMouseDown()
     {
-
         GameObject dialogueBox = GameObject.Find("VN controller/Root/Canvas - Overlay/4 - Dialogue");
         dialogueBox.SetActive(true);
         CameraManager.instance.ZoomCamera("in");

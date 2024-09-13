@@ -2,15 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Scene
+[CreateAssetMenu(menuName ="DialogueSystem/Scene")]
+public class Scene : ScriptableObject
 {
-    public string name;
+   
     public bool isFinished = false;
     public List<string> characters;
+    public List<Scene> conditionScenes;
+    public GameObject characterPrefab;
+   
 
     public Scene(string name, List<string> characters)
     {
-        this.name = name;
+        
         this.characters = characters;
     }
 
