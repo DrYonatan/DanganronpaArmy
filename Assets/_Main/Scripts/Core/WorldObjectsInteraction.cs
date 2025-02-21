@@ -23,27 +23,31 @@ public class WorldObjectsInteraction : MonoBehaviour
         GameObject dialogueBox = GameObject.Find("VN controller/Root/Canvas - Overlay/4 - Dialogue");
         dialogueBox.SetActive(true);
         CameraManager.instance.ZoomCamera("in");
-        if(WorldManager.instance.currentScene != null)
+        if(WorldManager.instance.currentGameEvent != null)
         gameObject.transform.parent.transform.localScale = new Vector3(0, 0, 0);
         StartConversation();
-        WorldManager.instance.currentScene.UpdateScene();
+        WorldManager.instance.currentGameEvent.UpdateEvent();
     }
 
 
     void StartConversation()
     {
         List<string> lines;
-        string currentSceneName = WorldManager.instance.currentScene.name;
-        if (!isClicked)
+        if(WorldManager.instance.currentGameEvent is Scene)
         {
-            lines = FileManager.ReadTextAsset($"Scenes/{currentSceneName}/{characterName}");
+            string currentSceneName = ((Scene)WorldManager.instance.currentGameEvent).name;
+            if (!isClicked)
+            {
+                lines = FileManager.ReadTextAsset($"Scenes/{currentSceneName}/{characterName}");
+            }
+            else
+            {
+                lines = FileManager.ReadTextAsset($"Scenes/{currentSceneName}/{characterName}2");
+            }
+            DialogueSystem.instance.Say(lines);
+            isClicked = true;
         }
-        else
-        {
-            lines = FileManager.ReadTextAsset($"Scenes/{currentSceneName}/{characterName}2");
-        }
-        DialogueSystem.instance.Say(lines);
-        isClicked = true;
+        
 
     }
 }

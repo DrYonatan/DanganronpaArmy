@@ -6,7 +6,7 @@ using DIALOGUE;
 public class WorldManager : MonoBehaviour
 {
     public RectTransform characterPanel = null;
-    public Scene currentScene;
+    public GameEvent currentGameEvent;
 
     public static WorldManager instance { get; private set; }
 
@@ -15,7 +15,6 @@ public class WorldManager : MonoBehaviour
     {
         instance = this;
         StartConversation("Prologue1");
-        ProgressManager.instance.DecideWhichSceneToPlay();
     }
 
     void StartConversation(string textFile)
@@ -28,48 +27,30 @@ public class WorldManager : MonoBehaviour
 
     public void ReturningToWorld()
     {
-        GameObject characters = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/1.5 - World Objects/Scene/Characters");
         GameObject dialogueBox = GameObject.Find("VN controller/Root/Canvas - Overlay/4 - Dialogue");
 
-        if (currentScene.isFinished)
+        if (currentGameEvent.CheckIfFinished())
         {
-            Destroy(characters);
-            characters = null;
-            List<string> lines = FileManager.ReadTextAsset($"Scenes/{currentScene.name}/Finish");
-            if(lines != null)
-            DialogueSystem.instance.Say(lines);
-            ProgressManager.instance.DecideWhichSceneToPlay();
+            currentGameEvent.OnFinish();
         }
         
         else
         dialogueBox.SetActive(false);
 
 
-        if(currentScene != null)
+        if(currentGameEvent != null)
         {
-            GameObject prefab = Resources.Load<GameObject>($"Scenes/{currentScene.name}/Characters");
-            if (characters == null)
-            {
-
-                Debug.Log("Working well");
-                GameObject ob = Instantiate(prefab, characterPanel);
-                ob.name = "Characters";
-                ob.SetActive(true);
-
-
-            }
-
-
-
-            else
-            {
-                characters.transform.localScale = new Vector3(1, 1, 1);
-            }
+            currentGameEvent.PlayEvent();
         }
        
-        
-        CameraManager.instance.ZoomCamera("out");
+    }
 
+    public void CreateCharacters(GameObject prefab)
+    {
+        Debug.Log("Working well");
+        GameObject ob = Instantiate(prefab, characterPanel);
+        ob.name = "Characters";
+        ob.SetActive(true);
     }
 
     public void HideCharacters()
