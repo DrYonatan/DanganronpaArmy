@@ -202,19 +202,19 @@ public class VideoManager : MonoBehaviour
         float duration = 0.25f;
 
         GameObject character = GameObject.Find($"VN controller/Root/Canvas - Main/LAYERS/2 - Characters");
-        Vector3 addPos = new Vector3(direction == "left" ? -550 : 550, 0, 0);
+        Vector3 addPos = new Vector3(direction == "left" ? -150 : 150, 0, 0);
         Animator anim = character.GetComponent<Animator>();
 
-        Vector3 startPos = character.transform.position;
+        Vector3 startPos = character.transform.localPosition;
         Vector3 targetPos = startPos + addPos; // Adjust this vector to change the direction
 
         while (elapsedTime < duration)
         {
-            character.transform.position = Vector3.Lerp(startPos, targetPos, elapsedTime / duration);
+            character.transform.localPosition = Vector3.Lerp(startPos, targetPos, elapsedTime / duration);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        character.transform.position = targetPos;
+        character.transform.localPosition = targetPos;
     }
 
     

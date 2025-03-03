@@ -130,17 +130,6 @@ namespace CHARACTERS
         
             (characters[characterName] as Character_Sprite).TransitionSprite(sprite);
 
-//            string imagePath = "VN controller/Root/Canvas - Main/LAYERS/2 - Characters/Character - [" + characterName + "](Clone)/Anim/FullBody";
-  //          GameObject obj = GameObject.Find(imagePath);
-    //        obj.GetComponent<Image>().sprite = GetSpritesForCharacter(characterName)[num-1];
-           
-            
-
-            // Debug.Log(imagePath);
-            // Debug.Log(obj == null);
-            //Debug.Log(GetSpritesForCharacter(characterName).Count);
-
-
         }
 
         private GameObject GetPrefabForCharacter(string characterName)

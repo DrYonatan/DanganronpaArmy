@@ -3,6 +3,7 @@
 ZoomCamera("in")
 
 ??? "מבני הבסיס הגדולים האלה באמצע העיר."
+
 ??? "זה כאילו לשכת הגיוס נמצאת במרכז הארץ."
 
 ShowImage("lishka")
@@ -169,6 +170,11 @@ ZoomCamera("in")
 CreateCharacter("Koby" middle)
 CreateCharacter("Inbal" left)
 CreateCharacter("Noa" right)
+CreateCharacter("Roey" right)
+CreateCharacter("Shiraz" left)
+HideCharacter("Roey")
+HideCharacter("Shiraz")
+
 PlaySong("bambadead")
 
 ??? "מה קורה כאן בדיוק?"
@@ -183,7 +189,6 @@ PlaySound("noawhere")
 "לא, הדבר האחרון שאני זוכרת זה שהגעתי ללשכת גיוס תל השומר, כל השאר מעורפל... איפה אנחנו בדיוק?"
 
 DestroyCharacter("Inbal")
-CreateCharacter("Shiraz" left)
 MoveCamera("left")
 
 PlaySound("shirazunforgivable")
@@ -196,7 +201,6 @@ PlaySound("Kobywhat")
 "שמרי על הפה שלך!"
 
 DestroyCharacter("Noa")
-CreateCharacter("Roey" right)
 MoveCamera("right")
 SwitchEmotion("Roey" scared)
 

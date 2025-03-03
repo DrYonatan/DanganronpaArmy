@@ -37,26 +37,34 @@ namespace CHARACTERS
 
         public Coroutine TransitionSprite(Sprite sprite, float speed = 1)
         {
-            if (sprite == renderer.sprite)
-                return null;
+            if(renderer)
+            {
+                if (sprite == renderer.sprite)
+                    return null;
 
-            if (isTransitioningLayer)
-                characterManager.StopCoroutine(co_transitioningLayer);
+                if (isTransitioningLayer)
+                    characterManager.StopCoroutine(co_transitioningLayer);
 
-            co_transitioningLayer = characterManager.StartCoroutine(TransitioningSprite(sprite, speed));
+                co_transitioningLayer = characterManager.StartCoroutine(TransitioningSprite(sprite, speed));
+                return co_transitioningLayer;
 
-            return co_transitioningLayer;
+            }
+            return null;
         }
 
         private IEnumerator TransitioningSprite(Sprite sprite, float speedMultiplier)
         {
-            transitionSpeedMultiplier = speedMultiplier;
-            Image newRenderer = CreateRenderer(renderer.transform.parent);
-            newRenderer.sprite = sprite;
+            if(renderer)
+            {
+                transitionSpeedMultiplier = speedMultiplier;
+                Image newRenderer = CreateRenderer(renderer.transform.parent);
+                newRenderer.sprite = sprite;
 
-            yield return TryStartLevelingAlphas();
+                yield return TryStartLevelingAlphas();
 
-            co_transitioningLayer = null;
+                co_transitioningLayer = null;
+            }
+            
 
         }
 
@@ -87,6 +95,7 @@ namespace CHARACTERS
 
         private IEnumerator RunAlphaLeveling()
         {
+            if(renderer != null) {
             while(rendererCG.alpha < 1 || oldRenderers.Any(oldCG => oldCG.alpha > 0))
             {
                 float speed = DEFAULT_TRANSITION_SPEED * transitionSpeedMultiplier * Time.deltaTime;
@@ -107,6 +116,8 @@ namespace CHARACTERS
             }
 
             co_levelingAlpha = null;
+            }
+            
 
         }
     }

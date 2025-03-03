@@ -55,7 +55,7 @@ public class WorldManager : MonoBehaviour
 
     public void HideCharacters()
     {
-        GameObject characters = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/1.5 - World Objects/Scene/Characters");
+        GameObject characters = GameObject.Find("World Objects/Characters");
 
         Destroy(characters);
     }

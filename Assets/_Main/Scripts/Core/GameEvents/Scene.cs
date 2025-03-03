@@ -11,6 +11,7 @@ public class Scene : GameEvent
     public List<string> characters;
     public List<Scene> conditionScenes;
     public GameObject characterPrefab;
+    public static string characterPath = $"/World Objects/Characters";
    
 
     public Scene(string name, List<string> characters)
@@ -25,7 +26,8 @@ public class Scene : GameEvent
 
         foreach (string character in characters)
         {
-            GameObject obj = GameObject.Find($"VN controller/Root/Canvas - Main/LAYERS/1.5 - World Objects/Scene/Characters/Character - [{character}] Variant");
+            Debug.Log("character name:" + character);
+            GameObject obj = GameObject.Find($"{characterPath}/{character}");
             if (!obj.GetComponent<WorldObjectsInteraction>().isClicked)
                 isFinished = false;
         }
@@ -53,7 +55,7 @@ public class Scene : GameEvent
 
     public override void PlayEvent()
     {
-        GameObject characters = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/1.5 - World Objects/Scene/Characters");
+        GameObject characters = GameObject.Find(characterPath);
         GameObject dialogueBox = GameObject.Find("VN controller/Root/Canvas - Overlay/4 - Dialogue");
 
         GameObject prefab = Resources.Load<GameObject>($"Scenes/{name}/Characters");
@@ -71,7 +73,7 @@ public class Scene : GameEvent
 
     public override void OnFinish()
     {
-        GameObject characters = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/1.5 - World Objects/Scene/Characters");
+        GameObject characters = GameObject.Find(characterPath);
 
         Destroy(characters);
         List<string> lines = FileManager.ReadTextAsset($"Scenes/{name}/Finish");
