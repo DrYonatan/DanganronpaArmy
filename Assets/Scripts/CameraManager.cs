@@ -9,9 +9,16 @@ public class CameraManager : MonoBehaviour
 
     public const string charactersLayerPath = "VN controller/Root/Canvas - Main/LAYERS/2 - Characters";
 
+    private const int CHARACTERS_RIGHT = -350;
+    private const int CHARACTERS_MIDDLE = 0;
+    private const int CHARACTERS_LEFT = 382;
+
+    private Vector3 charactersPos;
+
     private void Awake()
     {
         instance = this;
+        charactersPos = GameObject.Find(charactersLayerPath).transform.position;
     }
 
     public void MoveCamera(string direction, float duration)
@@ -57,17 +64,17 @@ public class CameraManager : MonoBehaviour
         {
            case "right" :
            x = 20;
-           characterX = -403;
+           characterX = CHARACTERS_RIGHT;
            break;
 
            case "middle" :
            x = 3;
-           characterX = -25;
+           characterX = CHARACTERS_MIDDLE;
            break;
 
            case "left" :
            x = -20;
-           characterX = 350;
+           characterX = CHARACTERS_LEFT;
            break;
         }
 
@@ -75,7 +82,7 @@ public class CameraManager : MonoBehaviour
         Vector3 targetPos = new Vector3(x, 19, -245);
 
         Vector3 charactersStartPos = characters.transform.localPosition;
-        Vector3 charactersTargetPos = new Vector3(characterX, 274, 0);
+        Vector3 charactersTargetPos = charactersPos + new Vector3(characterX, 0, 0);
 
 
         while (elapsedTime < duration)

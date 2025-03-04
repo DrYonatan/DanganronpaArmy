@@ -12,7 +12,7 @@ public class SoundManager : MonoBehaviour
 
     private void SetTextBoxAudio()
     {
-        textBoxAudio = GameObject.Find("VN controller/Root/Canvas - Overlay/4 - Dialogue").GetComponent<AudioSource>();
+        textBoxAudio = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/4 - Dialogue").GetComponent<AudioSource>();
         textBoxAudio.clip = Resources.Load<AudioClip>($"Audio/Sound Effects/textadvance");
     
     }

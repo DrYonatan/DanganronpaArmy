@@ -8,13 +8,13 @@ using UnityEngine.UI;
 public class CutSceneManager : MonoBehaviour
 {
     private VideoPlayer videoPlayer;
-    private GameObject dialogueBox;
+    private CanvasGroup dialogueBoxCanvas;
     public bool isPlaying = false;
     public static CutSceneManager instance { get; private set; }
     private void Awake()
     {
         instance = this;
-        dialogueBox = GameObject.Find("VN controller/Root/Canvas - Overlay/4 - Dialogue");
+        dialogueBoxCanvas = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/4 - Dialogue").GetComponent<CanvasGroup>();
         videoPlayer = GetComponent<VideoPlayer>();
         videoPlayer.transform.parent.gameObject.SetActive(false);
 
@@ -35,7 +35,7 @@ public class CutSceneManager : MonoBehaviour
         video.clip = (VideoClip)Resources.Load($"Videos/{cutsceneName}");
         videoPlayer.Play();
         StartCoroutine(Play());
-        dialogueBox.transform.localScale = new Vector3(0, 0, 0);
+        dialogueBoxCanvas.alpha = 0;
     }
     public void PlayCutsceneWithoutHiding(string cutsceneName)
     {
@@ -46,7 +46,7 @@ public class CutSceneManager : MonoBehaviour
         video.clip = (VideoClip)Resources.Load($"Videos/{cutsceneName}");
         videoPlayer.Play();
         StartCoroutine(PlayWithoutHiding());
-        dialogueBox.transform.localScale = new Vector3(0, 0, 0);
+        dialogueBoxCanvas.alpha = 0;
     }
 
     public void Hide()
@@ -70,7 +70,7 @@ public class CutSceneManager : MonoBehaviour
 
         }
         gameObject.GetComponentInParent<CanvasGroup>().alpha = 0;
-        dialogueBox.transform.localScale = new Vector3(1, 1, 1);
+        dialogueBoxCanvas.alpha = 1;
         isPlaying = false;
     }
     IEnumerator PlayWithoutHiding()
@@ -89,7 +89,7 @@ public class CutSceneManager : MonoBehaviour
             yield return null;
 
         }
-        dialogueBox.transform.localScale = new Vector3(1, 1, 1);
+        dialogueBoxCanvas.alpha = 1;
         isPlaying = false;
     }
 }

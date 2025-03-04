@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class VideoManager : MonoBehaviour
 {
     private VideoPlayer videoPlayer;
-    private GameObject dialogueBox;
+    private CanvasGroup dialogueBoxCanvas;
     private GameObject nameText;
     private GameObject ultimateText;
     public bool isPlaying = false;
@@ -18,7 +18,7 @@ public class VideoManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        dialogueBox = GameObject.Find("VN controller/Root/Canvas - Overlay/4 - Dialogue");
+        dialogueBoxCanvas = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/4 - Dialogue").GetComponent<CanvasGroup>();
         nameText = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/5 - Foreground/NameText");
         ultimateText = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/5 - Foreground/UltimateText");
         videoPlayer = GetComponent<VideoPlayer>();
@@ -40,14 +40,14 @@ public class VideoManager : MonoBehaviour
         video.clip = (VideoClip)Resources.Load($"Videos/{cutsceneName}");
         videoPlayer.Play();
         StartCoroutine(Play());
-        dialogueBox.transform.localScale = new Vector3(0, 0, 0);
+        dialogueBoxCanvas.alpha = 1;
     }
 
     public void PlayUltimateVideo(string characterName)
     {
         VideoPlayer video = gameObject.GetComponent<VideoPlayer>();
         video.SetDirectAudioMute(0, false);
-        dialogueBox.transform.localScale = new Vector3(0, 0, 0);
+        dialogueBoxCanvas.alpha = 0;
         videoPlayer.Stop();
         videoPlayer.Play();
         StartCoroutine(Play());
@@ -175,7 +175,7 @@ public class VideoManager : MonoBehaviour
         }
         gameObject.GetComponentInParent<CanvasGroup>().alpha = 0;
         videoPlayer.transform.parent.gameObject.SetActive(false);
-        dialogueBox.transform.localScale = new Vector3(1, 1, 1);
+        dialogueBoxCanvas.alpha = 1;
         isPlaying = false;
     }
 

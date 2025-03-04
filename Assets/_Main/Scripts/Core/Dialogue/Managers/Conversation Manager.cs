@@ -88,94 +88,55 @@ namespace DIALOGUE
 
         public void DecideCharactersToHide(string speakerName)
         {
-            if (GetCharacterPosition("Koby") == GetCharacterPosition(speakerName) && speakerName != "Koby" && speakerName != "Protagonist")
-                CharacterManager.instance.HideCharacter("Koby");
-            if (GetCharacterPosition("Noya") == GetCharacterPosition(speakerName) && speakerName != "Noya" && speakerName != "Protagonist")
-                CharacterManager.instance.HideCharacter("Noya");
-            if (GetCharacterPosition("Inbal") == GetCharacterPosition(speakerName) && speakerName != "Inbal" && speakerName != "Protagonist")
-                CharacterManager.instance.HideCharacter("Inbal");
-            if (GetCharacterPosition("Omer") == GetCharacterPosition(speakerName) && speakerName != "Omer" && speakerName != "Protagonist")
-                CharacterManager.instance.HideCharacter("Omer");
-            if (GetCharacterPosition("Noa") == GetCharacterPosition(speakerName) && speakerName != "Noa" && speakerName != "Protagonist")
-                CharacterManager.instance.HideCharacter("Noa");
-            if (GetCharacterPosition("Guy") == GetCharacterPosition(speakerName) && speakerName != "Guy" && speakerName != "Protagonist")
-                CharacterManager.instance.HideCharacter("Guy");
-            if (GetCharacterPosition("Kfir") == GetCharacterPosition(speakerName) && speakerName != "Kfir" && speakerName != "Protagonist")
-                CharacterManager.instance.HideCharacter("Kfir");
-            if (GetCharacterPosition("Maya") == GetCharacterPosition(speakerName) && speakerName != "Maya" && speakerName != "Protagonist")
-                CharacterManager.instance.HideCharacter("Maya");
-            if (GetCharacterPosition("Ariel") == GetCharacterPosition(speakerName) && speakerName != "Ariel" && speakerName != "Protagonist")
-                CharacterManager.instance.HideCharacter("Ariel");
-            if (GetCharacterPosition("Shiraz") == GetCharacterPosition(speakerName) && speakerName != "Shiraz" && speakerName != "Protagonist")
-                CharacterManager.instance.HideCharacter("Shiraz");
-            if (GetCharacterPosition("Liel") == GetCharacterPosition(speakerName) && speakerName != "Liel" && speakerName != "Protagonist")
-                CharacterManager.instance.HideCharacter("Liel");
-            if (GetCharacterPosition("Romi") == GetCharacterPosition(speakerName) && speakerName != "Romi" && speakerName != "Protagonist")
-                CharacterManager.instance.HideCharacter("Romi");
-            if (GetCharacterPosition("Roey") == GetCharacterPosition(speakerName) && speakerName != "Roey" && speakerName != "Protagonist")
-                CharacterManager.instance.HideCharacter("Roey");
-            if (GetCharacterPosition("Ohav") == GetCharacterPosition(speakerName) && speakerName != "Ohav" && speakerName != "Protagonist")
-                CharacterManager.instance.HideCharacter("Ohav");
-            if (GetCharacterPosition("Bamba") == GetCharacterPosition(speakerName) && speakerName != "Bamba" && speakerName != "Protagonist")
-                CharacterManager.instance.HideCharacter("Bamba");
-
+            string pos = GetCharacterPosition(speakerName);
+            
+            if(pos == "left") {
+                foreach(string character in CharacterManager.instance.leftCharacters) {
+                    if(character != speakerName)
+                    CharacterManager.instance.HideCharacter(character);
+                }
+            }
+            else if(pos == "middle") {
+                foreach(string character in CharacterManager.instance.middleCharacters) {
+                    if(character != speakerName)
+                    CharacterManager.instance.HideCharacter(character);
+                }
+            }
+            else {
+                foreach(string character in CharacterManager.instance.rightCharacters) {
+                    if(character != speakerName)
+                    CharacterManager.instance.HideCharacter(character);
+                }
+            }
 
         }
 
         public string GetCharacterPosition(string speakerName)
         {
             string direction = "";
-            if(CharacterManager.instance.characters.ContainsKey(speakerName.ToLower()))
-            {
-                if (GameObject.Find($"VN controller/Root/Canvas - Main/LAYERS/2 - Characters/Character - [{speakerName}]/Anim/Renderers/Later: 0").transform.position.x == GameObject.Find($"VN controller/Root/Canvas - Main/LAYERS/0 - Underlay Background/Middle").transform.position.x)
-                    direction = "middle";
-                else if (GameObject.Find($"VN controller/Root/Canvas - Main/LAYERS/2 - Characters/Character - [{speakerName}]/Anim/Renderers/Later: 0").transform.position.x == GameObject.Find($"VN controller/Root/Canvas - Main/LAYERS/0 - Underlay Background/Right").transform.position.x)
-                    direction = "right";
-                else
-                    direction = "left";
+            if(CharacterManager.instance.leftCharacters.Contains(speakerName))
+            direction = "left";
+            else if(CharacterManager.instance.middleCharacters.Contains(speakerName))
+            direction = "middle";
+            else if(CharacterManager.instance.rightCharacters.Contains(speakerName))
+            direction = "right";
 
-            }
-            Debug.Log($"The Direction is of {speakerName} is: " + direction);
             return direction;
         }
         public string GetSpeakerEnglishName(DIALOGUE_LINE line)
         {
-            string speakerName = "";
-            if (line.speakerData.name == "קובי")
-                speakerName = "Koby";
-            else if (line.speakerData.name == "נויה")
-                speakerName = "Noya";
-            else if (line.speakerData.name == "שירז")
-                speakerName = "Shiraz";
-            else if (line.speakerData.name == "ליאל")
-                speakerName = "Liel";
-            else if (line.speakerData.name == "אריאל")
-                speakerName = "Ariel";
-            else if (line.speakerData.name == "כפיר")
-                speakerName = "Kfir";
-            else if (line.speakerData.name == "נעה")
-                speakerName = "Noa";
-            else if (line.speakerData.name == "מאיה")
-                speakerName = "Maya";
-            else if (line.speakerData.name == "רועי")
-                speakerName = "Roey";
-            else if (line.speakerData.name == "עומר")
-                speakerName = "Omer";
-            else if (line.speakerData.name == "אוהב")
-                speakerName = "Ohav";
-            else if (line.speakerData.name == "גיא")
-                speakerName = "Guy";
-            else if (line.speakerData.name == "ענבל")
-                speakerName = "Inbal";
-            else if (line.speakerData.name == "רומי")
-                speakerName = "Romi";
-            else if (line.speakerData.name == "במבה")
-                speakerName = "Bamba";
-            else if (line.speakerData.name == "אלון")
-                speakerName = "Protagonist";
-
+           string speakerName = "";
+            foreach (CharacterConfigData character in DialogueSystem.instance.config.characterConfigurationAsset.characters)
+            {
+                if (character.alias == line.speakerData.name)
+                {
+                    speakerName = character.name;
+                    break;
+                }
+            }
             return speakerName;
         }
+        
         IEnumerator Line_RunDialogue(DIALOGUE_LINE line)
         {
             //Show or hide the speaker name if there is one

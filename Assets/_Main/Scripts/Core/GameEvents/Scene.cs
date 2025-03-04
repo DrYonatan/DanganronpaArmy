@@ -56,7 +56,7 @@ public class Scene : GameEvent
     public override void PlayEvent()
     {
         GameObject characters = GameObject.Find(characterPath);
-        GameObject dialogueBox = GameObject.Find("VN controller/Root/Canvas - Overlay/4 - Dialogue");
+        GameObject dialogueBox = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/4 - Dialogue");
 
         GameObject prefab = Resources.Load<GameObject>($"Scenes/{name}/Characters");
         if (characters == null)

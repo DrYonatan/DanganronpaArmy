@@ -13,6 +13,9 @@ namespace CHARACTERS
         
         public static CharacterManager instance { get; private set; }
         public Dictionary<string, Character> characters = new Dictionary<string, Character>();
+        public List<string> leftCharacters;
+        public List<string> middleCharacters;
+        public List<string> rightCharacters;
 
         private CharacterConfigSO config => DialogueSystem.instance.config.characterConfigurationAsset;
 
@@ -78,9 +81,9 @@ namespace CHARACTERS
         public void SetPosition(string characterName, string position)
         {
             GameObject characterParent = GameObject.Find($"VN controller/Root/Canvas - Main/LAYERS/2 - Characters/Character - [{characterName}]/Anim/Renderers/Later: 0");
-            GameObject middle = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/0 - Underlay Background/Middle");
-            GameObject right = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/0 - Underlay Background/Right");
-            GameObject left = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/0 - Underlay Background/Left");
+            GameObject middle = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/2 - Characters/Middle");
+            GameObject right = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/2 - Characters/Right");
+            GameObject left = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/2 - Characters/Left");
             Vector3 middleVec = new Vector3(middle.transform.position.x, characterParent.transform.position.y, characterParent.transform.position.z);
             Vector3 rightVec = new Vector3(right.transform.position.x, characterParent.transform.position.y, characterParent.transform.position.z);
             Vector3 leftVec = new Vector3(left.transform.position.x, characterParent.transform.position.y, characterParent.transform.position.z);
@@ -91,14 +94,18 @@ namespace CHARACTERS
             {
                 case "middle":
                     characterParent.transform.position = middleVec;
+                    Debug.Log("Middle added name " + characterName);
+                    middleCharacters.Add(characterName);
                     break;
 
                 case "left":
                     characterParent.transform.position = leftVec;
+                    leftCharacters.Add(characterName);
                     break;
 
                 case "right":
                     characterParent.transform.position = rightVec;
+                    rightCharacters.Add(characterName);
                     break;
             }
         }
