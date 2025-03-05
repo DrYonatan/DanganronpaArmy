@@ -93,19 +93,19 @@ namespace DIALOGUE
             if(pos == "left") {
                 foreach(string character in CharacterManager.instance.leftCharacters) {
                     if(character != speakerName)
-                    CharacterManager.instance.HideCharacter(character);
+                    CharacterManager.instance.InstantHideCharacter(character);
                 }
             }
             else if(pos == "middle") {
                 foreach(string character in CharacterManager.instance.middleCharacters) {
                     if(character != speakerName)
-                    CharacterManager.instance.HideCharacter(character);
+                    CharacterManager.instance.InstantHideCharacter(character);
                 }
             }
             else {
                 foreach(string character in CharacterManager.instance.rightCharacters) {
                     if(character != speakerName)
-                    CharacterManager.instance.HideCharacter(character);
+                    CharacterManager.instance.InstantHideCharacter(character);
                 }
             }
 

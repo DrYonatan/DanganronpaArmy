@@ -24,14 +24,13 @@ public class MovingPictureScript : MonoBehaviour
 
     private IEnumerator MoveImage()
     {
-        Debug.Log("Activated now!");
         isMoving = true;
         float elapsedTime = 0;
         float duration = 8f;
         float elapsedTime2 = 0;
         
 
-        GameObject image = GameObject.Find($"VN controller/Root/Canvas - Overlay/MovingImage");
+        GameObject image = GameObject.Find($"VN controller/Root/Canvas - Main/LAYERS/3 - Cinematic/MovingImage");
    
         Vector3 left = new Vector3(-440, 0, 0);
         Vector3 startPos = image.transform.position;

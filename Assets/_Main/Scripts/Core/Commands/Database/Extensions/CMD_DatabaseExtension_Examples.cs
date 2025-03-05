@@ -75,7 +75,7 @@ namespace TESTING
 
         private static void HideMovingImage()
         {
-            GameObject obj = GameObject.Find("VN controller/Root/Canvas - Overlay/MovingImage");
+            GameObject obj = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/3 - Cinematic/MovingImage");
             obj.SetActive(false);
         }
         private static void ShowMovingImage(string[] args)
@@ -92,7 +92,7 @@ namespace TESTING
              image.rectTransform.sizeDelta = new Vector2(2386, 1080);
              imgObject.transform.SetParent(GameObject.Find("VN controller/Root/Canvas - Overlay/movingImage").transform);
             */
-            GameObject obj = GameObject.Find("VN controller/Root/Canvas - Overlay/MovingImage");
+            GameObject obj = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/3 - Cinematic/MovingImage");
             obj.SetActive(true);
             Image movingImage = obj.GetComponent<Image>();
             movingImage.sprite = Resources.Load<Sprite>($"Images/{args[0]}");
@@ -147,13 +147,12 @@ namespace TESTING
         private static void ChangeBackground(string imageName)
         {
             GameObject background = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/1 - Background/RawImage");
-            Debug.Log(background == null);
             background.GetComponent<RawImage>().texture = Resources.Load<Texture>($"Images/{imageName}");
         }
 
         private static void ShowImage(string imageName)
         {
-            GameObject image = GameObject.Find("VN controller/Root/Canvas - Overlay/Image");
+            GameObject image = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/3 - Cinematic/Image");
             image.GetComponent<Image>().sprite = Resources.Load<Sprite>($"Images/{imageName}");
             ImageScript.instance.Show();
 

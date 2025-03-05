@@ -23,7 +23,7 @@ public class ImageScript : MonoBehaviour
 
     public static IEnumerator ShowImage()
     {
-        CanvasGroup self = GameObject.Find("VN controller/Root/Canvas - Overlay/Image").GetComponent<CanvasGroup>();
+        CanvasGroup self = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/3 - Cinematic/Image").GetComponent<CanvasGroup>();
         float targetAlpha = 1;
         
         while (self.alpha != targetAlpha)
@@ -36,7 +36,7 @@ public class ImageScript : MonoBehaviour
 
     public static IEnumerator HideImage()
     {
-        CanvasGroup self = GameObject.Find("VN controller/Root/Canvas - Overlay/Image").GetComponent<CanvasGroup>();
+        CanvasGroup self = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/3 - Cinematic/Image").GetComponent<CanvasGroup>();
         float targetAlpha = 0;
 
         while (self.alpha != targetAlpha)

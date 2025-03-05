@@ -76,6 +76,12 @@ namespace CHARACTERS
             }
         }
 
+        public void InstantHideCharacter(string characterName) 
+        {
+            GameObject character = GameObject.Find($"VN controller/Root/Canvas - Main/LAYERS/2 - Characters/Character - [{characterName}]");
+            character.GetComponent<CanvasGroup>().alpha = 0;
+        }
+
    
         
         public void SetPosition(string characterName, string position)
@@ -94,7 +100,6 @@ namespace CHARACTERS
             {
                 case "middle":
                     characterParent.transform.position = middleVec;
-                    Debug.Log("Middle added name " + characterName);
                     middleCharacters.Add(characterName);
                     break;
 
