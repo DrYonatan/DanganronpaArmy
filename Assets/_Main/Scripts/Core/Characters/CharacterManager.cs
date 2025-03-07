@@ -79,6 +79,7 @@ namespace CHARACTERS
         public void InstantHideCharacter(string characterName) 
         {
             GameObject character = GameObject.Find($"VN controller/Root/Canvas - Main/LAYERS/2 - Characters/Character - [{characterName}]");
+            if(character)
             character.GetComponent<CanvasGroup>().alpha = 0;
         }
 

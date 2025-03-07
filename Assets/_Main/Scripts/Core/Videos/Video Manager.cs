@@ -45,6 +45,7 @@ public class VideoManager : MonoBehaviour
 
     public void PlayUltimateVideo(string characterName)
     {
+        GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/1 - Background/UltimateVideo/Screen").GetComponent<CanvasGroup>().alpha = 1;
         VideoPlayer video = gameObject.GetComponent<VideoPlayer>();
         video.SetDirectAudioMute(0, false);
         dialogueBoxCanvas.alpha = 0;
@@ -65,6 +66,7 @@ public class VideoManager : MonoBehaviour
 
     public void SetUltimateVideo(string characterName)
     {
+        GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/1 - Background/UltimateVideo/Screen").GetComponent<CanvasGroup>().alpha = 0;
         MakeActive();
         gameObject.SetActive(true);
         VideoPlayer video = gameObject.GetComponent<VideoPlayer>();
