@@ -62,7 +62,7 @@ namespace DIALOGUE
                     {
                         speakerName = GetSpeakerEnglishName(line);
                         string direction = GetCharacterPosition(speakerName);
-                        if (CharacterManager.instance.characters.ContainsKey(speakerName.ToLower()) && (direction == "left" || direction == "middle" || direction == "right"))
+                        if (CharacterManager.instance.characters.ContainsKey(speakerName.ToLower()))
                             CameraManager.instance.MoveCamera(direction, 0.3f);
                           DecideCharactersToHide(speakerName);
                        
@@ -142,13 +142,9 @@ namespace DIALOGUE
             //Show or hide the speaker name if there is one
             if (line.hasSpeaker)
             {
-
                 dialogueSystem.ShowSpeakerName(line.speakerData.displayName);
-                
             }
-              
-
-                
+                 
             //Build Dialogue
             
             yield return BuildLineSegments(line.dialogueData);

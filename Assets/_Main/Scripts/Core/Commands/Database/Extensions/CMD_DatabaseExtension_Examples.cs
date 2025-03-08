@@ -16,20 +16,10 @@ namespace TESTING
 
         new public static void Extend(CommandDatabase database)
         {
-            //Add Action with no parameters
-            database.AddCommand("print", new Action(PrintDefaultMessage));
-            database.AddCommand("print_1p", new Action<string>(PrintUserMessage));
-            database.AddCommand("print_mp", new Action<string[]>(PrintLines));
-
-            //Add lambda with no parameters
-            database.AddCommand("lambda", new Action(() => { Debug.Log("Printing a default message to console from lambda command"); }));
-            database.AddCommand("lambda_1p", new Action<string>((arg) => { Debug.Log($"Log user lambda message: '{arg}'"); }));
-            database.AddCommand("lambda_mp", new Action<string[]>((args) => { Debug.Log(string.Join(", ", args)); }));
-
             //Add coroutine with no parameters
-            database.AddCommand("process", new Func<IEnumerator>(SimpleProcess));
-            database.AddCommand("process_1p", new Func<string, IEnumerator>(LineProcess));
-            database.AddCommand("process_mp", new Func<string[], IEnumerator>(MultiLineProcess));
+            // database.AddCommand("process", new Func<IEnumerator>(SimpleProcess));
+            // database.AddCommand("process_1p", new Func<string, IEnumerator>(LineProcess));
+            // database.AddCommand("process_mp", new Func<string[], IEnumerator>(MultiLineProcess));
 
             database.AddCommand("CreateCharacter", new Action<string[]>(CreateCharacter));
             database.AddCommand("SwitchEmotion", new Action<string[]>(SwitchEmotion));
@@ -96,9 +86,6 @@ namespace TESTING
             obj.SetActive(true);
             Image movingImage = obj.GetComponent<Image>();
             movingImage.sprite = Resources.Load<Sprite>($"Images/{args[0]}");
-            
-
-            
         }
         private static void SwitchTextColor(string colorName)
         {
@@ -155,8 +142,6 @@ namespace TESTING
             GameObject image = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/3 - Cinematic/Image");
             image.GetComponent<Image>().sprite = Resources.Load<Sprite>($"Images/{imageName}");
             ImageScript.instance.Show();
-
-
         }
 
         private static void HideImage()
@@ -198,10 +183,7 @@ namespace TESTING
         private static void CreateCharacter(string[] args)
         {
             Character character = CharacterManager.instance.CreateCharacter(args[0]);
-
             CharacterManager.instance.SetPosition(character.name, args[1]);
-            
-            character.Show();
         }
 
         private static void SwitchEmotion(string[] command)

@@ -46,8 +46,6 @@ namespace CHARACTERS
 
             characters.Add(characterName.ToLower(), character);
 
-
-
             return character;
         }
 

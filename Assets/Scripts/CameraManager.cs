@@ -75,7 +75,7 @@ public class CameraManager : MonoBehaviour
            break;
 
            case "middle" :
-           x = 3;
+           x = 0;
            characterX = CHARACTERS_MIDDLE;
            break;
 
