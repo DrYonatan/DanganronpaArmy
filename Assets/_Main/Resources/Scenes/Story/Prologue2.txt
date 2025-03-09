@@ -5,6 +5,14 @@ CreateCharacter("Ariel" left)
 CreateCharacter("Noa" right)
 CreateCharacter("Noya" middle)
 CreateCharacter("Romi" middle)
+CreateCharacter("Omer" right)
+CreateCharacter("Guy" right)
+CreateCharacter("Shiraz" left)
+CreateCharacter("Ohav" left)
+CreateCharacter("Liel" middle)
+CreateCharacter("Kfir" middle)
+CreateCharacter("Roey" middle)
+
 
 
 ZoomCamera("in")
@@ -46,23 +54,17 @@ SwitchEmotion("Noya" default)
 
 נעה "מישהו שם לב לעוד משהו?"
 
-CreateCharacter("Shiraz" left)
-
 שירז "הטלפון שלי נעלם!"
 
 PlaySound("Romimoment")
 
 רומי "גם אני שמתי לב שהטלפון שלי נלקח ממני."
 
-CreateCharacter("Omer" right)
 
 עומר "גם הטלפון שלי נאבד..."
 
-CreateCharacter("Roey" middle)
 
 רועי "זה לא עד כדי כך מוזר שייקחו לנו את הטלפונים בטירונות..."
-
-ShowCharacter("Inbal")
 
 PlaySound("inbalmoment")
 ענבל "עוד לפני שפגשנו את המפקדים אפילו?"
@@ -70,8 +72,6 @@ PlaySound("inbalmoment")
 SwitchEmotion("Roey" thinking)
 רועי "אולי המשמעת פה ממש קשוחה..."
 
-HideCharacter("Omer")
-CreateCharacter("Guy" right)
 MoveCamera("right")
 SwitchEmotion("Roey" default)
 
@@ -84,7 +84,6 @@ PlaySound("guyah")
 "למה שלא אתם הקרביים תלכו לחפש? הרי גם ככה כל מה שאתם יודעים זה לרוץ ולומר אוגה בוגה."
 
 HideCharacter("Roey")
-CreateCharacter("Kfir" middle)
 SwitchEmotion("Kfir" angry)
 
 PlaySound("kfirsharmuta")
@@ -112,27 +111,16 @@ HideImage()
 
 עומר "מה זה היה?"
 
-MoveCamera("middle")
 SwitchEmotion("Kfir" default)
 כפיר "אה, הנה, סוף סוף מתחילים. אני אלך לרחבה." HideCharacter("Kfir")
 
 MoveCamera("left")
 ענבל "רגע? זה באמת בטוח?"
 
-ShowCharacter("Koby")
-MoveCamera("middle")
-
 PlaySound("Kobyisaid")
 קובי "זה חייב להיות! ואני ממליץ לך למהר, את לא רוצה לאחר למסדר הראשון שלך!" HideCharacter("Koby")
 
-MoveCamera("left")
-HideCharacter("Inbal")
-CreateCharacter("Ohav" left)
 אוהב "אני אלך, גם ככה אין לי משהו יותר טוב לעשות." HideCharacter("Ohav")
-
-HideCharacter("Omer")
-ShowCharacter("Guy")
-MoveCamera("right")
 
 PlaySound("guyah")
 גיא "הקול שלו נשמע גבוה למדי, אני מחכה לראות מי זה המפקד הזה..." HideCharacter("Guy")
@@ -142,14 +130,11 @@ MoveCamera("left")
 
 שירז "טוב אם כולם הולכים גם אני אלך." HideCharacter("Shiraz")
 
-CreateCharacter("Liel" middle)
 MoveCamera("middle")
 
 ליאל "רגע, חכי לי!" HideCharacter("Liel")
 
-ShowCharacter("Maya")
 SwitchEmotion("Maya" default)
-MoveCamera("right")
 
 PlaySound("mayayes")
 מאיה "טוב, אני מניחה שגם אני אלך..." HideCharacter("Maya")
@@ -210,12 +195,6 @@ ShowCharacter("Koby")
 ??? "שלום לכולם! המסדר ימתח להקשב!"
 
 PlayCutsceneWithoutHiding("bambaIntro")
-
-
-
-
-
-
 
 HideCharacter("Koby")
 
