@@ -1,22 +1,7 @@
-﻿CreateCharacter("Koby" middle)
-CreateCharacter("Maya" right)
-CreateCharacter("Inbal" left)
-CreateCharacter("Ariel" left)
-CreateCharacter("Noa" right)
-CreateCharacter("Noya" middle)
-CreateCharacter("Romi" middle)
-CreateCharacter("Omer" right)
-CreateCharacter("Guy" right)
-CreateCharacter("Shiraz" left)
-CreateCharacter("Ohav" left)
-CreateCharacter("Liel" middle)
-CreateCharacter("Kfir" middle)
-CreateCharacter("Roey" middle)
-
-
+﻿CreateCharacters("Koby" middle "Maya" right "Inbal" left "Ariel" left "Noa" right "Noya" middle "Omer" right "Romi" middle "Guy" right "Shiraz" left "Ohav" left "Liel" middle "Kfir" middle "Roey" middle)
 
 ZoomCamera("in")
-ChangeBackground("outside")
+HideBackground()
 
 קובי "אוקיי כולם! עכשיו שאנחנו מכירים, בואו ננסה להבין מה הולך כאן!"
 
@@ -185,7 +170,7 @@ ZoomCamera("out")
 "..."
 "הלכנו אל הרחבה."
 
-ChangeBackground("court")
+HideBackground()
 אלון "זאת רחבת המסדרים?"
 ZoomCamera("in")
 ShowCharacter("Koby")
@@ -195,9 +180,6 @@ ShowCharacter("Koby")
 ??? "שלום לכולם! המסדר ימתח להקשב!"
 
 PlayCutsceneWithoutHiding("bambaIntro")
-
-HideCharacter("Koby")
-
 
 "..."
 PlaySong("Bamba")

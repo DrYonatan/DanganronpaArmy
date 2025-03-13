@@ -15,7 +15,7 @@ public class ProgressManager : MonoBehaviour
     {
         foreach(GameEvent gameEvent in gameEvents)
         {
-            if(!gameEvent.CheckIfFinished())
+            if(!gameEvent.isFinished)
             {
                 
                 if(gameEvent.CheckIfToPlay())

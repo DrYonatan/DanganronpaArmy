@@ -21,12 +21,13 @@ public class WorldObjectsInteraction : MonoBehaviour
     private void OnMouseDown()
     {
         GameObject dialogueBox = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/4 - Dialogue");
+        Transform cameraLocation = transform.Find("CameraLocation");
         dialogueBox.SetActive(true);
-        CameraManager.instance.ZoomCamera("in");
+        CameraManager.instance.MoveCameraTo(cameraLocation);
         if(WorldManager.instance.currentGameEvent != null)
-        gameObject.transform.parent.transform.localScale = new Vector3(0, 0, 0);
         StartConversation();
         WorldManager.instance.currentGameEvent.UpdateEvent();
+        transform.parent.gameObject.SetActive(false);
     }
 
 

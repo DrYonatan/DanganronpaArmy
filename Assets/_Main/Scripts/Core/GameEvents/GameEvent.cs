@@ -4,7 +4,9 @@ using UnityEngine;
 
 public abstract class GameEvent : ScriptableObject
 {
-    abstract public bool CheckIfFinished();
+    public bool isFinished;
+
+    abstract public void CheckIfFinished();
 
     abstract public void UpdateEvent();
 

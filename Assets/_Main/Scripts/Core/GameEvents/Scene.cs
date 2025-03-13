@@ -7,16 +7,14 @@ using DIALOGUE;
 public class Scene : GameEvent 
 {
    
-    public bool isFinished = false;
     public List<string> characters;
     public List<Scene> conditionScenes;
     public GameObject characterPrefab;
-    public static string characterPath = $"/World Objects/Characters";
+    public static string characterPath = $"World/World Objects/Characters";
    
 
     public Scene(string name, List<string> characters)
     {
-        
         this.characters = characters;
     }
 
@@ -33,9 +31,14 @@ public class Scene : GameEvent
         }
     }
 
-    public override bool CheckIfFinished()
+    public override void CheckIfFinished()
     {
-        return isFinished;
+        GameObject dialogueBox = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/4 - Dialogue");
+        CameraManager.instance.MoveCameraTo(GameObject.Find("World/CameraStartPos").transform);
+        if(isFinished)
+        OnFinish();
+        else
+        dialogueBox.SetActive(false);
     }
 
     public override bool CheckIfToPlay()
@@ -44,7 +47,7 @@ public class Scene : GameEvent
         if (conditionScenes != null)
             foreach (Scene conditionScene in conditionScenes)
             {
-                if (!conditionScene.CheckIfFinished())
+                if (!conditionScene.isFinished)
                     playScene = false;
 
             }
@@ -65,16 +68,14 @@ public class Scene : GameEvent
         }
         else
         {
-            characters.transform.localScale = new Vector3(1, 1, 1);
+            characters.SetActive(true);
         }
-        CameraManager.instance.ZoomCamera("out");
-
+        
     }
 
     public override void OnFinish()
     {
         GameObject characters = GameObject.Find(characterPath);
-
         Destroy(characters);
         List<string> lines = FileManager.ReadTextAsset($"Scenes/{name}/Finish");
         if (lines != null)

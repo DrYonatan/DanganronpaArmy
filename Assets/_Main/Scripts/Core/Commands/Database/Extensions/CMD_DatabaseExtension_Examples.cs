@@ -45,6 +45,8 @@ namespace TESTING
             database.AddCommand("HideMovingImage", new Action(HideMovingImage));
             database.AddCommand("HideCutscene", new Action(HideCutscene));
             database.AddCommand("HideSceneCharacters", new Action(HideSceneCharacters));
+            database.AddCommand("CreateCharacters", new Action<string[]>(CreateCharacters));
+            database.AddCommand("HideBackground", new Action(HideBackground));
 
         }
 
@@ -134,7 +136,14 @@ namespace TESTING
         private static void ChangeBackground(string imageName)
         {
             GameObject background = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/1 - Background/RawImage");
+            background.GetComponent<CanvasGroup>().alpha = 1;
             background.GetComponent<RawImage>().texture = Resources.Load<Texture>($"Images/{imageName}");
+        }
+
+        private static void HideBackground() 
+        {
+            GameObject background = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/1 - Background/RawImage");
+            background.GetComponent<CanvasGroup>().alpha = 0;
         }
 
         private static void ShowImage(string imageName)
@@ -184,6 +193,17 @@ namespace TESTING
         {
             Character character = CharacterManager.instance.CreateCharacter(args[0]);
             CharacterManager.instance.SetPosition(character.name, args[1]);
+        }
+
+        private static void CreateCharacters(string[] args)
+        {
+            string[] characterToCreate = new string[2];
+            for(int i = 0; i+1 < args.Length; i+=2)
+            {
+                characterToCreate[0] = args[i];
+                characterToCreate[1] = args[i+1];
+                CreateCharacter(characterToCreate);
+            }
         }
 
         private static void SwitchEmotion(string[] command)

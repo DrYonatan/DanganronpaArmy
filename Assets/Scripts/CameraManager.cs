@@ -19,10 +19,19 @@ public class CameraManager : MonoBehaviour
 
     private void Awake()
     {
+        Transform absoluteStartPos = GameObject.Find("World/CameraStartPos").transform;
         instance = this;
         initialCharacterPos = GameObject.Find(charactersLayerPath).transform.position;
-        initialRotation = Camera.main.transform.rotation;
-        initialPosition = Camera.main.transform.position;
+        initialRotation = absoluteStartPos.rotation;
+        initialPosition = absoluteStartPos.position;
+        Camera.main.transform.position = initialPosition;
+        Camera.main.transform.rotation = initialRotation;
+    }
+
+    public void setInitialPosition(Transform initial) 
+    {
+        initialPosition = initial.position;
+        initialRotation = initial.rotation;
     }
 
     public void MoveCamera(string direction, float duration)
@@ -31,9 +40,34 @@ public class CameraManager : MonoBehaviour
 
     }
 
+    public void MoveCameraTo(Transform location) {
+        float duration = 0.3f;
+        setInitialPosition(location);
+        StartCoroutine(MoveCameraTo(location, duration));
+    }
+
     public void ZoomCamera(string zoom)
     {
         StartCoroutine(Zoom(zoom));
+    }
+
+    IEnumerator MoveCameraTo(Transform location, float duration) {
+        Vector3 startPos = Camera.main.transform.position;
+
+        Quaternion startRotate = Camera.main.transform.rotation;
+        
+        float elapsedTime = 0;
+
+        while (elapsedTime < duration)
+        {
+            Camera.main.transform.position = Vector3.Lerp(startPos, location.position, elapsedTime / duration);
+            Camera.main.transform.rotation = Quaternion.Slerp(startRotate, location.rotation, elapsedTime / duration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        Camera.main.transform.position = location.position; // Ensure the camera reaches the exact target position
+        Camera.main.transform.rotation = location.rotation;
     }
 
     IEnumerator Zoom(string zoom)
@@ -57,6 +91,8 @@ public class CameraManager : MonoBehaviour
 
 
     }  
+
+
 
     IEnumerator MoveCamera(float duration, string location)
     {

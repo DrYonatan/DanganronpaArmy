@@ -14,7 +14,7 @@ public class WorldManager : MonoBehaviour
     void Start()
     {
         instance = this;
-        StartConversation("Prologue2");
+        StartConversation("Prologue1");
     }
 
     void StartConversation(string textFile)
@@ -27,16 +27,7 @@ public class WorldManager : MonoBehaviour
 
     public void ReturningToWorld()
     {
-        GameObject dialogueBox = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/4 - Dialogue");
-
-        if (currentGameEvent.CheckIfFinished())
-        {
-            currentGameEvent.OnFinish();
-        }
-        
-        else
-        dialogueBox.SetActive(false);
-
+        currentGameEvent.CheckIfFinished();
 
         if(currentGameEvent != null)
         {
