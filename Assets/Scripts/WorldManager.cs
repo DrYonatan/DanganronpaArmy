@@ -14,7 +14,7 @@ public class WorldManager : MonoBehaviour
     void Start()
     {
         instance = this;
-        StartConversation("Prologue1");
+        StartConversation("test");
     }
 
     void StartConversation(string textFile)

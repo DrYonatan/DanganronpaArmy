@@ -1,0 +1,72 @@
+﻿
+
+HideBackground()
+ZoomCamera("in")
+
+CreateCharacters("Koby" middle "Inbal" left "Noa" right "Roey" right "Shiraz" left "Noya" middle)
+
+HideCharacter("Roey")
+HideCharacter("Shiraz")
+
+PlaySong("bambadead")
+
+ShowCharacter("Koby")
+??? "מה קורה כאן בדיוק?"
+
+MoveCamera("left")
+SwitchEmotion("Inbal" thinking)
+ShowCharacter("Inbal")
+"רגע, אני רוצה לוודא. אף אחד פה לא זוכר איך הגענו הנה?"
+
+MoveCamera("right")
+ 
+PlaySound("noawhere")
+ShowCharacter("Noa")
+"לא, הדבר האחרון שאני זוכרת זה שהגעתי ללשכת גיוס תל השומר, כל השאר מעורפל... איפה אנחנו בדיוק?"
+
+DestroyCharacter("Inbal")
+MoveCamera("left")
+
+ShowCharacter("Shiraz")
+PlaySound("shirazunforgivable")
+"אני אתבע להם את האמ אמא!"
+
+MoveCamera("middle")
+ShowCharacter("Koby")
+SwitchEmotion("Koby" angry)
+
+PlaySound("Kobywhat")
+"שמרי על הפה שלך!"
+
+DestroyCharacter("Noa")
+MoveCamera("right")
+ShowCharacter("Roey")
+SwitchEmotion("Roey" scared)
+
+"וואו וואו, בואו לא נריב לפני שאנחנו מבינים מה קורה כאן."
+
+HideCharacter("Koby")
+ShowCharacter("Noya")
+MoveCamera("middle")
+
+"אוקיי, שכולם יגידו מה הם זוכרים."
+
+DestroyCharacter("Shiraz")
+CreateCharacter("Romi" left)
+MoveCamera("left")
+
+ShowCharacter("Romi")
+"כדאי שכולנו נציג את עצמנו. שנוכל לדבר בקלילות."
+DestroyCharacter("Noya")
+ShowCharacter("Koby")
+MoveCamera("middle")
+
+"צודקת! בואו כולנו נציג את עצמנו."
+
+DestroyCharacter("Koby")
+DestroyCharacter("Romi")
+DestroyCharacter("Roey")
+ZoomCamera("out")
+
+אלון "טוב, כדאי שאציג את עצמי בפני אנשים. עם מי להתחיל..."
+ReturnToWorld()

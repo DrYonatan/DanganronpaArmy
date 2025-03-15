@@ -43,6 +43,7 @@ namespace DIALOGUE
                 return;
             dialogueSystem.StopCoroutine(process);
             process = null;
+            CharacterManager.instance.DestroyAllCharacters();
         }
 
         IEnumerator RunningConversation(List<string> conversation)
@@ -64,6 +65,7 @@ namespace DIALOGUE
                         string direction = GetCharacterPosition(speakerName);
                         if (CharacterManager.instance.characters.ContainsKey(speakerName.ToLower()))
                             CameraManager.instance.MoveCamera(direction, 0.3f);
+                        if(!speakerName.Equals(""))
                           DecideCharactersToHide(speakerName);
                        
 
@@ -90,19 +92,22 @@ namespace DIALOGUE
         {
             string pos = GetCharacterPosition(speakerName);
             
-            if(pos == "left") {
+            if(pos == "left") 
+            {
                 foreach(string character in CharacterManager.instance.leftCharacters) {
                     if(character != speakerName)
                     CharacterManager.instance.InstantHideCharacter(character);
                 }
             }
-            else if(pos == "middle") {
+            else if(pos == "middle") 
+            {
                 foreach(string character in CharacterManager.instance.middleCharacters) {
                     if(character != speakerName)
                     CharacterManager.instance.InstantHideCharacter(character);
                 }
             }
-            else {
+            else 
+            {
                 foreach(string character in CharacterManager.instance.rightCharacters) {
                     if(character != speakerName)
                     CharacterManager.instance.InstantHideCharacter(character);
@@ -113,11 +118,9 @@ namespace DIALOGUE
 
         public string GetCharacterPosition(string speakerName)
         {
-            string direction = "";
+            string direction = "middle";
             if(CharacterManager.instance.leftCharacters.Contains(speakerName))
             direction = "left";
-            else if(CharacterManager.instance.middleCharacters.Contains(speakerName))
-            direction = "middle";
             else if(CharacterManager.instance.rightCharacters.Contains(speakerName))
             direction = "right";
 

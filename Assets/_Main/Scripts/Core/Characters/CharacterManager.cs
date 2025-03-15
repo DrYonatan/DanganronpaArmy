@@ -170,7 +170,17 @@ namespace CHARACTERS
             return null;
         }
 
-        
+        public void DestroyAllCharacters()
+        {
+            leftCharacters = new List<string>();
+            middleCharacters = new List<string>();
+            rightCharacters = new List<string>();
+
+            foreach(string character in characters.Keys) 
+            {
+                DestroyCharacter(character);
+            }
+        }
 
         private class CHARACTER_INFO
         {
