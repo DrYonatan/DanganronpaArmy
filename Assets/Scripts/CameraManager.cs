@@ -9,9 +9,9 @@ public class CameraManager : MonoBehaviour
 
     public const string charactersLayerPath = "VN controller/Root/Canvas - Main/LAYERS/2 - Characters";
 
-    private const int CHARACTERS_RIGHT = -350;
+    private const int CHARACTERS_RIGHT = -1400;
     private const int CHARACTERS_MIDDLE = 0;
-    private const int CHARACTERS_LEFT = 382;
+    private const int CHARACTERS_LEFT = 1400;
 
     private Vector3 initialPosition;
     private Vector3 initialCharacterPos;

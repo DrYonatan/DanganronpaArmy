@@ -20,19 +20,18 @@ public class PlayerInputManager : MonoBehaviour
     void Update()
     {
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
-            {
-                if(!VideoManager.instance.isPlaying && !CutSceneManager.instance.isPlaying)
-                {
-                    PromptAdvance();
-                }
+            {  
+               PromptAdvance();       
             }
                
     }
 
     public void PromptAdvance()
     {
-            DialogueSystem.instance.OnUserPrompt_Next();
+        if(!VideoManager.instance.isPlaying && !CutSceneManager.instance.isPlaying) 
+        {
+             DialogueSystem.instance.OnUserPrompt_Next();
+        }
     }
-
 }
 }

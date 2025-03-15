@@ -81,27 +81,27 @@ public class VideoManager : MonoBehaviour
         switch (characterName.ToLower())
         {
             case "koby":
-                res[0] = "קובי שוורץ";
+                res[0] = "קובי  שוורץ";
                 res[1] = "רע''צ משטרה צבאית";
                 break;
 
             case "noya":
-                res[0] = "נויה פישמן";
+                res[0] = "נויה  פישמן";
                 res[1] = "רע''צית מודיעין";
                 break;
 
             case "noa":
-                res[0] = "נעה ליבוביץ'";
+                res[0] = "נעה  ליבוביץ'";
                 res[1] = "רע''צית ת''ש";
                 break;
 
             case "inbal":
-                res[0] = "ענבל אשכנזי";
+                res[0] = "ענבל  אשכנזי";
                 res[1] = "רע''צית אוויר";
                 break;
 
             case "guy":
-                res[0] = "גיא רופין";
+                res[0] = "גיא  רופין";
                 res[1] = "רע''צ תקשוב";
                 break;
 
@@ -111,42 +111,42 @@ public class VideoManager : MonoBehaviour
                 break;
 
             case "kfir":
-                res[0] = "כפיר כהן";
+                res[0] = "כפיר  כהן";
                 res[1] = "רע''צ גולני";
                 break;
 
             case "liel":
-                res[0] = "ליאל אברג'יל";
+                res[0] = "ליאל  אברג'יל";
                 res[1] = "רע''צית חימוש";
                 break;
 
             case "shiraz":
-                res[0] = "שירז רן";
+                res[0] = "שירז  רן";
                 res[1] = "רע''צית  טיק טוק";
                 break;
 
             case "omer":
-                res[0] = "עומר הרוש";
+                res[0] = "עומר  הרוש";
                 res[1] = "רע''צ שריון";
                 break;
 
             case "romi":
-                res[0] = "רומי הכט";
+                res[0] = "רומי  הכט";
                 res[1] = "רע''צית דין";
                 break;
 
             case "maya":
-                res[0] = "מאיה וקנין";
+                res[0] = "מאיה  וקנין";
                 res[1] = "רע''צית תצפיתנית";
                 break;
 
             case "ohav":
-                res[0] = "אוהב בן עזרא";
+                res[0] = "אוהב  בן  עזרא";
                 res[1] = "רע''צ מטבח";
                 break;
 
             case "roey":
-                res[0] = "רועי הדר";
+                res[0] = "רועי  הדר";
                 res[1] = "רע''צ ים";
                 break;
         }
@@ -204,7 +204,7 @@ public class VideoManager : MonoBehaviour
         float duration = 0.25f;
 
         GameObject character = GameObject.Find($"VN controller/Root/Canvas - Main/LAYERS/2 - Characters");
-        Vector3 addPos = new Vector3(direction == "left" ? -150 : 150, 0, 0);
+        Vector3 addPos = new Vector3(direction == "left" ? -650 : 650, 0, 0);
         Animator anim = character.GetComponent<Animator>();
 
         Vector3 startPos = character.transform.localPosition;
