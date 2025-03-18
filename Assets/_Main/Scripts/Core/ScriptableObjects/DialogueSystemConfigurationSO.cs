@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace DIALOGUE
 {
-    [CreateAssetMenu(fileName = "Dialogue System Configuration", menuName = "DialogueSystem/Dialogue Configuration Asset")]
+    [CreateAssetMenu(fileName = "Dialogue System Configuration", menuName = "Dialogue System/Dialogue Configuration Asset")]
     public class DialogueSystemConfigurationSO : ScriptableObject
     {
         public CharacterConfigSO characterConfigurationAsset;

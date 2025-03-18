@@ -5,8 +5,9 @@ using DIALOGUE;
 
 public class WorldObjectsInteraction : MonoBehaviour
 {
-    public string characterName;
     public bool isClicked = false;
+    public TextAsset text1;
+    public TextAsset text2;
 
     // Start is called before the first frame update
     void Start()
@@ -36,14 +37,13 @@ public class WorldObjectsInteraction : MonoBehaviour
         List<string> lines;
         if(WorldManager.instance.currentGameEvent is Scene)
         {
-            string currentSceneName = ((Scene)WorldManager.instance.currentGameEvent).name;
             if (!isClicked)
             {
-                lines = FileManager.ReadTextAsset($"Scenes/{currentSceneName}/{characterName}");
+                lines = FileManager.ReadTextAsset(text1);
             }
             else
             {
-                lines = FileManager.ReadTextAsset($"Scenes/{currentSceneName}/{characterName}2");
+                lines = FileManager.ReadTextAsset(text2 ? text2 : text1);
             }
             DialogueSystem.instance.Say(lines);
             isClicked = true;

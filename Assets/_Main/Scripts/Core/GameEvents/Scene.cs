@@ -3,30 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using DIALOGUE;
 
-[CreateAssetMenu(menuName ="DialogueSystem/Scene")]
+[CreateAssetMenu(menuName ="Game Events/Scene")]
 public class Scene : GameEvent 
 {
-   
-    public List<string> characters;
-    public List<Scene> conditionScenes;
     public GameObject characterPrefab;
     public static string characterPath = $"World/World Objects/Characters";
-   
-
-    public Scene(string name, List<string> characters)
-    {
-        this.characters = characters;
-    }
+    public TextAsset finishText;
 
     public override void UpdateEvent()
     {
         isFinished = true;
+        Transform characters = GameObject.Find(characterPath).transform;
 
-        foreach (string character in characters)
+        foreach (Transform character in characters)
         {
-            Debug.Log("character name:" + character);
-            GameObject obj = GameObject.Find($"{characterPath}/{character}");
-            if (!obj.GetComponent<WorldObjectsInteraction>().isClicked)
+            if (!character.GetComponent<WorldObjectsInteraction>().isClicked)
                 isFinished = false;
         }
     }
@@ -44,14 +35,13 @@ public class Scene : GameEvent
     public override bool CheckIfToPlay()
     {
         bool playScene = true;
-        if (conditionScenes != null)
-            foreach (Scene conditionScene in conditionScenes)
+        if (conditionEvents != null)
+            foreach (GameEvent conditionEvent in conditionEvents)
             {
-                if (!conditionScene.isFinished)
+                if (!conditionEvent.isFinished)
                     playScene = false;
 
             }
-
         
         return playScene;
     }
@@ -61,10 +51,9 @@ public class Scene : GameEvent
         GameObject characters = GameObject.Find(characterPath);
         GameObject dialogueBox = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/4 - Dialogue");
 
-        GameObject prefab = Resources.Load<GameObject>($"Scenes/{name}/Characters");
         if (characters == null)
         {
-            WorldManager.instance.CreateCharacters(prefab);
+            WorldManager.instance.CreateCharacters(characterPrefab);
         }
         else
         {
@@ -77,11 +66,12 @@ public class Scene : GameEvent
     {
         GameObject characters = GameObject.Find(characterPath);
         Destroy(characters);
-        List<string> lines = FileManager.ReadTextAsset($"Scenes/{name}/Finish");
+        List<string> lines = FileManager.ReadTextAsset(finishText);
         if (lines != null)
             DialogueSystem.instance.Say(lines);
         ProgressManager.instance.DecideWhichSceneToPlay();
 
         
     }
+
 }

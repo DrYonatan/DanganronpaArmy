@@ -14,7 +14,9 @@ public class WorldManager : MonoBehaviour
     void Start()
     {
         instance = this;
+        Dictionary<string, GameEvent> runtimeGameEvents = ProgressManager.instance.runtimeGameEvents;
         StartConversation("test");
+        currentGameEvent = runtimeGameEvents["Scene1"];
     }
 
     void StartConversation(string textFile)
@@ -38,7 +40,6 @@ public class WorldManager : MonoBehaviour
 
     public void CreateCharacters(GameObject prefab)
     {
-        Debug.Log("Working well");
         GameObject ob = Instantiate(prefab, characterPanel);
         ob.name = "Characters";
         ob.SetActive(true);
