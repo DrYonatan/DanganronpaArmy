@@ -60,14 +60,14 @@ public class ProgressManager : MonoBehaviour
         return null;
     }
 
-    public Scene GetEventByName(string name)
+    public PointAndClickEvent GetEventByName(string name)
     {
         foreach(GameEvent gameEvent in runtimeGameEvents.Values)
         {
-            if(gameEvent is Scene)
+            if(gameEvent is PointAndClickEvent)
             {
-                if (((Scene)gameEvent).name == name)
-                    return (Scene)gameEvent;
+                if (((PointAndClickEvent)gameEvent).name == name)
+                    return (PointAndClickEvent)gameEvent;
             }
             
         }

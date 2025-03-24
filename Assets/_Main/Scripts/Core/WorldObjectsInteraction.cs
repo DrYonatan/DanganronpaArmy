@@ -15,10 +15,7 @@ public class WorldObjectsInteraction : MonoBehaviour
   
        
     }
-
-
     
-
     private void OnMouseDown()
     {
         GameObject dialogueBox = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/4 - Dialogue");
@@ -35,7 +32,7 @@ public class WorldObjectsInteraction : MonoBehaviour
     void StartConversation()
     {
         List<string> lines;
-        if(WorldManager.instance.currentGameEvent is Scene)
+        if(WorldManager.instance.currentGameEvent is PointAndClickEvent)
         {
             if (!isClicked)
             {

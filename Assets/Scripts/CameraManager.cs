@@ -19,7 +19,7 @@ public class CameraManager : MonoBehaviour
 
     private void Awake()
     {
-        Transform absoluteStartPos = GameObject.Find("World/CameraStartPos").transform;
+        Transform absoluteStartPos = GameObject.Find("World").transform.GetChild(0).transform.Find("CameraStartPos").transform;
         instance = this;
         initialCharacterPos = GameObject.Find(charactersLayerPath).transform.position;
         initialRotation = absoluteStartPos.rotation;
@@ -134,14 +134,14 @@ public class CameraManager : MonoBehaviour
 
         while (elapsedTime < duration)
         {
-            Camera.main.transform.position = Vector3.Lerp(startPos, targetPos, elapsedTime / duration);
+           // Camera.main.transform.position = Vector3.Lerp(startPos, targetPos, elapsedTime / duration);
             Camera.main.transform.rotation = Quaternion.Slerp(startRotate, targetRotate, elapsedTime / duration);
             characters.transform.localPosition = Vector3.Lerp(charactersStartPos, charactersTargetPos, elapsedTime / duration);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        Camera.main.transform.position = targetPos; // Ensure the camera reaches the exact target position
+        //Camera.main.transform.position = targetPos; // Ensure the camera reaches the exact target position
         characters.transform.localPosition = charactersTargetPos;
     }
 

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Video;
 using TMPro;
 using UnityEngine.UI;
+using DIALOGUE;
 
 
 public class VideoManager : MonoBehaviour
@@ -177,6 +178,7 @@ public class VideoManager : MonoBehaviour
         }
         gameObject.GetComponentInParent<CanvasGroup>().alpha = 0;
         videoPlayer.transform.parent.gameObject.SetActive(false);
+        DialogueSystem.instance.OnUserPrompt_Next();
         dialogueBoxCanvas.alpha = 1;
         isPlaying = false;
     }

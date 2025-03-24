@@ -10,6 +10,8 @@ namespace DIALOGUE
 
     public class DialogueSystem : MonoBehaviour
     {
+
+        public bool isActive;
         [SerializeField] private DialogueSystemConfigurationSO _config;
         public DialogueSystemConfigurationSO config => _config;
 
@@ -29,6 +31,7 @@ namespace DIALOGUE
             if (instance == null)
             {
                 instance = this;
+                isActive = false;
                 Initialize();
             }
 
@@ -67,6 +70,7 @@ namespace DIALOGUE
 
         public Coroutine Say(List<string> conversation)
         {
+            isActive = true;
            return conversationManager.StartConversation(conversation);
         }
 }

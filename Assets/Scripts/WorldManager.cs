@@ -7,6 +7,7 @@ public class WorldManager : MonoBehaviour
 {
     public RectTransform characterPanel = null;
     public GameEvent currentGameEvent;
+    public Room currentRoom;
 
     public static WorldManager instance { get; private set; }
 
@@ -14,14 +15,16 @@ public class WorldManager : MonoBehaviour
     void Start()
     {
         instance = this;
+        currentRoom = Instantiate(currentRoom);
         Dictionary<string, GameEvent> runtimeGameEvents = ProgressManager.instance.runtimeGameEvents;
         StartConversation("test");
         currentGameEvent = runtimeGameEvents["Scene1"];
+        characterPanel = GameObject.Find("World").transform.GetChild(0).transform.Find("World Objects").GetComponent<RectTransform>();
     }
 
     void StartConversation(string textFile)
     {
-        List<string> lines = FileManager.ReadTextAsset($"Scenes/Story/{textFile}");
+        List<string> lines = FileManager.ReadTextAsset($"GameEvents/Story/{textFile}");
 
         DialogueSystem.instance.Say(lines);
 
@@ -30,6 +33,7 @@ public class WorldManager : MonoBehaviour
     public void ReturningToWorld()
     {
         currentGameEvent.CheckIfFinished();
+        DialogueSystem.instance.isActive = false;
 
         if(currentGameEvent != null)
         {
@@ -55,6 +59,7 @@ public class WorldManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(!DialogueSystem.instance.isActive)
+        currentRoom.MovementControl();
     }
 }

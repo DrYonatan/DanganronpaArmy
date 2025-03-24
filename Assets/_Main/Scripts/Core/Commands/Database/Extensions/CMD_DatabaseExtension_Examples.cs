@@ -100,7 +100,7 @@ namespace TESTING
         private static void PlayScene(string sceneName)
         {
             List<string> lines;
-            lines = FileManager.ReadTextAsset($"Scenes/{sceneName}");
+            lines = FileManager.ReadTextAsset($"GameEvents/{sceneName}");
             DialogueSystem.instance.Say(lines);
         }
         private static void PlayCustscene(string cutsceneName)
