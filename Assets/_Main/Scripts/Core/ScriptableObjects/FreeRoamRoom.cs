@@ -19,11 +19,16 @@ public class FreeRoamRoom : Room
     }
     void Move()
     {
+        float speed = moveSpeed;
         float moveX = Input.GetAxis("Horizontal"); // A (-1) / D (1)
         float moveZ = Input.GetAxis("Vertical");   // W (1) / S (-1)
+        if(Input.GetKey(KeyCode.LeftShift))
+        {
+            speed *= 2;
+        }
 
         Vector3 move = Camera.main.transform.right * moveX + Camera.main.transform.forward * moveZ;
-        Camera.main.transform.position += new Vector3(move.x, 0, move.z) * moveSpeed * Time.deltaTime;
+        Camera.main.transform.position += new Vector3(move.x, 0, move.z) * speed * Time.deltaTime;
     }
 
     void Look()

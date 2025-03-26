@@ -47,7 +47,14 @@ namespace TESTING
             database.AddCommand("HideSceneCharacters", new Action(HideSceneCharacters));
             database.AddCommand("CreateCharacters", new Action<string[]>(CreateCharacters));
             database.AddCommand("HideBackground", new Action(HideBackground));
+            database.AddCommand("LoadRoom", new Action<string>(LoadRoom));
 
+        }
+
+        private static void LoadRoom(string roomname)
+        {
+            Room room = Resources.Load<Room>($"Rooms/{roomname}");
+            WorldManager.instance.StartLoadingRoom(room);
         }
 
         private static void HideSceneCharacters()

@@ -17,15 +17,12 @@ public class CameraManager : MonoBehaviour
     private Vector3 initialCharacterPos;
     private Quaternion initialRotation;
 
-    private void Awake()
+    private void Start()
     {
-        Transform absoluteStartPos = GameObject.Find("World").transform.GetChild(0).transform.Find("CameraStartPos").transform;
         instance = this;
         initialCharacterPos = GameObject.Find(charactersLayerPath).transform.position;
-        initialRotation = absoluteStartPos.rotation;
-        initialPosition = absoluteStartPos.position;
-        Camera.main.transform.position = initialPosition;
-        Camera.main.transform.rotation = initialRotation;
+        Transform absoluteStartPos = GameObject.Find("World/CameraStartPos").transform;
+        CameraManager.instance.setInitialPosition(absoluteStartPos);
     }
 
     public void setInitialPosition(Transform initial) 

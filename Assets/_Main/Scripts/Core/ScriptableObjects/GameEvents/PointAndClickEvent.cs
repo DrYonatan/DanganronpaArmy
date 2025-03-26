@@ -7,13 +7,13 @@ using DIALOGUE;
 public class PointAndClickEvent : GameEvent 
 {
     public GameObject characterPrefab;
-    public static string characterPath = $"World Objects/Characters";
+    public static string characterPath = $"World/World Objects/Characters";
     public TextAsset finishText;
 
     public override void UpdateEvent()
     {
         isFinished = true;
-        Transform characters = GameObject.Find("World").transform.GetChild(0).transform.Find(characterPath).transform;
+        Transform characters = GameObject.Find(characterPath).transform;
 
         foreach (Transform character in characters)
         {
@@ -25,18 +25,19 @@ public class PointAndClickEvent : GameEvent
     public override void CheckIfFinished()
     {
         GameObject dialogueBox = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/4 - Dialogue");
-        CameraManager.instance.MoveCameraTo(GameObject.Find("World").transform.GetChild(0).transform.Find("CameraStartPos"));
+        CameraManager.instance.MoveCameraTo(GameObject.Find("World/CameraStartPos").transform);
         if(isFinished)
         OnFinish();
         else
-        dialogueBox.SetActive(false);
+        dialogueBox.GetComponent<CanvasGroup>().alpha = 0;
     }
 
 
     public override void PlayEvent()
     {
-        Transform characters = GameObject.Find("World").transform.GetChild(0).transform.Find(characterPath);
-        GameObject dialogueBox = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/4 - Dialogue");
+        GameObject characters = GameObject.Find(characterPath);
+        Transform cameraStatPos = GameObject.Find("World/CameraStartPos").transform;
+        CameraManager.instance.setInitialPosition(cameraStatPos);
         ((PointAndClickRoom)(WorldManager.instance.currentRoom)).ResetRotations();
 
         if (characters == null)
@@ -45,14 +46,14 @@ public class PointAndClickEvent : GameEvent
         }
         else
         {
-            characters.gameObject.SetActive(true);
+            characters.SetActive(true);
         }
         
     }
 
     public override void OnFinish()
     {
-        GameObject characters = GameObject.Find("World").transform.GetChild(0).transform.Find(characterPath).gameObject;
+        GameObject characters = GameObject.Find(characterPath);
         Destroy(characters);
         List<string> lines = FileManager.ReadTextAsset(finishText);
         if (lines != null)

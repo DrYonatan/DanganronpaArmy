@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DIALOGUE;
+using System.Threading.Tasks;
 
 public class WorldManager : MonoBehaviour
 {
@@ -12,14 +13,13 @@ public class WorldManager : MonoBehaviour
     public static WorldManager instance { get; private set; }
 
     // Start is called before the first frame update
-    void Start()
+    async void Start()
     {
         instance = this;
-        currentRoom = Instantiate(currentRoom);
+        StartLoadingRoom(currentRoom);
         Dictionary<string, GameEvent> runtimeGameEvents = ProgressManager.instance.runtimeGameEvents;
         StartConversation("test");
-        currentGameEvent = runtimeGameEvents["Scene1"];
-        characterPanel = GameObject.Find("World").transform.GetChild(0).transform.Find("World Objects").GetComponent<RectTransform>();
+        currentGameEvent = runtimeGameEvents["InsideRoom"];
     }
 
     void StartConversation(string textFile)
@@ -32,8 +32,12 @@ public class WorldManager : MonoBehaviour
 
     public void ReturningToWorld()
     {
+        if(currentGameEvent != null)
         currentGameEvent.CheckIfFinished();
         DialogueSystem.instance.isActive = false;
+        GameObject dialogueBox = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/4 - Dialogue");
+        dialogueBox.GetComponent<CanvasGroup>().alpha = 0;
+
 
         if(currentGameEvent != null)
         {
@@ -55,6 +59,49 @@ public class WorldManager : MonoBehaviour
 
         Destroy(characters);
     }
+
+    public async void StartLoadingRoom(Room room)
+    {
+        await LoadRoom(room);
+    }
+
+    public async Task LoadRoom(Room room)
+    {
+        float timeout = 2f;
+        float elapsedTime = 0f;
+
+        currentRoom = Instantiate(room);
+        currentRoom.name = room.name;
+        Destroy(GameObject.Find("World"));
+
+        // Wait until World finished destroying (max 2 seconds to prevent infinite loops)
+        while (GameObject.Find("World") != null && elapsedTime < timeout)
+        {
+           await Task.Yield();
+           elapsedTime += Time.deltaTime;
+        }
+
+
+        GameObject ob = Instantiate(room.prefab);
+        ob.name = "World";
+        ob.SetActive(true);
+
+        elapsedTime = 0;
+        // Wait until "World Objects" is found (max 2 seconds to prevent infinite loops)
+        while (GameObject.Find("World/World Objects") == null && elapsedTime < timeout)
+        {
+           await Task.Yield();
+           elapsedTime += Time.deltaTime;
+        }
+        
+        if(GameObject.Find("World/World Objects").GetComponent<RectTransform>() != null)
+        characterPanel = GameObject.Find("World/World Objects").GetComponent<RectTransform>();
+        Camera.main.transform.position = GameObject.Find("World/CameraStartPos").transform.position;
+        ReturningToWorld();
+        
+    }
+
+
 
     // Update is called once per frame
     void Update()

@@ -70,7 +70,10 @@ namespace DIALOGUE
 
         public Coroutine Say(List<string> conversation)
         {
-            isActive = true;
+           isActive = true;
+           GameObject dialogueBox = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/4 - Dialogue");
+           dialogueBox.SetActive(true);
+           dialogueBox.GetComponent<CanvasGroup>().alpha = 1;
            return conversationManager.StartConversation(conversation);
         }
 }

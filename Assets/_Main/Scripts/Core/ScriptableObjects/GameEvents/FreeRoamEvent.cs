@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DIALOGUE;
 
 [CreateAssetMenu(menuName ="Game Events/Free Roam Event")]
 public class FreeRoamEvent : GameEvent
 {
     public GameObject characterPrefab;
-    public string currentRoomName;
     public string targetRoomName;
+    public List<string> allowedRooms;
+    public TextAsset unallowedText;
+    public TextAsset finishText;
 
     public override void CheckIfFinished()
     {
@@ -20,7 +23,7 @@ public class FreeRoamEvent : GameEvent
 
     public override void UpdateEvent()
     {
-        if(currentRoomName.Equals(targetRoomName))
+        if(WorldManager.instance.currentRoom.name.Equals(targetRoomName))
         {
             isFinished = true;
         }
@@ -29,11 +32,13 @@ public class FreeRoamEvent : GameEvent
 
     public override void PlayEvent()
     {
-
+        //GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/4 - Dialogue").GetComponent<CanvasGroup>().alpha = 0;
     }
 
     public override void OnFinish()
     {
-
+        List<string> lines = FileManager.ReadTextAsset(finishText);
+        if (lines != null)
+            DialogueSystem.instance.Say(lines);
     }
 }
