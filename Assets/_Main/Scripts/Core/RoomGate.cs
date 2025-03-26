@@ -26,8 +26,7 @@ public class RoomGate : MonoBehaviour
         {
             WorldManager.instance.LoadRoom(roomToLoad);
             WorldManager.instance.currentGameEvent.UpdateEvent();
-            WorldManager.instance.ReturningToWorld();
-            ProgressManager.instance.DecideWhichSceneToPlay();
+            WorldManager.instance.currentGameEvent.CheckIfFinished();
         }
         else
         {

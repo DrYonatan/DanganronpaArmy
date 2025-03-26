@@ -33,7 +33,8 @@ public class WorldManager : MonoBehaviour
     public void ReturningToWorld()
     {
         if(currentGameEvent != null)
-        currentGameEvent.CheckIfFinished();
+           currentGameEvent.CheckIfFinished();
+
         DialogueSystem.instance.isActive = false;
         GameObject dialogueBox = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/4 - Dialogue");
         dialogueBox.GetComponent<CanvasGroup>().alpha = 0;
@@ -96,9 +97,11 @@ public class WorldManager : MonoBehaviour
         
         if(GameObject.Find("World/World Objects").GetComponent<RectTransform>() != null)
         characterPanel = GameObject.Find("World/World Objects").GetComponent<RectTransform>();
-        Camera.main.transform.position = GameObject.Find("World/CameraStartPos").transform.position;
-        ReturningToWorld();
-        
+        Transform cameraStartPos = GameObject.Find("World/CameraStartPos").transform;
+        Camera.main.transform.position = cameraStartPos.position;
+        Camera.main.transform.rotation = cameraStartPos.rotation;
+        CameraManager.instance.setInitialPosition(cameraStartPos);
+
     }
 
 

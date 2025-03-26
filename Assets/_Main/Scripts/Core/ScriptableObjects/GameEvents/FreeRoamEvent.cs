@@ -40,5 +40,7 @@ public class FreeRoamEvent : GameEvent
         List<string> lines = FileManager.ReadTextAsset(finishText);
         if (lines != null)
             DialogueSystem.instance.Say(lines);
+            
+        ProgressManager.instance.DecideWhichSceneToPlay();
     }
 }
