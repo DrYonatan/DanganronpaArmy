@@ -15,7 +15,7 @@ namespace CHARACTERS
 
         public Image renderer { get; private set; } = null;
 
-        public CanvasGroup rendererCG => renderer.GetComponent<CanvasGroup>();
+        public CanvasGroup rendererCG => renderer ? renderer.GetComponent<CanvasGroup>() : null;
         
         private List<CanvasGroup> oldRenderers = new List<CanvasGroup>();
 
@@ -95,8 +95,7 @@ namespace CHARACTERS
 
         private IEnumerator RunAlphaLeveling()
         {
-            if(renderer != null) {
-            while(rendererCG.alpha < 1 || oldRenderers.Any(oldCG => oldCG.alpha > 0))
+            while(rendererCG ? (rendererCG.alpha < 1 || oldRenderers.Any(oldCG => oldCG.alpha > 0)) : false)
             {
                 float speed = DEFAULT_TRANSITION_SPEED * transitionSpeedMultiplier * Time.deltaTime;
                 rendererCG.alpha = Mathf.MoveTowards(rendererCG.alpha, 1, speed);
@@ -116,9 +115,6 @@ namespace CHARACTERS
             }
 
             co_levelingAlpha = null;
-            }
-            
-
         }
     }
 }

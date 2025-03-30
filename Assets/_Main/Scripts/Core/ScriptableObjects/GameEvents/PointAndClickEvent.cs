@@ -24,12 +24,11 @@ public class PointAndClickEvent : GameEvent
 
     public override void CheckIfFinished()
     {
-        GameObject dialogueBox = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/4 - Dialogue");
         CameraManager.instance.MoveCameraTo(GameObject.Find("World/CameraStartPos").transform);
         if(isFinished)
         OnFinish();
         else
-        dialogueBox.GetComponent<CanvasGroup>().alpha = 0;
+        DialogueSystem.instance.SetIsActive(false);
     }
 
 
@@ -46,7 +45,7 @@ public class PointAndClickEvent : GameEvent
         }
         else
         {
-            characters.SetActive(true);
+            characters.transform.GetChild(0).gameObject.GetComponent<CharacterClickEffects>().MakeCharactersReappear();
         }
         
     }

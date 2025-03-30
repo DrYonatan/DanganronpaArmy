@@ -22,7 +22,7 @@ public class CameraManager : MonoBehaviour
         instance = this;
         initialCharacterPos = GameObject.Find(charactersLayerPath).transform.position;
         Transform absoluteStartPos = GameObject.Find("World/CameraStartPos").transform;
-        CameraManager.instance.setInitialPosition(absoluteStartPos);
+        setInitialPosition(absoluteStartPos);
     }
 
     public void setInitialPosition(Transform initial) 
@@ -37,8 +37,9 @@ public class CameraManager : MonoBehaviour
 
     }
 
-    public void MoveCameraTo(Transform location) {
-        float duration = 0.3f;
+    public void MoveCameraTo(Transform location) 
+    {
+        float duration = 0.5f;
         setInitialPosition(location);
         StartCoroutine(MoveCameraTo(location, duration));
     }
@@ -48,7 +49,8 @@ public class CameraManager : MonoBehaviour
         StartCoroutine(Zoom(zoom));
     }
 
-    IEnumerator MoveCameraTo(Transform location, float duration) {
+    IEnumerator MoveCameraTo(Transform location, float duration) 
+    {
         Vector3 startPos = Camera.main.transform.position;
 
         Quaternion startRotate = Camera.main.transform.rotation;
@@ -57,15 +59,36 @@ public class CameraManager : MonoBehaviour
 
         while (elapsedTime < duration)
         {
-            Camera.main.transform.position = Vector3.Lerp(startPos, location.position, elapsedTime / duration);
-            Camera.main.transform.rotation = Quaternion.Slerp(startRotate, location.rotation, elapsedTime / duration);
+            if(location != null)
+            {
+               Camera.main.transform.rotation = Quaternion.Slerp(startRotate, location.rotation, elapsedTime / duration);
+            }
+          
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        Camera.main.transform.position = location.position; // Ensure the camera reaches the exact target position
-        Camera.main.transform.rotation = location.rotation;
+        elapsedTime = 0;
+
+        while (elapsedTime < duration)
+        {
+            if(location != null)
+            {
+               Camera.main.transform.position = Vector3.Lerp(startPos, location.position, elapsedTime / duration);
+            }
+          
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        if(location != null)
+        {
+           Camera.main.transform.position = location.position; // Ensure the camera reaches the exact target position
+           Camera.main.transform.rotation = location.rotation;
+        }
+        
     }
+
 
     IEnumerator Zoom(string zoom)
     {

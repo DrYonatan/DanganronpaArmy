@@ -70,11 +70,24 @@ namespace DIALOGUE
 
         public Coroutine Say(List<string> conversation)
         {
-           isActive = true;
-           GameObject dialogueBox = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/4 - Dialogue");
-           dialogueBox.SetActive(true);
-           dialogueBox.GetComponent<CanvasGroup>().alpha = 1;
+           SetIsActive(true);
            return conversationManager.StartConversation(conversation);
+        }
+        
+        public void SetIsActive(bool activeOrNot) // Not to be cofnsued with Unity's GameObject.SetActive() 
+        {
+            isActive = activeOrNot;
+            GameObject dialogueBox = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/4 - Dialogue");
+
+            if(activeOrNot)
+            {
+                dialogueBox.SetActive(true); // Probably should remove this as it seems dialogueBox is never set to false 
+                dialogueBox.GetComponent<CanvasGroup>().alpha = 1;
+            }
+            else 
+            {
+                dialogueBox.GetComponent<CanvasGroup>().alpha = 0;
+            }
         }
 }
 

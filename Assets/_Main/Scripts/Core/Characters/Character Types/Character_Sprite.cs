@@ -68,7 +68,7 @@ namespace CHARACTERS
             CanvasGroup self = rootCG;
 
 
-            while (self.alpha != targetAlpha)
+            while (self ? self.alpha != targetAlpha : false) // Ensures this check only happens if the character is still intact 
             {
                 self.alpha = Mathf.MoveTowards(self.alpha, targetAlpha, 3f * Time.deltaTime);
                 yield return null;

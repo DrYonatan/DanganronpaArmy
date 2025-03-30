@@ -8,24 +8,25 @@ public class WorldObjectsInteraction : MonoBehaviour
     public bool isClicked = false;
     public TextAsset text1;
     public TextAsset text2;
-
     // Start is called before the first frame update
     void Start()
     {
-  
-       
+
     }
     
     private void OnMouseDown()
     {
-        GameObject dialogueBox = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/4 - Dialogue");
-        Transform cameraLocation = transform.Find("CameraLocation");
-        dialogueBox.SetActive(true);
-        CameraManager.instance.MoveCameraTo(cameraLocation);
-        if(WorldManager.instance.currentGameEvent != null)
-        StartConversation();
-        WorldManager.instance.currentGameEvent.UpdateEvent();
-        transform.parent.gameObject.SetActive(false);
+        if(!DialogueSystem.instance.isActive) 
+        {
+            GameObject dialogueBox = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/4 - Dialogue");
+            Transform cameraLocation = transform.Find("CameraLocation");
+            dialogueBox.SetActive(true);
+            CameraManager.instance.MoveCameraTo(cameraLocation);
+            if(WorldManager.instance.currentGameEvent != null)
+            StartConversation();
+            WorldManager.instance.currentGameEvent.UpdateEvent();
+        }
+        
     }
 
 
@@ -45,7 +46,7 @@ public class WorldObjectsInteraction : MonoBehaviour
             DialogueSystem.instance.Say(lines);
             isClicked = true;
         }
-        
 
     }
+
 }
