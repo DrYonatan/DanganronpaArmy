@@ -20,15 +20,23 @@ public class WorldObjectsInteraction : MonoBehaviour
         {
             GameObject dialogueBox = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/4 - Dialogue");
             Transform cameraLocation = transform.Find("CameraLocation");
-            dialogueBox.SetActive(true);
-            CameraManager.instance.MoveCameraTo(cameraLocation);
-            if(WorldManager.instance.currentGameEvent != null)
-            StartConversation();
-            WorldManager.instance.currentGameEvent.UpdateEvent();
+            // CameraManager.instance.MoveCameraTo(cameraLocation);
+            StartCoroutine(MoveAndRotateCameraTo(cameraLocation));
+            
         }
         
     }
 
+    IEnumerator MoveAndRotateCameraTo(Transform transform)
+    {
+        float duration = 0.5f;
+        yield return StartCoroutine(CameraManager.instance.RotateCameraTo(transform, duration));
+        StartCoroutine(CameraManager.instance.MoveCameraTo(transform, duration));
+        CameraManager.instance.setInitialPosition(transform);
+        if(WorldManager.instance.currentGameEvent != null)
+            StartConversation();
+            WorldManager.instance.currentGameEvent.UpdateEvent();
+    }
 
     void StartConversation()
     {

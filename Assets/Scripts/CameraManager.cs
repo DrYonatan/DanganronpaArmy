@@ -42,17 +42,18 @@ public class CameraManager : MonoBehaviour
         float duration = 0.5f;
         setInitialPosition(location);
         StartCoroutine(MoveCameraTo(location, duration));
+        StartCoroutine(RotateCameraTo(location, duration));
     }
+
+    
 
     public void ZoomCamera(string zoom)
     {
         StartCoroutine(Zoom(zoom));
     }
 
-    IEnumerator MoveCameraTo(Transform location, float duration) 
+    public IEnumerator RotateCameraTo(Transform location, float duration)
     {
-        Vector3 startPos = Camera.main.transform.position;
-
         Quaternion startRotate = Camera.main.transform.rotation;
         
         float elapsedTime = 0;
@@ -68,7 +69,17 @@ public class CameraManager : MonoBehaviour
             yield return null;
         }
 
-        elapsedTime = 0;
+         if(location != null)
+        {
+           Camera.main.transform.rotation = location.rotation;
+        }
+    }
+
+    public IEnumerator MoveCameraTo(Transform location, float duration) 
+    {
+        Vector3 startPos = Camera.main.transform.position;
+        
+        float elapsedTime = 0;
 
         while (elapsedTime < duration)
         {
@@ -84,7 +95,6 @@ public class CameraManager : MonoBehaviour
         if(location != null)
         {
            Camera.main.transform.position = location.position; // Ensure the camera reaches the exact target position
-           Camera.main.transform.rotation = location.rotation;
         }
         
     }

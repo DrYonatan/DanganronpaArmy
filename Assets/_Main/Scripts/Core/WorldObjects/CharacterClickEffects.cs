@@ -6,7 +6,6 @@ using DIALOGUE;
 public class CharacterClickEffects : MonoBehaviour
 {
     private bool isRunning = false;
-    public float fadeDuration = 1f; // Time in seconds to fade out
     private Renderer[] renderers;
     private Color[] startColors;
     
@@ -24,8 +23,8 @@ public class CharacterClickEffects : MonoBehaviour
 
     void OnMouseDown()
     {
-        //if(!DialogueSystem.instance.isActive)
-        if(!isRunning)
+        
+        if(!isRunning && !DialogueSystem.instance.isActive)
         {
           StartCoroutine(HopCharacter());
           MakeCharactersDisappear();
@@ -45,7 +44,7 @@ public class CharacterClickEffects : MonoBehaviour
             startColors[i] = renderers[i].material.color;
         }
 
-        StartCoroutine(Fade(1f, 0f));
+        StartCoroutine(Fade(1f, 0f, 1f));
     }
 
     public void MakeCharactersReappear()
@@ -61,7 +60,7 @@ public class CharacterClickEffects : MonoBehaviour
             startColors[i] = renderers[i].material.color;
         }
 
-        StartCoroutine(Fade(0f, 1f));
+        StartCoroutine(Fade(0f, 1f, 0.5f));
     }
 
     IEnumerator HopCharacter()
@@ -95,14 +94,14 @@ public class CharacterClickEffects : MonoBehaviour
         isRunning = false;
     }
 
-    IEnumerator Fade(float start, float target)
+    IEnumerator Fade(float start, float target, float duration)
     {
         float elapsedTime = 0f;
 
-        while (elapsedTime < fadeDuration)
+        while (elapsedTime < duration)
         {
             elapsedTime += Time.deltaTime;
-            float alpha = Mathf.Lerp(start, target, elapsedTime / fadeDuration);
+            float alpha = Mathf.Lerp(start, target, elapsedTime / duration);
 
             for (int i = 0; i < renderers.Length; i++)
             {
