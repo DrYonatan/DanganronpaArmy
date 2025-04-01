@@ -20,7 +20,7 @@ public class WorldObjectsInteraction : MonoBehaviour
         {
             GameObject dialogueBox = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/4 - Dialogue");
             Transform cameraLocation = transform.Find("CameraLocation");
-            // CameraManager.instance.MoveCameraTo(cameraLocation);
+            SoundManager.instance.PlaySoundEffect("click");
             StartCoroutine(MoveAndRotateCameraTo(cameraLocation));
             
         }
