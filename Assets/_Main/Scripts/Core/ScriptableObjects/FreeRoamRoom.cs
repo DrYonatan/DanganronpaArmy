@@ -12,10 +12,15 @@ public class FreeRoamRoom : Room
     private float verticalRotation = 0f;
     public float maxLookAngle = 80f; // Prevents camera flipping
 
+    float playerReach = 14f;
+    public FreeRoamInteractable currentInteractable;
+
     public override void MovementControl() 
     {
+        Cursor.lockState = CursorLockMode.Locked;
         Move();
         Look();
+        Interact();
     }
     void Move()
     {
@@ -45,4 +50,45 @@ public class FreeRoamRoom : Room
         verticalRotation = Mathf.Clamp(verticalRotation, -maxLookAngle, maxLookAngle);
         Camera.main.transform.localRotation = Quaternion.Euler(verticalRotation, horizontalRotation, 0f);
     }
+
+    void Interact()
+    {
+        CheckInteraction();
+        if(Input.GetMouseButtonDown(0) && currentInteractable != null)
+        {
+            currentInteractable.Interact();
+        }
+    }
+
+    void CheckInteraction()
+    {
+        RaycastHit hit;
+        Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+
+        if(Physics.Raycast(ray, out hit, playerReach))
+        {
+            if(hit.collider.tag == "Interactable")
+            {
+                FreeRoamInteractable newInteractable = hit.collider.GetComponent<FreeRoamInteractable>();
+
+                if(newInteractable.enabled)
+                {
+                    currentInteractable = newInteractable;
+                }
+                else
+                {
+                    currentInteractable = null;
+                }
+            }
+            else
+            {
+                currentInteractable = null;
+            }
+        }
+        else
+        {
+            currentInteractable = null;
+        }
+    }
+
 }

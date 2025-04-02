@@ -35,8 +35,8 @@ public class PointAndClickEvent : GameEvent
     public override void PlayEvent()
     {
         GameObject characters = GameObject.Find(characterPath);
-        Transform cameraStatPos = GameObject.Find("World/CameraStartPos").transform;
-        CameraManager.instance.setInitialPosition(cameraStatPos);
+        Transform cameraStartPos = GameObject.Find("World/CameraStartPos").transform;
+        CameraManager.instance.setInitialPosition(cameraStartPos.position, cameraStartPos.rotation);
         ((PointAndClickRoom)(WorldManager.instance.currentRoom)).ResetRotations();
 
         if (characters == null)

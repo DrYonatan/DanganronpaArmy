@@ -77,6 +77,7 @@ namespace DIALOGUE
         public void SetIsActive(bool activeOrNot) // Not to be cofnsued with Unity's GameObject.SetActive() 
         {
             isActive = activeOrNot;
+            Cursor.lockState = CursorLockMode.None;
             GameObject dialogueBox = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/4 - Dialogue");
 
             if(activeOrNot)

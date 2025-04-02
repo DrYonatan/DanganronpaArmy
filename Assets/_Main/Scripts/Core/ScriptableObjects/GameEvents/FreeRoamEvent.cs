@@ -32,7 +32,7 @@ public class FreeRoamEvent : GameEvent
 
     public override void PlayEvent()
     {
-        //GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/4 - Dialogue").GetComponent<CanvasGroup>().alpha = 0;
+        
     }
 
     public override void OnFinish()

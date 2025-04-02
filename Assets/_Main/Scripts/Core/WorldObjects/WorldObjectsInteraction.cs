@@ -19,20 +19,23 @@ public class WorldObjectsInteraction : MonoBehaviour
         if(!DialogueSystem.instance.isActive) 
         {
             GameObject dialogueBox = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/4 - Dialogue");
-            Transform cameraLocation = transform.Find("CameraLocation");
             SoundManager.instance.PlaySoundEffect("click");
-            StartCoroutine(MoveAndRotateCameraTo(cameraLocation));
+            StartCoroutine(MoveAndRotateCameraTo());
             
         }
         
     }
 
-    IEnumerator MoveAndRotateCameraTo(Transform transform)
+    IEnumerator MoveAndRotateCameraTo()
     {
         float duration = 0.5f;
-        yield return StartCoroutine(CameraManager.instance.RotateCameraTo(transform, duration));
-        StartCoroutine(CameraManager.instance.MoveCameraTo(transform, duration));
-        CameraManager.instance.setInitialPosition(transform);
+        Vector3 targetPosition = Vector3.Lerp(Camera.main.transform.position, transform.position, 0.75f);
+        Quaternion targetRotation = Quaternion.LookRotation(transform.position - Camera.main.transform.position, Vector3.up);
+
+        yield return StartCoroutine(CameraManager.instance.RotateCameraTo(targetRotation, duration));
+        StartCoroutine(CameraManager.instance.MoveCameraTo(targetPosition, duration));
+
+        CameraManager.instance.setInitialPosition(targetPosition, targetRotation);
         if(WorldManager.instance.currentGameEvent != null)
             StartConversation();
             WorldManager.instance.currentGameEvent.UpdateEvent();

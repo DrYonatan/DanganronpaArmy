@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 public class WorldManager : MonoBehaviour
 {
-    public RectTransform characterPanel = null;
+    public GameObject characterPanel = null;
     public GameEvent currentGameEvent;
     public Room currentRoom;
 
@@ -37,8 +37,6 @@ public class WorldManager : MonoBehaviour
             currentGameEvent.CheckIfFinished();
         }
 
-        DialogueSystem.instance.SetIsActive(false);
-
         if(currentGameEvent != null)
         {
             currentGameEvent.PlayEvent();
@@ -48,7 +46,7 @@ public class WorldManager : MonoBehaviour
 
     public void CreateCharacters(GameObject prefab)
     {
-        GameObject ob = Instantiate(prefab, characterPanel);
+        GameObject ob = Instantiate(prefab, characterPanel.transform);
         ob.name = "Characters";
         ob.SetActive(true);
     }
@@ -94,11 +92,11 @@ public class WorldManager : MonoBehaviour
            elapsedTime += Time.deltaTime;
         }
         
-        if(GameObject.Find("World/World Objects").GetComponent<RectTransform>() != null)
-        characterPanel = GameObject.Find("World/World Objects").GetComponent<RectTransform>();
+        if(GameObject.Find("World/World Objects") != null)
+        characterPanel = GameObject.Find("World/World Objects");
         Transform cameraStartPos = GameObject.Find("World/CameraStartPos").transform;
         if(CameraManager.instance)
-        CameraManager.instance.setInitialPosition(cameraStartPos); // Sets only the Camera Manager's initial position value for later, not actually changing position of camera
+        CameraManager.instance.setInitialPosition(cameraStartPos.position, cameraStartPos.rotation); // Sets only the Camera Manager's initial position value for later, not actually changing position of camera
 
         Camera.main.transform.position = cameraStartPos.position; // Actually changing position of camera
         Camera.main.transform.rotation = cameraStartPos.rotation;

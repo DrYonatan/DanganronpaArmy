@@ -22,13 +22,13 @@ public class CameraManager : MonoBehaviour
         instance = this;
         initialCharacterPos = GameObject.Find(charactersLayerPath).transform.position;
         Transform absoluteStartPos = GameObject.Find("World/CameraStartPos").transform;
-        setInitialPosition(absoluteStartPos);
+        setInitialPosition(absoluteStartPos.position, absoluteStartPos.rotation);
     }
 
-    public void setInitialPosition(Transform initial) 
+    public void setInitialPosition(Vector3 position, Quaternion rotation) 
     {
-        initialPosition = initial.position;
-        initialRotation = initial.rotation;
+        initialPosition = position;
+        initialRotation = rotation;
     }
 
     public void MoveCamera(string direction, float duration)
@@ -40,9 +40,9 @@ public class CameraManager : MonoBehaviour
     public void MoveCameraTo(Transform location) 
     {
         float duration = 0.5f;
-        setInitialPosition(location);
-        StartCoroutine(MoveCameraTo(location, duration));
-        StartCoroutine(RotateCameraTo(location, duration));
+        setInitialPosition(location.position, location.rotation);
+        StartCoroutine(MoveCameraTo(location.position, duration));
+        StartCoroutine(RotateCameraTo(location.rotation, duration));
     }
 
     
@@ -52,7 +52,7 @@ public class CameraManager : MonoBehaviour
         StartCoroutine(Zoom(zoom));
     }
 
-    public IEnumerator RotateCameraTo(Transform location, float duration)
+    public IEnumerator RotateCameraTo(Quaternion rotation, float duration)
     {
         Quaternion startRotate = Camera.main.transform.rotation;
         
@@ -60,22 +60,22 @@ public class CameraManager : MonoBehaviour
 
         while (elapsedTime < duration)
         {
-            if(location != null)
+            if(rotation != null)
             {
-               Camera.main.transform.rotation = Quaternion.Slerp(startRotate, location.rotation, elapsedTime / duration);
+               Camera.main.transform.rotation = Quaternion.Slerp(startRotate, rotation, elapsedTime / duration);
             }
           
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-         if(location != null)
+         if(rotation != null)
         {
-           Camera.main.transform.rotation = location.rotation;
+           Camera.main.transform.rotation = rotation;
         }
     }
 
-    public IEnumerator MoveCameraTo(Transform location, float duration) 
+    public IEnumerator MoveCameraTo(Vector3 location, float duration) 
     {
         Vector3 startPos = Camera.main.transform.position;
         
@@ -85,7 +85,7 @@ public class CameraManager : MonoBehaviour
         {
             if(location != null)
             {
-               Camera.main.transform.position = Vector3.Lerp(startPos, location.position, elapsedTime / duration);
+               Camera.main.transform.position = Vector3.Lerp(startPos, location, elapsedTime / duration);
             }
           
             elapsedTime += Time.deltaTime;
@@ -94,7 +94,7 @@ public class CameraManager : MonoBehaviour
 
         if(location != null)
         {
-           Camera.main.transform.position = location.position; // Ensure the camera reaches the exact target position
+           Camera.main.transform.position = location; // Ensure the camera reaches the exact target position
         }
         
     }

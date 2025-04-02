@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DIALOGUE;
 
-public class RoomGate : MonoBehaviour
+public class RoomGate : FreeRoamInteractable
 {
     public Room roomToLoad;
 
@@ -19,19 +19,24 @@ public class RoomGate : MonoBehaviour
         
     }
 
-    void OnMouseDown()
+    public override void Interact()
     {
-        if(((FreeRoamEvent)(WorldManager.instance.currentGameEvent)).allowedRooms.Contains(roomToLoad.name) || 
-        ((FreeRoamEvent)(WorldManager.instance.currentGameEvent)).allowedRooms[0].ToLower() == "all")
+        if(!DialogueSystem.instance.isActive)
         {
-            WorldManager.instance.LoadRoom(roomToLoad);
-            WorldManager.instance.currentGameEvent.UpdateEvent();
-            WorldManager.instance.currentGameEvent.CheckIfFinished();
+            SoundManager.instance.PlaySoundEffect("click");
+            if(((FreeRoamEvent)(WorldManager.instance.currentGameEvent)).allowedRooms.Contains(roomToLoad.name) || 
+            ((FreeRoamEvent)(WorldManager.instance.currentGameEvent)).allowedRooms[0].ToLower() == "all")
+            {
+               WorldManager.instance.LoadRoom(roomToLoad);
+               WorldManager.instance.currentGameEvent.UpdateEvent();
+               WorldManager.instance.currentGameEvent.CheckIfFinished();
+            }
+            else
+            {
+               // if the room is unallowed, read the "you can't go into this room" text
+               DialogueSystem.instance.Say(FileManager.ReadTextAsset(((FreeRoamEvent)WorldManager.instance.currentGameEvent).unallowedText));
+            }
         }
-        else
-        {
-            // if the room is unallowed, read the "you can't go into this room" text
-            DialogueSystem.instance.Say(FileManager.ReadTextAsset(((FreeRoamEvent)WorldManager.instance.currentGameEvent).unallowedText));
-        }
+        
     }
 }

@@ -167,6 +167,7 @@ namespace TESTING
 
         private static void ReturnToWorld()
         {
+            DialogueSystem.instance.SetIsActive(false);
             WorldManager.instance.ReturningToWorld();
             
         }

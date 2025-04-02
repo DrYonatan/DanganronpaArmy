@@ -16,6 +16,7 @@ public class PointAndClickRoom : Room
 
     public override void MovementControl()
     {
+     Cursor.lockState = CursorLockMode.None;
      float horizontalInput = 0f;
      float verticalInput = 0f;
 
