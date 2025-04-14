@@ -168,8 +168,15 @@ namespace TESTING
         private static void ReturnToWorld()
         {
             DialogueSystem.instance.SetIsActive(false);
+            CharacterManager.instance.DestroyAllCharacters();
+            WorldManager.instance.currentGameEvent.UpdateEvent();
+            if(WorldManager.instance.currentRoom is PointAndClickRoom)
+            {
+              GameObject characters = GameObject.Find("World/World Objects/Characters");
+              CameraManager.instance.MoveCameraTo(GameObject.Find("World/CameraStartPos").transform);
+              characters?.transform.GetChild(0).gameObject.GetComponent<CharacterClickEffects>()?.MakeCharactersReappear();
+            }
             WorldManager.instance.ReturningToWorld();
-            
         }
 
         private static void ShowCharacter(string characterName)

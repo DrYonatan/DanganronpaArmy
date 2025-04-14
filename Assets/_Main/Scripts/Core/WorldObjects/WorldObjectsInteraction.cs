@@ -38,14 +38,12 @@ public class WorldObjectsInteraction : MonoBehaviour
         CameraManager.instance.setInitialPosition(targetPosition, targetRotation);
         if(WorldManager.instance.currentGameEvent != null)
             StartConversation();
-            WorldManager.instance.currentGameEvent.UpdateEvent();
+        WorldManager.instance.currentGameEvent.UpdateEvent();
     }
 
     void StartConversation()
     {
         List<string> lines;
-        if(WorldManager.instance.currentGameEvent is PointAndClickEvent)
-        {
             if (!isClicked)
             {
                 lines = FileManager.ReadTextAsset(text1);
@@ -56,7 +54,6 @@ public class WorldObjectsInteraction : MonoBehaviour
             }
             DialogueSystem.instance.Say(lines);
             isClicked = true;
-        }
 
     }
 

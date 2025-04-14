@@ -3,13 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using DIALOGUE;
 
-[CreateAssetMenu(menuName ="Game Events/Free Roam Event")]
+
+[System.Serializable]
+public class EventRoom
+{
+    public string name;
+    public GameObject worldObjects;
+}
+
+
+[CreateAssetMenu(menuName = "Game Events/Free Roam Event")]
 public class FreeRoamEvent : GameEvent
 {
     public GameObject characterPrefab;
     public string targetRoomName;
-    public List<string> allowedRooms;
-    public TextAsset unallowedText;
+    public List<EventRoom> allowedRooms;
     public TextAsset finishText;
 
     public override void CheckIfFinished()
@@ -23,6 +31,11 @@ public class FreeRoamEvent : GameEvent
 
     public override void UpdateEvent()
     {
+        // checks the current room's objects (mostly characters) in this event, and loads the event's current room objects
+        GameObject objects = (allowedRooms.Find(room => room.name == WorldManager.instance.currentRoom.name))?.worldObjects;
+        if(objects != null && GameObject.Find("World/World Objects/Characters") == null)
+        WorldManager.instance.CreateCharacters(objects);
+
         if(WorldManager.instance.currentRoom.name.Equals(targetRoomName))
         {
             isFinished = true;
@@ -32,7 +45,7 @@ public class FreeRoamEvent : GameEvent
 
     public override void PlayEvent()
     {
-        
+
     }
 
     public override void OnFinish()

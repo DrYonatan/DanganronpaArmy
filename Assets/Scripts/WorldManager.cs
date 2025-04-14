@@ -41,13 +41,20 @@ public class WorldManager : MonoBehaviour
         {
             currentGameEvent.PlayEvent();
         }
-       
+
     }
 
     public void CreateCharacters(GameObject prefab)
     {
         GameObject ob = Instantiate(prefab, characterPanel.transform);
         ob.name = "Characters";
+        ob.SetActive(true);
+    }
+
+    public void CreateObjects(GameObject prefab)
+    {
+        GameObject ob = Instantiate(prefab, characterPanel.transform);
+        ob.name = "Objects";
         ob.SetActive(true);
     }
 
@@ -102,7 +109,6 @@ public class WorldManager : MonoBehaviour
         Camera.main.transform.rotation = cameraStartPos.rotation;
 
     }
-
 
 
     // Update is called once per frame

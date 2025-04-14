@@ -8,6 +8,8 @@ public abstract class GameEvent : ScriptableObject
 
     public List<GameEvent> conditionEvents;
 
+    public TextAsset unallowedText;
+
     abstract public void CheckIfFinished();
 
     abstract public void UpdateEvent();
@@ -17,16 +19,6 @@ public abstract class GameEvent : ScriptableObject
 
     abstract public void OnFinish();
 
-    public GameEvent GetRunTimeInstance()
-    {
-        GameEvent runTimeEvent = Instantiate(this);
-        runTimeEvent.conditionEvents = new List<GameEvent>();
-
-        foreach(GameEvent conditionEvent in conditionEvents)
-        {
-        }
-        return runTimeEvent;
-    }
     public bool CheckIfToPlay()
     {
         bool playScene = true;

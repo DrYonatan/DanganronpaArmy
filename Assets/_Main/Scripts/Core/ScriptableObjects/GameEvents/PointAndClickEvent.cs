@@ -7,24 +7,45 @@ using DIALOGUE;
 public class PointAndClickEvent : GameEvent 
 {
     public GameObject characterPrefab;
+    public GameObject interactableObjectsPrefab;
     public static string characterPath = $"World/World Objects/Characters";
+    public static string objectsPath = $"World/World Objects/Objects";
     public TextAsset finishText;
 
     public override void UpdateEvent()
     {
         isFinished = true;
-        Transform characters = GameObject.Find(characterPath).transform;
+        Transform characters = GameObject.Find(characterPath)?.transform;
 
-        foreach (Transform character in characters)
+        // checks all the characters are clicked
+        if(characters != null)
         {
-            if (!character.GetComponent<WorldObjectsInteraction>().isClicked)
-                isFinished = false;
+            foreach (Transform character in characters)
+            {
+                if (!character.GetComponent<WorldObjectsInteraction>().isClicked)
+                    isFinished = false;
+            }
         }
+
+        Transform objects = GameObject.Find(objectsPath)?.transform;
+
+        // checks all the objects are clicked
+        if(objects != null)
+        {
+            foreach (Transform interactableObject in objects)
+            {
+                if(!interactableObject.GetComponent<WorldObjectsInteraction>().isClicked)
+                   isFinished = false;
+            }
+        }
+
+        if(objects == null && characters == null) // if none of the interactables loaded it means the event just started
+        isFinished = false;
+       
     }
 
     public override void CheckIfFinished()
     {
-        CameraManager.instance.MoveCameraTo(GameObject.Find("World/CameraStartPos").transform);
         if(isFinished)
         OnFinish();
         else
@@ -35,17 +56,27 @@ public class PointAndClickEvent : GameEvent
     public override void PlayEvent()
     {
         GameObject characters = GameObject.Find(characterPath);
+        GameObject objects = GameObject.Find(objectsPath);
         Transform cameraStartPos = GameObject.Find("World/CameraStartPos").transform;
         CameraManager.instance.setInitialPosition(cameraStartPos.position, cameraStartPos.rotation);
         ((PointAndClickRoom)(WorldManager.instance.currentRoom)).ResetRotations();
 
-        if (characters == null)
+        if(characterPrefab != null)
         {
+            if (characters == null)
+            {
             WorldManager.instance.CreateCharacters(characterPrefab);
-        }
-        else
-        {
+            }
+            else
+            {
             characters.transform.GetChild(0).gameObject.GetComponent<CharacterClickEffects>().MakeCharactersReappear();
+            }
+        }
+        
+
+        if(objects == null && interactableObjectsPrefab != null)
+        {
+            WorldManager.instance.CreateObjects(interactableObjectsPrefab);
         }
         
     }

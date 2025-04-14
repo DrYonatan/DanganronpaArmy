@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DIALOGUE;
 
 [CreateAssetMenu(menuName="Rooms/Point and Click Room")]
 public class PointAndClickRoom : Room
 {
+    public Room exitRoom;
+
     public float rotationSpeed = 100f; // Adjust rotation speed
     public float borderRight = 10f;
     public float borderLeft = -10f;
@@ -35,6 +38,19 @@ public class PointAndClickRoom : Room
         if (Input.GetKey(KeyCode.S))
         {
             verticalInput = 1f; // Rotate down
+        }
+
+        if(Input.GetKey(KeyCode.R))
+        {
+            if(WorldManager.instance.currentGameEvent is PointAndClickEvent)
+            {
+                DialogueSystem.instance.Say(FileManager.ReadTextAsset(WorldManager.instance.currentGameEvent.unallowedText ?
+                WorldManager.instance.currentGameEvent.unallowedText : 
+                Resources.Load<TextAsset>("GameEvents/unallowed")));
+            }
+            
+            else
+            WorldManager.instance.LoadRoom(exitRoom);
         }
 
       

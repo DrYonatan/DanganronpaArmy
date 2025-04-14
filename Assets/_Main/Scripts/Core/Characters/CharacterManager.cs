@@ -52,7 +52,6 @@ namespace CHARACTERS
        
         public void DestroyCharacter(string characterName)
         {
-            characters.Remove(characters.Single(s => s.Key == characterName.ToLower()).Key);
             GameObject character = GameObject.Find($"VN controller/Root/Canvas - Main/LAYERS/2 - Characters/Character - [{characterName}]");
             Destroy(character);
         }
@@ -178,8 +177,17 @@ namespace CHARACTERS
 
             foreach(string character in characters.Keys) 
             {
-                DestroyCharacter(character);
+                string tempstring = character[0].ToString();
+                tempstring=tempstring.ToUpper();
+                string capitalLetterCharacter = character;
+                capitalLetterCharacter = capitalLetterCharacter.Remove(0, 1);
+                capitalLetterCharacter = capitalLetterCharacter.Insert(0, tempstring);
+                // this entire thing turns the first letter capital
+
+                DestroyCharacter(capitalLetterCharacter);
             }
+
+            characters = new Dictionary<string, Character>();
         }
 
         private class CHARACTER_INFO
