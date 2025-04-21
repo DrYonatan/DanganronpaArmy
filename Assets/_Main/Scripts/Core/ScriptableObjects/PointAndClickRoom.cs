@@ -19,7 +19,6 @@ public class PointAndClickRoom : Room
 
     public override void MovementControl()
     {
-     Cursor.lockState = CursorLockMode.None;
      float horizontalInput = 0f;
      float verticalInput = 0f;
 
@@ -52,6 +51,18 @@ public class PointAndClickRoom : Room
             else
             WorldManager.instance.LoadRoom(exitRoom);
         }
+
+        Vector2 pos;
+        Canvas canvas = GameObject.Find("VN controller/Root/Canvas - Main").GetComponent<Canvas>();
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            canvas.transform as RectTransform,
+            Input.mousePosition,
+            canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera,
+            out pos
+        );
+        GameObject reticle = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/6 - Controls/Reticle");
+        if(reticle != null)
+        reticle.GetComponent<RectTransform>().anchoredPosition = pos;
 
       
 

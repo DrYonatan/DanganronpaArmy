@@ -17,7 +17,6 @@ public class FreeRoamRoom : Room
 
     public override void MovementControl() 
     {
-        Cursor.lockState = CursorLockMode.Locked;
         Move();
         Look();
         Interact();
@@ -41,6 +40,8 @@ public class FreeRoamRoom : Room
 
     void Look()
     {
+        CenterReticle();
+
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
 
@@ -89,6 +90,17 @@ public class FreeRoamRoom : Room
         {
             currentInteractable = null;
         }
+    }
+
+    public void CenterReticle()
+    {
+        RectTransform reticle = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/6 - Controls/Reticle").GetComponent<RectTransform>();
+        reticle.anchorMin = new Vector2(0.5f, 0.5f);
+        reticle.anchorMax = new Vector2(0.5f, 0.5f);
+        reticle.pivot = new Vector2(0.5f, 0.5f);
+
+        // Set position to center
+        reticle.anchoredPosition = Vector2.zero;
     }
 
 }
