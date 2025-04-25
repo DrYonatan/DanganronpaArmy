@@ -84,12 +84,12 @@ namespace DIALOGUE
             {
                 dialogueBox.SetActive(true); // Probably should remove this as it seems dialogueBox is never set to false 
                 dialogueBox.GetComponent<CanvasGroup>().alpha = 1;
-                reticle.SetActive(false);                
+                reticle.SetActive(false);
             }
             else 
             {
                 dialogueBox.GetComponent<CanvasGroup>().alpha = 0;
-                reticle.SetActive(true);                
+                reticle.SetActive(true);
             }
         }
 }

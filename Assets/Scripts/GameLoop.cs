@@ -57,6 +57,10 @@ public class GameLoop : MonoBehaviour
     float stageTimer;
     float defaultStageTime = 600f;
 
+    public GameObject textBulletPrefab;
+    public float shootForce = 10f;
+    public Transform shootOrigin;
+
 
     // Start is called before the first frame update
     void Start()
@@ -70,7 +74,7 @@ public class GameLoop : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if(Input.GetKeyDown(KeyCode.Alpha1))
         {
             SetPause(!pause);
         }
@@ -131,6 +135,7 @@ public class GameLoop : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(0))
         {
+            ShootText();
             for (int i = 0; i < textLines.Count; i++)
             {
                 if (correctTMPIndex != i)
@@ -166,6 +171,23 @@ public class GameLoop : MonoBehaviour
         {
             MusicManager.instance.RaiseVolume();
         }    
+    }
+
+    void ShootText()
+    {
+        // Use the shootOrigin or fallback to camera's position
+        Vector3 spawnPosition = shootOrigin ? shootOrigin.position : Camera.main.transform.position;
+        Quaternion spawnRotation = Camera.main.transform.rotation * Quaternion.Euler(0f, 72f, 0f);
+
+        GameObject bullet = Instantiate(textBulletPrefab, spawnPosition, spawnRotation);
+        Rigidbody rb = bullet.GetComponent<Rigidbody>();
+
+        if (rb != null)
+        {
+            rb.velocity = bullet.transform.right * -1 * shootForce;
+        }
+
+        Destroy(bullet, 3f);
     }
 
     void Hit()

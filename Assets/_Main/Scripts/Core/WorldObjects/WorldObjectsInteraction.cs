@@ -18,10 +18,12 @@ public class WorldObjectsInteraction : MonoBehaviour
     {
         if(!DialogueSystem.instance.isActive) 
         {
-            GameObject dialogueBox = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/4 - Dialogue");
             SoundManager.instance.PlaySoundEffect("click");
+            if(gameObject.GetComponent<CharacterClickEffects>() != null)
+            {
+                gameObject.GetComponent<CharacterClickEffects>().Interact();
+            }
             StartCoroutine(MoveAndRotateCameraTo());
-            
         }
         
     }

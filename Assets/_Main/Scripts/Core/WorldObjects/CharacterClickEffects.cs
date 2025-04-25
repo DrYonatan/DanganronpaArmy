@@ -21,9 +21,8 @@ public class CharacterClickEffects : MonoBehaviour
         
     }
 
-    void OnMouseDown()
+    public void Interact()
     {
-        
         if(!isRunning && !DialogueSystem.instance.isActive)
         {
           StartCoroutine(HopCharacter());

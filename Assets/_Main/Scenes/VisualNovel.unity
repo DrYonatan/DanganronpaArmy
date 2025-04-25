@@ -675,9 +675,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 30
-  reticleTexture: {fileID: 2800000, guid: c3839c4a35c05e64aaceb12042f8507a, type: 3}
-  hotspot: {x: 0, y: 0}
-  cursorMode: 0
 --- !u!114 &195473132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1221,7 +1218,6 @@ GameObject:
   m_Component:
   - component: {fileID: 276346473}
   - component: {fileID: 276346475}
-  - component: {fileID: 276346476}
   - component: {fileID: 276346477}
   m_Layer: 5
   m_Name: Root Container
@@ -1259,18 +1255,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 276346472}
   m_CullTransparentMesh: 1
---- !u!114 &276346476
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 276346472}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf2ab806fea08fb45907a9d1e886d41b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &276346477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1291,7 +1275,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e6e7ca4da95da4840a3714ba0fd33cfb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0082c6b7f492257469b59f7d7e7fa73b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3085,6 +3069,7 @@ GameObject:
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
   - component: {fileID: 963194230}
+  - component: {fileID: 963194231}
   m_Layer: 0
   m_Name: Camera - Main
   m_TagString: MainCamera
@@ -3133,7 +3118,7 @@ Camera:
     height: 1
   near clip plane: 0.06
   far clip plane: 1000
-  field of view: 45
+  field of view: 60.000004
   orthographic: 0
   orthographic size: 5
   m_Depth: 3
@@ -3159,8 +3144,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -119.58, y: 8.83, z: -1059.31}
+  m_LocalRotation: {x: -0.07781488, y: -0.052560993, z: 0.004076329, w: -0.995573}
+  m_LocalPosition: {x: -104.29796, y: 5.524101, z: 30.266638}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3213,6 +3198,40 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &963194231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowDebugText: 0
+  m_ShowCameraFrustum: 1
+  m_IgnoreTimeScale: 0
+  m_WorldUpOverride: {fileID: 0}
+  m_UpdateMethod: 2
+  m_BlendUpdateMethod: 1
+  m_DefaultBlend:
+    m_Style: 1
+    m_Time: 2
+    m_CustomCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  m_CustomBlends: {fileID: 0}
+  m_CameraCutEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_CameraActivatedEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1035430992
 GameObject:
   m_ObjectHideFlags: 0

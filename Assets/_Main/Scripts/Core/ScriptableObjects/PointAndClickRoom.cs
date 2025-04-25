@@ -2,11 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DIALOGUE;
+using Cinemachine;
 
 [CreateAssetMenu(menuName="Rooms/Point and Click Room")]
 public class PointAndClickRoom : Room
 {
     public Room exitRoom;
+
+    [SerializeField] Cinemachine.CinemachineVirtualCamera virtualCamera;
+    [SerializeField] float cameraDollySpeed = 3f;
+    CinemachineTrackedDolly trackedDolly;
 
     public float rotationSpeed = 100f; // Adjust rotation speed
     public float borderRight = 10f;
@@ -19,7 +24,14 @@ public class PointAndClickRoom : Room
 
     public override void MovementControl()
     {
+        
+    //  float position = virtualCamera.GetCinemachineComponent<CinemachineTrackedDolly>().m_PathPosition;
+    //  position += horizontalInput * cameraDollySpeed * Time.deltaTime;
+    //  position = Mathf.Clamp01(position);
+    //  virtualCamera.GetCinemachineComponent<CinemachineTrackedDolly>().m_PathPosition = position;
+
      float horizontalInput = 0f;
+
      float verticalInput = 0f;
 
         if (Input.GetKey(KeyCode.A))
