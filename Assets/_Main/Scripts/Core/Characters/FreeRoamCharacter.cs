@@ -22,7 +22,7 @@ public class FreeRoamCharacter : FreeRoamInteractable
 
     public override void Interact()
     {
-        gameObject.GetComponent<CharacterClickEffects>().Interact();
+        CharacterClickEffects.instance.Interact(gameObject.transform);
         DialogueSystem.instance.Say(FileManager.ReadTextAsset(textToSay));
         SoundManager.instance.PlaySoundEffect("click");
     }

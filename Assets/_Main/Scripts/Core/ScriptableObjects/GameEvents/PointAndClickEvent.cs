@@ -11,6 +11,7 @@ public class PointAndClickEvent : GameEvent
     public static string characterPath = $"World/World Objects/Characters";
     public static string objectsPath = $"World/World Objects/Objects";
     public TextAsset finishText;
+    public bool isExitable = false;
 
     public override void UpdateEvent()
     {
@@ -41,7 +42,6 @@ public class PointAndClickEvent : GameEvent
 
         if(objects == null && characters == null) // if none of the interactables loaded it means the event just started
         isFinished = false;
-       
     }
 
     public override void CheckIfFinished()
@@ -69,7 +69,7 @@ public class PointAndClickEvent : GameEvent
             }
             else
             {
-            characters.transform.GetChild(0).gameObject.GetComponent<CharacterClickEffects>().MakeCharactersReappear();
+            CharacterClickEffects.instance.MakeCharactersReappear(characters);
             }
         }
         

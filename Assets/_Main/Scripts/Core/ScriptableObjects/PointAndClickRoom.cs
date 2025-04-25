@@ -53,7 +53,8 @@ public class PointAndClickRoom : Room
 
         if(Input.GetKey(KeyCode.R))
         {
-            if(WorldManager.instance.currentGameEvent is PointAndClickEvent)
+            GameEvent currentGameEvent = WorldManager.instance.currentGameEvent;
+            if(currentGameEvent is PointAndClickEvent && !((PointAndClickEvent)(currentGameEvent)).isExitable)
             {
                 DialogueSystem.instance.Say(FileManager.ReadTextAsset(WorldManager.instance.currentGameEvent.unallowedText ?
                 WorldManager.instance.currentGameEvent.unallowedText : 

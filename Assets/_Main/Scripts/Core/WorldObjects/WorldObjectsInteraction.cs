@@ -19,9 +19,9 @@ public class WorldObjectsInteraction : MonoBehaviour
         if(!DialogueSystem.instance.isActive) 
         {
             SoundManager.instance.PlaySoundEffect("click");
-            if(gameObject.GetComponent<CharacterClickEffects>() != null)
+            if(gameObject.transform.parent.name.Equals("Characters"))
             {
-                gameObject.GetComponent<CharacterClickEffects>().Interact();
+              CharacterClickEffects.instance.Interact(gameObject.transform);
             }
             StartCoroutine(MoveAndRotateCameraTo());
         }

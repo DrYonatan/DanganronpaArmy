@@ -48,6 +48,7 @@ namespace TESTING
             database.AddCommand("CreateCharacters", new Action<string[]>(CreateCharacters));
             database.AddCommand("HideBackground", new Action(HideBackground));
             database.AddCommand("LoadRoom", new Action<string>(LoadRoom));
+            database.AddCommand("HideOverworldCharacters", new Action(HideOverworldCharacters));
 
         }
 
@@ -174,7 +175,7 @@ namespace TESTING
             {
               GameObject characters = GameObject.Find("World/World Objects/Characters");
               CameraManager.instance.MoveCameraTo(GameObject.Find("World/CameraStartPos").transform);
-              characters?.transform.GetChild(0).gameObject.GetComponent<CharacterClickEffects>()?.MakeCharactersReappear();
+              CharacterClickEffects.instance.MakeCharactersReappear(characters);
             }
             WorldManager.instance.ReturningToWorld();
         }
@@ -235,23 +236,11 @@ namespace TESTING
             CameraManager.instance.MoveCamera(direction, 0.3f);
 
         }
-        private static void PrintDefaultMessage()
-        {
-            Debug.Log("Printing a default message to console");
-        }
 
-        private static void PrintUserMessage(string message)
+        private static void HideOverworldCharacters()
         {
-            Debug.Log($"User's message: '{message}'");
-        }
-
-        private static void PrintLines(string[] lines)
-        {
-            int i = 1;
-            foreach (string line in lines)
-            {
-                Debug.Log($"{i++}. '{line}'");
-            }
+            GameObject characters = GameObject.Find("World/World Objects/Characters");
+            CharacterClickEffects.instance.MakeCharactersDisappear(characters);
         }
 
         private static IEnumerator SimpleProcess()
@@ -284,9 +273,5 @@ namespace TESTING
                 yield return new WaitForSeconds(0.5f);
             }
         }
-
-     
-
-
     }
 }

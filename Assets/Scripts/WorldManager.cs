@@ -34,6 +34,7 @@ public class WorldManager : MonoBehaviour
 
     public void ReturningToWorld()
     {
+
         if(currentGameEvent != null)
         {
             currentGameEvent.CheckIfFinished();
@@ -44,6 +45,9 @@ public class WorldManager : MonoBehaviour
             currentGameEvent.PlayEvent();
         }
 
+        ProgressManager.instance.DecideWhichSceneToPlay();
+        currentGameEvent.UpdateEvent();
+
     }
 
     public void CreateCharacters(GameObject prefab)
@@ -51,6 +55,12 @@ public class WorldManager : MonoBehaviour
         GameObject ob = Instantiate(prefab, characterPanel.transform);
         ob.name = "Characters";
         ob.SetActive(true);
+        foreach(string characterName in currentGameEvent.charactersData.Keys) 
+        {
+            ob.transform.Find(characterName).gameObject
+            .GetComponent<WorldObjectsInteraction>().isClicked =
+             currentGameEvent.charactersData[characterName].isClicked;
+        }
     }
 
     public void CreateObjects(GameObject prefab)
@@ -58,6 +68,12 @@ public class WorldManager : MonoBehaviour
         GameObject ob = Instantiate(prefab, characterPanel.transform);
         ob.name = "Objects";
         ob.SetActive(true);
+        foreach(string objectName in currentGameEvent.objectsData.Keys) 
+        {
+            ob.transform.Find(objectName).gameObject
+            .GetComponent<WorldObjectsInteraction>().isClicked =
+             currentGameEvent.objectsData[objectName].isClicked;
+        }
     }
 
     public void HideCharacters()
@@ -79,6 +95,18 @@ public class WorldManager : MonoBehaviour
 
         currentRoom = Instantiate(room);
         currentRoom.name = room.name;
+        Transform characters = GameObject.Find("World/World Objects/Characters")?.transform;
+
+        if (characters != null)
+        {
+           foreach (Transform character in characters)
+          {
+            currentGameEvent.charactersData[character.name] = 
+            new ObjectData(character.gameObject.GetComponent<WorldObjectsInteraction>().isClicked);
+          }
+        }
+
+        
         Destroy(GameObject.Find("World"));
 
         // Wait until World finished destroying (max 2 seconds to prevent infinite loops)
@@ -109,7 +137,7 @@ public class WorldManager : MonoBehaviour
 
         Camera.main.transform.position = cameraStartPos.position; // Actually changing position of camera
         Camera.main.transform.rotation = cameraStartPos.rotation;
-
+        WorldManager.instance.ReturningToWorld();
     }
 
 

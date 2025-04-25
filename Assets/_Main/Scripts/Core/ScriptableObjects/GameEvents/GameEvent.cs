@@ -2,6 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public class ObjectData 
+{
+    public bool isClicked;
+
+    public ObjectData(bool isClicked) 
+    {
+        this.isClicked = isClicked;
+    }
+}
+
 public abstract class GameEvent : ScriptableObject
 {
     public bool isFinished;
@@ -9,6 +19,10 @@ public abstract class GameEvent : ScriptableObject
     public List<GameEvent> conditionEvents;
 
     public TextAsset unallowedText;
+
+    public Dictionary<string, ObjectData> charactersData = new Dictionary<string, ObjectData>();
+
+    public Dictionary<string, ObjectData> objectsData = new Dictionary<string, ObjectData>();
 
     abstract public void CheckIfFinished();
 
