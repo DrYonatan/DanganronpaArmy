@@ -36,7 +36,6 @@ public class ProgressManager : MonoBehaviour
         {
             if(!gameEvent.isFinished)
             {
-                
                 if(gameEvent.CheckIfToPlay())
                 {
                     WorldManager.instance.currentGameEvent = gameEvent;

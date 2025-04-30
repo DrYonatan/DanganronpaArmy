@@ -1,18 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using DIALOGUE;
 
-[CreateAssetMenu(menuName ="Game Events/Investigation Event")]
-public class InvestigationEvent : GameEvent 
+[System.Serializable]
+public class NameAndEvent {
+    public string name;
+    public GameEvent gameEvent;
+}
+
+[CreateAssetMenu(menuName ="Game Events/Free Roam Event/Investigation Event")]
+public class InvestigationEvent : FreeRoamEvent 
 {
-    public Dictionary<string, GameEvent> gameEvents;
+    [SerializeField]
+    public List<NameAndEvent> assetEvents;
+    public Dictionary<string, GameEvent> gameEvents = new Dictionary<string, GameEvent>(); // The string represents the room the event takes place in
 
     public override void UpdateEvent()
     {
-        GameEvent gameEvent = gameEvents[WorldManager.instance.currentRoom.name];
-        if (gameEvent != null) 
-        gameEvent.PlayEvent();
+        bool isExists = false;
+        foreach(NameAndEvent assetEvent in assetEvents)
+        {
+            if(assetEvent.name == WorldManager.instance.currentRoom.name)
+            isExists = true;
+        }
+        if(isExists)
+        {
+            GameEvent gameEvent = gameEvents[WorldManager.instance.currentRoom.name];
+            WorldManager.instance.currentGameEvent = gameEvent;
+            gameEvent.PlayEvent();
+        }
+        
     }
 
     public override void CheckIfFinished()
@@ -33,6 +52,14 @@ public class InvestigationEvent : GameEvent
     public override void OnFinish()
     {
 
+    }
+
+    void Awake() 
+    {
+        foreach(NameAndEvent gameEvent in assetEvents)
+        {
+            gameEvents.Add(gameEvent.name, Instantiate(gameEvent.gameEvent));
+        }
     }
 
 }

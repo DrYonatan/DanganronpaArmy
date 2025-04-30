@@ -9,14 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a41efc7ec9542d42aefe87ea4a6738c, type: 3}
-  m_Name: GoingToMisdar
+  m_Script: {fileID: 11500000, guid: 66f4c6cfbd571c14fb2bdc3b5233e0a1, type: 3}
+  m_Name: Investigation
   m_EditorClassIdentifier: 
   isFinished: 0
   conditionEvents:
-  - {fileID: 11400000, guid: b0a44118df67fa14c91d223c8c163a2d, type: 2}
+  - {fileID: 11400000, guid: 4adbca780071e3e4ba12cbe363be603f, type: 2}
   unallowedText: {fileID: 4900000, guid: 788e3b39de4aa6640a3eb02f9d0790d9, type: 3}
   allowedRooms: []
-  characterPrefab: {fileID: 0}
-  targetRoomName: Misdarim
-  finishText: {fileID: 4900000, guid: 88b052bf566306946b894db249bc6400, type: 3}
+  assetEvents:
+  - name: InsideGilad
+    gameEvent: {fileID: 11400000, guid: 6d2320263b2b5034bad3ff68acfb355b, type: 2}
+  - name: Misdarim
+    gameEvent: {fileID: 11400000, guid: f47cc49793a44184c9aa5b30c1c33db7, type: 2}

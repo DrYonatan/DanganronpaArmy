@@ -54,10 +54,11 @@ public class PointAndClickEvent : GameEvent
 
 
     public override void PlayEvent()
-    {
+    {            
         GameObject characters = GameObject.Find(characterPath);
         GameObject objects = GameObject.Find(objectsPath);
         Transform cameraStartPos = GameObject.Find("World/CameraStartPos").transform;
+        if(CameraManager.instance != null)
         CameraManager.instance.setInitialPosition(cameraStartPos.position, cameraStartPos.rotation);
         ((PointAndClickRoom)(WorldManager.instance.currentRoom)).ResetRotations();
 
@@ -85,11 +86,16 @@ public class PointAndClickEvent : GameEvent
     {
         GameObject characters = GameObject.Find(characterPath);
         Destroy(characters);
-        List<string> lines = FileManager.ReadTextAsset(finishText);
-        if (lines != null)
+        if(finishText != null)
+        {
+            List<string> lines = FileManager.ReadTextAsset(finishText);
+            if (lines != null)
+             {
             DialogueSystem.instance.Say(lines);
-        ProgressManager.instance.DecideWhichSceneToPlay();
-
+             }
+            ProgressManager.instance.DecideWhichSceneToPlay(); 
+            finishText = null;
+        }
         
     }
 

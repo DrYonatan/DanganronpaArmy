@@ -13,47 +13,7 @@ public class EventRoom
 
 
 [CreateAssetMenu(menuName = "Game Events/Free Roam Event")]
-public class FreeRoamEvent : GameEvent
+public abstract class FreeRoamEvent : GameEvent
 {
-    public GameObject characterPrefab;
-    public string targetRoomName;
     public List<EventRoom> allowedRooms;
-    public TextAsset finishText;
-
-    public override void CheckIfFinished()
-    {
-        if(isFinished)
-        {
-            OnFinish();
-        }
-        
-    }
-
-    public override void UpdateEvent()
-    {
-        // checks the current room's objects (mostly characters) in this event, and loads the event's current room objects
-        GameObject objects = (allowedRooms.Find(room => room.name == WorldManager.instance.currentRoom.name))?.worldObjects;
-        if(objects != null && GameObject.Find("World/World Objects/Characters") == null)
-        WorldManager.instance.CreateCharacters(objects);
-
-        if(WorldManager.instance.currentRoom.name.Equals(targetRoomName))
-        {
-            isFinished = true;
-        }
-    }
-
-
-    public override void PlayEvent()
-    {
-
-    }
-
-    public override void OnFinish()
-    {
-        List<string> lines = FileManager.ReadTextAsset(finishText);
-        if (lines != null)
-            DialogueSystem.instance.Say(lines);
-            
-        ProgressManager.instance.DecideWhichSceneToPlay();
-    }
 }

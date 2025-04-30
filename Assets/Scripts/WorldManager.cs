@@ -40,13 +40,14 @@ public class WorldManager : MonoBehaviour
             currentGameEvent.CheckIfFinished();
         }
 
+        ProgressManager.instance.DecideWhichSceneToPlay();
+        currentGameEvent.UpdateEvent();
+
         if(currentGameEvent != null)
         {
             currentGameEvent.PlayEvent();
         }
-
-        ProgressManager.instance.DecideWhichSceneToPlay();
-        currentGameEvent.UpdateEvent();
+  
 
     }
 
@@ -137,7 +138,7 @@ public class WorldManager : MonoBehaviour
 
         Camera.main.transform.position = cameraStartPos.position; // Actually changing position of camera
         Camera.main.transform.rotation = cameraStartPos.rotation;
-        WorldManager.instance.ReturningToWorld();
+        ReturningToWorld();
     }
 
 

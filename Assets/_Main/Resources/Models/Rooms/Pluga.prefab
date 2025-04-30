@@ -1963,6 +1963,7 @@ Transform:
   - {fileID: 1264826364605374090}
   - {fileID: 5032140868538283395}
   - {fileID: 1917123588427143317}
+  - {fileID: 7354300559452359983}
   - {fileID: 8042138795960277995}
   - {fileID: 388947264669627680}
   - {fileID: 2277411541450130617}
@@ -4190,6 +4191,73 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilesPerUnit: {x: 1, y: 1}
+--- !u!1 &7594701387040560596
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7354300559452359983}
+  - component: {fileID: 2799828415790795430}
+  - component: {fileID: 3467228776526628138}
+  m_Layer: 0
+  m_Name: RoomDoor
+  m_TagString: Interactable
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7354300559452359983
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7594701387040560596}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -137.7, y: 3.9, z: -18.6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4370485433323172814}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2799828415790795430
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7594701387040560596}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.50561523, y: 9.525288, z: 4.7041464}
+  m_Center: {x: -0.9246979, y: 0.67272663, z: 0.31538725}
+--- !u!114 &3467228776526628138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7594701387040560596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9c95be4a451b2348a08bd98fa6e5deb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomToLoad: {fileID: 11400000, guid: 55447bfc884cd4340b110e2928249c70, type: 2}
 --- !u!1 &8090664109773180352
 GameObject:
   m_ObjectHideFlags: 0
