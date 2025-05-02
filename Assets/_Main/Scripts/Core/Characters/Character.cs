@@ -13,7 +13,7 @@ namespace CHARACTERS
         public string displayName = "";
         public RectTransform root = null;
         public CharacterConfigData config;
-        public Animator animator; 
+        public Animator animator;
 
         protected CharacterManager manager => CharacterManager.instance;
         public DialogueSystem dialogueSystem => DialogueSystem.instance;
@@ -31,7 +31,7 @@ namespace CHARACTERS
             this.displayName = name;
             this.config = config;
 
-            if(prefab != null)
+            if (prefab != null)
             {
                 GameObject ob = Object.Instantiate(prefab, manager.characterPanel);
                 ob.name = manager.FormatCharacterPath(manager.characterPrefabNameFormat, name);
@@ -40,21 +40,18 @@ namespace CHARACTERS
                 animator = root.GetComponentInChildren<Animator>();
                 if (animator == null)
                     Debug.Log("Animator is null");
-
             }
         }
 
-       
 
         public Coroutine Say(string dialogue) => Say(new List<string> { dialogue });
 
-        public Coroutine Say(List<string> dialogue) 
+        public Coroutine Say(List<string> dialogue)
         {
             dialogueSystem.ShowSpeakerName(displayName);
             return dialogueSystem.Say(dialogue);
         }
 
-       
 
         public virtual Coroutine Show()
         {
@@ -67,7 +64,6 @@ namespace CHARACTERS
             co_revealing = manager.StartCoroutine(ShowingOrHiding(true));
 
             return co_revealing;
-
         }
 
         public virtual Coroutine Hide()
@@ -81,7 +77,6 @@ namespace CHARACTERS
             co_hiding = manager.StartCoroutine(ShowingOrHiding(false));
 
             return co_hiding;
-
         }
 
         public virtual IEnumerator ShowingOrHiding(bool show)
@@ -91,8 +86,6 @@ namespace CHARACTERS
         }
 
 
-        
-
         public enum CharacterType
         {
             Text,
@@ -101,4 +94,3 @@ namespace CHARACTERS
         }
     }
 }
-

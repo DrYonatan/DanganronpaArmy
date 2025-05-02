@@ -13,12 +13,32 @@ public class EventRoom
 
 
 [CreateAssetMenu(menuName = "Game Events/Free Roam Event")]
-public abstract class FreeRoamEvent : GameEvent
+public class FreeRoamEvent : GameEvent
 {
     public List<EventRoom> allowedRooms;
 
-    public void onFinish()
+    protected void OnFinish()
     {
         base.OnFinish();
+    }
+
+    public override void CheckIfFinished()
+    {
+        if (isFinished)
+            OnFinish();
+    }
+
+    public override void UpdateEvent()
+    {
+        // checks the current room's objects (mostly characters) in this event, and loads the event's current room objects
+        GameObject objects = (allowedRooms.Find(room => room.name == WorldManager.instance.currentRoom.name))
+            ?.worldObjects;
+        if (objects != null && GameObject.Find("World/World Objects/Characters") == null)
+            WorldManager.instance.CreateCharacters(objects);
+    }
+
+
+    public override void PlayEvent()
+    {
     }
 }

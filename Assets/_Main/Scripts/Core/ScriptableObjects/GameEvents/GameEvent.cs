@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using DIALOGUE;
 
-public class ObjectData 
+public class ObjectData
 {
     public bool isClicked;
 
-    public ObjectData(bool isClicked) 
+    public ObjectData(bool isClicked)
     {
         this.isClicked = isClicked;
     }
@@ -27,23 +27,23 @@ public abstract class GameEvent : ScriptableObject
 
     public Dictionary<string, ObjectData> objectsData = new Dictionary<string, ObjectData>();
 
-    abstract public void CheckIfFinished();
+    public abstract void CheckIfFinished();
 
-    abstract public void UpdateEvent();
+    public abstract void UpdateEvent();
 
-    
-    abstract public void PlayEvent();
 
-    public virtual void OnFinish() 
+    public abstract void PlayEvent();
+
+    public virtual void OnFinish()
     {
         if (finishText != null)
         {
-           List<string> lines = FileManager.ReadTextAsset(finishText);
-           if (lines != null)
-            DialogueSystem.instance.Say(lines);
-            
-           ProgressManager.instance.DecideWhichSceneToPlay();
-           finishText = null;
+            List<string> lines = FileManager.ReadTextAsset(finishText);
+            if (lines != null)
+                DialogueSystem.instance.Say(lines);
+
+            ProgressManager.instance.DecideWhichSceneToPlay();
+            finishText = null;
         }
     }
 
@@ -55,9 +55,8 @@ public abstract class GameEvent : ScriptableObject
             {
                 if (!conditionEvent.isFinished)
                     playScene = false;
-
             }
-        
+
         return playScene;
     }
 }

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using DIALOGUE;
 
-[CreateAssetMenu(menuName ="Game Events/Point And Click Event")]
-public class PointAndClickEvent : GameEvent 
+[CreateAssetMenu(menuName = "Game Events/Point And Click Event")]
+public class PointAndClickEvent : GameEvent
 {
     public GameObject characterPrefab;
     public GameObject interactableObjectsPrefab;
@@ -18,7 +18,7 @@ public class PointAndClickEvent : GameEvent
         Transform characters = GameObject.Find(characterPath)?.transform;
 
         // checks all the characters are clicked
-        if(characters != null)
+        if (characters != null)
         {
             foreach (Transform character in characters)
             {
@@ -30,68 +30,67 @@ public class PointAndClickEvent : GameEvent
         Transform objects = GameObject.Find(objectsPath)?.transform;
 
         // checks all the objects are clicked
-        if(objects != null)
+        if (objects != null)
         {
             foreach (Transform interactableObject in objects)
             {
-                if(!interactableObject.GetComponent<WorldObjectsInteraction>().isClicked)
-                   isFinished = false;
+                if (!interactableObject.GetComponent<WorldObjectsInteraction>().isClicked)
+                    isFinished = false;
             }
         }
 
-        if(objects == null && characters == null) // if none of the interactables loaded it means the event just started
-        isFinished = false;
+        if (objects == null &&
+            characters == null) // if none of the interactables loaded it means the event just started
+            isFinished = false;
     }
 
     public override void CheckIfFinished()
     {
-        if(isFinished)
-        OnFinish();
+        if (isFinished)
+            OnFinish();
         else
-        DialogueSystem.instance.SetIsActive(false);
+            DialogueSystem.instance.SetIsActive(false);
     }
 
 
     public override void PlayEvent()
-    {            
+    {
         GameObject characters = GameObject.Find(characterPath);
         GameObject objects = GameObject.Find(objectsPath);
         Transform cameraStartPos = GameObject.Find("World/CameraStartPos").transform;
-        if(CameraManager.instance != null)
-        CameraManager.instance.setInitialPosition(cameraStartPos.position, cameraStartPos.rotation);
+        if (CameraManager.instance != null)
+            CameraManager.instance.setInitialPosition(cameraStartPos.position, cameraStartPos.rotation);
         ((PointAndClickRoom)(WorldManager.instance.currentRoom)).ResetRotations();
 
-        if(characterPrefab != null)
+        if (characterPrefab != null)
         {
             if (characters == null)
             {
-            WorldManager.instance.CreateCharacters(characterPrefab);
+                WorldManager.instance.CreateCharacters(characterPrefab);
             }
             else
             {
-            CharacterClickEffects.instance.MakeCharactersReappear(characters);
+                CharacterClickEffects.instance.MakeCharactersReappear(characters);
             }
         }
-        
 
-        if(objects == null && interactableObjectsPrefab != null)
+
+        if (objects == null && interactableObjectsPrefab != null)
         {
             WorldManager.instance.CreateObjects(interactableObjectsPrefab);
         }
-        
     }
 
     public override void OnFinish()
     {
-        if (!isExitable) 
+        if (!isExitable)
         {
-          GameObject characters = GameObject.Find(characterPath);
-          GameObject objects = GameObject.Find(objectsPath);
-          Destroy(objects);
-          Destroy(characters);
+            GameObject characters = GameObject.Find(characterPath);
+            GameObject objects = GameObject.Find(objectsPath);
+            Destroy(objects);
+            Destroy(characters);
         }
 
         base.OnFinish();
     }
-
 }
