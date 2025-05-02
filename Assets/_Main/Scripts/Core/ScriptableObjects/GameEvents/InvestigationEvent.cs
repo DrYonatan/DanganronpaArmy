@@ -19,13 +19,15 @@ public class InvestigationEvent : FreeRoamEvent
 
     public override void UpdateEvent()
     {
-        bool isExists = false;
-        foreach(NameAndEvent assetEvent in assetEvents)
+        isFinished = true;
+
+        foreach (GameEvent gameEvent in gameEvents.Values)
         {
-            if(assetEvent.name == WorldManager.instance.currentRoom.name)
-            isExists = true;
+            if (!gameEvent.isFinished)
+            isFinished = false;
         }
-        if(isExists)
+
+        if(gameEvents.ContainsKey(WorldManager.instance.currentRoom.name) && !isFinished)
         {
             GameEvent gameEvent = gameEvents[WorldManager.instance.currentRoom.name];
             WorldManager.instance.currentGameEvent = gameEvent;
@@ -51,7 +53,7 @@ public class InvestigationEvent : FreeRoamEvent
 
     public override void OnFinish()
     {
-
+        base.OnFinish();
     }
 
     void Awake() 

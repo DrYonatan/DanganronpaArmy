@@ -16,4 +16,9 @@ public class EventRoom
 public abstract class FreeRoamEvent : GameEvent
 {
     public List<EventRoom> allowedRooms;
+
+    public void onFinish()
+    {
+        base.OnFinish();
+    }
 }

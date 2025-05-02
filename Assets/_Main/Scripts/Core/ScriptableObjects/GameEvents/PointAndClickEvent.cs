@@ -10,7 +10,6 @@ public class PointAndClickEvent : GameEvent
     public GameObject interactableObjectsPrefab;
     public static string characterPath = $"World/World Objects/Characters";
     public static string objectsPath = $"World/World Objects/Objects";
-    public TextAsset finishText;
     public bool isExitable = false;
 
     public override void UpdateEvent()
@@ -84,19 +83,15 @@ public class PointAndClickEvent : GameEvent
 
     public override void OnFinish()
     {
-        GameObject characters = GameObject.Find(characterPath);
-        Destroy(characters);
-        if(finishText != null)
+        if (!isExitable) 
         {
-            List<string> lines = FileManager.ReadTextAsset(finishText);
-            if (lines != null)
-             {
-            DialogueSystem.instance.Say(lines);
-             }
-            ProgressManager.instance.DecideWhichSceneToPlay(); 
-            finishText = null;
+          GameObject characters = GameObject.Find(characterPath);
+          GameObject objects = GameObject.Find(objectsPath);
+          Destroy(objects);
+          Destroy(characters);
         }
-        
+
+        base.OnFinish();
     }
 
 }

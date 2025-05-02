@@ -8,7 +8,6 @@ public class DestinationEvent : FreeRoamEvent
 {
     public GameObject characterPrefab;
     public string targetRoomName;
-    public TextAsset finishText;
 
     public override void CheckIfFinished()
     {
@@ -40,10 +39,6 @@ public class DestinationEvent : FreeRoamEvent
 
     public override void OnFinish()
     {
-        List<string> lines = FileManager.ReadTextAsset(finishText);
-        if (lines != null)
-            DialogueSystem.instance.Say(lines);
-            
-        ProgressManager.instance.DecideWhichSceneToPlay();
+        base.OnFinish();
     }
 }

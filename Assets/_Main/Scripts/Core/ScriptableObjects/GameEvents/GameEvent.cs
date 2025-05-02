@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DIALOGUE;
 
 public class ObjectData 
 {
@@ -15,6 +16,8 @@ public class ObjectData
 public abstract class GameEvent : ScriptableObject
 {
     public bool isFinished;
+
+    public TextAsset finishText;
 
     public List<GameEvent> conditionEvents;
 
@@ -31,7 +34,18 @@ public abstract class GameEvent : ScriptableObject
     
     abstract public void PlayEvent();
 
-    abstract public void OnFinish();
+    public virtual void OnFinish() 
+    {
+        if (finishText != null)
+        {
+           List<string> lines = FileManager.ReadTextAsset(finishText);
+           if (lines != null)
+            DialogueSystem.instance.Say(lines);
+            
+           ProgressManager.instance.DecideWhichSceneToPlay();
+           finishText = null;
+        }
+    }
 
     public bool CheckIfToPlay()
     {
