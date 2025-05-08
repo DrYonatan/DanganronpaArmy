@@ -1,12 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CHARACTERS;
+using DIALOGUE;
 
 public class ProgressManager : MonoBehaviour
 {
     public static ProgressManager instance { get; private set; }
     public List<GameEvent> assetGameEvents;
     public Dictionary<string, GameEvent> runtimeGameEvents = new ();
+
+    public CharactersFreeTimeEventsSO characterEventsAsset;
+    public Dictionary<string, int> charactersRanks = new (); // Free time events ranks for each character
+
     private void Awake()
     {
         instance = this;
@@ -25,6 +31,11 @@ public class ProgressManager : MonoBehaviour
             {
                 value.conditionEvents.Add(runtimeGameEvents[conditionEvent.name]);
             }
+        }
+
+        foreach(CharacterFreeTimeEvents characterEvents in characterEventsAsset.charactersEvents)
+        {
+            charactersRanks.Add(characterEvents.characterName, 0);
         }
 
 

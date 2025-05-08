@@ -84,6 +84,7 @@ public class GameLoop : MonoBehaviour
             textIndex = 0;
         }
 
+      
         timer += Time.deltaTime;
         stageTimer -= Time.deltaTime;
         TimeSpan timeSpan = TimeSpan.FromSeconds(stageTimer);
@@ -177,17 +178,40 @@ public class GameLoop : MonoBehaviour
     {
         // Use the shootOrigin or fallback to camera's position
         Vector3 spawnPosition = shootOrigin ? shootOrigin.position : Camera.main.transform.position;
-        Quaternion spawnRotation = Camera.main.transform.rotation * Quaternion.Euler(0f, 72f, 0f);
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+ 
+        // Create a plane in front of the firePoint (facing the same way as the camera)
+        Plane plane = new Plane(Camera.main.transform.forward, shootOrigin.position + Camera.main.transform.forward * 10f);
 
-        GameObject bullet = Instantiate(textBulletPrefab, spawnPosition, spawnRotation);
-        Rigidbody rb = bullet.GetComponent<Rigidbody>();
-
-        if (rb != null)
+        if (plane.Raycast(ray, out float distance))
         {
-            rb.velocity = bullet.transform.right * -1 * shootForce;
-        }
+          Vector3 targetPoint = ray.GetPoint(distance);
+          Vector3 direction = (targetPoint - shootOrigin.position).normalized;
 
-        Destroy(bullet, 3f);
+          Quaternion rotation = Quaternion.LookRotation(direction, Camera.main.transform.up) * Quaternion.Euler(0, 90, 0);
+          GameObject bullet = Instantiate(textBulletPrefab, shootOrigin.position, rotation);
+
+          Rigidbody rb = bullet.GetComponent<Rigidbody>();
+          rb.velocity = direction * shootForce;
+
+          Debug.DrawRay(shootOrigin.position, direction * 3, Color.red, 2f);
+
+
+          Destroy(bullet, 3f);
+        }
+        
+
+        // Quaternion spawnRotation = Quaternion.LookRotation(direction, Vector3.up) * Quaternion.Euler(0, 90, 0); // rotate it to be parallel to the direction it's moving
+        
+        // GameObject bullet = Instantiate(textBulletPrefab, spawnPosition, spawnRotation);
+        // Rigidbody rb = bullet.GetComponent<Rigidbody>();
+
+
+        // if (rb != null)
+        // {
+        //     rb.velocity = direction * shootForce;
+        // }
+
     }
 
     void Hit()

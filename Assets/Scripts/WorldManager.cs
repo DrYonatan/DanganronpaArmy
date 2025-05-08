@@ -46,8 +46,7 @@ public class WorldManager : MonoBehaviour
         if(currentGameEvent != null)
         {
             currentGameEvent.PlayEvent();
-        }
-  
+        }  
 
     }
 

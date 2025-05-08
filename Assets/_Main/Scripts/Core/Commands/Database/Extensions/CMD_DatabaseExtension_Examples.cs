@@ -178,6 +178,7 @@ namespace TESTING
               CharacterClickEffects.instance.MakeCharactersReappear(characters);
             }
             WorldManager.instance.ReturningToWorld();
+            DialogueSystem.instance.ClearTextBox();
         }
 
         private static void ShowCharacter(string characterName)

@@ -94,6 +94,16 @@ namespace DIALOGUE
                 CharacterClickEffects.instance.MakeCharactersReappear(characters);
             }
         }
+
+        public void ClearTextBox()
+        {
+            if(!isActive) 
+            {
+                HideSpeakerName();
+                conversationManager.ClearTextBox();
+            }
+            
+        }
 }
 
 }

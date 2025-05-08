@@ -70,6 +70,11 @@ public class TextArchitect
 
     }
 
+    public void Clear()
+    {
+        tmpro.text = "";
+    }
+
     IEnumerator Building()
     {
         Prepare();

@@ -233,5 +233,10 @@ namespace DIALOGUE
             if(!architect.isBuilding)
                 SoundManager.instance.PlayTextBoxSound();
         }
+
+        public void ClearTextBox()
+        {
+            architect.Clear();
+        }
     }
 }
