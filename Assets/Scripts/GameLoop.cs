@@ -181,7 +181,7 @@ public class GameLoop : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
  
         // Create a plane in front of the firePoint (facing the same way as the camera)
-        Plane plane = new Plane(Camera.main.transform.forward, shootOrigin.position + Camera.main.transform.forward * 10f);
+        Plane plane = new Plane(Camera.main.transform.forward, shootOrigin.position + Camera.main.transform.forward * 5.5f);
 
         if (plane.Raycast(ray, out float distance))
         {
