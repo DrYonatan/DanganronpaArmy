@@ -672,13 +672,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2001967171366344221}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2535174570094974609}
-  m_Father: {fileID: 4370485433323172814}
+  m_Father: {fileID: 4499253160323805421}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2234805084851000716
 GameObject:
@@ -1976,7 +1976,7 @@ Transform:
   - {fileID: 5566939169976766374}
   - {fileID: 5010555560609642725}
   - {fileID: 3808931477553895235}
-  - {fileID: 1466977549328813352}
+  - {fileID: 4499253160323805421}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3890547084353559183
@@ -4578,6 +4578,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilesPerUnit: {x: 1, y: 1}
+--- !u!1 &8918708625688605873
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4499253160323805421}
+  m_Layer: 0
+  m_Name: World Objects
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4499253160323805421
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8918708625688605873}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1466977549328813352}
+  m_Father: {fileID: 4370485433323172814}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8977628884623476856
 GameObject:
   m_ObjectHideFlags: 0
@@ -6108,6 +6140,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6264867728829862694, guid: a05941408eb5e0842bf8900dfeacfd2b, type: 3}
+      propertyPath: text1
+      value: 
+      objectReference: {fileID: 4900000, guid: 1e2ae154a83dc6b488354f537216a3d3, type: 3}
     - target: {fileID: 7134902792044118361, guid: a05941408eb5e0842bf8900dfeacfd2b, type: 3}
       propertyPath: m_Name
       value: Koby
@@ -6117,7 +6153,7 @@ PrefabInstance:
       value: Interactable
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 6264867728829862694, guid: a05941408eb5e0842bf8900dfeacfd2b, type: 3}
+    - {fileID: 6371282535787340006, guid: a05941408eb5e0842bf8900dfeacfd2b, type: 3}
     m_RemovedGameObjects:
     - {fileID: 33742793682337216, guid: a05941408eb5e0842bf8900dfeacfd2b, type: 3}
     m_AddedGameObjects: []
@@ -6143,7 +6179,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83be033d3c36a5342b0d74157bd9081a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textToSay: {fileID: 4900000, guid: 1e2ae154a83dc6b488354f537216a3d3, type: 3}
 --- !u!4 &2535174570094974609 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5110583635807653312, guid: a05941408eb5e0842bf8900dfeacfd2b, type: 3}

@@ -15,7 +15,11 @@ public class ReticleManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(0, 0,  speed * Time.deltaTime);
+        int actualSpeed = speed;
+        if(WorldManager.instance.currentRoom.currentInteractable != null)
+        actualSpeed *= 4;
+
+        transform.Rotate(0, 0,  actualSpeed * Time.deltaTime);
         
     }
 }

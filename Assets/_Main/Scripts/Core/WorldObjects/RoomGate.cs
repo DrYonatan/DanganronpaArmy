@@ -5,7 +5,7 @@ using DIALOGUE;
 using System.Linq;
 
 
-public class RoomGate : FreeRoamInteractable
+public class RoomGate : Interactable
 {
     public Room roomToLoad;
 

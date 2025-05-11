@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using DIALOGUE;
 
-public class FreeRoamCharacter : FreeRoamInteractable
+public class FaceCameraObject : MonoBehaviour
 {
-    public TextAsset textToSay;
 
     // Start is called before the first frame update
     void Start()
@@ -20,10 +19,5 @@ public class FreeRoamCharacter : FreeRoamInteractable
         transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
     }
 
-    public override void Interact()
-    {
-        CharacterClickEffects.instance.Interact(gameObject.transform);
-        DialogueSystem.instance.Say(FileManager.ReadTextAsset(textToSay));
-        SoundManager.instance.PlaySoundEffect("click");
-    }
+   
 }

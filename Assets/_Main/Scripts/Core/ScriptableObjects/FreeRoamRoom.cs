@@ -13,7 +13,6 @@ public class FreeRoamRoom : Room
     public float maxLookAngle = 80f; // Prevents camera flipping
 
     float playerReach = 14f;
-    public FreeRoamInteractable currentInteractable;
 
     public override void MovementControl() 
     {
@@ -70,7 +69,7 @@ public class FreeRoamRoom : Room
         {
             if(hit.collider.tag == "Interactable")
             {
-                FreeRoamInteractable newInteractable = hit.collider.GetComponent<FreeRoamInteractable>();
+                Interactable newInteractable = hit.collider.GetComponent<Interactable>();
 
                 if(newInteractable.enabled)
                 {

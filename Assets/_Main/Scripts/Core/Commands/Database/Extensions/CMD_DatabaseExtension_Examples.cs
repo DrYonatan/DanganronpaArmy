@@ -171,12 +171,14 @@ namespace TESTING
             DialogueSystem.instance.SetIsActive(false);
             CharacterManager.instance.DestroyAllCharacters();
             WorldManager.instance.currentGameEvent.UpdateEvent();
+            GameObject characters = GameObject.Find("World/World Objects/Characters");
+            if(characters != null)
+            CharacterClickEffects.instance.MakeCharactersReappear(characters);
             if(WorldManager.instance.currentRoom is PointAndClickRoom)
             {
-              GameObject characters = GameObject.Find("World/World Objects/Characters");
               CameraManager.instance.MoveCameraTo(GameObject.Find("World/CameraStartPos").transform);
-              CharacterClickEffects.instance.MakeCharactersReappear(characters);
             }
+            
             WorldManager.instance.ReturningToWorld();
             DialogueSystem.instance.ClearTextBox();
         }

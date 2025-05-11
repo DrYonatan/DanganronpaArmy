@@ -6,6 +6,8 @@ public abstract class Room : ScriptableObject
 {
     public GameObject prefab;
 
+    public Interactable currentInteractable;
+
     public abstract void MovementControl();
    
 }

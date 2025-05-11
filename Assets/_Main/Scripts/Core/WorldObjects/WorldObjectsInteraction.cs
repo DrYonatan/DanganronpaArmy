@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DIALOGUE;
 
-public class WorldObjectsInteraction : MonoBehaviour
+public class WorldObjectsInteraction : Interactable
 {
     public bool isClicked = false;
     public TextAsset text1;
@@ -14,7 +14,7 @@ public class WorldObjectsInteraction : MonoBehaviour
 
     }
     
-    private void OnMouseDown()
+    public override void Interact()
     {
         if(!DialogueSystem.instance.isActive) 
         {
