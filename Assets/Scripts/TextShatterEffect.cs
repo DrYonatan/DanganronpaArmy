@@ -7,6 +7,7 @@ public class TextShatterEffect : MonoBehaviour
     public float explosionForce = 5f;
     public float explosionRadius = 3f;
     public float letterLifetime = 2f;
+    public float spinAmount = 10f;
 
     public void Shatter(GameObject textToShatter)
     {
@@ -64,9 +65,21 @@ public class TextShatterEffect : MonoBehaviour
             mr.material = textMesh.fontMaterial;
 
             Rigidbody rb = letterObj.AddComponent<Rigidbody>();
-            Vector3 dir = Random.onUnitSphere;
+            // Get the direction from the text to the camera
+            Vector3 toCamera = (Camera.main.transform.position - letterObj.transform.position).normalized;
+
+            // Create a random horizontal direction
+            Vector3 randomHorizontal = Vector3.right * Random.Range(-1f, 1f) + Vector3.forward * Random.Range(-1f, 1f);
+            randomHorizontal.Normalize();
+
+            Vector3 randomVertical = Vector3.up * Random.Range(-1f, 1f) + Vector3.forward * Random.Range(-1f, 1f);
+
+            // Blend the horizontal randomness with the direction to the camera
+            Vector3 dir = (toCamera + randomHorizontal * 0.5f + randomVertical * 0.5f).normalized;
+
             rb.AddForce(dir * explosionForce, ForceMode.Impulse);
-            rb.AddTorque(Random.insideUnitSphere * 10f, ForceMode.Impulse);
+            Vector3 camForward = Camera.main.transform.forward;
+            rb.AddTorque(camForward * Random.Range(-spinAmount, spinAmount), ForceMode.Impulse);
 
             Destroy(letterObj, letterLifetime);
         }
