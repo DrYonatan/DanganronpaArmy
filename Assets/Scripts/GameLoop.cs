@@ -33,6 +33,13 @@ public class GameLoop : MonoBehaviour
         }
     }
 
+    public static GameLoop instance { get; private set; }
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
     [SerializeField] CameraController cameraController;
     [SerializeField] List<CharacterStand> characterStands;
     [SerializeField] Stage stage;
@@ -51,6 +58,8 @@ public class GameLoop : MonoBehaviour
     List<TextLine> textLines;
     CharacterStand characterStand;
     Evidence correctEvidence;
+
+    public GameObject currentText;
 
     bool pause;
     bool finished;
@@ -153,7 +162,7 @@ public class GameLoop : MonoBehaviour
                 {
                     if(index >= correctCharacterIndexBegin && index < correctCharacterIndexEnd)
                     {
-                        Hit();
+                      //  Hit();
                     }
                 }
             }
@@ -194,27 +203,12 @@ public class GameLoop : MonoBehaviour
           Rigidbody rb = bullet.GetComponent<Rigidbody>();
           rb.velocity = direction * shootForce;
 
-          Debug.DrawRay(shootOrigin.position, direction * 3, Color.red, 2f);
-
-
           Destroy(bullet, 3f);
         }
-        
-
-        // Quaternion spawnRotation = Quaternion.LookRotation(direction, Vector3.up) * Quaternion.Euler(0, 90, 0); // rotate it to be parallel to the direction it's moving
-        
-        // GameObject bullet = Instantiate(textBulletPrefab, spawnPosition, spawnRotation);
-        // Rigidbody rb = bullet.GetComponent<Rigidbody>();
-
-
-        // if (rb != null)
-        // {
-        //     rb.velocity = direction * shootForce;
-        // }
 
     }
 
-    void Hit()
+    public void Hit()
     {
         if (evidenceManager.Check(correctEvidence))
         {
@@ -225,6 +219,7 @@ public class GameLoop : MonoBehaviour
     private void CorrectChoice()
     {
         finished = true;
+        gameObject.GetComponent<TextShatterEffect>().Shatter(currentText);
         Debug.Log("You clicked on the statement" + Time.time);
     }
 
@@ -256,6 +251,7 @@ public class GameLoop : MonoBehaviour
         for(int i = 0; i < nextDialogueNode.textLines.Count; i++)
         {
             GameObject go = Instantiate(textPrefab);
+            currentText = go;
             go.transform.position = textPivot.position;
             go.transform.position += nextDialogueNode.textLines[i].spawnOffset;
             go.transform.rotation = textPivot.rotation;

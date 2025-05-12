@@ -1868,6 +1868,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audio: {fileID: 290041879}
+--- !u!114 &1882886019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1882886012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deb538c0cc27b7844abeb307f73d98b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosionForce: 10
+  explosionRadius: 10
+  letterLifetime: 1
 --- !u!1 &2013947723
 GameObject:
   m_ObjectHideFlags: 0
@@ -2031,6 +2046,10 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8309603348950177392, guid: f3c3c0f81946b3944a91edc1321502c0, type: 3}
+      propertyPath: currentText
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8309603348950177392, guid: f3c3c0f81946b3944a91edc1321502c0, type: 3}
       propertyPath: shootOrigin
       value: 
       objectReference: {fileID: 430999051}
@@ -2084,6 +2103,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3855608602787902032, guid: f3c3c0f81946b3944a91edc1321502c0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1882886016}
+    - targetCorrespondingSourceObject: {fileID: 3855608602787902032, guid: f3c3c0f81946b3944a91edc1321502c0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1882886019}
   m_SourcePrefab: {fileID: 100100000, guid: f3c3c0f81946b3944a91edc1321502c0, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
