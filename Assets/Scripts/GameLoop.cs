@@ -62,7 +62,7 @@ public class GameLoop : MonoBehaviour
     public GameObject currentText;
 
     bool pause;
-    bool finished;
+    public bool finished;
     float stageTimer;
     float defaultStageTime = 600f;
 
@@ -219,7 +219,8 @@ public class GameLoop : MonoBehaviour
     private void CorrectChoice()
     {
         finished = true;
-        gameObject.GetComponent<TextShatterEffect>().Shatter(currentText);
+        gameObject.GetComponent<TextShatterEffect>().Shatter(currentText.GetComponent<TextMeshPro>());
+        cameraController.OnHitStatement();
         Debug.Log("You clicked on the statement" + Time.time);
     }
 
@@ -255,7 +256,7 @@ public class GameLoop : MonoBehaviour
             go.transform.position = textPivot.position;
             go.transform.position += nextDialogueNode.textLines[i].spawnOffset;
             go.transform.rotation = textPivot.rotation;
-            go.transform.localScale = nextDialogueNode.textLines[i].scale/10;
+            go.transform.localScale = nextDialogueNode.textLines[i].scale;
 
             TextMeshPro tmp = go.GetComponent<TextMeshPro>();
             string str = nextDialogueNode.textLines[i].text;
