@@ -53,7 +53,7 @@ public class GameLoop : MonoBehaviour
     float timer;
     int textIndex;
 
-    int correctTMPIndex, correctCharacterIndexBegin, correctCharacterIndexEnd;
+    public int correctTMPIndex, correctCharacterIndexBegin, correctCharacterIndexEnd;
 
     List<TextLine> textLines;
     CharacterStand characterStand;

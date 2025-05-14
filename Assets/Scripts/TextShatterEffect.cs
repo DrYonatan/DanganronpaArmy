@@ -14,6 +14,7 @@ public class TextShatterEffect : MonoBehaviour
         string text = Regex.Replace(textToSeperate.text, "<.*?>", "");
         Vector3 startPosition = textToSeperate.transform.position;
         float charSpacing = 0.15f;
+        bool isStatementCharacter = false;
 
         for (int i = 0; i < text.Length; i++)
         {
@@ -24,7 +25,11 @@ public class TextShatterEffect : MonoBehaviour
             tmp.text = text[i].ToString();
             tmp.font = textToSeperate.font;
             tmp.fontSize = textToSeperate.fontSize;
-            tmp.color = textToSeperate.color;
+            if(i >= GameLoop.instance.correctCharacterIndexBegin && i <= GameLoop.instance.correctCharacterIndexEnd)
+            isStatementCharacter = true;
+            
+            if(isStatementCharacter)
+            tmp.color = new Color32(255, 165, 0, 255); // give it an orange color
             tmp.alignment = textToSeperate.alignment;
 
             charObj.transform.position = startPosition +
@@ -44,10 +49,19 @@ public class TextShatterEffect : MonoBehaviour
             Vector3 dir = (toCamera).normalized;
             
             float forceFactor = Random.Range(0.7f, 1.8f);
+            float spinFactor = 1f;
+
+            if(!isStatementCharacter)
+            {
+                forceFactor = 0.1f;
+                spinFactor = 0.1f;
+            }
+            
+
 
             rb.AddForce(dir * explosionForce * forceFactor, ForceMode.Impulse);
             Vector3 camForward = Camera.main.transform.forward;
-            rb.AddTorque(camForward * Random.Range(-spinAmount, spinAmount), ForceMode.Impulse);
+            rb.AddTorque(camForward * Random.Range(-spinAmount, spinAmount) * spinFactor, ForceMode.Impulse);
 
             Destroy(charObj, letterLifetime);
         }
