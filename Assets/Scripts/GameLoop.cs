@@ -143,6 +143,10 @@ public class GameLoop : MonoBehaviour
 
     void HandleMouseControl()
     {
+        ReticleManager.instance.ReticleAsCursor();
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Confined;
+        
         if(Input.GetMouseButtonDown(0))
         {
             ShootText();
@@ -190,7 +194,7 @@ public class GameLoop : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
  
         // Create a plane in front of the firePoint (facing the same way as the camera)
-        Plane plane = new Plane(Camera.main.transform.forward, shootOrigin.position + Camera.main.transform.forward * 5.5f);
+        Plane plane = new Plane(Camera.main.transform.forward, shootOrigin.position + Camera.main.transform.forward * 5f);
 
         if (plane.Raycast(ray, out float distance))
         {
@@ -203,7 +207,7 @@ public class GameLoop : MonoBehaviour
           Rigidbody rb = bullet.GetComponent<Rigidbody>();
           rb.velocity = direction * shootForce;
 
-          Destroy(bullet, 3f);
+          Destroy(bullet, 1f);
         }
 
     }

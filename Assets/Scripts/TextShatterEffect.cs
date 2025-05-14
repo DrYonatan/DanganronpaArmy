@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
@@ -13,6 +15,8 @@ public class TextShatterEffect : MonoBehaviour
 
     public void Shatter(TextMeshPro textToSeperate)
     {
+        SoundManager.instance.PlaySoundEffect("shatter");
+
         string text = Regex.Replace(textToSeperate.text, "<.*?>", "");
         Vector3 startPosition = textToSeperate.transform.position;
         float charSpacing = 0.15f;
@@ -35,7 +39,7 @@ public class TextShatterEffect : MonoBehaviour
             tmp.alignment = textToSeperate.alignment;
 
             charObj.transform.position = startPosition +
-                                         textToSeperate.transform.right * charSpacing * (i - text.Length / 2f);
+                                         textToSeperate.transform.right * charSpacing * (text.Length / 2f - i);
             
             Rigidbody rb = charObj.AddComponent<Rigidbody>();
             rb.useGravity = false;
@@ -65,7 +69,9 @@ public class TextShatterEffect : MonoBehaviour
             Vector3 camForward = Camera.main.transform.forward;
             rb.AddTorque(camForward * Random.Range(-spinAmount, spinAmount) * spinFactor, ForceMode.Impulse);
 
+            StartCoroutine(FadeCharacterAway(charObj.GetComponent<TextMeshPro>(), 1f));
             Destroy(charObj, letterLifetime);
+            
         }
         
         textToSeperate.gameObject.SetActive(false);
@@ -76,5 +82,18 @@ public class TextShatterEffect : MonoBehaviour
     {
         GameObject effect = Instantiate(hitEffectPrefab, position, Quaternion.identity);
         Destroy(effect, 2f);
+    }
+
+    public IEnumerator FadeCharacterAway(TextMeshPro charObj, float duration)
+    {
+        float elapsedTime = 0f;
+        
+        while (elapsedTime < duration)
+        {
+            float alpha = Mathf.MoveTowards(1f, 0f, elapsedTime / duration);
+            charObj.color = new Color(charObj.color.r, charObj.color.g, charObj.color.b, alpha);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
     }
 }
