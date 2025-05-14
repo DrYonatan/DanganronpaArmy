@@ -8,6 +8,7 @@ public class BulletCollision : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         GameLoop.instance.Hit();
+        GameLoop.instance.GetComponent<TextShatterEffect>().Explosion(other.ClosestPoint(transform.position));
     }
 
     private bool CheckHitLocation(Collision collision)
@@ -46,5 +47,17 @@ public class BulletCollision : MonoBehaviour
         }
 
         return res;
+    }
+
+    private Vector3 GetFrontTipPosition()
+    {
+        MeshFilter meshFilter = gameObject.GetComponentInChildren<MeshFilter>();
+        if(meshFilter == null) return transform.position;
+        
+        Bounds bounds = meshFilter.mesh.bounds;
+        
+        Vector3 localFront = bounds.center + new Vector3(0, 0, bounds.extents.z);
+        
+        return meshFilter.transform.TransformPoint(localFront);
     }
 }

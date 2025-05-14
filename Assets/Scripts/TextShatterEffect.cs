@@ -9,6 +9,8 @@ public class TextShatterEffect : MonoBehaviour
     public float letterLifetime = 2f;
     public float spinAmount = 10f;
 
+    public GameObject hitEffectPrefab;
+
     public void Shatter(TextMeshPro textToSeperate)
     {
         string text = Regex.Replace(textToSeperate.text, "<.*?>", "");
@@ -70,8 +72,9 @@ public class TextShatterEffect : MonoBehaviour
 
     }
 
-    public void Explosion()
+    public void Explosion(Vector3 position)
     {
-        
+        GameObject effect = Instantiate(hitEffectPrefab, position, Quaternion.identity);
+        Destroy(effect, 2f);
     }
 }
