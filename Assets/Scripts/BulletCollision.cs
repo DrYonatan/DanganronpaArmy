@@ -5,23 +5,21 @@ using TMPro;
 
 public class BulletCollision : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        GameLoop.instance.Hit();
-        GameLoop.instance.GetComponent<TextShatterEffect>().Explosion(other.ClosestPoint(transform.position));
+        GameLoop.instance.Hit(collision.contacts[0].point);
     }
 
     private bool CheckHitLocation(Collision collision)
     {
         TextMeshPro textMeshPro = GameLoop.instance.currentText.GetComponent<TextMeshPro>();
+        textMeshPro.ForceMeshUpdate();
+        
         ContactPoint contact = collision.GetContact(0);
         Vector3 hitPoint = contact.point;
-
+        
         bool res = false;
-
-        // Convert world point to local point of the TextMeshPro object
-        Vector3 localHit = textMeshPro.transform.InverseTransformPoint(hitPoint);
-
+        
         TMP_TextInfo textInfo = textMeshPro.textInfo;
 
         for (int i = 0; i < textInfo.characterCount; i++)
@@ -32,12 +30,13 @@ public class BulletCollision : MonoBehaviour
                 continue;
 
             // Each character is a quad: bottom left and top right
-            Vector3 bottomLeft = charInfo.bottomLeft;
-            Vector3 topRight = charInfo.topRight;
-
-            if (localHit.x >= bottomLeft.x && localHit.x <= topRight.x &&
-                localHit.y >= bottomLeft.y && localHit.y <= topRight.y)
+            Vector3 bottomLeft = textMeshPro.transform.TransformPoint(charInfo.bottomLeft);
+            Vector3 topRight = textMeshPro.transform.TransformPoint(charInfo.topRight);
+            
+            if (hitPoint.x >= bottomLeft.x && hitPoint.x <= topRight.x &&
+                hitPoint.y >= bottomLeft.y && hitPoint.y <= topRight.y)
             {
+                res = true;
                 if(i >= GameLoop.instance.correctCharacterIndexBegin && i <= GameLoop.instance.correctCharacterIndexEnd)
                 {
                     res = true;
@@ -48,16 +47,5 @@ public class BulletCollision : MonoBehaviour
 
         return res;
     }
-
-    private Vector3 GetFrontTipPosition()
-    {
-        MeshFilter meshFilter = gameObject.GetComponentInChildren<MeshFilter>();
-        if(meshFilter == null) return transform.position;
-        
-        Bounds bounds = meshFilter.mesh.bounds;
-        
-        Vector3 localFront = bounds.center + new Vector3(0, 0, bounds.extents.z);
-        
-        return meshFilter.transform.TransformPoint(localFront);
-    }
+    
 }

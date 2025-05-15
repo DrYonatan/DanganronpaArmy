@@ -71,9 +71,18 @@ public class CameraController : MonoBehaviour
         Vector3 targetPosition =  startPos + forwardLocation;
         Quaternion targetRotation = cameraTransform.rotation * Quaternion.Euler(0f, 15f, 0f);
         Quaternion oppositeRotation = cameraTransform.rotation * Quaternion.Euler(0f, -5f, 0f);
+        StartCoroutine(PlayNoThatsWrong(1.5f));
         yield return MoveCameraOnXAndZ(targetPosition, targetRotation, 0.2f);
         yield return MoveCameraOnXAndZ(startPos - forwardLocation, targetRotation, 0.2f);
         yield return MoveCameraOnXAndZ(targetPosition, oppositeRotation, 4f);
+        
+
+    }
+
+    IEnumerator PlayNoThatsWrong(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SoundManager.instance.PlaySoundEffect("nothatswrong");
     }
 
     IEnumerator MoveCameraOnXAndZ(Vector3 targetPosition, Quaternion targetRotation, float duration)

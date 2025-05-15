@@ -205,18 +205,33 @@ public class GameLoop : MonoBehaviour
           GameObject bullet = Instantiate(textBulletPrefab, shootOrigin.position, rotation);
 
           Rigidbody rb = bullet.GetComponent<Rigidbody>();
-          rb.velocity = direction * shootForce;
 
-          Destroy(bullet, 1f);
+          StartCoroutine(MoveBullet(bullet, direction, 1f));
+
         }
 
     }
 
-    public void Hit()
+    IEnumerator MoveBullet(GameObject bullet, Vector3 direction, float duration)
+    {
+        float elapsedTime = 0f;
+        while (elapsedTime < duration)
+        {
+            bullet.transform.position += direction * shootForce * Time.deltaTime;
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        
+        Destroy(bullet);
+    }
+    
+
+    public void Hit(Vector3 point)
     {
         if (evidenceManager.Check(correctEvidence))
         {
             CorrectChoice();
+            gameObject.GetComponent<TextShatterEffect>().Explosion(point);
         }
     }
 
@@ -225,7 +240,6 @@ public class GameLoop : MonoBehaviour
         finished = true;
         gameObject.GetComponent<TextShatterEffect>().Shatter(currentText.GetComponent<TextMeshPro>());
         cameraController.OnHitStatement();
-        Debug.Log("You clicked on the statement" + Time.time);
     }
 
     void SpawnText(int dialogueNodeIndex)
