@@ -12,8 +12,7 @@ public class GameLoop : MonoBehaviour
         public RectTransform textRT;
         public List<TextEffect> textEffect;
         public float ttl;
-        public TextMeshPro textMeshPro;    
-       
+        public TextMeshPro textMeshPro;
 
         public TextLine(GameObject textGO, RectTransform textRT, List<TextEffect> textEffect, float ttl, TextMeshPro tmp)
         {
@@ -42,6 +41,8 @@ public class GameLoop : MonoBehaviour
     [SerializeField] EvidenceManager evidenceManager;
     [SerializeField] MusicManager musicManager;
     [SerializeField] Text timerText;
+    [SerializeField] Transform shatterTransform;
+
 
     float timer;
     int textIndex;
@@ -225,6 +226,7 @@ public class GameLoop : MonoBehaviour
     private void CorrectChoice()
     {
         finished = true;
+        shatterTransform.gameObject.SetActive(true);
         Debug.Log("You clicked on the statement" + Time.time);
     }
 
