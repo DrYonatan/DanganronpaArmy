@@ -14,6 +14,8 @@ public class CameraController : MonoBehaviour
     [SerializeField] float speed = 50f;
     float height;
 
+    public GameObject noThatsWrong;
+
 
     // Start is called before the first frame update
     void Start()
@@ -82,7 +84,13 @@ public class CameraController : MonoBehaviour
     IEnumerator PlayNoThatsWrong(float delay)
     {
         yield return new WaitForSeconds(delay);
+
+        noThatsWrong.SetActive(true);
         SoundManager.instance.PlaySoundEffect("nothatswrong");
+
+        yield return new WaitForSeconds(2.5f);
+
+        noThatsWrong.SetActive(false);
     }
 
     IEnumerator MoveCameraOnXAndZ(Vector3 targetPosition, Quaternion targetRotation, float duration)
