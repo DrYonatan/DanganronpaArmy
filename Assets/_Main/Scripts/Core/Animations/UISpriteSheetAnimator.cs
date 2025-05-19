@@ -5,6 +5,7 @@ public class UISpriteSheetAnimator : MonoBehaviour
 {
     public string spriteSheetName; // Name of the sprite sheet file (without extension)
     public float frameRate = 10f;
+    public bool isLoop;
 
     private Sprite[] frames;
     private Image image;
@@ -22,18 +23,22 @@ public class UISpriteSheetAnimator : MonoBehaviour
         {
             Debug.LogError("No sprites found. Make sure your sprite sheet is sliced and located in a Resources folder.");
         }
+
     }
+
 
     void Update()
     {
-        if (frames == null || frames.Length == 0) return;
+        
+       if (frames == null || frames.Length == 0) return;
 
         timer += Time.deltaTime;
-        if (timer >= 1f / frameRate)
+        if (timer >= 1f / frameRate && (currentFrame + 1 < frames.Length || isLoop))
         {
             currentFrame = (currentFrame + 1) % frames.Length;
             image.sprite = frames[currentFrame];
             timer = 0f;
         }
     }
+
 }

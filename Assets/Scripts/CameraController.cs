@@ -88,7 +88,7 @@ public class CameraController : MonoBehaviour
         noThatsWrong.SetActive(true);
         SoundManager.instance.PlaySoundEffect("nothatswrong");
 
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(3f);
 
         noThatsWrong.SetActive(false);
     }
