@@ -59,7 +59,7 @@ public class GameLoop : MonoBehaviour
     CharacterStand characterStand;
     Evidence correctEvidence;
 
-    public GameObject currentText;
+    public List<GameObject> currentTexts;
 
     bool pause;
     public bool finished;
@@ -119,6 +119,7 @@ public class GameLoop : MonoBehaviour
             if(textLines[index].ttl < timer)
             {
                 Destroy(textLines[index].textGO);
+                currentTexts.RemoveAt(index);
                 textLines.RemoveAt(index);
                 index--;
             }
@@ -238,7 +239,10 @@ public class GameLoop : MonoBehaviour
     private void CorrectChoice()
     {
         finished = true;
-        gameObject.GetComponent<TextShatterEffect>().Shatter(currentText.GetComponent<TextMeshPro>());
+        foreach(GameObject text in currentTexts)
+        {
+        gameObject.GetComponent<TextShatterEffect>().Shatter(text.GetComponent<TextMeshPro>());
+        }
         cameraController.OnHitStatement();
     }
 
@@ -270,7 +274,7 @@ public class GameLoop : MonoBehaviour
         for(int i = 0; i < nextDialogueNode.textLines.Count; i++)
         {
             GameObject go = Instantiate(textPrefab);
-            currentText = go;
+            currentTexts.Add(go);
             go.transform.position = textPivot.position;
             go.transform.position += nextDialogueNode.textLines[i].spawnOffset;
             go.transform.rotation = textPivot.rotation;

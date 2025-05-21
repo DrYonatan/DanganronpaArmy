@@ -12,7 +12,7 @@ public class BulletCollision : MonoBehaviour
 
     private bool CheckHitLocation(Collision collision)
     {
-        TextMeshPro textMeshPro = GameLoop.instance.currentText.GetComponent<TextMeshPro>();
+        TextMeshPro textMeshPro = GameLoop.instance.currentTexts[0].GetComponent<TextMeshPro>();
         textMeshPro.ForceMeshUpdate();
         
         ContactPoint contact = collision.GetContact(0);
