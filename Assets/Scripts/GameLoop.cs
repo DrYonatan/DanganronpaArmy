@@ -255,7 +255,7 @@ public class GameLoop : MonoBehaviour
             correctTMPIndex = -1;
             correctCharacterIndexBegin = -1;
             correctCharacterIndexEnd = -1;
-            
+
             GameObject go = Instantiate(textPrefab);
             go.transform.position = textPivot.position;
             go.transform.position += nextDialogueNode.textLines[i].spawnOffset;
@@ -285,14 +285,56 @@ public class GameLoop : MonoBehaviour
                 correctCharacterIndexBegin,
                 correctCharacterIndexEnd
                 );
+
+            textLine.textMeshPro.ForceMeshUpdate();
+            CreateColliderAroundTextRange(textLine, 0, textLine.textMeshPro.textInfo.characterCount-1);
+            CreateColliderAroundTextRange(textLine, correctCharacterIndexBegin, correctCharacterIndexEnd);
             textLines.Add(textLine);
         }
-
-       
-        
-       
         
         effectController.effect = nextDialogueNode.cameraEffect;
         effectController.Reset();
+    }
+
+    public void CreateColliderAroundTextRange(TextLine textLine, int startIndex, int endIndex)
+    {
+        TextMeshPro tmp = textLine.textMeshPro;
+        tmp.ForceMeshUpdate();
+        TMP_TextInfo textInfo = tmp.textInfo;
+      
+        BoxCollider boxCollider = null;
+
+        if (startIndex < 0 || endIndex >= textInfo.characterCount || startIndex > endIndex)
+        {
+            Debug.Log("Wrong indexes: " + startIndex + ", " + endIndex);
+            return;
+        }
+
+        Vector3 min = Vector3.positiveInfinity;
+        Vector3 max = Vector3.negativeInfinity;
+
+        for (int i = startIndex; i <= endIndex; i++)
+        {
+            var charInfo = textInfo.characterInfo[i];
+            if (!charInfo.isVisible) continue;
+
+            Vector3 bl = charInfo.bottomLeft;
+            Vector3 tr = charInfo.topRight;
+
+            min = Vector3.Min(min, bl);
+            max = Vector3.Max(max, tr);
+        }
+
+        Vector3 center = (min + max) / 2;
+        Vector3 size = max - min;
+
+        if (boxCollider == null)
+        {
+            boxCollider = textLine.textGO.AddComponent<BoxCollider>();
+            boxCollider.center = center;
+            boxCollider.size = size;
+        }
+
+        
     }
 }
