@@ -13,10 +13,11 @@ public class TextShatterEffect : MonoBehaviour
 
     public GameObject hitEffectPrefab;
 
-    public void Shatter(TextMeshPro textToSeperate)
+    public void Shatter(GameLoop.TextLine textLine)
     {
         SoundManager.instance.PlaySoundEffect("shatter");
 
+        TextMeshPro textToSeperate = textLine.textMeshPro;
         string text = Regex.Replace(textToSeperate.text, "<.*?>", "");
         Vector3 startPosition = textToSeperate.transform.position;
         float charSpacing = 0.15f;
@@ -31,7 +32,7 @@ public class TextShatterEffect : MonoBehaviour
             tmp.text = text[i].ToString();
             tmp.font = textToSeperate.font;
             tmp.fontSize = textToSeperate.fontSize;
-            if(i >= GameLoop.instance.correctCharacterIndexBegin && i <= GameLoop.instance.correctCharacterIndexEnd)
+            if(i >= textLine.correctCharacterIndexBegin && i <= textLine.correctCharacterIndexEnd)
             isStatementCharacter = true;
             
             if(isStatementCharacter)

@@ -6,22 +6,25 @@ using System;
 using Text = TMPro.TextMeshProUGUI;
 public class GameLoop : MonoBehaviour
 {
-    class TextLine
+    public class TextLine
     {
         public GameObject textGO;
         public RectTransform textRT;
         public List<TextEffect> textEffect;
         public float ttl;
         public TextMeshPro textMeshPro;    
-       
+        public int correctTMPIndex, correctCharacterIndexBegin, correctCharacterIndexEnd;
 
-        public TextLine(GameObject textGO, RectTransform textRT, List<TextEffect> textEffect, float ttl, TextMeshPro tmp)
+        public TextLine(GameObject textGO, RectTransform textRT, List<TextEffect> textEffect, float ttl, TextMeshPro tmp, int correctTMPIndex, int correctCharacterIndexBegin, int correctCharacterIndexEnd)
         {
             this.textMeshPro = tmp;
             this.textGO = textGO;
             this.textRT = textRT;
             this.textEffect = textEffect;
             this.ttl = ttl;
+            this.correctTMPIndex = correctTMPIndex;
+            this.correctCharacterIndexBegin = correctCharacterIndexBegin;
+            this.correctCharacterIndexEnd = correctCharacterIndexEnd;
         }
 
         internal void Apply()
@@ -32,6 +35,7 @@ public class GameLoop : MonoBehaviour
             }
         }
     }
+
 
     public static GameLoop instance { get; private set; }
 
@@ -53,13 +57,9 @@ public class GameLoop : MonoBehaviour
     float timer;
     int textIndex;
 
-    public int correctTMPIndex, correctCharacterIndexBegin, correctCharacterIndexEnd;
-
     List<TextLine> textLines;
     CharacterStand characterStand;
     Evidence correctEvidence;
-
-    public List<GameObject> currentTexts;
 
     bool pause;
     public bool finished;
@@ -119,7 +119,6 @@ public class GameLoop : MonoBehaviour
             if(textLines[index].ttl < timer)
             {
                 Destroy(textLines[index].textGO);
-                currentTexts.RemoveAt(index);
                 textLines.RemoveAt(index);
                 index--;
             }
@@ -151,26 +150,6 @@ public class GameLoop : MonoBehaviour
         if(Input.GetMouseButtonDown(0))
         {
             ShootText();
-            for (int i = 0; i < textLines.Count; i++)
-            {
-                if (correctTMPIndex != i)
-                {
-                    continue;
-                }
-                int index = TMP_TextUtilities.FindIntersectingCharacter(
-                    textLines[i].textMeshPro,
-                    Input.mousePosition,
-                    Camera.main,
-                    true
-                    );
-                if (index != -1)
-                {
-                    if(index >= correctCharacterIndexBegin && index < correctCharacterIndexEnd)
-                    {
-                      //  Hit();
-                    }
-                }
-            }
         }
         
     }
@@ -239,18 +218,18 @@ public class GameLoop : MonoBehaviour
     private void CorrectChoice()
     {
         finished = true;
-        foreach(GameObject text in currentTexts)
+        foreach(TextLine text in textLines)
         {
-        gameObject.GetComponent<TextShatterEffect>().Shatter(text.GetComponent<TextMeshPro>());
+        gameObject.GetComponent<TextShatterEffect>().Shatter(text);
         }
         cameraController.OnHitStatement();
     }
 
     void SpawnText(int dialogueNodeIndex)
     {
-        correctTMPIndex = -1;
-        correctCharacterIndexBegin = -1;
-        correctCharacterIndexEnd = -1;
+        int correctTMPIndex = -1;
+        int correctCharacterIndexBegin = -1;
+        int correctCharacterIndexEnd = -1;
 
         DialogueNode nextDialogueNode = stage.dialogueNodes[dialogueNodeIndex];
         correctEvidence = nextDialogueNode.evidence;
@@ -273,8 +252,11 @@ public class GameLoop : MonoBehaviour
 
         for(int i = 0; i < nextDialogueNode.textLines.Count; i++)
         {
+            correctTMPIndex = -1;
+            correctCharacterIndexBegin = -1;
+            correctCharacterIndexEnd = -1;
+            
             GameObject go = Instantiate(textPrefab);
-            currentTexts.Add(go);
             go.transform.position = textPivot.position;
             go.transform.position += nextDialogueNode.textLines[i].spawnOffset;
             go.transform.rotation = textPivot.rotation;
@@ -298,7 +280,10 @@ public class GameLoop : MonoBehaviour
                 go.GetComponent<RectTransform>(),
                 nextDialogueNode.textLines[i].textEffect,
                 nextDialogueNode.textLines[i].ttl,
-                go.GetComponent<TextMeshPro>()
+                go.GetComponent<TextMeshPro>(),
+                correctTMPIndex,
+                correctCharacterIndexBegin,
+                correctCharacterIndexEnd
                 );
             textLines.Add(textLine);
         }
