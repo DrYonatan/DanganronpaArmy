@@ -287,8 +287,8 @@ public class GameLoop : MonoBehaviour
                 );
 
             textLine.textMeshPro.ForceMeshUpdate();
-            CreateColliderAroundTextRange(textLine, 0, textLine.textMeshPro.textInfo.characterCount-1);
-            CreateColliderAroundTextRange(textLine, correctCharacterIndexBegin, correctCharacterIndexEnd);
+            CreateColliderAroundTextRange(textLine, 0, textLine.textMeshPro.textInfo.characterCount-1, false);
+            CreateColliderAroundTextRange(textLine, correctCharacterIndexBegin, correctCharacterIndexEnd, true);
             textLines.Add(textLine);
         }
         
@@ -296,7 +296,9 @@ public class GameLoop : MonoBehaviour
         effectController.Reset();
     }
 
-    public void CreateColliderAroundTextRange(TextLine textLine, int startIndex, int endIndex)
+
+    // Gets the textLine to create for, the range and whether or not to make a child (AKA the orange part)
+    public void CreateColliderAroundTextRange(TextLine textLine, int startIndex, int endIndex, bool createChildObject)
     {
         TextMeshPro tmp = textLine.textMeshPro;
         tmp.ForceMeshUpdate();
@@ -306,7 +308,6 @@ public class GameLoop : MonoBehaviour
 
         if (startIndex < 0 || endIndex >= textInfo.characterCount || startIndex > endIndex)
         {
-            Debug.Log("Wrong indexes: " + startIndex + ", " + endIndex);
             return;
         }
 
@@ -328,13 +329,22 @@ public class GameLoop : MonoBehaviour
         Vector3 center = (min + max) / 2;
         Vector3 size = max - min;
 
-        if (boxCollider == null)
+        if(createChildObject)
         {
-            boxCollider = textLine.textGO.AddComponent<BoxCollider>();
-            boxCollider.center = center;
-            boxCollider.size = size;
-        }
+            // Create the new GameObject
+            GameObject orangeHitbox = new GameObject("OrangeHitBox");
+            orangeHitbox.transform.SetParent(tmp.transform, false); // parent to text object
+            orangeHitbox.transform.localPosition = center;
+            orangeHitbox.transform.localRotation = Quaternion.identity;
+            orangeHitbox.transform.localScale = Vector3.one;
+            boxCollider = orangeHitbox.AddComponent<BoxCollider>();
+            orangeHitbox.tag = "OrangeHitBox";
 
+        }
+        else 
+        boxCollider = textLine.textGO.AddComponent<BoxCollider>();
+        boxCollider.center = center;
+        boxCollider.size = size;
         
     }
 }
