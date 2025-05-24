@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +6,9 @@ public class ScreenShatter : MonoBehaviour
 {
     public GameObject explosionPositionObject;
     public Image flashImage;
+    public GameObject breakText;
+    public GameObject pieces;
+
     private void Awake()
     {
         flashImage.color = new Color(1, 1, 1, 0); // Ensure transparent at start
@@ -14,14 +16,15 @@ public class ScreenShatter : MonoBehaviour
         Camera camera = transform.Find("ShatterCamera")?.GetComponent<Camera>();
         StartCoroutine(Shatter(camera));
     }
+
     private IEnumerator Shatter(Camera camera)
     {
         foreach (Transform child in transform)
         {
             if (child.TryGetComponent<Rigidbody>(out Rigidbody childRigidbody))
             {
-                 SwapAndReswap(0, 1, child.gameObject);
-                 yield return null;
+                SwapAndReswap(0, 1, child.gameObject);
+                yield return null;
             }
         }
 
@@ -29,7 +32,7 @@ public class ScreenShatter : MonoBehaviour
 
         ScreenFlash(camera);
         Vector3 explosionPosition = explosionPositionObject.transform.position;
-        foreach (Transform child in transform)
+        foreach (Transform child in pieces.transform)
         {
             if (child.TryGetComponent<Rigidbody>(out Rigidbody childRigidbody))
             {
@@ -38,7 +41,12 @@ public class ScreenShatter : MonoBehaviour
                 childRigidbody.AddTorque(0, 0, 0.2f + 0.3f * direction, ForceMode.Impulse);
             }
         }
+
+        yield return new WaitForSeconds(1.3f);
+        
+        breakText.SetActive(true);
     }
+
     private void ScreenFlash(Camera camera)
     {
         camera!.backgroundColor = Color.white;
@@ -62,7 +70,7 @@ public class ScreenShatter : MonoBehaviour
 
         cam.backgroundColor = endColor; // Ensure it's exactly black at the end
     }
-    
+
     public void SwapMaterials(int index1, int index2, GameObject obj)
     {
         MeshRenderer renderer = obj.GetComponent<MeshRenderer>();
@@ -82,13 +90,13 @@ public class ScreenShatter : MonoBehaviour
         // Apply the changes
         renderer.materials = materials;
     }
-    
-    public void SwapAndReswap(int index1, int index2,  GameObject obj)
+
+    public void SwapAndReswap(int index1, int index2, GameObject obj)
     {
         StartCoroutine(SwapAndReswapCoroutine(index1, index2, obj));
     }
 
-    private IEnumerator SwapAndReswapCoroutine(int index1, int index2,  GameObject obj)
+    private IEnumerator SwapAndReswapCoroutine(int index1, int index2, GameObject obj)
     {
         SwapMaterials(index1, index2, obj);
 
@@ -96,7 +104,7 @@ public class ScreenShatter : MonoBehaviour
 
         SwapMaterials(index1, index2, obj);
     }
-    
+
     private IEnumerator ImageFlash(float flashDuration)
     {
         Color startColor = new Color(1, 1, 1, 0);
@@ -113,17 +121,14 @@ public class ScreenShatter : MonoBehaviour
         flashImage.color = endColor; // Ensure it's exactly black at the end
 
         time = 0f;
-        
+
         while (time < flashDuration)
         {
             flashImage.color = Color.Lerp(endColor, startColor, time / flashDuration);
             time += Time.deltaTime;
             yield return null;
         }
-        
+
         flashImage.color = startColor; // Ensure it's exactly black at the end
-
     }
-
-  
 }
