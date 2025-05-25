@@ -25,24 +25,29 @@ MonoBehaviour:
       x: 220
       y: 50
       width: 200
-      height: 410
+      height: 580
     title: 
     drawNode: {fileID: 11400000, guid: e895cb65ac440b44997bf8d22434e51b, type: 2}
     text: 
     character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
     cameraEffect: {fileID: 11400000, guid: d7b5a6678c2f5b34c816559f2046fca5, type: 2}
     textLines:
-    - text: "\u05E9\u05DC\u05D5\u05DD {0} \u05DC\u05DB\u05D5\u05DC\u05DD"
+    - text: "\u05E9\u05DC\u05D5\u05DD {0} \u05E9\u05DC\u05D5\u05DD"
       textEffect:
-      - {fileID: 11400000, guid: 1783f855e5ca44a46918165450f0b808, type: 2}
       - {fileID: 11400000, guid: e5ad80d2a8ee1f042bf34c66a49d1aef, type: 2}
-      spawnOffset: {x: 1, y: 0.52, z: 0}
-      scale: {x: 1, y: 1, z: 1}
+      spawnOffset: {x: 2, y: 0.52, z: 0}
+      scale: {x: 0.75, y: 0.75, z: 0.75}
+      ttl: 3.94
+    - text: "\u05E9\u05DC\u05D5\u05DD \u05DC\u05DB\u05DD"
+      textEffect:
+      - {fileID: 11400000, guid: e5ad80d2a8ee1f042bf34c66a49d1aef, type: 2}
+      spawnOffset: {x: 2, y: 0.2, z: 0}
+      scale: {x: 0.75, y: 0.75, z: 0.75}
       ttl: 3.94
     voiceLine: {fileID: 0}
     evidence: {fileID: 11400000, guid: 61f792b87e669574793f5e93b1753771, type: 2}
-    statement: "\u05D0\u05DE\u05E8\u05D4"
-    statementColor: {r: 1, g: 0.6587773, b: 0.118867874, a: 0}
+    statement: "\u05E9\u05DC\u05D5\u05DD \u05E9\u05DC\u05D5\u05DD"
+    statementColor: {r: 1, g: 0.55050254, b: 0.11764705, a: 0}
     expression: 1
   - nodeRect:
       serializedVersion: 2
@@ -56,7 +61,7 @@ MonoBehaviour:
     character: {fileID: 11400000, guid: e5e319997f8a6c943997082245a52a96, type: 2}
     cameraEffect: {fileID: 11400000, guid: 2b0b273d7412a6b469741fc4eda2fd17, type: 2}
     textLines:
-    - text: "\u05DE\u05D4 \u05E7\u05D5\u05E8\u05D4"
+    - text: "\u05DE\u05D4 {0} \u05E7\u05D5\u05E8\u05D4"
       textEffect:
       - {fileID: 11400000, guid: 1783f855e5ca44a46918165450f0b808, type: 2}
       spawnOffset: {x: 0, y: 0, z: 0}

@@ -7,15 +7,8 @@ public class SoundManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        SetTextBoxAudio();
     }
-
-    private void SetTextBoxAudio()
-    {
-        textBoxAudio = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/4 - Dialogue").GetComponent<AudioSource>();
-        textBoxAudio.clip = Resources.Load<AudioClip>($"Audio/Sound Effects/textadvance");
     
-    }
 
     public void PlaySoundEffect(string soundEffectName)
     {
