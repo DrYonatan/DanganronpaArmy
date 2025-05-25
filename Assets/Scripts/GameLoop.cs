@@ -174,19 +174,19 @@ public class GameLoop : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
  
         // Create a plane in front of the firePoint (facing the same way as the camera)
-        Plane plane = new Plane(Camera.main.transform.forward, shootOrigin.position + Camera.main.transform.forward * 5f);
+        Plane plane = new Plane(Camera.main.transform.forward, shootOrigin.position + Camera.main.transform.forward * 4f);
 
         if (plane.Raycast(ray, out float distance))
         {
           Vector3 targetPoint = ray.GetPoint(distance);
           Vector3 direction = (targetPoint - shootOrigin.position).normalized;
 
-          Quaternion rotation = Quaternion.LookRotation(direction, Camera.main.transform.up) * Quaternion.Euler(0, 90, 0);
+          Quaternion rotation = Quaternion.LookRotation(direction, Camera.main.transform.up) * Quaternion.Euler(0, 90f, 0);
           GameObject bullet = Instantiate(textBulletPrefab, shootOrigin.position, rotation);
 
           Rigidbody rb = bullet.GetComponent<Rigidbody>();
 
-          StartCoroutine(MoveBullet(bullet, direction, 1f));
+          StartCoroutine(MoveBullet(bullet, direction, 2f));
 
         }
 
@@ -287,8 +287,17 @@ public class GameLoop : MonoBehaviour
                 );
 
             textLine.textMeshPro.ForceMeshUpdate();
-            CreateColliderAroundTextRange(textLine, 0, textLine.textMeshPro.textInfo.characterCount-1, false);
-            CreateColliderAroundTextRange(textLine, correctCharacterIndexBegin, correctCharacterIndexEnd, true);
+            if(correctCharacterIndexBegin != -1) // if there's a statement, build box colliders for the segment before, in and after the statement
+            {
+               CreateColliderAroundTextRange(textLine, 0, correctCharacterIndexBegin-1, false);
+               CreateColliderAroundTextRange(textLine, correctCharacterIndexBegin, correctCharacterIndexEnd, true);
+               CreateColliderAroundTextRange(textLine, correctCharacterIndexEnd, textLine.textMeshPro.textInfo.characterCount-1, false);
+            }
+            else // if there's no statement, just build one box collider
+            {
+                CreateColliderAroundTextRange(textLine, 0, textLine.textMeshPro.textInfo.characterCount-1, false);
+            }
+            
             textLines.Add(textLine);
         }
         
@@ -306,7 +315,7 @@ public class GameLoop : MonoBehaviour
       
         BoxCollider boxCollider = null;
 
-        if (startIndex < 0 || endIndex >= textInfo.characterCount || startIndex > endIndex)
+        if (startIndex < 0 || endIndex > textInfo.characterCount || startIndex > endIndex)
         {
             return;
         }

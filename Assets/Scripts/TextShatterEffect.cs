@@ -47,16 +47,12 @@ public class TextShatterEffect : MonoBehaviour
             rb.drag = 0.5f;
             // Get the direction from the text to the camera
             Vector3 toCamera = (Camera.main.transform.position - textToSeperate.transform.position).normalized;
-
-            // Create a random horizontal direction
-            Vector3 randomHorizontal = Vector3.right * Random.Range(-0.01f, 0.01f) + Vector3.forward * Random.Range(-1f, 1f);
-            randomHorizontal.Normalize();
             
             // Blend the horizontal randomness with the direction to the camera
             Vector3 dir = (toCamera).normalized;
             
             float forceFactor = Random.Range(0.7f, 1.8f);
-            float spinFactor = 1f;
+            float spinFactor = 2f;
 
             if(!isStatementCharacter)
             {
@@ -77,6 +73,51 @@ public class TextShatterEffect : MonoBehaviour
         
         textToSeperate.gameObject.SetActive(false);
 
+    }
+
+    public IEnumerator Deflect(TextMeshPro textToDeflect, Vector3 hitPosition)
+    {
+        string text = textToDeflect.text;
+        for (int i = text.Length-1; i >= 0; i--)
+        {
+            textToDeflect.text = text;
+            textToDeflect.ForceMeshUpdate();            
+            GameObject charObj = new GameObject($"Char_{i}");
+            charObj.transform.SetParent(textToDeflect.transform.parent);
+
+            TextMeshPro tmp = charObj.AddComponent<TextMeshPro>();
+            tmp.text = text[i].ToString();
+            tmp.font = textToDeflect.font;
+            tmp.fontSize = textToDeflect.fontSize;
+            tmp.alignment = textToDeflect.alignment;
+
+            charObj.transform.position = hitPosition;
+            charObj.transform.rotation = textToDeflect.transform.rotation * Quaternion.Euler(0, -90f, 0);
+
+            if(text.Length > 1)
+            text = text.Remove(i, 1);
+
+            Rigidbody rb = charObj.AddComponent<Rigidbody>();
+            rb.useGravity = false;
+            rb.drag = 0.5f;
+            // Get the direction from the text to the camera            
+            // Blend the horizontal randomness with the direction to the camera
+            Vector3 randomVertical = Vector3.up * Random.Range(0.4f, -0.4f);
+            Vector3 dir = charObj.transform.right * -1 + randomVertical;
+            
+            
+            rb.AddForce(dir * explosionForce, ForceMode.Impulse);
+
+            Destroy(charObj, letterLifetime);
+
+            textToDeflect.transform.position += textToDeflect.transform.right * 0.6f;
+
+
+            yield return new WaitForSeconds(0.05f);
+            
+        }
+        
+        textToDeflect.gameObject.SetActive(false);
     }
 
     public void Explosion(Vector3 position)

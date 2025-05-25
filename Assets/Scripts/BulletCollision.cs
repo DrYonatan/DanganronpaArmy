@@ -5,10 +5,22 @@ using TMPro;
 
 public class BulletCollision : MonoBehaviour
 {
+    bool didHit = false;
+    
     private void OnCollisionEnter(Collision collision)
     {
-        if(CheckHitLocation(collision))
-        GameLoop.instance.Hit(collision.contacts[0].point);
+        if(!didHit)
+        {
+         if(CheckHitLocation(collision))
+         GameLoop.instance.Hit(collision.contacts[0].point);
+         else
+         StartCoroutine(
+         GameLoop.instance.gameObject.GetComponent<TextShatterEffect>().Deflect(
+          gameObject.GetComponent<TextMeshPro>(),
+         collision.contacts[0].point));
+
+        }
+        
     }
 
     private bool CheckHitLocation(Collision collision)
@@ -17,13 +29,17 @@ public class BulletCollision : MonoBehaviour
 
         if (other.CompareTag("OrangeHitBox"))
         {
+            didHit = true;
            return true;
         }
-        else
+        else if (other.CompareTag("WhiteHitBox"))
         {
            // Handle white (default) hit
+           didHit = true;
            return false;
         }
+        else 
+        return false;
     }
     
 }
