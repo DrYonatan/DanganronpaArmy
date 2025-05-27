@@ -14,9 +14,6 @@ public class CameraController : MonoBehaviour
     [SerializeField] float speed = 50f;
     float height;
 
-    public GameObject noThatsWrong;
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -60,40 +57,7 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    public void OnHitStatement()
-    {
-        StartCoroutine(DebateHitEffect());
-    }
-
-    IEnumerator DebateHitEffect()
-    {
-        Transform cameraTransform = Camera.main.transform;
-        Vector3 startPos = cameraTransform.position;
-        Vector3 forwardLocation = -cameraTransform.forward;
-        Vector3 targetPosition =  startPos + forwardLocation;
-        Quaternion targetRotation = cameraTransform.rotation * Quaternion.Euler(0f, 15f, 0f);
-        Quaternion oppositeRotation = cameraTransform.rotation * Quaternion.Euler(0f, -5f, 0f);
-        StartCoroutine(PlayNoThatsWrong(1.5f));
-        yield return MoveCameraOnXAndZ(targetPosition, targetRotation, 0.2f);
-        yield return MoveCameraOnXAndZ(startPos - forwardLocation, targetRotation, 0.2f);
-        yield return MoveCameraOnXAndZ(targetPosition, oppositeRotation, 4f);
-        
-
-    }
-
-    IEnumerator PlayNoThatsWrong(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-
-        noThatsWrong.SetActive(true);
-        SoundManager.instance.PlaySoundEffect("nothatswrong");
-
-        yield return new WaitForSeconds(3f);
-
-        noThatsWrong.SetActive(false);
-    }
-
-    IEnumerator MoveCameraOnXAndZ(Vector3 targetPosition, Quaternion targetRotation, float duration)
+    public IEnumerator MoveCameraOnXAndZ(Vector3 targetPosition, Quaternion targetRotation, float duration)
     {
         Transform cameraTransform = Camera.main.transform;
         Vector3 startPos = cameraTransform.position;

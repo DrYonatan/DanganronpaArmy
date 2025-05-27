@@ -19,7 +19,7 @@ public class ScreenShatter : MonoBehaviour
 
     private IEnumerator Shatter(Camera camera)
     {
-        foreach (Transform child in transform)
+        foreach (Transform child in pieces.transform)
         {
             if (child.TryGetComponent<Rigidbody>(out Rigidbody childRigidbody))
             {
@@ -34,7 +34,7 @@ public class ScreenShatter : MonoBehaviour
         Vector3 explosionPosition = explosionPositionObject.transform.position;
         foreach (Transform child in pieces.transform)
         {
-            if (child.TryGetComponent<Rigidbody>(out Rigidbody childRigidbody))
+            if (child.TryGetComponent(out Rigidbody childRigidbody))
             {
                 float direction = Mathf.Sign(explosionPosition.x - child.position.x);
                 childRigidbody.AddExplosionForce(17f + direction * 8f, explosionPosition, 10f);
