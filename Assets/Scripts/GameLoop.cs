@@ -6,21 +6,25 @@ using System;
 using Text = TMPro.TextMeshProUGUI;
 public class GameLoop : MonoBehaviour
 {
-    class TextLine
+    public class TextLine
     {
         public GameObject textGO;
         public RectTransform textRT;
         public List<TextEffect> textEffect;
         public float ttl;
-        public TextMeshPro textMeshPro;
+        public TextMeshPro textMeshPro;    
+        public int correctTMPIndex, correctCharacterIndexBegin, correctCharacterIndexEnd;
 
-        public TextLine(GameObject textGO, RectTransform textRT, List<TextEffect> textEffect, float ttl, TextMeshPro tmp)
+        public TextLine(GameObject textGO, RectTransform textRT, List<TextEffect> textEffect, float ttl, TextMeshPro tmp, int correctTMPIndex, int correctCharacterIndexBegin, int correctCharacterIndexEnd)
         {
             this.textMeshPro = tmp;
             this.textGO = textGO;
             this.textRT = textRT;
             this.textEffect = textEffect;
             this.ttl = ttl;
+            this.correctTMPIndex = correctTMPIndex;
+            this.correctCharacterIndexBegin = correctCharacterIndexBegin;
+            this.correctCharacterIndexEnd = correctCharacterIndexEnd;
         }
 
         internal void Apply()
@@ -30,6 +34,14 @@ public class GameLoop : MonoBehaviour
                 textEffect[i].Apply(textRT);
             }
         }
+    }
+
+
+    public static GameLoop instance { get; private set; }
+
+    private void Awake()
+    {
+        instance = this;
     }
 
     [SerializeField] CameraController cameraController;
@@ -47,14 +59,12 @@ public class GameLoop : MonoBehaviour
     float timer;
     int textIndex;
 
-    int correctTMPIndex, correctCharacterIndexBegin, correctCharacterIndexEnd;
-
     List<TextLine> textLines;
     CharacterStand characterStand;
     Evidence correctEvidence;
 
     bool pause;
-    bool finished;
+    public bool finished;
     float stageTimer;
     float defaultStageTime = 600f;
 
@@ -135,29 +145,13 @@ public class GameLoop : MonoBehaviour
 
     void HandleMouseControl()
     {
+        ReticleManager.instance.ReticleAsCursor();
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Confined;
+        
         if(Input.GetMouseButtonDown(0))
         {
             ShootText();
-            for (int i = 0; i < textLines.Count; i++)
-            {
-                if (correctTMPIndex != i)
-                {
-                    continue;
-                }
-                int index = TMP_TextUtilities.FindIntersectingCharacter(
-                    textLines[i].textMeshPro,
-                    Input.mousePosition,
-                    Camera.main,
-                    true
-                    );
-                if (index != -1)
-                {
-                    if(index >= correctCharacterIndexBegin && index < correctCharacterIndexEnd)
-                    {
-                        Hit();
-                    }
-                }
-            }
         }
         
     }
@@ -182,59 +176,64 @@ public class GameLoop : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
  
         // Create a plane in front of the firePoint (facing the same way as the camera)
-        Plane plane = new Plane(Camera.main.transform.forward, shootOrigin.position + Camera.main.transform.forward * 5.5f);
+        Plane plane = new Plane(Camera.main.transform.forward, shootOrigin.position + Camera.main.transform.forward * 4f);
 
         if (plane.Raycast(ray, out float distance))
         {
           Vector3 targetPoint = ray.GetPoint(distance);
           Vector3 direction = (targetPoint - shootOrigin.position).normalized;
 
-          Quaternion rotation = Quaternion.LookRotation(direction, Camera.main.transform.up) * Quaternion.Euler(0, 90, 0);
+          Quaternion rotation = Quaternion.LookRotation(direction, Camera.main.transform.up) * Quaternion.Euler(0, 90f, 0);
           GameObject bullet = Instantiate(textBulletPrefab, shootOrigin.position, rotation);
 
           Rigidbody rb = bullet.GetComponent<Rigidbody>();
-          rb.velocity = direction * shootForce;
 
-          Debug.DrawRay(shootOrigin.position, direction * 3, Color.red, 2f);
+          StartCoroutine(MoveBullet(bullet, direction, 2f));
 
-
-          Destroy(bullet, 3f);
         }
-        
-
-        // Quaternion spawnRotation = Quaternion.LookRotation(direction, Vector3.up) * Quaternion.Euler(0, 90, 0); // rotate it to be parallel to the direction it's moving
-        
-        // GameObject bullet = Instantiate(textBulletPrefab, spawnPosition, spawnRotation);
-        // Rigidbody rb = bullet.GetComponent<Rigidbody>();
-
-
-        // if (rb != null)
-        // {
-        //     rb.velocity = direction * shootForce;
-        // }
 
     }
 
-    void Hit()
+    IEnumerator MoveBullet(GameObject bullet, Vector3 direction, float duration)
+    {
+        float elapsedTime = 0f;
+        while (elapsedTime < duration)
+        {
+            bullet.transform.position += direction * shootForce * Time.deltaTime;
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        
+        Destroy(bullet);
+    }
+    
+
+    public void Hit(Vector3 point)
     {
         if (evidenceManager.Check(correctEvidence))
         {
             CorrectChoice();
+            gameObject.GetComponent<TextShatterEffect>().Explosion(point);
         }
     }
 
     private void CorrectChoice()
     {
         finished = true;
+        foreach(TextLine text in textLines)
+        {
+        gameObject.GetComponent<TextShatterEffect>().Shatter(text);
+        }
+        cameraController.OnHitStatement();
         shatterTransform.gameObject.SetActive(true);
         Debug.Log("You clicked on the statement" + Time.time);
     }
 
     void SpawnText(int dialogueNodeIndex)
     {
-        correctTMPIndex = -1;
-        correctCharacterIndexBegin = -1;
-        correctCharacterIndexEnd = -1;
+        int correctTMPIndex = -1;
+        int correctCharacterIndexBegin = -1;
+        int correctCharacterIndexEnd = -1;
 
         DialogueNode nextDialogueNode = stage.dialogueNodes[dialogueNodeIndex];
         correctEvidence = nextDialogueNode.evidence;
@@ -257,11 +256,15 @@ public class GameLoop : MonoBehaviour
 
         for(int i = 0; i < nextDialogueNode.textLines.Count; i++)
         {
+            correctTMPIndex = -1;
+            correctCharacterIndexBegin = -1;
+            correctCharacterIndexEnd = -1;
+
             GameObject go = Instantiate(textPrefab);
             go.transform.position = textPivot.position;
             go.transform.position += nextDialogueNode.textLines[i].spawnOffset;
             go.transform.rotation = textPivot.rotation;
-            go.transform.localScale = nextDialogueNode.textLines[i].scale/10;
+            go.transform.localScale = nextDialogueNode.textLines[i].scale;
 
             TextMeshPro tmp = go.GetComponent<TextMeshPro>();
             string str = nextDialogueNode.textLines[i].text;
@@ -281,16 +284,80 @@ public class GameLoop : MonoBehaviour
                 go.GetComponent<RectTransform>(),
                 nextDialogueNode.textLines[i].textEffect,
                 nextDialogueNode.textLines[i].ttl,
-                go.GetComponent<TextMeshPro>()
+                go.GetComponent<TextMeshPro>(),
+                correctTMPIndex,
+                correctCharacterIndexBegin,
+                correctCharacterIndexEnd
                 );
+
+            textLine.textMeshPro.ForceMeshUpdate();
+            if(correctCharacterIndexBegin != -1) // if there's a statement, build box colliders for the segment before, in and after the statement
+            {
+               CreateColliderAroundTextRange(textLine, 0, correctCharacterIndexBegin-1, false);
+               CreateColliderAroundTextRange(textLine, correctCharacterIndexBegin, correctCharacterIndexEnd, true);
+               CreateColliderAroundTextRange(textLine, correctCharacterIndexEnd, textLine.textMeshPro.textInfo.characterCount-1, false);
+            }
+            else // if there's no statement, just build one box collider
+            {
+                CreateColliderAroundTextRange(textLine, 0, textLine.textMeshPro.textInfo.characterCount-1, false);
+            }
+            
             textLines.Add(textLine);
         }
-
-       
-        
-       
         
         effectController.effect = nextDialogueNode.cameraEffect;
         effectController.Reset();
+    }
+
+
+    // Gets the textLine to create for, the range and whether or not to make a child (AKA the orange part)
+    public void CreateColliderAroundTextRange(TextLine textLine, int startIndex, int endIndex, bool createChildObject)
+    {
+        TextMeshPro tmp = textLine.textMeshPro;
+        tmp.ForceMeshUpdate();
+        TMP_TextInfo textInfo = tmp.textInfo;
+      
+        BoxCollider boxCollider = null;
+
+        if (startIndex < 0 || endIndex > textInfo.characterCount || startIndex > endIndex)
+        {
+            return;
+        }
+
+        Vector3 min = Vector3.positiveInfinity;
+        Vector3 max = Vector3.negativeInfinity;
+
+        for (int i = startIndex; i <= endIndex; i++)
+        {
+            var charInfo = textInfo.characterInfo[i];
+            if (!charInfo.isVisible) continue;
+
+            Vector3 bl = charInfo.bottomLeft;
+            Vector3 tr = charInfo.topRight;
+
+            min = Vector3.Min(min, bl);
+            max = Vector3.Max(max, tr);
+        }
+
+        Vector3 center = (min + max) / 2;
+        Vector3 size = max - min;
+
+        if(createChildObject)
+        {
+            // Create the new GameObject
+            GameObject orangeHitbox = new GameObject("OrangeHitBox");
+            orangeHitbox.transform.SetParent(tmp.transform, false); // parent to text object
+            orangeHitbox.transform.localPosition = center;
+            orangeHitbox.transform.localRotation = Quaternion.identity;
+            orangeHitbox.transform.localScale = Vector3.one;
+            boxCollider = orangeHitbox.AddComponent<BoxCollider>();
+            orangeHitbox.tag = "OrangeHitBox";
+
+        }
+        else 
+        boxCollider = textLine.textGO.AddComponent<BoxCollider>();
+        boxCollider.center = center;
+        boxCollider.size = size;
+        
     }
 }
