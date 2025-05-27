@@ -19,12 +19,11 @@ public class ReticleManager : MonoBehaviour
     void Update()
     {
         int actualSpeed = speed;
-        if(WorldManager.instance != null)
-        if(WorldManager.instance.currentRoom.currentInteractable != null)
-        actualSpeed *= 4;
+        if (WorldManager.instance != null)
+            if (WorldManager.instance.currentRoom.currentInteractable != null)
+                actualSpeed *= 4;
 
-        transform.Rotate(0, 0,  actualSpeed * Time.deltaTime);
-        
+        transform.Rotate(0, 0, actualSpeed * Time.deltaTime);
     }
 
     public void ReticleAsCursor()
@@ -37,5 +36,10 @@ public class ReticleManager : MonoBehaviour
             out pos
         );
         gameObject.GetComponent<RectTransform>().anchoredPosition = pos;
+    }
+
+    public void Hide()
+    {
+        gameObject.SetActive(false);
     }
 }
