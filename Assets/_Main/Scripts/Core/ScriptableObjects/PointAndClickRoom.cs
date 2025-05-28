@@ -9,9 +9,7 @@ public class PointAndClickRoom : Room
 {
     public Room exitRoom;
 
-    [SerializeField] Cinemachine.CinemachineVirtualCamera virtualCamera;
-    [SerializeField] float cameraDollySpeed = 3f;
-    CinemachineTrackedDolly trackedDolly;
+    [SerializeField] float cameraDollySpeed = 2f;
 
     public float rotationSpeed = 100f; // Adjust rotation speed
     public float borderRight = 10f;
@@ -24,13 +22,10 @@ public class PointAndClickRoom : Room
 
     public override void MovementControl()
     {
-        
-    //  float position = virtualCamera.GetCinemachineComponent<CinemachineTrackedDolly>().m_PathPosition;
-    //  position += horizontalInput * cameraDollySpeed * Time.deltaTime;
-    //  position = Mathf.Clamp01(position);
-    //  virtualCamera.GetCinemachineComponent<CinemachineTrackedDolly>().m_PathPosition = position;
-
-     float horizontalInput = 0f;
+      float horizontalInput = Input.GetAxis("Horizontal");
+      float position = VirutalCameraManager.instance.virtualCamera.GetCinemachineComponent<CinemachineTrackedDolly>().m_PathPosition;
+      position += (horizontalInput * cameraDollySpeed * Time.deltaTime);
+      VirutalCameraManager.instance.virtualCamera.GetCinemachineComponent<CinemachineTrackedDolly>().m_PathPosition = position;
 
      float verticalInput = 0f;
 
@@ -74,7 +69,6 @@ public class PointAndClickRoom : Room
         horizontalRotation = Mathf.Clamp(horizontalRotation, borderLeft, borderRight);
         verticalRotation = Mathf.Clamp(verticalRotation, borderUp, borderDown);
       
-        Camera.main.transform.localRotation = Quaternion.Euler(verticalRotation, horizontalRotation, 0f);
     }
 
     public void ResetRotations()

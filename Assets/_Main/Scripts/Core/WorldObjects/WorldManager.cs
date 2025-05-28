@@ -135,6 +135,8 @@ public class WorldManager : MonoBehaviour
         if(CameraManager.instance)
         CameraManager.instance.setInitialPosition(cameraStartPos.position, cameraStartPos.rotation); // Sets only the Camera Manager's initial position value for later, not actually changing position of camera
 
+        VirutalCameraManager.instance.AssignVirtualCamera();
+
         Camera.main.transform.position = cameraStartPos.position; // Actually changing position of camera
         Camera.main.transform.rotation = cameraStartPos.rotation;
         ReturningToWorld();

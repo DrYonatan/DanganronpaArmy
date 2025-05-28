@@ -6,8 +6,6 @@ using TMPro;
 
 namespace DIALOGUE
 {
-
-
     public class DialogueSystem : MonoBehaviour
     {
 
@@ -83,12 +81,13 @@ namespace DIALOGUE
             
             if(activeOrNot)
             {
-                dialogueBox.SetActive(true); // Probably should remove this as it seems dialogueBox is never set to false 
+                VirutalCameraManager.instance.DisableVirtualCamera();
                 dialogueBox.GetComponent<CanvasGroup>().alpha = 1;
                 reticle.SetActive(false);
             }
             else 
             {
+                VirutalCameraManager.instance.EnableVirtualCamera();
                 dialogueBox.GetComponent<CanvasGroup>().alpha = 0;
                 reticle.SetActive(true);
                 CharacterClickEffects.instance.MakeCharactersReappear(characters);

@@ -18,6 +18,7 @@ public class WorldObjectsInteraction : Interactable
     {
         if(!DialogueSystem.instance.isActive) 
         {
+            GameObject.Find("World/Virtual Camera")?.SetActive(false);
             SoundManager.instance.PlaySoundEffect("click");
             if(gameObject.transform.parent.name.Equals("Characters"))
             {
