@@ -8,6 +8,7 @@ public class VirutalCameraManager : MonoBehaviour
     public static VirutalCameraManager instance { get; private set; }
 
     public Cinemachine.CinemachineVirtualCamera virtualCamera;
+    public DollyCameraPitchControl pitchControl;
 
     private void Awake()
     {
@@ -24,6 +25,7 @@ public class VirutalCameraManager : MonoBehaviour
     public void AssignVirtualCamera()
     {
         virtualCamera = GameObject.Find("World/Virtual Camera").GetComponent<Cinemachine.CinemachineVirtualCamera>();
+        pitchControl = virtualCamera.GetComponent<DollyCameraPitchControl>();
     }
 
     public void DisableVirtualCamera()

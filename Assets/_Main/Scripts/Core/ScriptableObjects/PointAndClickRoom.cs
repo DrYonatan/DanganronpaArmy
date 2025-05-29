@@ -20,14 +20,22 @@ public class PointAndClickRoom : Room
     private float horizontalRotation = 0f;
     private float verticalRotation = 0f;
 
+    private float pitch = 0f;
+
     public override void MovementControl()
     {
       float horizontalInput = Input.GetAxis("Horizontal");
+      float verticalInput = Input.GetAxis("Vertical");
+
       float position = VirutalCameraManager.instance.virtualCamera.GetCinemachineComponent<CinemachineTrackedDolly>().m_PathPosition;
       position += (horizontalInput * cameraDollySpeed * Time.deltaTime);
       VirutalCameraManager.instance.virtualCamera.GetCinemachineComponent<CinemachineTrackedDolly>().m_PathPosition = position;
 
-     float verticalInput = 0f;
+      pitch -= verticalInput * rotationSpeed * Time.deltaTime;
+      pitch = Mathf.Clamp(pitch, borderUp, borderDown);
+
+      // Apply the updated pitch
+      VirutalCameraManager.instance.pitchControl.pitch = pitch;
 
         if (Input.GetKey(KeyCode.A))
         {
