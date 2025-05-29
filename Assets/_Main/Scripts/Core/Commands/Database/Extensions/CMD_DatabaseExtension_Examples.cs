@@ -80,18 +80,6 @@ namespace TESTING
         }
         private static void ShowMovingImage(string[] args)
         {
-            /* GameObject imgObject = new GameObject("movingImage");
-
-             RectTransform trans = imgObject.AddComponent<RectTransform>();
-             trans.anchoredPosition = new Vector2(0.5f, 0.5f);
-             trans.localPosition = new Vector3(0, 0, 0);
-             trans.position = new Vector3(983, 540, 0);
-
-             Image image = imgObject.AddComponent<Image>();
-             image.sprite = Resources.Load<Sprite>($"Images/{args[0]}");
-             image.rectTransform.sizeDelta = new Vector2(2386, 1080);
-             imgObject.transform.SetParent(GameObject.Find("VN controller/Root/Canvas - Overlay/movingImage").transform);
-            */
             GameObject obj = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/3 - Cinematic/MovingImage");
             obj.SetActive(true);
             Image movingImage = obj.GetComponent<Image>();
@@ -176,7 +164,7 @@ namespace TESTING
             CharacterClickEffects.instance.MakeCharactersReappear(characters);
             if(WorldManager.instance.currentRoom is PointAndClickRoom)
             {
-              CameraManager.instance.MoveCameraTo(GameObject.Find("World/CameraStartPos").transform);
+               CameraManager.instance.ReturnCameraToTrack();
             }
             
             WorldManager.instance.ReturningToWorld();

@@ -45,7 +45,22 @@ public class CameraManager : MonoBehaviour
         StartCoroutine(RotateCameraTo(location.rotation, duration));
     }
 
-    
+    public void ReturnCameraToTrack()
+    {
+        StartCoroutine(MoveCameraToDollyTrack());
+    }
+
+    public IEnumerator MoveCameraToDollyTrack()
+    {
+        float duration = 0.5f;
+        Vector3 vCamPosition = VirutalCameraManager.instance.virtualCamera.State.FinalPosition;
+        Quaternion vCamRotation = VirutalCameraManager.instance.virtualCamera.State.FinalOrientation;
+        setInitialPosition(vCamPosition, vCamRotation);
+        StartCoroutine(RotateCameraTo(vCamRotation, duration));
+        yield return MoveCameraTo(vCamPosition, duration);
+        VirutalCameraManager.instance.EnableVirtualCamera();
+
+    }
 
     public void ZoomCamera(string zoom)
     {

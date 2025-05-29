@@ -87,7 +87,6 @@ namespace DIALOGUE
             }
             else 
             {
-                VirutalCameraManager.instance.EnableVirtualCamera();
                 dialogueBox.GetComponent<CanvasGroup>().alpha = 0;
                 reticle.SetActive(true);
                 CharacterClickEffects.instance.MakeCharactersReappear(characters);

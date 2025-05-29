@@ -5,7 +5,7 @@ using Cinemachine;
 public class CM_YawOffset : CinemachineExtension
 {
     [Tooltip("Degrees to rotate around the path's up-axis")]
-    public float yawOffset = 90f;
+    public float yawOffset = -90f;
 
     protected override void PostPipelineStageCallback(
         CinemachineVirtualCameraBase vcam,

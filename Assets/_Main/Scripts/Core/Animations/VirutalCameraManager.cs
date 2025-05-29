@@ -24,7 +24,6 @@ public class VirutalCameraManager : MonoBehaviour
     public void AssignVirtualCamera()
     {
         virtualCamera = GameObject.Find("World/Virtual Camera").GetComponent<Cinemachine.CinemachineVirtualCamera>();
-        virtualCamera.GetCinemachineComponent<CinemachineTrackedDolly>().m_PathPosition  = 1f;
     }
 
     public void DisableVirtualCamera()
