@@ -37,22 +37,6 @@ public class PointAndClickRoom : Room
       // Apply the updated pitch
       VirutalCameraManager.instance.pitchControl.pitch = pitch;
 
-        if (Input.GetKey(KeyCode.A))
-        {
-            horizontalInput = -1f; // Rotate left
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            horizontalInput = 1f; // Rotate right
-        }
-        if (Input.GetKey(KeyCode.W))
-        {
-            verticalInput = -1f; // Rotate up
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            verticalInput = 1f; // Rotate down
-        }
 
         if(Input.GetKey(KeyCode.R))
         {
@@ -69,13 +53,6 @@ public class PointAndClickRoom : Room
         }
         
         ReticleManager.instance.ReticleAsCursor();
-        
-        horizontalRotation += horizontalInput * rotationSpeed * Time.deltaTime;
-        verticalRotation += verticalInput * rotationSpeed * Time.deltaTime;
-        // Rotate the camera around the Y-axis
-
-        horizontalRotation = Mathf.Clamp(horizontalRotation, borderLeft, borderRight);
-        verticalRotation = Mathf.Clamp(verticalRotation, borderUp, borderDown);
       
     }
 

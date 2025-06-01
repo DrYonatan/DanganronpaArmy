@@ -57,9 +57,6 @@ public class PointAndClickEvent : GameEvent
     {
         GameObject characters = GameObject.Find(characterPath);
         GameObject objects = GameObject.Find(objectsPath);
-        Transform cameraStartPos = GameObject.Find("World/CameraStartPos").transform;
-        if (CameraManager.instance != null)
-            CameraManager.instance.setInitialPosition(cameraStartPos.position, cameraStartPos.rotation);
         ((PointAndClickRoom)(WorldManager.instance.currentRoom)).ResetRotations();
 
         if (characterPrefab != null)
@@ -89,6 +86,7 @@ public class PointAndClickEvent : GameEvent
             GameObject objects = GameObject.Find(objectsPath);
             Destroy(objects);
             Destroy(characters);
+            CameraManager.instance.MoveCameraTo(GameObject.Find("World/CameraStartPos").transform);
         }
 
         base.OnFinish();

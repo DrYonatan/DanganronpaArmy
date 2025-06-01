@@ -34,7 +34,6 @@ public class WorldManager : MonoBehaviour
 
     public void ReturningToWorld()
     {
-
         if(currentGameEvent != null)
         {
             currentGameEvent.CheckIfFinished();

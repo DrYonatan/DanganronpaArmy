@@ -77,7 +77,6 @@ namespace DIALOGUE
             isActive = activeOrNot;
             GameObject dialogueBox = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/4 - Dialogue");
             GameObject reticle = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/6 - Controls/Reticle");
-            GameObject characters = GameObject.Find("World/World Objects/Characters");
             
             if(activeOrNot)
             {
@@ -89,7 +88,6 @@ namespace DIALOGUE
             {
                 dialogueBox.GetComponent<CanvasGroup>().alpha = 0;
                 reticle.SetActive(true);
-                CharacterClickEffects.instance.MakeCharactersReappear(characters);
             }
         }
 

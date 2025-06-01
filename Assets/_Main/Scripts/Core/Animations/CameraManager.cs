@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DIALOGUE;
 
 public class CameraManager : MonoBehaviour
 {
@@ -45,7 +46,7 @@ public class CameraManager : MonoBehaviour
         StartCoroutine(RotateCameraTo(location.rotation, duration));
     }
 
-    public void ReturnCameraToTrack()
+    public void ReturnToDollyTrack()
     {
         StartCoroutine(MoveCameraToDollyTrack());
     }
@@ -58,8 +59,8 @@ public class CameraManager : MonoBehaviour
         setInitialPosition(vCamPosition, vCamRotation);
         StartCoroutine(RotateCameraTo(vCamRotation, duration));
         yield return MoveCameraTo(vCamPosition, duration);
+        if(!DialogueSystem.instance.isActive)
         VirutalCameraManager.instance.EnableVirtualCamera();
-
     }
 
     public void ZoomCamera(string zoom)
