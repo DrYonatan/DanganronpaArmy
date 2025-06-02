@@ -37,6 +37,8 @@ public class WorldObjectsInteraction : Interactable
 
         yield return StartCoroutine(CameraManager.instance.RotateCameraTo(targetRotation, duration));
         StartCoroutine(CameraManager.instance.MoveCameraTo(targetPosition, duration));
+        if(gameObject.transform.parent.name.Equals("Characters"))
+        StartCoroutine(CameraManager.instance.RotateCameraTo(Quaternion.LookRotation(transform.forward), duration));
 
         CameraManager.instance.setInitialPosition(targetPosition, targetRotation);
         if(WorldManager.instance.currentGameEvent != null)

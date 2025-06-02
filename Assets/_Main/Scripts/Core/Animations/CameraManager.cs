@@ -123,7 +123,7 @@ public class CameraManager : MonoBehaviour
         if (zoom.ToLower() == "in")
             z = 30;
         else
-            z = 45;
+            z = 60;
         while (Camera.main.fieldOfView != z)
         {
             Camera.main.fieldOfView = Mathf.MoveTowards(Camera.main.fieldOfView, z, 60 * Time.deltaTime);
