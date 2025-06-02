@@ -14,34 +14,33 @@ public class PointAndClickEvent : GameEvent
 
     public override void UpdateEvent()
     {
-        isFinished = true;
         Transform characters = GameObject.Find(characterPath)?.transform;
-
-        // checks all the characters are clicked
-        if (characters != null)
-        {
-            foreach (Transform character in characters)
-            {
-                if (!character.GetComponent<WorldObjectsInteraction>().isClicked)
-                    isFinished = false;
-            }
-        }
-
+        bool allCharactersClicked = AreAllClicked(characters);
+        
         Transform objects = GameObject.Find(objectsPath)?.transform;
+        bool allObjectsClicked = AreAllClicked(objects);
 
-        // checks all the objects are clicked
-        if (objects != null)
-        {
-            foreach (Transform interactableObject in objects)
-            {
-                if (!interactableObject.GetComponent<WorldObjectsInteraction>().isClicked)
-                    isFinished = false;
-            }
-        }
+        isFinished = allCharactersClicked && allObjectsClicked;
 
         if (objects == null &&
             characters == null) // if none of the interactables loaded it means the event just started
             isFinished = false;
+    }
+
+    private bool AreAllClicked(Transform objects)
+    {
+        bool finished = true;
+        
+        if (objects != null)
+        {
+            foreach (Transform interactableObject in objects)
+            {
+                if (!interactableObject.GetComponent<ConversationInteractable>().isClicked)
+                    finished = false;
+            }
+        }
+
+        return finished;
     }
 
     public override void CheckIfFinished()

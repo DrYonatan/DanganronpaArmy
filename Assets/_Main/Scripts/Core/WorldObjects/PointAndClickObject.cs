@@ -1,19 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using DIALOGUE;
+using UnityEngine;
 
 public class PointAndClickObject : MonoBehaviour
 {
     private void OnMouseDown()
     {
-        gameObject.GetComponent<WorldObjectsInteraction>().Interact();
+        if (!DialogueSystem.instance.isActive)
+        {
+            gameObject.GetComponent<Interactable>().Interact();
+            VirutalCameraManager.instance.virtualCamera.gameObject.SetActive(false);
+        }
     }
 
     private void OnMouseOver()
     {
-        if(!DialogueSystem.instance.isActive)
-        WorldManager.instance.currentRoom.currentInteractable = gameObject.GetComponent<Interactable>();
+        if (!DialogueSystem.instance.isActive)
+            WorldManager.instance.currentRoom.currentInteractable = gameObject.GetComponent<Interactable>();
     }
 
     private void OnMouseExit()

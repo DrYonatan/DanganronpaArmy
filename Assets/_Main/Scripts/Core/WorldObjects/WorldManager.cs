@@ -57,7 +57,7 @@ public class WorldManager : MonoBehaviour
         foreach(string characterName in currentGameEvent.charactersData.Keys) 
         {
             ob.transform.Find(characterName).gameObject
-            .GetComponent<WorldObjectsInteraction>().isClicked =
+            .GetComponent<WorldCharacter>().isClicked =
              currentGameEvent.charactersData[characterName].isClicked;
         }
     }
@@ -70,7 +70,7 @@ public class WorldManager : MonoBehaviour
         foreach(string objectName in currentGameEvent.objectsData.Keys) 
         {
             ob.transform.Find(objectName).gameObject
-            .GetComponent<WorldObjectsInteraction>().isClicked =
+            .GetComponent<WorldCharacter>().isClicked =
              currentGameEvent.objectsData[objectName].isClicked;
         }
     }
@@ -101,7 +101,7 @@ public class WorldManager : MonoBehaviour
            foreach (Transform character in characters)
           {
             currentGameEvent.charactersData[character.name] = 
-            new ObjectData(character.gameObject.GetComponent<WorldObjectsInteraction>().isClicked);
+            new ObjectData(character.gameObject.GetComponent<WorldCharacter>().isClicked);
           }
         }
 
@@ -132,7 +132,7 @@ public class WorldManager : MonoBehaviour
         characterPanel = GameObject.Find("World/World Objects");
         Transform cameraStartPos = GameObject.Find("World/CameraStartPos").transform;
         if(CameraManager.instance)
-        CameraManager.instance.setInitialPosition(cameraStartPos.position, cameraStartPos.rotation); // Sets only the Camera Manager's initial position value for later, not actually changing position of camera
+        CameraManager.instance.initialRotation = cameraStartPos.rotation; // Sets only the Camera Manager's initial position value for later, not actually changing position of camera
 
         if(currentRoom is PointAndClickRoom)
         VirutalCameraManager.instance.AssignVirtualCamera();

@@ -14,34 +14,29 @@ public class CameraManager : MonoBehaviour
     private const int CHARACTERS_MIDDLE = 0;
     private const int CHARACTERS_LEFT = 1400;
 
-    private Vector3 initialPosition;
-    private Vector3 initialCharacterPos;
-    private Quaternion initialRotation;
+    public Quaternion initialRotation;
+
+    private bool isInFinalRotation = true;
 
     private void Start()
     {
         instance = this;
-        initialCharacterPos = GameObject.Find(charactersLayerPath).transform.position;
         Transform absoluteStartPos = GameObject.Find("World/CameraStartPos").transform;
-        setInitialPosition(absoluteStartPos.position, absoluteStartPos.rotation);
-    }
-
-    public void setInitialPosition(Vector3 position, Quaternion rotation) 
-    {
-        initialPosition = position;
-        initialRotation = rotation;
+        initialRotation = absoluteStartPos.rotation;
     }
 
     public void MoveCamera(string direction, float duration)
     {
-        StartCoroutine(MoveCamera(duration, direction));
-
+        if (isInFinalRotation)
+        {
+            StartCoroutine(MoveCamera(duration, direction));
+        }
     }
 
     public void MoveCameraTo(Transform location) 
     {
         float duration = 0.5f;
-        setInitialPosition(location.position, location.rotation);
+        initialRotation = location.rotation;
         StartCoroutine(MoveCameraTo(location.position, duration));
         StartCoroutine(RotateCameraTo(location.rotation, duration));
     }
@@ -56,7 +51,7 @@ public class CameraManager : MonoBehaviour
         float duration = 0.5f;
         Vector3 vCamPosition = VirutalCameraManager.instance.virtualCamera.State.FinalPosition;
         Quaternion vCamRotation = VirutalCameraManager.instance.virtualCamera.State.FinalOrientation;
-        setInitialPosition(vCamPosition, vCamRotation);
+        initialRotation = vCamRotation;
         StartCoroutine(RotateCameraTo(vCamRotation, duration));
         yield return MoveCameraTo(vCamPosition, duration);
         if(!DialogueSystem.instance.isActive)
@@ -70,6 +65,8 @@ public class CameraManager : MonoBehaviour
 
     public IEnumerator RotateCameraTo(Quaternion rotation, float duration)
     {
+        isInFinalRotation = false;
+        
         Quaternion startRotate = Camera.main.transform.rotation;
         
         float elapsedTime = 0;
@@ -89,6 +86,8 @@ public class CameraManager : MonoBehaviour
         {
            Camera.main.transform.rotation = rotation;
         }
+         
+         isInFinalRotation = true;
     }
 
     public IEnumerator MoveCameraTo(Vector3 location, float duration) 
@@ -163,9 +162,7 @@ public class CameraManager : MonoBehaviour
            rotation = Quaternion.Euler(0f, -12f, 0f);
            break;
         }
-
-        Vector3 startPos = Camera.main.transform.position;
-
+        
         Quaternion startRotate = Camera.main.transform.rotation;
         Quaternion targetRotate = initialRotation * rotation;
 

@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using DIALOGUE;
 using UnityEngine;
 
-[CreateAssetMenu(menuName="Rooms/Free Roam Room")]
+[CreateAssetMenu(menuName = "Rooms/Free Roam Room")]
 public class FreeRoamRoom : Room
 {
     public float moveSpeed = 5f;
@@ -14,22 +15,23 @@ public class FreeRoamRoom : Room
 
     float playerReach = 14f;
 
-    public override void MovementControl() 
+    public override void MovementControl()
     {
         Move();
         Look();
         Interact();
     }
+
     void Move()
     {
         float speed = moveSpeed;
-        if(Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift))
         {
             speed *= 2;
         }
 
         GameObject gameObject = Camera.main.transform.gameObject;
-        float horizontal = Input.GetAxis("Horizontal"); 
+        float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
         Vector3 move = gameObject.transform.right * horizontal + gameObject.transform.forward * vertical;
         move.y = 0; // Ensure no vertical movement
@@ -54,7 +56,8 @@ public class FreeRoamRoom : Room
     void Interact()
     {
         CheckInteraction();
-        if(Input.GetMouseButtonDown(0) && currentInteractable != null)
+        if (Input.GetMouseButtonDown(0) && currentInteractable != null 
+                                        && !DialogueSystem.instance.isActive)
         {
             currentInteractable.Interact();
         }
@@ -65,13 +68,13 @@ public class FreeRoamRoom : Room
         RaycastHit hit;
         Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
 
-        if(Physics.Raycast(ray, out hit, playerReach))
+        if (Physics.Raycast(ray, out hit, playerReach))
         {
-            if(hit.collider.tag == "Interactable")
+            if (hit.collider.tag == "Interactable")
             {
                 Interactable newInteractable = hit.collider.GetComponent<Interactable>();
 
-                if(newInteractable.enabled)
+                if (newInteractable.enabled)
                 {
                     currentInteractable = newInteractable;
                 }
@@ -93,7 +96,8 @@ public class FreeRoamRoom : Room
 
     public void CenterReticle()
     {
-        RectTransform reticle = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/6 - Controls/Reticle").GetComponent<RectTransform>();
+        RectTransform reticle = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/6 - Controls/Reticle")
+            .GetComponent<RectTransform>();
         reticle.anchorMin = new Vector2(0.5f, 0.5f);
         reticle.anchorMax = new Vector2(0.5f, 0.5f);
         reticle.pivot = new Vector2(0.5f, 0.5f);
@@ -101,5 +105,4 @@ public class FreeRoamRoom : Room
         // Set position to center
         reticle.anchoredPosition = Vector2.zero;
     }
-
 }
