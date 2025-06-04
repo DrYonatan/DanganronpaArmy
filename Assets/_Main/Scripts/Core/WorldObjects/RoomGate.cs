@@ -17,8 +17,6 @@ public class RoomGate : Interactable
             ((FreeRoamEvent)(WorldManager.instance.currentGameEvent)).allowedRooms.Count == 0)
         {
             WorldManager.instance.StartLoadingRoom(roomToLoad);
-           // WorldManager.instance.currentGameEvent.UpdateEvent();
-           // WorldManager.instance.currentGameEvent.CheckIfFinished();
         }
         else
         {

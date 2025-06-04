@@ -22,6 +22,11 @@ public class PointAndClickRoom : Room
 
     private float pitch = 0f;
 
+    public override IEnumerator OnLoad()
+    {
+        return VirutalCameraManager.instance.SlideAcrossRoom(3f);
+    }
+
     public override void MovementControl()
     {
       float horizontalInput = Input.GetAxis("Horizontal");

@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DIALOGUE;
-using System.Threading.Tasks;
 
 public class WorldManager : MonoBehaviour
 {
@@ -143,7 +142,8 @@ public class WorldManager : MonoBehaviour
         Camera.main.transform.position = cameraStartPos.position; // Actually changing position of camera
         Camera.main.transform.rotation = cameraStartPos.rotation;
 
-       // StartCoroutine(VirutalCameraManager.instance.SlideAcrossRoom(3f));
+        if(room.OnLoad() != null)
+        yield return StartCoroutine(room.OnLoad());
         isLoading = false;
         ReturningToWorld();
     }

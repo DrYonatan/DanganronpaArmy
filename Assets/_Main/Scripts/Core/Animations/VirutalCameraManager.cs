@@ -63,6 +63,7 @@ public class VirutalCameraManager : MonoBehaviour
 
         while(elapsedTime < duration)
         {
+            elapsedTime += Time.deltaTime;
             position += Time.deltaTime;
             VirutalCameraManager.instance.virtualCamera.GetCinemachineComponent<CinemachineTrackedDolly>().m_PathPosition = position;
             yield return null;
@@ -72,7 +73,8 @@ public class VirutalCameraManager : MonoBehaviour
 
         while(elapsedTime < 0.5f)
         {
-            position = Mathf.MoveTowards(position, initialPosition, Time.deltaTime);
+            elapsedTime += Time.deltaTime;
+            position = Mathf.MoveTowards(position, initialPosition, Time.deltaTime * 4f);
             VirutalCameraManager.instance.virtualCamera.GetCinemachineComponent<CinemachineTrackedDolly>().m_PathPosition = position;
             yield return null;
         }
