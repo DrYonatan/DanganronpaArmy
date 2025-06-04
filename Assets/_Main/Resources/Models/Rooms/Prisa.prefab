@@ -245,6 +245,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: -8679921383154817045}
+  - component: {fileID: 4070546671704377629}
   m_Layer: 0
   m_Name: picnictable
   m_TagString: Untagged
@@ -261,13 +262,52 @@ Transform:
   m_GameObject: {fileID: 919132149155446097}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -185.19095, y: 1.5830256, z: -151.17488}
+  m_LocalPosition: {x: -185.19095, y: 0.03, z: -127.1}
   m_LocalScale: {x: 1.5830297, y: 1.5830301, z: 1.5830297}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1151388028547126963}
   m_Father: {fileID: 645256557181278590}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4070546671704377629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132149155446097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 331812002879e6b4180269d14a722880, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  height: 30
+  fallSpeed: 40
+  delay: 1.5
+  fallCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1466800226897480230
 GameObject:
   m_ObjectHideFlags: 0
@@ -541,6 +581,7 @@ GameObject:
   - component: {fileID: 275899119137040636}
   - component: {fileID: 3566639734017315606}
   - component: {fileID: 5842690282451133261}
+  - component: {fileID: 527056765250301201}
   m_Layer: 0
   m_Name: Bush (2)
   m_TagString: Untagged
@@ -635,6 +676,21 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &527056765250301201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2153969921097975935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88618a4c3155a52458e1bb38348fef87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: {x: 0, y: 0, z: 5}
+  speed: 30
+  delay: 1
 --- !u!1 &2480313750695417910
 GameObject:
   m_ObjectHideFlags: 0
@@ -745,7 +801,7 @@ Transform:
   m_GameObject: {fileID: 2517818700843379351}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 14.7002, y: -1.2576, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.08357287, y: 0.08357287, z: 0.08357287}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1557,6 +1613,7 @@ GameObject:
   - component: {fileID: 2893814929524137927}
   - component: {fileID: 4634371140434135778}
   - component: {fileID: 7028777903409068946}
+  - component: {fileID: 4986588231893427971}
   m_Layer: 0
   m_Name: Bush (1)
   m_TagString: Untagged
@@ -1651,6 +1708,21 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &4986588231893427971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5175487434649251279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88618a4c3155a52458e1bb38348fef87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: {x: 0, y: 0, z: -10}
+  speed: 30
+  delay: 0.5
 --- !u!1 &5323326621091048621
 GameObject:
   m_ObjectHideFlags: 0
@@ -2303,6 +2375,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6849078582969107523}
+  - component: {fileID: 2988024201676969852}
   m_Layer: 0
   m_Name: picnictable (1)
   m_TagString: Untagged
@@ -2319,13 +2392,52 @@ Transform:
   m_GameObject: {fileID: 6657103913075685780}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -185.19095, y: 1.5830256, z: -168.29575}
+  m_LocalPosition: {x: -185.19, y: 0.22, z: -146.21}
   m_LocalScale: {x: 1.5830297, y: 1.5830301, z: 1.5830297}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 120142029402175200}
   m_Father: {fileID: 645256557181278590}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2988024201676969852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6657103913075685780}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 331812002879e6b4180269d14a722880, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  height: 30
+  fallSpeed: 40
+  delay: 1
+  fallCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &6856730928646319710
 GameObject:
   m_ObjectHideFlags: 0
@@ -2986,6 +3098,7 @@ GameObject:
   - component: {fileID: 1364799924351072813}
   - component: {fileID: 4044127568146716235}
   - component: {fileID: 2461811407720036244}
+  - component: {fileID: 6780339539318596222}
   m_Layer: 0
   m_Name: Bush
   m_TagString: Untagged
@@ -3080,6 +3193,21 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &6780339539318596222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8062346154196035631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88618a4c3155a52458e1bb38348fef87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: {x: 0, y: 0, z: -10}
+  speed: 30
+  delay: 0
 --- !u!1 &8164078558771037576
 GameObject:
   m_ObjectHideFlags: 0
@@ -3107,7 +3235,7 @@ Transform:
   m_GameObject: {fileID: 8164078558771037576}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 14.7002, y: -1.2576, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.08357287, y: 0.08357287, z: 0.08357287}
   m_ConstrainProportionsScale: 0
   m_Children: []
