@@ -49,7 +49,7 @@ public class PointAndClickRoom : Room
             }
             
             else
-            WorldManager.instance.LoadRoom(exitRoom);
+            WorldManager.instance.StartLoadingRoom(exitRoom);
         }
         
         ReticleManager.instance.ReticleAsCursor();

@@ -9,16 +9,16 @@ public class RoomGate : Interactable
 {
     public Room roomToLoad;
 
-    public async override void Interact()
+    public override void Interact()
     {
         base.Interact();
         if (((FreeRoamEvent)(WorldManager.instance.currentGameEvent)).allowedRooms.Any(item =>
                 item.name == roomToLoad.name) ||
             ((FreeRoamEvent)(WorldManager.instance.currentGameEvent)).allowedRooms.Count == 0)
         {
-            await WorldManager.instance.LoadRoom(roomToLoad);
-            WorldManager.instance.currentGameEvent.UpdateEvent();
-            WorldManager.instance.currentGameEvent.CheckIfFinished();
+            WorldManager.instance.StartLoadingRoom(roomToLoad);
+           // WorldManager.instance.currentGameEvent.UpdateEvent();
+           // WorldManager.instance.currentGameEvent.CheckIfFinished();
         }
         else
         {
