@@ -57,7 +57,9 @@ public class WorldManager : MonoBehaviour
         ob.SetActive(true);
         foreach(string characterName in currentGameEvent.charactersData.Keys) 
         {
-            ob.transform.Find(characterName).gameObject
+            Transform character = ob.transform.Find(characterName);
+            if(character != null)
+            character.gameObject
             .GetComponent<WorldCharacter>().isClicked =
              currentGameEvent.charactersData[characterName].isClicked;
         }
@@ -71,7 +73,7 @@ public class WorldManager : MonoBehaviour
         foreach(string objectName in currentGameEvent.objectsData.Keys) 
         {
             ob.transform.Find(objectName).gameObject
-            .GetComponent<WorldCharacter>().isClicked =
+            .GetComponent<WorldObject>().isClicked =
              currentGameEvent.objectsData[objectName].isClicked;
         }
     }
