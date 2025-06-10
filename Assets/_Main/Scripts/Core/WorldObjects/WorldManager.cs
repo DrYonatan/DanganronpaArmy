@@ -34,20 +34,32 @@ public class WorldManager : MonoBehaviour
 
     public void ReturningToWorld()
     {
+        StartCoroutine(ReturningToWorldInOrder());
+    }
+
+    IEnumerator ReturningToWorldInOrder()
+    {
         if(currentGameEvent != null)
         {
             currentGameEvent.UpdateEvent();
             currentGameEvent.CheckIfFinished();
         }
 
+        float timeOut = 0.5f;
+        float elapsedTime = 0f;
+        while(GameObject.Find("World/World Objects/Characters") != null && elapsedTime < timeOut)
+        {
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
         ProgressManager.instance.DecideWhichSceneToPlay();
-        currentGameEvent.UpdateEvent();
 
         if(currentGameEvent != null)
         {
-            currentGameEvent.PlayEvent();
+            currentGameEvent.UpdateEvent();
         }  
-
+        yield return null;
     }
 
     public void CreateCharacters(GameObject prefab)
