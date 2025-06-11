@@ -17,6 +17,8 @@ public abstract class GameEvent : ScriptableObject
 {
     public bool isFinished;
 
+    public bool startEventImmediately = false; // used to know if to start the event as soon as the previous one ends or only after finish text
+
     public TextAsset finishText;
 
     public List<GameEvent> conditionEvents;
@@ -42,7 +44,6 @@ public abstract class GameEvent : ScriptableObject
             if (lines != null)
                 DialogueSystem.instance.Say(lines);
 
-            ProgressManager.instance.DecideWhichSceneToPlay();
             finishText = null;
         }
     }
