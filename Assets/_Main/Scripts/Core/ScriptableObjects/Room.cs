@@ -9,5 +9,7 @@ public abstract class Room : ScriptableObject
     public Interactable currentInteractable;
 
     public abstract void MovementControl();
+
+    public abstract IEnumerator OnLoad();
    
 }

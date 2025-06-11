@@ -30,11 +30,18 @@ public class FreeRoamEvent : GameEvent
 
     public override void UpdateEvent()
     {
-        // checks the current room's objects (mostly characters) in this event, and loads the event's current room objects
-        GameObject objects = (allowedRooms.Find(room => room.name == WorldManager.instance.currentRoom.name))
+        if(startEventImmediately)
+        {
+            // checks the current room's objects (mostly characters) in this event, and loads the event's current room objects
+            GameObject objects = (allowedRooms.Find(room => room.name == WorldManager.instance.currentRoom.name))
             ?.worldObjects;
-        if (objects != null && GameObject.Find("World/World Objects/Characters") == null)
+            if (objects != null && GameObject.Find("World/World Objects/Characters") == null)
             WorldManager.instance.CreateCharacters(objects);
+        }
+        else
+        {
+            startEventImmediately = true;
+        }
     }
 
 

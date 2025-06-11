@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DIALOGUE;
-using System.Threading.Tasks;
 
 public class WorldManager : MonoBehaviour
 {
@@ -10,11 +9,12 @@ public class WorldManager : MonoBehaviour
     public GameEvent currentGameEvent;
     public Room currentRoom;
     public bool isPaused;
+    public bool isLoading = false;
 
     public static WorldManager instance { get; private set; }
 
     // Start is called before the first frame update
-    async void Start()
+     void Start()
     {
         instance = this;
         isPaused = false;
@@ -34,19 +34,32 @@ public class WorldManager : MonoBehaviour
 
     public void ReturningToWorld()
     {
+        StartCoroutine(ReturningToWorldInOrder());
+    }
+
+    IEnumerator ReturningToWorldInOrder()
+    {
         if(currentGameEvent != null)
         {
+            currentGameEvent.UpdateEvent();
             currentGameEvent.CheckIfFinished();
         }
 
+        float timeOut = 0.5f;
+        float elapsedTime = 0f;
+        while(GameObject.Find("World/World Objects/Characters") != null && elapsedTime < timeOut)
+        {
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
         ProgressManager.instance.DecideWhichSceneToPlay();
-        currentGameEvent.UpdateEvent();
 
         if(currentGameEvent != null)
         {
-            currentGameEvent.PlayEvent();
+            currentGameEvent.UpdateEvent();
         }  
-
+        yield return null;
     }
 
     public void CreateCharacters(GameObject prefab)
@@ -56,7 +69,9 @@ public class WorldManager : MonoBehaviour
         ob.SetActive(true);
         foreach(string characterName in currentGameEvent.charactersData.Keys) 
         {
-            ob.transform.Find(characterName).gameObject
+            Transform character = ob.transform.Find(characterName);
+            if(character != null)
+            character.gameObject
             .GetComponent<WorldCharacter>().isClicked =
              currentGameEvent.charactersData[characterName].isClicked;
         }
@@ -70,7 +85,7 @@ public class WorldManager : MonoBehaviour
         foreach(string objectName in currentGameEvent.objectsData.Keys) 
         {
             ob.transform.Find(objectName).gameObject
-            .GetComponent<WorldCharacter>().isClicked =
+            .GetComponent<WorldObject>().isClicked =
              currentGameEvent.objectsData[objectName].isClicked;
         }
     }
@@ -82,13 +97,14 @@ public class WorldManager : MonoBehaviour
         Destroy(characters);
     }
 
-    public async void StartLoadingRoom(Room room)
+    public void StartLoadingRoom(Room room)
     {
-        await LoadRoom(room);
+        StartCoroutine(LoadRoom(room));
     }
 
-    public async Task LoadRoom(Room room)
+    public IEnumerator LoadRoom(Room room)
     {
+        isLoading = true;
         float timeout = 2f;
         float elapsedTime = 0f;
 
@@ -111,8 +127,8 @@ public class WorldManager : MonoBehaviour
         // Wait until World finished destroying (max 2 seconds to prevent infinite loops)
         while (GameObject.Find("World") != null && elapsedTime < timeout)
         {
-           await Task.Yield();
            elapsedTime += Time.deltaTime;
+           yield return null;
         }
 
 
@@ -124,8 +140,8 @@ public class WorldManager : MonoBehaviour
         // Wait until "World Objects" is found (max 2 seconds to prevent infinite loops)
         while (GameObject.Find("World/World Objects") == null && elapsedTime < timeout)
         {
-           await Task.Yield();
            elapsedTime += Time.deltaTime;
+           yield return null;
         }
         
         if(GameObject.Find("World/World Objects") != null)
@@ -139,6 +155,10 @@ public class WorldManager : MonoBehaviour
 
         Camera.main.transform.position = cameraStartPos.position; // Actually changing position of camera
         Camera.main.transform.rotation = cameraStartPos.rotation;
+
+        if(room.OnLoad() != null)
+        yield return StartCoroutine(room.OnLoad());
+        isLoading = false;
         ReturningToWorld();
     }
 
@@ -146,7 +166,7 @@ public class WorldManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!DialogueSystem.instance.isActive && !isPaused)
+        if(!DialogueSystem.instance.isActive && !isPaused && !isLoading)
         currentRoom.MovementControl();
     }
 }

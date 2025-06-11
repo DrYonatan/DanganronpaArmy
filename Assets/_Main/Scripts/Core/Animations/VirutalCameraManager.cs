@@ -53,4 +53,30 @@ public class VirutalCameraManager : MonoBehaviour
     {
         Camera.main.transform.position = virtualCamera.State.FinalPosition;
     }
+
+    public IEnumerator SlideAcrossRoom(float duration)
+    {
+        float elapsedTime = 0f;
+
+        float initialPosition = VirutalCameraManager.instance.virtualCamera.GetCinemachineComponent<CinemachineTrackedDolly>().m_PathPosition;
+        float position = 0f;
+
+        while(elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            position += Time.deltaTime;
+            VirutalCameraManager.instance.virtualCamera.GetCinemachineComponent<CinemachineTrackedDolly>().m_PathPosition = position;
+            yield return null;
+        }
+        
+        elapsedTime = 0f;
+
+        while(elapsedTime < 0.5f)
+        {
+            elapsedTime += Time.deltaTime;
+            position = Mathf.MoveTowards(position, initialPosition, Time.deltaTime * 4f);
+            VirutalCameraManager.instance.virtualCamera.GetCinemachineComponent<CinemachineTrackedDolly>().m_PathPosition = position;
+            yield return null;
+        }
+    }
 }

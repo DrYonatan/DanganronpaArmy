@@ -54,7 +54,9 @@ public class PointAndClickEvent : GameEvent
 
     public override void PlayEvent()
     {
-        GameObject characters = GameObject.Find(characterPath);
+        if(startEventImmediately)
+        {
+            GameObject characters = GameObject.Find(characterPath);
         GameObject objects = GameObject.Find(objectsPath);
         ((PointAndClickRoom)(WorldManager.instance.currentRoom)).ResetRotations();
 
@@ -75,6 +77,12 @@ public class PointAndClickEvent : GameEvent
         {
             WorldManager.instance.CreateObjects(interactableObjectsPrefab);
         }
+        }
+        else
+        {
+            startEventImmediately = true;
+        }
+        
     }
 
     public override void OnFinish()
