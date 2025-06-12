@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace CHARACTERS
 {
-    public class CharacterManager : MonoBehaviour
+    public class CharacterManager : MonoBehaviour, ICharacterHandler
     {
    
         
@@ -189,6 +189,79 @@ namespace CHARACTERS
 
             characters = new Dictionary<string, Character>();
         }
+        
+        public string GetCharacterPosition(string speakerName)
+        {
+            string direction = "middle";
+            if(leftCharacters.Contains(speakerName))
+                direction = "left";
+            else if(rightCharacters.Contains(speakerName))
+                direction = "right";
+
+            return direction;
+        }
+        public string GetSpeakerEnglishName(DIALOGUE_LINE line)
+        {
+            string speakerName = "";
+            foreach (CharacterConfigData character in DialogueSystem.instance.config.characterConfigurationAsset.characters)
+            {
+                if (character.alias == line.speakerData.name)
+                {
+                    speakerName = character.name;
+                    break;
+                }
+            }
+            return speakerName;
+        }
+        
+        public void DecideCharactersToHide(string speakerName)
+        {
+            string pos = GetCharacterPosition(speakerName);
+            
+            if(pos == "left") 
+            {
+                foreach(string character in leftCharacters) {
+                    if(character != speakerName)
+                        InstantHideCharacter(character);
+                }
+            }
+            else if(pos == "middle") 
+            {
+                foreach(string character in middleCharacters) {
+                    if(character != speakerName)
+                        InstantHideCharacter(character);
+                }
+            }
+            else 
+            {
+                foreach(string character in rightCharacters) {
+                    if(character != speakerName)
+                        InstantHideCharacter(character);
+                }
+            }
+
+        }
+
+        public void OnLineParsed(DIALOGUE_LINE line)
+        {
+            string speakerName = "";
+            if (line.hasSpeaker)
+            {
+                speakerName = GetSpeakerEnglishName(line);
+                string direction = GetCharacterPosition(speakerName);
+                if (characters.ContainsKey(speakerName.ToLower()))
+                    CameraManager.instance.MoveCamera(direction, 0.3f);
+                if(!speakerName.Equals(""))
+                    DecideCharactersToHide(speakerName);
+            }
+
+            ShowCharacter(speakerName);
+        }
+
+        public void OnStopConversation()
+        {
+            DestroyAllCharacters();
+        }
 
         private class CHARACTER_INFO
         {
@@ -199,8 +272,6 @@ namespace CHARACTERS
             public CharacterConfigData config = null;
 
             public GameObject prefab = null;
-
-         
         }
     }
 }

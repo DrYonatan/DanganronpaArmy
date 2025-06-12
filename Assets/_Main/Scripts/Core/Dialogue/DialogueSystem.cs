@@ -1,14 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
-
 
 namespace DIALOGUE
 {
     public class DialogueSystem : MonoBehaviour
     {
-
         public bool isActive;
         [SerializeField] private DialogueSystemConfigurationSO _config;
         public DialogueSystemConfigurationSO config => _config;
@@ -16,12 +12,12 @@ namespace DIALOGUE
         public DialogueContainer dialogueContainer = new DialogueContainer();
         private ConversationManager conversationManager;
         private TextArchitect architect;
-        public bool isRunningConversation => conversationManager.isRunning;
 
-
+        public MonoBehaviour characterHandler;
         public static DialogueSystem instance { get; private set; }
 
         public delegate void DialogueSystemEvent();
+
         public event DialogueSystemEvent onUserPrompt_Next;
 
         private void Awake()
@@ -38,13 +34,14 @@ namespace DIALOGUE
         }
 
         bool _initialized = false;
+
         private void Initialize()
         {
             if (_initialized)
                 return;
 
             architect = new TextArchitect(dialogueContainer.dialogueText);
-            conversationManager = new ConversationManager(architect);
+            conversationManager = new ConversationManager(architect, characterHandler as ICharacterHandler);
         }
 
         public void OnUserPrompt_Next()
@@ -59,32 +56,34 @@ namespace DIALOGUE
             else
                 HideSpeakerName();
         }
+
         public void HideSpeakerName() => dialogueContainer.nameContainer.Hide();
+
         public Coroutine Say(string speaker, string dialogue)
         {
-           List<string> conversation = new List<string>() { $"{speaker} \"{dialogue}\"" };
+            List<string> conversation = new List<string>() { $"{speaker} \"{dialogue}\"" };
             return Say(conversation);
         }
 
         public Coroutine Say(List<string> conversation)
         {
-           SetIsActive(true);
-           return conversationManager.StartConversation(conversation);
+            SetIsActive(true);
+            return conversationManager.StartConversation(conversation);
         }
-        
+
         public void SetIsActive(bool activeOrNot) // Not to be cofnsued with Unity's GameObject.SetActive() 
         {
             isActive = activeOrNot;
             GameObject dialogueBox = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/4 - Dialogue");
             GameObject reticle = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/6 - Controls/Reticle");
-            
-            if(activeOrNot)
+
+            if (activeOrNot)
             {
                 VirutalCameraManager.instance.DisableVirtualCamera();
                 dialogueBox.GetComponent<CanvasGroup>().alpha = 1;
                 reticle.SetActive(false);
             }
-            else 
+            else
             {
                 dialogueBox.GetComponent<CanvasGroup>().alpha = 0;
                 reticle.SetActive(true);
@@ -93,13 +92,11 @@ namespace DIALOGUE
 
         public void ClearTextBox()
         {
-            if(!isActive) 
+            if (!isActive)
             {
                 HideSpeakerName();
                 conversationManager.ClearTextBox();
             }
-            
         }
-}
-
+    }
 }

@@ -1,9 +1,7 @@
-﻿using COMMANDS;
-using CHARACTERS;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using COMMANDS;
 using UnityEngine;
-
 
 namespace DIALOGUE
 {
@@ -17,10 +15,13 @@ namespace DIALOGUE
         private TextArchitect architect = null;
 
         private bool userPrompt = false;
-        public ConversationManager(TextArchitect architect)
+        
+        public ICharacterHandler characterHandler;
+        public ConversationManager(TextArchitect architect, ICharacterHandler characterHandler)
         {
             this.architect = architect;
             dialogueSystem.onUserPrompt_Next += OnUserPrompt_Next;
+            this.characterHandler = characterHandler;
         }
 
         private void OnUserPrompt_Next()
@@ -43,7 +44,7 @@ namespace DIALOGUE
                 return;
             dialogueSystem.StopCoroutine(process);
             process = null;
-            CharacterManager.instance.DestroyAllCharacters();
+            characterHandler?.OnStopConversation();
         }
 
         IEnumerator RunningConversation(List<string> conversation)
@@ -58,20 +59,8 @@ namespace DIALOGUE
                 //Show Dialogue
                 if(line.hasDialogue)
                 {
-                    string speakerName = "";
-                    if (line.hasSpeaker)
-                    {
-                        speakerName = GetSpeakerEnglishName(line);
-                        string direction = GetCharacterPosition(speakerName);
-                        if (CharacterManager.instance.characters.ContainsKey(speakerName.ToLower()))
-                            CameraManager.instance.MoveCamera(direction, 0.3f);
-                        if(!speakerName.Equals(""))
-                          DecideCharactersToHide(speakerName);
-                       
-
-                    }
-
-                    CharacterManager.instance.ShowCharacter(speakerName);
+                    // character handler will only exist in visual novel
+                    characterHandler?.OnLineParsed(line);
                     yield return Line_RunDialogue(line);
                 }
                 //Run any commands
@@ -85,59 +74,6 @@ namespace DIALOGUE
                 yield return WaitForUserInput();
 
             }
-        }
-
-
-        public void DecideCharactersToHide(string speakerName)
-        {
-            string pos = GetCharacterPosition(speakerName);
-            
-            if(pos == "left") 
-            {
-                foreach(string character in CharacterManager.instance.leftCharacters) {
-                    if(character != speakerName)
-                    CharacterManager.instance.InstantHideCharacter(character);
-                }
-            }
-            else if(pos == "middle") 
-            {
-                foreach(string character in CharacterManager.instance.middleCharacters) {
-                    if(character != speakerName)
-                    CharacterManager.instance.InstantHideCharacter(character);
-                }
-            }
-            else 
-            {
-                foreach(string character in CharacterManager.instance.rightCharacters) {
-                    if(character != speakerName)
-                    CharacterManager.instance.InstantHideCharacter(character);
-                }
-            }
-
-        }
-
-        public string GetCharacterPosition(string speakerName)
-        {
-            string direction = "middle";
-            if(CharacterManager.instance.leftCharacters.Contains(speakerName))
-            direction = "left";
-            else if(CharacterManager.instance.rightCharacters.Contains(speakerName))
-            direction = "right";
-
-            return direction;
-        }
-        public string GetSpeakerEnglishName(DIALOGUE_LINE line)
-        {
-           string speakerName = "";
-            foreach (CharacterConfigData character in DialogueSystem.instance.config.characterConfigurationAsset.characters)
-            {
-                if (character.alias == line.speakerData.name)
-                {
-                    speakerName = character.name;
-                    break;
-                }
-            }
-            return speakerName;
         }
         
         IEnumerator Line_RunDialogue(DIALOGUE_LINE line)
