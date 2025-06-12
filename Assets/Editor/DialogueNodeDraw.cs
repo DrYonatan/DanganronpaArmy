@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-
 
 [CreateAssetMenu(menuName = "Behaviour Editor/Draw/Dialogue Node Draw")]
 public class DialogueNodeDraw : DrawNode
@@ -13,12 +11,6 @@ public class DialogueNodeDraw : DrawNode
         b.nodeRect.width = 200;
         
         b.character = (CharacterCourt)EditorGUILayout.ObjectField(b.character, typeof(CharacterCourt), false);
-
-        b.evidence = (Evidence)EditorGUILayout.ObjectField(b.evidence, typeof(Evidence), false);
-
-        b.statement = EditorGUILayout.TextField(b.statement);
-
-        b.statementColor = EditorGUILayout.ColorField(b.statementColor);
 
         b.cameraEffect = (CameraEffect)EditorGUILayout.ObjectField(b.cameraEffect, typeof(CameraEffect), false);
 

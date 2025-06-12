@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using _Main.Scripts.Court;
 using UnityEditor;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ public class BehaviourEditor : EditorWindow
 {
     public Stage container;
     Vector3 mousePosition;
-    DialogueNode selectedNode;
+    DebateDialogueNode selectedNode;
     public DrawNode textNode;
     Vector2 scrollPosition;
     Rect scrollAreaSize = new Rect(0, 0, 2000, 2000);
@@ -17,7 +18,7 @@ public class BehaviourEditor : EditorWindow
 
     static EditorWindow window;
 
-    [MenuItem("Dialogue Editor/Editor")]
+    [MenuItem("Debate Editor/Editor")]
     static void ShowEditor()
     {
         window = EditorWindow.GetWindow(typeof(BehaviourEditor));
@@ -37,7 +38,7 @@ public class BehaviourEditor : EditorWindow
 
         if (container.dialogueNodes == null)
         {
-            container.dialogueNodes = new List<DialogueNode>();
+            container.dialogueNodes = new List<DebateDialogueNode>();
         }
 
         if (container.dialogueNodes.Count > 0)
@@ -187,7 +188,7 @@ public class BehaviourEditor : EditorWindow
 
     void CreateNode()
     {
-        container.dialogueNodes.Add(new DialogueNode(textNode));
+        container.dialogueNodes.Add(new DebateDialogueNode(textNode));
     }
 
     void AddTextLine()

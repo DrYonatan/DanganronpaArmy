@@ -1,9 +1,8 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using CHARACTERS;
 
-[System.Serializable]
+[Serializable]
 public class TextLine
 {
     public string text;
@@ -22,7 +21,7 @@ public class TextLine
 }
 
 
-[System.Serializable]
+[Serializable]
 public class DialogueNode 
 {
     public Rect nodeRect;
@@ -39,10 +38,7 @@ public class DialogueNode
     public List<TextLine> textLines;
 
     public AudioClip voiceLine;
-
-    public Evidence evidence;
-    public string statement;
-    public Color statementColor;
+    
     public CharacterState expression;
 
     public DialogueNode(DrawNode _drawNode)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
+using _Main.Scripts.Court;
 using Text = TMPro.TextMeshProUGUI;
 
 public class GameLoop : MonoBehaviour
@@ -276,7 +277,7 @@ public class GameLoop : MonoBehaviour
         int correctCharacterIndexBegin = -1;
         int correctCharacterIndexEnd = -1;
 
-        DialogueNode nextDialogueNode = stage.dialogueNodes[dialogueNodeIndex];
+        DebateDialogueNode nextDialogueNode = stage.dialogueNodes[dialogueNodeIndex];
         correctEvidence = nextDialogueNode.evidence;
 
         if (nextDialogueNode.character != null)
