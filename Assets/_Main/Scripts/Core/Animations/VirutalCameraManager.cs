@@ -58,14 +58,16 @@ public class VirutalCameraManager : MonoBehaviour
     {
         float elapsedTime = 0f;
 
-        float initialPosition = VirutalCameraManager.instance.virtualCamera.GetCinemachineComponent<CinemachineTrackedDolly>().m_PathPosition;
+        CinemachineTrackedDolly dolly = virtualCamera.GetCinemachineComponent<CinemachineTrackedDolly>();
+
+        float initialPosition = dolly.m_PathPosition;
         float position = 0f;
 
         while(elapsedTime < duration)
         {
             elapsedTime += Time.deltaTime;
             position += Time.deltaTime;
-            VirutalCameraManager.instance.virtualCamera.GetCinemachineComponent<CinemachineTrackedDolly>().m_PathPosition = position;
+            dolly.m_PathPosition = position;
             yield return null;
         }
         
@@ -75,7 +77,7 @@ public class VirutalCameraManager : MonoBehaviour
         {
             elapsedTime += Time.deltaTime;
             position = Mathf.MoveTowards(position, initialPosition, Time.deltaTime * 4f);
-            VirutalCameraManager.instance.virtualCamera.GetCinemachineComponent<CinemachineTrackedDolly>().m_PathPosition = position;
+            dolly.m_PathPosition = position;
             yield return null;
         }
     }

@@ -24,6 +24,7 @@ public class PointAndClickRoom : Room
 
     public override IEnumerator OnLoad()
     {
+        VirutalCameraManager.instance.AssignVirtualCamera();
         return VirutalCameraManager.instance.SlideAcrossRoom(3f);
     }
 
