@@ -12,7 +12,7 @@ public class VirutalCameraManager : MonoBehaviour
 
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
         }
@@ -30,23 +30,19 @@ public class VirutalCameraManager : MonoBehaviour
 
     public void DisableVirtualCamera()
     {
-        if(virtualCamera)
+        if (virtualCamera)
         {
-           virtualCamera.gameObject.SetActive(false);
+            virtualCamera.gameObject.SetActive(false);
         }
-       
-
     }
 
     public void EnableVirtualCamera()
     {
-        if(virtualCamera)
+        if (virtualCamera)
         {
             virtualCamera.gameObject.SetActive(true);
             MakeMainCameraFollowVirtualCamera();
         }
-        
-    
     }
 
     public void MakeMainCameraFollowVirtualCamera()
@@ -54,31 +50,35 @@ public class VirutalCameraManager : MonoBehaviour
         Camera.main.transform.position = virtualCamera.State.FinalPosition;
     }
 
-    public IEnumerator SlideAcrossRoom(float duration)
+    public IEnumerator SlideAcrossRoom(float duration, Vector3 slidingTrackPoisition)
     {
         float elapsedTime = 0f;
 
         CinemachineTrackedDolly dolly = virtualCamera.GetCinemachineComponent<CinemachineTrackedDolly>();
-
+        Vector3 initialTrackPosition = dolly.m_Path.transform.position;
         float initialPosition = dolly.m_PathPosition;
+        dolly.m_Path.transform.position = slidingTrackPoisition;
         float position = 0f;
 
-        while(elapsedTime < duration)
+        while (elapsedTime < duration)
         {
             elapsedTime += Time.deltaTime;
             position += Time.deltaTime;
             dolly.m_PathPosition = position;
             yield return null;
         }
-        
-        elapsedTime = 0f;
 
-        while(elapsedTime < 0.5f)
+        elapsedTime = 0f;
+        
+        while (elapsedTime < 0.5f)
         {
             elapsedTime += Time.deltaTime;
-            position = Mathf.MoveTowards(position, initialPosition, Time.deltaTime * 4f);
-            dolly.m_PathPosition = position;
+            dolly.m_PathPosition = Mathf.Lerp(position, initialPosition,  elapsedTime / 0.5f);;
+            dolly.m_Path.transform.position = Vector3.Lerp(slidingTrackPoisition, initialTrackPosition, elapsedTime / 0.5f);
             yield return null;
         }
+        
+        dolly.m_PathPosition = initialPosition;
+        dolly.m_Path.transform.position = initialTrackPosition;
     }
 }

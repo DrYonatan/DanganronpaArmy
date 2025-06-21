@@ -281,8 +281,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 331812002879e6b4180269d14a722880, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  height: 30
-  fallSpeed: 40
+  height: 45
+  fallSpeed: 50
   delay: 1.5
   fallCurve:
     serializedVersion: 2
@@ -2321,8 +2321,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 331812002879e6b4180269d14a722880, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  height: 30
-  fallSpeed: 40
+  height: 45
+  fallSpeed: 50
   delay: 1
   fallCurve:
     serializedVersion: 2
@@ -2502,6 +2502,7 @@ Transform:
   - {fileID: 7332593901441961304}
   - {fileID: 3212758050776701599}
   - {fileID: 3174858700666622140}
+  - {fileID: 3435319364894175493}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &7104006238146944748
@@ -3240,6 +3241,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &9061532371203818385
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3435319364894175493}
+  m_Layer: 0
+  m_Name: TrackSlidingPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3435319364894175493
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9061532371203818385}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -135.15, y: 7.58, z: -145.9}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 645256557181278590}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9116509465546591352
 GameObject:
   m_ObjectHideFlags: 0
