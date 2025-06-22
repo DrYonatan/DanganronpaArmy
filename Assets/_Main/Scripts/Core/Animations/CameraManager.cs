@@ -177,7 +177,6 @@ public class CameraManager : MonoBehaviour
 
     public void ChangeCameraBackground(bool isInside)
     {
-        Debug.Log("HELLO" + isInside);
         Camera.main.clearFlags = isInside ? CameraClearFlags.SolidColor : CameraClearFlags.Skybox;
     }
 }

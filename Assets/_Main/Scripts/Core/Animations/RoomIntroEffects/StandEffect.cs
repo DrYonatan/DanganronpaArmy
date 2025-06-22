@@ -8,12 +8,14 @@ public class StandEffect : MonoBehaviour
     public float duration = 1f;
     public Vector3 degreesOffset = new Vector3(-90f, 0f, 0f);
     public GameObject parentObject;
-
+    
+    private Renderer renderer;
     private Quaternion targetRotation;
 
     // Start is called before the first frame update
     void Start()
     {   
+        renderer = GetComponent<Renderer>();
         CreateParentGameObject();
         targetRotation = parentObject.transform.rotation;
         parentObject.transform.Rotate(degreesOffset);
@@ -32,7 +34,9 @@ public class StandEffect : MonoBehaviour
 
     private IEnumerator PlayEffect()
     {
+        renderer.enabled = false;
         yield return new WaitForSeconds(delay);
+        renderer.enabled = true;
         float elapsedTime = 0f;
 
         while(elapsedTime < duration)
