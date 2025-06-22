@@ -46,6 +46,7 @@ public class CameraManager : MonoBehaviour
         StartCoroutine(MoveCameraToDollyTrack());
     }
 
+
     public IEnumerator MoveCameraToDollyTrack()
     {
         float duration = 0.5f;
