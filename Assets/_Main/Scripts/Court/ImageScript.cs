@@ -1,52 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ImageScript : MonoBehaviour
 {
     public static ImageScript instance { get; private set; }
 
+    Image image;
+    CanvasGroup canvasGroup; 
+
     private void Awake()
     {
         instance = this;
+        image = gameObject.GetComponent<Image>();
+        canvasGroup = gameObject.GetComponent<CanvasGroup>();
     }
-    public void Show()
+    public void Show(string imageName, float duration)
     {
-        StartCoroutine(ShowImage());
+        image.sprite = Resources.Load<Sprite>($"Images/{imageName}");
+        StartCoroutine(ShowingOrHiding(duration, 1f));
     }
-    public void Hide()
+    public void Hide(float duration)
     {
-        StartCoroutine(HideImage());
+        StartCoroutine(ShowingOrHiding(duration, 0f));
     }
 
 
 
-    public static IEnumerator ShowImage()
-    {
-        CanvasGroup self = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/3 - Cinematic/Image").GetComponent<CanvasGroup>();
-        float targetAlpha = 1;
-        
-        while (self.alpha != targetAlpha)
+    public IEnumerator ShowingOrHiding(float duration, float targetAlpha)
+    {        
+        while (canvasGroup.alpha != targetAlpha)
         {
-            self.alpha = Mathf.MoveTowards(self.alpha, targetAlpha, 5f * Time.deltaTime);
+            canvasGroup.alpha = Mathf.MoveTowards(canvasGroup.alpha, targetAlpha, Time.deltaTime / duration);
             yield return null;
         }
 
     }
-
-    public static IEnumerator HideImage()
-    {
-        CanvasGroup self = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/3 - Cinematic/Image").GetComponent<CanvasGroup>();
-        float targetAlpha = 0;
-
-        while (self.alpha != targetAlpha)
-        {
-            self.alpha = Mathf.MoveTowards(self.alpha, targetAlpha, 5f * Time.deltaTime);
-            yield return null;
-        }
-
-    }
-
-  
-   
 }
