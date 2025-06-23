@@ -162,7 +162,6 @@ public class WorldManager : MonoBehaviour
         ReturningToWorld();
     }
 
-
     // Update is called once per frame
     void Update()
     {
