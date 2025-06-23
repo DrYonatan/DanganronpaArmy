@@ -156,6 +156,7 @@ public class WorldManager : MonoBehaviour
         Camera.main.transform.position = cameraStartPos.position; // Actually changing position of camera
         Camera.main.transform.rotation = cameraStartPos.rotation;
 
+        ImageScript.instance.UnFadeToBlack(0.1f);
         if(room.OnLoad() != null)
         yield return StartCoroutine(room.OnLoad());
         isLoading = false;
