@@ -17,6 +17,8 @@ public class CameraManager : MonoBehaviour
     public Quaternion initialRotation;
 
     private bool isInFinalRotation = true;
+    
+    private List<IEnumerator> operations = new List<IEnumerator>();
 
     private void Start()
     {
@@ -29,7 +31,7 @@ public class CameraManager : MonoBehaviour
     {
         if (isInFinalRotation)
         {
-            StartCoroutine(MoveCamera(duration, direction));
+            StartCameraCoroutine(MoveCamera(duration, direction));
         }
     }
 
@@ -37,16 +39,16 @@ public class CameraManager : MonoBehaviour
     {
         float duration = 0.5f;
         initialRotation = location.rotation;
-        StartCoroutine(MoveCameraTo(location.position, duration));
-        StartCoroutine(RotateCameraTo(location.rotation, duration));
+        StartCameraCoroutine(MoveCameraTo(location.position, duration));
+        StartCameraCoroutine(RotateCameraTo(location.rotation, duration));
     }
 
     public void ReturnToDollyTrack()
     {
-        StartCoroutine(MoveCameraToDollyTrack());
+        StartCameraCoroutine(MoveCameraToDollyTrack());
     }
 
-    public IEnumerator MoveCameraToDollyTrack()
+    private IEnumerator MoveCameraToDollyTrack()
     {
         float duration = 0.5f;
         Vector3 vCamPosition = VirutalCameraManager.instance.virtualCamera.State.FinalPosition;
@@ -60,7 +62,7 @@ public class CameraManager : MonoBehaviour
 
     public void ZoomCamera(string zoom)
     {
-        StartCoroutine(Zoom(zoom));
+        StartCameraCoroutine(Zoom(zoom));
     }
 
     public IEnumerator RotateCameraTo(Quaternion rotation, float duration)
@@ -181,4 +183,18 @@ public class CameraManager : MonoBehaviour
         characters.transform.localPosition = charactersTargetPos;
     }
 
+    public Coroutine StartCameraCoroutine(IEnumerator operation)
+    {
+        Coroutine coroutine = StartCoroutine(operation);
+        operations.Add(operation);
+        return coroutine;
+    }
+
+    public void StopAllPreviousOperations()
+    {
+        foreach (IEnumerator operation in operations)
+        {
+            StopCoroutine(operation);
+        }
+    }
 }

@@ -16,8 +16,8 @@ public class WorldObject : ConversationInteractable
         Quaternion targetRotation =
             Quaternion.LookRotation(transform.position - Camera.main.transform.position, Vector3.up);
 
-        yield return StartCoroutine(CameraManager.instance.RotateCameraTo(targetRotation, duration));
-        StartCoroutine(CameraManager.instance.MoveCameraTo(targetPosition, duration));
+        yield return CameraManager.instance.StartCameraCoroutine(CameraManager.instance.RotateCameraTo(targetRotation, duration));
+        CameraManager.instance.StartCameraCoroutine(CameraManager.instance.MoveCameraTo(targetPosition, duration));
         FinishInteraction();
     }
 }

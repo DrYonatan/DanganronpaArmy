@@ -99,6 +99,7 @@ public class WorldManager : MonoBehaviour
 
     public void StartLoadingRoom(Room room)
     {
+        CameraManager.instance?.StopAllPreviousOperations();
         StartCoroutine(LoadRoom(room));
     }
 

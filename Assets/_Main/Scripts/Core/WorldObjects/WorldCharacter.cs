@@ -17,10 +17,10 @@ public class WorldCharacter : ConversationInteractable
         float duration = 0.5f;
         Vector3 targetPosition = transform.position + transform.forward + Vector3.up;
         Quaternion targetRotation = Quaternion.LookRotation(transform.forward);
-        yield return StartCoroutine(CameraManager.instance.RotateCameraTo(
+        yield return CameraManager.instance.StartCameraCoroutine(CameraManager.instance.RotateCameraTo(
             Quaternion.LookRotation(transform.position - Camera.main.transform.position, Vector3.up), duration));
-        StartCoroutine(CameraManager.instance.MoveCameraTo(targetPosition, duration));
-        StartCoroutine(CameraManager.instance.RotateCameraTo(targetRotation, duration));
+        CameraManager.instance.StartCameraCoroutine(CameraManager.instance.MoveCameraTo(targetPosition, duration));
+        CameraManager.instance.StartCameraCoroutine(CameraManager.instance.RotateCameraTo(targetRotation, duration));
         CameraManager.instance.initialRotation = targetRotation;
         FinishInteraction();
     }
