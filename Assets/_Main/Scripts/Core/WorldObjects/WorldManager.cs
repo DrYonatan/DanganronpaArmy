@@ -105,6 +105,7 @@ public class WorldManager : MonoBehaviour
     public IEnumerator LoadRoom(Room room)
     {
         isLoading = true;
+
         float timeout = 2f;
         float elapsedTime = 0f;
 
@@ -161,6 +162,18 @@ public class WorldManager : MonoBehaviour
         yield return StartCoroutine(room.OnLoad());
         isLoading = false;
         ReturningToWorld();
+    }
+
+    public void OnExitRoom(Room exitRoom)
+    {
+        StartCoroutine(FadeAndExit(exitRoom));
+    }
+
+    IEnumerator FadeAndExit(Room exitRoom)
+    {
+        ImageScript.instance.FadeToBlack(0.2f);
+        yield return new WaitForSeconds(0.2f);
+        StartLoadingRoom(exitRoom);
     }
 
     // Update is called once per frame

@@ -21,8 +21,8 @@ public class CameraManager : MonoBehaviour
     private void Start()
     {
         instance = this;
-        Transform absoluteStartPos = GameObject.Find("World/CameraStartPos").transform;
-        initialRotation = absoluteStartPos.rotation;
+        if(GameObject.Find("World/CameraStartPos") != null)
+        initialRotation = GameObject.Find("World/CameraStartPos").transform.rotation;
     }
 
     public void MoveCamera(string direction, float duration)
