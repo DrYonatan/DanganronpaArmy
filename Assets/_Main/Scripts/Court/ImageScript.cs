@@ -1,52 +1,57 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ImageScript : MonoBehaviour
 {
     public static ImageScript instance { get; private set; }
 
+    public GameObject overlayImage;
+    public GameObject blackFade;
+
+    Image image;
+    CanvasGroup canvasGroup;
+
+    CanvasGroup blackFadeCanvasGroup;
+
     private void Awake()
     {
+        image = overlayImage.GetComponent<Image>();
+        canvasGroup = overlayImage.GetComponent<CanvasGroup>();
+        blackFadeCanvasGroup = blackFade.GetComponent<CanvasGroup>();
         instance = this;
     }
-    public void Show()
+
+    public void Show(string imageName, float duration)
     {
-        StartCoroutine(ShowImage());
-    }
-    public void Hide()
-    {
-        StartCoroutine(HideImage());
+        image.sprite = Resources.Load<Sprite>($"Images/{imageName}");
+        StartCoroutine(ShowingOrHiding(canvasGroup, duration, 1f));
     }
 
-
-
-    public static IEnumerator ShowImage()
+    public void Hide(float duration)
     {
-        CanvasGroup self = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/3 - Cinematic/Image").GetComponent<CanvasGroup>();
-        float targetAlpha = 1;
-        
-        while (self.alpha != targetAlpha)
+        StartCoroutine(ShowingOrHiding(canvasGroup, duration, 0f));
+    }
+
+    public void FadeToBlack(float duration)
+    {
+        StartCoroutine(ShowingOrHiding(blackFadeCanvasGroup, duration, 1f));
+    }
+
+    public void UnFadeToBlack(float duration)
+    {
+        StartCoroutine(ShowingOrHiding(blackFadeCanvasGroup, duration, 0f));
+    }
+
+    public IEnumerator ShowingOrHiding(CanvasGroup canvasGroup, float duration, float targetAlpha)
+    {        
+        while (canvasGroup.alpha != targetAlpha)
         {
-            self.alpha = Mathf.MoveTowards(self.alpha, targetAlpha, 5f * Time.deltaTime);
+            canvasGroup.alpha = Mathf.MoveTowards(canvasGroup.alpha, targetAlpha, Time.deltaTime / duration);
             yield return null;
         }
 
     }
 
-    public static IEnumerator HideImage()
-    {
-        CanvasGroup self = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/3 - Cinematic/Image").GetComponent<CanvasGroup>();
-        float targetAlpha = 0;
-
-        while (self.alpha != targetAlpha)
-        {
-            self.alpha = Mathf.MoveTowards(self.alpha, targetAlpha, 5f * Time.deltaTime);
-            yield return null;
-        }
-
-    }
-
-  
-   
 }

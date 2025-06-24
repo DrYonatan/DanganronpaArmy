@@ -99,13 +99,18 @@ public class WorldManager : MonoBehaviour
 
     public void StartLoadingRoom(Room room)
     {
-        CameraManager.instance?.StopAllPreviousOperations();
         StartCoroutine(LoadRoom(room));
     }
 
     public IEnumerator LoadRoom(Room room)
     {
+         CameraManager.instance?.StopAllPreviousOperations();
+
         isLoading = true;
+        
+        ImageScript.instance.FadeToBlack(0.2f);
+        yield return new WaitForSeconds(0.2f);
+        
         float timeout = 2f;
         float elapsedTime = 0f;
 
@@ -153,13 +158,13 @@ public class WorldManager : MonoBehaviour
         Camera.main.transform.position = cameraStartPos.position; // Actually changing position of camera
         Camera.main.transform.rotation = cameraStartPos.rotation;
 
+        ImageScript.instance.UnFadeToBlack(0.1f);
         if(room.OnLoad() != null)
         yield return StartCoroutine(room.OnLoad());
         isLoading = false;
         ReturningToWorld();
     }
-
-
+    
     // Update is called once per frame
     void Update()
     {

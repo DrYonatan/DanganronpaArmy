@@ -144,14 +144,12 @@ namespace TESTING
 
         private static void ShowImage(string imageName)
         {
-            GameObject image = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/3 - Cinematic/Image");
-            image.GetComponent<Image>().sprite = Resources.Load<Sprite>($"Images/{imageName}");
-            ImageScript.instance.Show();
+            ImageScript.instance.Show(imageName, 0.25f);
         }
 
         private static void HideImage()
         {
-            ImageScript.instance.Hide();
+            ImageScript.instance.Hide(0.25f);
         }
 
         private static void ReturnToWorld()

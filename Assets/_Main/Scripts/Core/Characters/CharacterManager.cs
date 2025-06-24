@@ -8,9 +8,7 @@ using UnityEngine.UI;
 namespace CHARACTERS
 {
     public class CharacterManager : MonoBehaviour, ICharacterHandler
-    {
-   
-        
+    { 
         public static CharacterManager instance { get; private set; }
         public Dictionary<string, Character> characters = new Dictionary<string, Character>();
         public List<string> leftCharacters;
