@@ -53,8 +53,8 @@ public class CameraManager : MonoBehaviour
         Vector3 vCamPosition = VirutalCameraManager.instance.virtualCamera.State.FinalPosition;
         Quaternion vCamRotation = VirutalCameraManager.instance.virtualCamera.State.FinalOrientation;
         initialRotation = vCamRotation;
-        StartCoroutine(RotateCameraTo(vCamRotation, duration));
-        yield return MoveCameraTo(vCamPosition, duration);
+        StartCameraCoroutine(RotateCameraTo(vCamRotation, duration));
+        yield return StartCameraCoroutine(MoveCameraTo(vCamPosition, duration));
         if (!DialogueSystem.instance.isActive)
             VirutalCameraManager.instance.EnableVirtualCamera();
     }

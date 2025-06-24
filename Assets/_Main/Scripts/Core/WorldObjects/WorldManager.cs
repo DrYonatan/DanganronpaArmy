@@ -99,12 +99,13 @@ public class WorldManager : MonoBehaviour
 
     public void StartLoadingRoom(Room room)
     {
-        CameraManager.instance?.StopAllPreviousOperations();
         StartCoroutine(LoadRoom(room));
     }
 
     public IEnumerator LoadRoom(Room room)
     {
+         CameraManager.instance?.StopAllPreviousOperations();
+
         isLoading = true;
         
         ImageScript.instance.FadeToBlack(0.2f);
