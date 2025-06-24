@@ -7,9 +7,10 @@ public class BounceEffect : MonoBehaviour
     public float duration = 1f;
     public float bounceFrequency = 2f; // number of bounces
     public float damping = 5f;         // how quickly it settles
-    
+    private Renderer renderer;
     void Start()
     {
+        renderer = GetComponent<Renderer>();
         StartCoroutine(PlayEffect());
     }
 
@@ -21,8 +22,9 @@ public class BounceEffect : MonoBehaviour
 
         // Store the original bottom position
         float baseY = transform.position.y - (originalScale.y / 2f);
-
+        renderer.enabled = false;
         yield return new WaitForSeconds(delay);
+        renderer.enabled = true;
 
         float elapsed = 0f;
         while (elapsed < duration)

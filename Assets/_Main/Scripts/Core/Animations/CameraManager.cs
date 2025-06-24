@@ -5,7 +5,6 @@ using DIALOGUE;
 
 public class CameraManager : MonoBehaviour
 {
-
     public static CameraManager instance { get; private set; }
 
     public const string charactersLayerPath = "VN controller/Root/Canvas - Main/LAYERS/2 - Characters";
@@ -35,7 +34,7 @@ public class CameraManager : MonoBehaviour
         }
     }
 
-    public void MoveCameraTo(Transform location) 
+    public void MoveCameraTo(Transform location)
     {
         float duration = 0.5f;
         initialRotation = location.rotation;
@@ -56,8 +55,8 @@ public class CameraManager : MonoBehaviour
         initialRotation = vCamRotation;
         StartCoroutine(RotateCameraTo(vCamRotation, duration));
         yield return MoveCameraTo(vCamPosition, duration);
-        if(!DialogueSystem.instance.isActive)
-        VirutalCameraManager.instance.EnableVirtualCamera();
+        if (!DialogueSystem.instance.isActive)
+            VirutalCameraManager.instance.EnableVirtualCamera();
     }
 
     public void ZoomCamera(string zoom)
@@ -68,52 +67,51 @@ public class CameraManager : MonoBehaviour
     public IEnumerator RotateCameraTo(Quaternion rotation, float duration)
     {
         isInFinalRotation = false;
-        
+
         Quaternion startRotate = Camera.main.transform.rotation;
-        
+
         float elapsedTime = 0;
 
         while (elapsedTime < duration)
         {
-            if(rotation != null)
+            if (rotation != null)
             {
-               Camera.main.transform.rotation = Quaternion.Slerp(startRotate, rotation, elapsedTime / duration);
+                Camera.main.transform.rotation = Quaternion.Slerp(startRotate, rotation, elapsedTime / duration);
             }
-          
+
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-         if(rotation != null)
+        if (rotation != null)
         {
-           Camera.main.transform.rotation = rotation;
+            Camera.main.transform.rotation = rotation;
         }
-         
-         isInFinalRotation = true;
+
+        isInFinalRotation = true;
     }
 
-    public IEnumerator MoveCameraTo(Vector3 location, float duration) 
+    public IEnumerator MoveCameraTo(Vector3 location, float duration)
     {
         Vector3 startPos = Camera.main.transform.position;
-        
+
         float elapsedTime = 0;
 
         while (elapsedTime < duration)
         {
-            if(location != null)
+            if (location != null)
             {
-               Camera.main.transform.position = Vector3.Lerp(startPos, location, elapsedTime / duration);
+                Camera.main.transform.position = Vector3.Lerp(startPos, location, elapsedTime / duration);
             }
-          
+
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        if(location != null)
+        if (location != null)
         {
-           Camera.main.transform.position = location; // Ensure the camera reaches the exact target position
+            Camera.main.transform.position = location; // Ensure the camera reaches the exact target position
         }
-        
     }
 
 
@@ -133,12 +131,7 @@ public class CameraManager : MonoBehaviour
         }
 
         Camera.main.fieldOfView = z;
-
-
-
-
-    }  
-
+    }
 
 
     IEnumerator MoveCamera(float duration, string location)
@@ -148,23 +141,23 @@ public class CameraManager : MonoBehaviour
         int characterX = 0;
         Quaternion rotation = Quaternion.Euler(0f, 0f, 0f);
 
-        switch (location) 
+        switch (location)
         {
-           case "right" :
-           characterX = CHARACTERS_RIGHT;
-           rotation = Quaternion.Euler(0f, 12f, 0f);
-           break;
+            case "right":
+                characterX = CHARACTERS_RIGHT;
+                rotation = Quaternion.Euler(0f, 12f, 0f);
+                break;
 
-           case "middle" :
-           characterX = CHARACTERS_MIDDLE;
-           break;
+            case "middle":
+                characterX = CHARACTERS_MIDDLE;
+                break;
 
-           case "left" :
-           characterX = CHARACTERS_LEFT;
-           rotation = Quaternion.Euler(0f, -12f, 0f);
-           break;
+            case "left":
+                characterX = CHARACTERS_LEFT;
+                rotation = Quaternion.Euler(0f, -12f, 0f);
+                break;
         }
-        
+
         Quaternion startRotate = Camera.main.transform.rotation;
         Quaternion targetRotate = initialRotation * rotation;
 
@@ -175,7 +168,8 @@ public class CameraManager : MonoBehaviour
         while (elapsedTime < duration)
         {
             Camera.main.transform.rotation = Quaternion.Slerp(startRotate, targetRotate, elapsedTime / duration);
-            characters.transform.localPosition = Vector3.Lerp(charactersStartPos, charactersTargetPos, elapsedTime / duration);
+            characters.transform.localPosition =
+                Vector3.Lerp(charactersStartPos, charactersTargetPos, elapsedTime / duration);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
@@ -183,6 +177,10 @@ public class CameraManager : MonoBehaviour
         characters.transform.localPosition = charactersTargetPos;
     }
 
+    public void ChangeCameraBackground(bool isInside)
+    {
+        Camera.main.clearFlags = isInside ? CameraClearFlags.SolidColor : CameraClearFlags.Skybox;
+    }
     public Coroutine StartCameraCoroutine(IEnumerator operation)
     {
         Coroutine coroutine = StartCoroutine(operation);

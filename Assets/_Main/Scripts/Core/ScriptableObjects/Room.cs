@@ -8,8 +8,13 @@ public abstract class Room : ScriptableObject
 
     public Interactable currentInteractable;
 
+    public bool isInside = false;
+
     public abstract void MovementControl();
 
-    public abstract IEnumerator OnLoad();
-   
+    public virtual IEnumerator OnLoad()
+    {
+        CameraManager.instance?.ChangeCameraBackground(isInside);
+        return null;
+    }
 }
