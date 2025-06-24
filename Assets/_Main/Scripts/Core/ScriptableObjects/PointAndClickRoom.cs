@@ -55,7 +55,7 @@ public class PointAndClickRoom : Room
             
             else
             {
-                WorldManager.instance.OnExitRoom(exitRoom);
+                WorldManager.instance.StartLoadingRoom(exitRoom);
             }
         }
         
