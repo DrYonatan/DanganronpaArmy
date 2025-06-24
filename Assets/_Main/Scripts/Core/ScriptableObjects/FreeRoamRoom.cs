@@ -15,11 +15,6 @@ public class FreeRoamRoom : Room
 
     float playerReach = 14f;
 
-    public override IEnumerator OnLoad()
-    {
-        return null;
-    }
-
     public override void MovementControl()
     {
         Move();
