@@ -29,11 +29,11 @@ public class RoomGate : Interactable
     IEnumerator RoomTransition()
     {
         WorldManager.instance.isLoading = true;
-        Vector3 targetPosition = new Vector3(transform.position.x + transform.forward.x * 2f, Camera.main.transform.position.y, transform.position.z + transform.forward.z * 2f);
+        Vector3 targetPosition = new Vector3(transform.position.x + transform.forward.x * 9f, Camera.main.transform.position.y, transform.position.z + transform.forward.z * 9f);
         CameraManager.instance.StartCameraCoroutine(CameraManager.instance.RotateCameraTo(Quaternion.LookRotation(transform.forward * -1), 0.5f));
         yield return CameraManager.instance.MoveCameraTo(targetPosition, 0.5f);
         ImageScript.instance.FadeToBlack(1f);
-        yield return CameraManager.instance.MoveCameraTo(targetPosition + -1 * transform.forward, 1.5f);
+        yield return CameraManager.instance.MoveCameraTo(targetPosition + -5 * transform.forward, 1.5f);
         WorldManager.instance.StartLoadingRoom(roomToLoad);
     }
 }

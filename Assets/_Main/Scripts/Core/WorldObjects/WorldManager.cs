@@ -155,9 +155,13 @@ public class WorldManager : MonoBehaviour
         Transform cameraStartPos = GameObject.Find("World/CameraStartPos").transform;
         if(CameraManager.instance)
         CameraManager.instance.initialRotation = cameraStartPos.rotation; // Sets only the Camera Manager's initial position value for later, not actually changing position of camera
+        
+        CharacterController controller = Camera.main.gameObject.GetComponent<CharacterController>();
+        controller.enabled = false;
         Camera.main.transform.position = cameraStartPos.position; // Actually changing position of camera
         Camera.main.transform.rotation = cameraStartPos.rotation;
-
+        controller.enabled = true;
+        
         ImageScript.instance.UnFadeToBlack(0.1f);
         if(room.OnLoad() != null)
         yield return StartCoroutine(room.OnLoad());
