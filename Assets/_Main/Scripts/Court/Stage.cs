@@ -8,5 +8,5 @@ public class Stage : ScriptableObject
 {
     public Evidence[] evidences = new Evidence[5];
     public AudioClip audioClip;
-    public List<DebateDialogueNode> dialogueNodes;
+    public List<DebateNode> dialogueNodes;
 }

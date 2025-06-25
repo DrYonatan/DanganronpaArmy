@@ -277,12 +277,12 @@ public class GameLoop : MonoBehaviour
         int correctCharacterIndexBegin = -1;
         int correctCharacterIndexEnd = -1;
 
-        DebateDialogueNode nextDialogueNode = stage.dialogueNodes[dialogueNodeIndex];
-        correctEvidence = nextDialogueNode.evidence;
+        DebateNode nextNode = stage.dialogueNodes[dialogueNodeIndex];
+        correctEvidence = nextNode.evidence;
 
-        if (nextDialogueNode.character != null)
+        if (nextNode.character != null)
         {
-            characterStand = characterStands.Find(stand => stand.character == nextDialogueNode.character
+            characterStand = characterStands.Find(stand => stand.character == nextNode.character
             );
             //find the transform of the new target for the camera
             cameraController.target = characterStand.spriteRenderer.transform;
@@ -295,7 +295,7 @@ public class GameLoop : MonoBehaviour
             characterStand.SetSprite();
         }
 
-        for (int i = 0; i < nextDialogueNode.textLines.Count; i++)
+        for (int i = 0; i < nextNode.textLines.Count; i++)
         {
             correctTMPIndex = -1;
             correctCharacterIndexBegin = -1;
@@ -303,20 +303,20 @@ public class GameLoop : MonoBehaviour
 
             GameObject go = Instantiate(textPrefab);
             go.transform.position = textPivot.position;
-            go.transform.position += nextDialogueNode.textLines[i].spawnOffset;
+            go.transform.position += nextNode.textLines[i].spawnOffset;
             go.transform.rotation = textPivot.rotation;
-            go.transform.localScale = nextDialogueNode.textLines[i].scale;
+            go.transform.localScale = nextNode.textLines[i].scale;
 
             TextMeshPro tmp = go.GetComponent<TextMeshPro>();
-            string str = nextDialogueNode.textLines[i].text;
+            string str = nextNode.textLines[i].text;
             int indexOf = str.IndexOf("{0}");
             if (indexOf != -1)
             {
                 correctTMPIndex = i;
                 correctCharacterIndexBegin = indexOf;
-                correctCharacterIndexEnd = indexOf + nextDialogueNode.statement.Length;
-                str = string.Format(nextDialogueNode.textLines[i].text,
-                    "<color=orange>" + nextDialogueNode.statement +
+                correctCharacterIndexEnd = indexOf + nextNode.statement.Length;
+                str = string.Format(nextNode.textLines[i].text,
+                    "<color=orange>" + nextNode.statement +
                     "</color>"); //  + ColorUtility.ToHtmlStringRGBA(nextDialogueNode.statementColor) +">" + nextDialogueNode.statement + 
             }
 
@@ -325,8 +325,8 @@ public class GameLoop : MonoBehaviour
             TextLine textLine = new TextLine(
                 go,
                 go.GetComponent<RectTransform>(),
-                nextDialogueNode.textLines[i].textEffect,
-                nextDialogueNode.textLines[i].ttl,
+                nextNode.textLines[i].textEffect,
+                nextNode.textLines[i].ttl,
                 go.GetComponent<TextMeshPro>(),
                 correctTMPIndex,
                 correctCharacterIndexBegin,
@@ -350,7 +350,7 @@ public class GameLoop : MonoBehaviour
             textLines.Add(textLine);
         }
 
-        effectController.effect = nextDialogueNode.cameraEffect;
+        effectController.effect = nextNode.cameraEffect;
         effectController.Reset();
     }
 
