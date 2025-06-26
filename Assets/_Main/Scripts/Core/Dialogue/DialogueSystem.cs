@@ -14,6 +14,7 @@ namespace DIALOGUE
         private TextArchitect architect;
 
         public MonoBehaviour characterHandler;
+        public MonoBehaviour worldHandler;
         public static DialogueSystem instance { get; private set; }
 
         public delegate void DialogueSystemEvent();
@@ -44,7 +45,7 @@ namespace DIALOGUE
                 return;
 
             architect = new TextArchitect(dialogueContainer.dialogueText);
-            conversationManager = new ConversationManager(architect, characterHandler as ICharacterHandler);
+            conversationManager = new ConversationManager(architect, characterHandler as ICharacterHandler, worldHandler as IWorldHandler);
         }
 
         public void OnUserPrompt_Next()
@@ -80,7 +81,7 @@ namespace DIALOGUE
 
             if (activeOrNot)
             {
-                VirutalCameraManager.instance.DisableVirtualCamera();
+                VirutalCameraManager.instance?.DisableVirtualCamera();
                 dialogueBox.GetComponent<CanvasGroup>().alpha = 1;
                 reticle.SetActive(false);
             }
@@ -89,11 +90,6 @@ namespace DIALOGUE
                 dialogueBox.GetComponent<CanvasGroup>().alpha = 0;
                 reticle.SetActive(true);
             }
-        }
-
-        public void HandleConversationEnd()
-        {
-            
         }
 
         public void ClearTextBox()

@@ -14,14 +14,14 @@ namespace DIALOGUE
         {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Confined;
-            bool isPaused = WorldManager.instance.isPaused;
-            if (!isPaused)
-            {
+           // bool isPaused = WorldManager.instance.isPaused;
+         //   if (!isPaused)
+         //   {
                 if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
                 {
                     PromptAdvance();
                 }
-            }
+       //     }
 
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {

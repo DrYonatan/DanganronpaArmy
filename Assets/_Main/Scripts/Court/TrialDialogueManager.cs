@@ -3,17 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using DIALOGUE;
 
-public class TrialDialogueManager : MonoBehaviour
+public class TrialDialogueManager : MonoBehaviour, IWorldHandler
 {
     public static TrialDialogueManager instance { get; private set; }
+
+    [SerializeField] ConversationSegment conversation;
+    int conversationIndex;
 
     private void Awake()
     {
         instance = this;
     }
 
-    [SerializeField] ConversationSegment conversation;
-    int conversationIndex;
+    void Start()
+    {
+        PlayConversationNode();
+    }
 
     void PlayConversationNode()
     {
@@ -26,6 +31,11 @@ public class TrialDialogueManager : MonoBehaviour
     {
         conversationIndex++;
         PlayConversationNode();
+    }
+
+    public void HandleConversationEnd()
+    {
+        GoToNextNode();
     }
 
 }

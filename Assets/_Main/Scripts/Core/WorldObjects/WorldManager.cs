@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DIALOGUE;
+using CHARACTERS;
 
-public class WorldManager : MonoBehaviour
+public class WorldManager : MonoBehaviour, IWorldHandler
 {
     public GameObject characterPanel = null;
     public GameEvent currentGameEvent;
@@ -160,6 +161,20 @@ public class WorldManager : MonoBehaviour
         yield return StartCoroutine(room.OnLoad());
         isLoading = false;
         ReturningToWorld();
+    }
+
+    public void HandleConversationEnd()
+    {
+        DialogueSystem.instance.SetIsActive(false);
+        CharacterManager.instance.DestroyAllCharacters();
+        currentGameEvent.UpdateEvent();
+        GameObject characters = GameObject.Find("World/World Objects/Characters");
+        if(characters != null)
+        CharacterClickEffects.instance.MakeCharactersReappear(characters);
+        ReturningToWorld();
+        DialogueSystem.instance.ClearTextBox();
+        if(currentRoom is PointAndClickRoom && !currentGameEvent.isFinished)
+        CameraManager.instance.ReturnToDollyTrack();
     }
 
 

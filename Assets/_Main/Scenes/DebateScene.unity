@@ -1020,7 +1020,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &57058296
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1668,7 +1668,6 @@ Transform:
   - {fileID: 1365943822}
   - {fileID: 1891043990}
   - {fileID: 1786363823}
-  - {fileID: 1322171601}
   - {fileID: 1244628639}
   - {fileID: 578263954}
   - {fileID: 1882886021}
@@ -2074,7 +2073,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &165818938
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2802,7 +2801,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 284596568}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec53f66276ca5744c8bdaee33f3dba63, type: 3}
   m_Name: 
@@ -3543,6 +3542,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d970bfb918b92e4f97d643761106899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  videoPlayer: {fileID: 443010407}
+  dialogueBoxCanvas: {fileID: 57058297}
+  nameText: {fileID: 0}
+  ultimateText: {fileID: 0}
   isPlaying: 0
 --- !u!328 &443010407
 VideoPlayer:
@@ -4998,7 +5001,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &672133746
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5999,6 +6002,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65b079683f58b0e4386fad0719c323d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dialogueBoxCanvas: {fileID: 57058297}
   isPlaying: 0
 --- !u!328 &757552232
 VideoPlayer:
@@ -9116,7 +9120,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1244628639
 Transform:
   m_ObjectHideFlags: 0
@@ -9813,51 +9817,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 747270072}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1322171600
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1322171601}
-  - component: {fileID: 1322171602}
-  m_Layer: 0
-  m_Name: Video Manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1322171601
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1322171600}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 94256287}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1322171602
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1322171600}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d970bfb918b92e4f97d643761106899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isPlaying: 0
 --- !u!1 &1364845991
 GameObject:
   m_ObjectHideFlags: 0
@@ -9980,7 +9939,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1365943822
 Transform:
   m_ObjectHideFlags: 0
@@ -10017,6 +9976,7 @@ MonoBehaviour:
       nameText: {fileID: 1659526338}
     dialogueText: {fileID: 403369036}
   characterHandler: {fileID: 0}
+  worldHandler: {fileID: 228458421}
   dialogueBox: {fileID: 57058295}
   reticle: {fileID: 246436660}
 --- !u!1 &1371583845
@@ -10491,7 +10451,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1517360010
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12561,7 +12521,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1786363823
 Transform:
   m_ObjectHideFlags: 0
@@ -12764,7 +12724,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1891043989
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14366,6 +14326,10 @@ PrefabInstance:
     - target: {fileID: 3855608602787902032, guid: f3c3c0f81946b3944a91edc1321502c0, type: 3}
       propertyPath: m_Name
       value: DebateManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 3855608602787902032, guid: f3c3c0f81946b3944a91edc1321502c0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8309603348950177392, guid: f3c3c0f81946b3944a91edc1321502c0, type: 3}
       propertyPath: textPivot

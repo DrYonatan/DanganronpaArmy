@@ -17,11 +17,14 @@ namespace DIALOGUE
         private bool userPrompt = false;
         
         public ICharacterHandler characterHandler;
-        public ConversationManager(TextArchitect architect, ICharacterHandler characterHandler)
+        public IWorldHandler worldHandler;
+
+        public ConversationManager(TextArchitect architect, ICharacterHandler characterHandler, IWorldHandler worldHandler)
         {
             this.architect = architect;
             dialogueSystem.onUserPrompt_Next += OnUserPrompt_Next;
             this.characterHandler = characterHandler;
+            this.worldHandler = worldHandler;
         }
 
         private void OnUserPrompt_Next()
@@ -75,7 +78,7 @@ namespace DIALOGUE
 
             }
 
-            dialogueSystem.HandleConversationEnd();
+            worldHandler.HandleConversationEnd();
         }
         
         IEnumerator Line_RunDialogue(DIALOGUE_LINE line)
