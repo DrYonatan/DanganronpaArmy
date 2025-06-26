@@ -20,6 +20,9 @@ namespace DIALOGUE
 
         public event DialogueSystemEvent onUserPrompt_Next;
 
+        public GameObject dialogueBox;
+        public GameObject reticle;
+
         private void Awake()
         {
             if (instance == null)
@@ -74,8 +77,6 @@ namespace DIALOGUE
         public void SetIsActive(bool activeOrNot) // Not to be cofnsued with Unity's GameObject.SetActive() 
         {
             isActive = activeOrNot;
-            GameObject dialogueBox = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/4 - Dialogue");
-            GameObject reticle = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/6 - Controls/Reticle");
 
             if (activeOrNot)
             {
@@ -88,6 +89,11 @@ namespace DIALOGUE
                 dialogueBox.GetComponent<CanvasGroup>().alpha = 0;
                 reticle.SetActive(true);
             }
+        }
+
+        public void HandleConversationEnd()
+        {
+            
         }
 
         public void ClearTextBox()

@@ -74,6 +74,8 @@ namespace DIALOGUE
                 yield return WaitForUserInput();
 
             }
+
+            dialogueSystem.HandleConversationEnd();
         }
         
         IEnumerator Line_RunDialogue(DIALOGUE_LINE line)
