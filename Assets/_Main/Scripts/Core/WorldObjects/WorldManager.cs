@@ -9,7 +9,6 @@ public class WorldManager : MonoBehaviour, IWorldHandler
     public GameObject characterPanel = null;
     public GameEvent currentGameEvent;
     public Room currentRoom;
-    public bool isPaused;
     public bool isLoading = false;
 
     public static WorldManager instance { get; private set; }
@@ -18,7 +17,6 @@ public class WorldManager : MonoBehaviour, IWorldHandler
      void Start()
     {
         instance = this;
-        isPaused = false;
         StartLoadingRoom(currentRoom);
         Dictionary<string, GameEvent> runtimeGameEvents = ProgressManager.instance.runtimeGameEvents;
         StartConversation("test");
@@ -181,7 +179,7 @@ public class WorldManager : MonoBehaviour, IWorldHandler
     // Update is called once per frame
     void Update()
     {
-        if(!DialogueSystem.instance.isActive && !isPaused && !isLoading)
+        if(!DialogueSystem.instance.isActive && !PlayerInputManager.instance.isPaused && !isLoading)
         currentRoom.MovementControl();
     }
 }

@@ -6,7 +6,7 @@ using DIALOGUE;
 public class TrialDialogueManager : MonoBehaviour, IWorldHandler
 {
     public static TrialDialogueManager instance { get; private set; }
-
+    
     [SerializeField] ConversationSegment conversation;
     int conversationIndex;
 
@@ -24,6 +24,7 @@ public class TrialDialogueManager : MonoBehaviour, IWorldHandler
     {
         ConversationNode nextNode = conversation.conversationNodes[conversationIndex];
         List<string> lines = nextNode.textLines;
+        DialogueSystem.instance.ShowSpeakerName(nextNode.character.name);
         DialogueSystem.instance.Say(lines);
     }
 

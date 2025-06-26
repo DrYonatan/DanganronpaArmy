@@ -159,8 +159,6 @@ namespace TESTING
             
         }
 
-        
-
         private static void ShowCharacter(string characterName)
         {
             CharacterManager.instance.ShowCharacter(characterName);
