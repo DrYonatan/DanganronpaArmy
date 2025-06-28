@@ -9,6 +9,9 @@ public class TrialDialogueManager : MonoBehaviour, IWorldHandler
     
     [SerializeField] ConversationSegment conversation;
     int conversationIndex;
+    [SerializeField] CameraEffectController effectController;
+    [SerializeField] CameraController cameraController;
+    [SerializeField] List<CharacterStand> characterStands;
 
     private void Awake()
     {
@@ -20,9 +23,18 @@ public class TrialDialogueManager : MonoBehaviour, IWorldHandler
         PlayConversationNode();
     }
 
+    void Update()
+    {
+        effectController.Process();
+    }
+
     void PlayConversationNode()
     {
         ConversationNode nextNode = conversation.conversationNodes[conversationIndex];
+        effectController.effect = nextNode.cameraEffect;
+        effectController.effect.OnStart(effectController);
+        CharacterStand characterStand = characterStands.Find(stand => stand.character == nextNode.character);
+        cameraController.target = characterStand.transform;
         List<string> lines = nextNode.textLines;
         DialogueSystem.instance.ShowSpeakerName(nextNode.character.name);
         DialogueSystem.instance.Say(lines);
@@ -31,6 +43,7 @@ public class TrialDialogueManager : MonoBehaviour, IWorldHandler
     void GoToNextNode()
     {
         conversationIndex++;
+        effectController.Reset();
         PlayConversationNode();
     }
 

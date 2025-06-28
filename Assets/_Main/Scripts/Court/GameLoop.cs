@@ -282,8 +282,7 @@ public class GameLoop : MonoBehaviour
 
         if (nextNode.character != null)
         {
-            characterStand = characterStands.Find(stand => stand.character == nextNode.character
-            );
+            characterStand = characterStands.Find(stand => stand.character == nextNode.character);
             //find the transform of the new target for the camera
             cameraController.target = characterStand.spriteRenderer.transform;
             textPivot = characterStand.textPivot;

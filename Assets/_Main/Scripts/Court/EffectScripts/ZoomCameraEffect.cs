@@ -15,4 +15,8 @@ public class ZoomCameraEffect : CameraEffect
             speed * Time.deltaTime
             );
     }
+    public override void OnStart(CameraEffectController effectController)
+    {
+        
+    }
 }

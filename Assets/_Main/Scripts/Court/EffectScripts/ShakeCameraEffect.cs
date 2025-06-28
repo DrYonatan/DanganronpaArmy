@@ -8,6 +8,11 @@ public class ShakeCameraEffect : CameraEffect
     [SerializeField] Vector3 limits;
     [SerializeField] int intensity = 10;
 
+    public override void OnStart(CameraEffectController effectController)
+    {
+
+    }
+
     public override void Apply(CameraEffectController effectController)
     {
         if (Time.frameCount % intensity == 0)

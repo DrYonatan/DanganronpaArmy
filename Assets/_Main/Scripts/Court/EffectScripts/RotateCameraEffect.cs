@@ -7,6 +7,12 @@ public class RotateCameraEffect : CameraEffect
 {
     [SerializeField] Vector3 rotationLimit;
     [SerializeField] float speed;
+
+    public override void OnStart(CameraEffectController effectController)
+    {
+        
+    }
+
     public override void Apply(CameraEffectController effectController)
     {
         effectController.rotation = Vector3.MoveTowards(effectController.rotation,
