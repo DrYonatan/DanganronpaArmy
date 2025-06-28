@@ -25,8 +25,8 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!GameLoop.instance.finished)
-        {
+     //   if (!GameLoop.instance.finished)
+       // {
             Vector3 targetDir = target.position - pivot.position;
             targetDir.y = 0;
             Vector3 cameraDir = cameraTransform.position - effectController.position - pivot.position;
@@ -54,7 +54,7 @@ public class CameraController : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(transform.position - pivot.position);
             cameraTransform.rotation =
                 Quaternion.Euler(cameraTransform.rotation.eulerAngles + effectController.rotation);
-        }
+      //  }
     }
 
     public IEnumerator MoveCameraOnXAndZ(Vector3 targetPosition, Quaternion targetRotation, float duration)

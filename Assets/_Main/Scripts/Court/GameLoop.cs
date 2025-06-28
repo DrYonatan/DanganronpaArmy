@@ -115,7 +115,7 @@ public class GameLoop : MonoBehaviour
             GameOver();
         }
 
-        effectController.Process();
+      //  effectController.Process();
 
         if (textLines.Count == 0)
         {
@@ -349,8 +349,8 @@ public class GameLoop : MonoBehaviour
             textLines.Add(textLine);
         }
 
-        effectController.effect = nextNode.cameraEffect;
         effectController.Reset();
+        effectController.StartEffect(nextNode.cameraEffect);
     }
 
 

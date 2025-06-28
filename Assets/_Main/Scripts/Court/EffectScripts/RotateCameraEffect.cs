@@ -8,16 +8,18 @@ public class RotateCameraEffect : CameraEffect
     [SerializeField] Vector3 rotationLimit;
     [SerializeField] float speed;
 
-    public override void OnStart(CameraEffectController effectController)
+    public override IEnumerator Apply(CameraEffectController effectController)
     {
-        
-    }
-
-    public override void Apply(CameraEffectController effectController)
-    {
-        effectController.rotation = Vector3.MoveTowards(effectController.rotation,
+        float elapsedTime = 0f;
+        while(elapsedTime < timeLimit)
+        {
+            effectController.rotation = Vector3.MoveTowards(effectController.rotation,
             rotationLimit,
             speed * Time.deltaTime
             );
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        
     }
 }

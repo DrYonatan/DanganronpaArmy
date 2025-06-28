@@ -7,16 +7,18 @@ public class ZoomCameraEffect : CameraEffect
 {
     [SerializeField] float zoom;
     [SerializeField] float speed;
-    public override void Apply(CameraEffectController effectController)
+    public override IEnumerator Apply(CameraEffectController effectController)
     {
-        effectController.zoom = Mathf.MoveTowards(
+        float elapsedTime = 0f;
+        while(elapsedTime < timeLimit)
+        {
+            effectController.zoom = Mathf.MoveTowards( 
             effectController.zoom,
             zoom,
             speed * Time.deltaTime
             );
-    }
-    public override void OnStart(CameraEffectController effectController)
-    {
-        
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
     }
 }
