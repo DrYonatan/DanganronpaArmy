@@ -21,7 +21,7 @@ public class ShakeCameraEffect : CameraEffect
                Random.Range(-limits.y/100, limits.y/100),
                Random.Range(-limits.z/100, limits.z/100)
                );
-            effectController.position = newPosition;
+            effectController.cameraTransform.position += newPosition;
             }
             elapsedTime += Time.deltaTime;
             yield return null;

@@ -11,12 +11,17 @@ public class RotateCameraEffect : CameraEffect
     public override IEnumerator Apply(CameraEffectController effectController)
     {
         float elapsedTime = 0f;
+        Quaternion startRotation = effectController.cameraTransform.rotation;
+        Quaternion targetRotation = startRotation * Quaternion.Euler(rotationLimit);
+
         while(elapsedTime < timeLimit)
         {
-            effectController.rotation = Vector3.MoveTowards(effectController.rotation,
-            rotationLimit,
+            effectController.cameraTransform.rotation = Quaternion.RotateTowards(
+            effectController.cameraTransform.rotation,
+            targetRotation,
             speed * Time.deltaTime
-            );
+        );
+
             elapsedTime += Time.deltaTime;
             yield return null;
         }

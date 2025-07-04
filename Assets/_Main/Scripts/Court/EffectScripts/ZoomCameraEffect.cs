@@ -12,11 +12,11 @@ public class ZoomCameraEffect : CameraEffect
         float elapsedTime = 0f;
         while(elapsedTime < timeLimit)
         {
-            effectController.zoom = Mathf.MoveTowards( 
-            effectController.zoom,
-            zoom,
-            speed * Time.deltaTime
-            );
+            effectController.cameraTransform.position = 
+            Vector3.Lerp(effectController.cameraTransform.position,
+            effectController.cameraTransform.position + effectController.cameraTransform.forward * zoom,
+            speed * Time.deltaTime);
+
             elapsedTime += Time.deltaTime;
             yield return null;
         }

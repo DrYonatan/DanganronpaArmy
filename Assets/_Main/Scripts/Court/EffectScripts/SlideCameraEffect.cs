@@ -22,29 +22,29 @@ public class SlideCameraEffect : CameraEffect
         switch (fromDirection)
         {
             case Direction.Up:
-            effectController.position += effectController.transform.up * amount;
+            effectController.cameraTransform.position += effectController.cameraTransform.up * amount;
             break;
             case Direction.Right:
-            effectController.position += effectController.transform.right * amount;
+            effectController.cameraTransform.position += effectController.cameraTransform.right * amount;
             break;
             case Direction.Left:
-            effectController.position -= effectController.transform.right * amount;
+            effectController.cameraTransform.position -= effectController.cameraTransform.right * amount;
             break;
             case Direction.Down:
-            effectController.position -= effectController.transform.up * amount;
+            effectController.cameraTransform.position -= effectController.cameraTransform.up * amount;
             break;
         }
     }
 
     public override IEnumerator Apply(CameraEffectController effectController)
     {
-        originalPosition = effectController.position;
+        originalPosition = effectController.cameraTransform.position;
         TeleportToFromDirection(effectController);
 
         float elapsedTime = 0f;
         while(elapsedTime < timeLimit)
         {
-            effectController.position = Vector3.MoveTowards(effectController.position, originalPosition, Time.deltaTime * speed);
+            effectController.cameraTransform.position = Vector3.MoveTowards(effectController.cameraTransform.position, originalPosition, Time.deltaTime * speed);
             elapsedTime += Time.deltaTime;
             yield return null;
         }

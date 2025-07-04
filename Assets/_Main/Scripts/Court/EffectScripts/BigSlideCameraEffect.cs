@@ -7,7 +7,7 @@ public class BigSlideCameraEffect : SlideCameraEffect
 {
     public override IEnumerator Apply(CameraEffectController effectController)
     {
-        originalPosition = effectController.position;
+        originalPosition = effectController.cameraTransform.position;
         TeleportToFromDirection(effectController);
 
         float elapsedTime = 0f;
@@ -16,9 +16,9 @@ public class BigSlideCameraEffect : SlideCameraEffect
         speed = 0.75f;
         while(elapsedTime < timeLimit)
         {
-            if(elapsedTime > 0.1f)
+            if(elapsedTime > 0.2f)
             speed = originalSpeed;
-            effectController.position = Vector3.MoveTowards(effectController.position, originalPosition, Time.deltaTime * speed);
+            effectController.cameraTransform.position = Vector3.MoveTowards(effectController.cameraTransform.position, originalPosition, Time.deltaTime * speed);
             elapsedTime += Time.deltaTime;
             yield return null;
         }

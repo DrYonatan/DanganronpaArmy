@@ -27,6 +27,7 @@ public class TrialDialogueManager : MonoBehaviour, IWorldHandler
     {
         ConversationNode nextNode = conversation.conversationNodes[conversationIndex];
         CharacterStand characterStand = characterStands.Find(stand => stand.character == nextNode.character);
+        cameraController.TeleportToTarget(characterStand.transform);
         cameraController.target = characterStand.transform;
         List<string> lines = nextNode.textLines;
         DialogueSystem.instance.ShowSpeakerName(nextNode.character.name);
