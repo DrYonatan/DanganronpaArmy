@@ -59,7 +59,6 @@ public class GameLoop : MonoBehaviour
     [SerializeField] GameObject shatterTransform;
     public GameObject noThatsWrong;
 
-
     float timer;
     int textIndex;
 
@@ -75,7 +74,8 @@ public class GameLoop : MonoBehaviour
     public GameObject textBulletPrefab;
     public float shootForce = 10f;
     public Transform shootOrigin;
-
+    public Transform textStartPosition;
+    public Camera statementsCamera;
 
     // Start is called before the first frame update
     void Start()
@@ -114,9 +114,7 @@ public class GameLoop : MonoBehaviour
         {
             GameOver();
         }
-
-      //  effectController.Process();
-
+        
         if (textLines.Count == 0)
         {
             SpawnText(textIndex);
@@ -180,25 +178,21 @@ public class GameLoop : MonoBehaviour
 
     void ShootText()
     {
-        // Use the shootOrigin or fallback to camera's position
-        Vector3 spawnPosition = shootOrigin ? shootOrigin.position : Camera.main.transform.position;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = statementsCamera.ScreenPointToRay(Input.mousePosition);
 
         // Create a plane in front of the firePoint (facing the same way as the camera)
-        Plane plane = new Plane(Camera.main.transform.forward,
-            shootOrigin.position + Camera.main.transform.forward * 4f);
+        Plane plane = new Plane(statementsCamera.transform.forward,
+            shootOrigin.position + statementsCamera.transform.forward * 4f);
 
         if (plane.Raycast(ray, out float distance))
         {
             Vector3 targetPoint = ray.GetPoint(distance);
             Vector3 direction = (targetPoint - shootOrigin.position).normalized;
 
-            Quaternion rotation = Quaternion.LookRotation(direction, Camera.main.transform.up) *
+            Quaternion rotation = Quaternion.LookRotation(direction, statementsCamera.transform.up) *
                                   Quaternion.Euler(0, 90f, 0);
             GameObject bullet = Instantiate(textBulletPrefab, shootOrigin.position, rotation);
-
-            Rigidbody rb = bullet.GetComponent<Rigidbody>();
-
+            
             StartCoroutine(MoveBullet(bullet, direction, 2f));
         }
     }
@@ -283,9 +277,6 @@ public class GameLoop : MonoBehaviour
         if (nextNode.character != null)
         {
             characterStand = characterStands.Find(stand => stand.character == nextNode.character);
-            //find the transform of the new target for the camera
-            cameraController.target = characterStand.spriteRenderer.transform;
-            textPivot = characterStand.textPivot;
         }
 
         if (characterStand != null)
@@ -300,10 +291,9 @@ public class GameLoop : MonoBehaviour
             correctCharacterIndexBegin = -1;
             correctCharacterIndexEnd = -1;
 
-            GameObject go = Instantiate(textPrefab);
-            go.transform.position = textPivot.position;
+            GameObject go = Instantiate(textPrefab, statementsCamera.transform.parent);
+            go.transform.position = textStartPosition.position;
             go.transform.position += nextNode.textLines[i].spawnOffset;
-            go.transform.rotation = textPivot.rotation;
             go.transform.localScale = nextNode.textLines[i].scale;
 
             TextMeshPro tmp = go.GetComponent<TextMeshPro>();
@@ -351,6 +341,8 @@ public class GameLoop : MonoBehaviour
 
         effectController.Reset();
         effectController.StartEffect(nextNode.cameraEffect);
+        cameraController.SpinToTarget(characterStand.transform);
+
     }
 
 

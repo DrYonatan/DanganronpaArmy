@@ -46,7 +46,7 @@ public class TextShatterEffect : MonoBehaviour
             rb.useGravity = false;
             rb.drag = 0.5f;
             // Get the direction from the text to the camera
-            Vector3 toCamera = (Camera.main.transform.position - textToSeperate.transform.position).normalized;
+            Vector3 toCamera = (GameLoop.instance.statementsCamera.transform.position - textToSeperate.transform.position).normalized;
             
             // Blend the horizontal randomness with the direction to the camera
             Vector3 dir = (toCamera).normalized;
@@ -59,11 +59,9 @@ public class TextShatterEffect : MonoBehaviour
                 forceFactor = 0.1f;
                 spinFactor = 0.1f;
             }
-            
-
 
             rb.AddForce(dir * explosionForce * forceFactor, ForceMode.Impulse);
-            Vector3 camForward = Camera.main.transform.forward;
+            Vector3 camForward = GameLoop.instance.statementsCamera.transform.forward;
             rb.AddTorque(camForward * Random.Range(-spinAmount, spinAmount) * spinFactor, ForceMode.Impulse);
 
             StartCoroutine(FadeCharacterAway(charObj.GetComponent<TextMeshPro>(), 1f));
