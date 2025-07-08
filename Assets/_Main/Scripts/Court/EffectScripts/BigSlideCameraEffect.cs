@@ -13,10 +13,10 @@ public class BigSlideCameraEffect : SlideCameraEffect
         float elapsedTime = 0f;
 
         float originalSpeed = speed;
-        speed = 0.75f;
+        speed = 3f;
         while(elapsedTime < timeLimit)
         {
-            if(elapsedTime > 0.2f)
+            if(elapsedTime > 0.3f)
             speed = originalSpeed;
             effectController.cameraTransform.position = Vector3.MoveTowards(effectController.cameraTransform.position, originalPosition, Time.deltaTime * speed);
             elapsedTime += Time.deltaTime;

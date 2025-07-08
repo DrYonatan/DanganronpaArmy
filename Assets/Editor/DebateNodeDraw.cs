@@ -23,9 +23,7 @@ public class DebateNodeDraw : DrawNode
         node.statement = EditorGUILayout.TextField(node.statement);
 
         node.statementColor = EditorGUILayout.ColorField(node.statementColor);
-
-      //  node.cameraEffect = (CameraEffect)EditorGUILayout.ObjectField(node.cameraEffect, typeof(CameraEffect), false);
-
+        
         node.voiceLine = (AudioClip)EditorGUILayout.ObjectField(node.voiceLine, typeof(AudioClip), false);
 
         node.expression = (CharacterState)EditorGUILayout.EnumPopup(node.expression);
@@ -35,6 +33,7 @@ public class DebateNodeDraw : DrawNode
         for (int i = 0; i < node.textLines.Count; i++)
         {
             EditorGUILayout.Separator();
+            ShowCameraEffect(ref node.cameraEffects, ref node);
             GUILayout.BeginHorizontal();
             GUILayout.Label("Line #" + i.ToString());
             if (GUILayout.Button(("X"), GUILayout.Width(20)))
@@ -74,6 +73,26 @@ public class DebateNodeDraw : DrawNode
         if(GUILayout.Button("Add text effect"))
         {
             textEffect.Add(null);
+        }
+        b.nodeRect.height += 20;
+    }
+    private void ShowCameraEffect(ref List<CameraEffect> cameraEffects, ref DebateNode b)
+    {
+        for(int i = 0; i < cameraEffects.Count; i++)
+        {
+            GUILayout.BeginHorizontal();
+            cameraEffects[i] = (CameraEffect)EditorGUILayout.ObjectField(cameraEffects[i], typeof(CameraEffect), false);
+            if(GUILayout.Button("X", GUILayout.Width(20)))
+            {
+                cameraEffects.RemoveAt(i);
+                continue;
+            }
+            b.nodeRect.height += 20;
+            GUILayout.EndHorizontal();
+        }
+        if(GUILayout.Button("Add camera effect"))
+        {
+            cameraEffects.Add(null);
         }
         b.nodeRect.height += 20;
     }

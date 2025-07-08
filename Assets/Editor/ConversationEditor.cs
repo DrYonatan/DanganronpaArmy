@@ -165,6 +165,7 @@ public class ConversationEditor : EditorWindow
 
         selectedNode.textLines.Add("");
     }
+    
 
     void DeleteNode()
     {
