@@ -13,7 +13,7 @@ public class ConversationNodeDraw : DrawNode
 
         node.character = (CharacterCourt)EditorGUILayout.ObjectField(b.character, typeof(CharacterCourt), false);
 
-        node.cameraEffect = (CameraEffect)EditorGUILayout.ObjectField(b.cameraEffect, typeof(CameraEffect), false);
+      //  node.cameraEffect = (CameraEffect)EditorGUILayout.ObjectField(b.cameraEffect, typeof(CameraEffect), false);
 
 
         for (int i = 0; i < node.textLines.Count; i++)

@@ -340,7 +340,10 @@ public class GameLoop : MonoBehaviour
         }
 
         effectController.Reset();
-        effectController.StartEffect(nextNode.cameraEffect);
+        foreach (CameraEffect cameraEffect in nextNode.cameraEffects)
+        {
+            effectController.StartEffect(cameraEffect);
+        }
         cameraController.SpinToTarget(characterStand.transform);
 
     }

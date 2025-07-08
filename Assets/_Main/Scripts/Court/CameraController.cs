@@ -6,7 +6,7 @@ public class CameraController : MonoBehaviour
 {
     Transform pivot;
 
-    [SerializeField] Transform cameraTransform;
+    public Transform cameraTransform;
     CameraEffectController effectController;
 
     [SerializeField] float newAngle, rotationTime, radius;

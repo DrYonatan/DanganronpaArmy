@@ -24,7 +24,7 @@ public class DebateNodeDraw : DrawNode
 
         node.statementColor = EditorGUILayout.ColorField(node.statementColor);
 
-        node.cameraEffect = (CameraEffect)EditorGUILayout.ObjectField(node.cameraEffect, typeof(CameraEffect), false);
+      //  node.cameraEffect = (CameraEffect)EditorGUILayout.ObjectField(node.cameraEffect, typeof(CameraEffect), false);
 
         node.voiceLine = (AudioClip)EditorGUILayout.ObjectField(node.voiceLine, typeof(AudioClip), false);
 

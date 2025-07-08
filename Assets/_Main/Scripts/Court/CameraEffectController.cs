@@ -5,7 +5,13 @@ using UnityEngine;
 public class CameraEffectController : MonoBehaviour
 {
     public Transform cameraTransform;
+    public Camera camera;
     List<Coroutine> operations = new List<Coroutine>();
+
+    void Start()
+    {
+        camera = cameraTransform.GetComponent<Camera>();
+    }
 
     public void StartEffect(CameraEffect effect)
     {

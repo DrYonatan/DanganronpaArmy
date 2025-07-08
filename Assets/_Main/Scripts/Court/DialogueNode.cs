@@ -9,13 +9,14 @@ public abstract class DialogueNode
     public string title;
 
     public DrawNode drawNode;
-
-
+    
     public string text;
     public CharacterCourt character;
 
-    public CameraEffect cameraEffect;
-    
+    public List<CameraEffect> cameraEffects;
+    public float fovOffset;
+    public Vector3 positionOffset;
+    public Vector3 rotationOffset;
     public DialogueNode(DrawNode _drawNode)
     {
         drawNode = _drawNode;
