@@ -13,7 +13,7 @@ public class DebateNodeDraw : DrawNode
         
         DebateNode node = (DebateNode)b;
         
-        node.nodeRect.height = 200;
+        node.nodeRect.height = 250;
         node.nodeRect.width = 200;
         
         node.character = (CharacterCourt)EditorGUILayout.ObjectField(node.character, typeof(CharacterCourt), false);
@@ -28,12 +28,19 @@ public class DebateNodeDraw : DrawNode
 
         node.expression = (CharacterState)EditorGUILayout.EnumPopup(node.expression);
 
+        node.positionOffset = EditorGUILayout.Vector3Field("Position Offset", node.positionOffset);
+        
+        node.rotationOffset = EditorGUILayout.Vector3Field("Rotation Offset", node.rotationOffset);
+        
+        node.fovOffset = EditorGUILayout.FloatField("Fov Offset", node.fovOffset);
+
+        ShowCameraEffect(ref node.cameraEffects, ref node);
+
         if(node.textLines == null) { return; }
 
         for (int i = 0; i < node.textLines.Count; i++)
         {
             EditorGUILayout.Separator();
-            ShowCameraEffect(ref node.cameraEffects, ref node);
             GUILayout.BeginHorizontal();
             GUILayout.Label("Line #" + i.ToString());
             if (GUILayout.Button(("X"), GUILayout.Width(20)))

@@ -344,7 +344,7 @@ public class GameLoop : MonoBehaviour
         {
             effectController.StartEffect(cameraEffect);
         }
-        cameraController.SpinToTarget(characterStand.transform);
+        cameraController.SpinToTarget(characterStand.transform, nextNode.positionOffset, nextNode.rotationOffset, nextNode.fovOffset);
 
     }
 

@@ -9,10 +9,17 @@ public class ConversationNodeDraw : DrawNode
     {
         ConversationNode node = (ConversationNode)b;
 
-        node.nodeRect.height = 80;
+        node.nodeRect.height = 150;
         node.nodeRect.width = 200;
 
         node.character = (CharacterCourt)EditorGUILayout.ObjectField(b.character, typeof(CharacterCourt), false);
+        
+        node.positionOffset = EditorGUILayout.Vector3Field("Position Offset", node.positionOffset);
+        
+        node.rotationOffset = EditorGUILayout.Vector3Field("Rotation Offset", node.rotationOffset);
+        
+        node.fovOffset = EditorGUILayout.FloatField("Fov Offset", node.fovOffset);
+        
         ShowCameraEffect(ref node.cameraEffects, ref node);
       
         for (int i = 0; i < node.textLines.Count; i++)

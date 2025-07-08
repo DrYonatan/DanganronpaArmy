@@ -33,18 +33,24 @@ public class CameraController : MonoBehaviour
         cameraTransform.rotation = Quaternion.LookRotation(targetDir);
     }
 
-    public void SpinToTarget(Transform target)
+    public void SpinToTarget(Transform target, Vector3 positionOffset, Vector3 rotationOffset, float fovOffset)
     {
         if (spinCoroutine != null)
         {
             StopCoroutine(spinCoroutine);
         }
+        Vector3 newPosition = target.right * positionOffset.x
+                              + target.up * positionOffset.y
+                              + target.forward * positionOffset.z;
+        Quaternion newRotation = cameraTransform.rotation * Quaternion.Euler(rotationOffset);
+        float newFOV = 15 + fovOffset;
 
-        spinCoroutine = StartCoroutine(SpinningToTarget(target));
+
+        spinCoroutine = StartCoroutine(SpinningToTarget(target.position + newPosition));
     }
-    IEnumerator SpinningToTarget(Transform target)
+    IEnumerator SpinningToTarget(Vector3 target)
     {
-        float heightOffset = target.position.y - 2f;
+        float heightOffset = target.y - 2f;
 
         // Start angle
         Vector3 toCamera = transform.position - pivot.position;
@@ -52,7 +58,7 @@ public class CameraController : MonoBehaviour
         float startAngle = Mathf.Atan2(toCamera.z, toCamera.x) * Mathf.Rad2Deg;
 
         // Opposite of target angle
-        Vector3 toTarget = target.position - pivot.position;
+        Vector3 toTarget = target - pivot.position;
         toTarget.y = 0f;
         float targetAngle = Mathf.Atan2(toTarget.z, toTarget.x) * Mathf.Rad2Deg;
         float oppositeAngle = (targetAngle + 180f) % 360f;
@@ -91,53 +97,6 @@ public class CameraController : MonoBehaviour
             yield return null;
         }
     }
-
-    // IEnumerator SpinningToTarget(Transform target)
-    // {
-    //     float elapsedTime = 0f;
-    //
-    //     while (elapsedTime < rotationTime)
-    //     {
-    //         elapsedTime += Time.deltaTime;
-    //
-    //         // Flatten positions to ground plane
-    //         Vector3 pivotPos = pivot.position;
-    //         Vector3 targetPos = target.position;
-    //
-    //         pivotPos.y = 0;
-    //         targetPos.y = 0;
-    //
-    //         // Direction from pivot to target
-    //         Vector3 dirToTarget = (targetPos - pivotPos).normalized;
-    //
-    //         // Angle from pivot forward to target direction
-    //         float angleToTarget = Vector3.SignedAngle(Vector3.forward, dirToTarget, Vector3.up);
-    //
-    //         // Opposite angle (add 180 degrees)
-    //         float desiredAngle = angleToTarget + 180f;
-    //
-    //         // Smoothly move angle over time
-    //         float currentAngle = Mathf.LerpAngle(0f, desiredAngle, elapsedTime / rotationTime);
-    //
-    //         // Convert angle to radians for position calculation
-    //         float rad = currentAngle * Mathf.Deg2Rad;
-    //
-    //         // Calculate new position around pivot at given radius
-    //         float x = Mathf.Sin(rad) * radius;
-    //         float z = Mathf.Cos(rad) * radius;
-    //
-    //         Vector3 newPos = new Vector3(x, 0, z) + pivot.position;
-    //
-    //         transform.position = newPos;
-    //
-    //         // Look at the pivot
-    //         transform.rotation = Quaternion.LookRotation(pivot.position - transform.position);
-    //
-    //         yield return null;
-    //     }
-    //
-    //     spinCoroutine = null;
-    // }
 
     public IEnumerator MoveCameraOnXAndZ(Vector3 targetPosition, Quaternion targetRotation, float duration)
     {
