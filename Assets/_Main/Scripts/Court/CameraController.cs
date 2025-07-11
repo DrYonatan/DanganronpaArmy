@@ -7,6 +7,7 @@ public class CameraController : MonoBehaviour
     Transform pivot;
 
     public Transform cameraTransform;
+    public Camera camera;
     CameraEffectController effectController;
 
     [SerializeField] float newAngle, rotationTime, radius;
@@ -42,23 +43,23 @@ public class CameraController : MonoBehaviour
         Vector3 newPosition = target.right * positionOffset.x
                               + target.up * positionOffset.y
                               + target.forward * positionOffset.z;
-        Quaternion newRotation = cameraTransform.rotation * Quaternion.Euler(rotationOffset);
+        Quaternion newRotation = Quaternion.Euler(rotationOffset);
         float newFOV = 15 + fovOffset;
 
 
-        spinCoroutine = StartCoroutine(SpinningToTarget(target.position + newPosition));
+        spinCoroutine = StartCoroutine(SpinningToTarget(target.position + newPosition, newRotation, newFOV));
     }
-    IEnumerator SpinningToTarget(Vector3 target)
+    IEnumerator SpinningToTarget(Vector3 targetPosition, Quaternion targetRotation, float targetFOV)
     {
-        float heightOffset = target.y - 2f;
-
+        float heightOffset = targetPosition.y - 2f;
+        float startFOV = camera.fieldOfView;
         // Start angle
         Vector3 toCamera = transform.position - pivot.position;
         toCamera.y = 0f;
         float startAngle = Mathf.Atan2(toCamera.z, toCamera.x) * Mathf.Rad2Deg;
 
         // Opposite of target angle
-        Vector3 toTarget = target - pivot.position;
+        Vector3 toTarget = targetPosition - pivot.position;
         toTarget.y = 0f;
         float targetAngle = Mathf.Atan2(toTarget.z, toTarget.x) * Mathf.Rad2Deg;
         float oppositeAngle = (targetAngle + 180f) % 360f;
@@ -68,6 +69,7 @@ public class CameraController : MonoBehaviour
         float totalRotation = Mathf.Abs(angleDelta);
         float rotated = 0f;
         float currentAngle = startAngle;
+        Quaternion startRotation = cameraTransform.rotation;
 
         while (rotated < totalRotation)
         {
@@ -83,7 +85,9 @@ public class CameraController : MonoBehaviour
                 heightOffset,
                 Mathf.Sin(rad) * radius
             );
-            transform.position = pivot.position + newPos;
+            cameraTransform.position = pivot.position + newPos;
+            Quaternion rotation = Quaternion.Slerp(startRotation, targetRotation, rotated / totalRotation);
+            camera.fieldOfView = Mathf.Lerp(startFOV, targetFOV, rotated / totalRotation);
 
             // Look at pivot, ignore X rotation
             Vector3 lookDir = pivot.position - transform.position;
@@ -91,7 +95,7 @@ public class CameraController : MonoBehaviour
             if (lookDir.sqrMagnitude > 0.001f)
             {
                 Quaternion rot = Quaternion.LookRotation(lookDir);
-                transform.rotation = Quaternion.Euler(0f, rot.eulerAngles.y, 0f);
+                cameraTransform.rotation = Quaternion.Euler(rotation.eulerAngles.x, rot.eulerAngles.y, rotation.eulerAngles.z);
             }
 
             yield return null;
