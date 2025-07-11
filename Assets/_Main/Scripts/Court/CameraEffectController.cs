@@ -4,30 +4,30 @@ using UnityEngine;
 
 public class CameraEffectController : MonoBehaviour
 {
-    public Vector3 position;
-    public Vector3 rotation;
-    public CameraEffect effect;
-    float timer;
-    public float zoom;
+    public Transform cameraTransform;
+    public Camera camera;
+    List<Coroutine> operations = new List<Coroutine>();
 
-    public void Process()
+    void Start()
+    {
+        camera = cameraTransform.GetComponent<Camera>();
+    }
+
+    public void StartEffect(CameraEffect effect)
     {
         if(effect != null)
         {
-            if(effect.timeLimit > timer)
-            {
-                effect.Apply(this);
-            }
-            
+            var operation = StartCoroutine(effect.Apply(this));
+            operations.Add(operation);
         }
-        timer += Time.deltaTime;
+        
     }
 
     public void Reset()
     {
-        position = Vector3.zero;
-        rotation = Vector3.zero;
-        timer = 0f;
-        zoom = 0f;
+        foreach(Coroutine operation in operations)
+        {
+            StopCoroutine(operation);
+        }
     }
 }

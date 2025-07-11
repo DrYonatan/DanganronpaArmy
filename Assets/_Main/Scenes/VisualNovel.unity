@@ -97,7 +97,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: 6b2033af734721a438f1b1a1064b8fe3, type: 2}
+  m_LightingDataAsset: {fileID: 112000000, guid: 6b2033af734721a438f1b1a1064b8fe3,
+    type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -291,51 +292,6 @@ MonoBehaviour:
   middleCharacters: []
   rightCharacters: []
   _characterpanel: {fileID: 93912742}
---- !u!1 &79213446
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 79213447}
-  - component: {fileID: 79213448}
-  m_Layer: 0
-  m_Name: Video Manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &79213447
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 79213446}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 472655885}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &79213448
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 79213446}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d970bfb918b92e4f97d643761106899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isPlaying: 0
 --- !u!1 &93912741
 GameObject:
   m_ObjectHideFlags: 0
@@ -574,6 +530,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65b079683f58b0e4386fad0719c323d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dialogueBoxCanvas: {fileID: 1499816039}
   isPlaying: 0
 --- !u!1 &192170766
 GameObject:
@@ -1663,7 +1620,6 @@ Transform:
   - {fileID: 429292030}
   - {fileID: 61787103}
   - {fileID: 1395632033}
-  - {fileID: 79213447}
   - {fileID: 1941290551}
   - {fileID: 442922361}
   - {fileID: 755106309}
@@ -2401,7 +2357,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b0a44118df67fa14c91d223c8c163a2d, type: 2}
   - {fileID: 11400000, guid: 1ab8c3198da0117488708edc3a74e534, type: 2}
   - {fileID: 11400000, guid: 239769e5e5d8f0a49ac8b94892829ea8, type: 2}
-  characterEventsAsset: {fileID: 11400000, guid: 4df5623fd5cfef5469fde0dbab7737e7, type: 2}
+  characterEventsAsset: {fileID: 11400000, guid: 4df5623fd5cfef5469fde0dbab7737e7,
+    type: 2}
 --- !u!1 &762051889
 GameObject:
   m_ObjectHideFlags: 0
@@ -3473,6 +3430,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d970bfb918b92e4f97d643761106899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  videoPlayer: {fileID: 1035580760}
+  dialogueBoxCanvas: {fileID: 1499816039}
+  nameText: {fileID: 451031528}
+  ultimateText: {fileID: 1378537085}
   isPlaying: 0
 --- !u!328 &1035580760
 VideoPlayer:
@@ -3991,6 +3952,9 @@ MonoBehaviour:
       nameText: {fileID: 475160533}
     dialogueText: {fileID: 1575056481}
   characterHandler: {fileID: 61787104}
+  worldHandler: {fileID: 215763213}
+  dialogueBox: {fileID: 1499816034}
+  reticle: {fileID: 195473127}
 --- !u!1 &1378537085
 GameObject:
   m_ObjectHideFlags: 0

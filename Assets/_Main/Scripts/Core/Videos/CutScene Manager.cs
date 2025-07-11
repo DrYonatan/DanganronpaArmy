@@ -8,13 +8,12 @@ using UnityEngine.UI;
 public class CutSceneManager : MonoBehaviour
 {
     private VideoPlayer videoPlayer;
-    private CanvasGroup dialogueBoxCanvas;
+    public CanvasGroup dialogueBoxCanvas;
     public bool isPlaying = false;
     public static CutSceneManager instance { get; private set; }
     private void Awake()
     {
         instance = this;
-        dialogueBoxCanvas = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/4 - Dialogue").GetComponent<CanvasGroup>();
         videoPlayer = GetComponent<VideoPlayer>();
         videoPlayer.transform.parent.gameObject.SetActive(false);
 

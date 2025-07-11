@@ -154,19 +154,8 @@ namespace TESTING
 
         private static void ReturnToWorld()
         {
-            DialogueSystem.instance.SetIsActive(false);
-            CharacterManager.instance.DestroyAllCharacters();
-            WorldManager.instance.currentGameEvent.UpdateEvent();
-            GameObject characters = GameObject.Find("World/World Objects/Characters");
-            if(characters != null)
-            CharacterClickEffects.instance.MakeCharactersReappear(characters);
-            WorldManager.instance.ReturningToWorld();
-            DialogueSystem.instance.ClearTextBox();
-            if(WorldManager.instance.currentRoom is PointAndClickRoom && !WorldManager.instance.currentGameEvent.isFinished)
-            CameraManager.instance.ReturnToDollyTrack();
+            
         }
-
-        
 
         private static void ShowCharacter(string characterName)
         {

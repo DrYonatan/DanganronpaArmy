@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DIALOGUE;
+using CHARACTERS;
 
-public class WorldManager : MonoBehaviour
+public class WorldManager : MonoBehaviour, IWorldHandler
 {
     public GameObject characterPanel = null;
     public GameEvent currentGameEvent;
     public Room currentRoom;
-    public bool isPaused;
     public bool isLoading = false;
 
     public static WorldManager instance { get; private set; }
@@ -17,7 +17,6 @@ public class WorldManager : MonoBehaviour
      void Start()
     {
         instance = this;
-        isPaused = false;
         StartLoadingRoom(currentRoom);
         Dictionary<string, GameEvent> runtimeGameEvents = ProgressManager.instance.runtimeGameEvents;
         StartConversation("test");
@@ -168,11 +167,26 @@ public class WorldManager : MonoBehaviour
         isLoading = false;
         ReturningToWorld();
     }
-    
+
+    public void HandleConversationEnd()
+    {
+        DialogueSystem.instance.SetIsActive(false);
+        CharacterManager.instance.DestroyAllCharacters();
+        currentGameEvent.UpdateEvent();
+        GameObject characters = GameObject.Find("World/World Objects/Characters");
+        if(characters != null)
+        CharacterClickEffects.instance.MakeCharactersReappear(characters);
+        ReturningToWorld();
+        DialogueSystem.instance.ClearTextBox();
+        if(currentRoom is PointAndClickRoom && !currentGameEvent.isFinished)
+        CameraManager.instance.ReturnToDollyTrack();
+    }
+
+
     // Update is called once per frame
     void Update()
     {
-        if(!DialogueSystem.instance.isActive && !isPaused && !isLoading)
+        if(!DialogueSystem.instance.isActive && !PlayerInputManager.instance.isPaused && !isLoading)
         currentRoom.MovementControl();
     }
 }

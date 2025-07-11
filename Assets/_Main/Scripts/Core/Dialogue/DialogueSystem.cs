@@ -14,11 +14,15 @@ namespace DIALOGUE
         private TextArchitect architect;
 
         public MonoBehaviour characterHandler;
+        public MonoBehaviour worldHandler;
         public static DialogueSystem instance { get; private set; }
 
         public delegate void DialogueSystemEvent();
 
         public event DialogueSystemEvent onUserPrompt_Next;
+
+        public GameObject dialogueBox;
+        public GameObject reticle;
 
         private void Awake()
         {
@@ -41,7 +45,7 @@ namespace DIALOGUE
                 return;
 
             architect = new TextArchitect(dialogueContainer.dialogueText);
-            conversationManager = new ConversationManager(architect, characterHandler as ICharacterHandler);
+            conversationManager = new ConversationManager(architect, characterHandler as ICharacterHandler, worldHandler as IWorldHandler);
         }
 
         public void OnUserPrompt_Next()
@@ -74,12 +78,10 @@ namespace DIALOGUE
         public void SetIsActive(bool activeOrNot) // Not to be cofnsued with Unity's GameObject.SetActive() 
         {
             isActive = activeOrNot;
-            GameObject dialogueBox = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/4 - Dialogue");
-            GameObject reticle = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/6 - Controls/Reticle");
 
             if (activeOrNot)
             {
-                VirutalCameraManager.instance.DisableVirtualCamera();
+                VirutalCameraManager.instance?.DisableVirtualCamera();
                 dialogueBox.GetComponent<CanvasGroup>().alpha = 1;
                 reticle.SetActive(false);
             }

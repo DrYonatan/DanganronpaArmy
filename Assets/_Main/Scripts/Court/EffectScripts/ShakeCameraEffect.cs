@@ -8,17 +8,25 @@ public class ShakeCameraEffect : CameraEffect
     [SerializeField] Vector3 limits;
     [SerializeField] int intensity = 10;
 
-    public override void Apply(CameraEffectController effectController)
+
+    public override IEnumerator Apply(CameraEffectController effectController)
     {
-        if (Time.frameCount % intensity == 0)
+        float elapsedTime = 0f;
+        while(elapsedTime < timeLimit)
         {
+           if (Time.frameCount % intensity == 0)
+           {
             Vector3 newPosition = new Vector3(
                Random.Range(-limits.x/100, limits.x/100),
                Random.Range(-limits.y/100, limits.y/100),
                Random.Range(-limits.z/100, limits.z/100)
                );
-            effectController.position = newPosition;
+            effectController.cameraTransform.position += newPosition;
+            }
+            elapsedTime += Time.deltaTime;
+            yield return null;
         }
+        
         
     }
 }

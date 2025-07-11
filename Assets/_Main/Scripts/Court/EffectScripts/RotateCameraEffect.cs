@@ -7,11 +7,24 @@ public class RotateCameraEffect : CameraEffect
 {
     [SerializeField] Vector3 rotationLimit;
     [SerializeField] float speed;
-    public override void Apply(CameraEffectController effectController)
+
+    public override IEnumerator Apply(CameraEffectController effectController)
     {
-        effectController.rotation = Vector3.MoveTowards(effectController.rotation,
-            rotationLimit,
+        float elapsedTime = 0f;
+        Quaternion startRotation = effectController.cameraTransform.rotation;
+        Quaternion targetRotation = startRotation * Quaternion.Euler(rotationLimit);
+
+        while(elapsedTime < timeLimit)
+        {
+            effectController.cameraTransform.rotation = Quaternion.RotateTowards(
+            effectController.cameraTransform.rotation,
+            targetRotation,
             speed * Time.deltaTime
-            );
+        );
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        
     }
 }

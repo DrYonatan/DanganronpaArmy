@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
+using _Main.Scripts.Court;
 using Text = TMPro.TextMeshProUGUI;
 
 public class GameLoop : MonoBehaviour
@@ -58,7 +59,6 @@ public class GameLoop : MonoBehaviour
     [SerializeField] GameObject shatterTransform;
     public GameObject noThatsWrong;
 
-
     float timer;
     int textIndex;
 
@@ -74,7 +74,8 @@ public class GameLoop : MonoBehaviour
     public GameObject textBulletPrefab;
     public float shootForce = 10f;
     public Transform shootOrigin;
-
+    public Transform textStartPosition;
+    public Camera statementsCamera;
 
     // Start is called before the first frame update
     void Start()
@@ -113,9 +114,7 @@ public class GameLoop : MonoBehaviour
         {
             GameOver();
         }
-
-        effectController.Process();
-
+        
         if (textLines.Count == 0)
         {
             SpawnText(textIndex);
@@ -179,25 +178,21 @@ public class GameLoop : MonoBehaviour
 
     void ShootText()
     {
-        // Use the shootOrigin or fallback to camera's position
-        Vector3 spawnPosition = shootOrigin ? shootOrigin.position : Camera.main.transform.position;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = statementsCamera.ScreenPointToRay(Input.mousePosition);
 
         // Create a plane in front of the firePoint (facing the same way as the camera)
-        Plane plane = new Plane(Camera.main.transform.forward,
-            shootOrigin.position + Camera.main.transform.forward * 4f);
+        Plane plane = new Plane(statementsCamera.transform.forward,
+            shootOrigin.position + statementsCamera.transform.forward * 4f);
 
         if (plane.Raycast(ray, out float distance))
         {
             Vector3 targetPoint = ray.GetPoint(distance);
             Vector3 direction = (targetPoint - shootOrigin.position).normalized;
 
-            Quaternion rotation = Quaternion.LookRotation(direction, Camera.main.transform.up) *
+            Quaternion rotation = Quaternion.LookRotation(direction, statementsCamera.transform.up) *
                                   Quaternion.Euler(0, 90f, 0);
             GameObject bullet = Instantiate(textBulletPrefab, shootOrigin.position, rotation);
-
-            Rigidbody rb = bullet.GetComponent<Rigidbody>();
-
+            
             StartCoroutine(MoveBullet(bullet, direction, 2f));
         }
     }
@@ -276,16 +271,12 @@ public class GameLoop : MonoBehaviour
         int correctCharacterIndexBegin = -1;
         int correctCharacterIndexEnd = -1;
 
-        DialogueNode nextDialogueNode = stage.dialogueNodes[dialogueNodeIndex];
-        correctEvidence = nextDialogueNode.evidence;
+        DebateNode nextNode = stage.dialogueNodes[dialogueNodeIndex];
+        correctEvidence = nextNode.evidence;
 
-        if (nextDialogueNode.character != null)
+        if (nextNode.character != null)
         {
-            characterStand = characterStands.Find(stand => stand.character == nextDialogueNode.character
-            );
-            //find the transform of the new target for the camera
-            cameraController.target = characterStand.spriteRenderer.transform;
-            textPivot = characterStand.textPivot;
+            characterStand = characterStands.Find(stand => stand.character == nextNode.character);
         }
 
         if (characterStand != null)
@@ -294,28 +285,27 @@ public class GameLoop : MonoBehaviour
             characterStand.SetSprite();
         }
 
-        for (int i = 0; i < nextDialogueNode.textLines.Count; i++)
+        for (int i = 0; i < nextNode.textLines.Count; i++)
         {
             correctTMPIndex = -1;
             correctCharacterIndexBegin = -1;
             correctCharacterIndexEnd = -1;
 
-            GameObject go = Instantiate(textPrefab);
-            go.transform.position = textPivot.position;
-            go.transform.position += nextDialogueNode.textLines[i].spawnOffset;
-            go.transform.rotation = textPivot.rotation;
-            go.transform.localScale = nextDialogueNode.textLines[i].scale;
+            GameObject go = Instantiate(textPrefab, statementsCamera.transform.parent);
+            go.transform.position = textStartPosition.position;
+            go.transform.position += nextNode.textLines[i].spawnOffset;
+            go.transform.localScale = nextNode.textLines[i].scale;
 
             TextMeshPro tmp = go.GetComponent<TextMeshPro>();
-            string str = nextDialogueNode.textLines[i].text;
+            string str = nextNode.textLines[i].text;
             int indexOf = str.IndexOf("{0}");
             if (indexOf != -1)
             {
                 correctTMPIndex = i;
                 correctCharacterIndexBegin = indexOf;
-                correctCharacterIndexEnd = indexOf + nextDialogueNode.statement.Length;
-                str = string.Format(nextDialogueNode.textLines[i].text,
-                    "<color=orange>" + nextDialogueNode.statement +
+                correctCharacterIndexEnd = indexOf + nextNode.statement.Length;
+                str = string.Format(nextNode.textLines[i].text,
+                    "<color=orange>" + nextNode.statement +
                     "</color>"); //  + ColorUtility.ToHtmlStringRGBA(nextDialogueNode.statementColor) +">" + nextDialogueNode.statement + 
             }
 
@@ -324,8 +314,8 @@ public class GameLoop : MonoBehaviour
             TextLine textLine = new TextLine(
                 go,
                 go.GetComponent<RectTransform>(),
-                nextDialogueNode.textLines[i].textEffect,
-                nextDialogueNode.textLines[i].ttl,
+                nextNode.textLines[i].textEffect,
+                nextNode.textLines[i].ttl,
                 go.GetComponent<TextMeshPro>(),
                 correctTMPIndex,
                 correctCharacterIndexBegin,
@@ -349,8 +339,13 @@ public class GameLoop : MonoBehaviour
             textLines.Add(textLine);
         }
 
-        effectController.effect = nextDialogueNode.cameraEffect;
         effectController.Reset();
+        foreach (CameraEffect cameraEffect in nextNode.cameraEffects)
+        {
+            effectController.StartEffect(cameraEffect);
+        }
+        cameraController.SpinToTarget(characterStand.transform, nextNode.positionOffset, nextNode.rotationOffset, nextNode.fovOffset);
+
     }
 
 

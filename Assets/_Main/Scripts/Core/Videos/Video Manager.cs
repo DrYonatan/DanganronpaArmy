@@ -9,20 +9,16 @@ using DIALOGUE;
 
 public class VideoManager : MonoBehaviour
 {
-    private VideoPlayer videoPlayer;
-    private CanvasGroup dialogueBoxCanvas;
-    private GameObject nameText;
-    private GameObject ultimateText;
+    public VideoPlayer videoPlayer;
+    public CanvasGroup dialogueBoxCanvas;
+    public GameObject nameText;
+    public GameObject ultimateText;
     public bool isPlaying = false;
     public static VideoManager instance { get; private set; }
 
     private void Awake()
     {
         instance = this;
-        dialogueBoxCanvas = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/4 - Dialogue").GetComponent<CanvasGroup>();
-        nameText = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/5 - Foreground/NameText");
-        ultimateText = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/5 - Foreground/UltimateText");
-        videoPlayer = GetComponent<VideoPlayer>();
         videoPlayer.transform.parent.gameObject.SetActive(false);
 
     }

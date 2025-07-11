@@ -4,17 +4,20 @@ namespace DIALOGUE
 {
     public class PlayerInputManager : MonoBehaviour
     {
-        // Start is called before the first frame update
+        public static PlayerInputManager instance {get; private set;}
+
+        public bool isPaused;
+
         void Start()
         {
+            isPaused = false;
+            instance = this;
         }
-
         // Update is called once per frame
         void Update()
         {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Confined;
-            bool isPaused = WorldManager.instance.isPaused;
             if (!isPaused)
             {
                 if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
@@ -39,11 +42,11 @@ namespace DIALOGUE
 
         public void TogglePause()
         {
-            WorldManager.instance.isPaused = !WorldManager.instance.isPaused;
+            isPaused = !isPaused;
             GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/6 - Controls/Pause Menu")
-                .SetActive(WorldManager.instance.isPaused);
+                .SetActive(isPaused);
             GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/6 - Controls/Reticle")
-                .SetActive(!WorldManager.instance.isPaused);
+                .SetActive(!isPaused);
         }
     }
 }
