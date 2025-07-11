@@ -103,7 +103,13 @@ public class WorldManager : MonoBehaviour, IWorldHandler
 
     public IEnumerator LoadRoom(Room room)
     {
+         CameraManager.instance?.StopAllPreviousOperations();
+
         isLoading = true;
+        
+        ImageScript.instance.FadeToBlack(0.2f);
+        yield return new WaitForSeconds(0.2f);
+        
         float timeout = 2f;
         float elapsedTime = 0f;
 
@@ -148,13 +154,14 @@ public class WorldManager : MonoBehaviour, IWorldHandler
         Transform cameraStartPos = GameObject.Find("World/CameraStartPos").transform;
         if(CameraManager.instance)
         CameraManager.instance.initialRotation = cameraStartPos.rotation; // Sets only the Camera Manager's initial position value for later, not actually changing position of camera
-
-        if(currentRoom is PointAndClickRoom)
-        VirutalCameraManager.instance.AssignVirtualCamera();
-
+        
+        CharacterController controller = Camera.main.gameObject.GetComponent<CharacterController>();
+        controller.enabled = false;
         Camera.main.transform.position = cameraStartPos.position; // Actually changing position of camera
         Camera.main.transform.rotation = cameraStartPos.rotation;
-
+        controller.enabled = true;
+        
+        ImageScript.instance.UnFadeToBlack(0.1f);
         if(room.OnLoad() != null)
         yield return StartCoroutine(room.OnLoad());
         isLoading = false;
