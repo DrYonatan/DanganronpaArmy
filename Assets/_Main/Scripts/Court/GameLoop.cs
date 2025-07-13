@@ -76,6 +76,7 @@ public class GameLoop : MonoBehaviour
     public Transform shootOrigin;
     public Transform textStartPosition;
     public Camera statementsCamera;
+    public DebateText currentAimedText;
 
     // Start is called before the first frame update
     void Start()

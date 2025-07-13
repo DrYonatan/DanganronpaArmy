@@ -14,6 +14,8 @@ public class ReticleManager : MonoBehaviour
     public TextMeshProUGUI interactableNameText;
     public CanvasGroup interactableNameCanvasGroup;
     private Coroutine fadeCoroutine;
+    private Vector3 originalScale;
+    public Vector3 hoverScale = new Vector3(1.1f, 1.1f, 1.1f);
 
     public static ReticleManager instance { get; private set; }
 
@@ -21,12 +23,14 @@ public class ReticleManager : MonoBehaviour
     void Start()
     {
         instance = this;
+        originalScale = cursor.localScale;
     }
 
     // Update is called once per frame
     void Update()
     {
         int actualSpeed = speed;
+        Vector3 goalScale = originalScale;
         if (WorldManager.instance != null)
             if (WorldManager.instance.currentRoom.currentInteractable != null)
             {
@@ -38,8 +42,15 @@ public class ReticleManager : MonoBehaviour
                 ShowOrHideMagnifyingGlass(false);
                 ShowOrHideConversationIcon(false);
             }
-                
-
+        else if(GameLoop.instance != null)
+        {
+            if(GameLoop.instance.currentAimedText != null)
+            {
+                actualSpeed = 0;
+                goalScale = hoverScale;  
+            }
+        }             
+        cursor.localScale = Vector3.Lerp(cursor.localScale, goalScale, Time.deltaTime * 20f);
         reticle.Rotate(0, 0, actualSpeed * Time.deltaTime);
     }
 
