@@ -5,12 +5,20 @@ using UnityEngine;
 
 public abstract class Interactable : MonoBehaviour
 {
-    
-
+    public bool isAlreadyLooking = false;
     public virtual void Interact()
     {
         SoundManager.instance.PlaySoundEffect("click");
     }
 
+    public virtual void OnLook()
+    {
+        ReticleManager.instance.ShowOrHideMagnifyingGlass(true);
+    }
     
+    public virtual void OnStopLooking()
+    {
+        isAlreadyLooking = false;
+        ReticleManager.instance.ShowOrHideMagnifyingGlass(false);
+    }
 }

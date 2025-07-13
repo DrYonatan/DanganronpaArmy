@@ -1,11 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class ReticleManager : MonoBehaviour
 {
     public int speed = 30;
+    public RectTransform cursor;
     public Canvas canvas;
+    public Transform reticle;
+    public GameObject magnifyingGlass;
+    public GameObject conversationIcon;
+    public TextMeshProUGUI interactableNameText;
+    public CanvasGroup interactableNameCanvasGroup;
+    private Coroutine fadeCoroutine;
 
     public static ReticleManager instance { get; private set; }
 
@@ -21,9 +29,18 @@ public class ReticleManager : MonoBehaviour
         int actualSpeed = speed;
         if (WorldManager.instance != null)
             if (WorldManager.instance.currentRoom.currentInteractable != null)
+            {
                 actualSpeed *= 4;
+                WorldManager.instance.currentRoom.currentInteractable.OnLook();
+            }
+            else
+            {
+                ShowOrHideMagnifyingGlass(false);
+                ShowOrHideConversationIcon(false);
+            }
+                
 
-        transform.Rotate(0, 0, actualSpeed * Time.deltaTime);
+        reticle.Rotate(0, 0, actualSpeed * Time.deltaTime);
     }
 
     public void ReticleAsCursor()
@@ -35,11 +52,46 @@ public class ReticleManager : MonoBehaviour
             canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera,
             out pos
         );
-        gameObject.GetComponent<RectTransform>().anchoredPosition = pos;
+        cursor.anchoredPosition = pos;
     }
 
     public void Hide()
     {
-        gameObject.SetActive(false);
+        cursor.gameObject.SetActive(false);
+    }
+    public void Show()
+    {
+        cursor.gameObject.SetActive(true);
+    }
+
+    public void ShowOrHideMagnifyingGlass(bool show)
+    {
+        magnifyingGlass.SetActive(show);
+    }
+    public void ShowOrHideConversationIcon(bool show)
+    {
+        conversationIcon.SetActive(show);
+    }
+
+    public void ShowOrHideInteractableName(bool show, string name)
+    {
+        interactableNameText.text = name;
+        if(fadeCoroutine != null)
+        StopCoroutine(fadeCoroutine);
+        fadeCoroutine = StartCoroutine(ShowingOrHidingInteractableName(0.1f, show ? 1f : 0f));
+    }
+
+    IEnumerator ShowingOrHidingInteractableName(float duration, float target)
+    {
+        float elapsedTime = 0f;
+
+        float start = interactableNameCanvasGroup.alpha;
+        while(elapsedTime < duration)
+        {
+            interactableNameCanvasGroup.alpha = Mathf.Lerp(start, target, elapsedTime / duration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        interactableNameCanvasGroup.alpha = target;
     }
 }

@@ -22,7 +22,6 @@ namespace DIALOGUE
         public event DialogueSystemEvent onUserPrompt_Next;
 
         public GameObject dialogueBox;
-        public GameObject reticle;
 
         private void Awake()
         {
@@ -83,12 +82,12 @@ namespace DIALOGUE
             {
                 VirutalCameraManager.instance?.DisableVirtualCamera();
                 dialogueBox.GetComponent<CanvasGroup>().alpha = 1;
-                reticle.SetActive(false);
+                ReticleManager.instance.Hide();
             }
             else
             {
                 dialogueBox.GetComponent<CanvasGroup>().alpha = 0;
-                reticle.SetActive(true);
+                ReticleManager.instance.Show();
             }
         }
 

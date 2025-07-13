@@ -80,23 +80,36 @@ public class FreeRoamRoom : Room
                 }
                 else
                 {
-                    currentInteractable = null;
+                    if(currentInteractable != null)
+                    {
+                        currentInteractable.OnStopLooking();
+                        currentInteractable = null;
+                    }
+                    
                 }
             }
             else
             {
-                currentInteractable = null;
+                if(currentInteractable != null)
+                {
+                    currentInteractable.OnStopLooking();
+                    currentInteractable = null;
+                }
             }
         }
         else
         {
-            currentInteractable = null;
+            if(currentInteractable != null)
+            {
+                currentInteractable.OnStopLooking();
+                currentInteractable = null;
+            }
         }
     }
 
     public void CenterReticle()
     {
-        RectTransform reticle = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/6 - Controls/Reticle")
+        RectTransform reticle = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/6 - Controls/Cursor")
             .GetComponent<RectTransform>();
         reticle.anchorMin = new Vector2(0.5f, 0.5f);
         reticle.anchorMax = new Vector2(0.5f, 0.5f);
