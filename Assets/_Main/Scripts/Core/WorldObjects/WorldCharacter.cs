@@ -7,11 +7,12 @@ public class WorldCharacter : ConversationInteractable
 {
     public string name;
 
-    public override void Interact()
+    public override void FinishInteraction()
     {
         CharacterClickEffects.instance.Interact(transform);
-        base.Interact();
-        StartCoroutine(MoveAndRotateCameraTo());
+        Quaternion targetRotation = Quaternion.LookRotation(transform.forward);
+        CameraManager.instance.StartCameraCoroutine(CameraManager.instance.RotateCameraTo(targetRotation, 0.5f));
+        base.FinishInteraction();
     }
 
     public override void OnLook()

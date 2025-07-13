@@ -421,6 +421,7 @@ MonoBehaviour:
   conversationIcon: {fileID: 655168653}
   interactableNameText: {fileID: 1628549227}
   interactableNameCanvasGroup: {fileID: 1225050957}
+  hoverScale: {x: 1.1, y: 1.1, z: 1.1}
 --- !u!1 &168053698
 GameObject:
   m_ObjectHideFlags: 0
@@ -3999,6 +4000,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1237158327}
   - component: {fileID: 1237158328}
+  - component: {fileID: 1237158329}
   m_Layer: 0
   m_Name: PlayerInput Manager
   m_TagString: Untagged
@@ -4033,7 +4035,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef2de938a4f1a9b4897bb658bc04ee8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shooter: {fileID: 1237158329}
   isPaused: 0
+--- !u!114 &1237158329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1237158326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79602b9b3cef3e44b94b4ae972145d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCamera: {fileID: 963194227}
+  questionMarkPrefab: {fileID: 1679103883713268576, guid: 7573bd93a29d34644b1940a068c5402c, type: 3}
+  travelTime: 0.5
+  curveAmount: 5
 --- !u!1 &1246559003
 GameObject:
   m_ObjectHideFlags: 0
@@ -4456,6 +4475,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df5ceb9428534304c9850324f82acda3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cameraTransform: {fileID: 0}
   initialRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &1411524844
 GameObject:
