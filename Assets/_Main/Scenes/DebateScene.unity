@@ -2729,7 +2729,6 @@ GameObject:
   - component: {fileID: 263735712}
   - component: {fileID: 263735711}
   - component: {fileID: 263735710}
-  - component: {fileID: 263735709}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -2756,18 +2755,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &263735709
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 263735707}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc59324924e6ba941a56c6d8f98df8c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!225 &263735710
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -2929,7 +2916,7 @@ MonoBehaviour:
   cameraTransform: {fileID: 284596571}
   camera: {fileID: 284596570}
   newAngle: 0
-  rotationTime: 2
+  rotationTime: 0.3
   radius: 5
   speed: 300
 --- !u!114 &284596573
@@ -14916,7 +14903,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e437cebb8112844ca0571164d561904, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.5
   cameraTransform: {fileID: 1572153660}
   tmpText: {fileID: 2032813253}
   glowColor: {r: 0.6509433, g: 1, b: 0.7366765, a: 1}

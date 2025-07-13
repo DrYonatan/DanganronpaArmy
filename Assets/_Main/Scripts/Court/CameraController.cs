@@ -20,7 +20,7 @@ public class CameraController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        pivot = transform.parent;
+        pivot = cameraTransform.parent;
         effectController = GetComponent<CameraEffectController>();
         height = cameraTransform.position.y;
     }
@@ -34,77 +34,80 @@ public class CameraController : MonoBehaviour
         cameraTransform.rotation = Quaternion.LookRotation(targetDir);
     }
 
-    public void SpinToTarget(Transform target, Vector3 positionOffset, Vector3 rotationOffset, float fovOffset)
+    public IEnumerator SpinToTarget(Transform target, Vector3 positionOffset, Vector3 rotationOffset, float fovOffset)
     {
         if (spinCoroutine != null)
         {
             StopCoroutine(spinCoroutine);
         }
-        Vector3 newPosition = target.right * positionOffset.x
-                              + target.up * positionOffset.y
-                              + target.forward * positionOffset.z;
+        Vector3 newPosition = target.position + target.right * positionOffset.x
+                                              + target.up * (positionOffset.y + 0.75f)
+                                              + target.forward * positionOffset.z;
         Quaternion newRotation = Quaternion.Euler(rotationOffset);
         float newFOV = 15 + fovOffset;
 
 
-        spinCoroutine = StartCoroutine(SpinningToTarget(target.position + newPosition, newRotation, newFOV));
+        spinCoroutine = StartCoroutine(SpinningToTarget(newPosition, newRotation, newFOV, rotationTime));
+        yield return spinCoroutine;
     }
-    IEnumerator SpinningToTarget(Vector3 targetPosition, Quaternion targetRotation, float targetFOV)
+    public IEnumerator SpinningToTarget(Vector3 targetPosition, Quaternion targetRotation, float targetFov, float duration)
     {
-        float heightOffset = targetPosition.y - 2f;
-        float startFOV = camera.fieldOfView;
-        // Start angle
-        Vector3 toCamera = transform.position - pivot.position;
-        toCamera.y = 0f;
-        float startAngle = Mathf.Atan2(toCamera.z, toCamera.x) * Mathf.Rad2Deg;
+        // --- Direction & radius setup ---
+        Vector3 directionToTarget = targetPosition - pivot.position;
+        Vector3 desiredDirection = -directionToTarget.normalized;
+        
+        // Start and end angles in radians
+        Vector3 currentDirection = (transform.position - pivot.position).normalized;
+        float startAngle = Mathf.Atan2(currentDirection.z, currentDirection.x);
+        float endAngle = Mathf.Atan2(desiredDirection.z, desiredDirection.x);
 
-        // Opposite of target angle
-        Vector3 toTarget = targetPosition - pivot.position;
-        toTarget.y = 0f;
-        float targetAngle = Mathf.Atan2(toTarget.z, toTarget.x) * Mathf.Rad2Deg;
-        float oppositeAngle = (targetAngle + 180f) % 360f;
+        // Angle difference in degrees (shortest path)
+        float angleDiff = Mathf.DeltaAngle(startAngle * Mathf.Rad2Deg, endAngle * Mathf.Rad2Deg);
 
-        float angleDelta = Mathf.DeltaAngle(startAngle, oppositeAngle);
-        float direction = Mathf.Sign(angleDelta);
-        float totalRotation = Mathf.Abs(angleDelta);
-        float rotated = 0f;
-        float currentAngle = startAngle;
+        // Y transition
+        float startY = cameraTransform.position.y;
+        float endY = targetPosition.y;
         Quaternion startRotation = cameraTransform.rotation;
+        float startFov = camera.fieldOfView;
 
-        while (rotated < totalRotation)
+        float elapsed = 0f;
+
+        while (elapsed < duration)
         {
-            float step = speed * Time.deltaTime;
-            float remaining = totalRotation - rotated;
-            float actualStep = Mathf.Min(step, remaining);
-            currentAngle += actualStep * direction;
-            rotated += actualStep;
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
 
-            float rad = currentAngle * Mathf.Deg2Rad;
-            Vector3 newPos = new Vector3(
-                Mathf.Cos(rad) * radius,
-                heightOffset,
-                Mathf.Sin(rad) * radius
-            );
-            cameraTransform.position = pivot.position + newPos;
-            Quaternion rotation = Quaternion.Slerp(startRotation, targetRotation, rotated / totalRotation);
-            camera.fieldOfView = Mathf.Lerp(startFOV, targetFOV, rotated / totalRotation);
+            // Interpolated angle (in radians)
+            float angle = startAngle + Mathf.Deg2Rad * angleDiff * t;
 
-            // Look at pivot, ignore X rotation
-            Vector3 lookDir = pivot.position - transform.position;
-            lookDir.y = 0f;
-            if (lookDir.sqrMagnitude > 0.001f)
-            {
-                Quaternion rot = Quaternion.LookRotation(lookDir);
-                cameraTransform.rotation = Quaternion.Euler(rotation.eulerAngles.x, rot.eulerAngles.y, rotation.eulerAngles.z);
-            }
+            // Interpolated Y
+            float y = Mathf.Lerp(startY, endY, t);
+
+            // New position along the circle at height y
+            Vector3 newPos = pivot.position + new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * radius;
+            newPos.y = y;
+
+            cameraTransform.position = newPos;
+            Vector3 targetDirection = pivot.position - cameraTransform.position;
+            targetDirection.y = 0;
+            Quaternion offSetRotation = Quaternion.Slerp(startRotation, targetRotation, t);
+            offSetRotation.y = 0;
+            cameraTransform.rotation = Quaternion.LookRotation(targetDirection) * offSetRotation;
+            camera.fieldOfView = Mathf.Lerp(startFov, targetFov, t);
 
             yield return null;
         }
-    }
 
+        // Final snap
+        Vector3 finalPosition = pivot.position + desiredDirection * radius;
+        finalPosition.y = endY;
+        cameraTransform.position = finalPosition;
+        Vector3 finalDirection = pivot.position - cameraTransform.position;
+        finalDirection.y = 0;
+        cameraTransform.rotation = Quaternion.LookRotation(finalDirection) * targetRotation;
+    }
     public IEnumerator MoveCameraOnXAndZ(Vector3 targetPosition, Quaternion targetRotation, float duration)
     {
-        Transform cameraTransform = Camera.main.transform;
         Vector3 startPos = cameraTransform.position;
         Quaternion startRotation = cameraTransform.rotation;
         targetPosition.y = startPos.y;

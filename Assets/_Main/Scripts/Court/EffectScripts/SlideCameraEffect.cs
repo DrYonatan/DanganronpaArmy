@@ -1,53 +1,24 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public enum Direction {
-    Up,
-    Right,
-    Left,
-    Down,
-}
-
-[CreateAssetMenu(menuName ="Behaviour Editor/Camera Effect/Slide/Small Slide")]
+[CreateAssetMenu(menuName = "Behaviour Editor/Camera Effect/Slide/Small Slide")]
 public class SlideCameraEffect : CameraEffect
 {
-    public Direction fromDirection;
-    [SerializeField] protected float amount = 1f;
+    public Vector3 direction; 
     [SerializeField] protected float speed = 1f;
-    protected Vector3 originalPosition;
-
-    public void TeleportToFromDirection(CameraEffectController effectController)
-    {
-        switch (fromDirection)
-        {
-            case Direction.Up:
-            effectController.cameraTransform.position += effectController.cameraTransform.up * amount;
-            break;
-            case Direction.Right:
-            effectController.cameraTransform.position += effectController.cameraTransform.right * amount;
-            break;
-            case Direction.Left:
-            effectController.cameraTransform.position -= effectController.cameraTransform.right * amount;
-            break;
-            case Direction.Down:
-            effectController.cameraTransform.position -= effectController.cameraTransform.up * amount;
-            break;
-        }
-    }
 
     public override IEnumerator Apply(CameraEffectController effectController)
     {
-        originalPosition = effectController.cameraTransform.position;
-        TeleportToFromDirection(effectController);
-
+        Transform cameraTransform = effectController.cameraTransform;
+        Vector3 targetPosition = cameraTransform.position + direction.x * cameraTransform.right +
+                                 direction.y * cameraTransform.up + direction.z * cameraTransform.forward;
         float elapsedTime = 0f;
-        while(elapsedTime < timeLimit)
+        while (elapsedTime < timeLimit)
         {
-            effectController.cameraTransform.position = Vector3.MoveTowards(effectController.cameraTransform.position, originalPosition, Time.deltaTime * speed);
+            effectController.cameraTransform.position = Vector3.MoveTowards(effectController.cameraTransform.position,
+                targetPosition, Time.deltaTime * speed);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        
     }
 }

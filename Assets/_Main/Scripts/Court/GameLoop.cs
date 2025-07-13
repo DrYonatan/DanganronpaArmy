@@ -117,7 +117,7 @@ public class GameLoop : MonoBehaviour
         
         if (textLines.Count == 0)
         {
-            SpawnText(textIndex);
+            StartCoroutine(StartNewNode(textIndex));
             timer = 0;
             textIndex++;
         }
@@ -265,13 +265,25 @@ public class GameLoop : MonoBehaviour
         noThatsWrong.SetActive(false);
     }
 
-    void SpawnText(int dialogueNodeIndex)
+    IEnumerator StartNewNode(int dialogueNodeIndex)
+    {
+        DebateNode nextNode = stage.dialogueNodes[dialogueNodeIndex];
+        SpawnText(nextNode);
+        effectController.Reset();
+        yield return cameraController.SpinToTarget(characterStand.transform, nextNode.positionOffset, nextNode.rotationOffset, nextNode.fovOffset);
+       
+        foreach (CameraEffect cameraEffect in nextNode.cameraEffects)
+        { ;
+            effectController.StartEffect(cameraEffect);
+        }
+    }
+
+    void SpawnText(DebateNode nextNode)
     {
         int correctTMPIndex = -1;
         int correctCharacterIndexBegin = -1;
         int correctCharacterIndexEnd = -1;
 
-        DebateNode nextNode = stage.dialogueNodes[dialogueNodeIndex];
         correctEvidence = nextNode.evidence;
 
         if (nextNode.character != null)
@@ -281,7 +293,7 @@ public class GameLoop : MonoBehaviour
 
         if (characterStand != null)
         {
-            characterStand.state = stage.dialogueNodes[dialogueNodeIndex].expression;
+            characterStand.state = nextNode.expression;
             characterStand.SetSprite();
         }
 
@@ -338,14 +350,6 @@ public class GameLoop : MonoBehaviour
 
             textLines.Add(textLine);
         }
-
-        effectController.Reset();
-        foreach (CameraEffect cameraEffect in nextNode.cameraEffects)
-        {
-            effectController.StartEffect(cameraEffect);
-        }
-        cameraController.SpinToTarget(characterStand.transform, nextNode.positionOffset, nextNode.rotationOffset, nextNode.fovOffset);
-
     }
 
 
