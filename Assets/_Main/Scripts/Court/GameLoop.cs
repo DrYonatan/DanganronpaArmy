@@ -239,16 +239,15 @@ public class GameLoop : MonoBehaviour
 
     IEnumerator DebateHitEffect()
     {
-        Transform cameraTransform = Camera.main.transform;
-        Vector3 startPos = cameraTransform.position;
-        Vector3 forwardLocation = -cameraTransform.forward;
-        Vector3 targetPosition = startPos + forwardLocation;
-        Quaternion targetRotation = cameraTransform.rotation * Quaternion.Euler(0f, 15f, 0f);
-        Quaternion oppositeRotation = cameraTransform.rotation * Quaternion.Euler(0f, -5f, 0f);
+        Transform cameraTransform = cameraController.cameraTransform;
+        Vector3 forwardLocation = -cameraTransform.forward * 8f;
+        Vector3 targetPosition = cameraController.pivot.position + forwardLocation + cameraTransform.right;
+        Quaternion targetRotation = cameraTransform.rotation * Quaternion.Euler(cameraTransform.right * -5f) * Quaternion.Euler(cameraTransform.up * -5f);
+        Quaternion oppositeRotation = cameraTransform.rotation *  Quaternion.Euler(cameraTransform.up * -5f) * Quaternion.Euler(cameraTransform.forward * 10f);;
         StartCoroutine(PlayNoThatsWrong(1.5f));
-        yield return cameraController.MoveCameraOnXAndZ(targetPosition, targetRotation, 0.2f);
-        yield return cameraController.MoveCameraOnXAndZ(startPos - forwardLocation, targetRotation, 0.2f);
-        StartCoroutine(cameraController.MoveCameraOnXAndZ(targetPosition, oppositeRotation, 4f));
+        StartCoroutine(cameraController.ChangeFov(cameraController.camera.fieldOfView, 10, 0.5f));
+        yield return cameraController.MoveCameraOnXAndZ(targetPosition, targetRotation, 0.4f);
+        StartCoroutine(cameraController.MoveCameraOnXAndZ(targetPosition + forwardLocation / 3, oppositeRotation, 4f));
         yield return new WaitForSeconds(3f);
         shatterTransform.SetActive(true);
     }

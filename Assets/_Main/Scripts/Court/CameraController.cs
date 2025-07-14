@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    Transform pivot;
+    public Transform pivot;
 
     public Transform cameraTransform;
     public Camera camera;
@@ -40,9 +40,9 @@ public class CameraController : MonoBehaviour
         {
             StopCoroutine(spinCoroutine);
         }
+        radius = 5 + positionOffset.z;
         Vector3 newPosition = target.position + target.right * positionOffset.x
-                                              + target.up * (positionOffset.y + 0.75f)
-                                              + target.forward * positionOffset.z;
+                                              + target.up * (positionOffset.y + 0.75f);
         Quaternion newRotation = Quaternion.Euler(rotationOffset);
         float newFOV = 15 + fovOffset;
 
@@ -105,6 +105,17 @@ public class CameraController : MonoBehaviour
         Vector3 finalDirection = pivot.position - cameraTransform.position;
         finalDirection.y = 0;
         cameraTransform.rotation = Quaternion.LookRotation(finalDirection) * targetRotation;
+    }
+
+    public IEnumerator ChangeFov(float start, float target, float duration)
+    {
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            camera.fieldOfView = Mathf.Lerp(start, target, elapsed / duration);
+            yield return null;
+        }
     }
     public IEnumerator MoveCameraOnXAndZ(Vector3 targetPosition, Quaternion targetRotation, float duration)
     {
