@@ -7,6 +7,8 @@ public class QuestionMarkShooter : MonoBehaviour
     public GameObject questionMarkPrefab;
     public float travelTime = 1.2f;
     public float curveAmount = 1.0f; // How far it veers side-to-side
+    public GameObject hitEffectPrefab;
+    public float hitEffectOffset = 0.2f; 
 
     public IEnumerator ShootQuestionMark(Vector3 target)
     {
@@ -36,6 +38,10 @@ public class QuestionMarkShooter : MonoBehaviour
         }
 
         qm.transform.position = target;
+        Vector3 directionToCamera = (Camera.main.transform.position - target).normalized;
+        GameObject effect = Instantiate(hitEffectPrefab, target + directionToCamera * hitEffectOffset, Quaternion.identity);
+        effect.transform.localScale = new Vector3(2f, 2f, 2f);
+        Destroy(effect, 2f);
         // Optional: destroy or animate on hit
         Destroy(qm);
     }
