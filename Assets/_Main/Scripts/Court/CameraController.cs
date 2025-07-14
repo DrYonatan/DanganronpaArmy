@@ -34,15 +34,15 @@ public class CameraController : MonoBehaviour
         cameraTransform.rotation = Quaternion.LookRotation(targetDir);
     }
 
-    public IEnumerator SpinToTarget(Transform target, Vector3 positionOffset, Vector3 rotationOffset, float fovOffset)
+    public IEnumerator SpinToTarget(Transform target, Transform pivot, Vector3 positionOffset, Vector3 rotationOffset, float fovOffset)
     {
         if (spinCoroutine != null)
         {
             StopCoroutine(spinCoroutine);
         }
         radius = 5 + positionOffset.z;
-        Vector3 newPosition = target.position + target.right * positionOffset.x
-                                              + target.up * (positionOffset.y + 0.75f);
+        Vector3 newPosition = target.position + target.right * positionOffset.x;
+        newPosition.y = pivot.position.y + positionOffset.y;
         Quaternion newRotation = Quaternion.Euler(rotationOffset);
         float newFOV = 15 + fovOffset;
 

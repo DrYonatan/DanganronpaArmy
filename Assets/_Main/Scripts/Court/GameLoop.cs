@@ -245,7 +245,7 @@ public class GameLoop : MonoBehaviour
         Quaternion targetRotation = cameraTransform.rotation * Quaternion.Euler(-5f, -5f, 0f);
         Quaternion oppositeRotation = cameraTransform.rotation * Quaternion.Euler(0f, -5f, -10f);
         StartCoroutine(PlayNoThatsWrong(1.5f));
-        StartCoroutine(cameraController.ChangeFov(cameraController.camera.fieldOfView, 10, 0.5f));
+        StartCoroutine(cameraController.ChangeFov(cameraController.camera.fieldOfView, 10, 0.7f));
         yield return cameraController.MoveCameraOnXAndZ(targetPosition, targetRotation, 0.4f);
         StartCoroutine(cameraController.MoveCameraOnXAndZ(targetPosition + forwardLocation / 3, oppositeRotation, 4f));
         yield return new WaitForSeconds(3f);
@@ -269,7 +269,7 @@ public class GameLoop : MonoBehaviour
         DebateNode nextNode = stage.dialogueNodes[dialogueNodeIndex];
         SpawnText(nextNode);
         effectController.Reset();
-        yield return cameraController.SpinToTarget(characterStand.transform, nextNode.positionOffset, nextNode.rotationOffset, nextNode.fovOffset);
+        yield return cameraController.SpinToTarget(characterStand.transform, characterStand.heightPivot, nextNode.positionOffset, nextNode.rotationOffset, nextNode.fovOffset);
        
         foreach (CameraEffect cameraEffect in nextNode.cameraEffects)
         { ;
