@@ -242,8 +242,8 @@ public class GameLoop : MonoBehaviour
         Transform cameraTransform = cameraController.cameraTransform;
         Vector3 forwardLocation = -cameraTransform.forward * 8f;
         Vector3 targetPosition = cameraController.pivot.position + forwardLocation + cameraTransform.right;
-        Quaternion targetRotation = cameraTransform.rotation * Quaternion.Euler(cameraTransform.right * -5f) * Quaternion.Euler(cameraTransform.up * -5f);
-        Quaternion oppositeRotation = cameraTransform.rotation *  Quaternion.Euler(cameraTransform.up * -5f) * Quaternion.Euler(cameraTransform.forward * 10f);;
+        Quaternion targetRotation = cameraTransform.rotation * Quaternion.Euler(-5f, -5f, 0f);
+        Quaternion oppositeRotation = cameraTransform.rotation * Quaternion.Euler(0f, -5f, -10f);
         StartCoroutine(PlayNoThatsWrong(1.5f));
         StartCoroutine(cameraController.ChangeFov(cameraController.camera.fieldOfView, 10, 0.5f));
         yield return cameraController.MoveCameraOnXAndZ(targetPosition, targetRotation, 0.4f);
