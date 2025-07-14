@@ -12,6 +12,7 @@ public class WorldCharacter : ConversationInteractable
         CharacterClickEffects.instance.Interact(transform);
         Quaternion targetRotation = Quaternion.LookRotation(transform.forward);
         CameraManager.instance.StartCameraCoroutine(CameraManager.instance.RotateCameraTo(targetRotation, 0.5f));
+        CameraManager.instance.initialRotation = transform.rotation;
         base.FinishInteraction();
     }
 
