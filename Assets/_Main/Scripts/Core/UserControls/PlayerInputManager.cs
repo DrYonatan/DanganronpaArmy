@@ -6,6 +6,8 @@ namespace DIALOGUE
     {
         public static PlayerInputManager instance {get; private set;}
 
+        public QuestionMarkShooter shooter;
+
         public bool isPaused;
 
         void Start()
@@ -45,8 +47,10 @@ namespace DIALOGUE
             isPaused = !isPaused;
             GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/6 - Controls/Pause Menu")
                 .SetActive(isPaused);
-            GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/6 - Controls/Reticle")
+            GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/6 - Controls/Cursor")
                 .SetActive(!isPaused);
         }
+
+       
     }
 }

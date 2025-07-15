@@ -46,9 +46,12 @@ public class ImageScript : MonoBehaviour
 
     public IEnumerator ShowingOrHiding(CanvasGroup canvasGroup, float duration, float targetAlpha)
     {        
-        while (canvasGroup.alpha != targetAlpha)
+        float elapsedTime = 0f;
+        float startAlpha = canvasGroup.alpha;
+        while (elapsedTime < duration)
         {
-            canvasGroup.alpha = Mathf.MoveTowards(canvasGroup.alpha, targetAlpha, Time.deltaTime / duration);
+            elapsedTime += Time.deltaTime;
+            canvasGroup.alpha = Mathf.MoveTowards(startAlpha, targetAlpha, elapsedTime / duration);
             yield return null;
         }
 

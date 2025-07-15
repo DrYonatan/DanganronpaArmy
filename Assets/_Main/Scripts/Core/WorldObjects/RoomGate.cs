@@ -12,7 +12,12 @@ public class RoomGate : Interactable
     public override void Interact()
     {
         base.Interact();
-        if (((FreeRoamEvent)(WorldManager.instance.currentGameEvent)).allowedRooms.Any(item =>
+       
+    }
+
+    public override void FinishInteraction()
+    {
+         if (((FreeRoamEvent)(WorldManager.instance.currentGameEvent)).allowedRooms.Any(item =>
                 item.name == roomToLoad.name) ||
             ((FreeRoamEvent)(WorldManager.instance.currentGameEvent)).allowedRooms.Count == 0)
         {

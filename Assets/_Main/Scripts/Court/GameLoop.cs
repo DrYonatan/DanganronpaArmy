@@ -76,6 +76,7 @@ public class GameLoop : MonoBehaviour
     public Transform shootOrigin;
     public Transform textStartPosition;
     public Camera statementsCamera;
+    public DebateText currentAimedText;
 
     // Start is called before the first frame update
     void Start()
@@ -153,7 +154,7 @@ public class GameLoop : MonoBehaviour
 
     void HandleMouseControl()
     {
-        ReticleManager.instance.ReticleAsCursor();
+        CursorManager.instance.ReticleAsCursor();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
 
@@ -229,7 +230,7 @@ public class GameLoop : MonoBehaviour
         }
 
         OnHitStatement();
-        ReticleManager.instance.Hide();
+        CursorManager.instance.Hide();
     }
 
     public void OnHitStatement()
