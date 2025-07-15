@@ -245,9 +245,9 @@ public class GameLoop : MonoBehaviour
         Quaternion targetRotation = cameraTransform.rotation * Quaternion.Euler(-5f, -5f, 0f);
         Quaternion oppositeRotation = cameraTransform.rotation * Quaternion.Euler(0f, -5f, -10f);
         StartCoroutine(PlayNoThatsWrong(1.5f));
-        StartCoroutine(cameraController.ChangeFov(cameraController.camera.fieldOfView, 10, 0.7f));
+        StartCoroutine(cameraController.ChangeFov(cameraController.camera.fieldOfView, 8, 0.7f));
         yield return cameraController.MoveCameraOnXAndZ(targetPosition, targetRotation, 0.4f);
-        StartCoroutine(cameraController.MoveCameraOnXAndZ(targetPosition + forwardLocation / 3, oppositeRotation, 4f));
+        StartCoroutine(cameraController.MoveCameraOnXAndZ(targetPosition + forwardLocation, oppositeRotation, 4f));
         yield return new WaitForSeconds(3f);
         shatterTransform.SetActive(true);
     }
