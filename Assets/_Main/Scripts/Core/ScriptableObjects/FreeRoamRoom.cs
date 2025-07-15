@@ -41,7 +41,7 @@ public class FreeRoamRoom : Room
 
     void Look()
     {
-        CenterReticle();
+        CenterCursor();
 
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
@@ -107,15 +107,15 @@ public class FreeRoamRoom : Room
         }
     }
 
-    public void CenterReticle()
+    public void CenterCursor()
     {
-        RectTransform reticle = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/6 - Controls/Cursor")
+        RectTransform cursor = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/6 - Controls/Cursor")
             .GetComponent<RectTransform>();
-        reticle.anchorMin = new Vector2(0.5f, 0.5f);
-        reticle.anchorMax = new Vector2(0.5f, 0.5f);
-        reticle.pivot = new Vector2(0.5f, 0.5f);
+        cursor.anchorMin = new Vector2(0.5f, 0.5f);
+        cursor.anchorMax = new Vector2(0.5f, 0.5f);
+        cursor.pivot = new Vector2(0.5f, 0.5f);
 
         // Set position to center
-        reticle.anchoredPosition = Vector2.zero;
+        cursor.anchoredPosition = Vector2.zero;
     }
 }

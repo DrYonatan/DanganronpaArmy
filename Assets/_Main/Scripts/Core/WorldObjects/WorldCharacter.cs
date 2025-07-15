@@ -21,8 +21,8 @@ public class WorldCharacter : ConversationInteractable
         if(!isAlreadyLooking)
         {
             isAlreadyLooking = true;
-            ReticleManager.instance.ShowOrHideConversationIcon(true);
-            ReticleManager.instance.ShowOrHideInteractableName(true, name);
+            CursorManager.instance.ShowOrHideConversationIcon(true);
+            CursorManager.instance.ShowOrHideInteractableName(true, name);
         }
         
     }
@@ -30,8 +30,8 @@ public class WorldCharacter : ConversationInteractable
     public override void OnStopLooking()
     {
         isAlreadyLooking = false;
-        ReticleManager.instance.ShowOrHideConversationIcon(false);
-        ReticleManager.instance.ShowOrHideInteractableName(false, "");
+        CursorManager.instance.ShowOrHideConversationIcon(false);
+        CursorManager.instance.ShowOrHideInteractableName(false, "");
     }
 
     private IEnumerator MoveAndRotateCameraTo()

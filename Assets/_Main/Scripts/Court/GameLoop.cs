@@ -154,7 +154,7 @@ public class GameLoop : MonoBehaviour
 
     void HandleMouseControl()
     {
-        ReticleManager.instance.ReticleAsCursor();
+        CursorManager.instance.ReticleAsCursor();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
 
@@ -230,7 +230,7 @@ public class GameLoop : MonoBehaviour
         }
 
         OnHitStatement();
-        ReticleManager.instance.Hide();
+        CursorManager.instance.Hide();
     }
 
     public void OnHitStatement()

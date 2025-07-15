@@ -82,12 +82,12 @@ namespace DIALOGUE
             {
                 VirutalCameraManager.instance?.DisableVirtualCamera();
                 dialogueBox.GetComponent<CanvasGroup>().alpha = 1;
-                ReticleManager.instance.Hide();
+                CursorManager.instance.Hide();
             }
             else
             {
                 dialogueBox.GetComponent<CanvasGroup>().alpha = 0;
-                ReticleManager.instance.Show();
+                CursorManager.instance.Show();
             }
         }
 

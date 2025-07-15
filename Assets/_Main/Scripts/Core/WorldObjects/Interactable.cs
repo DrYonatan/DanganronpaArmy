@@ -30,13 +30,13 @@ public abstract class Interactable : MonoBehaviour
 
     public virtual void OnLook()
     {
-        ReticleManager.instance.ShowOrHideMagnifyingGlass(true);
+        CursorManager.instance.ShowOrHideMagnifyingGlass(true);
     }
     
     public virtual void OnStopLooking()
     {
         isAlreadyLooking = false;
-        ReticleManager.instance.ShowOrHideMagnifyingGlass(false);
+        CursorManager.instance.ShowOrHideMagnifyingGlass(false);
     }
 
     public abstract void FinishInteraction();

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class ReticleManager : MonoBehaviour
+public class CursorManager : MonoBehaviour
 {
     public int speed = 30;
     public RectTransform cursor;
@@ -17,7 +17,7 @@ public class ReticleManager : MonoBehaviour
     private Vector3 originalScale;
     public Vector3 hoverScale = new Vector3(1.1f, 1.1f, 1.1f);
 
-    public static ReticleManager instance { get; private set; }
+    public static CursorManager instance { get; private set; }
 
     // Start is called before the first frame update
     void Start()
