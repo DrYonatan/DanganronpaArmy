@@ -92,19 +92,20 @@ public class CameraController : MonoBehaviour
 
     public IEnumerator MoveCameraOnXAndZ(Vector3 targetPosition, Quaternion targetRotation, float duration)
     {
-        Vector3 startPos = cameraTransform.position;
-        Quaternion startRotation = cameraTransform.rotation;
+        Vector3 startPos = cameraTransform.localPosition;
+        Quaternion startRotation = cameraTransform.localRotation;
         targetPosition.y = startPos.y;
         float elapsedTime = 0;
 
         while (elapsedTime < duration)
         {
-            cameraTransform.position = Vector3.Lerp(startPos, targetPosition, elapsedTime / duration);
-            cameraTransform.rotation = Quaternion.Slerp(startRotation, targetRotation, elapsedTime / (duration * 3f));
+            cameraTransform.localPosition = Vector3.Lerp(startPos, targetPosition, elapsedTime / duration);
+            cameraTransform.localRotation = Quaternion.Slerp(startRotation, targetRotation, elapsedTime / duration);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        cameraTransform.position = targetPosition;
+        cameraTransform.localPosition = targetPosition;
+        cameraTransform.localRotation = targetRotation;
     }
 }

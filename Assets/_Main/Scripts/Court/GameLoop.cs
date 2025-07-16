@@ -127,6 +127,7 @@ public class GameLoop : MonoBehaviour
         {
             if (textLines[index].ttl < timer)
             {
+                StartCoroutine(DestroyText(textLines[index].textGO));
                 Destroy(textLines[index].textGO);
                 textLines.RemoveAt(index);
                 index--;
@@ -239,15 +240,12 @@ public class GameLoop : MonoBehaviour
 
     IEnumerator DebateHitEffect()
     {
-        Transform cameraTransform = cameraController.cameraTransform;
-        Vector3 forwardLocation = -cameraTransform.forward * 8f;
-        Vector3 targetPosition = cameraController.pivot.position + forwardLocation + cameraTransform.right;
-        Quaternion targetRotation = cameraTransform.rotation * Quaternion.Euler(-5f, -5f, 0f);
-        Quaternion oppositeRotation = cameraTransform.rotation * Quaternion.Euler(0f, -5f, -10f);
+        Vector3 firstTargetPosition = new Vector3(1f, 3f, -8f);
+        Vector3 secondTargetPosition = firstTargetPosition - new Vector3(0f, 0f, 8f);
         StartCoroutine(PlayNoThatsWrong(1.5f));
         StartCoroutine(cameraController.ChangeFov(cameraController.camera.fieldOfView, 8, 0.7f));
-        yield return cameraController.MoveCameraOnXAndZ(targetPosition, targetRotation, 0.4f);
-        StartCoroutine(cameraController.MoveCameraOnXAndZ(targetPosition + forwardLocation, oppositeRotation, 4f));
+        yield return cameraController.MoveCameraOnXAndZ(firstTargetPosition, Quaternion.Euler(0f, -5f, 0f), 0.4f);
+        StartCoroutine(cameraController.MoveCameraOnXAndZ(secondTargetPosition, Quaternion.Euler(0f, 0f, 30f), 4f));
         yield return new WaitForSeconds(3f);
         shatterTransform.SetActive(true);
     }
@@ -308,6 +306,7 @@ public class GameLoop : MonoBehaviour
             go.transform.localScale = nextNode.textLines[i].scale;
 
             TextMeshPro tmp = go.GetComponent<TextMeshPro>();
+             
             string str = nextNode.textLines[i].text;
             int indexOf = str.IndexOf("{0}");
             if (indexOf != -1)
@@ -321,6 +320,7 @@ public class GameLoop : MonoBehaviour
             }
 
             tmp.text = str;
+            StartCoroutine(FadeText(tmp, 0f, 1f, 0.2f));
 
             TextLine textLine = new TextLine(
                 go,
@@ -351,6 +351,28 @@ public class GameLoop : MonoBehaviour
         }
     }
 
+    IEnumerator FadeText(TextMeshPro tmp, float from, float to, float duration)
+    {
+        Color color = tmp.color;
+        color.a = from;
+        float elapsedTime = 0f;
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            color.a = Mathf.Lerp(from, to, elapsedTime / duration);
+            tmp.color = color;
+            yield return null;
+        }
+
+        color.a = to;
+        tmp.color = color;
+    }
+
+    IEnumerator DestroyText(GameObject tmp)
+    {
+        yield return FadeText(tmp.GetComponent<TextMeshPro>(), 1f, 0f, 0.2f);
+        Destroy(tmp);
+    }
 
     // Gets the textLine to create for, the range and whether or not to make a child (AKA the orange part)
     public void CreateColliderAroundTextRange(TextLine textLine, int startIndex, int endIndex, bool createChildObject)
