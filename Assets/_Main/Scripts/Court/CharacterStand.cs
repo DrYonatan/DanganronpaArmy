@@ -10,7 +10,7 @@ public class CharacterStand : MonoBehaviour
     public CharacterCourt character;
     public CharacterState state;
     public SpriteRenderer spriteRenderer;
-    public Transform textPivot;
+    public Transform heightPivot;
     // Start is called before the first frame update
     void Start()
     {

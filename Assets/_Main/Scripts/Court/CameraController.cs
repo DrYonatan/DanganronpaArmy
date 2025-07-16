@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    Transform pivot;
+    public Transform pivot;
 
     public Transform cameraTransform;
     public Camera camera;
@@ -12,7 +13,7 @@ public class CameraController : MonoBehaviour
 
     [SerializeField] float newAngle, rotationTime, radius;
     [SerializeField] float speed = 50f;
-    float height;
+    private Vector3 cameraDefaultLocalPosition;
 
 
     private Coroutine spinCoroutine;
@@ -20,9 +21,44 @@ public class CameraController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        pivot = transform.parent;
+        pivot = cameraTransform.parent;
         effectController = GetComponent<CameraEffectController>();
-        height = cameraTransform.position.y;
+        cameraDefaultLocalPosition = cameraTransform.localPosition;
+    }
+
+    public IEnumerator DebateStartCameraMovement(float duration)
+    {
+        camera.fieldOfView = 30f;
+        
+        cameraTransform.localRotation *= Quaternion.Euler(new Vector3(10f, 0f, 10f));
+        
+        Vector3 cameraStartPos = cameraDefaultLocalPosition + new Vector3(0f, 8f, -20f);
+        cameraTransform.position = cameraStartPos;
+        
+        Quaternion cameraStartRot = cameraTransform.localRotation;
+        
+        float elapsedTime = 0f;
+        while (elapsedTime < duration)
+        {
+            pivot.Rotate(Vector3.up, Time.deltaTime * -80f);
+            cameraTransform.localPosition = Vector3.Lerp(cameraStartPos, cameraDefaultLocalPosition + Vector3.up * 3f, elapsedTime  / duration);
+           
+            cameraTransform.localRotation = Quaternion.Lerp(cameraStartRot, Quaternion.Euler(0f, 0f, 0f), elapsedTime / duration);
+            
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        
+        cameraTransform.localPosition = cameraDefaultLocalPosition + Vector3.up * 3.5f;
+        cameraTransform.localRotation = Quaternion.Euler(0f, 0f, 5f);
+        camera.fieldOfView = 20f;
+        elapsedTime = 0f;
+        while (elapsedTime < duration * 2f)
+        {
+            pivot.Rotate(Vector3.up, Time.deltaTime * -30f);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
     }
 
     public void TeleportToTarget(Transform target)
@@ -34,90 +70,78 @@ public class CameraController : MonoBehaviour
         cameraTransform.rotation = Quaternion.LookRotation(targetDir);
     }
 
-    public void SpinToTarget(Transform target, Vector3 positionOffset, Vector3 rotationOffset, float fovOffset)
+    public IEnumerator SpinToTarget(Transform target, Transform heightPivot, Vector3 positionOffset,
+        Vector3 rotationOffset,
+        float fovOffset)
     {
         if (spinCoroutine != null)
         {
             StopCoroutine(spinCoroutine);
         }
-        Vector3 newPosition = target.right * positionOffset.x
-                              + target.up * positionOffset.y
-                              + target.forward * positionOffset.z;
-        Quaternion newRotation = Quaternion.Euler(rotationOffset);
-        float newFOV = 15 + fovOffset;
 
-
-        spinCoroutine = StartCoroutine(SpinningToTarget(target.position + newPosition, newRotation, newFOV));
+        spinCoroutine = StartCoroutine(SpinningToTarget(target.position,
+            positionOffset + new Vector3(0, heightPivot.position.y, 0),
+            Quaternion.Euler(rotationOffset), 15 + fovOffset, rotationTime));
+        yield return spinCoroutine;
     }
-    IEnumerator SpinningToTarget(Vector3 targetPosition, Quaternion targetRotation, float targetFOV)
+
+    public IEnumerator SpinningToTarget(Vector3 targetPosition, Vector3 positionOffset, Quaternion rotationOffset,
+        float fovOffset,
+        float rotationTime)
     {
-        float heightOffset = targetPosition.y - 2f;
+        float elapedTime = 0f;
+        Quaternion start = pivot.rotation;
+        Vector3 lookDirection = targetPosition - pivot.position;
+        lookDirection.y = 0;
+        Quaternion targetDirection = Quaternion.LookRotation(lookDirection);
         float startFOV = camera.fieldOfView;
-        // Start angle
-        Vector3 toCamera = transform.position - pivot.position;
-        toCamera.y = 0f;
-        float startAngle = Mathf.Atan2(toCamera.z, toCamera.x) * Mathf.Rad2Deg;
+        Vector3 startPos = cameraTransform.localPosition;
+        Quaternion startRotation = cameraTransform.localRotation;
 
-        // Opposite of target angle
-        Vector3 toTarget = targetPosition - pivot.position;
-        toTarget.y = 0f;
-        float targetAngle = Mathf.Atan2(toTarget.z, toTarget.x) * Mathf.Rad2Deg;
-        float oppositeAngle = (targetAngle + 180f) % 360f;
-
-        float angleDelta = Mathf.DeltaAngle(startAngle, oppositeAngle);
-        float direction = Mathf.Sign(angleDelta);
-        float totalRotation = Mathf.Abs(angleDelta);
-        float rotated = 0f;
-        float currentAngle = startAngle;
-        Quaternion startRotation = cameraTransform.rotation;
-
-        while (rotated < totalRotation)
+        while (elapedTime < rotationTime)
         {
-            float step = speed * Time.deltaTime;
-            float remaining = totalRotation - rotated;
-            float actualStep = Mathf.Min(step, remaining);
-            currentAngle += actualStep * direction;
-            rotated += actualStep;
+            pivot.rotation = Quaternion.Slerp(start, targetDirection, elapedTime / rotationTime);
+            camera.fieldOfView = Mathf.Lerp(startFOV, fovOffset, elapedTime / rotationTime);
+            cameraTransform.localPosition = Vector3.Lerp(startPos,
+                cameraDefaultLocalPosition + positionOffset, elapedTime / rotationTime);
+            cameraTransform.localRotation = Quaternion.Slerp(startRotation, rotationOffset, elapedTime / rotationTime);
+            elapedTime += Time.deltaTime;
+            yield return null;
+        }
 
-            float rad = currentAngle * Mathf.Deg2Rad;
-            Vector3 newPos = new Vector3(
-                Mathf.Cos(rad) * radius,
-                heightOffset,
-                Mathf.Sin(rad) * radius
-            );
-            cameraTransform.position = pivot.position + newPos;
-            Quaternion rotation = Quaternion.Slerp(startRotation, targetRotation, rotated / totalRotation);
-            camera.fieldOfView = Mathf.Lerp(startFOV, targetFOV, rotated / totalRotation);
+        pivot.rotation = targetDirection;
+        cameraTransform.localPosition = cameraDefaultLocalPosition + positionOffset;
+        cameraTransform.localRotation = rotationOffset;
+        camera.fieldOfView = fovOffset;
+    }
 
-            // Look at pivot, ignore X rotation
-            Vector3 lookDir = pivot.position - transform.position;
-            lookDir.y = 0f;
-            if (lookDir.sqrMagnitude > 0.001f)
-            {
-                Quaternion rot = Quaternion.LookRotation(lookDir);
-                cameraTransform.rotation = Quaternion.Euler(rotation.eulerAngles.x, rot.eulerAngles.y, rotation.eulerAngles.z);
-            }
-
+    public IEnumerator ChangeFov(float start, float target, float duration)
+    {
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            camera.fieldOfView = Mathf.Lerp(start, target, elapsed / duration);
             yield return null;
         }
     }
 
     public IEnumerator MoveCameraOnXAndZ(Vector3 targetPosition, Quaternion targetRotation, float duration)
     {
-        Transform cameraTransform = Camera.main.transform;
-        Vector3 startPos = cameraTransform.position;
-        Quaternion startRotation = cameraTransform.rotation;
+        Vector3 startPos = cameraTransform.localPosition;
+        Quaternion startRotation = cameraTransform.localRotation;
         targetPosition.y = startPos.y;
         float elapsedTime = 0;
 
         while (elapsedTime < duration)
         {
-            cameraTransform.position = Vector3.Lerp(startPos, targetPosition, elapsedTime / duration);
-            cameraTransform.rotation = Quaternion.Slerp(startRotation, targetRotation, elapsedTime / (duration * 3f));
+            cameraTransform.localPosition = Vector3.Lerp(startPos, targetPosition, elapsedTime / duration);
+            cameraTransform.localRotation = Quaternion.Slerp(startRotation, targetRotation, elapsedTime / duration);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        cameraTransform.position = targetPosition;
+        cameraTransform.localPosition = targetPosition;
+        cameraTransform.localRotation = targetRotation;
     }
 }

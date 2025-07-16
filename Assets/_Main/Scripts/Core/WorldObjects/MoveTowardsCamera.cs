@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MoveTowardsCamera : MonoBehaviour
 {
-    public float speed = 0.5f;
+    private float speed = 0.5f;
     public Transform cameraTransform;
     public TextMeshPro tmpText;
     public Color glowColor = Color.cyan;
@@ -29,11 +29,24 @@ public class MoveTowardsCamera : MonoBehaviour
 
     void Update()
     {
-        float speedFactor = transform.position.z - cameraTransform.position.z < 0.4f ? 2 : 0.4f;
+        float difference = transform.position.z - cameraTransform.position.z;
+        if (difference < 0.35f)
+        {
+            speed = 2.5f;
+        } 
+        else if (difference > 0.35f && difference < 0.4f)
+        {
+            speed = 0.04f;
+        }
+        else
+        {
+            speed = 0.8f;
+        }
+        
         transform.position = Vector3.MoveTowards(
             transform.position,
             cameraTransform.position,
-            speedFactor * speed * Time.deltaTime
+            speed * Time.deltaTime
         );
     }
 
@@ -58,7 +71,7 @@ public class MoveTowardsCamera : MonoBehaviour
         tmpMaterial.SetColor(ShaderUtilities.ID_OutlineColor, glowColor);
 
         // Hold glow for a brief moment
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.7f);
 
         // Fade Out
         timer = 0f;
