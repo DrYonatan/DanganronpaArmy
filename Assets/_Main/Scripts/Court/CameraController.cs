@@ -30,7 +30,7 @@ public class CameraController : MonoBehaviour
     {
         camera.fieldOfView = 30f;
         
-        cameraTransform.localRotation *= Quaternion.Euler(new Vector3(10f, 0f, 0f));
+        cameraTransform.localRotation *= Quaternion.Euler(new Vector3(10f, 0f, 10f));
         
         Vector3 cameraStartPos = cameraDefaultLocalPosition + new Vector3(0f, 8f, -20f);
         cameraTransform.position = cameraStartPos;
