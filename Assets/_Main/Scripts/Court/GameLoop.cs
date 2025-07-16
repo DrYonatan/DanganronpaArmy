@@ -84,68 +84,93 @@ public class GameLoop : MonoBehaviour
         evidenceManager.ShowEvidence(stage.evidences);
         MusicManager.instance.PlaySong(stage.audioClip.name);
         stageTimer = defaultStageTime;
+        finished = true;
+        StartCoroutine(StartDebate());
+    }
+
+    IEnumerator StartDebate()
+    { 
+        ImageScript.instance.blackFade.GetComponent<CanvasGroup>().alpha = 1f;
+        yield return 0;
+        ImageScript.instance.UnFadeToBlack(1f);
+       yield return StartCoroutine(cameraController.DebateStartCameraMovement(4f));
+       finished = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (!finished)
         {
-            SetPause(!pause);
-        }
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                SetPause(!pause);
+            }
 
-        if (pause == true || finished == true)
-        {
-            return;
-        }
+            if (Input.GetKey(KeyCode.LeftControl))
+            {
+                Time.timeScale = 4f;
+            }
+            else
+            {
+                Time.timeScale = 1f;
+            }
 
-        if (stage.dialogueNodes.Count <= textIndex)
-        {
-            textIndex = 0;
-        }
+            if (pause == true || finished == true)
+            {
+                return;
+            }
+
+            if (stage.dialogueNodes.Count <= textIndex)
+            {
+                textIndex = 0;
+            }
 
 
-        timer += Time.deltaTime;
-        stageTimer -= Time.deltaTime;
-        TimeSpan timeSpan = TimeSpan.FromSeconds(stageTimer);
-        timerText.text = timeSpan.ToString(@"mm\:ss\:ffff");
+            timer += Time.deltaTime;
+            stageTimer -= Time.deltaTime;
+            TimeSpan timeSpan = TimeSpan.FromSeconds(stageTimer);
+            timerText.text = timeSpan.ToString(@"mm\:ss\:ffff");
 
-        if (stageTimer < 0f)
-        {
-            GameOver();
-        }
+            if (stageTimer < 0f)
+            {
+                GameOver();
+            }
         
-        if (textLines.Count == 0)
-        {
-            StartCoroutine(StartNewNode(textIndex));
-            timer = 0;
-            textIndex++;
-        }
-
-        int index = 0;
-        while (index < textLines.Count)
-        {
-            if (textLines[index].ttl < timer)
+            if (textLines.Count == 0)
             {
-                StartCoroutine(DestroyText(textLines[index].textGO));
-                Destroy(textLines[index].textGO);
-                textLines.RemoveAt(index);
-                index--;
+                StartCoroutine(StartNewNode(textIndex));
+                timer = 0;
+                textIndex++;
             }
 
-            index++;
-        }
-
-        if (textLines.Count > 0)
-        {
-            for (int i = 0; i < textLines.Count; i++)
+            int index = 0;
+            while (index < textLines.Count)
             {
-                textLines[i].Apply();
-            }
-        }
+                if (textLines[index].ttl < timer)
+                {
+                    StartCoroutine(DestroyText(textLines[index].textGO));
+                    Destroy(textLines[index].textGO);
+                    textLines.RemoveAt(index);
+                    index--;
+                }
 
-        HandleMouseControl();
+                index++;
+            }
+
+            if (textLines.Count > 0)
+            {
+                for (int i = 0; i < textLines.Count; i++)
+                {
+                    textLines[i].Apply();
+                }
+            }
+
+            HandleMouseControl();
+        }
     }
+
+    
 
     private void GameOver()
     {
@@ -240,6 +265,7 @@ public class GameLoop : MonoBehaviour
 
     IEnumerator DebateHitEffect()
     {
+        effectController.Reset();
         Vector3 firstTargetPosition = new Vector3(1f, 3f, -8f);
         Vector3 secondTargetPosition = firstTargetPosition - new Vector3(0f, 0f, 8f);
         StartCoroutine(PlayNoThatsWrong(1.5f));
@@ -411,7 +437,7 @@ public class GameLoop : MonoBehaviour
             // Create the new GameObject
             GameObject orangeHitbox = new GameObject("OrangeHitBox");
             orangeHitbox.transform.SetParent(tmp.transform, false); // parent to text object
-            orangeHitbox.transform.localPosition = center;
+            orangeHitbox.transform.localPosition = Vector3.zero;
             orangeHitbox.transform.localRotation = Quaternion.identity;
             orangeHitbox.transform.localScale = Vector3.one;
             boxCollider = orangeHitbox.AddComponent<BoxCollider>();

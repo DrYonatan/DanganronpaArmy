@@ -45,14 +45,14 @@ MonoBehaviour:
       spawnOffset: {x: 0.5, y: 0, z: 0}
       scale: {x: 1, y: 1, z: 1}
       ttl: 4
-    expression: 0
+    expression: 1
     voiceLine: {fileID: 0}
   - nodeRect:
       serializedVersion: 2
       x: 430
       y: 50
       width: 200
-      height: 460
+      height: 480
     title: 
     drawNode: {fileID: 11400000, guid: 81b17a11177a0f4449f7df8eebe49b4b, type: 2}
     text: 
@@ -67,8 +67,9 @@ MonoBehaviour:
     statementColor: {r: 0, g: 0, b: 0, a: 0}
     textLines:
     - text: "\u05E9\u05DC\u05D5\u05E1 {0}"
-      textEffect: []
-      spawnOffset: {x: 0, y: 0, z: 0}
+      textEffect:
+      - {fileID: 11400000, guid: e5ad80d2a8ee1f042bf34c66a49d1aef, type: 2}
+      spawnOffset: {x: 0, y: 0, z: -1}
       scale: {x: 1, y: 1, z: 1}
       ttl: 3
     expression: 0
@@ -78,7 +79,7 @@ MonoBehaviour:
       x: 640
       y: 50
       width: 200
-      height: 460
+      height: 500
     title: 
     drawNode: {fileID: 11400000, guid: 81b17a11177a0f4449f7df8eebe49b4b, type: 2}
     text: 
@@ -93,9 +94,11 @@ MonoBehaviour:
     statementColor: {r: 0, g: 0, b: 0, a: 0}
     textLines:
     - text: "\u05E9\u05DC\u05D5\u05E1 {0}"
-      textEffect: []
+      textEffect:
+      - {fileID: 11400000, guid: 78cef4dbf176f274ba273d043b6ea500, type: 2}
+      - {fileID: 11400000, guid: 776df99a68a7fa04d9cebde19eafed87, type: 2}
       spawnOffset: {x: 0, y: 0, z: 0}
-      scale: {x: 2, y: 2, z: 2}
+      scale: {x: 1, y: 1, z: 1}
       ttl: 3
     expression: 0
     voiceLine: {fileID: 0}
@@ -104,21 +107,23 @@ MonoBehaviour:
       x: 850
       y: 50
       width: 200
-      height: 440
+      height: 480
     title: 
     drawNode: {fileID: 11400000, guid: 81b17a11177a0f4449f7df8eebe49b4b, type: 2}
     text: 
     character: {fileID: 11400000, guid: e5e319997f8a6c943997082245a52a96, type: 2}
-    cameraEffects: []
+    cameraEffects:
+    - {fileID: 11400000, guid: 34d24cddd4dd9e04da54eee78586ef7e, type: 2}
     fovOffset: 0
     positionOffset: {x: 0, y: 0, z: 0}
-    rotationOffset: {x: 0, y: 5, z: 0}
-    evidence: {fileID: 0}
-    statement: 
+    rotationOffset: {x: 0, y: 0, z: -2}
+    evidence: {fileID: 11400000, guid: 61f792b87e669574793f5e93b1753771, type: 2}
+    statement: "\u05E9\u05DC\u05D5\u05DD"
     statementColor: {r: 0, g: 0, b: 0, a: 0}
     textLines:
-    - text: "\u05D9\u05E9 \u05DE\u05D4 \u05D6\u05D4"
-      textEffect: []
+    - text: "\u05D9\u05E9 \u05DE\u05D4 \u05D6\u05D4 {0}"
+      textEffect:
+      - {fileID: 11400000, guid: e5ad80d2a8ee1f042bf34c66a49d1aef, type: 2}
       spawnOffset: {x: 0, y: 0, z: 0}
       scale: {x: 1, y: 1, z: 1}
       ttl: 3

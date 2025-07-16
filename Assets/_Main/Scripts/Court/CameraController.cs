@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,6 +24,41 @@ public class CameraController : MonoBehaviour
         pivot = cameraTransform.parent;
         effectController = GetComponent<CameraEffectController>();
         cameraDefaultLocalPosition = cameraTransform.localPosition;
+    }
+
+    public IEnumerator DebateStartCameraMovement(float duration)
+    {
+        camera.fieldOfView = 30f;
+        
+        cameraTransform.localRotation *= Quaternion.Euler(new Vector3(10f, 0f, 0f));
+        
+        Vector3 cameraStartPos = cameraDefaultLocalPosition + new Vector3(0f, 8f, -20f);
+        cameraTransform.position = cameraStartPos;
+        
+        Quaternion cameraStartRot = cameraTransform.localRotation;
+        
+        float elapsedTime = 0f;
+        while (elapsedTime < duration)
+        {
+            pivot.Rotate(Vector3.up, Time.deltaTime * -80f);
+            cameraTransform.localPosition = Vector3.Lerp(cameraStartPos, cameraDefaultLocalPosition + Vector3.up * 3f, elapsedTime  / duration);
+           
+            cameraTransform.localRotation = Quaternion.Lerp(cameraStartRot, Quaternion.Euler(0f, 0f, 0f), elapsedTime / duration);
+            
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        
+        cameraTransform.localPosition = cameraDefaultLocalPosition + Vector3.up * 3.5f;
+        cameraTransform.localRotation = Quaternion.Euler(0f, 0f, 5f);
+        camera.fieldOfView = 20f;
+        elapsedTime = 0f;
+        while (elapsedTime < duration * 2f)
+        {
+            pivot.Rotate(Vector3.up, Time.deltaTime * -30f);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
     }
 
     public void TeleportToTarget(Transform target)
