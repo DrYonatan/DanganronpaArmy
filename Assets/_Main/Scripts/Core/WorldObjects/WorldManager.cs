@@ -189,4 +189,5 @@ public class WorldManager : MonoBehaviour, IWorldHandler
         if(!DialogueSystem.instance.isActive && !PlayerInputManager.instance.isPaused && !isLoading)
         currentRoom.MovementControl();
     }
+
 }

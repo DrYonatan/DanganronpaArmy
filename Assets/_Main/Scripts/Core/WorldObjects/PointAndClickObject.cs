@@ -20,6 +20,9 @@ public class PointAndClickObject : MonoBehaviour
 
     private void OnMouseExit()
     {
+        if(WorldManager.instance.currentRoom.currentInteractable != null)
+        WorldManager.instance.currentRoom.currentInteractable.OnStopLooking();
         WorldManager.instance.currentRoom.currentInteractable = null;
+
     }
 }

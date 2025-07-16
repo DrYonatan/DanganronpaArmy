@@ -61,7 +61,7 @@ public class PointAndClickRoom : Room
             }
         }
         
-        ReticleManager.instance.ReticleAsCursor();
+        CursorManager.instance.ReticleAsCursor();
       
     }
 

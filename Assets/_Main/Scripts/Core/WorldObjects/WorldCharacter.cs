@@ -5,11 +5,33 @@ using DIALOGUE;
 
 public class WorldCharacter : ConversationInteractable
 {
-    public override void Interact()
+    public string name;
+
+    public override void FinishInteraction()
     {
         CharacterClickEffects.instance.Interact(transform);
-        base.Interact();
-        StartCoroutine(MoveAndRotateCameraTo());
+        Quaternion targetRotation = Quaternion.LookRotation(transform.forward);
+        CameraManager.instance.StartCameraCoroutine(CameraManager.instance.RotateCameraTo(targetRotation, 0.5f));
+        CameraManager.instance.initialRotation = transform.rotation;
+        base.FinishInteraction();
+    }
+
+    public override void OnLook()
+    {
+        if(!isAlreadyLooking)
+        {
+            isAlreadyLooking = true;
+            CursorManager.instance.ShowOrHideConversationIcon(true);
+            CursorManager.instance.ShowOrHideInteractableName(true, name);
+        }
+        
+    }
+
+    public override void OnStopLooking()
+    {
+        isAlreadyLooking = false;
+        CursorManager.instance.ShowOrHideConversationIcon(false);
+        CursorManager.instance.ShowOrHideInteractableName(false, "");
     }
 
     private IEnumerator MoveAndRotateCameraTo()

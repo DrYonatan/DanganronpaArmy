@@ -121,6 +121,7 @@ public class TextShatterEffect : MonoBehaviour
     public void Explosion(Vector3 position)
     {
         GameObject effect = Instantiate(hitEffectPrefab, position, Quaternion.identity);
+        effect.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
         Destroy(effect, 2f);
     }
 
