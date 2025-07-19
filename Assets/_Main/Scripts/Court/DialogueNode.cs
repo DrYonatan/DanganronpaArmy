@@ -13,7 +13,7 @@ public abstract class DialogueNode
     public string text;
     public CharacterCourt character;
 
-    public List<CameraEffect> cameraEffects;
+    public List<CameraEffect> cameraEffects = new List<CameraEffect>();
     public float fovOffset;
     public Vector3 positionOffset;
     public Vector3 rotationOffset;
