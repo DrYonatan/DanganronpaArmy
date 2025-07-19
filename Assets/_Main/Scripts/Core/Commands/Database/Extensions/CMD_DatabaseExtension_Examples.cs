@@ -173,8 +173,6 @@ namespace TESTING
             SwitchEmotion(args);
             VideoManager.instance.MakeActive();
             VideoManager.instance.PlayUltimateVideo(characterName);
-            
-
         }
 
         private static void SetUltimateVideo(string characterName)
