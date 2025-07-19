@@ -14,6 +14,7 @@ public class VideoManager : MonoBehaviour
     public GameObject nameText;
     public GameObject ultimateText;
     public bool isPlaying = false;
+    public Transform characterSilhouette;
     public static VideoManager instance { get; private set; }
 
     private void Awake()
@@ -42,6 +43,9 @@ public class VideoManager : MonoBehaviour
 
     public void PlayUltimateVideo(string characterName)
     {
+        GameObject silhouette =
+            GameObject.Find($"VN controller/Root/Canvas - Main/LAYERS/2 - Characters/Character - [{characterName}]/Character - [{characterName}](Clone)");
+        silhouette.GetComponent<CanvasGroup>().alpha = 1f;
         GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/1 - Background/UltimateVideo/Screen").GetComponent<CanvasGroup>().alpha = 1;
         VideoPlayer video = gameObject.GetComponent<VideoPlayer>();
         video.SetDirectAudioMute(0, false);
@@ -54,12 +58,32 @@ public class VideoManager : MonoBehaviour
         nameText.GetComponent<TextMeshProUGUI>().SetText(nameAndText[0]);
         ultimateText.GetComponent<TextMeshProUGUI>().SetText(nameAndText[1]);
         StartCoroutine(MakeTextAppearOrDisappear(4.5f, false));
-
-        StartCoroutine(WaitAndThenMoveCharacter(0.31f, characterName, "left"));
-        StartCoroutine(WaitAndThenMoveCharacter(4.5f, characterName, "right"));
-
+        Transform renderer = GameObject.Find($"VN controller/Root/Canvas - Main/LAYERS/2 - Characters/Character - [{characterName}]/Character - [{characterName}](Clone)/Anim/Renderers").transform;
+        StartCoroutine(WaitAndThenMoveCharacter(0.31f, characterName, "left", renderer, 4.5f, true));
+        
+        StartCoroutine(WaitAndThenMoveCharacter(4.5f, characterName, "right", renderer, 0.3f, false));
     }
 
+    IEnumerator SlideSilhouette(Transform silhouette, float duration, bool starts)
+    {
+        float elapsedTime = 0f;
+        Vector3 startPosition = silhouette.localPosition;
+        Vector3 targetPosition = startPosition + (starts ? 1 : -1) * (55 * Vector3.up + 65 * Vector3.left);
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            silhouette.localPosition = Vector3.Lerp(startPosition,
+                targetPosition, elapsedTime / duration);
+            yield return null;
+        }
+        
+        silhouette.localPosition = targetPosition;
+        if (!starts)
+        {
+            silhouette.parent.parent.GetComponent<CanvasGroup>().alpha = 0;
+        } 
+    }
 
     public void SetUltimateVideo(string characterName)
     {
@@ -70,6 +94,13 @@ public class VideoManager : MonoBehaviour
         video.clip = (VideoClip)Resources.Load($"Videos/UltimateVideo{characterName}");
         video.SetDirectAudioMute(0, true);
         videoPlayer.Play();
+        GameObject character = GameObject.Find($"VN controller/Root/Canvas - Main/LAYERS/2 - Characters/Character - [{characterName}]");
+        GameObject silhouette = Instantiate(character, character.transform);
+        silhouette.transform.localScale = Vector3.one;
+        silhouette.transform.localPosition = Vector3.zero;
+        silhouette.transform.SetSiblingIndex(0);
+        silhouette.GetComponentInChildren<Image>().color = Color.black;
+        silhouette.GetComponent<CanvasGroup>().alpha = 0;
     }
 
     private string[] MakeUltimateAndNameText(string characterName)
@@ -151,10 +182,13 @@ public class VideoManager : MonoBehaviour
         return res;
     }
 
-    IEnumerator WaitAndThenMoveCharacter(float duration, string characterName, string direction)
+    IEnumerator WaitAndThenMoveCharacter(float duration, string characterName,
+        string direction, Transform silhouette, float silhouetteDuration, bool starts)
     {
         yield return new WaitForSeconds(duration);
+        StartCoroutine(SlideSilhouette(silhouette, silhouetteDuration, starts));
         StartCoroutine(MoveCharacter(direction, characterName));
+        
     }
     IEnumerator Play()
     {
