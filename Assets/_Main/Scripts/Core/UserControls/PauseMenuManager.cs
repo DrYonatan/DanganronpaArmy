@@ -8,7 +8,7 @@ public class PauseMenuManager : MonoBehaviour
 {
     public List<GameObject> menuItems;
     public int currentItemIndex;
-    public GameObject menuTopEffect;
+    public Image menuTopEffect;
 
     // Start is called before the first frame update
     void Start()
@@ -39,7 +39,7 @@ public class PauseMenuManager : MonoBehaviour
     public void UpdateCurrentItem()
     {
         GameObject currentItem = menuItems[currentItemIndex];
-        menuTopEffect.GetComponent<Image>().material.SetColor(
+        menuTopEffect.material.SetColor(
             "_ColorTop",
              currentItem.GetComponent<Button>().colors.highlightedColor);
              
