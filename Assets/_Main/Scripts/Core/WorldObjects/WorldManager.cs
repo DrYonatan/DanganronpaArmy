@@ -19,8 +19,8 @@ public class WorldManager : MonoBehaviour, IWorldHandler
         instance = this;
         StartLoadingRoom(currentRoom);
         Dictionary<string, GameEvent> runtimeGameEvents = ProgressManager.instance.runtimeGameEvents;
-        StartConversation("test");
         currentGameEvent = runtimeGameEvents["InsideRoom"];
+        ReturningToWorld();
     }
 
     void StartConversation(string textFile)

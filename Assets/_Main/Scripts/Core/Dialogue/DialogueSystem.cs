@@ -21,14 +21,14 @@ namespace DIALOGUE
 
         public event DialogueSystemEvent onUserPrompt_Next;
 
-        public GameObject dialogueBox;
+        public TextBoxAnimations dialogueBoxAnimator;
 
         private void Awake()
         {
+            isActive = false;
             if (instance == null)
             {
                 instance = this;
-                isActive = false;
                 Initialize();
             }
 
@@ -74,19 +74,19 @@ namespace DIALOGUE
             return conversationManager.StartConversation(conversation);
         }
 
-        public void SetIsActive(bool activeOrNot) // Not to be cofnsued with Unity's GameObject.SetActive() 
+        public void SetIsActive(bool isActive) // Not to be cofnsued with Unity's GameObject.SetActive() 
         {
-            isActive = activeOrNot;
+            this.isActive = isActive;
 
-            if (activeOrNot)
+            if (isActive)
             {
                 VirutalCameraManager.instance?.DisableVirtualCamera();
-                dialogueBox.GetComponent<CanvasGroup>().alpha = 1;
+                dialogueBoxAnimator.TextBoxAppear();
                 CursorManager.instance?.Hide();
             }
             else
             {
-                dialogueBox.GetComponent<CanvasGroup>().alpha = 0;
+                dialogueBoxAnimator.TextBoxDisappear();
                 CursorManager.instance.Show();
             }
         }

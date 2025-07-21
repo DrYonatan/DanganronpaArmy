@@ -87,11 +87,7 @@ namespace TESTING
         }
         private static void SwitchTextColor(string colorName)
         {
-            GameObject text = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/4 - Dialogue/Root Container/DialogueText");
-            if (colorName.ToLower() == "blue")
-                text.GetComponent<TextMeshProUGUI>().color = Color.cyan;
-            else if (colorName.ToLower() == "white")
-                text.GetComponent<TextMeshProUGUI>().color = Color.white;
+            
         }
         private static void PlayScene(string sceneName)
         {
