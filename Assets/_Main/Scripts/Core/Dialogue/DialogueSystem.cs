@@ -70,6 +70,7 @@ namespace DIALOGUE
 
         public Coroutine Say(List<string> conversation)
         {
+            if(!isActive)
             SetIsActive(true);
             return conversationManager.StartConversation(conversation);
         }
