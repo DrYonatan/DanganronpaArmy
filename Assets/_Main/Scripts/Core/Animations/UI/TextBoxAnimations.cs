@@ -15,7 +15,7 @@ public class TextBoxAnimations : MonoBehaviour
 
     public RectTransform namePlateOriginalPos;
 
-    void Start()
+    void Awake()
     {
         dialogueBoxCanvasGroup = dialoguePart.GetComponent<CanvasGroup>();
         namePlateCanvasGroup = namePlate.GetComponent<CanvasGroup>();

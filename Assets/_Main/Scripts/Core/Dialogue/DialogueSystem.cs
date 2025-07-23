@@ -83,7 +83,7 @@ namespace DIALOGUE
             {
                 VirutalCameraManager.instance?.DisableVirtualCamera();
                 dialogueBoxAnimator.TextBoxAppear();
-                CursorManager.instance?.Hide();
+                CursorManager.instance.Hide();
             }
             else
             {
