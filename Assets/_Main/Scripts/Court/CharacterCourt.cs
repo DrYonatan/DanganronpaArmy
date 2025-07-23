@@ -12,6 +12,6 @@ public enum CharacterState
 [CreateAssetMenu(menuName ="Data/CharacterCourt")]
 public class CharacterCourt : ScriptableObject
 {
-    public string name;
+    public string displayName;
     public List<Sprite> Sprites;
 }

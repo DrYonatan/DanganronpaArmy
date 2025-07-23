@@ -35,7 +35,8 @@ public class TrialDialogueManager : MonoBehaviour, IWorldHandler
         cameraController.cameraTransform.rotation *= Quaternion.Euler(nextNode.rotationOffset);
         cameraController.cameraTransform.GetComponent<Camera>().fieldOfView = 15 + nextNode.fovOffset;
         List<string> lines = nextNode.textLines;
-        DialogueSystem.instance.ShowSpeakerName(nextNode.character.name);
+        DialogueSystem.instance.ShowSpeakerName(nextNode.character.displayName);
+        ((CourtTextBoxAnimator)(DialogueSystem.instance.dialogueBoxAnimator)).ChangeFace(nextNode.character.name);
         DialogueSystem.instance.Say(lines);
         foreach (CameraEffect cameraEffect in nextNode.cameraEffects)
         {

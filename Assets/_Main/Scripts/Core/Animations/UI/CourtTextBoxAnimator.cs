@@ -5,23 +5,29 @@ using DG.Tweening;
 
 public class CourtTextBoxAnimator : TextBoxAnimations
 {
-    public RectTransform characterFace; // only appears in court
+    public CharacterFaceController characterFace; // only appears in court
 
     public override void TextBoxAppear()
     {
         base.TextBoxAppear();
 
-        characterFace.localScale = new Vector3(1f, 0f, 1f);
-        characterFace.DOScaleY(1f, duration);
+        characterFace.transform.localScale = new Vector3(1f, 0f, 1f);
+        characterFace.transform.DOScaleY(1f, duration);
     }
 
     public override void TextBoxDisappear()
     {
         base.TextBoxDisappear();
 
-        characterFace.localScale = new Vector3(1f, 1f, 1f);
-        characterFace.DOScaleY(0f, duration);
+        characterFace.transform.localScale = new Vector3(1f, 1f, 1f);
+        characterFace.transform.DOScaleY(0f, duration);
                 
     }
+
+    public void ChangeFace(string characterName)
+    {
+        characterFace.SetFace(characterName);
+    }
+
 
 }
