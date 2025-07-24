@@ -303,7 +303,7 @@ public class GameLoop : MonoBehaviour
         yield return cameraController.SpinToTarget(characterStand.transform, characterStand.heightPivot, nextNode.positionOffset, nextNode.rotationOffset, nextNode.fovOffset);
        
         foreach (CameraEffect cameraEffect in nextNode.cameraEffects)
-        { ;
+        { 
             effectController.StartEffect(cameraEffect);
         }
     }
