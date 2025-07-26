@@ -57,6 +57,7 @@ public class GameLoop : MonoBehaviour
     [SerializeField] MusicManager musicManager;
     [SerializeField] Text timerText;
     [SerializeField] GameObject shatterTransform;
+    [SerializeField] DebateUIAnimator debateUIAnimator;
     public GameObject noThatsWrong;
 
     float timer;
@@ -92,11 +93,13 @@ public class GameLoop : MonoBehaviour
 
     IEnumerator StartDebate()
     { 
+        debateUIAnimator.DebateUIDisappear();
         ImageScript.instance.blackFade.GetComponent<CanvasGroup>().alpha = 1f;
         yield return 0;
         ImageScript.instance.UnFadeToBlack(1f);
        yield return StartCoroutine(cameraController.DebateStartCameraMovement(4f));
        finished = false;
+       debateUIAnimator.DebateUIAppear();
     }
 
     // Update is called once per frame
