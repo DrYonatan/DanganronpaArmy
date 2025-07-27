@@ -13,6 +13,8 @@ public class DebateUIAnimator : MonoBehaviour
     public RectTransform facePartOriginalPos;
     public RectTransform timePartOriginalPos;
 
+    public CharacterFaceController characterFace;
+
     public float moveAmountY = 40f;
     public float moveAmountX = 150f;
 
@@ -37,5 +39,10 @@ public class DebateUIAnimator : MonoBehaviour
         namePart.DOAnchorPos(namePartOriginalPos.anchoredPosition + new Vector2(0, -moveAmountY), duration).SetEase(Ease.OutQuad);
         facePart.DOAnchorPos(facePartOriginalPos.anchoredPosition + new Vector2(moveAmountX, 0), duration).SetEase(Ease.OutQuad);
         timePart.DOAnchorPos(timePartOriginalPos.anchoredPosition + new Vector2(0, moveAmountY), duration).SetEase(Ease.OutQuad);
+    }
+
+    public void ChangeFace(string characterName)
+    {
+        characterFace.SetFace(characterName);
     }
 }

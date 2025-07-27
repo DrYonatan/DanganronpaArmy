@@ -6,9 +6,7 @@ using DG.Tweening;
 
 public class CourtTextBoxAnimator : TextBoxAnimations
 {
-    public CharacterFaceController characterFace;
-    public Image faceWhiteOverlay;
-    public float faceFlashDuration;
+    public CharacterFaceController characterFace;   
 
     public override void TextBoxAppear()
     {
@@ -29,28 +27,7 @@ public class CourtTextBoxAnimator : TextBoxAnimations
 
     public void ChangeFace(string characterName)
     {
-        Sequence seq = DOTween.Sequence();
-
-        // Ensure white overlay is enabled and fully transparent
-        faceWhiteOverlay.color = new Color(1, 1, 1, 0);
-        faceWhiteOverlay.gameObject.SetActive(true);
-
-        // Fade white overlay in
-        seq.Append(faceWhiteOverlay.DOFade(1f, faceFlashDuration));
-
-        // After flash, swap sprite
-        seq.AppendCallback(() => {
-            characterFace.SetFace(characterName);
-        });
-
-        // Fade white overlay out
-        seq.Append(faceWhiteOverlay.DOFade(0f, faceFlashDuration));
-
-        // Optional: hide overlay after
-        seq.AppendCallback(() => {
-            faceWhiteOverlay.gameObject.SetActive(false);
-        });
-        
+        characterFace.SetFace(characterName);
     }
 
 

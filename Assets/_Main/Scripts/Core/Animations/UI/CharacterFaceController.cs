@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class CharacterFaceController : MonoBehaviour
 { 
@@ -15,6 +16,8 @@ public class CharacterFaceController : MonoBehaviour
     }
 
     [SerializeField] private Image faceImage;
+    public Image faceWhiteOverlay;
+    public float faceFlashDuration;
 
     // Offsets for aligning each character's face inside the cropped box
     public List<CharacterInfo> characterInfos = new List<CharacterInfo>();
@@ -25,13 +28,29 @@ public class CharacterFaceController : MonoBehaviour
 
         if(info != null)
         {
-            faceImage.sprite = info.sprite;
-            faceImage.rectTransform.anchoredPosition = info.offset;
-        }
+            
+            Sequence seq = DOTween.Sequence();
 
-        else
-        {
-            Debug.Log($"Character {characterName}  does not exist!");
+            // Ensure white overlay is enabled and fully transparent
+            faceWhiteOverlay.color = new Color(1, 1, 1, 0);
+            faceWhiteOverlay.gameObject.SetActive(true);
+
+            // Fade white overlay in
+            seq.Append(faceWhiteOverlay.DOFade(1f, faceFlashDuration));
+
+            // After flash, swap sprite
+            seq.AppendCallback(() => {
+                faceImage.sprite = info.sprite;
+                faceImage.rectTransform.anchoredPosition = info.offset;
+            });
+
+            // Fade white overlay out
+            seq.Append(faceWhiteOverlay.DOFade(0f, faceFlashDuration));
+
+            // Optional: hide overlay after
+            seq.AppendCallback(() => {
+                faceWhiteOverlay.gameObject.SetActive(false);
+            });
         }
     }
 }

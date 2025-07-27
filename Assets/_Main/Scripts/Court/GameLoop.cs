@@ -303,6 +303,7 @@ public class GameLoop : MonoBehaviour
         DebateNode nextNode = stage.dialogueNodes[dialogueNodeIndex];
         SpawnText(nextNode);
         effectController.Reset();
+        debateUIAnimator.ChangeFace(nextNode.character.name);
         yield return cameraController.SpinToTarget(characterStand.transform, characterStand.heightPivot, nextNode.positionOffset, nextNode.rotationOffset, nextNode.fovOffset);
        
         foreach (CameraEffect cameraEffect in nextNode.cameraEffects)
