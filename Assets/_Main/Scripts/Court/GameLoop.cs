@@ -49,7 +49,7 @@ public class GameLoop : MonoBehaviour
 
     [SerializeField] CameraController cameraController;
     [SerializeField] List<CharacterStand> characterStands;
-    [SerializeField] Stage stage;
+    public Stage stage;
     [SerializeField] Transform textPivot;
     [SerializeField] GameObject textPrefab;
     [SerializeField] CameraEffectController effectController;
@@ -304,6 +304,7 @@ public class GameLoop : MonoBehaviour
         SpawnText(nextNode);
         effectController.Reset();
         debateUIAnimator.ChangeFace(nextNode.character.name);
+        debateUIAnimator.HighlightNode(textIndex);
         yield return cameraController.SpinToTarget(characterStand.transform, characterStand.heightPivot, nextNode.positionOffset, nextNode.rotationOffset, nextNode.fovOffset);
        
         foreach (CameraEffect cameraEffect in nextNode.cameraEffects)

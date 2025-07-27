@@ -11736,8 +11736,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 336.2, y: -391.8}
-  m_SizeDelta: {x: 569.6, y: 1339.3}
+  m_AnchoredPosition: {x: 298.45, y: -542}
+  m_SizeDelta: {x: 621.9, y: 1462.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1175033164
 MonoBehaviour:
@@ -13999,6 +13999,66 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1376332399
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1376332400}
+  - component: {fileID: 1376332401}
+  m_Layer: 5
+  m_Name: NodeIndicatorsContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1376332400
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1376332399}
+  m_LocalRotation: {x: -0, y: -0, z: -0.08072077, w: 0.99673676}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1792889378}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -9.26}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 338.24, y: 113.22}
+  m_SizeDelta: {x: 100, y: 78.16}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1376332401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1376332399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_StartCorner: 0
+  m_StartAxis: 0
+  m_CellSize: {x: 20, y: 10}
+  m_Spacing: {x: 5, y: 5}
+  m_Constraint: 0
+  m_ConstraintCount: 2
 --- !u!1 &1394395931
 GameObject:
   m_ObjectHideFlags: 0
@@ -17356,6 +17416,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1376332400}
   - {fileID: 926069190}
   m_Father: {fileID: 1364845995}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -17420,7 +17481,7 @@ MonoBehaviour:
   characterInfos:
   - characterName: Guy
     sprite: {fileID: 21300000, guid: 6d5846a93a175e44a8f306ac957e2b43, type: 3}
-    offset: {x: 298, y: -496}
+    offset: {x: 298, y: -542}
   - characterName: Noa
     sprite: {fileID: 21300000, guid: 4f84501393002ac49bb32d1bc865b1ea, type: 3}
     offset: {x: 298, y: -320}
@@ -17432,7 +17493,7 @@ MonoBehaviour:
     offset: {x: 298, y: -400}
   - characterName: Kfir
     sprite: {fileID: 21300000, guid: b82da60d5e1461e4cac7fc6fe99be996, type: 3}
-    offset: {x: 298, y: -450}
+    offset: {x: 298, y: -500}
   - characterName: Liel
     sprite: {fileID: 21300000, guid: fea55ed4fd883c84098d817fd01e7050, type: 3}
     offset: {x: 298, y: -350}
@@ -17456,13 +17517,13 @@ MonoBehaviour:
     offset: {x: 298, y: -350}
   - characterName: Alon
     sprite: {fileID: 21300000, guid: c0c3b29f8abdf1e46b2b8569c8a8b8da, type: 3}
-    offset: {x: 298, y: -450}
+    offset: {x: 298, y: -500}
   - characterName: Noya
     sprite: {fileID: 21300000, guid: 79eb1fc1a2be4044ab2fcf087fe4eb1f, type: 3}
-    offset: {x: 350, y: -450}
+    offset: {x: 350, y: -500}
   - characterName: Koby
     sprite: {fileID: 21300000, guid: ee6e7241605e6c74f9cfcb1d6a0bb0ca, type: 3}
-    offset: {x: 298, y: -450}
+    offset: {x: 298, y: -500}
 --- !u!1 &1819152575
 GameObject:
   m_ObjectHideFlags: 0
@@ -17672,6 +17733,8 @@ MonoBehaviour:
   facePartOriginalPos: {fileID: 1695806772}
   timePartOriginalPos: {fileID: 1399632650}
   characterFace: {fileID: 1792889381}
+  nodeIndicatorPrefab: {fileID: 2660432344348894953, guid: c73905f66b7c0a0418497135d89a79aa, type: 3}
+  nodeIndicatorContainer: {fileID: 1376332400}
   moveAmountY: 60
   moveAmountX: 200
   duration: 0.5
