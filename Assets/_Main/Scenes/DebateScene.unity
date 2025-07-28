@@ -19515,7 +19515,7 @@ MonoBehaviour:
   m_text: "\u05D7\u05D3\u05DC !!"
   m_isRightToLeft: 1
   m_fontAsset: {fileID: 11400000, guid: 61ea2d6e5a7ddde40980539eeb16abab, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 61ea2d6e5a7ddde40980539eeb16abab, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -19581,7 +19581,7 @@ MonoBehaviour:
   _SortingLayer: 0
   _SortingLayerID: 0
   _SortingOrder: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_renderer: {fileID: 2032813254}
   m_maskType: 0
 --- !u!23 &2032813254
@@ -19604,7 +19604,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
+  - {fileID: 2180264, guid: 61ea2d6e5a7ddde40980539eeb16abab, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -19640,9 +19640,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 1572153660}
   tmpText: {fileID: 2032813253}
-  glowColor: {r: 0.6509433, g: 1, b: 0.7366765, a: 1}
-  maxOutlineWidth: 0.3
-  glowFadeDuration: 0.36
+  glowFadeDuration: 1
+  speedCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 3
+      outSlope: 3
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.02672609
+      value: 0.370353
+      inSlope: 0.40399963
+      outSlope: 0.40399963
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.5954451
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.17086506
+      value: 0.4162153
+      inSlope: 0.18055354
+      outSlope: 0.18055354
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.08511983
+      outWeight: 0.44457385
+    - serializedVersion: 3
+      time: 0.20399344
+      value: 1.3075805
+      inSlope: 2.284496
+      outSlope: 2.284496
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.08845359
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!43 &2053549244
 Mesh:
   m_ObjectHideFlags: 0
