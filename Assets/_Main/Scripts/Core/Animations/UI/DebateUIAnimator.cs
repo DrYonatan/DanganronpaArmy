@@ -99,4 +99,19 @@ public class DebateUIAnimator : MonoBehaviour
         bullet.anchoredPosition = bulletOriginalPos.anchoredPosition - new Vector2(500f, 0);
         bullet.DOAnchorPosX(bulletOriginalPos.anchoredPosition.x, reloadDuration).SetEase(Ease.OutQuad);
     }
+
+    public void MoveCylinder()
+    {
+        Image image = cylinder.GetComponent<Image>();
+        Vector3 originalPosition = cylinder.anchoredPosition;
+        Color originalColor = image.color;
+
+        image.DOColor(Color.white, 0.1f);
+        cylinder.DOAnchorPos(originalPosition + Vector3.right * 200f, 0.1f)
+            .OnComplete(() =>
+            {
+                cylinder.DOAnchorPos(originalPosition, 0.1f);
+                image.DOColor(originalColor, 0.1f);
+            });
+    }
 }

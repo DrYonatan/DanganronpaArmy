@@ -230,6 +230,7 @@ public class GameLoop : MonoBehaviour
                 GameObject bullet = Instantiate(textBulletPrefab, shootOrigin.position, rotation);
                 bullet.GetComponent<TextMeshPro>().text = evidenceManager.GetSelectedEvidence();
                 StartCoroutine(MoveBullet(bullet, direction, 1f));
+                debateUIAnimator.MoveCylinder();
             } 
         }
         

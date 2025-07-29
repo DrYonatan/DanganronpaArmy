@@ -7,7 +7,7 @@ public class EvidenceManager : MonoBehaviour
 {
     [SerializeField] UIBullet selectedBullet;
     List<Evidence> evidences;
-    [SerializeField] private RectTransform cyllinder;
+    [SerializeField] private RectTransform cylinder;
     int selectedIndex;
 
     private void Update()
@@ -16,7 +16,7 @@ public class EvidenceManager : MonoBehaviour
         {
             selectedIndex++;
             GameLoop.instance.debateUIAnimator.LoadBullet();
-            cyllinder.DOLocalRotate(cyllinder.localRotation.eulerAngles + new Vector3(0, 0, 60), 0.4f);
+            cylinder.DOLocalRotate(cylinder.localRotation.eulerAngles + new Vector3(0, 0, 60), 0.4f);
             if (selectedIndex >= evidences.Count)
             {
                 selectedIndex = 0;
@@ -27,7 +27,7 @@ public class EvidenceManager : MonoBehaviour
         if (Input.GetAxis("Mouse ScrollWheel") > 0)
         {
             GameLoop.instance.debateUIAnimator.LoadBullet();
-            cyllinder.DOLocalRotate(cyllinder.localRotation.eulerAngles + new Vector3(0, 0, -60), 0.4f);
+            cylinder.DOLocalRotate(cylinder.localRotation.eulerAngles + new Vector3(0, 0, -60), 0.4f);
             selectedIndex--;
             if(selectedIndex < 0)
             {
