@@ -1,15 +1,13 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using UnityEngine.UI;
-using Text = TMPro.TextMeshProUGUI;
-using System;
+using DG.Tweening;
 
 public class EvidenceManager : MonoBehaviour
 {
-    [SerializeField] Text textField;
+    [SerializeField] UIBullet selectedBullet;
     List<Evidence> evidences;
+    [SerializeField] private RectTransform cyllinder;
     int selectedIndex;
 
     private void Update()
@@ -17,6 +15,8 @@ public class EvidenceManager : MonoBehaviour
         if(Input.GetAxis("Mouse ScrollWheel") < 0)
         {
             selectedIndex++;
+            GameLoop.instance.debateUIAnimator.LoadBullet();
+            cyllinder.DOLocalRotate(cyllinder.localRotation.eulerAngles + new Vector3(0, 0, 60), 0.4f);
             if (selectedIndex >= evidences.Count)
             {
                 selectedIndex = 0;
@@ -26,6 +26,8 @@ public class EvidenceManager : MonoBehaviour
 
         if (Input.GetAxis("Mouse ScrollWheel") > 0)
         {
+            GameLoop.instance.debateUIAnimator.LoadBullet();
+            cyllinder.DOLocalRotate(cyllinder.localRotation.eulerAngles + new Vector3(0, 0, -60), 0.4f);
             selectedIndex--;
             if(selectedIndex < 0)
             {
@@ -37,14 +39,7 @@ public class EvidenceManager : MonoBehaviour
 
     void UpdateEvidence()
     {
-        string textToShow = "";
-        for (int i = 0; i < this.evidences.Count; i++)
-        {
-            if (this.evidences[i] == null) { continue; }
-            if(i == selectedIndex) { textToShow += ">>>"; }
-            textToShow += this.evidences[i].Name + "\n";
-        }
-        textField.text = textToShow;
+        selectedBullet.text.text = this.evidences[selectedIndex].Name;
     }
     
     public void ShowEvidence(Evidence[] evidences)
@@ -58,5 +53,15 @@ public class EvidenceManager : MonoBehaviour
     internal bool Check(Evidence correctEvidence)
     {
         return evidences[selectedIndex] == correctEvidence;
+    }
+
+    public void ShootBullet()
+    {
+        selectedBullet.Shoot();
+    }
+
+    public string GetSelectedEvidence()
+    {
+        return this.evidences[selectedIndex].Name;
     }
 }

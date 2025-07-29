@@ -57,7 +57,8 @@ public class GameLoop : MonoBehaviour
     [SerializeField] MusicManager musicManager;
     [SerializeField] Text timerText;
     [SerializeField] GameObject shatterTransform;
-    [SerializeField] DebateUIAnimator debateUIAnimator;
+    public DebateUIAnimator debateUIAnimator;
+    public bool isShooting;
     public GameObject noThatsWrong;
 
     float timer;
@@ -209,23 +210,29 @@ public class GameLoop : MonoBehaviour
 
     void ShootText()
     {
-        Ray ray = statementsCamera.ScreenPointToRay(Input.mousePosition);
-
-        // Create a plane in front of the firePoint (facing the same way as the camera)
-        Plane plane = new Plane(statementsCamera.transform.forward,
-            shootOrigin.position + statementsCamera.transform.forward * 4f);
-
-        if (plane.Raycast(ray, out float distance))
+        if (!isShooting)
         {
-            Vector3 targetPoint = ray.GetPoint(distance);
-            Vector3 direction = (targetPoint - shootOrigin.position).normalized;
+            isShooting = true;
+            Ray ray = statementsCamera.ScreenPointToRay(Input.mousePosition);
 
-            Quaternion rotation = Quaternion.LookRotation(direction, statementsCamera.transform.up) *
-                                  Quaternion.Euler(0, 90f, 0);
-            GameObject bullet = Instantiate(textBulletPrefab, shootOrigin.position, rotation);
-            
-            StartCoroutine(MoveBullet(bullet, direction, 2f));
+            // Create a plane in front of the firePoint (facing the same way as the camera)
+            Plane plane = new Plane(statementsCamera.transform.forward,
+                shootOrigin.position + statementsCamera.transform.forward * 4f);
+
+            if (plane.Raycast(ray, out float distance))
+            {
+                Vector3 targetPoint = ray.GetPoint(distance);
+                Vector3 direction = (targetPoint - shootOrigin.position).normalized;
+
+                Quaternion rotation = Quaternion.LookRotation(direction, statementsCamera.transform.up) *
+                                      Quaternion.Euler(0, 90f, 0);
+                evidenceManager.ShootBullet();
+                GameObject bullet = Instantiate(textBulletPrefab, shootOrigin.position, rotation);
+                bullet.GetComponent<TextMeshPro>().text = evidenceManager.GetSelectedEvidence();
+                StartCoroutine(MoveBullet(bullet, direction, 1f));
+            } 
         }
+        
     }
 
     IEnumerator MoveBullet(GameObject bullet, Vector3 direction, float duration)
@@ -233,12 +240,14 @@ public class GameLoop : MonoBehaviour
         float elapsedTime = 0f;
         while (elapsedTime < duration)
         {
-            bullet.transform.position += direction * shootForce * Time.deltaTime;
+            bullet.transform.position += direction * (shootForce * Time.deltaTime);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
         Destroy(bullet);
+        isShooting = false;
+        debateUIAnimator.LoadBullet();
     }
 
 
@@ -304,6 +313,7 @@ public class GameLoop : MonoBehaviour
         SpawnText(nextNode);
         effectController.Reset();
         debateUIAnimator.ChangeFace(nextNode.character.name);
+        debateUIAnimator.UpdateName(nextNode.character.displayName);
         debateUIAnimator.HighlightNode(textIndex);
         yield return cameraController.SpinToTarget(characterStand.transform, characterStand.heightPivot, nextNode.positionOffset, nextNode.rotationOffset, nextNode.fovOffset);
        

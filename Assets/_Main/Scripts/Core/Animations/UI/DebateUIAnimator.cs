@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using TMPro;
 
 public class DebateUIAnimator : MonoBehaviour
 {
@@ -18,11 +19,17 @@ public class DebateUIAnimator : MonoBehaviour
     public GameObject nodeIndicatorPrefab;
     public Transform nodeIndicatorContainer;
     private List<Image> indicators = new List<Image>();
+    public TextMeshProUGUI nameText;
+
+    public RectTransform cylinder;
+    public RectTransform bullet;
+    public RectTransform bulletOriginalPos;
 
     public float moveAmountY = 40f;
     public float moveAmountX = 150f;
 
     public float duration = 0.5f;
+    public float reloadDuration = 0.2f;
 
     public void DebateUIAppear()
     {
@@ -74,5 +81,22 @@ public class DebateUIAnimator : MonoBehaviour
         indicators[index].DOColor(new Color(1f, 1f, 0.5f), 0.5f)
             .SetLoops(-1, LoopType.Yoyo)
             .SetEase(Ease.InOutSine);
+    }
+
+    public void UpdateName(string characterName)
+    {
+        nameText.text = characterName;
+    }
+    
+    public void UnLoadBullet()
+    {
+        bullet.DOAnchorPosX(bulletOriginalPos.anchoredPosition.x - 500f, reloadDuration).SetEase(Ease.OutQuad);
+    }
+
+    public void LoadBullet()
+    {
+        bullet.GetComponent<UIBullet>().UnWhitenBullet();
+        bullet.anchoredPosition = bulletOriginalPos.anchoredPosition - new Vector2(500f, 0);
+        bullet.DOAnchorPosX(bulletOriginalPos.anchoredPosition.x, reloadDuration).SetEase(Ease.OutQuad);
     }
 }
