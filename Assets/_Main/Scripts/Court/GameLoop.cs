@@ -231,6 +231,7 @@ public class GameLoop : MonoBehaviour
                 bullet.GetComponent<TextMeshPro>().text = evidenceManager.GetSelectedEvidence();
                 StartCoroutine(MoveBullet(bullet, direction, 1f));
                 debateUIAnimator.MoveCylinder();
+                debateUIAnimator.GrowAndShrinkCircles();
             } 
         }
         

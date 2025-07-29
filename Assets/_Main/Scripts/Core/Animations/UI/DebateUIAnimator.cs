@@ -25,6 +25,9 @@ public class DebateUIAnimator : MonoBehaviour
     public RectTransform bullet;
     public RectTransform bulletOriginalPos;
 
+    public DebateCircle smallCircle;
+    public DebateCircle bigCircle;
+
     public float moveAmountY = 40f;
     public float moveAmountX = 150f;
 
@@ -113,5 +116,11 @@ public class DebateUIAnimator : MonoBehaviour
                 cylinder.DOAnchorPos(originalPosition, 0.1f);
                 image.DOColor(originalColor, 0.1f);
             });
+    }
+
+    public void GrowAndShrinkCircles()
+    {
+        smallCircle.GrowAndShrink(0.1f);
+        bigCircle.GrowAndShrink(0.1f);
     }
 }
