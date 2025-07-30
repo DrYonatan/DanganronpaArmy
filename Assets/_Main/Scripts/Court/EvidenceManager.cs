@@ -36,6 +36,11 @@ public class EvidenceManager : MonoBehaviour
             UpdateEvidence();
         }
     }
+    
+    public void LoadBullets()
+    {
+        GameLoop.instance.debateUIAnimator.LoadBullets(evidences);
+    }
 
     void UpdateEvidence()
     {

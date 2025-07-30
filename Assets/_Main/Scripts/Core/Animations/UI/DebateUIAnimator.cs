@@ -25,8 +25,11 @@ public class DebateUIAnimator : MonoBehaviour
     public RectTransform bullet;
     public RectTransform bulletOriginalPos;
 
+    public RectTransform circles;
     public DebateCircle smallCircle;
     public DebateCircle bigCircle;
+
+    public BulletSelectionMenu bulletSelectionMenu;
 
     public float moveAmountY = 40f;
     public float moveAmountX = 150f;
@@ -43,13 +46,33 @@ public class DebateUIAnimator : MonoBehaviour
         namePart.DOAnchorPos(namePartOriginalPos.anchoredPosition, duration).SetEase(Ease.OutQuad);
         facePart.DOAnchorPos(facePartOriginalPos.anchoredPosition, duration).SetEase(Ease.OutQuad);
         timePart.DOAnchorPos(timePartOriginalPos.anchoredPosition, duration).SetEase(Ease.OutQuad);
+
+        CursorManager.instance.Show();
         GenerateIndicators();
+    }
+    
+    public void LoadBullets(List<Evidence> evidences)
+    {
+        bulletSelectionMenu.LoadBullets(evidences);
+    }
+    public void OpenBulletSelectionMenu()
+    {
+        bulletSelectionMenu.Appear();
+        HideCylinderAndCircles();
+    }
+
+    public void CloseBulletSelectionMenu()
+    {
+        bulletSelectionMenu.Disappear();
+        ShowCylinderAndCircles();
     }
     public void DebateUIDisappear()
     {
         namePart.anchoredPosition = namePartOriginalPos.anchoredPosition + new Vector2(0, -moveAmountY);
         facePart.anchoredPosition = facePartOriginalPos.anchoredPosition + new Vector2(moveAmountX, 0);
         timePart.anchoredPosition = timePartOriginalPos.anchoredPosition + new Vector2(0, moveAmountY);
+        HideCylinderAndCircles();
+        CursorManager.instance.Hide();
     }
 
     public void ChangeFace(string characterName)
@@ -93,7 +116,7 @@ public class DebateUIAnimator : MonoBehaviour
     
     public void UnLoadBullet()
     {
-        bullet.DOAnchorPosX(bulletOriginalPos.anchoredPosition.x - 500f, reloadDuration).SetEase(Ease.OutQuad);
+        bullet.DOAnchorPosX(bulletOriginalPos.anchoredPosition.x - 250f, reloadDuration).SetEase(Ease.OutQuad);
     }
 
     public void LoadBullet()
@@ -122,5 +145,18 @@ public class DebateUIAnimator : MonoBehaviour
     {
         smallCircle.GrowAndShrink(0.1f);
         bigCircle.GrowAndShrink(0.1f);
+    }
+
+    void ShowCylinderAndCircles()
+    {
+        cylinder.DOAnchorPosX(0, 0.5f);
+        circles.DOAnchorPosX(-52, 0.5f);
+        LoadBullet();
+    }
+    void HideCylinderAndCircles()
+    {
+        cylinder.DOAnchorPosX(-200f, 0.5f);
+        circles.DOAnchorPosX(-252f, 0.5f);
+        UnLoadBullet();
     }
 }

@@ -252,6 +252,10 @@ public class GameLoop : MonoBehaviour
         debateUIAnimator.LoadBullet();
     }
 
+    public void LoadBullets()
+    {
+        evidenceManager.LoadBullets();
+    }
 
     public void Hit(Vector3 point)
     {

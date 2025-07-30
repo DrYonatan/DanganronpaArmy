@@ -8,6 +8,8 @@ public class UIBullet : MonoBehaviour
 {
     public RectTransform imageTransform;
 
+    public Color selectedColor;
+
     public TextMeshProUGUI text;
 
     public Image image;
@@ -30,6 +32,7 @@ public class UIBullet : MonoBehaviour
     public void Shoot()
     {
         image.sprite = Resources.Load<Sprite>(WHITE_IMAGE_PATH);
+        image.color = Color.white;
         text.alpha = 0f;
         GetComponent<RectTransform>().DOAnchorPosX(imageTransform.anchoredPosition.x + 2000f, shootDuration).SetEase(Ease.Linear);
     }
@@ -37,6 +40,7 @@ public class UIBullet : MonoBehaviour
     public void UnWhitenBullet()
     {
         text.alpha = 1f;
+        image.color = selectedColor;
         image.sprite = Resources.Load<Sprite>(REGULAR_IMAGE_PATH);
     }
     

@@ -50,6 +50,8 @@ public class CameraController : MonoBehaviour
         }
         
         cameraTransform.localPosition = cameraDefaultLocalPosition + Vector3.up * 3.5f;
+        GameLoop.instance.debateUIAnimator.OpenBulletSelectionMenu();
+        GameLoop.instance.LoadBullets();
         cameraTransform.localRotation = Quaternion.Euler(0f, 0f, 5f);
         camera.fieldOfView = 20f;
         elapsedTime = 0f;
@@ -59,6 +61,7 @@ public class CameraController : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+        GameLoop.instance.debateUIAnimator.CloseBulletSelectionMenu();
     }
 
     public void TeleportToTarget(Transform target)
