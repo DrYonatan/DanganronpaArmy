@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
@@ -55,13 +56,22 @@ public class CameraController : MonoBehaviour
         cameraTransform.localRotation = Quaternion.Euler(0f, 0f, 5f);
         camera.fieldOfView = 20f;
         elapsedTime = 0f;
+        bool triggeredUI = false;
         while (elapsedTime < duration * 2f)
         {
             pivot.Rotate(Vector3.up, Time.deltaTime * -30f);
             elapsedTime += Time.deltaTime;
+            if (!triggeredUI && elapsedTime >= (duration * 2f - 1f))
+            {
+                Sequence sequence = DOTween.Sequence();
+                sequence.AppendCallback(() => GameLoop.instance.debateUIAnimator.CloseBulletSelectionMenu());
+                sequence.AppendInterval(0.5f); // optional short delay between them
+                sequence.AppendCallback(() => GameLoop.instance.debateUIAnimator.DebateUIAppear());
+                triggeredUI = true;
+            }
             yield return null;
         }
-        GameLoop.instance.debateUIAnimator.CloseBulletSelectionMenu();
+        
     }
 
     public void TeleportToTarget(Transform target)

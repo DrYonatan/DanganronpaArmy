@@ -8,7 +8,7 @@ public class EvidenceManager : MonoBehaviour
     [SerializeField] UIBullet selectedBullet;
     List<Evidence> evidences;
     [SerializeField] private RectTransform cylinder;
-    int selectedIndex;
+    public int selectedIndex;
     
     public void LoadBullets()
     {

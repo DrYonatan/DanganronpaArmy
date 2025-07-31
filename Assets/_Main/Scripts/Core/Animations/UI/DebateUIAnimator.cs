@@ -57,14 +57,23 @@ public class DebateUIAnimator : MonoBehaviour
     }
     public void OpenBulletSelectionMenu()
     {
-        bulletSelectionMenu.Appear();
-        HideCylinderAndCircles();
+        if (!bulletSelectionMenu.isOpen)
+        {
+            bulletSelectionMenu.Appear();
+            bulletSelectionMenu.OpenBullets();
+            HideCylinderAndCircles();
+        }
+        
     }
 
     public void CloseBulletSelectionMenu()
     {
-        bulletSelectionMenu.Disappear();
-        ShowCylinderAndCircles();
+        if (bulletSelectionMenu.isOpen)
+        {
+            bulletSelectionMenu.Disappear();
+            ShowCylinderAndCircles(); 
+        }
+        
     }
     public void DebateUIDisappear()
     {
@@ -114,16 +123,20 @@ public class DebateUIAnimator : MonoBehaviour
         nameText.text = characterName;
     }
     
-    public void UnLoadBullet()
+    void UnLoadBullet()
     {
-        bullet.DOAnchorPosX(bulletOriginalPos.anchoredPosition.x - 250f, reloadDuration).SetEase(Ease.OutQuad);
+        bullet.DOAnchorPosX(bulletOriginalPos.anchoredPosition.x - 300f, reloadDuration).SetEase(Ease.OutQuad);
     }
 
     public void LoadBullet()
     {
-        bullet.GetComponent<UIBullet>().UnWhitenBullet();
-        bullet.anchoredPosition = bulletOriginalPos.anchoredPosition - new Vector2(500f, 0);
-        bullet.DOAnchorPosX(bulletOriginalPos.anchoredPosition.x, reloadDuration).SetEase(Ease.OutQuad);
+        if (!bulletSelectionMenu.isOpen)
+        {
+            bullet.GetComponent<UIBullet>().UnWhitenBullet();
+            bullet.anchoredPosition = bulletOriginalPos.anchoredPosition - new Vector2(500f, 0);
+            bullet.DOAnchorPosX(bulletOriginalPos.anchoredPosition.x, reloadDuration).SetEase(Ease.OutQuad);
+        }
+        
     }
 
     public void MoveCylinder()

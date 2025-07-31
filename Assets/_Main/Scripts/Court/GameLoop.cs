@@ -100,7 +100,7 @@ public class GameLoop : MonoBehaviour
         ImageScript.instance.UnFadeToBlack(1f);
        yield return StartCoroutine(cameraController.DebateStartCameraMovement(4f));
        finished = false;
-       debateUIAnimator.DebateUIAppear();
+       
     }
 
     // Update is called once per frame
@@ -171,7 +171,8 @@ public class GameLoop : MonoBehaviour
                     textLines[i].Apply();
                 }
             }
-            
+
+            HandleBulletMenuOpening();
             HandleMouseScroll();
             HandleMouseControl();
         }
@@ -206,6 +207,18 @@ public class GameLoop : MonoBehaviour
         if (Input.GetAxis("Mouse ScrollWheel") > 0)
         {
             evidenceManager.SelectPreviousEvidence();
+        }
+    }
+
+    void HandleBulletMenuOpening()
+    {
+        if (Input.GetKey(KeyCode.Q))
+        {
+            debateUIAnimator.OpenBulletSelectionMenu();
+        }
+        else
+        {
+            debateUIAnimator.CloseBulletSelectionMenu();
         }
     }
 
@@ -490,5 +503,10 @@ public class GameLoop : MonoBehaviour
 
         boxCollider.center = center;
         boxCollider.size = size;
+    }
+
+    public int GetSelectedEvidenceIndex()
+    {
+        return evidenceManager.selectedIndex;
     }
 }

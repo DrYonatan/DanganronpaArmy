@@ -9,6 +9,7 @@ public class UIBullet : MonoBehaviour
     public RectTransform imageTransform;
 
     public Color selectedColor;
+    public Color originalColor = Color.white;
 
     public TextMeshProUGUI text;
 
