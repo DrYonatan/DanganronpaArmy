@@ -131,7 +131,7 @@ public class GameLoop : MonoBehaviour
             {
                 textIndex = 0;
             }
-
+            
 
             timer += Time.deltaTime;
             stageTimer -= Time.deltaTime;
@@ -171,7 +171,8 @@ public class GameLoop : MonoBehaviour
                     textLines[i].Apply();
                 }
             }
-
+            
+            HandleMouseScroll();
             HandleMouseControl();
         }
     }
@@ -192,6 +193,19 @@ public class GameLoop : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             ShootText();
+        }
+    }
+
+    void HandleMouseScroll()
+    {
+        if(Input.GetAxis("Mouse ScrollWheel") < 0)
+        {
+            evidenceManager.SelectNextEvidence();
+        }
+
+        if (Input.GetAxis("Mouse ScrollWheel") > 0)
+        {
+            evidenceManager.SelectPreviousEvidence();
         }
     }
 

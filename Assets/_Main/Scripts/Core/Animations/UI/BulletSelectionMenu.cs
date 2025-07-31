@@ -11,7 +11,8 @@ public class BulletSelectionMenu : MonoBehaviour
     [SerializeField] float bulletSpacing;
     [SerializeField] List<UIBullet> bullets;
     [SerializeField] private UIBullet bulletPrefab;
-    
+    [SerializeField] private RectTransform cylinder;
+
     public void Appear()
     {
         rectTransform.anchoredPosition = new Vector2(0, 0);
@@ -22,17 +23,11 @@ public class BulletSelectionMenu : MonoBehaviour
     {
         Sequence sequence = DOTween.Sequence();
 
-        sequence.AppendCallback(() => {
-            UnLoadBullets();
-        });
+        sequence.AppendCallback(() => { UnLoadBullets(); });
 
-        sequence.AppendCallback(() =>
-        {
-            rectTransform.anchoredPosition = new Vector2(250f, 0);
-        });
-        
+        sequence.AppendCallback(() => { rectTransform.anchoredPosition = new Vector2(250f, 0); });
+
         sequence.Append(rectTransform.DOAnchorPosX(0, startDuration));
-
     }
 
     public void LoadBullets(List<Evidence> evidences)
@@ -61,6 +56,7 @@ public class BulletSelectionMenu : MonoBehaviour
 
             // Step 2: Animate to targetPos
             sequence.Append(rt.DOAnchorPos(targetPos, 0.4f).SetEase(Ease.Linear));
+            sequence.Append(cylinder.DOLocalRotate( new Vector3(0, 0, 60) * (i+1), 0.2f));
         }
     }
 
