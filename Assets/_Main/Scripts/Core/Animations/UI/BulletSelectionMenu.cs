@@ -59,7 +59,7 @@ public class BulletSelectionMenu : MonoBehaviour
 
             // Step 2: Animate to targetPos
             sequence.Append(rt.DOAnchorPos(targetPos, 0.4f).SetEase(Ease.Linear));
-            sequence.Append(cylinder.DOLocalRotate( new Vector3(0, 0, 60) * (i+1), 0.2f));
+            sequence.Append(cylinder.DOLocalRotate(new Vector3(0, 0, 60) * (i + 1), 0.2f));
         }
     }
 
@@ -69,7 +69,7 @@ public class BulletSelectionMenu : MonoBehaviour
         int count = bullets.Count;
         int half = count / 2;
         float evenOffset = (count % 2 == 0) ? bulletSpacing / 2f : 0f;
-        
+
         for (int i = 0; i < count; i++)
         {
             bullets[i].image.DOFade(1f, bulletsFadeDuration);
@@ -89,15 +89,18 @@ public class BulletSelectionMenu : MonoBehaviour
             rt.DOAnchorPos(targetPos, 0.4f).SetEase(Ease.Linear);
             bullets[i].image.color = bullets[i].originalColor;
         }
-        if(selectedIndex < bullets.Count && selectedIndex >= 0)
-        SelectBullet(selectedIndex);
+
+        if (selectedIndex < bullets.Count && selectedIndex >= 0)
+        {
+            RectTransform rt = bullets[selectedIndex].GetComponent<RectTransform>();
+            bullets[selectedIndex].image.color = bullets[selectedIndex].selectedColor;
+            rt.DOAnchorPosX(rt.anchoredPosition.x + 100f, 0.4f);
+        }
     }
 
-    public void SelectBullet(int selectedIndex)
+    public void UpdateBullets()
     {
-        RectTransform rt = bullets[selectedIndex].GetComponent<RectTransform>();
-        bullets[selectedIndex].image.color = bullets[selectedIndex].selectedColor;
-        rt.DOAnchorPosX(rt.anchoredPosition.x + 100f, 0.4f);
+        OpenBullets();
     }
 
     public void UnLoadBullets()

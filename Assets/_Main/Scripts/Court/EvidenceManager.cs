@@ -8,8 +8,9 @@ public class EvidenceManager : MonoBehaviour
     [SerializeField] UIBullet selectedBullet;
     List<Evidence> evidences;
     [SerializeField] private RectTransform cylinder;
+    [SerializeField] private BulletSelectionMenu bulletSelectionMenu;
     public int selectedIndex;
-    
+
     public void LoadBullets()
     {
         GameLoop.instance.debateUIAnimator.LoadBullets(evidences);
@@ -19,7 +20,7 @@ public class EvidenceManager : MonoBehaviour
     {
         selectedBullet.text.text = this.evidences[selectedIndex].Name;
     }
-    
+
     public void ShowEvidence(Evidence[] evidences)
     {
         this.evidences = evidences.ToList();
@@ -46,24 +47,44 @@ public class EvidenceManager : MonoBehaviour
     public void SelectNextEvidence()
     {
         selectedIndex++;
-        GameLoop.instance.debateUIAnimator.LoadBullet();
-        cylinder.DOLocalRotate(cylinder.localRotation.eulerAngles + new Vector3(0, 0, 60), 0.4f);
+
         if (selectedIndex >= evidences.Count)
         {
             selectedIndex = 0;
         }
+
+        if (bulletSelectionMenu.isOpen)
+        {
+            bulletSelectionMenu.UpdateBullets();
+        }
+        else
+        {
+            GameLoop.instance.debateUIAnimator.LoadBullet();
+            cylinder.DOLocalRotate(cylinder.localRotation.eulerAngles + new Vector3(0, 0, 60), 0.4f);
+        }
+
         UpdateEvidence();
     }
 
     public void SelectPreviousEvidence()
     {
-        GameLoop.instance.debateUIAnimator.LoadBullet();
-        cylinder.DOLocalRotate(cylinder.localRotation.eulerAngles + new Vector3(0, 0, -60), 0.4f);
         selectedIndex--;
-        if(selectedIndex < 0)
+
+        if (selectedIndex < 0)
         {
-            selectedIndex = evidences.Count-1;
+            selectedIndex = evidences.Count - 1;
         }
+        
+        if (bulletSelectionMenu.isOpen)
+        {
+            bulletSelectionMenu.UpdateBullets();
+        }
+        else
+        {
+            GameLoop.instance.debateUIAnimator.LoadBullet();
+            cylinder.DOLocalRotate(cylinder.localRotation.eulerAngles + new Vector3(0, 0, -60), 0.4f);
+        }
+        
         UpdateEvidence();
     }
 }

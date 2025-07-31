@@ -50,11 +50,12 @@ public class DebateUIAnimator : MonoBehaviour
         CursorManager.instance.Show();
         GenerateIndicators();
     }
-    
+
     public void LoadBullets(List<Evidence> evidences)
     {
         bulletSelectionMenu.LoadBullets(evidences);
     }
+
     public void OpenBulletSelectionMenu()
     {
         if (!bulletSelectionMenu.isOpen)
@@ -63,7 +64,6 @@ public class DebateUIAnimator : MonoBehaviour
             bulletSelectionMenu.OpenBullets();
             HideCylinderAndCircles();
         }
-        
     }
 
     public void CloseBulletSelectionMenu()
@@ -71,10 +71,10 @@ public class DebateUIAnimator : MonoBehaviour
         if (bulletSelectionMenu.isOpen)
         {
             bulletSelectionMenu.Disappear();
-            ShowCylinderAndCircles(); 
+            ShowCylinderAndCircles();
         }
-        
     }
+
     public void DebateUIDisappear()
     {
         namePart.anchoredPosition = namePartOriginalPos.anchoredPosition + new Vector2(0, -moveAmountY);
@@ -88,7 +88,7 @@ public class DebateUIAnimator : MonoBehaviour
     {
         characterFace.SetFace(characterName);
     }
-    
+
     void GenerateIndicators()
     {
         // Clear old indicators
@@ -105,14 +105,16 @@ public class DebateUIAnimator : MonoBehaviour
             indicators.Add(image);
         }
     }
+
     public void HighlightNode(int index)
     {
         for (int i = 0; i < indicators.Count; i++)
         {
             indicators[i].color = Color.gray;
-            indicators[i].DOComplete();  // Stop any running tweens
+            indicators[i].DOComplete(); // Stop any running tweens
             indicators[i].DOKill();
         }
+
         indicators[index].DOColor(new Color(1f, 1f, 0.5f), 0.5f)
             .SetLoops(-1, LoopType.Yoyo)
             .SetEase(Ease.InOutSine);
@@ -122,7 +124,7 @@ public class DebateUIAnimator : MonoBehaviour
     {
         nameText.text = characterName;
     }
-    
+
     void UnLoadBullet()
     {
         bullet.DOAnchorPosX(bulletOriginalPos.anchoredPosition.x - 300f, reloadDuration).SetEase(Ease.OutQuad);
@@ -130,13 +132,9 @@ public class DebateUIAnimator : MonoBehaviour
 
     public void LoadBullet()
     {
-        if (!bulletSelectionMenu.isOpen)
-        {
-            bullet.GetComponent<UIBullet>().UnWhitenBullet();
-            bullet.anchoredPosition = bulletOriginalPos.anchoredPosition - new Vector2(500f, 0);
-            bullet.DOAnchorPosX(bulletOriginalPos.anchoredPosition.x, reloadDuration).SetEase(Ease.OutQuad);
-        }
-        
+        bullet.GetComponent<UIBullet>().UnWhitenBullet();
+        bullet.anchoredPosition = bulletOriginalPos.anchoredPosition - new Vector2(500f, 0);
+        bullet.DOAnchorPosX(bulletOriginalPos.anchoredPosition.x, reloadDuration).SetEase(Ease.OutQuad);
     }
 
     public void MoveCylinder()
@@ -166,6 +164,7 @@ public class DebateUIAnimator : MonoBehaviour
         circles.DOAnchorPosX(-52, 0.5f);
         LoadBullet();
     }
+
     void HideCylinderAndCircles()
     {
         cylinder.DOAnchorPosX(-200f, 0.5f);
