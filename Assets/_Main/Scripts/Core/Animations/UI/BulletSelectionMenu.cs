@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -41,6 +42,7 @@ public class BulletSelectionMenu : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             float yOffset = -((i - (count - 1) / 2f) * bulletSpacing);
+            float xOffset = -Math.Abs(((i - (count - 1) / 2f)) * 10f);
 
             // Instantiate and place bullet
             UIBullet bulletGO = Instantiate(bulletPrefab, transform);
@@ -49,7 +51,7 @@ public class BulletSelectionMenu : MonoBehaviour
             RectTransform rt = bulletGO.GetComponent<RectTransform>();
 
             // Final position
-            Vector2 targetPos = new Vector2(850, yOffset);
+            Vector2 targetPos = new Vector2(850 + xOffset, yOffset);
 
             // Step 1: Teleport off-screen to the right (e.g., x = 2000)
             rt.anchoredPosition = new Vector2(2000, yOffset);
@@ -84,7 +86,8 @@ public class BulletSelectionMenu : MonoBehaviour
                 offset += count;
 
             float yOffset = -offset * bulletSpacing + evenOffset;
-            Vector2 targetPos = new Vector2(850, yOffset);
+            float xOffset = -Math.Abs(offset) * 10f;
+            Vector2 targetPos = new Vector2(850 + xOffset, yOffset);
             RectTransform rt = bullets[i].GetComponent<RectTransform>();
             rt.DOAnchorPos(targetPos, 0.4f).SetEase(Ease.Linear);
             bullets[i].image.color = bullets[i].originalColor;
