@@ -55,7 +55,7 @@ public class EvidenceManager : MonoBehaviour
 
         if (bulletSelectionMenu.isOpen)
         {
-            bulletSelectionMenu.UpdateBullets();
+            bulletSelectionMenu.UpdateBullets(1);
         }
         else
         {
@@ -77,7 +77,7 @@ public class EvidenceManager : MonoBehaviour
         
         if (bulletSelectionMenu.isOpen)
         {
-            bulletSelectionMenu.UpdateBullets();
+            bulletSelectionMenu.UpdateBullets(-1);
         }
         else
         {

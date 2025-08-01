@@ -18,7 +18,7 @@ public class BulletSelectionMenu : MonoBehaviour
     public void Appear()
     {
         rectTransform.anchoredPosition = new Vector2(0, 0);
-        rectTransform.DOAnchorPosX(250f, startDuration);
+        rectTransform.DOAnchorPosX(400f, startDuration);
         isOpen = true;
     }
 
@@ -28,7 +28,7 @@ public class BulletSelectionMenu : MonoBehaviour
 
         sequence.AppendCallback(() => { UnLoadBullets(); });
 
-        sequence.AppendCallback(() => { rectTransform.anchoredPosition = new Vector2(250f, 0); });
+        sequence.AppendCallback(() => { rectTransform.anchoredPosition = new Vector2(400f, 0); });
 
         sequence.Append(rectTransform.DOAnchorPosX(0, startDuration));
         isOpen = false;
@@ -51,10 +51,10 @@ public class BulletSelectionMenu : MonoBehaviour
             RectTransform rt = bulletGO.GetComponent<RectTransform>();
 
             // Final position
-            Vector2 targetPos = new Vector2(850 + xOffset, yOffset);
+            Vector2 targetPos = new Vector2(1090 + xOffset, yOffset);
 
             // Step 1: Teleport off-screen to the right (e.g., x = 2000)
-            rt.anchoredPosition = new Vector2(2000, yOffset);
+            rt.anchoredPosition = new Vector2(3000, yOffset);
 
             // Set text
             bullets[i].text.text = evidences[i].Name;
@@ -87,7 +87,7 @@ public class BulletSelectionMenu : MonoBehaviour
 
             float yOffset = -offset * bulletSpacing + evenOffset;
             float xOffset = -Math.Abs(offset) * 10f;
-            Vector2 targetPos = new Vector2(850 + xOffset, yOffset);
+            Vector2 targetPos = new Vector2(1090 + xOffset, yOffset);
             RectTransform rt = bullets[i].GetComponent<RectTransform>();
             rt.DOAnchorPos(targetPos, 0.4f).SetEase(Ease.Linear);
             bullets[i].image.color = bullets[i].originalColor;
@@ -101,8 +101,9 @@ public class BulletSelectionMenu : MonoBehaviour
         }
     }
 
-    public void UpdateBullets()
+    public void UpdateBullets(float direction)
     {
+        cylinder.DOLocalRotate(cylinder.localRotation.eulerAngles + new Vector3(0, 0, 60) * direction, 0.2f);
         OpenBullets();
     }
 
@@ -112,7 +113,7 @@ public class BulletSelectionMenu : MonoBehaviour
         {
             bullet.image.DOFade(0f, bulletsFadeDuration);
             bullet.text.DOFade(0f, bulletsFadeDuration);
-            bullet.GetComponent<RectTransform>().DOAnchorPos(new Vector2(850, 0), bulletsFadeDuration);
+            bullet.GetComponent<RectTransform>().DOAnchorPos(new Vector2(1090, 0), bulletsFadeDuration);
         }
     }
 }
