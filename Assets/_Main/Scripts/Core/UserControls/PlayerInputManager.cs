@@ -8,6 +8,8 @@ namespace DIALOGUE
 
         public QuestionMarkShooter shooter;
 
+        public GameObject pauseMenu;
+
         public bool isPaused;
 
         void Start()
@@ -45,10 +47,8 @@ namespace DIALOGUE
         public void TogglePause()
         {
             isPaused = !isPaused;
-            GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/6 - Controls/Pause Menu")
-                .SetActive(isPaused);
-            GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/6 - Controls/Cursor")
-                .SetActive(!isPaused);
+            pauseMenu.SetActive(isPaused);
+            CursorManager.instance.cursor.gameObject.SetActive(!isPaused);
         }
 
        

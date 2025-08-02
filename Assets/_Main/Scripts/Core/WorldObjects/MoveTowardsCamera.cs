@@ -5,15 +5,19 @@ using UnityEngine;
 
 public class MoveTowardsCamera : MonoBehaviour
 {
-    private float speed = 0.5f;
+    private float duration = 10f;
     public Transform cameraTransform;
     public TextMeshPro tmpText;
-    public Color glowColor = Color.cyan;
-    public float maxOutlineWidth = 0.9f;
     public float glowFadeDuration = 5f;
     private Material tmpMaterial;
-    private float originalOutlineWidth;
-    private Color originalOutlineColor;
+    private float elapsed = 0f;
+    private Vector3 startPos;
+    private Vector3 endPos;
+    public AnimationCurve speedCurve = new AnimationCurve(
+        new Keyframe(0f, 0f, 3f, 3f),
+        new Keyframe(0.5f, 0.3f, 0f, 0f),
+        new Keyframe(1f, 1f, 3f, 3f)
+    );
 
     void Start()
     {
@@ -21,74 +25,62 @@ public class MoveTowardsCamera : MonoBehaviour
         tmpMaterial = Instantiate(tmpText.fontMaterial);
         tmpText.fontMaterial = tmpMaterial;
 
-        originalOutlineWidth = tmpMaterial.GetFloat(ShaderUtilities.ID_OutlineWidth);
-        originalOutlineColor = tmpMaterial.GetColor(ShaderUtilities.ID_OutlineColor);
+        startPos = transform.position;
+        endPos = new Vector3(
+            cameraTransform.position.x,
+            cameraTransform.position.y,
+            cameraTransform.position.z
+        );
 
         StartCoroutine(GlowEffect());
     }
 
     void Update()
     {
-        float difference = transform.position.z - cameraTransform.position.z;
-        if (difference < 0.35f)
+        if (elapsed < duration)
         {
-            speed = 2.5f;
-        } 
-        else if (difference > 0.35f && difference < 0.4f)
-        {
-            speed = 0.04f;
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+            float curveT = speedCurve.Evaluate(t);
+            transform.position = Vector3.Lerp(startPos, endPos, curveT);
         }
-        else
-        {
-            speed = 0.8f;
-        }
-        
-        transform.position = Vector3.MoveTowards(
-            transform.position,
-            cameraTransform.position,
-            speed * Time.deltaTime
-        );
     }
+    
 
     private IEnumerator GlowEffect()
     {
-        float timer = 0f;
+        Material mat = tmpText.fontMaterial;
+        Color underlayColor = mat.GetColor("_UnderlayColor");
+        float startAlpha = 0f;
+        float targetAlpha = 1f;
+        float elapsed = 0f;
 
-        // Fade In
-        while (timer < glowFadeDuration)
+        // Make sure starting alpha is 0
+        underlayColor.a = startAlpha;
+        mat.SetColor("_UnderlayColor", underlayColor);
+
+        while (elapsed < glowFadeDuration)
         {
-            float t = timer / glowFadeDuration;
-            tmpMaterial.SetFloat(ShaderUtilities.ID_OutlineWidth, Mathf.Lerp(originalOutlineWidth, maxOutlineWidth, t));
-
-            Color fadeColor = Color.Lerp(originalOutlineColor, glowColor, t);
-            tmpMaterial.SetColor(ShaderUtilities.ID_OutlineColor, fadeColor);
-
-            timer += Time.deltaTime;
+            elapsed += Time.deltaTime;
+            float newAlpha = Mathf.Lerp(startAlpha, targetAlpha, elapsed / glowFadeDuration);
+            underlayColor.a = newAlpha;
+            mat.SetColor("_UnderlayColor", underlayColor);
             yield return null;
         }
 
-        tmpMaterial.SetFloat(ShaderUtilities.ID_OutlineWidth, maxOutlineWidth);
-        tmpMaterial.SetColor(ShaderUtilities.ID_OutlineColor, glowColor);
-
-        // Hold glow for a brief moment
-        yield return new WaitForSeconds(0.7f);
-
-        // Fade Out
-        timer = 0f;
-        while (timer < glowFadeDuration)
+        // Ensure final value is set
+        underlayColor.a = targetAlpha;
+        mat.SetColor("_UnderlayColor", underlayColor);
+        
+        elapsed = 0f;
+        while (elapsed < glowFadeDuration * 5f)
         {
-            float t = timer / glowFadeDuration;
-            tmpMaterial.SetFloat(ShaderUtilities.ID_OutlineWidth, Mathf.Lerp(maxOutlineWidth, originalOutlineWidth, t));
-
-            Color fadeColor = Color.Lerp(glowColor, originalOutlineColor, t);
-            tmpMaterial.SetColor(ShaderUtilities.ID_OutlineColor, fadeColor);
-
-            timer += Time.deltaTime;
+            elapsed += Time.deltaTime;
+            float newAlpha = Mathf.Lerp(targetAlpha, startAlpha, elapsed / (glowFadeDuration * 5f));
+            underlayColor.a = newAlpha;
+            mat.SetColor("_UnderlayColor", underlayColor);
             yield return null;
         }
-
-        tmpMaterial.SetFloat(ShaderUtilities.ID_OutlineWidth, originalOutlineWidth);
-        tmpMaterial.SetColor(ShaderUtilities.ID_OutlineColor, originalOutlineColor);
     }
 
     IEnumerator FadeIn(float duration)

@@ -49,7 +49,7 @@ public class GameLoop : MonoBehaviour
 
     [SerializeField] CameraController cameraController;
     [SerializeField] List<CharacterStand> characterStands;
-    [SerializeField] Stage stage;
+    public Stage stage;
     [SerializeField] Transform textPivot;
     [SerializeField] GameObject textPrefab;
     [SerializeField] CameraEffectController effectController;
@@ -57,6 +57,8 @@ public class GameLoop : MonoBehaviour
     [SerializeField] MusicManager musicManager;
     [SerializeField] Text timerText;
     [SerializeField] GameObject shatterTransform;
+    public DebateUIAnimator debateUIAnimator;
+    public bool isShooting;
     public GameObject noThatsWrong;
 
     float timer;
@@ -92,11 +94,13 @@ public class GameLoop : MonoBehaviour
 
     IEnumerator StartDebate()
     { 
+        debateUIAnimator.DebateUIDisappear();
         ImageScript.instance.blackFade.GetComponent<CanvasGroup>().alpha = 1f;
         yield return 0;
         ImageScript.instance.UnFadeToBlack(1f);
        yield return StartCoroutine(cameraController.DebateStartCameraMovement(4f));
        finished = false;
+       
     }
 
     // Update is called once per frame
@@ -127,7 +131,7 @@ public class GameLoop : MonoBehaviour
             {
                 textIndex = 0;
             }
-
+            
 
             timer += Time.deltaTime;
             stageTimer -= Time.deltaTime;
@@ -168,6 +172,8 @@ public class GameLoop : MonoBehaviour
                 }
             }
 
+            HandleBulletMenuOpening();
+            HandleMouseScroll();
             HandleMouseControl();
         }
     }
@@ -191,6 +197,31 @@ public class GameLoop : MonoBehaviour
         }
     }
 
+    void HandleMouseScroll()
+    {
+        if(Input.GetAxis("Mouse ScrollWheel") < 0)
+        {
+            evidenceManager.SelectNextEvidence();
+        }
+
+        if (Input.GetAxis("Mouse ScrollWheel") > 0)
+        {
+            evidenceManager.SelectPreviousEvidence();
+        }
+    }
+
+    void HandleBulletMenuOpening()
+    {
+        if (Input.GetKey(KeyCode.Q))
+        {
+            debateUIAnimator.OpenBulletSelectionMenu();
+        }
+        else
+        {
+            debateUIAnimator.CloseBulletSelectionMenu();
+        }
+    }
+
     void SetPause(bool _pause)
     {
         pause = _pause;
@@ -206,23 +237,31 @@ public class GameLoop : MonoBehaviour
 
     void ShootText()
     {
-        Ray ray = statementsCamera.ScreenPointToRay(Input.mousePosition);
-
-        // Create a plane in front of the firePoint (facing the same way as the camera)
-        Plane plane = new Plane(statementsCamera.transform.forward,
-            shootOrigin.position + statementsCamera.transform.forward * 4f);
-
-        if (plane.Raycast(ray, out float distance))
+        if (!isShooting)
         {
-            Vector3 targetPoint = ray.GetPoint(distance);
-            Vector3 direction = (targetPoint - shootOrigin.position).normalized;
+            isShooting = true;
+            Ray ray = statementsCamera.ScreenPointToRay(Input.mousePosition);
 
-            Quaternion rotation = Quaternion.LookRotation(direction, statementsCamera.transform.up) *
-                                  Quaternion.Euler(0, 90f, 0);
-            GameObject bullet = Instantiate(textBulletPrefab, shootOrigin.position, rotation);
-            
-            StartCoroutine(MoveBullet(bullet, direction, 2f));
+            // Create a plane in front of the firePoint (facing the same way as the camera)
+            Plane plane = new Plane(statementsCamera.transform.forward,
+                shootOrigin.position + statementsCamera.transform.forward * 4f);
+
+            if (plane.Raycast(ray, out float distance))
+            {
+                Vector3 targetPoint = ray.GetPoint(distance);
+                Vector3 direction = (targetPoint - shootOrigin.position).normalized;
+
+                Quaternion rotation = Quaternion.LookRotation(direction, statementsCamera.transform.up) *
+                                      Quaternion.Euler(0, 90f, 0);
+                evidenceManager.ShootBullet();
+                GameObject bullet = Instantiate(textBulletPrefab, shootOrigin.position, rotation);
+                bullet.GetComponent<TextMeshPro>().text = evidenceManager.GetSelectedEvidence();
+                StartCoroutine(MoveBullet(bullet, direction, 1f));
+                debateUIAnimator.MoveCylinder();
+                debateUIAnimator.GrowAndShrinkCircles();
+            } 
         }
+        
     }
 
     IEnumerator MoveBullet(GameObject bullet, Vector3 direction, float duration)
@@ -230,14 +269,20 @@ public class GameLoop : MonoBehaviour
         float elapsedTime = 0f;
         while (elapsedTime < duration)
         {
-            bullet.transform.position += direction * shootForce * Time.deltaTime;
+            bullet.transform.position += direction * (shootForce * Time.deltaTime);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
         Destroy(bullet);
+        isShooting = false;
+        debateUIAnimator.LoadBullet();
     }
 
+    public void LoadBullets()
+    {
+        evidenceManager.LoadBullets();
+    }
 
     public void Hit(Vector3 point)
     {
@@ -300,10 +345,13 @@ public class GameLoop : MonoBehaviour
         DebateNode nextNode = stage.dialogueNodes[dialogueNodeIndex];
         SpawnText(nextNode);
         effectController.Reset();
+        debateUIAnimator.ChangeFace(nextNode.character.name);
+        debateUIAnimator.UpdateName(nextNode.character.displayName);
+        debateUIAnimator.HighlightNode(textIndex);
         yield return cameraController.SpinToTarget(characterStand.transform, characterStand.heightPivot, nextNode.positionOffset, nextNode.rotationOffset, nextNode.fovOffset);
        
         foreach (CameraEffect cameraEffect in nextNode.cameraEffects)
-        { ;
+        { 
             effectController.StartEffect(cameraEffect);
         }
     }
@@ -455,5 +503,10 @@ public class GameLoop : MonoBehaviour
 
         boxCollider.center = center;
         boxCollider.size = size;
+    }
+
+    public int GetSelectedEvidenceIndex()
+    {
+        return evidenceManager.selectedIndex;
     }
 }

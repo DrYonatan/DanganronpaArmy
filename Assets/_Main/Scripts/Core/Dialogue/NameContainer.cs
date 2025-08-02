@@ -14,14 +14,13 @@ public class NameContainer
 
     public void Show(string nameToShow = "")
     {
-        root.SetActive(true);
         if (nameToShow != string.Empty)
             nameText.text = nameToShow;
     }
 
     public void Hide()
     {
-        root.SetActive(false);
+        
     }
 }
 }
