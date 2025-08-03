@@ -5,8 +5,8 @@ using UnityEngine;
 public class TrialNodeDraw : DrawNode
 {
     
-    const int previewWidth = 192;
-    const int previewHeight = 108;
+    private const int previewWidth = 192;
+    private const int previewHeight = 108;
     public override void DrawWindow(DialogueNode b)
     {
         b.character = (CharacterCourt)EditorGUILayout.ObjectField(b.character, typeof(CharacterCourt), false);
@@ -26,9 +26,8 @@ public class TrialNodeDraw : DrawNode
         b.rotationOffset = EditorGUILayout.Vector3Field("Rotation Offset", b.rotationOffset);
         
         b.fovOffset = EditorGUILayout.FloatField("Fov Offset", b.fovOffset);
-        
-        
-        
+
+
         ShowCameraEffect(ref b.cameraEffects, ref b);
         SetupPreview(b);
         UpdatePreview(b);

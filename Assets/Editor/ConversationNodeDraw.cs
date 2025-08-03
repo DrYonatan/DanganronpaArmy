@@ -6,14 +6,18 @@ public class ConversationNodeDraw : TrialNodeDraw
 {
     public override void DrawWindow(DialogueNode b)
     {
+        b.nodeRect.height = 300;
+        b.nodeRect.width = 200;
+        
         base.DrawWindow(b);
         
         ConversationNode node = (ConversationNode)b;
+        ShowTextLines(node);
+    }
 
-        node.nodeRect.height = 300;
-        node.nodeRect.width = 200;
+    private void ShowTextLines(ConversationNode node)
+    {
         
-      
         for (int i = 0; i < node.textLines.Count; i++)
         {
             EditorGUILayout.Separator();
@@ -30,8 +34,7 @@ public class ConversationNodeDraw : TrialNodeDraw
             node.textLines[i] = GUILayout.TextField(node.textLines[i]);
             node.nodeRect.height += 30;
             EditorGUILayout.Separator();
-            b.nodeRect.height += 25;
+            node.nodeRect.height += 25;
         }
-        
     }
 }

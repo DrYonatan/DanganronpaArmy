@@ -8,12 +8,12 @@ public class DebateNodeDraw : TrialNodeDraw
 {
     public override void DrawWindow(DialogueNode b)
     {
+        b.nodeRect.height = 400;
+        b.nodeRect.width = 200;
+        
         base.DrawWindow(b);
         
         DebateNode node = (DebateNode)b;
-        
-        node.nodeRect.height = 400;
-        node.nodeRect.width = 200;
         
         node.evidence = (Evidence)EditorGUILayout.ObjectField(node.evidence, typeof(Evidence), false);
 
