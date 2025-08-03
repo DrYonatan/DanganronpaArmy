@@ -10,7 +10,7 @@ public class ConversationNodeDraw : TrialNodeDraw
         
         ConversationNode node = (ConversationNode)b;
 
-        node.nodeRect.height = 200;
+        node.nodeRect.height = 300;
         node.nodeRect.width = 200;
         
       

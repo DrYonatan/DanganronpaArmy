@@ -5,8 +5,8 @@ using UnityEngine;
 public class TrialNodeDraw : DrawNode
 {
     
-    const int previewWidth = 160;
-    const int previewHeight = 90;
+    const int previewWidth = 192;
+    const int previewHeight = 108;
     public override void DrawWindow(DialogueNode b)
     {
         b.character = (CharacterCourt)EditorGUILayout.ObjectField(b.character, typeof(CharacterCourt), false);
@@ -14,7 +14,11 @@ public class TrialNodeDraw : DrawNode
         
         if (b.previewTexture != null)
         {
-            GUILayout.Label(b.previewTexture, GUILayout.Width(b.previewTexture.width), GUILayout.Height(b.previewTexture.height));
+            GUILayout.Label(b.previewTexture, GUILayout.Width(previewWidth), GUILayout.Height(previewHeight));
+        }
+        else
+        {
+            GUILayout.Label("No Preview", GUILayout.Width(previewWidth), GUILayout.Height(previewHeight));
         }
         
         b.positionOffset = EditorGUILayout.Vector3Field("Position Offset", b.positionOffset);
