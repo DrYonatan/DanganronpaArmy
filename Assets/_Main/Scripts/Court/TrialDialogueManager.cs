@@ -36,6 +36,15 @@ public class TrialDialogueManager : MonoBehaviour, IWorldHandler
         {
             effectController.StartEffect(cameraEffect);
         }
+
+        if (nextNode.commands != null)
+        {
+            foreach (Command command in nextNode.commands)
+            {
+                command.Execute();
+            } 
+        }
+        
     }
 
     void GoToNextNode()

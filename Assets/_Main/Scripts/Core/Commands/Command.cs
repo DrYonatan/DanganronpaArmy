@@ -1,8 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using System;
 
+[Serializable]
 public abstract class Command
 {
+    public float height = 70;
     public abstract void Execute();
+    
+    public abstract void DrawGUI();
 }

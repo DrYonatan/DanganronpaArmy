@@ -8,13 +8,13 @@ using UnityEngine;
 public class PlaySoundEffectCommand : Command
 {
     public AudioClip clip;
-    public float volume;
+    public float volume = 1f;
     public override void Execute()
     {
         SoundManager.instance.PlaySoundEffect(clip.name);
     }
 
-    public void DrawGUI()
+    public override void DrawGUI()
     {
         clip = (AudioClip)EditorGUILayout.ObjectField("Clip", clip, typeof(AudioClip), false);
         volume = EditorGUILayout.Slider("Volume", volume, 0f, 1f);

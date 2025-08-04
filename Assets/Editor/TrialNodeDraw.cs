@@ -7,7 +7,7 @@ public class TrialNodeDraw : DrawNode
     
     private const int previewWidth = 192;
     private const int previewHeight = 108;
-    public override void DrawWindow(DialogueNode b)
+    public override void DrawWindow(TrialDialogueNode b)
     {
         b.character = (CharacterCourt)EditorGUILayout.ObjectField(b.character, typeof(CharacterCourt), false);
         b.characterStand = GameObject.Find($"Court/Characters/{b.character?.name}")?.GetComponent<CharacterStand>();
@@ -26,14 +26,13 @@ public class TrialNodeDraw : DrawNode
         b.rotationOffset = EditorGUILayout.Vector3Field("Rotation Offset", b.rotationOffset);
         
         b.fovOffset = EditorGUILayout.FloatField("Fov Offset", b.fovOffset);
-
-
-        ShowCameraEffect(ref b.cameraEffects, ref b);
+        
+        ShowCameraEffects(ref b.cameraEffects, ref b);
         SetupPreview(b);
         UpdatePreview(b);
     }
     
-    private void ShowCameraEffect(ref List<CameraEffect> cameraEffects, ref DialogueNode b)
+    private void ShowCameraEffects(ref List<CameraEffect> cameraEffects, ref TrialDialogueNode b)
     {
         for(int i = 0; i < cameraEffects.Count; i++)
         {
@@ -57,7 +56,7 @@ public class TrialNodeDraw : DrawNode
         b.nodeRect.height += 20;
     }
     
-    private void SetupPreview(DialogueNode b)
+    private void SetupPreview(TrialDialogueNode b)
     {
         if (b.previewTexture == null)
         {
@@ -80,7 +79,7 @@ public class TrialNodeDraw : DrawNode
         }
     }
     
-    private void UpdatePreview(DialogueNode b)
+    private void UpdatePreview(TrialDialogueNode b)
     {
         if (b.previewCamera == null || b.character == null)
             return;

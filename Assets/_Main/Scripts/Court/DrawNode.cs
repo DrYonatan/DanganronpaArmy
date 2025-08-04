@@ -2,5 +2,5 @@
 
 public abstract class DrawNode : ScriptableObject
 {
-    public abstract void DrawWindow(DialogueNode b);
+    public abstract void DrawWindow(TrialDialogueNode b);
 }

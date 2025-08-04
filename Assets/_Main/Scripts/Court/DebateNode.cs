@@ -23,7 +23,7 @@ namespace _Main.Scripts.Court
     }
     
     [Serializable]
-    public class DebateNode : DialogueNode
+    public class DebateNode : TrialDialogueNode
     {
         public Evidence evidence;
         public string statement;
