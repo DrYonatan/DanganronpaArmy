@@ -9,14 +9,12 @@ public class SlideCameraEffect : CameraEffect
 
     public override IEnumerator Apply(CameraEffectController effectController)
     {
-        Transform cameraTransform = effectController.cameraTransform;
-        Vector3 targetPosition = cameraTransform.position + direction.x * cameraTransform.right +
-                                 direction.y * cameraTransform.up + direction.z * cameraTransform.forward;
         float elapsedTime = 0f;
+        Vector3 targetPos = effectController.cameraTransform.localPosition + direction;
         while (elapsedTime < timeLimit)
         {
-            effectController.cameraTransform.position = Vector3.MoveTowards(effectController.cameraTransform.position,
-                targetPosition, Time.deltaTime * speed);
+            effectController.cameraTransform.localPosition = Vector3.MoveTowards(effectController.cameraTransform.localPosition,
+                targetPos, Time.deltaTime * speed);
             elapsedTime += Time.deltaTime;
             yield return null;
         }

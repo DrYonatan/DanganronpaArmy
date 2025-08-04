@@ -70,7 +70,6 @@ public class TrialNodeDraw : DrawNode
             pivot.transform.position = new Vector3(0f, 0f, 0f);
             GameObject camObj = new GameObject("NodePreviewCamera");
             camObj.transform.parent = pivot.transform;
-            camObj.transform.localPosition = new Vector3(0f, b.characterStand.heightPivot.position.y, -1.65f);
             camObj.transform.localRotation = Quaternion.identity;
             
             pivot.hideFlags = HideFlags.HideAndDontSave;
@@ -87,7 +86,7 @@ public class TrialNodeDraw : DrawNode
             return;
         b.previewPivot.transform.rotation = Quaternion.LookRotation(new Vector3(b.characterStand.transform.position.x, 0f, b.characterStand.transform.position.z));
         
-        b.previewCamera.transform.localPosition = new Vector3(0f, b.characterStand.heightPivot.position.y, 0f) + b.positionOffset;
+        b.previewCamera.transform.localPosition = new Vector3(0f, b.characterStand.heightPivot.position.y, -1.65f) + b.positionOffset;
         b.previewCamera.transform.localRotation = Quaternion.Euler(b.rotationOffset);
         b.previewCamera.fieldOfView = 15f + b.fovOffset;
     
