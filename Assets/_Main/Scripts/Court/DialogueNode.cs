@@ -22,7 +22,6 @@ public abstract class DialogueNode
     [NonSerialized] public GameObject previewPivot;
     [NonSerialized] public Camera previewCamera;
     [NonSerialized] public RenderTexture previewTexture;
-
     
     protected DialogueNode(DrawNode _drawNode)
     {
