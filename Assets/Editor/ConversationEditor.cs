@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ConversationEditor : EditorWindow
 {
-    public ConversationSegment container;
-    ConversationNode selectedNode;
+    public DiscussionSegment container;
+    DiscussionNode selectedNode;
     public DrawNode textNode;
     Vector2 scrollPosition;
     Rect scrollAreaSize = new Rect(0, 0, 2000, 2000);
@@ -22,7 +22,7 @@ public class ConversationEditor : EditorWindow
   
     private void OnGUI()
     {
-        container = (ConversationSegment)EditorGUILayout.ObjectField(container, typeof(ConversationSegment), false, GUILayout.Width(200));
+        container = (DiscussionSegment)EditorGUILayout.ObjectField(container, typeof(DiscussionSegment), false, GUILayout.Width(200));
 
         if (container == null)
         {
@@ -31,14 +31,14 @@ public class ConversationEditor : EditorWindow
 
         EditorUtility.SetDirty(container);
 
-        if (container.conversationNodes == null)
+        if (container.discussionNodes == null)
         {
-            container.conversationNodes = new List<ConversationNode>();
+            container.discussionNodes = new List<DiscussionNode>();
         }
 
-        if (container.conversationNodes.Count > 0)
+        if (container.discussionNodes.Count > 0)
         {
-            Rect nodeSize = container.conversationNodes[container.conversationNodes.Count - 1].nodeRect;
+            Rect nodeSize = container.discussionNodes[container.discussionNodes.Count - 1].nodeRect;
             scrollAreaSize.width = nodeSize.xMax + 10;
             scrollAreaSize.height = 400;
 
@@ -68,12 +68,12 @@ public class ConversationEditor : EditorWindow
         {
 
 
-            if (container.conversationNodes.Count > 1)
+            if (container.discussionNodes.Count > 1)
             {
-                for (int i = 1; i < container.conversationNodes.Count; i++)
+                for (int i = 1; i < container.discussionNodes.Count; i++)
                 {
 
-                    ConnectLine(container.conversationNodes[i - 1].nodeRect, container.conversationNodes[i].nodeRect);
+                    ConnectLine(container.discussionNodes[i - 1].nodeRect, container.discussionNodes[i].nodeRect);
 
                 }
             }
@@ -138,7 +138,6 @@ public class ConversationEditor : EditorWindow
     {
         GenericMenu menu = new GenericMenu();
         menu.AddItem(new GUIContent("Delete"), false, DeleteNode);
-        menu.AddItem(new GUIContent("Add Text Line"), false, AddTextLine);
         menu.ShowAsContext();
         e.Use();
     }
@@ -153,32 +152,21 @@ public class ConversationEditor : EditorWindow
 
     void CreateNode()
     {
-        container.conversationNodes.Add(new ConversationNode(textNode));
-    }
-
-    void AddTextLine()
-    {
-        if (selectedNode.textLines == null)
-        {
-            selectedNode.textLines = new List<string>();
-        }
-
-        selectedNode.textLines.Add("");
+        container.discussionNodes.Add(new DiscussionNode(textNode));
     }
     
-
     void DeleteNode()
     {
-        container.conversationNodes.Remove(selectedNode);
+        container.discussionNodes.Remove(selectedNode);
     }
 
     private void CheckClickNode(Event e)
     {
-        for (int i = 0; i < container.conversationNodes.Count; i++)
+        for (int i = 0; i < container.discussionNodes.Count; i++)
         {
-            if (container.conversationNodes[i].nodeRect.Contains(e.mousePosition))
+            if (container.discussionNodes[i].nodeRect.Contains(e.mousePosition))
             {
-                selectedNode = container.conversationNodes[i];
+                selectedNode = container.discussionNodes[i];
                 break;
             }
         }
@@ -192,13 +180,13 @@ public class ConversationEditor : EditorWindow
     {
         if (container != null)
         {
-            for (int i = 0; i < container.conversationNodes.Count; i++)
+            for (int i = 0; i < container.discussionNodes.Count; i++)
             {
-                Rect rect = container.conversationNodes[i].nodeRect;
+                Rect rect = container.discussionNodes[i].nodeRect;
                 rect.x = rect.width * i + 10 * i + 10 + nodeOffset;
                 rect.y = 50;
-                container.conversationNodes[i].nodeRect = rect;
-                GUI.Window(i, container.conversationNodes[i].nodeRect, DrawNode, container.conversationNodes[i].title);
+                container.discussionNodes[i].nodeRect = rect;
+                GUI.Window(i, container.discussionNodes[i].nodeRect, DrawNode, container.discussionNodes[i].title);
             }
         }
 
@@ -207,14 +195,14 @@ public class ConversationEditor : EditorWindow
 
     void DrawNode(int id)
     {
-        container.conversationNodes[id].DrawNode();
+        container.discussionNodes[id].DrawNode();
     }
     
     private void OnDisable()
     {
-        if (container != null && container.conversationNodes != null)
+        if (container != null && container.discussionNodes != null)
         {
-            foreach (var node in container.conversationNodes)
+            foreach (var node in container.discussionNodes)
             {
                 if (node.previewCamera != null)
                     GameObject.DestroyImmediate(node.previewPivot.gameObject);

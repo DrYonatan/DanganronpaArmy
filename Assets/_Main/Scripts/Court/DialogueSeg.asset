@@ -12,67 +12,59 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bcdf6757a5346ccb5c8cfd5b4fc5e04, type: 3}
   m_Name: DialogueSeg
   m_EditorClassIdentifier: 
-  conversationNodes:
+  discussionNodes:
   - nodeRect:
       serializedVersion: 2
       x: 220
       y: 50
       width: 200
-      height: 485
+      height: 410
     title: 
-    drawNode: {fileID: 11400000, guid: 6344f4092040cbd4183fc5d6dc877647, type: 2}
-    text: 
+    expression: 0
+    textData:
+      rid: 3042479623798521869
     character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
     characterStand: {fileID: 0}
     cameraEffects:
-    - {fileID: 11400000, guid: 2b0b273d7412a6b469741fc4eda2fd17, type: 2}
-    - {fileID: 11400000, guid: a7a355a6aaef7974a97658ee65c58919, type: 2}
+    - {fileID: 11400000, guid: 98dc0d8ba914bd84e9faf6654227f4e5, type: 2}
     fovOffset: 0
     positionOffset: {x: 0, y: 0, z: 0}
     rotationOffset: {x: 0, y: 0, z: 0}
-    textLines:
-    - cxxccx
     commands:
-    - rid: 3042479623798521858
+    - rid: 3042479623798521871
   - nodeRect:
       serializedVersion: 2
       x: 430
       y: 50
       width: 200
-      height: 535
+      height: 320
     title: 
-    drawNode: {fileID: 11400000, guid: 6344f4092040cbd4183fc5d6dc877647, type: 2}
-    text: 
+    expression: 0
+    textData:
+      rid: 3042479623798521872
     character: {fileID: 11400000, guid: e518102ea47577a499c54e7bb8334338, type: 2}
     characterStand: {fileID: 0}
-    cameraEffects:
-    - {fileID: 11400000, guid: 8087dd134ffdb1e48ad5c829514baaf6, type: 2}
-    fovOffset: -3.09
-    positionOffset: {x: 0.57, y: 0, z: -2.14}
+    cameraEffects: []
+    fovOffset: 0
+    positionOffset: {x: 0, y: 0, z: 0}
     rotationOffset: {x: 0, y: 0, z: 0}
-    textLines:
-    - xccxcx
-    commands:
-    - rid: 3042479623798521862
-    - rid: 3042479623798521863
+    commands: []
   references:
     version: 2
     RefIds:
-    - rid: 3042479623798521858
+    - rid: 3042479623798521869
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: wddwd
+        commands: []
+    - rid: 3042479623798521871
       type: {class: PlaySoundEffectCommand, ns: , asm: Assembly-CSharp}
       data:
         height: 70
         clip: {fileID: 8300000, guid: 230835235584d2444a6c854a364453e1, type: 3}
         volume: 1
-    - rid: 3042479623798521862
-      type: {class: PlayMusicCommand, ns: , asm: Assembly-CSharp}
+    - rid: 3042479623798521872
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
-        height: 70
-        music: {fileID: 8300000, guid: 14cfb27443a5538428934b85657c943f, type: 3}
-        volume: 1
-    - rid: 3042479623798521863
-      type: {class: PlaySoundEffectCommand, ns: , asm: Assembly-CSharp}
-      data:
-        height: 70
-        clip: {fileID: 8300000, guid: 4841a5ca987a08b499877968bcff8c80, type: 3}
-        volume: 1
+        text: ddfdfdfd
+        commands: []

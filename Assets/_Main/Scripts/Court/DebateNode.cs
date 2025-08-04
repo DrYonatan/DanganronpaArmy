@@ -29,7 +29,6 @@ namespace _Main.Scripts.Court
         public string statement;
         public Color statementColor;
         public List<TextLine> textLines;
-        public CharacterState expression;
         public AudioClip voiceLine;
 
         public DebateNode(DrawNode _drawNode) : base(_drawNode)

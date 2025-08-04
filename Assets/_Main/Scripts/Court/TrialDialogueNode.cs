@@ -1,17 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Playables;
 
 [Serializable]
-public abstract class TrialDialogueNode 
+public abstract class TrialDialogueNode : DialogueNode
 {
-    public Rect nodeRect;
-    public string title;
-
-    public DrawNode drawNode;
-    
-    public string text;
     public CharacterCourt character;
     public CharacterStand characterStand;
     
@@ -24,9 +17,9 @@ public abstract class TrialDialogueNode
     [NonSerialized] public Camera previewCamera;
     [NonSerialized] public RenderTexture previewTexture;
     
-    protected TrialDialogueNode(DrawNode _drawNode)
+    protected TrialDialogueNode(DrawNode _drawNode): base(_drawNode)
     {
-        drawNode = _drawNode;
+        this.drawNode = _drawNode;
     }
 
     public void DrawNode()

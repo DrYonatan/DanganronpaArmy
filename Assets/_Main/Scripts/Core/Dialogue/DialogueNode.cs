@@ -8,11 +8,12 @@ public class DialogueNode
 {
     public Rect nodeRect;
     public string title;
-    DrawNode drawNode;
+    protected DrawNode drawNode;
     
     public Character character;
-    public CharacterState characterState;
+    public CharacterState expression;
     
+    [SerializeReference]
     public TextData textData;
     
     protected DialogueNode(DrawNode drawNode)

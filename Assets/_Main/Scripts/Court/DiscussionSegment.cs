@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName ="Data/Conversation Segment")]
-public class ConversationSegment : ScriptableObject
+public class DiscussionSegment : ScriptableObject
 {
-    public List<ConversationNode> conversationNodes;
+    public List<DiscussionNode> discussionNodes;
 }

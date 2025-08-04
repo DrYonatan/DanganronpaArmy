@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class ConversationNode : TrialDialogueNode
+public class DiscussionNode : TrialDialogueNode
 {
-    public List<string> textLines;
     [SerializeReference]
     public List<Command> commands = new();
 
-    public ConversationNode(DrawNode _drawNode) : base(_drawNode)
+    public DiscussionNode(DrawNode _drawNode) : base(_drawNode)
     {
-        textLines = new List<string>();
+        textData = new VNTextData();
         commands = new List<Command>();
     }
 
