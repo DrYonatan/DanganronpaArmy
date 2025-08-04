@@ -209,4 +209,19 @@ public class ConversationEditor : EditorWindow
     {
         container.conversationNodes[id].DrawNode();
     }
+    
+    private void OnDisable()
+    {
+        if (container != null && container.conversationNodes != null)
+        {
+            foreach (var node in container.conversationNodes)
+            {
+                if (node.previewCamera != null)
+                    GameObject.DestroyImmediate(node.previewPivot.gameObject);
+
+                if (node.previewTexture != null)
+                    node.previewTexture.Release();
+            }
+        }
+    }
 }

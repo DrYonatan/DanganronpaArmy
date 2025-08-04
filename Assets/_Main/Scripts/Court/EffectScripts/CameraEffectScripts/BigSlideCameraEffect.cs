@@ -15,6 +15,7 @@ public class BigSlideCameraEffect : CameraEffect
     [SerializeField] private float amount = 1f;
     [SerializeField] private float speed = 1f;
     private Vector3 originalPosition;
+
     public void TeleportToFromDirection(CameraEffectController effectController)
     {
         switch (fromDirection)

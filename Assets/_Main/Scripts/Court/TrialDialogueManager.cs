@@ -27,13 +27,7 @@ public class TrialDialogueManager : MonoBehaviour, IWorldHandler
     {
         ConversationNode nextNode = conversation.conversationNodes[conversationIndex];
         CharacterStand characterStand = characterStands.Find(stand => stand.character == nextNode.character);
-        cameraController.TeleportToTarget(characterStand.transform);
-        Vector3 worldOffset = cameraController.cameraTransform.right * nextNode.positionOffset.x
-                              + cameraController.cameraTransform.up * nextNode.positionOffset.y
-                              + cameraController.cameraTransform.forward * nextNode.positionOffset.z;
-        cameraController.cameraTransform.position += worldOffset;
-        cameraController.cameraTransform.rotation *= Quaternion.Euler(nextNode.rotationOffset);
-        cameraController.cameraTransform.GetComponent<Camera>().fieldOfView = 15 + nextNode.fovOffset;
+        cameraController.TeleportToTarget(characterStand.transform, characterStand.heightPivot, nextNode.positionOffset, nextNode.rotationOffset, nextNode.fovOffset);
         List<string> lines = nextNode.textLines;
         DialogueSystem.instance.ShowSpeakerName(nextNode.character.displayName);
         ((CourtTextBoxAnimator)(DialogueSystem.instance.dialogueBoxAnimator)).ChangeFace(nextNode.character.name);

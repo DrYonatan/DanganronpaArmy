@@ -7,19 +7,19 @@ public class UISpriteSheetAnimator : MonoBehaviour
     public float frameRate = 10f;
     public bool isLoop;
 
-    private Sprite[] frames;
-    private Image image;
-    private int currentFrame;
-    private float timer;
+    private Sprite[] _frames;
+    private Image _image;
+    private int _currentFrame;
+    private float _timer;
 
     void Start()
     {
-        image = GetComponent<Image>();
+        _image = GetComponent<Image>();
 
         // Load all sliced sprites from the sprite sheet in Resources folder
-        frames = Resources.LoadAll<Sprite>("Images/" + spriteSheetName);
+        _frames = Resources.LoadAll<Sprite>("Images/" + spriteSheetName);
 
-        if (frames == null || frames.Length == 0)
+        if (_frames == null || _frames.Length == 0)
         {
             Debug.LogError("No sprites found. Make sure your sprite sheet is sliced and located in a Resources folder.");
         }
@@ -29,15 +29,28 @@ public class UISpriteSheetAnimator : MonoBehaviour
 
     void Update()
     {
-        
-       if (frames == null || frames.Length == 0) return;
+        if (_frames == null || _frames.Length == 0 || _image == null) return;
 
-        timer += Time.deltaTime;
-        if (timer >= 1f / frameRate && (currentFrame + 1 < frames.Length || isLoop))
+        _timer += Time.deltaTime;
+        float frameDuration = 1f / frameRate;
+
+        int framesToAdvance = (int)(_timer / frameDuration);
+        if (framesToAdvance > 0)
         {
-            currentFrame = (currentFrame + 1) % frames.Length;
-            image.sprite = frames[currentFrame];
-            timer = 0f;
+            _timer -= framesToAdvance * frameDuration;
+
+            _currentFrame += framesToAdvance;
+
+            if (isLoop)
+            {
+                _currentFrame %= _frames.Length;
+            }
+            else
+            {
+                _currentFrame = Mathf.Min(_currentFrame, _frames.Length - 1);
+            }
+
+            _image.sprite = _frames[_currentFrame];
         }
     }
 

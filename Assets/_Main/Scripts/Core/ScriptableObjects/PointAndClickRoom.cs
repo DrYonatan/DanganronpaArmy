@@ -12,8 +12,6 @@ public class PointAndClickRoom : Room
     [SerializeField] float cameraDollySpeed = 2f;
 
     public float rotationSpeed = 100f; // Adjust rotation speed
-    public float borderRight = 10f;
-    public float borderLeft = -10f;
     public float borderUp = -10f;
     public float borderDown = 10f;
 

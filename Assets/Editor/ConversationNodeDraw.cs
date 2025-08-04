@@ -1,27 +1,23 @@
-﻿using System.Collections.Generic;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Behaviour Editor/Draw/Dialogue Node Draw")]
-public class ConversationNodeDraw : DrawNode
+public class ConversationNodeDraw : TrialNodeDraw
 {
     public override void DrawWindow(DialogueNode b)
     {
+        b.nodeRect.height = 300;
+        b.nodeRect.width = 200;
+        
+        base.DrawWindow(b);
+        
         ConversationNode node = (ConversationNode)b;
+        ShowTextLines(node);
+    }
 
-        node.nodeRect.height = 150;
-        node.nodeRect.width = 200;
-
-        node.character = (CharacterCourt)EditorGUILayout.ObjectField(b.character, typeof(CharacterCourt), false);
+    private void ShowTextLines(ConversationNode node)
+    {
         
-        node.positionOffset = EditorGUILayout.Vector3Field("Position Offset", node.positionOffset);
-        
-        node.rotationOffset = EditorGUILayout.Vector3Field("Rotation Offset", node.rotationOffset);
-        
-        node.fovOffset = EditorGUILayout.FloatField("Fov Offset", node.fovOffset);
-        
-        ShowCameraEffect(ref node.cameraEffects, ref node);
-      
         for (int i = 0; i < node.textLines.Count; i++)
         {
             EditorGUILayout.Separator();
@@ -38,29 +34,7 @@ public class ConversationNodeDraw : DrawNode
             node.textLines[i] = GUILayout.TextField(node.textLines[i]);
             node.nodeRect.height += 30;
             EditorGUILayout.Separator();
-            b.nodeRect.height += 25;
+            node.nodeRect.height += 25;
         }
-        
-        
-    }
-    private void ShowCameraEffect(ref List<CameraEffect> cameraEffects, ref ConversationNode b)
-    {
-        for(int i = 0; i < cameraEffects.Count; i++)
-        {
-            GUILayout.BeginHorizontal();
-            cameraEffects[i] = (CameraEffect)EditorGUILayout.ObjectField(cameraEffects[i], typeof(CameraEffect), false);
-            if(GUILayout.Button("X", GUILayout.Width(20)))
-            {
-                cameraEffects.RemoveAt(i);
-                continue;
-            }
-            b.nodeRect.height += 20;
-            GUILayout.EndHorizontal();
-        }
-        if(GUILayout.Button("Add camera effect"))
-        {
-            cameraEffects.Add(null);
-        }
-        b.nodeRect.height += 20;
     }
 }

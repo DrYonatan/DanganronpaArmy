@@ -243,4 +243,19 @@ public class DebateEditor : EditorWindow
     {
         container.dialogueNodes[id].DrawNode();
     }
+    
+    private void OnDisable()
+    {
+        if (container != null && container.dialogueNodes != null)
+        {
+            foreach (var node in container.dialogueNodes)
+            {
+                if (node.previewCamera != null)
+                    GameObject.DestroyImmediate(node.previewPivot.gameObject);
+
+                if (node.previewTexture != null)
+                    node.previewTexture.Release();
+            }
+        }
+    }
 }

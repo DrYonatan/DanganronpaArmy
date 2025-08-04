@@ -172,9 +172,13 @@ public class GameLoop : MonoBehaviour
                 }
             }
 
-            HandleBulletMenuOpening();
-            HandleMouseScroll();
-            HandleMouseControl();
+            if (!isShooting)
+            {
+                HandleBulletMenuOpening();
+                HandleMouseScroll();
+                HandleMouseControl();
+            }
+            
         }
     }
 
@@ -183,6 +187,7 @@ public class GameLoop : MonoBehaviour
     private void GameOver()
     {
         finished = true;
+        Time.timeScale = 1f;
     }
 
     void HandleMouseControl()

@@ -54,7 +54,7 @@ public class CameraController : MonoBehaviour
         GameLoop.instance.debateUIAnimator.OpenBulletSelectionMenu();
         GameLoop.instance.LoadBullets();
         cameraTransform.localRotation = Quaternion.Euler(0f, 0f, 5f);
-        camera.fieldOfView = 20f;
+        camera.fieldOfView = 15f;
         elapsedTime = 0f;
         bool triggeredUI = false;
         while (elapsedTime < duration * 2f)
@@ -74,13 +74,12 @@ public class CameraController : MonoBehaviour
         
     }
 
-    public void TeleportToTarget(Transform target)
+    public void TeleportToTarget(Transform target, Transform heightPivot, Vector3 positionOffset, Vector3 rotationOffset, float fovOffset)
     {
-        Vector3 targetDir = target.forward;
-        Vector3 targetPosition = target.position - target.forward * 10f;
-        targetPosition.y += 1f;
-        cameraTransform.position = targetPosition;
-        cameraTransform.rotation = Quaternion.LookRotation(targetDir);
+        pivot.rotation = Quaternion.LookRotation(new Vector3(target.position.x, 0, target.position.z));
+        cameraTransform.localPosition = positionOffset + new Vector3(0, heightPivot.position.y, -1.65f);
+        cameraTransform.localRotation = Quaternion.Euler(rotationOffset);
+        cameraTransform.GetComponent<Camera>().fieldOfView = 15 + fovOffset;
     }
 
     public IEnumerator SpinToTarget(Transform target, Transform heightPivot, Vector3 positionOffset,
