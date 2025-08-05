@@ -8,9 +8,9 @@ public class DialogueNode
 {
     public Rect nodeRect;
     public string title;
-    protected DrawNode drawNode;
+    public DrawNode drawNode;
     
-    public Character character;
+    public Character VnCharacter;
     public CharacterState expression;
     
     [SerializeReference]
@@ -25,7 +25,7 @@ public class DialogueNode
     {
         if (drawNode != null)
         {
-            
+            drawNode.DrawWindow(this);
         }
     }
 }

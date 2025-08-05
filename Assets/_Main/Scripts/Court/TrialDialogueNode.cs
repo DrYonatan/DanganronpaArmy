@@ -19,7 +19,7 @@ public abstract class TrialDialogueNode : DialogueNode
     
     protected TrialDialogueNode(DrawNode _drawNode): base(_drawNode)
     {
-        this.drawNode = _drawNode;
+        
     }
 
     public void DrawNode()

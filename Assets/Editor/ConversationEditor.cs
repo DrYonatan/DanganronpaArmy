@@ -28,6 +28,14 @@ public class ConversationEditor : EditorWindow
         {
             return;
         }
+        
+        foreach (var node in container.discussionNodes)
+        {
+            if (node.drawNode == null)
+            {
+                node.drawNode = textNode;
+            }
+        }
 
         EditorUtility.SetDirty(container);
 
@@ -40,7 +48,7 @@ public class ConversationEditor : EditorWindow
         {
             Rect nodeSize = container.discussionNodes[container.discussionNodes.Count - 1].nodeRect;
             scrollAreaSize.width = nodeSize.xMax + 10;
-            scrollAreaSize.height = 400;
+            scrollAreaSize.height = nodeSize.yMax + 10;
 
         }
         GUILayout.BeginArea(new Rect(0, 0, window.position.width, window.position.height));

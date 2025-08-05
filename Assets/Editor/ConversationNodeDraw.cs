@@ -5,15 +5,19 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Behaviour Editor/Draw/Dialogue Node Draw")]
 public class ConversationNodeDraw : TrialNodeDraw
 {
-    public override void DrawWindow(TrialDialogueNode b)
+    public override void DrawWindow(DialogueNode b)
     {
         b.nodeRect.height = 300;
         b.nodeRect.width = 200;
-        
         base.DrawWindow(b);
         
-        DiscussionNode node = (DiscussionNode)b;
+        DiscussionNode node = b as DiscussionNode;
         
+        if (node == null)
+        {
+            EditorGUILayout.LabelField("Failed to cast node to DiscussionNode.");
+            return;
+        }
         ((VNTextData)node.textData).text = EditorGUILayout.TextField(((VNTextData)node.textData).text);
         
         ShowCommands(node);

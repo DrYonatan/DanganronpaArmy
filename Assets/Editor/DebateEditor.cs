@@ -45,7 +45,7 @@ public class DebateEditor : EditorWindow
         {
             Rect nodeSize = container.dialogueNodes[container.dialogueNodes.Count - 1].nodeRect;
             scrollAreaSize.width = nodeSize.xMax + 10;
-            scrollAreaSize.height = 400;
+            scrollAreaSize.height = nodeSize.yMax + 10;
 
         }
         GUILayout.BeginArea(new Rect(0, 0, window.position.width, window.position.height));
@@ -223,7 +223,6 @@ public class DebateEditor : EditorWindow
     float nodeOffset = 210f;
     private void DrawEditor()
     {
-        
         if (container != null)
         {
             for (int i = 0; i < container.dialogueNodes.Count; i++)

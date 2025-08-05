@@ -7,29 +7,30 @@ public class TrialNodeDraw : DrawNode
     
     private const int previewWidth = 192;
     private const int previewHeight = 108;
-    public override void DrawWindow(TrialDialogueNode b)
+    public override void DrawWindow(DialogueNode b)
     {
-        b.character = (CharacterCourt)EditorGUILayout.ObjectField(b.character, typeof(CharacterCourt), false);
-        b.characterStand = GameObject.Find($"Court/Characters/{b.character?.name}")?.GetComponent<CharacterStand>();
+        TrialDialogueNode node = (TrialDialogueNode)b;
+        node.character = (CharacterCourt)EditorGUILayout.ObjectField(node.character, typeof(CharacterCourt), false);
+        node.characterStand = GameObject.Find($"Court/Characters/{node.character?.name}")?.GetComponent<CharacterStand>();
         
-        if (b.previewTexture != null)
+        if (node.previewTexture != null)
         {
-            GUILayout.Label(b.previewTexture, GUILayout.Width(previewWidth), GUILayout.Height(previewHeight));
+            GUILayout.Label(node.previewTexture, GUILayout.Width(previewWidth), GUILayout.Height(previewHeight));
         }
         else
         {
             GUILayout.Label("No Preview", GUILayout.Width(previewWidth), GUILayout.Height(previewHeight));
         }
         
-        b.positionOffset = EditorGUILayout.Vector3Field("Position Offset", b.positionOffset);
+        node.positionOffset = EditorGUILayout.Vector3Field("Position Offset", node.positionOffset);
         
-        b.rotationOffset = EditorGUILayout.Vector3Field("Rotation Offset", b.rotationOffset);
+        node.rotationOffset = EditorGUILayout.Vector3Field("Rotation Offset", node.rotationOffset);
         
-        b.fovOffset = EditorGUILayout.FloatField("Fov Offset", b.fovOffset);
+        node.fovOffset = EditorGUILayout.FloatField("Fov Offset", node.fovOffset);
         
-        ShowCameraEffects(ref b.cameraEffects, ref b);
-        SetupPreview(b);
-        UpdatePreview(b);
+        ShowCameraEffects(ref node.cameraEffects, ref node);
+        SetupPreview(node);
+        UpdatePreview(node);
     }
     
     private void ShowCameraEffects(ref List<CameraEffect> cameraEffects, ref TrialDialogueNode b)
