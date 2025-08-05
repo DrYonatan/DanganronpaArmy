@@ -16,7 +16,7 @@ public class DialogueNode
     [SerializeReference]
     public TextData textData;
     
-    protected DialogueNode(DrawNode drawNode)
+    public DialogueNode(DrawNode drawNode)
     {
         this.drawNode = drawNode;
     }

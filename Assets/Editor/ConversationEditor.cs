@@ -13,7 +13,7 @@ public class ConversationEditor : EditorWindow
 
     static EditorWindow window;
 
-    [MenuItem("Courtroom Editors/Dialogue Editor")]
+    [MenuItem("Dialogue Editors/Dialogue Editor")]
     static void ShowEditor()
     {
         window = GetWindow(typeof(ConversationEditor));
@@ -74,8 +74,6 @@ public class ConversationEditor : EditorWindow
     {
         if (container != null)
         {
-
-
             if (container.discussionNodes.Count > 1)
             {
                 for (int i = 1; i < container.discussionNodes.Count; i++)

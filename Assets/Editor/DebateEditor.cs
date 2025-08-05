@@ -18,7 +18,7 @@ public class DebateEditor : EditorWindow
 
     static EditorWindow window;
 
-    [MenuItem("Courtroom Editors/Debate Editor")]
+    [MenuItem("Dialogue Editors/Debate Editor")]
     static void ShowEditor()
     {
         window = EditorWindow.GetWindow(typeof(DebateEditor));
