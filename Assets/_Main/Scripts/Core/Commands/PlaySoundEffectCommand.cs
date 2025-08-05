@@ -14,10 +14,12 @@ public class PlaySoundEffectCommand : Command
         SoundManager.instance.PlaySoundEffect(clip.name);
     }
 
+    #if UNITY_EDITOR
     public override void DrawGUI()
     {
         clip = (AudioClip)EditorGUILayout.ObjectField("Clip", clip, typeof(AudioClip), false);
         volume = EditorGUILayout.Slider("Volume", volume, 0f, 1f);
     }
+    #endif
 
 }
