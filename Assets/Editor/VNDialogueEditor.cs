@@ -76,13 +76,11 @@ public class VNDialogueEditor : EditorWindow
    {
       if (container != null)
       {
+         GUILayout.Box("", GUILayout.Height(150), GUILayout.Width(300));
          for (int i = 0; i < container.nodes.Count; i++)
          {
-            Rect rect = container.nodes[i].nodeRect;
-            rect.y = rect.height * i + 10 * i + 10 + nodeOffset;
-            rect.x = 50;
-            container.nodes[i].nodeRect = rect;
-            GUI.Window(i, container.nodes[i].nodeRect, DrawNode, container.nodes[i].title);
+            DrawNode(i);
+            GUILayout.Button("ADD NODE", GUILayout.Width(1400));
          }
       }
    }

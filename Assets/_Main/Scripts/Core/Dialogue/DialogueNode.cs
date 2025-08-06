@@ -10,7 +10,7 @@ public class DialogueNode
     public string title;
     public DrawNode drawNode;
     
-    public Character VnCharacter;
+    public CharacterCourt VnCharacter;
     public CharacterState expression;
     
     [SerializeReference]
@@ -19,6 +19,7 @@ public class DialogueNode
     public DialogueNode(DrawNode drawNode)
     {
         this.drawNode = drawNode;
+        textData = new VNTextData();
     }
 
     public void DrawNode()

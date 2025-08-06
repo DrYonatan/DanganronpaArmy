@@ -17,15 +17,33 @@ MonoBehaviour:
       serializedVersion: 2
       x: 50
       y: 220
-      width: 500
-      height: 200
+      width: 1400
+      height: 230
     title: 
     drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
+    VnCharacter: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
     expression: 0
     textData:
-      rid: -2
+      rid: 3042479668869726209
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
+    - rid: 3042479668869726209
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: 
+        commands:
+        - rid: 3042479668869726218
+        - rid: 3042479668869726220
+    - rid: 3042479668869726218
+      type: {class: PlaySoundEffectCommand, ns: , asm: Assembly-CSharp}
+      data:
+        height: 70
+        clip: {fileID: 0}
+        volume: 1
+    - rid: 3042479668869726220
+      type: {class: PlaySoundEffectCommand, ns: , asm: Assembly-CSharp}
+      data:
+        height: 70
+        clip: {fileID: 0}
+        volume: 1
