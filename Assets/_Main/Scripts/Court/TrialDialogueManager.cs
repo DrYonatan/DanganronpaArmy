@@ -39,14 +39,14 @@ public class TrialDialogueManager : MonoBehaviour, IWorldHandler
             effectController.StartEffect(cameraEffect);
         }
 
-        if (nextNode.commands != null)
+        List<Command> commands = ((nextNode.textData) as VNTextData).commands;
+        if (commands != null)
         {
-            foreach (Command command in nextNode.commands)
+            foreach (Command command in commands)
             {
                 command.Execute();
             } 
         }
-        
     }
 
     void GoToNextNode()

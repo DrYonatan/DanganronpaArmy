@@ -15,35 +15,45 @@ MonoBehaviour:
   nodes:
   - nodeRect:
       serializedVersion: 2
-      x: 50
-      y: 220
-      width: 1400
-      height: 230
+      x: 0
+      y: 0
+      width: 0
+      height: 0
     title: 
     drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
-    VnCharacter: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
+    character: {fileID: 11400000, guid: e518102ea47577a499c54e7bb8334338, type: 2}
     expression: 0
     textData:
-      rid: 3042479668869726209
+      rid: 3042479686728810497
+  - nodeRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    title: 
+    drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
+    character: {fileID: 11400000, guid: e556e59756b89ea4ab97f97255a16dac, type: 2}
+    expression: 0
+    textData:
+      rid: 3042479686728810502
   references:
     version: 2
     RefIds:
-    - rid: 3042479668869726209
+    - rid: 3042479686728810497
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
-        text: 
+        text: "\u05E9\u05DC\u05D5\u05E1 \u05E9\u05DC\u05D5\u05E1"
         commands:
-        - rid: 3042479668869726218
-        - rid: 3042479668869726220
-    - rid: 3042479668869726218
-      type: {class: PlaySoundEffectCommand, ns: , asm: Assembly-CSharp}
+        - rid: 3042479686728810509
+    - rid: 3042479686728810502
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "\u05E9\u05DC\u05D5\u05DE\u05E4 \u05E9\u05DC\u05D5\u05DE\u05E4"
+        commands: []
+    - rid: 3042479686728810509
+      type: {class: PlayMusicCommand, ns: , asm: Assembly-CSharp}
       data:
         height: 70
-        clip: {fileID: 0}
-        volume: 1
-    - rid: 3042479668869726220
-      type: {class: PlaySoundEffectCommand, ns: , asm: Assembly-CSharp}
-      data:
-        height: 70
-        clip: {fileID: 0}
+        music: {fileID: 8300000, guid: b25a0a0ccad58d647969fd90137d2b3c, type: 3}
         volume: 1

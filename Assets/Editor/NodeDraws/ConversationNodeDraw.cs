@@ -1,60 +1,44 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class TrialNodeDraw : DrawNode
+[CreateAssetMenu(menuName = "Behaviour Editor/Draw/Trial Discussion Node Draw")]
+public class ConversationNodeDraw : VNNodeDraw
 {
-    
     private const int previewWidth = 192;
     private const int previewHeight = 108;
     public override void DrawWindow(DialogueNode b)
     {
-        TrialDialogueNode node = (TrialDialogueNode)b;
-        node.character = (CharacterCourt)EditorGUILayout.ObjectField(node.character, typeof(CharacterCourt), false);
+        b.nodeRect.height = 300;
+        b.nodeRect.width = 200;
+        base.DrawWindow(b);
+        
+        DiscussionNode node = b as DiscussionNode;
+        
+        if (node == null)
+        {
+            EditorGUILayout.LabelField("Failed to cast node to DiscussionNode.");
+            return;
+        }
+        
         node.characterStand = GameObject.Find($"Court/Characters/{node.character?.name}")?.GetComponent<CharacterStand>();
         
-        if (node.previewTexture != null)
+        SetupPreview(node);
+        UpdatePreview(node);
+        
+    }
+
+    protected override void ShowPreviewImage(DialogueNode node)
+    {
+        DiscussionNode discussionNode = node as DiscussionNode;
+        if (discussionNode?.previewTexture != null)
         {
-            GUILayout.Label(node.previewTexture, GUILayout.Width(previewWidth), GUILayout.Height(previewHeight));
+             GUILayout.Label(discussionNode.previewTexture, GUILayout.Width(previewWidth), GUILayout.Height(previewHeight));
         }
         else
         {
-            GUILayout.Label("No Preview", GUILayout.Width(previewWidth), GUILayout.Height(previewHeight));
+             GUILayout.Label("No Preview", GUILayout.Width(previewWidth), GUILayout.Height(previewHeight));
         }
-        
-        node.positionOffset = EditorGUILayout.Vector3Field("Position Offset", node.positionOffset);
-        
-        node.rotationOffset = EditorGUILayout.Vector3Field("Rotation Offset", node.rotationOffset);
-        
-        node.fovOffset = EditorGUILayout.FloatField("Fov Offset", node.fovOffset);
-        
-        ShowCameraEffects(ref node.cameraEffects, ref node);
-        SetupPreview(node);
-        UpdatePreview(node);
-    }
-    
-    private void ShowCameraEffects(ref List<CameraEffect> cameraEffects, ref TrialDialogueNode b)
-    {
-        for(int i = 0; i < cameraEffects.Count; i++)
-        {
-            GUILayout.BeginHorizontal();
-            cameraEffects[i] = (CameraEffect)EditorGUILayout.ObjectField(cameraEffects[i], typeof(CameraEffect), false);
-            if(GUILayout.Button("X", GUILayout.Width(20)))
-            {
-                cameraEffects.RemoveAt(i);
-            }
-            else
-            {
-                b.nodeRect.height += 20;  
-            }
-            
-            GUILayout.EndHorizontal();
-        }
-        if(GUILayout.Button("Add camera effect"))
-        {
-            cameraEffects.Add(null);
-        }
-        b.nodeRect.height += 20;
     }
     
     private void SetupPreview(TrialDialogueNode b)
@@ -63,7 +47,6 @@ public class TrialNodeDraw : DrawNode
         {
             b.previewTexture = new RenderTexture(previewWidth, previewHeight, 16);
         }
-
         if (b.previewCamera == null && b.characterStand != null)
         {
             GameObject pivot = new GameObject("PreviewPivot");
@@ -72,7 +55,6 @@ public class TrialNodeDraw : DrawNode
             camObj.transform.parent = pivot.transform;
             camObj.transform.localRotation = Quaternion.identity;
             
-            pivot.hideFlags = HideFlags.HideAndDontSave;
             b.previewPivot = pivot;
             b.previewCamera = camObj.AddComponent<Camera>();
             b.previewCamera.targetTexture = b.previewTexture;
@@ -92,6 +74,5 @@ public class TrialNodeDraw : DrawNode
     
         b.previewCamera.Render();
     }
-    
-    
+
 }

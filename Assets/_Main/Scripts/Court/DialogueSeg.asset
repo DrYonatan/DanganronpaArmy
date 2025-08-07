@@ -18,38 +18,52 @@ MonoBehaviour:
       x: 220
       y: 50
       width: 200
-      height: 320
+      height: 300
     title: 
     drawNode: {fileID: 11400000, guid: 6344f4092040cbd4183fc5d6dc877647, type: 2}
+    character: {fileID: 11400000, guid: e556e59756b89ea4ab97f97255a16dac, type: 2}
     expression: 0
     textData:
       rid: 3042479637414805504
-    character: {fileID: 11400000, guid: e556e59756b89ea4ab97f97255a16dac, type: 2}
     characterStand: {fileID: 0}
     cameraEffects: []
     fovOffset: 0
     positionOffset: {x: 0, y: 0, z: 0}
     rotationOffset: {x: 0, y: 0, z: 0}
-    commands: []
   - nodeRect:
       serializedVersion: 2
-      x: 430
-      y: 50
+      x: 0
+      y: 0
       width: 200
-      height: 390
+      height: 300
     title: 
     drawNode: {fileID: 11400000, guid: 6344f4092040cbd4183fc5d6dc877647, type: 2}
+    character: {fileID: 11400000, guid: e518102ea47577a499c54e7bb8334338, type: 2}
     expression: 0
     textData:
-      rid: 3042479638338338816
-    character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
+      rid: 3042479686728810504
+    characterStand: {fileID: 0}
+    cameraEffects: []
+    fovOffset: -7.23
+    positionOffset: {x: 1.35, y: 0, z: -10.12}
+    rotationOffset: {x: 0, y: 0, z: 0}
+  - nodeRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 200
+      height: 300
+    title: 
+    drawNode: {fileID: 11400000, guid: 6344f4092040cbd4183fc5d6dc877647, type: 2}
+    character: {fileID: 11400000, guid: 86ac77b9ffadf3643938e479c302689d, type: 2}
+    expression: 0
+    textData:
+      rid: 3042479686728810508
     characterStand: {fileID: 0}
     cameraEffects: []
     fovOffset: 0
     positionOffset: {x: 0, y: 0, z: 0}
     rotationOffset: {x: 0, y: 0, z: 0}
-    commands:
-    - rid: 3042479638338338817
   references:
     version: 2
     RefIds:
@@ -58,14 +72,20 @@ MonoBehaviour:
       data:
         text: fdddf
         commands: []
-    - rid: 3042479638338338816
+    - rid: 3042479686728810504
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
-        text: dsdsds
-        commands: []
-    - rid: 3042479638338338817
+        text: "\u05E9\u05DC\u05D5\u05E1"
+        commands:
+        - rid: 3042479686728810505
+    - rid: 3042479686728810505
       type: {class: PlaySoundEffectCommand, ns: , asm: Assembly-CSharp}
       data:
         height: 70
-        clip: {fileID: 8300000, guid: 230835235584d2444a6c854a364453e1, type: 3}
+        clip: {fileID: 8300000, guid: 7d7a4dd0a5fcef7478d40bfa0c5fca64, type: 3}
         volume: 1
+    - rid: 3042479686728810508
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: 
+        commands: []

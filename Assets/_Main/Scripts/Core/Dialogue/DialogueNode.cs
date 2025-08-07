@@ -10,7 +10,8 @@ public class DialogueNode
     public string title;
     public DrawNode drawNode;
     
-    public CharacterCourt VnCharacter;
+    public CharacterCourt character;
+
     public CharacterState expression;
     
     [SerializeReference]

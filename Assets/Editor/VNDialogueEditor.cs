@@ -7,10 +7,11 @@ using UnityEngine;
 public class VNDialogueEditor : EditorWindow
 {
    public VNConversationSegment container;
-   DialogueNode selectedNode;
+   protected DialogueNode selectedNode;
    public DrawNode textNode;
-   Vector2 scrollPosition;
-   Rect scrollAreaSize = new Rect(0, 0, 2000, 2000);
+   protected Vector2 scrollPosition;
+   protected Rect scrollAreaSize = new Rect(0, 0, 2000, 2000);
+   public float nodeSpacing = 10;
    
    static EditorWindow window;
    
@@ -37,7 +38,7 @@ public class VNDialogueEditor : EditorWindow
 
       if (container.nodes.Count == 0)
       {
-         CreateNode();
+         AddNode(0);
       }
       
       foreach (var node in container.nodes)
@@ -48,17 +49,10 @@ public class VNDialogueEditor : EditorWindow
          }
       }
       EditorUtility.SetDirty(container);
-
-      if (container.nodes.Count > 0)
-      {
-         Rect nodeSize = container.nodes[container.nodes.Count - 1].nodeRect;
-         scrollAreaSize.width = nodeSize.xMax + 10;
-         scrollAreaSize.height = nodeSize.yMax + 10;
-
-      }
+      
       GUILayout.BeginArea(new Rect(0, 0, window.position.width, window.position.height));
 
-      scrollPosition = GUI.BeginScrollView(new Rect(0, 0, window.position.width, window.position.height), scrollPosition, scrollAreaSize);
+      scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Height((window.position.height)));
 
       Event e = Event.current;
       UserInput(e);
@@ -67,11 +61,10 @@ public class VNDialogueEditor : EditorWindow
       DrawEditor();
       EndWindows();
 
-      GUI.EndScrollView();
+      GUILayout.EndScrollView();
       GUILayout.EndArea();
    }
    
-   float nodeOffset = 210f;
    private void DrawEditor()
    {
       if (container != null)
@@ -79,8 +72,19 @@ public class VNDialogueEditor : EditorWindow
          GUILayout.Box("", GUILayout.Height(150), GUILayout.Width(300));
          for (int i = 0; i < container.nodes.Count; i++)
          {
-            DrawNode(i);
-            GUILayout.Button("ADD NODE", GUILayout.Width(1400));
+            if (GUILayout.Button("X", GUILayout.Width(50)))
+            {
+               RemoveNode(i);
+            }
+            else
+            {
+               DrawNode(i);
+            }
+            
+            if (GUILayout.Button("ADD NODE", GUILayout.Width(1400)))
+            {
+               AddNode(i+1);
+            }
          }
       }
    }
@@ -97,9 +101,14 @@ public class VNDialogueEditor : EditorWindow
          
       }
    }
-   void CreateNode()
+   void AddNode(int index)
    {
-      container.nodes.Add(new DialogueNode(textNode));
+      container.nodes.Insert(index, new DialogueNode(textNode));
+   }
+
+   void RemoveNode(int index)
+   {
+      container.nodes.RemoveAt(index);
    }
    private Rect windowRect;
 }

@@ -14,10 +14,10 @@ public class VNNodeDraw : DrawNode
         
         GUILayout.BeginHorizontal(style, GUILayout.Width(1400));
         
-        GUILayout.BeginVertical();
-        b.VnCharacter = (CharacterCourt)EditorGUILayout.ObjectField(b.VnCharacter, typeof(CharacterCourt), false);
+        GUILayout.BeginVertical(GUILayout.Width(300));
+        b.character = (CharacterCourt)EditorGUILayout.ObjectField(b.character, typeof(CharacterCourt), false);
         b.expression = (CharacterState)EditorGUILayout.EnumPopup(b.expression);
-        GUILayout.Box("", GUILayout.Width(150), GUILayout.Height(150));
+        ShowPreviewImage(b);
         GUILayout.EndVertical();
         
         VNTextData vnTextData = (VNTextData)b.textData;
@@ -47,9 +47,6 @@ public class VNNodeDraw : DrawNode
             if (GUILayout.Button("X", GUILayout.Width(20)))
             {
                 commands.RemoveAt(i);
-            }
-            else
-            {
             }
 
             GUILayout.EndHorizontal();
@@ -86,5 +83,10 @@ public class VNNodeDraw : DrawNode
         }
         vnTextData.commands.Add(command);
         
+    }
+
+    protected virtual void ShowPreviewImage(DialogueNode node)
+    {
+        GUILayout.Box("", GUILayout.Width(150), GUILayout.Height(150));
     }
 }

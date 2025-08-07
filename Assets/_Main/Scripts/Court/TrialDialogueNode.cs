@@ -5,7 +5,6 @@ using UnityEngine;
 [Serializable]
 public abstract class TrialDialogueNode : DialogueNode
 {
-    public CharacterCourt character;
     public CharacterStand characterStand;
     
     public List<CameraEffect> cameraEffects = new List<CameraEffect>();
