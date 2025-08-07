@@ -109,4 +109,19 @@ public class ConversationEditor : EditorWindow
       container.discussionNodes.RemoveAt(index);
    }
    private Rect windowRect;
+   
+   private void OnDisable()
+   {
+      if (container != null && container.discussionNodes != null)
+      {
+         foreach (var node in container.discussionNodes)
+         {
+            if (node.previewCamera != null)
+               GameObject.DestroyImmediate(node.previewPivot.gameObject);
+
+            if (node.previewTexture != null)
+               node.previewTexture.Release();
+         }
+      }
+   }
 }

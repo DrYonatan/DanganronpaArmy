@@ -69,8 +69,6 @@ public class VNNodeDraw : DrawNode
             
         }
         
-        
-        
     }
     
     private void AddCommand(DialogueNode node, Command command)
