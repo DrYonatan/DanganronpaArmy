@@ -380,7 +380,8 @@ public class GameLoop : MonoBehaviour
             characterStand.SetSprite();
         }
 
-        for (int i = 0; i < nextNode.textLines.Count; i++)
+        DebateTextData textData = nextNode.textData as DebateTextData;
+        for (int i = 0; i < textData.textLines.Count; i++)
         {
             correctTMPIndex = -1;
             correctCharacterIndexBegin = -1;
@@ -388,19 +389,19 @@ public class GameLoop : MonoBehaviour
 
             GameObject go = Instantiate(textPrefab, statementsCamera.transform.parent);
             go.transform.position = textStartPosition.position;
-            go.transform.position += nextNode.textLines[i].spawnOffset;
-            go.transform.localScale = nextNode.textLines[i].scale;
+            go.transform.position += textData.textLines[i].spawnOffset;
+            go.transform.localScale = textData.textLines[i].scale;
 
             TextMeshPro tmp = go.GetComponent<TextMeshPro>();
              
-            string str = nextNode.textLines[i].text;
+            string str = textData.textLines[i].text;
             int indexOf = str.IndexOf("{0}");
             if (indexOf != -1)
             {
                 correctTMPIndex = i;
                 correctCharacterIndexBegin = indexOf;
                 correctCharacterIndexEnd = indexOf + nextNode.statement.Length;
-                str = string.Format(nextNode.textLines[i].text,
+                str = string.Format(textData.textLines[i].text,
                     "<color=orange>" + nextNode.statement +
                     "</color>"); //  + ColorUtility.ToHtmlStringRGBA(nextDialogueNode.statementColor) +">" + nextDialogueNode.statement + 
             }
@@ -411,8 +412,8 @@ public class GameLoop : MonoBehaviour
             TextLine textLine = new TextLine(
                 go,
                 go.GetComponent<RectTransform>(),
-                nextNode.textLines[i].textEffect,
-                nextNode.textLines[i].ttl,
+                textData.textLines[i].textEffect,
+                textData.textLines[i].ttl,
                 go.GetComponent<TextMeshPro>(),
                 correctTMPIndex,
                 correctCharacterIndexBegin,

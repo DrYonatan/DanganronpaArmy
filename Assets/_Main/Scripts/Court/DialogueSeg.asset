@@ -29,9 +29,9 @@ MonoBehaviour:
     cameraEffects:
     - {fileID: 11400000, guid: 98dc0d8ba914bd84e9faf6654227f4e5, type: 2}
     - {fileID: 11400000, guid: d7b5a6678c2f5b34c816559f2046fca5, type: 2}
-    fovOffset: -9.1
-    positionOffset: {x: 1.14, y: 0.78, z: -23.67}
-    rotationOffset: {x: 1.56, y: -0.92, z: 0}
+    fovOffset: -6.35
+    positionOffset: {x: 0.96, y: 0.7, z: -11.93}
+    rotationOffset: {x: 1.56, y: -2.28, z: 5}
   - nodeRect:
       serializedVersion: 2
       x: 0
@@ -45,9 +45,10 @@ MonoBehaviour:
     textData:
       rid: 3042479686728810504
     characterStand: {fileID: 0}
-    cameraEffects: []
+    cameraEffects:
+    - {fileID: 11400000, guid: 8087dd134ffdb1e48ad5c829514baaf6, type: 2}
     fovOffset: -7.23
-    positionOffset: {x: 0.94, y: 0, z: -10.12}
+    positionOffset: {x: 0.9, y: 0, z: -10.12}
     rotationOffset: {x: 0, y: -3.07, z: 0}
   - nodeRect:
       serializedVersion: 2
@@ -62,7 +63,8 @@ MonoBehaviour:
     textData:
       rid: 3042479686728810508
     characterStand: {fileID: 0}
-    cameraEffects: []
+    cameraEffects:
+    - {fileID: 11400000, guid: 34d24cddd4dd9e04da54eee78586ef7e, type: 2}
     fovOffset: 0
     positionOffset: {x: 0, y: 0, z: 0}
     rotationOffset: {x: 0, y: 0, z: 0}
@@ -79,10 +81,30 @@ MonoBehaviour:
     textData:
       rid: 3042479686728810510
     characterStand: {fileID: 0}
-    cameraEffects: []
-    fovOffset: 0
-    positionOffset: {x: 0, y: 0, z: 0}
-    rotationOffset: {x: 0, y: 0, z: 0}
+    cameraEffects:
+    - {fileID: 11400000, guid: 2b0b273d7412a6b469741fc4eda2fd17, type: 2}
+    - {fileID: 11400000, guid: d7b5a6678c2f5b34c816559f2046fca5, type: 2}
+    fovOffset: -9.2
+    positionOffset: {x: 2.36, y: 0.29, z: -17.03}
+    rotationOffset: {x: 0, y: -4.99, z: 0}
+  - nodeRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 200
+      height: 300
+    title: 
+    drawNode: {fileID: 11400000, guid: 6344f4092040cbd4183fc5d6dc877647, type: 2}
+    character: {fileID: 11400000, guid: 86ac77b9ffadf3643938e479c302689d, type: 2}
+    expression: 0
+    textData:
+      rid: 3042479701844295680
+    characterStand: {fileID: 0}
+    cameraEffects:
+    - {fileID: 11400000, guid: 8087dd134ffdb1e48ad5c829514baaf6, type: 2}
+    fovOffset: -9.11
+    positionOffset: {x: 2.05, y: 3.03, z: -22.6}
+    rotationOffset: {x: 6.85, y: -2.78, z: 0}
   references:
     version: 2
     RefIds:
@@ -90,7 +112,8 @@ MonoBehaviour:
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
         text: "\u05D4\u05D3\u05D2 \u05E0\u05D7\u05E9"
-        commands: []
+        commands:
+        - rid: 3042479702988029952
     - rid: 3042479686728810504
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -109,6 +132,7 @@ MonoBehaviour:
         text: zczcczcz
         commands:
         - rid: 3042479686728810511
+        - rid: 3042479702988029953
     - rid: 3042479686728810510
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -119,4 +143,21 @@ MonoBehaviour:
       data:
         height: 70
         clip: {fileID: 8300000, guid: dda477c657d386143ab0dafb6a1d5446, type: 3}
+        volume: 1
+    - rid: 3042479701844295680
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "\u05E9\u05DC\u05D5\u05DE\u05E4 \u05E9\u05DC\u05D5\u05DE\u05E4"
+        commands: []
+    - rid: 3042479702988029952
+      type: {class: PlaySoundEffectCommand, ns: , asm: Assembly-CSharp}
+      data:
+        height: 70
+        clip: {fileID: 8300000, guid: 4e070e10f0c19c646a60e44c0d7f4ca6, type: 3}
+        volume: 1
+    - rid: 3042479702988029953
+      type: {class: PlayMusicCommand, ns: , asm: Assembly-CSharp}
+      data:
+        height: 70
+        music: {fileID: 8300000, guid: b25a0a0ccad58d647969fd90137d2b3c, type: 3}
         volume: 1

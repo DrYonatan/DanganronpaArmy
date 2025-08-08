@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Behaviour Editor/Draw/Dialogue Node Draw")]
 public class VNNodeDraw : DrawNode
 {
-    private Vector2 scrollPosition;
+    private Vector2 commandsScrollPosition;
 
     public override void DrawWindow(DialogueNode b)
     {
@@ -20,13 +20,19 @@ public class VNNodeDraw : DrawNode
         ShowPreviewImage(b);
         GUILayout.EndVertical();
         
+        ShowTextData(b);
+        
+        GUILayout.EndHorizontal();
+        
+    }
+
+    protected virtual void ShowTextData(DialogueNode b)
+    {
         VNTextData vnTextData = (VNTextData)b.textData;
         vnTextData.text = GUILayout.TextArea(vnTextData.text, GUILayout.Height(180),  GUILayout.Width(800));
         GUILayout.BeginVertical();
         ShowCommands(b);
         GUILayout.EndVertical();
-        GUILayout.EndHorizontal();
-        
     }
     
     private void ShowCommands(DialogueNode node)
@@ -34,7 +40,7 @@ public class VNNodeDraw : DrawNode
         List<Command> commands = ((VNTextData)node.textData).commands;
         GUILayout.Label("Commands", EditorStyles.boldLabel);
         
-        scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Height(150));
+        commandsScrollPosition = GUILayout.BeginScrollView(commandsScrollPosition, GUILayout.Height(150));
         for (int i = 0; i < commands?.Count; i++)
         {
             var command = commands[i];
@@ -66,7 +72,6 @@ public class VNNodeDraw : DrawNode
             menu.AddItem(new GUIContent("Play Music"), false, () => AddCommand(node, new PlayMusicCommand()));
             // Add more as needed
             menu.ShowAsContext();
-            
         }
         
     }

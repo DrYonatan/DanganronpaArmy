@@ -22,67 +22,105 @@ MonoBehaviour:
   dialogueNodes:
   - nodeRect:
       serializedVersion: 2
-      x: 220
-      y: 50
+      x: 0
+      y: 0
       width: 200
-      height: 400
+      height: 300
     title: 
     drawNode: {fileID: 11400000, guid: 81b17a11177a0f4449f7df8eebe49b4b, type: 2}
-    VnCharacter: {fileID: 0}
+    character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
     expression: 0
     textData:
-      rid: -2
-    character: {fileID: 11400000, guid: e518102ea47577a499c54e7bb8334338, type: 2}
+      rid: 3042479711257624576
     characterStand: {fileID: 0}
-    cameraEffects: []
-    fovOffset: -7.94
-    positionOffset: {x: 1.16, y: 0.17, z: -11.27}
-    rotationOffset: {x: 0, y: -3.94, z: 0}
-    evidence: {fileID: 0}
-    statement: 
+    cameraEffects:
+    - {fileID: 11400000, guid: 2b0b273d7412a6b469741fc4eda2fd17, type: 2}
+    fovOffset: 3.22
+    positionOffset: {x: 0, y: 0, z: -4.76}
+    rotationOffset: {x: 0, y: 0, z: -3.86}
+    evidence: {fileID: 11400000, guid: 61f792b87e669574793f5e93b1753771, type: 2}
+    statement: "\u05E9\u05DC\u05D5\u05DE\u05E4"
     statementColor: {r: 0, g: 0, b: 0, a: 0}
-    textLines:
-    - text: 
-      textEffect: []
-      spawnOffset: {x: 0, y: 0, z: 0}
-      scale: {x: 1, y: 1, z: 1}
-      ttl: 2
     voiceLine: {fileID: 0}
   - nodeRect:
       serializedVersion: 2
-      x: 430
-      y: 50
+      x: 0
+      y: 0
       width: 200
-      height: 570
+      height: 300
     title: 
     drawNode: {fileID: 11400000, guid: 81b17a11177a0f4449f7df8eebe49b4b, type: 2}
-    VnCharacter: {fileID: 0}
+    character: {fileID: 11400000, guid: 86ac77b9ffadf3643938e479c302689d, type: 2}
     expression: 0
     textData:
-      rid: 3042479668869726223
-    character: {fileID: 11400000, guid: e556e59756b89ea4ab97f97255a16dac, type: 2}
+      rid: 3042479711257624577
     characterStand: {fileID: 0}
     cameraEffects: []
     fovOffset: 0
     positionOffset: {x: 0, y: 0, z: 0}
     rotationOffset: {x: 0, y: 0, z: 0}
     evidence: {fileID: 0}
-    statement: 
+    statement: Statement
     statementColor: {r: 0, g: 0, b: 0, a: 0}
-    textLines:
-    - text: dsdds
-      textEffect: []
-      spawnOffset: {x: 0, y: 0, z: 0}
-      scale: {x: 1, y: 1, z: 1}
-      ttl: 1
+    voiceLine: {fileID: 0}
+  - nodeRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 200
+      height: 300
+    title: 
+    drawNode: {fileID: 11400000, guid: 81b17a11177a0f4449f7df8eebe49b4b, type: 2}
+    character: {fileID: 11400000, guid: 95d3e48687d854942aea31b2cf9a8ff1, type: 2}
+    expression: 0
+    textData:
+      rid: 3042479711257624578
+    characterStand: {fileID: 0}
+    cameraEffects: []
+    fovOffset: 0
+    positionOffset: {x: 0, y: 0, z: 0}
+    rotationOffset: {x: 0, y: 0, z: 0}
+    evidence: {fileID: 0}
+    statement: Statement
+    statementColor: {r: 0, g: 0, b: 0, a: 0}
     voiceLine: {fileID: 0}
   references:
     version: 2
     RefIds:
-    - rid: -2
-      type: {class: , ns: , asm: }
-    - rid: 3042479668869726223
-      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+    - rid: 3042479711257624576
+      type: {class: DebateTextData, ns: , asm: Assembly-CSharp}
       data:
-        text: 
-        commands: []
+        textLines:
+        - text: "\u05E9\u05DC\u05D5\u05DD \u05DC\u05DB\u05D5\u05DC\u05DD"
+          textEffect:
+          - {fileID: 11400000, guid: e5ad80d2a8ee1f042bf34c66a49d1aef, type: 2}
+          spawnOffset: {x: 0.5, y: 0, z: 0}
+          scale: {x: 1, y: 1, z: 1}
+          ttl: 3
+        - text: "\u05DE\u05D4 {0} \u05E7\u05D5\u05E8\u05D4"
+          textEffect:
+          - {fileID: 11400000, guid: e5ad80d2a8ee1f042bf34c66a49d1aef, type: 2}
+          spawnOffset: {x: 0.5, y: -0.5, z: 0}
+          scale: {x: 1, y: 1, z: 1}
+          ttl: 3
+    - rid: 3042479711257624577
+      type: {class: DebateTextData, ns: , asm: Assembly-CSharp}
+      data:
+        textLines:
+        - text: "\u05DE\u05D4 \u05E7\u05D5\u05E8\u05D4"
+          textEffect:
+          - {fileID: 11400000, guid: 78cef4dbf176f274ba273d043b6ea500, type: 2}
+          - {fileID: 11400000, guid: 776df99a68a7fa04d9cebde19eafed87, type: 2}
+          spawnOffset: {x: 0, y: 0, z: 0}
+          scale: {x: 1, y: 1, z: 1}
+          ttl: 2
+    - rid: 3042479711257624578
+      type: {class: DebateTextData, ns: , asm: Assembly-CSharp}
+      data:
+        textLines:
+        - text: "\u05DE\u05D4 \u05D4\u05E7\u05D8\u05E2 \u05DE\u05D4 \u05D4\u05E7\u05D0\u05E5'"
+          textEffect:
+          - {fileID: 11400000, guid: 1783f855e5ca44a46918165450f0b808, type: 2}
+          spawnOffset: {x: 0, y: 0, z: 0}
+          scale: {x: 1, y: 1, z: 1}
+          ttl: 1

@@ -7,14 +7,16 @@ public class CameraSettingsPopUp : PopupWindowContent
 {
     private DiscussionNode node;
     private RenderTexture bigPreview;
+    private int bigPreviewHeight = 360;
+    private int bigPreviewWidth = 640;
     public CameraSettingsPopUp(DiscussionNode node)
     {
         this.node = node;
-        bigPreview = new RenderTexture(480, 270, 16);
+        bigPreview = new RenderTexture(bigPreviewWidth, bigPreviewHeight, 16);
         node.previewCamera.targetTexture = bigPreview;
     }
 
-    public override Vector2 GetWindowSize() => new (600, 600);
+    public override Vector2 GetWindowSize() => new (650, 600);
 
     public override void OnGUI(Rect rect)
     {
@@ -26,7 +28,7 @@ public class CameraSettingsPopUp : PopupWindowContent
             node.previewCamera.targetTexture = node.previewTexture;
             bigPreview.Release();
         }
-        GUILayout.Label(bigPreview, GUILayout.Width(480), GUILayout.Height(270));
+        GUILayout.Label(bigPreview, GUILayout.Width(bigPreviewWidth), GUILayout.Height(bigPreviewHeight));
 
         node.positionOffset = EditorGUILayout.Vector3Field("Position Offset", node.positionOffset);
         
