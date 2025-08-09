@@ -6,15 +6,16 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Behaviour Editor/Draw/Debate Dialogue Node Draw")]
 public class DebateNodeDraw : ConversationNodeDraw
 {
-    private Vector2 textLinesScrollPosition;
-
     public override void DrawWindow(DialogueNode b)
     {
         GUILayout.BeginHorizontal();
         base.DrawWindow(b);
         DebateNode node = (DebateNode)b;
 
-        GUILayout.BeginVertical();
+        GUIStyle style = new GUIStyle();
+        style.normal.background = Texture2D.linearGrayTexture;
+        
+        GUILayout.BeginVertical(style);
         node.evidence = (Evidence)EditorGUILayout.ObjectField(node.evidence, typeof(Evidence), false);
         node.statement = GUILayout.TextField(node.statement);
         node.voiceLine = (AudioClip)EditorGUILayout.ObjectField(node.voiceLine, typeof(AudioClip), false);
@@ -24,6 +25,9 @@ public class DebateNodeDraw : ConversationNodeDraw
 
     protected override void ShowTextData(DialogueNode b)
     {
+        GUIStyle style = new GUIStyle();
+        style.normal.background = Texture2D.linearGrayTexture;
+        
         DebateNode node = (DebateNode)b;
         DebateTextData textData = b.textData as DebateTextData;
 
@@ -32,16 +36,17 @@ public class DebateNodeDraw : ConversationNodeDraw
             textData.textLines.Add(new TextLine());
         }
         
+        
         for (int i = 0; i < textData.textLines.Count; i++)
         {
             TextLine textLine = textData.textLines[i];
-            GUILayout.BeginVertical(GUILayout.Width(150));
+            GUILayout.BeginVertical(style, GUILayout.Width(150));
             GUILayout.Label($"Line {i}#");
             textLine.text = GUILayout.TextField(textLine.text, GUILayout.Width(150));
             textLine.spawnOffset = EditorGUILayout.Vector3Field("Spawn Offset", textLine.spawnOffset);
             textLine.scale = EditorGUILayout.Vector3Field("Scale", textLine.scale);
             textLine.ttl = EditorGUILayout.FloatField("Time", textLine.ttl);
-            ShowTextEffect(ref textLine.textEffect, ref node);
+            ShowTextEffect(ref textLine, ref node);
             
             GUILayout.EndVertical();
             if (GUILayout.Button("X", GUILayout.Width(20), GUILayout.Height(20)))
@@ -55,23 +60,23 @@ public class DebateNodeDraw : ConversationNodeDraw
         }
     }
 
-    private void ShowTextEffect(ref List<TextEffect> textEffect, ref DebateNode b)
+    private void ShowTextEffect(ref TextLine textLine, ref DebateNode b)
     {
-        GUILayout.BeginScrollView(textLinesScrollPosition);
-        for(int i = 0; i < textEffect.Count; i++)
+        textLine.textLineScrollPosition = GUILayout.BeginScrollView(textLine.textLineScrollPosition);
+        for(int i = 0; i < textLine.textEffect.Count; i++)
         {
             GUILayout.BeginHorizontal();
-            textEffect[i] = (TextEffect)EditorGUILayout.ObjectField(textEffect[i], typeof(TextEffect), false);
+            textLine.textEffect[i] = (TextEffect)EditorGUILayout.ObjectField(textLine.textEffect[i], typeof(TextEffect), false);
             if(GUILayout.Button("X", GUILayout.Width(20)))
             {
-                textEffect.RemoveAt(i);
+                textLine.textEffect.RemoveAt(i);
             }
             
             GUILayout.EndHorizontal();
         }
         if(GUILayout.Button("Add text effect"))
         {
-            textEffect.Add(null);
+            textLine.textEffect.Add(null);
         }
         
         GUILayout.EndScrollView();

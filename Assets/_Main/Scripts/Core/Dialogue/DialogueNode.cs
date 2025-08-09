@@ -7,6 +7,8 @@ using UnityEngine;
 public class DialogueNode
 {
     public Rect nodeRect;
+    public Vector2 commandsScrollPosition;
+
     public string title;
     public DrawNode drawNode;
     

@@ -26,6 +26,7 @@ MonoBehaviour:
       y: 0
       width: 200
       height: 300
+    commandsScrollPosition: {x: 0, y: 0}
     title: 
     drawNode: {fileID: 11400000, guid: 81b17a11177a0f4449f7df8eebe49b4b, type: 2}
     character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
@@ -40,14 +41,15 @@ MonoBehaviour:
     rotationOffset: {x: 0, y: 0, z: -3.86}
     evidence: {fileID: 11400000, guid: 61f792b87e669574793f5e93b1753771, type: 2}
     statement: "\u05E9\u05DC\u05D5\u05DE\u05E4"
-    statementColor: {r: 0, g: 0, b: 0, a: 0}
     voiceLine: {fileID: 0}
+    textLinesScrollPosition: {x: 0, y: 0}
   - nodeRect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 200
       height: 300
+    commandsScrollPosition: {x: 0, y: 0}
     title: 
     drawNode: {fileID: 11400000, guid: 81b17a11177a0f4449f7df8eebe49b4b, type: 2}
     character: {fileID: 11400000, guid: 86ac77b9ffadf3643938e479c302689d, type: 2}
@@ -61,14 +63,15 @@ MonoBehaviour:
     rotationOffset: {x: 0, y: 0, z: 0}
     evidence: {fileID: 0}
     statement: Statement
-    statementColor: {r: 0, g: 0, b: 0, a: 0}
     voiceLine: {fileID: 0}
+    textLinesScrollPosition: {x: 0, y: 0}
   - nodeRect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 200
       height: 300
+    commandsScrollPosition: {x: 0, y: 0}
     title: 
     drawNode: {fileID: 11400000, guid: 81b17a11177a0f4449f7df8eebe49b4b, type: 2}
     character: {fileID: 11400000, guid: 95d3e48687d854942aea31b2cf9a8ff1, type: 2}
@@ -82,8 +85,8 @@ MonoBehaviour:
     rotationOffset: {x: 0, y: 0, z: 0}
     evidence: {fileID: 0}
     statement: Statement
-    statementColor: {r: 0, g: 0, b: 0, a: 0}
     voiceLine: {fileID: 0}
+    textLinesScrollPosition: {x: 0, y: 0}
   references:
     version: 2
     RefIds:
@@ -91,18 +94,13 @@ MonoBehaviour:
       type: {class: DebateTextData, ns: , asm: Assembly-CSharp}
       data:
         textLines:
-        - text: "\u05E9\u05DC\u05D5\u05DD \u05DC\u05DB\u05D5\u05DC\u05DD"
+        - text: "\u05E9\u05DC\u05D5\u05E1 {0} \u05E9\u05DC\u05D5\u05E1"
           textEffect:
-          - {fileID: 11400000, guid: e5ad80d2a8ee1f042bf34c66a49d1aef, type: 2}
-          spawnOffset: {x: 0.5, y: 0, z: 0}
+          - {fileID: 11400000, guid: 776df99a68a7fa04d9cebde19eafed87, type: 2}
+          spawnOffset: {x: 0, y: 0, z: 0}
           scale: {x: 1, y: 1, z: 1}
           ttl: 3
-        - text: "\u05DE\u05D4 {0} \u05E7\u05D5\u05E8\u05D4"
-          textEffect:
-          - {fileID: 11400000, guid: e5ad80d2a8ee1f042bf34c66a49d1aef, type: 2}
-          spawnOffset: {x: 0.5, y: -0.5, z: 0}
-          scale: {x: 1, y: 1, z: 1}
-          ttl: 3
+          textLineScrollPosition: {x: 0, y: 0}
     - rid: 3042479711257624577
       type: {class: DebateTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -114,6 +112,7 @@ MonoBehaviour:
           spawnOffset: {x: 0, y: 0, z: 0}
           scale: {x: 1, y: 1, z: 1}
           ttl: 2
+          textLineScrollPosition: {x: 0, y: 0}
     - rid: 3042479711257624578
       type: {class: DebateTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -124,3 +123,4 @@ MonoBehaviour:
           spawnOffset: {x: 0, y: 0, z: 0}
           scale: {x: 1, y: 1, z: 1}
           ttl: 1
+          textLineScrollPosition: {x: 0, y: 0}

@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -9,9 +7,7 @@ public class VNDialogueEditor : EditorWindow
    public VNConversationSegment container;
    protected DialogueNode selectedNode;
    public DrawNode textNode;
-   protected Vector2 scrollPosition;
-   protected Rect scrollAreaSize = new Rect(0, 0, 2000, 2000);
-   public float nodeSpacing = 10;
+   Vector2 scrollPosition;
    
    static EditorWindow window;
    
@@ -22,10 +18,20 @@ public class VNDialogueEditor : EditorWindow
       window.minSize = new Vector2(600, 800);
    }
 
-   private void OnGUI()
+   public void SetContainer()
    {
       container = (VNConversationSegment)EditorGUILayout.ObjectField(container, typeof(VNConversationSegment), false, GUILayout.Width(200));
+   }
 
+   public void SetNewList()
+   {
+      container.nodes = new List<DialogueNode>();
+   }
+
+   private void OnGUI()
+   {
+      SetContainer();
+      
       if (container == null)
       {
          return;
@@ -33,7 +39,7 @@ public class VNDialogueEditor : EditorWindow
       
       if (container.nodes == null)
       {
-         container.nodes = new List<DialogueNode>();
+         SetNewList();
       }
 
       if (container.nodes.Count == 0)
@@ -53,9 +59,6 @@ public class VNDialogueEditor : EditorWindow
       GUILayout.BeginArea(new Rect(0, 0, window.position.width, window.position.height));
 
       scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Height((window.position.height)));
-
-      Event e = Event.current;
-      UserInput(e);
 
       BeginWindows();
       DrawEditor();
@@ -93,15 +96,7 @@ public class VNDialogueEditor : EditorWindow
    {
       container.nodes[id].DrawNode();
    }
-   
-   private void UserInput(Event e)
-   {
-      if (container != null)
-      {
-         
-      }
-   }
-   void AddNode(int index)
+   public void AddNode(int index)
    {
       container.nodes.Insert(index, new DialogueNode(textNode));
    }
@@ -110,5 +105,4 @@ public class VNDialogueEditor : EditorWindow
    {
       container.nodes.RemoveAt(index);
    }
-   private Rect windowRect;
 }

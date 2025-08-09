@@ -9,8 +9,8 @@ namespace _Main.Scripts.Court
     {
         public Evidence evidence;
         public string statement;
-        public Color statementColor;
         public AudioClip voiceLine;
+        public Vector2 textLinesScrollPosition;
 
         public DebateNode(DrawNode _drawNode) : base(_drawNode)
         {

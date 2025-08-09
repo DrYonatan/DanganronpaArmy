@@ -5,8 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Behaviour Editor/Draw/Dialogue Node Draw")]
 public class VNNodeDraw : DrawNode
 {
-    private Vector2 commandsScrollPosition;
-
     public override void DrawWindow(DialogueNode b)
     {
         GUIStyle style = new GUIStyle();
@@ -40,7 +38,7 @@ public class VNNodeDraw : DrawNode
         List<Command> commands = ((VNTextData)node.textData).commands;
         GUILayout.Label("Commands", EditorStyles.boldLabel);
         
-        commandsScrollPosition = GUILayout.BeginScrollView(commandsScrollPosition, GUILayout.Height(150));
+        node.commandsScrollPosition = GUILayout.BeginScrollView(node.commandsScrollPosition, GUILayout.Height(150));
         for (int i = 0; i < commands?.Count; i++)
         {
             var command = commands[i];
