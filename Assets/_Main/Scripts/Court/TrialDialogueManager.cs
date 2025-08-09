@@ -25,15 +25,32 @@ public class TrialDialogueManager : MonoBehaviour, IWorldHandler
 
     void PlayConversationNode()
     {
+        CharacterCourt prevCharacter = new CharacterCourt();
+        if (conversationIndex > 0)
+        {
+            prevCharacter = discussion.discussionNodes[conversationIndex - 1].character;
+        }
         DiscussionNode nextNode = discussion.discussionNodes[conversationIndex];
         CharacterStand characterStand = characterStands.Find(stand => stand.character == nextNode.character);
-        cameraController.TeleportToTarget(characterStand.transform, characterStand.heightPivot, nextNode.positionOffset, nextNode.rotationOffset, nextNode.fovOffset);
+        if (!nextNode.usePrevCamera)
+        {
+            cameraController.TeleportToTarget(characterStand.transform, characterStand.heightPivot, nextNode.positionOffset, nextNode.rotationOffset, nextNode.fovOffset);
+            effectController.Reset();
+        }
         string line = ((VNTextData)nextNode.textData).text;
         DialogueSystem.instance.ShowSpeakerName(nextNode.character.displayName);
-        ((CourtTextBoxAnimator)(DialogueSystem.instance.dialogueBoxAnimator)).ChangeFace(nextNode.character.name);
+
+        if (conversationIndex == 0 || prevCharacter != nextNode.character)
+        {
+            ((CourtTextBoxAnimator)(DialogueSystem.instance.dialogueBoxAnimator)).ChangeFace(nextNode.character.name);
+        }
+        
         List<string> lines = new List<string>();
         lines.Add(line);
         DialogueSystem.instance.Say(lines);
+        
+        
+        
         foreach (CameraEffect cameraEffect in nextNode.cameraEffects)
         {
             effectController.StartEffect(cameraEffect);
@@ -52,7 +69,6 @@ public class TrialDialogueManager : MonoBehaviour, IWorldHandler
     void GoToNextNode()
     {
         conversationIndex++;
-        effectController.Reset();
         PlayConversationNode();
     }
 

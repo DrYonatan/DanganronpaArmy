@@ -347,10 +347,22 @@ public class GameLoop : MonoBehaviour
 
     IEnumerator StartNewNode(int dialogueNodeIndex)
     {
+        CharacterCourt prevCharacter = new CharacterCourt();
+        if (dialogueNodeIndex > 0)
+        {
+            prevCharacter = stage.dialogueNodes[dialogueNodeIndex - 1].character;
+        }
+        
         DebateNode nextNode = stage.dialogueNodes[dialogueNodeIndex];
         SpawnText(nextNode);
         effectController.Reset();
-        debateUIAnimator.ChangeFace(nextNode.character.name);
+        
+        if (dialogueNodeIndex == 0 || prevCharacter != nextNode.character)
+        {
+            debateUIAnimator.ChangeFace(nextNode.character.name);
+        }
+        
+        
         debateUIAnimator.UpdateName(nextNode.character.displayName);
         debateUIAnimator.HighlightNode(textIndex);
         yield return cameraController.SpinToTarget(characterStand.transform, characterStand.heightPivot, nextNode.positionOffset, nextNode.rotationOffset, nextNode.fovOffset);

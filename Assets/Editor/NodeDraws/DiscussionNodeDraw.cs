@@ -78,17 +78,15 @@ public class CameraSettingsPopUp : PopupWindowContent
 }
 
 [CreateAssetMenu(menuName = "Behaviour Editor/Draw/Trial Discussion Node Draw")]
-public class ConversationNodeDraw : VNNodeDraw
+public class DiscussionNodeDraw : VNNodeDraw
 {
     private const int previewWidth = 240;
     private const int previewHeight = 135;
     public override void DrawWindow(DialogueNode b)
     {
-        b.nodeRect.height = 300;
-        b.nodeRect.width = 200;
-        base.DrawWindow(b);
-        
+
         DiscussionNode node = b as DiscussionNode;
+        node.usePrevCamera = GUILayout.Toggle(node.usePrevCamera, "use previous camera");
         
         if (node == null)
         {
@@ -96,6 +94,8 @@ public class ConversationNodeDraw : VNNodeDraw
             return;
         }
         
+        base.DrawWindow(b);
+ 
         node.characterStand = GameObject.Find($"Court/Characters/{node.character?.name}")?.GetComponent<CharacterStand>();
         
         SetupPreview(node);

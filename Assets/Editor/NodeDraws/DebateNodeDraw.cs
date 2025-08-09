@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Behaviour Editor/Draw/Debate Dialogue Node Draw")]
-public class DebateNodeDraw : ConversationNodeDraw
+public class DebateNodeDraw : DiscussionNodeDraw
 {
     public override void DrawWindow(DialogueNode b)
     {
