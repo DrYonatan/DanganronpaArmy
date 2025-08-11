@@ -84,9 +84,7 @@ public class DiscussionNodeDraw : VNNodeDraw
     private const int previewHeight = 135;
     public override void DrawWindow(DialogueNode b)
     {
-
         DiscussionNode node = b as DiscussionNode;
-        node.usePrevCamera = GUILayout.Toggle(node.usePrevCamera, "use previous camera");
         
         if (node == null)
         {
@@ -94,18 +92,24 @@ public class DiscussionNodeDraw : VNNodeDraw
             return;
         }
         
+        GUILayout.BeginVertical();
+        node.usePrevCamera = GUILayout.Toggle(node.usePrevCamera, "use previous camera");
+        
         base.DrawWindow(b);
+        GUILayout.EndVertical();
  
         node.characterStand = GameObject.Find($"Court/Characters/{node.character?.name}")?.GetComponent<CharacterStand>();
         
         SetupPreview(node);
         UpdatePreview(node);
-        
+   
     }
 
     protected override void ShowPreviewImage(DialogueNode node)
     {
         DiscussionNode discussionNode = node as DiscussionNode;
+        GUILayout.BeginHorizontal();
+        GUILayout.FlexibleSpace();
         if (discussionNode?.previewTexture != null)
         {
              GUILayout.Label(discussionNode.previewTexture, GUILayout.Width(previewWidth), GUILayout.Height(previewHeight));
@@ -122,6 +126,9 @@ public class DiscussionNodeDraw : VNNodeDraw
         {
              GUILayout.Label("No Preview", GUILayout.Width(previewWidth), GUILayout.Height(previewHeight));
         }
+        GUILayout.FlexibleSpace();
+        GUILayout.EndHorizontal();
+
     }
     
     private void SetupPreview(TrialDialogueNode b)

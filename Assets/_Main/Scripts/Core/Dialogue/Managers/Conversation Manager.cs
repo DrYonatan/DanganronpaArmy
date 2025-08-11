@@ -32,11 +32,11 @@ namespace DIALOGUE
             userPrompt = true;
         }
 
-        public Coroutine StartConversation(List<string> conversation)
+        public Coroutine StartConversation(List<DialogueNode> nodes)
         {
             StopConversation();
 
-            process = dialogueSystem.StartCoroutine(RunningConversation(conversation));
+            process = dialogueSystem.StartCoroutine(RunningConversation(nodes));
 
             return process;
         }
@@ -50,30 +50,18 @@ namespace DIALOGUE
             characterHandler?.OnStopConversation();
         }
 
-        IEnumerator RunningConversation(List<string> conversation)
+        IEnumerator RunningConversation(List<DialogueNode> nodes)
         {
-            for(int i = 0; i < conversation.Count; i++)
+            for(int i = 0; i < nodes.Count; i++)
             {
-                //Don't show blank lines or run anything on them
-                if (string.IsNullOrWhiteSpace(conversation[i]))
-                    continue;
-                DIALOGUE_LINE line = DialogueParser.Parse(conversation[i]);
-
-                //Show Dialogue
-                if(line.hasDialogue)
-                {
-                    // character handler will only exist in visual novel
-                    characterHandler?.OnLineParsed(line);
-                    yield return Line_RunDialogue(line);
-                }
+                VNTextData textData = nodes[i].textData as VNTextData;
+                
+               // characterHandler?.OnLineParsed(textData);
+               DialogueSystem.instance.ShowSpeakerName(nodes[i].character.displayName);
+                worldHandler.PlayConversationNode(i);
+                yield return BuildDialogue(textData.text);
                 //Run any commands
-                if(line.hasCommands)
-                {
-                    yield return Line_RunCommands(line);
-                }
-
-                if(line.hasDialogue)
-                //Wait for user input
+                yield return Line_RunCommands(textData.commands);
                 yield return WaitForUserInput();
 
             }
@@ -81,33 +69,28 @@ namespace DIALOGUE
             worldHandler.HandleConversationEnd();
         }
         
-        IEnumerator Line_RunDialogue(DIALOGUE_LINE line)
+        // IEnumerator Line_RunDialogue(VNTextData textData)
+        // {
+        //     //Show or hide the speaker name if there is one
+        //     if (line.hasSpeaker)
+        //     {
+        //         dialogueSystem.ShowSpeakerName(line.speakerData.displayName);
+        //     }
+        //          
+        //     //Build Dialogue
+        //     
+        //     yield return BuildLineSegments(textData.text);
+        //
+        // }
+
+        IEnumerator Line_RunCommands(List<Command> commands)
         {
-            //Show or hide the speaker name if there is one
-            if (line.hasSpeaker)
+            foreach (Command command in commands)
             {
-                dialogueSystem.ShowSpeakerName(line.speakerData.displayName);
+                command.Execute();
+                yield return null;
             }
-                 
-            //Build Dialogue
             
-            yield return BuildLineSegments(line.dialogueData);
-
-        }
-
-        IEnumerator Line_RunCommands(DIALOGUE_LINE line)
-        {
-            List<DL_COMMAND_DATA.Command> commands = line.commandData.commands;
-
-            foreach(DL_COMMAND_DATA.Command command in commands)
-            {
-                if (command.waitForCompletion)
-                    yield return CommandManager.instance.Execute(command.name, command.arguments);
-                else
-                CommandManager.instance.Execute(command.name, command.arguments);
-            }
-
-            yield return null;
         }
 
         IEnumerator BuildLineSegments(DL_DIALOGUE_DATA line)

@@ -44,13 +44,13 @@ namespace CHARACTERS
         }
 
 
-        public Coroutine Say(string dialogue) => Say(new List<string> { dialogue });
-
-        public Coroutine Say(List<string> dialogue)
-        {
-            dialogueSystem.ShowSpeakerName(displayName);
-            return dialogueSystem.Say(dialogue);
-        }
+        // public Coroutine Say(string dialogue) => Say(new List<string> { dialogue });
+        //
+        // public Coroutine Say(List<string> dialogue)
+        // {
+        //     dialogueSystem.ShowSpeakerName(displayName);
+        //     return dialogueSystem.Say(dialogue);
+        // }
 
 
         public virtual Coroutine Show()

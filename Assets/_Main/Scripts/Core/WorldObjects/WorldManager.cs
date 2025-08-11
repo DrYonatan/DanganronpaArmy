@@ -23,12 +23,9 @@ public class WorldManager : MonoBehaviour, IWorldHandler
         ReturningToWorld();
     }
 
-    void StartConversation(string textFile)
+    public void PlayConversationNode(int i)
     {
-        List<string> lines = FileManager.ReadTextAsset($"GameEvents/Story/{textFile}");
-
-        DialogueSystem.instance.Say(lines);
-
+        
     }
 
     public void ReturningToWorld()

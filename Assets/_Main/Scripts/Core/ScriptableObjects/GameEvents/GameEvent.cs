@@ -19,11 +19,11 @@ public abstract class GameEvent : ScriptableObject
 
     public bool startEventImmediately = false; // used to know if to start the event as soon as the previous one ends or only after finish text
 
-    public TextAsset finishText;
+    public List<DialogueNode> finishText;
 
     public List<GameEvent> conditionEvents;
 
-    public TextAsset unallowedText;
+    public List<DialogueNode> unallowedText;
 
     public Dictionary<string, ObjectData> charactersData = new Dictionary<string, ObjectData>();
 
@@ -40,9 +40,7 @@ public abstract class GameEvent : ScriptableObject
     {
         if (finishText != null)
         {
-            List<string> lines = FileManager.ReadTextAsset(finishText);
-            if (lines != null)
-                DialogueSystem.instance.Say(lines);
+            DialogueSystem.instance.Say(finishText);
 
             finishText = null;
         }

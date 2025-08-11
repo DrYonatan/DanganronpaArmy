@@ -116,11 +116,12 @@ public class ConversationEditor : EditorWindow
       {
          foreach (var node in container.discussionNodes)
          {
-            if (node.previewCamera != null)
-               GameObject.DestroyImmediate(node.previewPivot.gameObject);
+            DiscussionNode discussionNode = node as DiscussionNode;
+            if (discussionNode.previewCamera != null)
+               GameObject.DestroyImmediate(discussionNode.previewPivot.gameObject);
 
-            if (node.previewTexture != null)
-               node.previewTexture.Release();
+            if (discussionNode.previewTexture != null)
+               discussionNode.previewTexture.Release();
          }
       }
    }

@@ -88,6 +88,10 @@ public class VNNodeDraw : DrawNode
 
     protected virtual void ShowPreviewImage(DialogueNode node)
     {
+        GUILayout.BeginHorizontal();
+        GUILayout.FlexibleSpace();
         GUILayout.Box("", GUILayout.Width(150), GUILayout.Height(150));
+        GUILayout.FlexibleSpace();
+        GUILayout.EndHorizontal();
     }
 }

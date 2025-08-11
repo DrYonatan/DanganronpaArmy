@@ -5,4 +5,5 @@ using UnityEngine;
 public interface IWorldHandler
 {
     public void HandleConversationEnd();
+    public void PlayConversationNode(int index);
 }

@@ -62,17 +62,17 @@ namespace DIALOGUE
 
         public void HideSpeakerName() => dialogueContainer.nameContainer.Hide();
 
-        public Coroutine Say(string speaker, string dialogue)
-        {
-            List<string> conversation = new List<string>() { $"{speaker} \"{dialogue}\"" };
-            return Say(conversation);
-        }
+        // public Coroutine Say(string speaker, string dialogue)
+        // {
+        //     List<string> conversation = new List<string>() { $"{speaker} \"{dialogue}\"" };
+        //     return Say();
+        // }
 
-        public Coroutine Say(List<string> conversation)
+        public Coroutine Say(List<DialogueNode> nodes)
         {
             if(!isActive)
             SetIsActive(true);
-            return conversationManager.StartConversation(conversation);
+            return conversationManager.StartConversation(nodes);
         }
 
         public void SetIsActive(bool isActive) // Not to be cofnsued with Unity's GameObject.SetActive() 
