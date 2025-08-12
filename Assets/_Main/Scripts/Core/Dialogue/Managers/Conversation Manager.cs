@@ -17,14 +17,14 @@ namespace DIALOGUE
         private bool userPrompt = false;
         
         public ICharacterHandler characterHandler;
-        public IWorldHandler worldHandler;
+        public IConversationNodePlayer conversationNodePlayer;
 
-        public ConversationManager(TextArchitect architect, ICharacterHandler characterHandler, IWorldHandler worldHandler)
+        public ConversationManager(TextArchitect architect, ICharacterHandler characterHandler, IConversationNodePlayer worldHandler)
         {
             this.architect = architect;
             dialogueSystem.onUserPrompt_Next += OnUserPrompt_Next;
             this.characterHandler = characterHandler;
-            this.worldHandler = worldHandler;
+            this.conversationNodePlayer = worldHandler;
         }
 
         private void OnUserPrompt_Next()
@@ -52,13 +52,15 @@ namespace DIALOGUE
 
         IEnumerator RunningConversation(List<DialogueNode> nodes)
         {
+
+            
             for(int i = 0; i < nodes.Count; i++)
             {
                 VNTextData textData = nodes[i].textData as VNTextData;
                 
                // characterHandler?.OnLineParsed(textData);
                DialogueSystem.instance.ShowSpeakerName(nodes[i].character.displayName);
-                worldHandler.PlayConversationNode(i);
+                conversationNodePlayer.PlayConversationNode(i);
                 yield return BuildDialogue(textData.text);
                 //Run any commands
                 yield return Line_RunCommands(textData.commands);
@@ -66,22 +68,9 @@ namespace DIALOGUE
 
             }
 
-            worldHandler.HandleConversationEnd();
+            conversationNodePlayer.HandleConversationEnd();
         }
         
-        // IEnumerator Line_RunDialogue(VNTextData textData)
-        // {
-        //     //Show or hide the speaker name if there is one
-        //     if (line.hasSpeaker)
-        //     {
-        //         dialogueSystem.ShowSpeakerName(line.speakerData.displayName);
-        //     }
-        //          
-        //     //Build Dialogue
-        //     
-        //     yield return BuildLineSegments(textData.text);
-        //
-        // }
 
         IEnumerator Line_RunCommands(List<Command> commands)
         {

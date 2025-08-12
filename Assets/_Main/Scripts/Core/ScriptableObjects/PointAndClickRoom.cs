@@ -48,7 +48,7 @@ public class PointAndClickRoom : Room
             GameEvent currentGameEvent = WorldManager.instance.currentGameEvent;
             if(currentGameEvent is PointAndClickEvent && !((PointAndClickEvent)(currentGameEvent)).isExitable)
             {
-                DialogueSystem.instance.Say(WorldManager.instance.currentGameEvent.unallowedText);
+                VNDialogueManager.instance.StartConversation(WorldManager.instance.currentGameEvent.unallowedText);
             }
             
             else

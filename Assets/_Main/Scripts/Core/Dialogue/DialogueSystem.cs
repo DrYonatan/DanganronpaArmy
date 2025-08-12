@@ -14,7 +14,7 @@ namespace DIALOGUE
         private TextArchitect architect;
 
         public MonoBehaviour characterHandler;
-        public MonoBehaviour worldHandler;
+        public MonoBehaviour conversationNodePlayer;
         public static DialogueSystem instance { get; private set; }
 
         public delegate void DialogueSystemEvent();
@@ -44,7 +44,7 @@ namespace DIALOGUE
                 return;
 
             architect = new TextArchitect(dialogueContainer.dialogueText);
-            conversationManager = new ConversationManager(architect, characterHandler as ICharacterHandler, worldHandler as IWorldHandler);
+            conversationManager = new ConversationManager(architect, characterHandler as ICharacterHandler, conversationNodePlayer as IConversationNodePlayer);
         }
 
         public void OnUserPrompt_Next()

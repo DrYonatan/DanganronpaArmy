@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac78edb917e5f4142b7f642498064325, type: 3}
+  m_Name: Door
+  m_EditorClassIdentifier: 
+  CharacterInfos:
+  - Character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
+    LookDirection: 0
+  - Character: {fileID: 11400000, guid: e556e59756b89ea4ab97f97255a16dac, type: 2}
+    LookDirection: 2
+  nodes:
+  - nodeRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    commandsScrollPosition: {x: 0, y: 0}
+    title: 
+    drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
+    character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
+    expression: 0
+    textData:
+      rid: 3042479773750657024
+  - nodeRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    commandsScrollPosition: {x: 0, y: 0}
+    title: 
+    drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
+    character: {fileID: 11400000, guid: e556e59756b89ea4ab97f97255a16dac, type: 2}
+    expression: 0
+    textData:
+      rid: 3042479794503024641
+  references:
+    version: 2
+    RefIds:
+    - rid: 3042479773750657024
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "\u05D0\u05D5\u05DC\u05D9 \u05D0\u05E0\u05E1\u05D4 \u05D0\u05EA \u05D4\u05D3\u05DC\u05EA
+          \u05D4\u05D6\u05D0\u05EA?"
+        commands: []
+    - rid: 3042479794503024641
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "\u05E9\u05DC\u05D5\u05E1"
+        commands: []

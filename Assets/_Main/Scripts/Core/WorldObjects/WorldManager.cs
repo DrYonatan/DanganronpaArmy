@@ -4,7 +4,7 @@ using UnityEngine;
 using DIALOGUE;
 using CHARACTERS;
 
-public class WorldManager : MonoBehaviour, IWorldHandler
+public class WorldManager : MonoBehaviour
 {
     public GameObject characterPanel = null;
     public GameEvent currentGameEvent;
@@ -21,11 +21,6 @@ public class WorldManager : MonoBehaviour, IWorldHandler
         Dictionary<string, GameEvent> runtimeGameEvents = ProgressManager.instance.runtimeGameEvents;
         currentGameEvent = runtimeGameEvents["InsideRoom"];
         ReturningToWorld();
-    }
-
-    public void PlayConversationNode(int i)
-    {
-        
     }
 
     public void ReturningToWorld()

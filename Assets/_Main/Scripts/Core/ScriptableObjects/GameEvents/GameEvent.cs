@@ -19,11 +19,11 @@ public abstract class GameEvent : ScriptableObject
 
     public bool startEventImmediately = false; // used to know if to start the event as soon as the previous one ends or only after finish text
 
-    public List<DialogueNode> finishText;
+    public VNConversationSegment finishText;
 
     public List<GameEvent> conditionEvents;
 
-    public List<DialogueNode> unallowedText;
+    public VNConversationSegment unallowedText;
 
     public Dictionary<string, ObjectData> charactersData = new Dictionary<string, ObjectData>();
 
@@ -40,7 +40,7 @@ public abstract class GameEvent : ScriptableObject
     {
         if (finishText != null)
         {
-            DialogueSystem.instance.Say(finishText);
+            VNDialogueManager.instance.StartConversation(finishText);
 
             finishText = null;
         }

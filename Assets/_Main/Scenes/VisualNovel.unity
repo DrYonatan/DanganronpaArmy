@@ -1840,6 +1840,7 @@ Transform:
   - {fileID: 1203422914}
   - {fileID: 885240361}
   - {fileID: 148780431}
+  - {fileID: 1087552700}
   m_Father: {fileID: 2090243131}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &475160531
@@ -1962,7 +1963,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -89.29915, y: 0, z: 0, w: 0}
+  m_margin: {x: -832.28156, y: 0, z: -50.2446, w: -49.143566}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -3831,6 +3832,51 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!1 &1087552699
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1087552700}
+  - component: {fileID: 1087552701}
+  m_Layer: 0
+  m_Name: NodePlayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1087552700
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1087552699}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 472655885}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1087552701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1087552699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b21b4cd8d9bf4556a010ffe732d25f0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentConversation: {fileID: 0}
 --- !u!1 &1121746188
 GameObject:
   m_ObjectHideFlags: 0
@@ -4451,7 +4497,7 @@ MonoBehaviour:
       nameText: {fileID: 475160533}
     dialogueText: {fileID: 1575056481}
   characterHandler: {fileID: 61787104}
-  worldHandler: {fileID: 215763213}
+  conversationNodePlayer: {fileID: 1087552701}
   dialogueBoxAnimator: {fileID: 276346476}
 --- !u!1 &1378537085
 GameObject:

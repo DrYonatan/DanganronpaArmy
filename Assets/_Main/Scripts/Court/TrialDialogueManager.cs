@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DIALOGUE;
 
-public class TrialDialogueManager : MonoBehaviour, IWorldHandler
+public class TrialDialogueManager : MonoBehaviour, IConversationNodePlayer
 {
     public static TrialDialogueManager instance { get; private set; }
     
@@ -57,9 +57,14 @@ public class TrialDialogueManager : MonoBehaviour, IWorldHandler
         
     }
 
+    public void StartConversation(VNConversationSegment conversationSegment)
+    {
+        throw new System.NotImplementedException();
+    }
+
     public void HandleConversationEnd()
     {
         // Should be something like GoToNextCourtEvent()
     }
-
+    
 }

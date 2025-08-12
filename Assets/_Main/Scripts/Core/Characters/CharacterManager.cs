@@ -247,8 +247,8 @@ namespace CHARACTERS
             {
                 speakerName = GetSpeakerEnglishName(line);
                 string direction = GetCharacterPosition(speakerName);
-                if (characters.ContainsKey(speakerName.ToLower()))
-                    CameraManager.instance.MoveCamera(direction, 0.3f);
+             //   if (characters.ContainsKey(speakerName.ToLower()))
+             //       CameraManager.instance.MoveCamera(direction, 0.3f);
                 if(!speakerName.Equals(""))
                     DecideCharactersToHide(speakerName);
             }

@@ -18,12 +18,28 @@ public class VNDialogueEditor : EditorWindow
       window.minSize = new Vector2(600, 800);
    }
 
-   public void SetContainer()
+   void SetConversationSettings()
+   {
+      if (container != null)
+      {
+         foreach(VNCharacterInfo characterInfo in container.CharacterInfos)
+         {
+            characterInfo.Character = (CharacterCourt)EditorGUILayout.ObjectField(characterInfo.Character, typeof(CharacterCourt), false, GUILayout.Width(50));
+            characterInfo.LookDirection = (CameraLookDirection)EditorGUILayout.EnumPopup(
+               "Character Position",
+               characterInfo.LookDirection
+            );
+         }
+      }
+      
+   }
+
+   void SetContainer()
    {
       container = (VNConversationSegment)EditorGUILayout.ObjectField(container, typeof(VNConversationSegment), false, GUILayout.Width(200));
    }
 
-   public void SetNewList()
+   void SetNewList()
    {
       container.nodes = new List<DialogueNode>();
    }
@@ -31,6 +47,7 @@ public class VNDialogueEditor : EditorWindow
    private void OnGUI()
    {
       SetContainer();
+      SetConversationSettings();
       
       if (container == null)
       {

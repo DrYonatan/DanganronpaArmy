@@ -28,11 +28,11 @@ public class CameraManager : MonoBehaviour
         initialRotation = GameObject.Find("World/CameraStartPos").transform.rotation;
     }
 
-    public void MoveCamera(string direction, float duration)
+    public void MoveCamera(CameraLookDirection direction, float duration)
     {
         if (isInFinalRotation)
         {
-            StartCameraCoroutine(MoveCamera(duration, direction));
+            StartCameraCoroutine(StartMovingCamera(direction, duration));
         }
     }
 
@@ -136,25 +136,25 @@ public class CameraManager : MonoBehaviour
     }
 
 
-    IEnumerator MoveCamera(float duration, string location)
+    IEnumerator StartMovingCamera(CameraLookDirection direction,  float duration)
     {
         GameObject characters = GameObject.Find(charactersLayerPath);
         float elapsedTime = 0;
         int characterX = 0;
         Quaternion rotation = Quaternion.Euler(0f, 0f, 0f);
 
-        switch (location)
+        switch (direction)
         {
-            case "right":
+            case CameraLookDirection.Right:
                 characterX = CHARACTERS_RIGHT;
                 rotation = Quaternion.Euler(0f, 12f, 0f);
                 break;
 
-            case "middle":
+            case CameraLookDirection.Middle:
                 characterX = CHARACTERS_MIDDLE;
                 break;
 
-            case "left":
+            case CameraLookDirection.Left:
                 characterX = CHARACTERS_LEFT;
                 rotation = Quaternion.Euler(0f, -12f, 0f);
                 break;
