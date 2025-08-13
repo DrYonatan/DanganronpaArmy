@@ -20,7 +20,7 @@ public class RoomGate : Interactable
         else
         {
             // if the room is unallowed, read the "you can't go into this room" text
-            VNDialogueManager.instance.StartConversation(WorldManager.instance.currentGameEvent.unallowedText);
+            VNNodePlayer.instance.StartConversation(WorldManager.instance.currentGameEvent.unallowedText);
         }
     }
 

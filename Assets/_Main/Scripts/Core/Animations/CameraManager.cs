@@ -11,9 +11,9 @@ public class CameraManager : MonoBehaviour
 
     public const string charactersLayerPath = "VN controller/Root/Canvas - Main/LAYERS/2 - Characters";
 
-    private const int CHARACTERS_RIGHT = -1400;
+    private const int CHARACTERS_RIGHT = -1800;
     private const int CHARACTERS_MIDDLE = 0;
-    private const int CHARACTERS_LEFT = 1400;
+    private const int CHARACTERS_LEFT = 1800;
 
     public Quaternion initialRotation;
 

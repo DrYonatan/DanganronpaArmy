@@ -163,7 +163,6 @@ public class WorldManager : MonoBehaviour
     public void HandleConversationEnd()
     {
         DialogueSystem.instance.SetIsActive(false);
-        CharacterManager.instance.DestroyAllCharacters();
         currentGameEvent.UpdateEvent();
         GameObject characters = GameObject.Find("World/World Objects/Characters");
         if(characters != null)

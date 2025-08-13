@@ -40,7 +40,7 @@ public abstract class GameEvent : ScriptableObject
     {
         if (finishText != null)
         {
-            VNDialogueManager.instance.StartConversation(finishText);
+            VNNodePlayer.instance.StartConversation(finishText);
 
             finishText = null;
         }

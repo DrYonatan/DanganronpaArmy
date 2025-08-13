@@ -30,7 +30,7 @@ public abstract class ConversationInteractable : Interactable
             text = text2;
         }
 
-        VNDialogueManager.instance.StartConversation(text);
+        VNNodePlayer.instance.StartConversation(text);
         isClicked = true;
     }
 }
