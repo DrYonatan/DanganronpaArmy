@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using CHARACTERS;
 using UnityEngine;
 using DIALOGUE;
 
@@ -10,10 +11,7 @@ public class CameraManager : MonoBehaviour
     public Transform cameraTransform;
 
     public const string charactersLayerPath = "VN controller/Root/Canvas - Main/LAYERS/2 - Characters";
-
-    private const int CHARACTERS_RIGHT = -1800;
-    private const int CHARACTERS_MIDDLE = 0;
-    private const int CHARACTERS_LEFT = 1800;
+    
 
     public Quaternion initialRotation;
 
@@ -138,45 +136,55 @@ public class CameraManager : MonoBehaviour
 
     IEnumerator StartMovingCamera(CameraLookDirection direction,  float duration)
     {
-        GameObject characters = GameObject.Find(charactersLayerPath);
+        RectTransform charactersLayer = VNCharacterManager.instance.characterLayer;
         float elapsedTime = 0;
-        int characterX = 0;
+        float characterX = 0;
         Quaternion rotation = Quaternion.Euler(0f, 0f, 0f);
 
         switch (direction)
         {
             case CameraLookDirection.Right:
-                characterX = CHARACTERS_RIGHT;
-                rotation = Quaternion.Euler(0f, 12f, 0f);
+                characterX = -VNCharacterManager.instance.right.anchoredPosition.x;
+                rotation = Quaternion.Euler(0f, 20f, 0f);
+                break;
+            
+            case CameraLookDirection.MidRight:
+                characterX = -VNCharacterManager.instance.midRight.anchoredPosition.x;
+                rotation = Quaternion.Euler(0f, 10f, 0f);
                 break;
 
             case CameraLookDirection.Middle:
-                characterX = CHARACTERS_MIDDLE;
+                characterX = -VNCharacterManager.instance.middle.anchoredPosition.x;
+                break;
+            
+            case CameraLookDirection.MidLeft:
+                characterX = -VNCharacterManager.instance.midLeft.anchoredPosition.x;
+                rotation = Quaternion.Euler(0f, -10f, 0f);
                 break;
 
             case CameraLookDirection.Left:
-                characterX = CHARACTERS_LEFT;
-                rotation = Quaternion.Euler(0f, -12f, 0f);
+                characterX = -VNCharacterManager.instance.left.anchoredPosition.x;
+                rotation = Quaternion.Euler(0f, -20f, 0f);
                 break;
         }
 
         Quaternion startRotate = Camera.main.transform.rotation;
         Quaternion targetRotate = initialRotation * rotation;
 
-        Vector3 charactersStartPos = characters.transform.localPosition;
-        Vector3 charactersTargetPos = new Vector3(characterX, charactersStartPos.y, charactersStartPos.z);
+        Vector2 charactersStartPos = charactersLayer.anchoredPosition;
+        Vector2 charactersTargetPos = new Vector2(characterX, charactersStartPos.y);
 
 
         while (elapsedTime < duration)
         {
             Camera.main.transform.rotation = Quaternion.Slerp(startRotate, targetRotate, elapsedTime / duration);
-            characters.transform.localPosition =
+            charactersLayer.anchoredPosition =
                 Vector3.Lerp(charactersStartPos, charactersTargetPos, elapsedTime / duration);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        characters.transform.localPosition = charactersTargetPos;
+        charactersLayer.anchoredPosition = charactersTargetPos;
     }
 
     public void ChangeCameraBackground(bool isInside)
