@@ -16,7 +16,7 @@ using UnityEngine;
             this.currentConversation = segment;
             foreach (VNCharacterInfo characterInfo in segment.CharacterInfos)
             {
-                CharacterManager.instance.CreateCharacter(characterInfo);
+                VNCharacterManager.instance.CreateCharacter(characterInfo);
             }
             DialogueSystem.instance.Say(segment.nodes);
         }
@@ -26,13 +26,15 @@ using UnityEngine;
             CharacterCourt speaker = currentConversation.nodes[index].character;
             VNCharacterInfo info =
                 currentConversation.CharacterInfos.Find(characterInfo => characterInfo.Character == speaker);
-            CharacterManager.instance.ShowOnlySpeaker(info);
+            VNCharacterManager.instance.ShowOnlySpeaker(info);
+            if(index > 0 && currentConversation.nodes[index].expression != currentConversation.nodes[index-1].expression)
+            VNCharacterManager.instance.SwitchEmotion(info.Character, currentConversation.nodes[index].expression);
             CameraManager.instance.MoveCamera(info.LookDirection, 0.4f);
         }
 
         public void HandleConversationEnd()
         {
-            CharacterManager.instance.DestroyCharacters();
+            VNCharacterManager.instance.DestroyCharacters();
             WorldManager.instance.HandleConversationEnd();
         }
 

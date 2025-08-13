@@ -8,9 +8,9 @@ using UnityEngine.UI;
 
 namespace CHARACTERS
 {
-    public class CharacterManager : MonoBehaviour
+    public class VNCharacterManager : MonoBehaviour
     {
-        public static CharacterManager instance { get; private set; }
+        public static VNCharacterManager instance { get; private set; }
 
         public Transform characterLayer;
 
@@ -28,9 +28,11 @@ namespace CHARACTERS
         public void CreateCharacter(VNCharacterInfo characterInfo)
         {
             GameObject characterObj = Instantiate(characterInfo.Character.vnObjectPrefab, characterLayer);
+            characterObj.GetComponent<CanvasGroup>().alpha = 1f;
             characterObj.name = characterInfo.Character.name;
             characterObj.transform.position = GetCharacterPosition(characterInfo.LookDirection);
             characterObjects.Add(characterInfo.Character, characterObj);
+            
         }
 
         public void ShowOnlySpeaker(VNCharacterInfo characterInfo)
@@ -51,7 +53,6 @@ namespace CHARACTERS
         void ShowCharacter(GameObject characterObj)
         {
             CanvasGroup canvasGroup = characterObj.GetComponent<CanvasGroup>();
-            canvasGroup.alpha = 0f;
             canvasGroup.DOFade(1f,  0.25f);
         }
         void HideCharacter(GameObject characterObj)
@@ -67,6 +68,20 @@ namespace CHARACTERS
             {
                 Destroy(characterObj.Value);
             }
+        }
+
+        public void SwitchEmotion(CharacterCourt character, CharacterState expression)
+        {
+            Transform characterTransform = characterObjects[character].transform;
+            GameObject oldSpriteObj = characterTransform.GetChild(0).gameObject;
+            GameObject newSpriteObj = Instantiate(oldSpriteObj, characterTransform);
+            newSpriteObj.name = oldSpriteObj.name;
+            CanvasGroup oldSprite = oldSpriteObj.GetComponent<CanvasGroup>();
+            Image newSprite = newSpriteObj.GetComponent<Image>();
+            newSprite.sprite = character.Sprites[(int)expression];
+            oldSprite.DOFade(0f, 0.5f).OnComplete(() => Destroy(oldSpriteObj));
+            newSprite.color = Color.black;
+            newSprite.DOColor(Color.white, 0.5f);
         }
 
         Vector3 GetCharacterPosition(CameraLookDirection lookDirection)
