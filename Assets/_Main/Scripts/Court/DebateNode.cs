@@ -5,36 +5,16 @@ using UnityEngine;
 namespace _Main.Scripts.Court
 {
     [Serializable]
-    public class TextLine
-    {
-        public string text;
-        public List<TextEffect> textEffect;
-        public Vector3 spawnOffset;
-        public Vector3 scale = Vector3.one;
-        public float ttl = 1f;
-
-        public TextLine()
-        {
-            text = "";
-            textEffect = new List<TextEffect>();
-            spawnOffset = Vector3.zero;
-            ttl = 1f;
-        }
-    }
-    
-    [Serializable]
-    public class DebateNode : DialogueNode
+    public class DebateNode : DiscussionNode
     {
         public Evidence evidence;
         public string statement;
-        public Color statementColor;
-        public List<TextLine> textLines;
-        public CharacterState expression;
         public AudioClip voiceLine;
+        public Vector2 textLinesScrollPosition;
 
         public DebateNode(DrawNode _drawNode) : base(_drawNode)
         {
-            textLines = new List<TextLine>();
+            textData = new DebateTextData();
         }
     }
 }

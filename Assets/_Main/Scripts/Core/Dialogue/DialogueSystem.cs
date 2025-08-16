@@ -6,15 +6,13 @@ namespace DIALOGUE
     public class DialogueSystem : MonoBehaviour
     {
         public bool isActive;
-        [SerializeField] private DialogueSystemConfigurationSO _config;
-        public DialogueSystemConfigurationSO config => _config;
 
         public DialogueContainer dialogueContainer = new DialogueContainer();
         private ConversationManager conversationManager;
         private TextArchitect architect;
 
         public MonoBehaviour characterHandler;
-        public MonoBehaviour worldHandler;
+        public MonoBehaviour conversationNodePlayer;
         public static DialogueSystem instance { get; private set; }
 
         public delegate void DialogueSystemEvent();
@@ -44,7 +42,7 @@ namespace DIALOGUE
                 return;
 
             architect = new TextArchitect(dialogueContainer.dialogueText);
-            conversationManager = new ConversationManager(architect, characterHandler as ICharacterHandler, worldHandler as IWorldHandler);
+            conversationManager = new ConversationManager(architect, characterHandler as ICharacterHandler, conversationNodePlayer as IConversationNodePlayer);
         }
 
         public void OnUserPrompt_Next()
@@ -62,17 +60,17 @@ namespace DIALOGUE
 
         public void HideSpeakerName() => dialogueContainer.nameContainer.Hide();
 
-        public Coroutine Say(string speaker, string dialogue)
-        {
-            List<string> conversation = new List<string>() { $"{speaker} \"{dialogue}\"" };
-            return Say(conversation);
-        }
+        // public Coroutine Say(string speaker, string dialogue)
+        // {
+        //     List<string> conversation = new List<string>() { $"{speaker} \"{dialogue}\"" };
+        //     return Say();
+        // }
 
-        public Coroutine Say(List<string> conversation)
+        public Coroutine Say(List<DialogueNode> nodes)
         {
             if(!isActive)
             SetIsActive(true);
-            return conversationManager.StartConversation(conversation);
+            return conversationManager.StartConversation(nodes);
         }
 
         public void SetIsActive(bool isActive) // Not to be cofnsued with Unity's GameObject.SetActive() 

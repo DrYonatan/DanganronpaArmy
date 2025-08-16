@@ -4,7 +4,7 @@ using UnityEngine;
 using DIALOGUE;
 using CHARACTERS;
 
-public class WorldManager : MonoBehaviour, IWorldHandler
+public class WorldManager : MonoBehaviour
 {
     public GameObject characterPanel = null;
     public GameEvent currentGameEvent;
@@ -21,14 +21,6 @@ public class WorldManager : MonoBehaviour, IWorldHandler
         Dictionary<string, GameEvent> runtimeGameEvents = ProgressManager.instance.runtimeGameEvents;
         currentGameEvent = runtimeGameEvents["InsideRoom"];
         ReturningToWorld();
-    }
-
-    void StartConversation(string textFile)
-    {
-        List<string> lines = FileManager.ReadTextAsset($"GameEvents/Story/{textFile}");
-
-        DialogueSystem.instance.Say(lines);
-
     }
 
     public void ReturningToWorld()
@@ -171,7 +163,6 @@ public class WorldManager : MonoBehaviour, IWorldHandler
     public void HandleConversationEnd()
     {
         DialogueSystem.instance.SetIsActive(false);
-        CharacterManager.instance.DestroyAllCharacters();
         currentGameEvent.UpdateEvent();
         GameObject characters = GameObject.Find("World/World Objects/Characters");
         if(characters != null)

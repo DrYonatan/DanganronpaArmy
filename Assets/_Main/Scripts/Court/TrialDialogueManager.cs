@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using DIALOGUE;
 
-public class TrialDialogueManager : MonoBehaviour, IWorldHandler
+public class TrialDialogueManager : MonoBehaviour, IConversationNodePlayer
 {
     public static TrialDialogueManager instance { get; private set; }
     
-    [SerializeField] ConversationSegment conversation;
-    int conversationIndex;
+    [SerializeField] DiscussionSegment discussion;
     [SerializeField] CameraEffectController effectController;
     [SerializeField] CameraController cameraController;
     [SerializeField] List<CharacterStand> characterStands;
@@ -20,34 +19,52 @@ public class TrialDialogueManager : MonoBehaviour, IWorldHandler
 
     void Start()
     {
-        PlayConversationNode();
+        List<DialogueNode> nodes = new List<DialogueNode>();
+        foreach (DiscussionNode discussionNode in discussion.discussionNodes)
+        {
+            nodes.Add(discussionNode);
+        }
+       DialogueSystem.instance.Say(nodes);
     }
 
-    void PlayConversationNode()
+    
+
+    public void PlayConversationNode(int conversationIndex)
     {
-        ConversationNode nextNode = conversation.conversationNodes[conversationIndex];
+        CharacterCourt prevCharacter = ScriptableObject.CreateInstance<CharacterCourt>();
+        if (conversationIndex > 0)
+        {
+            prevCharacter = discussion.discussionNodes[conversationIndex - 1].character;
+        }
+        DiscussionNode nextNode = discussion.discussionNodes[conversationIndex];
         CharacterStand characterStand = characterStands.Find(stand => stand.character == nextNode.character);
-        cameraController.TeleportToTarget(characterStand.transform, characterStand.heightPivot, nextNode.positionOffset, nextNode.rotationOffset, nextNode.fovOffset);
-        List<string> lines = nextNode.textLines;
-        DialogueSystem.instance.ShowSpeakerName(nextNode.character.displayName);
-        ((CourtTextBoxAnimator)(DialogueSystem.instance.dialogueBoxAnimator)).ChangeFace(nextNode.character.name);
-        DialogueSystem.instance.Say(lines);
+        if (!nextNode.usePrevCamera)
+        {
+            cameraController.TeleportToTarget(characterStand.transform, characterStand.heightPivot, nextNode.positionOffset, nextNode.rotationOffset, nextNode.fovOffset);
+            effectController.Reset();
+        }
+
+        if (conversationIndex == 0 || prevCharacter != nextNode.character)
+        {
+            ((CourtTextBoxAnimator)(DialogueSystem.instance.dialogueBoxAnimator)).ChangeFace(nextNode.character.name);
+        }
+  
+        
         foreach (CameraEffect cameraEffect in nextNode.cameraEffects)
         {
             effectController.StartEffect(cameraEffect);
         }
+        
     }
 
-    void GoToNextNode()
+    public void StartConversation(VNConversationSegment conversationSegment)
     {
-        conversationIndex++;
-        effectController.Reset();
-        PlayConversationNode();
+        throw new System.NotImplementedException();
     }
 
     public void HandleConversationEnd()
     {
-        GoToNextNode();
+        // Should be something like GoToNextCourtEvent()
     }
-
+    
 }

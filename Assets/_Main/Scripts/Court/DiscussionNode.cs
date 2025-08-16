@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class ConversationNode : DialogueNode
+public class DiscussionNode : TrialDialogueNode
 {
-    public List<string> textLines;
-
-    public ConversationNode(DrawNode _drawNode) : base(_drawNode)
+    public bool usePrevCamera;
+    public DiscussionNode(DrawNode _drawNode) : base(_drawNode)
     {
-        textLines = new List<string>();
+        textData = new VNTextData();
     }
 
     public void DrawNode()

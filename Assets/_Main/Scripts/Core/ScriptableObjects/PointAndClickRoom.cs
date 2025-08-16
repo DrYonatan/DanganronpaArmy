@@ -48,9 +48,7 @@ public class PointAndClickRoom : Room
             GameEvent currentGameEvent = WorldManager.instance.currentGameEvent;
             if(currentGameEvent is PointAndClickEvent && !((PointAndClickEvent)(currentGameEvent)).isExitable)
             {
-                DialogueSystem.instance.Say(FileManager.ReadTextAsset(WorldManager.instance.currentGameEvent.unallowedText ?
-                WorldManager.instance.currentGameEvent.unallowedText : 
-                Resources.Load<TextAsset>("GameEvents/unallowed")));
+                VNNodePlayer.instance.StartConversation(WorldManager.instance.currentGameEvent.unallowedText);
             }
             
             else

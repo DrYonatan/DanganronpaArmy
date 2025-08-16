@@ -3,15 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public abstract class DialogueNode 
+public abstract class TrialDialogueNode : DialogueNode
 {
-    public Rect nodeRect;
-    public string title;
-
-    public DrawNode drawNode;
-    
-    public string text;
-    public CharacterCourt character;
     public CharacterStand characterStand;
     
     public List<CameraEffect> cameraEffects = new List<CameraEffect>();
@@ -23,9 +16,9 @@ public abstract class DialogueNode
     [NonSerialized] public Camera previewCamera;
     [NonSerialized] public RenderTexture previewTexture;
     
-    protected DialogueNode(DrawNode _drawNode)
+    protected TrialDialogueNode(DrawNode _drawNode): base(_drawNode)
     {
-        drawNode = _drawNode;
+        
     }
 
     public void DrawNode()

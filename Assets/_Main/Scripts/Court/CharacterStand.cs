@@ -10,6 +10,7 @@ public class CharacterStand : MonoBehaviour
     public CharacterCourt character;
     public CharacterState state;
     public SpriteRenderer spriteRenderer;
+    public SpriteRenderer silhouetteRenderer;
     public Transform heightPivot;
     // Start is called before the first frame update
     void Start()
@@ -26,13 +27,16 @@ public class CharacterStand : MonoBehaviour
         if (character.Sprites.Count < stateIndex)
         {
             spriteRenderer.sprite = character.Sprites[0];
+            silhouetteRenderer.sprite = character.Sprites[0];
             return;
         }
         if(character.Sprites[stateIndex] == null)
         {
             spriteRenderer.sprite = character.Sprites[0];
+            silhouetteRenderer.sprite = character.Sprites[0];
             return;
         }
         spriteRenderer.sprite = character.Sprites[stateIndex];
+        silhouetteRenderer.sprite = character.Sprites[stateIndex];
     }
 }

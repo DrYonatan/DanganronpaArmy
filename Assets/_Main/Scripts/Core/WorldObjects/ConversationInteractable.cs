@@ -5,8 +5,8 @@ using UnityEngine;
 public abstract class ConversationInteractable : Interactable
 {
     public bool isClicked = false;
-    public TextAsset text1;
-    public TextAsset text2;
+    public VNConversationSegment text1;
+    public VNConversationSegment text2;
     
     public override void FinishInteraction()
     {
@@ -20,17 +20,17 @@ public abstract class ConversationInteractable : Interactable
 
     protected void StartConversation()
     {
-        List<string> lines;
+        VNConversationSegment text = ScriptableObject.CreateInstance<VNConversationSegment>();
         if (!isClicked)
         {
-            lines = FileManager.ReadTextAsset(text1);
+            text = text1;
         }
         else
         {
-            lines = FileManager.ReadTextAsset(text2 ? text2 : text1);
+            text = text2;
         }
 
-        DialogueSystem.instance.Say(lines);
+        VNNodePlayer.instance.StartConversation(text);
         isClicked = true;
     }
 }

@@ -2,38 +2,39 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class TrialNodeDraw : DrawNode
+public class TrialNodeDraw : VNNodeDraw
 {
     
     private const int previewWidth = 192;
     private const int previewHeight = 108;
     public override void DrawWindow(DialogueNode b)
     {
-        b.character = (CharacterCourt)EditorGUILayout.ObjectField(b.character, typeof(CharacterCourt), false);
-        b.characterStand = GameObject.Find($"Court/Characters/{b.character?.name}")?.GetComponent<CharacterStand>();
-        
-        if (b.previewTexture != null)
-        {
-            GUILayout.Label(b.previewTexture, GUILayout.Width(previewWidth), GUILayout.Height(previewHeight));
-        }
-        else
-        {
-            GUILayout.Label("No Preview", GUILayout.Width(previewWidth), GUILayout.Height(previewHeight));
-        }
-        
-        b.positionOffset = EditorGUILayout.Vector3Field("Position Offset", b.positionOffset);
-        
-        b.rotationOffset = EditorGUILayout.Vector3Field("Rotation Offset", b.rotationOffset);
-        
-        b.fovOffset = EditorGUILayout.FloatField("Fov Offset", b.fovOffset);
-
-
-        ShowCameraEffect(ref b.cameraEffects, ref b);
-        SetupPreview(b);
-        UpdatePreview(b);
+        base.DrawWindow(b);
+        // TrialDialogueNode node = (TrialDialogueNode)b;
+        // node.character = (CharacterCourt)EditorGUILayout.ObjectField(node.character, typeof(CharacterCourt), false);
+        // node.characterStand = GameObject.Find($"Court/Characters/{node.character?.name}")?.GetComponent<CharacterStand>();
+        //
+        // if (node.previewTexture != null)
+        // {
+        //     GUILayout.Label(node.previewTexture, GUILayout.Width(previewWidth), GUILayout.Height(previewHeight));
+        // }
+        // else
+        // {
+        //     GUILayout.Label("No Preview", GUILayout.Width(previewWidth), GUILayout.Height(previewHeight));
+        // }
+        //
+        // node.positionOffset = EditorGUILayout.Vector3Field("Position Offset", node.positionOffset);
+        //
+        // node.rotationOffset = EditorGUILayout.Vector3Field("Rotation Offset", node.rotationOffset);
+        //
+        // node.fovOffset = EditorGUILayout.FloatField("Fov Offset", node.fovOffset);
+        //
+        // ShowCameraEffects(ref node.cameraEffects, ref node);
+        // SetupPreview(node);
+        // UpdatePreview(node);
     }
     
-    private void ShowCameraEffect(ref List<CameraEffect> cameraEffects, ref DialogueNode b)
+    private void ShowCameraEffects(ref List<CameraEffect> cameraEffects, ref TrialDialogueNode b)
     {
         for(int i = 0; i < cameraEffects.Count; i++)
         {
@@ -57,7 +58,7 @@ public class TrialNodeDraw : DrawNode
         b.nodeRect.height += 20;
     }
     
-    private void SetupPreview(DialogueNode b)
+    private void SetupPreview(TrialDialogueNode b)
     {
         if (b.previewTexture == null)
         {
@@ -80,7 +81,7 @@ public class TrialNodeDraw : DrawNode
         }
     }
     
-    private void UpdatePreview(DialogueNode b)
+    private void UpdatePreview(TrialDialogueNode b)
     {
         if (b.previewCamera == null || b.character == null)
             return;

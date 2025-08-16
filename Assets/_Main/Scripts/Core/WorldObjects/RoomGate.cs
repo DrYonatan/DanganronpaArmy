@@ -9,12 +9,6 @@ public class RoomGate : Interactable
 {
     public Room roomToLoad;
 
-    public override void Interact()
-    {
-        base.Interact();
-       
-    }
-
     public override void FinishInteraction()
     {
          if (((FreeRoamEvent)(WorldManager.instance.currentGameEvent)).allowedRooms.Any(item =>
@@ -26,8 +20,7 @@ public class RoomGate : Interactable
         else
         {
             // if the room is unallowed, read the "you can't go into this room" text
-            DialogueSystem.instance.Say(
-                FileManager.ReadTextAsset(WorldManager.instance.currentGameEvent.unallowedText));
+            VNNodePlayer.instance.StartConversation(WorldManager.instance.currentGameEvent.unallowedText);
         }
     }
 

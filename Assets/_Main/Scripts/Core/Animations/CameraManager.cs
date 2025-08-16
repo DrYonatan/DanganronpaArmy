@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using CHARACTERS;
 using UnityEngine;
 using DIALOGUE;
 
@@ -10,10 +11,7 @@ public class CameraManager : MonoBehaviour
     public Transform cameraTransform;
 
     public const string charactersLayerPath = "VN controller/Root/Canvas - Main/LAYERS/2 - Characters";
-
-    private const int CHARACTERS_RIGHT = -1400;
-    private const int CHARACTERS_MIDDLE = 0;
-    private const int CHARACTERS_LEFT = 1400;
+    
 
     public Quaternion initialRotation;
 
@@ -28,11 +26,11 @@ public class CameraManager : MonoBehaviour
         initialRotation = GameObject.Find("World/CameraStartPos").transform.rotation;
     }
 
-    public void MoveCamera(string direction, float duration)
+    public void MoveCamera(CameraLookDirection direction, float duration)
     {
         if (isInFinalRotation)
         {
-            StartCameraCoroutine(MoveCamera(duration, direction));
+            StartCameraCoroutine(StartMovingCamera(direction, duration));
         }
     }
 
@@ -136,47 +134,57 @@ public class CameraManager : MonoBehaviour
     }
 
 
-    IEnumerator MoveCamera(float duration, string location)
+    IEnumerator StartMovingCamera(CameraLookDirection direction,  float duration)
     {
-        GameObject characters = GameObject.Find(charactersLayerPath);
+        RectTransform charactersLayer = VNCharacterManager.instance.characterLayer;
         float elapsedTime = 0;
-        int characterX = 0;
+        float characterX = 0;
         Quaternion rotation = Quaternion.Euler(0f, 0f, 0f);
 
-        switch (location)
+        switch (direction)
         {
-            case "right":
-                characterX = CHARACTERS_RIGHT;
-                rotation = Quaternion.Euler(0f, 12f, 0f);
+            case CameraLookDirection.Right:
+                characterX = -VNCharacterManager.instance.right.anchoredPosition.x;
+                rotation = Quaternion.Euler(0f, 20f, 0f);
+                break;
+            
+            case CameraLookDirection.MidRight:
+                characterX = -VNCharacterManager.instance.midRight.anchoredPosition.x;
+                rotation = Quaternion.Euler(0f, 10f, 0f);
                 break;
 
-            case "middle":
-                characterX = CHARACTERS_MIDDLE;
+            case CameraLookDirection.Middle:
+                characterX = -VNCharacterManager.instance.middle.anchoredPosition.x;
+                break;
+            
+            case CameraLookDirection.MidLeft:
+                characterX = -VNCharacterManager.instance.midLeft.anchoredPosition.x;
+                rotation = Quaternion.Euler(0f, -10f, 0f);
                 break;
 
-            case "left":
-                characterX = CHARACTERS_LEFT;
-                rotation = Quaternion.Euler(0f, -12f, 0f);
+            case CameraLookDirection.Left:
+                characterX = -VNCharacterManager.instance.left.anchoredPosition.x;
+                rotation = Quaternion.Euler(0f, -20f, 0f);
                 break;
         }
 
         Quaternion startRotate = Camera.main.transform.rotation;
         Quaternion targetRotate = initialRotation * rotation;
 
-        Vector3 charactersStartPos = characters.transform.localPosition;
-        Vector3 charactersTargetPos = new Vector3(characterX, charactersStartPos.y, charactersStartPos.z);
+        Vector2 charactersStartPos = charactersLayer.anchoredPosition;
+        Vector2 charactersTargetPos = new Vector2(characterX, charactersStartPos.y);
 
 
         while (elapsedTime < duration)
         {
             Camera.main.transform.rotation = Quaternion.Slerp(startRotate, targetRotate, elapsedTime / duration);
-            characters.transform.localPosition =
+            charactersLayer.anchoredPosition =
                 Vector3.Lerp(charactersStartPos, charactersTargetPos, elapsedTime / duration);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        characters.transform.localPosition = charactersTargetPos;
+        charactersLayer.anchoredPosition = charactersTargetPos;
     }
 
     public void ChangeCameraBackground(bool isInside)
