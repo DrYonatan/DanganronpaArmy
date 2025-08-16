@@ -39,7 +39,7 @@ public class CameraSettingsPopUp : PopupWindowContent
         ShowCameraEffects(ref node.cameraEffects, ref node);
     }
     
-    private void UpdatePreview(TrialDialogueNode b)
+    private void UpdatePreview(DiscussionNode b)
     {
         if (b.previewCamera == null || b.character == null)
             return;
@@ -82,7 +82,7 @@ public class DiscussionNodeDraw : VNNodeDraw
 {
     private const int previewWidth = 240;
     private const int previewHeight = 135;
-    public override void DrawWindow(DialogueNode b)
+    public override void DrawWindow(DialogueNode b, float windowWidth, float windowHeight)
     {
         DiscussionNode node = b as DiscussionNode;
         
@@ -95,7 +95,7 @@ public class DiscussionNodeDraw : VNNodeDraw
         GUILayout.BeginVertical();
         node.usePrevCamera = GUILayout.Toggle(node.usePrevCamera, "use previous camera");
         
-        base.DrawWindow(b);
+        base.DrawWindow(b, windowWidth, windowHeight);
         GUILayout.EndVertical();
  
         node.characterStand = GameObject.Find($"Court/Characters/{node.character?.name}")?.GetComponent<CharacterStand>();
@@ -131,7 +131,7 @@ public class DiscussionNodeDraw : VNNodeDraw
 
     }
     
-    private void SetupPreview(TrialDialogueNode b)
+    private void SetupPreview(DiscussionNode b)
     {
         if (b.previewTexture == null)
         {
@@ -152,7 +152,7 @@ public class DiscussionNodeDraw : VNNodeDraw
         }
     }
     
-    private void UpdatePreview(TrialDialogueNode b)
+    private void UpdatePreview(DiscussionNode b)
     {
         if (b.previewCamera == null || b.character == null)
             return;

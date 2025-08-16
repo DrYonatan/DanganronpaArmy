@@ -5,12 +5,12 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Behaviour Editor/Draw/Dialogue Node Draw")]
 public class VNNodeDraw : DrawNode
 {
-    public override void DrawWindow(DialogueNode b)
+    public override void DrawWindow(DialogueNode b, float windowWidth, float windowHeight)
     {
         GUIStyle style = new GUIStyle();
         style.normal.background = Texture2D.grayTexture;
         
-        GUILayout.BeginHorizontal(style, GUILayout.Width(1400));
+        GUILayout.BeginHorizontal(style);
         
         GUILayout.BeginVertical(GUILayout.Width(300));
         b.character = (CharacterCourt)EditorGUILayout.ObjectField(b.character, typeof(CharacterCourt), false);
@@ -18,16 +18,16 @@ public class VNNodeDraw : DrawNode
         ShowPreviewImage(b);
         GUILayout.EndVertical();
         
-        ShowTextData(b);
+        ShowTextData(b, windowWidth * 0.5f);
         
         GUILayout.EndHorizontal();
         
     }
 
-    protected virtual void ShowTextData(DialogueNode b)
+    protected virtual void ShowTextData(DialogueNode b, float width)
     {
         VNTextData vnTextData = (VNTextData)b.textData;
-        vnTextData.text = GUILayout.TextArea(vnTextData.text, GUILayout.Height(180),  GUILayout.Width(800));
+        vnTextData.text = GUILayout.TextArea(vnTextData.text, GUILayout.Height(180),  GUILayout.Width(width));
         GUILayout.BeginVertical();
         ShowCommands(b);
         GUILayout.EndVertical();

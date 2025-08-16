@@ -22,14 +22,19 @@ public class DialogueNode
     public DialogueNode(DrawNode drawNode)
     {
         this.drawNode = drawNode;
-        textData = new VNTextData();
+        this.InitializeTextData();
     }
 
-    public void DrawNode()
+    public void DrawNode(float windowWidth, float windowHeight)
     {
         if (drawNode != null)
         {
-            drawNode.DrawWindow(this);
+            drawNode.DrawWindow(this, windowWidth, windowHeight);
         }
+    }
+
+    protected virtual void InitializeTextData()
+    {
+        this.textData = new VNTextData();
     }
 }

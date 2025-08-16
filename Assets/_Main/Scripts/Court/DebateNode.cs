@@ -14,6 +14,11 @@ namespace _Main.Scripts.Court
 
         public DebateNode(DrawNode _drawNode) : base(_drawNode)
         {
+        }
+
+
+        protected override void InitializeTextData()
+        {
             textData = new DebateTextData();
         }
     }

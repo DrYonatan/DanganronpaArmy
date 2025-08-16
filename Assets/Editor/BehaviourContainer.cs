@@ -5,5 +5,5 @@ using UnityEngine;
 [CreateAssetMenu(menuName ="Behaviour Editor/Container")]
 public class BehaviourContainer : ScriptableObject
 {
-    public List<TrialDialogueNode> nodes;
+    public List<DiscussionNode> nodes;
 }

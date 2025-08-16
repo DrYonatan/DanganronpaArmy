@@ -51,7 +51,7 @@ public class DebateEditor : EditorWindow
       
       GUILayout.BeginArea(new Rect(0, 0, window.position.width, window.position.height));
 
-      scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Height((window.position.height)));
+      scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Height((window.position.height * 0.8f)));
 
       Event e = Event.current;
       UserInput(e);
@@ -90,7 +90,7 @@ public class DebateEditor : EditorWindow
    
    void DrawNode(int id)
    {
-      container.dialogueNodes[id].DrawNode();
+      container.dialogueNodes[id].DrawNode(window.position.width * 0.8f, window.position.height * 0.2f);
    }
    
    private void UserInput(Event e)

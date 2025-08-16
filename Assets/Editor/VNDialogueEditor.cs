@@ -75,7 +75,7 @@ public class VNDialogueEditor : EditorWindow
       
       GUILayout.BeginArea(new Rect(0, 0, window.position.width, window.position.height));
 
-      scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Height((window.position.height)));
+      scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Height((window.position.height * 0.8f)));
 
       BeginWindows();
       DrawEditor();
@@ -111,7 +111,7 @@ public class VNDialogueEditor : EditorWindow
    
    void DrawNode(int id)
    {
-      container.nodes[id].DrawNode();
+      container.nodes[id].DrawNode(window.position.width * 0.8f, window.position.height * 0.2f);
    }
    public void AddNode(int index)
    {

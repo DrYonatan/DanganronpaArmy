@@ -6,10 +6,10 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Behaviour Editor/Draw/Debate Dialogue Node Draw")]
 public class DebateNodeDraw : DiscussionNodeDraw
 {
-    public override void DrawWindow(DialogueNode b)
+    public override void DrawWindow(DialogueNode b, float windowWidth, float windowHeight)
     {
         GUILayout.BeginHorizontal();
-        base.DrawWindow(b);
+        base.DrawWindow(b, windowWidth, windowHeight);
         DebateNode node = (DebateNode)b;
 
         GUIStyle style = new GUIStyle();
@@ -23,7 +23,7 @@ public class DebateNodeDraw : DiscussionNodeDraw
         GUILayout.EndHorizontal();
     }
 
-    protected override void ShowTextData(DialogueNode b)
+    protected override void ShowTextData(DialogueNode b, float width)
     {
         GUIStyle style = new GUIStyle();
         style.normal.background = Texture2D.linearGrayTexture;
