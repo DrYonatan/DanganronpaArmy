@@ -69,7 +69,7 @@ public class GameLoop : MonoBehaviour
     Evidence correctEvidence;
 
     bool pause;
-    public bool finished;
+    public bool finished = true;
     float stageTimer;
     float defaultStageTime = 600f;
 
@@ -81,14 +81,13 @@ public class GameLoop : MonoBehaviour
     public DebateText currentAimedText;
     public Camera renderTextureCamera;
 
-    // Start is called before the first frame update
-    void Start()
+    public void PlayDebate(Stage debate)
     {
+        this.stage = debate;
         textLines = new List<TextLine>();
         evidenceManager.ShowEvidence(stage.evidences);
         MusicManager.instance.PlaySong(stage.audioClip.name);
         stageTimer = defaultStageTime;
-        finished = true;
         StartCoroutine(StartDebate());
     }
 
@@ -98,8 +97,8 @@ public class GameLoop : MonoBehaviour
         ImageScript.instance.blackFade.GetComponent<CanvasGroup>().alpha = 1f;
         yield return 0;
         ImageScript.instance.UnFadeToBlack(1f);
-       yield return StartCoroutine(cameraController.DebateStartCameraMovement(4f));
-       finished = false;
+        yield return StartCoroutine(cameraController.DebateStartCameraMovement(4f));
+        finished = false;
        
     }
 
@@ -331,6 +330,8 @@ public class GameLoop : MonoBehaviour
         cameraController.camera.targetTexture = null;
         shatterTransform.SetActive(true);
         renderTextureCamera.gameObject.SetActive(false);
+        yield return new WaitForSeconds(5f);
+        stage.Finish();
     }
     
     IEnumerator PlayNoThatsWrong(float delay)
