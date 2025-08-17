@@ -24,7 +24,7 @@ public class CameraController : MonoBehaviour
     {
         pivot = cameraTransform.parent;
         effectController = GetComponent<CameraEffectController>();
-        cameraDefaultLocalPosition = cameraTransform.localPosition;
+        cameraDefaultLocalPosition = new Vector3(0f, 0f, -3f);
     }
 
     public IEnumerator DebateStartCameraMovement(float duration)
@@ -34,9 +34,10 @@ public class CameraController : MonoBehaviour
         cameraTransform.localRotation *= Quaternion.Euler(new Vector3(10f, 0f, 10f));
         
         Vector3 cameraStartPos = cameraDefaultLocalPosition + new Vector3(0f, 8f, -20f);
-        cameraTransform.position = cameraStartPos;
+        cameraTransform.localPosition = cameraStartPos;
         
-        Quaternion cameraStartRot = cameraTransform.localRotation;
+        Quaternion cameraStartRot = Quaternion.Euler(new Vector3(15, 0f, 0f));
+        cameraTransform.localRotation = cameraStartRot;
         
         float elapsedTime = 0f;
         while (elapsedTime < duration)

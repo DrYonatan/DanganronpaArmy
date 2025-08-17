@@ -16,14 +16,12 @@ namespace DIALOGUE
 
         private bool userPrompt = false;
         
-        public ICharacterHandler characterHandler;
         public IConversationNodePlayer conversationNodePlayer;
 
-        public ConversationManager(TextArchitect architect, ICharacterHandler characterHandler, IConversationNodePlayer worldHandler)
+        public ConversationManager(TextArchitect architect, IConversationNodePlayer worldHandler)
         {
             this.architect = architect;
             dialogueSystem.onUserPrompt_Next += OnUserPrompt_Next;
-            this.characterHandler = characterHandler;
             this.conversationNodePlayer = worldHandler;
         }
 
@@ -47,7 +45,6 @@ namespace DIALOGUE
                 return;
             dialogueSystem.StopCoroutine(process);
             process = null;
-            characterHandler?.OnStopConversation();
         }
 
         IEnumerator RunningConversation(List<DialogueNode> nodes)

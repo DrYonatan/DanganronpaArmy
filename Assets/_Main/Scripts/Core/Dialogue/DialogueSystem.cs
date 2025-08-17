@@ -10,8 +10,7 @@ namespace DIALOGUE
         public DialogueContainer dialogueContainer = new DialogueContainer();
         private ConversationManager conversationManager;
         private TextArchitect architect;
-
-        public MonoBehaviour characterHandler;
+        
         public MonoBehaviour conversationNodePlayer;
         public static DialogueSystem instance { get; private set; }
 
@@ -42,7 +41,7 @@ namespace DIALOGUE
                 return;
 
             architect = new TextArchitect(dialogueContainer.dialogueText);
-            conversationManager = new ConversationManager(architect, characterHandler as ICharacterHandler, conversationNodePlayer as IConversationNodePlayer);
+            conversationManager = new ConversationManager(architect, conversationNodePlayer as IConversationNodePlayer);
         }
 
         public void OnUserPrompt_Next()

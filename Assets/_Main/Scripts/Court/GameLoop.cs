@@ -83,6 +83,7 @@ public class GameLoop : MonoBehaviour
 
     public void PlayDebate(Stage debate)
     {
+        debateUIAnimator.gameObject.SetActive(true);
         this.stage = debate;
         textLines = new List<TextLine>();
         evidenceManager.ShowEvidence(stage.evidences);
@@ -332,6 +333,9 @@ public class GameLoop : MonoBehaviour
         renderTextureCamera.gameObject.SetActive(false);
         yield return new WaitForSeconds(5f);
         stage.Finish();
+        debateUIAnimator.gameObject.SetActive(false);
+        shatterTransform.SetActive(false);
+        musicManager.StopSong();
     }
     
     IEnumerator PlayNoThatsWrong(float delay)

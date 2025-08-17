@@ -4,7 +4,6 @@ using UnityEngine;
 
 public interface IConversationNodePlayer
 {
-    public void StartConversation(VNConversationSegment conversationSegment);
     public void HandleConversationEnd();
     public void PlayConversationNode(int index);
     

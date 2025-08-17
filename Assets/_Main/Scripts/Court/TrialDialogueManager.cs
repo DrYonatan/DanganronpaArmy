@@ -16,15 +16,17 @@ public class TrialDialogueManager : MonoBehaviour, IConversationNodePlayer
     {
         instance = this;
     }
-
-    void Start()
+    
+    public void PlayDiscussion(DiscussionSegment discussion)
     {
+        DialogueSystem.instance.dialogueBoxAnimator.gameObject.SetActive(true);
+        this.discussion = discussion;
         List<DialogueNode> nodes = new List<DialogueNode>();
-        foreach (DiscussionNode discussionNode in discussion.discussionNodes)
+        foreach (DiscussionNode discussionNode in this.discussion.discussionNodes)
         {
             nodes.Add(discussionNode);
         }
-       DialogueSystem.instance.Say(nodes);
+        DialogueSystem.instance.Say(nodes);
     }
 
     
@@ -57,14 +59,11 @@ public class TrialDialogueManager : MonoBehaviour, IConversationNodePlayer
         
     }
 
-    public void StartConversation(VNConversationSegment conversationSegment)
-    {
-        throw new System.NotImplementedException();
-    }
-
     public void HandleConversationEnd()
     {
-        // Should be something like GoToNextCourtEvent()
+        DialogueSystem.instance.dialogueBoxAnimator.gameObject.SetActive(false);
+        effectController.Reset();
+        this.discussion.Finish();
     }
     
 }
