@@ -13,11 +13,10 @@ public class MusicManager : MonoBehaviour
         
     }
 
-    public void PlaySong(string songName)
+    public void PlaySong(AudioClip song)
     {
-        
         audio.Stop();
-        audio.clip = Resources.Load<AudioClip>($"Audio/Music/{songName}");
+        audio.clip = song;
         audio.Play();
     }
 

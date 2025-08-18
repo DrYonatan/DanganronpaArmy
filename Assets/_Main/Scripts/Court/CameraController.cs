@@ -27,6 +27,24 @@ public class CameraController : MonoBehaviour
         cameraDefaultLocalPosition = new Vector3(0f, 0f, -3f);
     }
 
+    public IEnumerator DiscussionOutroMovement(float duration)
+    {
+        float elapedTime = 0f;
+        Vector3 startPos = cameraTransform.localPosition;
+        Quaternion startRotation = cameraTransform.localRotation;
+        float startFOV = camera.fieldOfView;
+        while (elapedTime < duration)
+        {
+            camera.fieldOfView = Mathf.Lerp(startFOV, 30f, elapedTime / duration);
+            cameraTransform.localPosition = Vector3.Lerp(startPos, cameraDefaultLocalPosition + Vector3.up * 3.5f, elapedTime / duration);
+            cameraTransform.localRotation = Quaternion.Slerp(startRotation, Quaternion.Euler(new Vector3(0f, 0f, 0f)), elapedTime / duration);
+            pivot.Rotate(Vector3.up, 100f * Time.deltaTime);
+            elapedTime += Time.deltaTime;
+            yield return null;
+        }
+        cameraTransform.localPosition = cameraDefaultLocalPosition;
+    }
+
     public IEnumerator DebateStartCameraMovement(float duration)
     {
         camera.fieldOfView = 30f;

@@ -83,19 +83,20 @@ public class GameLoop : MonoBehaviour
 
     public void PlayDebate(Stage debate)
     {
-        debateUIAnimator.gameObject.SetActive(true);
         this.stage = debate;
         textLines = new List<TextLine>();
         evidenceManager.ShowEvidence(stage.evidences);
-        MusicManager.instance.PlaySong(stage.audioClip.name);
+        MusicManager.instance.PlaySong(stage.audioClip);
         stageTimer = defaultStageTime;
         StartCoroutine(StartDebate());
     }
 
     IEnumerator StartDebate()
-    { 
+    {
+        ImageScript.instance.FadeToBlack(1.5f);
+        yield return cameraController.DiscussionOutroMovement(2f);
+        debateUIAnimator.gameObject.SetActive(true);
         debateUIAnimator.DebateUIDisappear();
-        ImageScript.instance.blackFade.GetComponent<CanvasGroup>().alpha = 1f;
         yield return 0;
         ImageScript.instance.UnFadeToBlack(1f);
         yield return StartCoroutine(cameraController.DebateStartCameraMovement(4f));

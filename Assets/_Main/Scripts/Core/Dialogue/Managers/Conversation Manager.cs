@@ -49,8 +49,6 @@ namespace DIALOGUE
 
         IEnumerator RunningConversation(List<DialogueNode> nodes)
         {
-
-            
             for(int i = 0; i < nodes.Count; i++)
             {
                 VNTextData textData = nodes[i].textData as VNTextData;
@@ -64,7 +62,7 @@ namespace DIALOGUE
                 yield return WaitForUserInput();
 
             }
-
+            
             conversationNodePlayer.HandleConversationEnd();
         }
         

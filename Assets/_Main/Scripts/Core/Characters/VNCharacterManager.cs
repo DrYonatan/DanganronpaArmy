@@ -32,7 +32,6 @@ namespace CHARACTERS
             characterObj.name = characterInfo.Character.name;
             characterObj.transform.position = new Vector3(GetCharacterPosition(characterInfo.LookDirection).x, characterObj.transform.position.y, characterObj.transform.position.z);
             characterObjects.Add(characterInfo.Character, characterObj);
-            
         }
 
         public void ShowOnlySpeaker(VNCharacterInfo characterInfo)
