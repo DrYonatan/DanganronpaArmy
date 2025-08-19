@@ -54,17 +54,11 @@ namespace DIALOGUE
             if (speakerName.ToLower() != "narrator")
                 dialogueContainer.nameContainer.Show(speakerName);
             else
-                HideSpeakerName();
+                ClearSpeakerName();
         }
 
-        public void HideSpeakerName() => dialogueContainer.nameContainer.Hide();
-
-        // public Coroutine Say(string speaker, string dialogue)
-        // {
-        //     List<string> conversation = new List<string>() { $"{speaker} \"{dialogue}\"" };
-        //     return Say();
-        // }
-
+        public void ClearSpeakerName() => dialogueContainer.nameContainer.Clear();
+        
         public Coroutine Say(List<DialogueNode> nodes)
         {
             if(!isActive)
@@ -91,11 +85,8 @@ namespace DIALOGUE
 
         public void ClearTextBox()
         {
-            if (!isActive)
-            {
-                HideSpeakerName();
-                conversationManager.ClearTextBox();
-            }
+            ClearSpeakerName();
+            conversationManager.ClearTextBox();
         }
     }
 }

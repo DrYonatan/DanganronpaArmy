@@ -20,6 +20,7 @@ public class TrialDialogueManager : MonoBehaviour, IConversationNodePlayer
     public void PlayDiscussion(DiscussionSegment discussion)
     {
         DialogueSystem.instance.dialogueBoxAnimator.gameObject.SetActive(true);
+        ((CourtTextBoxAnimator)(DialogueSystem.instance.dialogueBoxAnimator)).FaceAppear();
         this.discussion = discussion;
         List<DialogueNode> nodes = new List<DialogueNode>();
         foreach (DiscussionNode discussionNode in this.discussion.discussionNodes)
@@ -63,6 +64,7 @@ public class TrialDialogueManager : MonoBehaviour, IConversationNodePlayer
     {
         DialogueSystem.instance.dialogueBoxAnimator.TextBoxDisappear();
         effectController.Reset();
+        
         this.discussion.Finish();
     }
     

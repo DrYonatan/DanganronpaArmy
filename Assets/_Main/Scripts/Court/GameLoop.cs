@@ -332,7 +332,7 @@ public class GameLoop : MonoBehaviour
         cameraController.camera.targetTexture = null;
         shatterTransform.SetActive(true);
         renderTextureCamera.gameObject.SetActive(false);
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(4f);
         ImageScript.instance.FadeToBlack(0.01f);
         yield return new WaitForSeconds(0.01f);
         debateUIAnimator.gameObject.SetActive(false);
