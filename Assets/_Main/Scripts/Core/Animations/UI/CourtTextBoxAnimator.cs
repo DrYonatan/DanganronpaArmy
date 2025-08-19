@@ -8,7 +8,7 @@ public class CourtTextBoxAnimator : TextBoxAnimations
     public override void TextBoxAppear()
     {
         base.TextBoxAppear();
-    
+        characterFace.faceWhiteOverlay.color = Color.white;
         characterFace.transform.localScale = new Vector3(1f, 0f, 1f);
         characterFace.transform.DOScaleY(1f, duration);
     }

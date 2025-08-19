@@ -61,7 +61,7 @@ public class TrialDialogueManager : MonoBehaviour, IConversationNodePlayer
 
     public void HandleConversationEnd()
     {
-        DialogueSystem.instance.dialogueBoxAnimator.gameObject.SetActive(false);
+        DialogueSystem.instance.dialogueBoxAnimator.TextBoxDisappear();
         effectController.Reset();
         this.discussion.Finish();
     }

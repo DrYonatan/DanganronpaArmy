@@ -93,8 +93,8 @@ public class GameLoop : MonoBehaviour
 
     IEnumerator StartDebate()
     {
-        ImageScript.instance.FadeToBlack(1.5f);
-        yield return cameraController.DiscussionOutroMovement(2f);
+        ImageScript.instance.FadeToBlack(2f);
+        yield return cameraController.DiscussionOutroMovement(2.5f);
         debateUIAnimator.gameObject.SetActive(true);
         debateUIAnimator.DebateUIDisappear();
         yield return 0;
@@ -333,10 +333,16 @@ public class GameLoop : MonoBehaviour
         shatterTransform.SetActive(true);
         renderTextureCamera.gameObject.SetActive(false);
         yield return new WaitForSeconds(5f);
-        stage.Finish();
+        ImageScript.instance.FadeToBlack(0.01f);
+        yield return new WaitForSeconds(0.01f);
         debateUIAnimator.gameObject.SetActive(false);
         shatterTransform.SetActive(false);
         musicManager.StopSong();
+        
+        ImageScript.instance.UnFadeToBlack(0.5f);
+        yield return cameraController.DiscussionIntroMovement(1f);
+        stage.Finish();
+
     }
     
     IEnumerator PlayNoThatsWrong(float delay)

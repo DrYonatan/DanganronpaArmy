@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using DIALOGUE;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
@@ -29,20 +30,41 @@ public class CameraController : MonoBehaviour
 
     public IEnumerator DiscussionOutroMovement(float duration)
     {
-        float elapedTime = 0f;
+        float elapsedTime = 0f;
         Vector3 startPos = cameraTransform.localPosition;
         Quaternion startRotation = cameraTransform.localRotation;
         float startFOV = camera.fieldOfView;
-        while (elapedTime < duration)
+        while (elapsedTime < duration)
         {
-            camera.fieldOfView = Mathf.Lerp(startFOV, 30f, elapedTime / duration);
-            cameraTransform.localPosition = Vector3.Lerp(startPos, cameraDefaultLocalPosition + Vector3.up * 3.5f, elapedTime / duration);
-            cameraTransform.localRotation = Quaternion.Slerp(startRotation, Quaternion.Euler(new Vector3(0f, 0f, 0f)), elapedTime / duration);
-            pivot.Rotate(Vector3.up, 100f * Time.deltaTime);
-            elapedTime += Time.deltaTime;
+            camera.fieldOfView = Mathf.Lerp(startFOV, 30f, elapsedTime / duration);
+            cameraTransform.localPosition = Vector3.Lerp(startPos, cameraDefaultLocalPosition + Vector3.up * 3.5f, elapsedTime / duration);
+            cameraTransform.localRotation = Quaternion.Slerp(startRotation, Quaternion.Euler(new Vector3(0f, 0f, 0f)), elapsedTime / duration);
+            pivot.Rotate(Vector3.up, 120f * Time.deltaTime);
+            elapsedTime += Time.deltaTime;
             yield return null;
         }
         cameraTransform.localPosition = cameraDefaultLocalPosition;
+    }
+
+    public IEnumerator DiscussionIntroMovement(float duration)
+    {
+        float elapsedTime = 0f;
+        Vector3 startPos = new Vector3(0f, 11f, -18f);
+        pivot.rotation = new Quaternion(0f, 0f, 0f, 0f);
+        cameraTransform.localRotation = Quaternion.Euler(new Vector3(27f, 0, 0));
+        camera.fieldOfView = 30f;
+        bool uiAppeared = false;
+        while (elapsedTime < duration)
+        {
+            if (elapsedTime > duration / 2 && !uiAppeared)
+            {
+                DialogueSystem.instance.dialogueBoxAnimator.TextBoxAppear();
+                uiAppeared = true;
+            }
+            cameraTransform.localPosition = Vector3.Lerp(startPos, startPos + cameraTransform.forward * 2f, elapsedTime / duration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
     }
 
     public IEnumerator DebateStartCameraMovement(float duration)

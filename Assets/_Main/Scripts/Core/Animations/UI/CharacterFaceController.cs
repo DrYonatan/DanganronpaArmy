@@ -46,11 +46,6 @@ public class CharacterFaceController : MonoBehaviour
 
             // Fade white overlay out
             seq.Append(faceWhiteOverlay.DOFade(0f, faceFlashDuration));
-
-            // Optional: hide overlay after
-            seq.AppendCallback(() => {
-                faceWhiteOverlay.gameObject.SetActive(false);
-            });
         }
     }
 }
