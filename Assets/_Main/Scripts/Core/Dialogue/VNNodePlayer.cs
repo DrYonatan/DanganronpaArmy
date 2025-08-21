@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using CHARACTERS;
 using DIALOGUE;
 using UnityEngine;
-    public class VNNodePlayer : MonoBehaviour, IConversationNodePlayer
+    public class VNNodePlayer : MonoBehaviour
     {
         public static VNNodePlayer instance { get; private set; }
         public VNConversationSegment currentConversation;
@@ -18,18 +19,33 @@ using UnityEngine;
             {
                 VNCharacterManager.instance.CreateCharacter(characterInfo);
             }
-            DialogueSystem.instance.Say(segment.nodes);
+            StartCoroutine(RunConversation(segment));
         }
 
-        public void PlayConversationNode(int index)
+        IEnumerator RunConversation(VNConversationSegment segment)
         {
-            CharacterCourt speaker = currentConversation.nodes[index].character;
+            yield return RunNodes(segment.nodes);
+            HandleConversationEnd();
+        }
+
+        IEnumerator RunNodes(List<DialogueNode> nodes)
+        {
+            foreach (DialogueNode node in nodes)
+            {
+                yield return PlayConversationNode(node);
+            }
+        }
+        
+
+        public IEnumerator PlayConversationNode(DialogueNode node)
+        {
+            CharacterCourt speaker = node.character;
             VNCharacterInfo info =
                 currentConversation.CharacterInfos.Find(characterInfo => characterInfo.Character == speaker);
             VNCharacterManager.instance.ShowOnlySpeaker(info);
-            if(index > 0 && currentConversation.nodes[index].expression != currentConversation.nodes[index-1].expression)
-            VNCharacterManager.instance.SwitchEmotion(info.Character, currentConversation.nodes[index].expression);
+            VNCharacterManager.instance.SwitchEmotion(info.Character, node.expression);
             CameraManager.instance.MoveCamera(info.LookDirection, 0.4f);
+            yield return DialogueSystem.instance.Say(node);
         }
 
         public void HandleConversationEnd()

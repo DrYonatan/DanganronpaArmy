@@ -15,10 +15,10 @@ public class PointAndClickRoom : Room
     public float borderUp = -10f;
     public float borderDown = 10f;
 
-    private float horizontalRotation = 0f;
-    private float verticalRotation = 0f;
+    private float horizontalRotation;
+    private float verticalRotation;
 
-    private float pitch = 0f;
+    private float pitch;
 
     public override IEnumerator OnLoad()
     {

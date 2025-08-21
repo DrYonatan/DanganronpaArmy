@@ -157,7 +157,6 @@ public class GameLoop : MonoBehaviour
                 if (textLines[index].ttl < timer)
                 {
                     StartCoroutine(DestroyText(textLines[index].textGO));
-                    Destroy(textLines[index].textGO);
                     textLines.RemoveAt(index);
                     index--;
                 }
@@ -359,7 +358,7 @@ public class GameLoop : MonoBehaviour
 
     IEnumerator StartNewNode(int dialogueNodeIndex)
     {
-        CharacterCourt prevCharacter = new CharacterCourt();
+        CharacterCourt prevCharacter = ScriptableObject.CreateInstance<CharacterCourt>();
         if (dialogueNodeIndex > 0)
         {
             prevCharacter = stage.dialogueNodes[dialogueNodeIndex - 1].character;

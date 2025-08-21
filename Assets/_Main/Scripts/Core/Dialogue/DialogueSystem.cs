@@ -11,7 +11,6 @@ namespace DIALOGUE
         private ConversationManager conversationManager;
         private TextArchitect architect;
         
-        public MonoBehaviour conversationNodePlayer;
         public static DialogueSystem instance { get; private set; }
 
         public delegate void DialogueSystemEvent();
@@ -41,7 +40,7 @@ namespace DIALOGUE
                 return;
 
             architect = new TextArchitect(dialogueContainer.dialogueText);
-            conversationManager = new ConversationManager(architect, conversationNodePlayer as IConversationNodePlayer);
+            conversationManager = new ConversationManager(architect);
         }
 
         public void OnUserPrompt_Next()
@@ -59,11 +58,11 @@ namespace DIALOGUE
 
         public void ClearSpeakerName() => dialogueContainer.nameContainer.Clear();
         
-        public Coroutine Say(List<DialogueNode> nodes)
+        public Coroutine Say(DialogueNode node)
         {
             if(!isActive)
             SetIsActive(true);
-            return conversationManager.StartConversation(nodes);
+            return conversationManager.PlayNodeText(node);
         }
 
         public void SetIsActive(bool isActive) // Not to be cofnsued with Unity's GameObject.SetActive() 

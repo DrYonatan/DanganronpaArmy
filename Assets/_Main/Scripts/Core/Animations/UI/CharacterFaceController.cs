@@ -26,7 +26,7 @@ public class CharacterFaceController : MonoBehaviour
     {
         CharacterInfo info = characterInfos.Find(c => c.characterName == characterName);
 
-        if(info != null)
+        if(info != null && info.sprite != faceImage.sprite)
         {
             
             Sequence seq = DOTween.Sequence();

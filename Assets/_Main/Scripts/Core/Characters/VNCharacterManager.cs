@@ -28,7 +28,9 @@ namespace CHARACTERS
         public void CreateCharacter(VNCharacterInfo characterInfo)
         {
             GameObject characterObj = Instantiate(characterInfo.Character.vnObjectPrefab, characterLayer);
-            characterObj.GetComponent<CanvasGroup>().alpha = 1f;
+            CanvasGroup canvasGroup = characterObj.GetComponent<CanvasGroup>();
+            canvasGroup.alpha = 0f;
+            canvasGroup.DOFade(1f, 0.25f);
             characterObj.name = characterInfo.Character.name;
             characterObj.transform.position = new Vector3(GetCharacterPosition(characterInfo.LookDirection).x, characterObj.transform.position.y, characterObj.transform.position.z);
             characterObjects.Add(characterInfo.Character, characterObj);
@@ -90,8 +92,11 @@ namespace CHARACTERS
 
             Image oldSprite = oldSpriteObj.GetComponent<Image>();
             Image newSprite = newSpriteObj.GetComponent<Image>();
-            newSprite.sprite = character.Sprites[(int)expression];
-
+            Sprite sprite = character.Sprites[(int)expression];
+            if (sprite.Equals(oldSprite.sprite))
+                return;
+            
+            newSprite.sprite = sprite;
             // Fade out + destroy old
             oldSprite.DOKill();
             oldSprite.DOFade(0f, 0.25f).OnComplete(() =>
