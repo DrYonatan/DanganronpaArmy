@@ -60,6 +60,7 @@ public class GameLoop : MonoBehaviour
     public DebateUIAnimator debateUIAnimator;
     public bool isShooting;
     public GameObject noThatsWrong;
+    private bool reachedEnd = false;
 
     float timer;
     int textIndex;
@@ -69,7 +70,7 @@ public class GameLoop : MonoBehaviour
     Evidence correctEvidence;
 
     bool pause;
-    public bool finished = true;
+    bool isActive = false;
     float stageTimer;
     float defaultStageTime = 600f;
 
@@ -100,14 +101,14 @@ public class GameLoop : MonoBehaviour
         yield return 0;
         ImageScript.instance.UnFadeToBlack(1f);
         yield return StartCoroutine(cameraController.DebateStartCameraMovement(4f));
-        finished = false;
+        isActive = true;
        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!finished)
+        if (isActive)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
@@ -123,7 +124,7 @@ public class GameLoop : MonoBehaviour
                 Time.timeScale = 1f;
             }
 
-            if (pause == true || finished == true)
+            if (pause == true || !isActive)
             {
                 return;
             }
@@ -131,6 +132,7 @@ public class GameLoop : MonoBehaviour
             if (stage.dialogueNodes.Count <= textIndex)
             {
                 textIndex = 0;
+                reachedEnd = true;
             }
             
 
@@ -146,9 +148,19 @@ public class GameLoop : MonoBehaviour
         
             if (textLines.Count == 0)
             {
-                StartCoroutine(StartNewNode(textIndex));
-                timer = 0;
-                textIndex++;
+                if (reachedEnd)
+                {
+                    
+                    DeactivateDebate();
+                    StartCoroutine(StartFinishNodes(stage.finishNodes));
+                }
+                else
+                {
+                    StartCoroutine(StartNewNode(textIndex));
+                    timer = 0;
+                    textIndex++;
+                }
+                
             }
 
             int index = 0;
@@ -182,12 +194,24 @@ public class GameLoop : MonoBehaviour
         }
     }
 
-    
+    void DeactivateDebate()
+    {
+        Time.timeScale = 1f;
+        isActive = false;
+    }
 
+
+    IEnumerator StartFinishNodes(List<DiscussionNode> finishNodes)
+    {
+        finishNodes[0].textData = new VNTextData();
+        ((VNTextData)(finishNodes[0].textData)).text = "שלוס שלוס";
+        yield return TrialDialogueManager.instance.RunNodes(finishNodes);
+        reachedEnd = false;
+        isActive = true;
+    }
     private void GameOver()
     {
-        finished = true;
-        Time.timeScale = 1f;
+        DeactivateDebate();
     }
 
     void HandleMouseControl()
@@ -300,7 +324,7 @@ public class GameLoop : MonoBehaviour
 
     private void CorrectChoice()
     {
-        finished = true;
+        DeactivateDebate();
         foreach (TextLine text in textLines)
         {
             gameObject.GetComponent<TextShatterEffect>().Shatter(text);
