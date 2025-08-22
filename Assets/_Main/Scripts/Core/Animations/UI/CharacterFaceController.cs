@@ -26,7 +26,7 @@ public class CharacterFaceController : MonoBehaviour
     {
         CharacterInfo info = characterInfos.Find(c => c.characterName == characterName);
 
-        if(info != null)
+        if(info != null && info.sprite != faceImage.sprite)
         {
             
             Sequence seq = DOTween.Sequence();
@@ -46,11 +46,6 @@ public class CharacterFaceController : MonoBehaviour
 
             // Fade white overlay out
             seq.Append(faceWhiteOverlay.DOFade(0f, faceFlashDuration));
-
-            // Optional: hide overlay after
-            seq.AppendCallback(() => {
-                faceWhiteOverlay.gameObject.SetActive(false);
-            });
         }
     }
 }

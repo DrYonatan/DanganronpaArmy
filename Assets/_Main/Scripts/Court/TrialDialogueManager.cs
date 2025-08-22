@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using DIALOGUE;
 
-public class TrialDialogueManager : MonoBehaviour, IConversationNodePlayer
+public class TrialDialogueManager : MonoBehaviour
 {
     public static TrialDialogueManager instance { get; private set; }
     
-    [SerializeField] DiscussionSegment discussion;
     [SerializeField] CameraEffectController effectController;
     [SerializeField] CameraController cameraController;
     [SerializeField] List<CharacterStand> characterStands;
@@ -16,55 +15,54 @@ public class TrialDialogueManager : MonoBehaviour, IConversationNodePlayer
     {
         instance = this;
     }
-
-    void Start()
+    
+    public void PlayDiscussion(DiscussionSegment discussion)
     {
-        List<DialogueNode> nodes = new List<DialogueNode>();
-        foreach (DiscussionNode discussionNode in discussion.discussionNodes)
-        {
-            nodes.Add(discussionNode);
-        }
-       DialogueSystem.instance.Say(nodes);
+        DialogueSystem.instance.dialogueBoxAnimator.gameObject.SetActive(true);
+        ((CourtTextBoxAnimator)(DialogueSystem.instance.dialogueBoxAnimator)).FaceAppear();
+        StartCoroutine(RunDiscussion(discussion));
     }
 
-    
-
-    public void PlayConversationNode(int conversationIndex)
+    IEnumerator RunDiscussion(DiscussionSegment discussion)
     {
-        CharacterCourt prevCharacter = ScriptableObject.CreateInstance<CharacterCourt>();
-        if (conversationIndex > 0)
+        yield return RunNodes(discussion.discussionNodes);
+        HandleConversationEnd(discussion);
+    }
+
+    public IEnumerator RunNodes(List<DiscussionNode> nodes)
+    {
+        foreach (DiscussionNode discussionNode in nodes)
         {
-            prevCharacter = discussion.discussionNodes[conversationIndex - 1].character;
+            yield return PlayConversationNode(discussionNode);
         }
-        DiscussionNode nextNode = discussion.discussionNodes[conversationIndex];
-        CharacterStand characterStand = characterStands.Find(stand => stand.character == nextNode.character);
-        if (!nextNode.usePrevCamera)
+    }
+
+    IEnumerator PlayConversationNode(DiscussionNode node)
+    {
+        CharacterStand characterStand = characterStands.Find(stand => stand.character == node.character);
+        if (!node.usePrevCamera)
         {
-            cameraController.TeleportToTarget(characterStand.transform, characterStand.heightPivot, nextNode.positionOffset, nextNode.rotationOffset, nextNode.fovOffset);
+            cameraController.TeleportToTarget(characterStand.transform, characterStand.heightPivot, node.positionOffset, node.rotationOffset, node.fovOffset);
             effectController.Reset();
         }
 
-        if (conversationIndex == 0 || prevCharacter != nextNode.character)
-        {
-            ((CourtTextBoxAnimator)(DialogueSystem.instance.dialogueBoxAnimator)).ChangeFace(nextNode.character.name);
-        }
-  
+        ((CourtTextBoxAnimator)(DialogueSystem.instance.dialogueBoxAnimator)).ChangeFace(node.character.name);
         
-        foreach (CameraEffect cameraEffect in nextNode.cameraEffects)
+        foreach (CameraEffect cameraEffect in node.cameraEffects)
         {
             effectController.StartEffect(cameraEffect);
         }
+
+        yield return DialogueSystem.instance.Say(node);
+
+    }
+
+    public void HandleConversationEnd(DiscussionSegment discussion)
+    {
+        DialogueSystem.instance.dialogueBoxAnimator.TextBoxDisappear();
+        effectController.Reset();
         
-    }
-
-    public void StartConversation(VNConversationSegment conversationSegment)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void HandleConversationEnd()
-    {
-        // Should be something like GoToNextCourtEvent()
+        discussion.Finish();
     }
     
 }

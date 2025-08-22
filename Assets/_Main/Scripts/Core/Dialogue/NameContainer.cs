@@ -18,9 +18,9 @@ public class NameContainer
             nameText.text = nameToShow;
     }
 
-    public void Hide()
+    public void Clear()
     {
-        
+        nameText.text = "";
     }
 }
 }

@@ -10,8 +10,7 @@ public class PlayMusicCommand : Command
    
    public override void Execute()
    {
-      // TODO make the music manager PlaySong get the actual song mp3 and not the name
-      MusicManager.instance.PlaySong(music.name);
+      MusicManager.instance.PlaySong(music);
    }
 
    #if UNITY_EDITOR

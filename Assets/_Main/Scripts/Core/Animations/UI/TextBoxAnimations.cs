@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using DIALOGUE;
 
 public class TextBoxAnimations : MonoBehaviour
 {
@@ -21,7 +22,7 @@ public class TextBoxAnimations : MonoBehaviour
         namePlateCanvasGroup = namePlate.GetComponent<CanvasGroup>();
     }
 
-    public virtual void TextBoxAppear()
+    public void TextBoxAppear()
     {
         dialogueBoxCanvasGroup.alpha = 0f;
         namePlateCanvasGroup.alpha = 0f;
@@ -33,6 +34,7 @@ public class TextBoxAnimations : MonoBehaviour
 
     public virtual void TextBoxDisappear()
     {
+        DialogueSystem.instance.ClearTextBox();
         dialogueBoxCanvasGroup.alpha = 1f;
         namePlateCanvasGroup.alpha = 1f;
         dialogueBoxCanvasGroup.DOFade(0f, duration).SetEase(Ease.InOutQuad);

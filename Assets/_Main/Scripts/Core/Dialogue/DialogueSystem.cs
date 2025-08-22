@@ -10,9 +10,7 @@ namespace DIALOGUE
         public DialogueContainer dialogueContainer = new DialogueContainer();
         private ConversationManager conversationManager;
         private TextArchitect architect;
-
-        public MonoBehaviour characterHandler;
-        public MonoBehaviour conversationNodePlayer;
+        
         public static DialogueSystem instance { get; private set; }
 
         public delegate void DialogueSystemEvent();
@@ -42,7 +40,7 @@ namespace DIALOGUE
                 return;
 
             architect = new TextArchitect(dialogueContainer.dialogueText);
-            conversationManager = new ConversationManager(architect, characterHandler as ICharacterHandler, conversationNodePlayer as IConversationNodePlayer);
+            conversationManager = new ConversationManager(architect);
         }
 
         public void OnUserPrompt_Next()
@@ -55,22 +53,16 @@ namespace DIALOGUE
             if (speakerName.ToLower() != "narrator")
                 dialogueContainer.nameContainer.Show(speakerName);
             else
-                HideSpeakerName();
+                ClearSpeakerName();
         }
 
-        public void HideSpeakerName() => dialogueContainer.nameContainer.Hide();
-
-        // public Coroutine Say(string speaker, string dialogue)
-        // {
-        //     List<string> conversation = new List<string>() { $"{speaker} \"{dialogue}\"" };
-        //     return Say();
-        // }
-
-        public Coroutine Say(List<DialogueNode> nodes)
+        public void ClearSpeakerName() => dialogueContainer.nameContainer.Clear();
+        
+        public Coroutine Say(DialogueNode node)
         {
             if(!isActive)
             SetIsActive(true);
-            return conversationManager.StartConversation(nodes);
+            return conversationManager.PlayNodeText(node);
         }
 
         public void SetIsActive(bool isActive) // Not to be cofnsued with Unity's GameObject.SetActive() 
@@ -92,11 +84,8 @@ namespace DIALOGUE
 
         public void ClearTextBox()
         {
-            if (!isActive)
-            {
-                HideSpeakerName();
-                conversationManager.ClearTextBox();
-            }
+            ClearSpeakerName();
+            conversationManager.ClearTextBox();
         }
     }
 }

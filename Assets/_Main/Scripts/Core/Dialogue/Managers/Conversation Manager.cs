@@ -16,15 +16,10 @@ namespace DIALOGUE
 
         private bool userPrompt = false;
         
-        public ICharacterHandler characterHandler;
-        public IConversationNodePlayer conversationNodePlayer;
-
-        public ConversationManager(TextArchitect architect, ICharacterHandler characterHandler, IConversationNodePlayer worldHandler)
+        public ConversationManager(TextArchitect architect)
         {
             this.architect = architect;
             dialogueSystem.onUserPrompt_Next += OnUserPrompt_Next;
-            this.characterHandler = characterHandler;
-            this.conversationNodePlayer = worldHandler;
         }
 
         private void OnUserPrompt_Next()
@@ -32,43 +27,31 @@ namespace DIALOGUE
             userPrompt = true;
         }
 
-        public Coroutine StartConversation(List<DialogueNode> nodes)
+        public Coroutine PlayNodeText(DialogueNode node)
         {
-            StopConversation();
+            StopPreviousText();
 
-            process = dialogueSystem.StartCoroutine(RunningConversation(nodes));
+            process = dialogueSystem.StartCoroutine(RunNodeText(node));
 
             return process;
         }
 
-        public void StopConversation()
+        public void StopPreviousText()
         {
             if (!isRunning)
                 return;
             dialogueSystem.StopCoroutine(process);
             process = null;
-            characterHandler?.OnStopConversation();
         }
 
-        IEnumerator RunningConversation(List<DialogueNode> nodes)
+        IEnumerator RunNodeText(DialogueNode node)
         {
-
-            
-            for(int i = 0; i < nodes.Count; i++)
-            {
-                VNTextData textData = nodes[i].textData as VNTextData;
-                
-               // characterHandler?.OnLineParsed(textData);
-               DialogueSystem.instance.ShowSpeakerName(nodes[i].character.displayName);
-                conversationNodePlayer.PlayConversationNode(i);
-                yield return BuildDialogue(textData.text);
-                //Run any commands
-                yield return Line_RunCommands(textData.commands);
-                yield return WaitForUserInput();
-
-            }
-
-            conversationNodePlayer.HandleConversationEnd();
+            VNTextData textData = node.textData as VNTextData;
+            DialogueSystem.instance.ShowSpeakerName(node.character.displayName);
+            yield return BuildDialogue(textData.text);
+            yield return Line_RunCommands(textData.commands);
+            yield return WaitForUserInput();
+            SoundManager.instance.PlayTextBoxSound();
         }
         
 
@@ -81,35 +64,7 @@ namespace DIALOGUE
             }
             
         }
-
-        IEnumerator BuildLineSegments(DL_DIALOGUE_DATA line)
-        {
-            for(int i = 0; i < line.segments.Count; i++)
-            {
-                DL_DIALOGUE_DATA.DIALOGUE_SEGMENT segment = line.segments[i];
-
-                yield return WaitForDialogueSegmentSignalToBeTriggered(segment);
-
-                yield return BuildDialogue(segment.dialogue, segment.appendText);
-            }
-        }
-
-        IEnumerator WaitForDialogueSegmentSignalToBeTriggered(DL_DIALOGUE_DATA.DIALOGUE_SEGMENT segment)
-        {
-            switch(segment.startSignal)
-            {
-                case DL_DIALOGUE_DATA.DIALOGUE_SEGMENT.StartSignal.C:
-                case DL_DIALOGUE_DATA.DIALOGUE_SEGMENT.StartSignal.A:
-                    yield return WaitForUserInput();
-                    break;
-                case DL_DIALOGUE_DATA.DIALOGUE_SEGMENT.StartSignal.WC:
-                case DL_DIALOGUE_DATA.DIALOGUE_SEGMENT.StartSignal.WA:
-                    yield return new WaitForSeconds(segment.signalDelay);
-                    break;
-                default:
-                    break;
-            }
-        }
+        
 
         IEnumerator BuildDialogue(string dialogue, bool append = false)
         {
@@ -124,10 +79,7 @@ namespace DIALOGUE
             {
                 if (userPrompt)
                 {
-                    if (!architect.hurryUp)
-                        architect.hurryUp = true;
-                    else
-                        architect.ForceComplete();
+                    architect.ForceComplete();
 
                     userPrompt = false;
                 }
@@ -143,8 +95,6 @@ namespace DIALOGUE
             while (!userPrompt)
                 yield return null;
             userPrompt = false;
-            if(!architect.isBuilding)
-                SoundManager.instance.PlayTextBoxSound();
         }
 
         public void ClearTextBox()

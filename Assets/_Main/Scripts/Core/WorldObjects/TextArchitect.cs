@@ -23,9 +23,7 @@ public class TextArchitect
 
     public int charactersPerCycle { get { return speed <= 2f ? characterMultiplier : speed <= 2.5f ? characterMultiplier * 2 : characterMultiplier * 3; } }
     public int characterMultiplier = 1;
-
-    public bool hurryUp = false;
-
+    
     public TextArchitect(TextMeshProUGUI tmpro_ui)
     {
         this.tmpro_ui = tmpro_ui;
@@ -92,7 +90,6 @@ public class TextArchitect
 
     private void OnComplete()
     {
-        hurryUp = false;
         buildProcess = null;
     }
 
@@ -201,7 +198,7 @@ public class TextArchitect
     {
         while(tmpro.maxVisibleCharacters < tmpro.textInfo.characterCount)
         {
-            tmpro.maxVisibleCharacters += (hurryUp ?  charactersPerCycle * 5: charactersPerCycle);
+            tmpro.maxVisibleCharacters += charactersPerCycle;
 
             yield return new WaitForSeconds(0.015f / speed);
         }
@@ -221,7 +218,7 @@ public class TextArchitect
 
         while (true)
         {
-            float fadeSpeed = ((hurryUp ? charactersPerCycle * 5 : charactersPerCycle) * speed) * 4f;
+            float fadeSpeed = charactersPerCycle * speed * 4f;
 
             for (int i = minRange; i < maxRange; i++)
             {

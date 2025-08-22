@@ -38,7 +38,7 @@ namespace DIALOGUE
 
         public void PromptAdvance()
         {
-            if (!VideoManager.instance.isPlaying && !CutSceneManager.instance.isPlaying)
+            if (!CutSceneManager.instance.isPlaying)
             {
                 DialogueSystem.instance.OnUserPrompt_Next();
             }

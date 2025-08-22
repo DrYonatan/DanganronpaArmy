@@ -60,6 +60,7 @@ public class GameLoop : MonoBehaviour
     public DebateUIAnimator debateUIAnimator;
     public bool isShooting;
     public GameObject noThatsWrong;
+    private bool reachedEnd = false;
 
     float timer;
     int textIndex;
@@ -69,7 +70,7 @@ public class GameLoop : MonoBehaviour
     Evidence correctEvidence;
 
     bool pause;
-    public bool finished;
+    bool isActive = false;
     float stageTimer;
     float defaultStageTime = 600f;
 
@@ -81,32 +82,33 @@ public class GameLoop : MonoBehaviour
     public DebateText currentAimedText;
     public Camera renderTextureCamera;
 
-    // Start is called before the first frame update
-    void Start()
+    public void PlayDebate(Stage debate)
     {
+        this.stage = debate;
         textLines = new List<TextLine>();
         evidenceManager.ShowEvidence(stage.evidences);
-        MusicManager.instance.PlaySong(stage.audioClip.name);
+        MusicManager.instance.PlaySong(stage.audioClip);
         stageTimer = defaultStageTime;
-        finished = true;
         StartCoroutine(StartDebate());
     }
 
     IEnumerator StartDebate()
-    { 
+    {
+        ImageScript.instance.FadeToBlack(2f);
+        yield return cameraController.DiscussionOutroMovement(2.5f);
+        debateUIAnimator.gameObject.SetActive(true);
         debateUIAnimator.DebateUIDisappear();
-        ImageScript.instance.blackFade.GetComponent<CanvasGroup>().alpha = 1f;
         yield return 0;
         ImageScript.instance.UnFadeToBlack(1f);
-       yield return StartCoroutine(cameraController.DebateStartCameraMovement(4f));
-       finished = false;
+        yield return StartCoroutine(cameraController.DebateStartCameraMovement(4f));
+        isActive = true;
        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!finished)
+        if (isActive)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
@@ -122,7 +124,7 @@ public class GameLoop : MonoBehaviour
                 Time.timeScale = 1f;
             }
 
-            if (pause == true || finished == true)
+            if (pause == true || !isActive)
             {
                 return;
             }
@@ -130,6 +132,7 @@ public class GameLoop : MonoBehaviour
             if (stage.dialogueNodes.Count <= textIndex)
             {
                 textIndex = 0;
+                reachedEnd = true;
             }
             
 
@@ -145,9 +148,19 @@ public class GameLoop : MonoBehaviour
         
             if (textLines.Count == 0)
             {
-                StartCoroutine(StartNewNode(textIndex));
-                timer = 0;
-                textIndex++;
+                if (reachedEnd)
+                {
+                    
+                    DeactivateDebate();
+                    StartCoroutine(StartFinishNodes(stage.finishNodes));
+                }
+                else
+                {
+                    StartCoroutine(StartNewNode(textIndex));
+                    timer = 0;
+                    textIndex++;
+                }
+                
             }
 
             int index = 0;
@@ -156,7 +169,6 @@ public class GameLoop : MonoBehaviour
                 if (textLines[index].ttl < timer)
                 {
                     StartCoroutine(DestroyText(textLines[index].textGO));
-                    Destroy(textLines[index].textGO);
                     textLines.RemoveAt(index);
                     index--;
                 }
@@ -182,12 +194,24 @@ public class GameLoop : MonoBehaviour
         }
     }
 
-    
+    void DeactivateDebate()
+    {
+        Time.timeScale = 1f;
+        isActive = false;
+    }
 
+
+    IEnumerator StartFinishNodes(List<DiscussionNode> finishNodes)
+    {
+        finishNodes[0].textData = new VNTextData();
+        ((VNTextData)(finishNodes[0].textData)).text = "שלוס שלוס";
+        yield return TrialDialogueManager.instance.RunNodes(finishNodes);
+        reachedEnd = false;
+        isActive = true;
+    }
     private void GameOver()
     {
-        finished = true;
-        Time.timeScale = 1f;
+        DeactivateDebate();
     }
 
     void HandleMouseControl()
@@ -300,7 +324,7 @@ public class GameLoop : MonoBehaviour
 
     private void CorrectChoice()
     {
-        finished = true;
+        DeactivateDebate();
         foreach (TextLine text in textLines)
         {
             gameObject.GetComponent<TextShatterEffect>().Shatter(text);
@@ -331,6 +355,17 @@ public class GameLoop : MonoBehaviour
         cameraController.camera.targetTexture = null;
         shatterTransform.SetActive(true);
         renderTextureCamera.gameObject.SetActive(false);
+        yield return new WaitForSeconds(4f);
+        ImageScript.instance.FadeToBlack(0.01f);
+        yield return new WaitForSeconds(0.01f);
+        debateUIAnimator.gameObject.SetActive(false);
+        shatterTransform.SetActive(false);
+        musicManager.StopSong();
+        
+        ImageScript.instance.UnFadeToBlack(0.5f);
+        yield return cameraController.DiscussionIntroMovement(1f);
+        stage.Finish();
+
     }
     
     IEnumerator PlayNoThatsWrong(float delay)
@@ -347,7 +382,7 @@ public class GameLoop : MonoBehaviour
 
     IEnumerator StartNewNode(int dialogueNodeIndex)
     {
-        CharacterCourt prevCharacter = new CharacterCourt();
+        CharacterCourt prevCharacter = ScriptableObject.CreateInstance<CharacterCourt>();
         if (dialogueNodeIndex > 0)
         {
             prevCharacter = stage.dialogueNodes[dialogueNodeIndex - 1].character;
