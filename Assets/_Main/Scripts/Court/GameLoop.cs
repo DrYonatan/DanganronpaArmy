@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using System;
 using _Main.Scripts.Court;
+using DIALOGUE;
 using Text = TMPro.TextMeshProUGUI;
 
 public class GameLoop : MonoBehaviour
@@ -95,6 +96,7 @@ public class GameLoop : MonoBehaviour
     IEnumerator StartDebate()
     {
         ImageScript.instance.FadeToBlack(2f);
+        DialogueSystem.instance.SetTextBox(debateUIAnimator.dialogueContainer);
         yield return cameraController.DiscussionOutroMovement(2.5f);
         debateUIAnimator.gameObject.SetActive(true);
         debateUIAnimator.DebateUIDisappear();
@@ -203,11 +205,15 @@ public class GameLoop : MonoBehaviour
 
     IEnumerator StartFinishNodes(List<DiscussionNode> finishNodes)
     {
-        finishNodes[0].textData = new VNTextData();
-        ((VNTextData)(finishNodes[0].textData)).text = "שלוס שלוס";
+        debateUIAnimator.HideCylinderAndCircles();
+        yield return new WaitForSeconds(1f);
+        debateUIAnimator.ShowTextBox();
         yield return TrialDialogueManager.instance.RunNodes(finishNodes);
+        debateUIAnimator.HideTextBox();
+        yield return new WaitForSeconds(1f);
         reachedEnd = false;
         isActive = true;
+        debateUIAnimator.ShowCylinderAndCircles();
     }
     private void GameOver()
     {

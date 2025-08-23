@@ -56,7 +56,7 @@ namespace DIALOGUE
                 ClearSpeakerName();
         }
 
-        public void ClearSpeakerName() => dialogueContainer.nameContainer.Clear();
+        void ClearSpeakerName() => dialogueContainer.nameContainer.Clear();
         
         public Coroutine Say(DialogueNode node)
         {
@@ -86,6 +86,13 @@ namespace DIALOGUE
         {
             ClearSpeakerName();
             conversationManager.ClearTextBox();
+        }
+
+        public void SetTextBox(DialogueContainer container)
+        {
+            dialogueContainer = container;
+            architect = new TextArchitect(dialogueContainer.dialogueText);
+            conversationManager.SetArchitect(architect);
         }
     }
 }

@@ -10,6 +10,8 @@ public class TrialDialogueManager : MonoBehaviour
     [SerializeField] CameraEffectController effectController;
     [SerializeField] CameraController cameraController;
     [SerializeField] List<CharacterStand> characterStands;
+    
+    public DialogueContainer dialogueContainer;
 
     private void Awake()
     {
@@ -18,6 +20,7 @@ public class TrialDialogueManager : MonoBehaviour
     
     public void PlayDiscussion(DiscussionSegment discussion)
     {
+        DialogueSystem.instance.SetTextBox(dialogueContainer);
         DialogueSystem.instance.dialogueBoxAnimator.gameObject.SetActive(true);
         ((CourtTextBoxAnimator)(DialogueSystem.instance.dialogueBoxAnimator)).FaceAppear();
         StartCoroutine(RunDiscussion(discussion));

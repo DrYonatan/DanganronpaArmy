@@ -7,17 +7,14 @@ public class CourtTextBoxAnimator : TextBoxAnimations
 
     public void FaceAppear()
     {
-        characterFace.faceWhiteOverlay.color = Color.white;
-        characterFace.transform.localScale = new Vector3(1f, 0f, 1f);
-        characterFace.transform.DOScaleY(1f, duration);
+        characterFace.DiscussionFaceContainerAppear(duration);
     }
 
     public override void TextBoxDisappear()
     {
         base.TextBoxDisappear();
 
-        characterFace.transform.localScale = new Vector3(1f, 1f, 1f);
-        characterFace.transform.DOScaleY(0f, duration);
+        characterFace.DiscussionFaceContainerDisappear(duration);
     }
 
     public void ChangeFace(string characterName)

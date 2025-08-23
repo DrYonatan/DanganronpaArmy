@@ -22,6 +22,11 @@ namespace DIALOGUE
             dialogueSystem.onUserPrompt_Next += OnUserPrompt_Next;
         }
 
+        public void SetArchitect(TextArchitect architect)
+        {
+            this.architect = architect;
+        }
+
         private void OnUserPrompt_Next()
         {
             userPrompt = true;
