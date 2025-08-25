@@ -102,7 +102,7 @@ public class GameLoop : MonoBehaviour
         debateUIAnimator.DebateUIDisappear();
         yield return 0;
         ImageScript.instance.UnFadeToBlack(1f);
-        yield return StartCoroutine(cameraController.DebateStartCameraMovement(4f));
+        yield return StartCoroutine(cameraController.DebateStartCameraMovement(3f));
         isActive = true;
        
     }
@@ -366,10 +366,10 @@ public class GameLoop : MonoBehaviour
         yield return new WaitForSeconds(0.01f);
         debateUIAnimator.gameObject.SetActive(false);
         shatterTransform.SetActive(false);
-        musicManager.StopSong();
         
         ImageScript.instance.UnFadeToBlack(0.5f);
         yield return cameraController.DiscussionIntroMovement(1f);
+        musicManager.StopSong();
         stage.Finish();
 
     }
