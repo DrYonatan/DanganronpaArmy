@@ -81,6 +81,7 @@ public class GameLoop : MonoBehaviour
     public Camera statementsCamera;
     public DebateText currentAimedText;
     public Camera renderTextureCamera;
+    public ScreenShatterNew screenShatter;
 
     public void PlayDebate(Stage debate)
     {
@@ -353,7 +354,9 @@ public class GameLoop : MonoBehaviour
         StartCoroutine(cameraController.MoveCameraOnXAndZ(secondTargetPosition, Quaternion.Euler(0f, 0f, 30f), 4f));
         yield return new WaitForSeconds(3f);
         cameraController.camera.targetTexture = null;
-        shatterTransform.SetActive(true);
+        // shatterTransform.SetActive(true);
+        screenShatter.gameObject.SetActive(true);
+        StartCoroutine(screenShatter.ScreenShatter());
         renderTextureCamera.gameObject.SetActive(false);
         yield return new WaitForSeconds(4f);
         ImageScript.instance.FadeToBlack(0.01f);
