@@ -3624,7 +3624,6 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2032813252}
   - {fileID: 229134273}
   m_Father: {fileID: 924420848}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3682,8 +3681,8 @@ Canvas:
   m_GameObject: {fileID: 328524624}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 467716897}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -4731,7 +4730,7 @@ GameObject:
   - component: {fileID: 414806696}
   - component: {fileID: 414806698}
   m_Layer: 0
-  m_Name: Camera
+  m_Name: DebateTextCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4746,7 +4745,7 @@ Transform:
   m_GameObject: {fileID: 414806695}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 80, y: 0, z: 0}
+  m_LocalPosition: {x: 80.1, y: 0, z: -0.24}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5013,7 +5012,7 @@ GameObject:
   - component: {fileID: 467716898}
   - component: {fileID: 467716897}
   m_Layer: 0
-  m_Name: Camera
+  m_Name: DebateUICamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9822,7 +9821,7 @@ Transform:
   m_GameObject: {fileID: 924420847}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1001.82166, y: 1000.2134, z: 999.9578}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9865,7 +9864,7 @@ MonoBehaviour:
   - {fileID: 1403491059}
   - {fileID: 1321647070}
   blackImage: {fileID: 1104719798}
-  breakText: {fileID: 0}
+  breakText: {fileID: 2032813251}
 --- !u!1 &926069189
 GameObject:
   m_ObjectHideFlags: 0
@@ -11250,7 +11249,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -857.54, y: 49}
+  m_AnchoredPosition: {x: -739.43, y: 54}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1076160264
@@ -13199,9 +13198,9 @@ RectTransform:
   m_Father: {fileID: 588812012}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1920, y: 1080}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: -112.21, y: -27.15}
+  m_SizeDelta: {x: 1695.58, y: 1027.72}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1253427877
 MonoBehaviour:
@@ -13268,7 +13267,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 1351175623}
   direction: {x: -1, y: 0.2}
-  speed: 500
+  speed: 600
   angularVelocity: 20
 --- !u!1 &1262851789
 GameObject:
@@ -14115,8 +14114,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 856.63995, y: -51.230133}
-  m_SizeDelta: {x: 204.92, y: 833.8896}
+  m_AnchoredPosition: {x: 739.43, y: -56}
+  m_SizeDelta: {x: 441.14, y: 799.83}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1321647067
 CanvasRenderer:
@@ -14298,7 +14297,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 112.21, y: -1.14}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1351175623
@@ -14934,8 +14933,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 857.09, y: 415.39}
-  m_SizeDelta: {x: 205.82, y: 242.64}
+  m_AnchoredPosition: {x: 852.83, y: 410.37}
+  m_SizeDelta: {x: 214.34, y: 252.69}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1403491056
 CanvasRenderer:
@@ -16749,6 +16748,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2032813252}
   - {fileID: 467716898}
   - {fileID: 414806696}
   - {fileID: 2002331854}
@@ -19964,16 +19964,16 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2032813251}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 328524625}
+  m_Father: {fileID: 1708573511}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.7979, y: 0}
-  m_SizeDelta: {x: 104.2259, y: 63.35}
+  m_AnchoredPosition: {x: 80, y: 0}
+  m_SizeDelta: {x: 0.792, y: 0.4814}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2032813253
 MonoBehaviour:
@@ -20022,11 +20022,11 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 2.6
   m_fontSizeBase: 300.99
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 18
+  m_fontSizeMin: 0
   m_fontSizeMax: 72
   m_fontStyle: 1
   m_HorizontalAlignment: 2
@@ -20121,7 +20121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e437cebb8112844ca0571164d561904, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraTransform: {fileID: 1572153660}
+  cameraTransform: {fileID: 414806696}
   tmpText: {fileID: 2032813253}
   glowFadeDuration: 0.4
   speedCurve:

@@ -35,7 +35,7 @@ public class ScreenShatterNew : MonoBehaviour
         screenImage.texture = newScreenShot;
         screenImage.color = new Color(255, 255, 255, 1);
         canvasGroup.alpha = 1f;
-        
+        GameLoop.instance.debateUIAnimator.gameObject.SetActive(false);
         yield return FlashPieces();
         ChangePiecesTransparency(1f);
         
@@ -45,6 +45,7 @@ public class ScreenShatterNew : MonoBehaviour
             piece.image.texture = newScreenShot;
         }
 
+        yield return new WaitForSeconds(0.25f);
         yield return Shatter();
     }
     
@@ -95,7 +96,7 @@ public class ScreenShatterNew : MonoBehaviour
         breakText.SetActive(true);
         yield return new WaitForSeconds(0.5f);
         blackImage.DOColor(Color.black, 1f);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         ImageScript.instance.FadeToBlack(0f);
         canvasGroup.alpha = 0;
     }

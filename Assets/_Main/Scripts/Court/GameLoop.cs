@@ -352,11 +352,9 @@ public class GameLoop : MonoBehaviour
         yield return new WaitForSeconds(3f);
         cameraController.camera.targetTexture = null;
         screenShatter.gameObject.SetActive(true);
-        StartCoroutine(screenShatter.ScreenShatter());
-        yield return new WaitForSeconds(4f);
+        yield return StartCoroutine(screenShatter.ScreenShatter());
         ImageScript.instance.FadeToBlack(0.01f);
         yield return new WaitForSeconds(0.01f);
-        debateUIAnimator.gameObject.SetActive(false);
         shatterTransform.SetActive(false);
         musicManager.StopSong();
         
