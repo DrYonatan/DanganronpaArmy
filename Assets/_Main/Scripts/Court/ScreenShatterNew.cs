@@ -75,13 +75,10 @@ public class ScreenShatterNew : MonoBehaviour
     }
 
     public void ChangePiecesTransparency(float transparency)
-    {
-        foreach (FlashGroup flashGroup in flashGroups)
-        {
-            foreach (Image piece in flashGroup.pieces)
-            {
-                piece.color = new Color(255, 255, 255, transparency);
-            }
+    { 
+        foreach (ScreenPiece piece in pieces) 
+        { 
+            piece.mask.color = new Color(255, 255, 255, transparency);
         }
     }
 

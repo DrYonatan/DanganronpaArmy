@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class ScreenPiece : MonoBehaviour
 {
+    public Image mask;
     public RawImage image;
     RectTransform rectTransform;
     public Vector2 direction;
