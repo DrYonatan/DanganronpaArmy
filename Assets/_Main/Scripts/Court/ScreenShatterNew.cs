@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 
 
@@ -18,6 +19,9 @@ public class ScreenShatterNew : MonoBehaviour
     [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private List<FlashGroup> flashGroups = new ();
     [SerializeField] private List<ScreenPiece> pieces;
+    [SerializeField] private RawImage blackImage;
+    public GameObject breakText;
+
     public IEnumerator ScreenShatter()
     {
         yield return new WaitForEndOfFrame();
@@ -83,6 +87,17 @@ public class ScreenShatterNew : MonoBehaviour
         {
             StartCoroutine(piece.Move(3f));
         }
+
+        screenImage.texture = null;
+        screenImage.DOColor(Color.white, 0.8f)
+            .SetLoops(2, LoopType.Yoyo);
+        yield return new WaitForSeconds(1f);
+        breakText.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        blackImage.DOColor(Color.black, 1f);
+        yield return new WaitForSeconds(1f);
+        ImageScript.instance.FadeToBlack(0f);
+        canvasGroup.alpha = 0;
     }
     
 }
