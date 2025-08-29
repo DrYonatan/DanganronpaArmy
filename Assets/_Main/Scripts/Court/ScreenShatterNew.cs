@@ -1,14 +1,23 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+
 public class ScreenShatterNew : MonoBehaviour
-{
+{ 
+    [Serializable]
+    class FlashGroup 
+    {
+        public List<Image> pieces = new ();
+    }
+    
     [SerializeField] private RawImage screenImage;
     [SerializeField] private CanvasGroup canvasGroup;
-    public List<Image> pieces;
-    public List<RawImage> pieceImages;
+    [SerializeField] private List<FlashGroup> flashGroups = new ();
+    [SerializeField] private List<ScreenPiece> pieces;
     public IEnumerator ScreenShatter()
     {
         yield return new WaitForEndOfFrame();
@@ -16,52 +25,64 @@ public class ScreenShatterNew : MonoBehaviour
         Texture2D newScreenShot = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
         newScreenShot.SetPixels(screenShot.GetPixels());
         newScreenShot.Apply();
-
+        
+        ChangePiecesTransparency(0f);
         yield return new WaitForEndOfFrame();
         screenImage.texture = newScreenShot;
         screenImage.color = new Color(255, 255, 255, 1);
         canvasGroup.alpha = 1f;
-        foreach (Image piece in pieces)
-        {
-            piece.color = new Color(255, 255, 255, 0);
-        }
+        
         yield return FlashPieces();
+        ChangePiecesTransparency(1f);
         
         screenImage.color = Color.black;
-        foreach (RawImage piece in pieceImages)
+        foreach (ScreenPiece piece in pieces)
         {
-            piece.texture = newScreenShot;
+            piece.image.texture = newScreenShot;
         }
+
+        yield return Shatter();
     }
     
     public IEnumerator FlashPieces()
     {
-        pieces[1].color = new Color(255, 255, 255, 1);
-        pieces[2].color = new Color(255, 255, 255, 1);
-        yield return new WaitForSeconds(0.1f);
-        pieces[1].color = new Color(255, 255, 255, 0);
-        pieces[2].color = new Color(255, 255, 255, 0);
-        yield return 4;
-        
-        
-        pieces[0].color = new Color(255, 255, 255, 1);
-        yield return new WaitForSeconds(0.1f);
-        pieces[0].color = new Color(255, 255, 255, 0);
-        yield return new WaitForEndOfFrame();
-        
-        yield return 4;
-        
-        pieces[0].color = new Color(255, 255, 255, 1);
-        pieces[3].color = new Color(255, 255, 255, 1);
-        yield return new WaitForSeconds(0.1f);
-        pieces[0].color = new Color(255, 255, 255, 0);
-        pieces[3].color = new Color(255, 255, 255, 0);
-        yield return 4;
-
-        foreach (Image piece in pieces)
+        foreach(FlashGroup flashGroup in flashGroups)
         {
-            piece.color = new Color(255, 255, 255, 1);
+            if (flashGroup.pieces.Count == 0)
+            {
+                yield return new WaitForSeconds(0.05f);
+                continue;
+            }
+            foreach (Image piece in flashGroup.pieces)
+            {
+                piece.color = new Color(255, 255, 255, 1);
+            }
+            yield return new WaitForSeconds(0.05f);
+            foreach (Image piece in flashGroup.pieces)
+            {
+                piece.color = new Color(255, 255, 255, 0);
+            }
         }
-
+        
     }
+
+    public void ChangePiecesTransparency(float transparency)
+    {
+        foreach (FlashGroup flashGroup in flashGroups)
+        {
+            foreach (Image piece in flashGroup.pieces)
+            {
+                piece.color = new Color(255, 255, 255, transparency);
+            }
+        }
+    }
+
+    IEnumerator Shatter()
+    {
+        foreach (ScreenPiece piece in pieces)
+        {
+            StartCoroutine(piece.Move(3f));
+        }
+    }
+    
 }
