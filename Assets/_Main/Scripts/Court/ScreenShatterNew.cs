@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.PostProcessing;
 
 
 
@@ -20,7 +22,8 @@ public class ScreenShatterNew : MonoBehaviour
     [SerializeField] private List<FlashGroup> flashGroups = new ();
     [SerializeField] private List<ScreenPiece> pieces;
     [SerializeField] private RawImage blackImage;
-    public GameObject breakText;
+    [SerializeField] private PostProcessVolume  psVolume;
+    [SerializeField] private GameObject breakText;
 
     public IEnumerator ScreenShatter()
     {
@@ -92,9 +95,24 @@ public class ScreenShatterNew : MonoBehaviour
         screenImage.texture = null;
         screenImage.DOColor(Color.white, 0.8f)
             .SetLoops(2, LoopType.Yoyo);
-        yield return new WaitForSeconds(1f);
+        float elapsedTime = 0f;
+        while (elapsedTime < 1f)
+        {
+            psVolume.weight =  Mathf.Lerp(0f, 0.8f, elapsedTime / 1f);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        
         breakText.SetActive(true);
-        yield return new WaitForSeconds(0.5f);
+
+        elapsedTime = 0f;
+        while (elapsedTime < 0.5f)
+        {
+            psVolume.weight =  Mathf.Lerp(0.8f, 0f, elapsedTime / 0.5f);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        
         blackImage.DOColor(Color.black, 1f);
         yield return new WaitForSeconds(2f);
         ImageScript.instance.FadeToBlack(0f);
