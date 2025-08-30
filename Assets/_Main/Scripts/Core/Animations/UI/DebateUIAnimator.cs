@@ -86,9 +86,9 @@ public class DebateUIAnimator : MonoBehaviour
         CursorManager.instance.Hide();
     }
 
-    public void ChangeFace(string characterName)
+    public void ChangeFace(Sprite sprite)
     {
-        characterFace.SetFace(characterName);
+        characterFace.SetFace(sprite);
     }
 
     void GenerateIndicators()

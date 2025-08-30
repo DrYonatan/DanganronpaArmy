@@ -394,7 +394,7 @@ public class GameLoop : MonoBehaviour
         
         if (dialogueNodeIndex == 0 || prevCharacter != nextNode.character)
         {
-            debateUIAnimator.ChangeFace(nextNode.character.name);
+            debateUIAnimator.ChangeFace(nextNode.character.faceSprite);
         }
         
         

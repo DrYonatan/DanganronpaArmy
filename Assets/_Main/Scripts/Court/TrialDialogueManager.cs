@@ -49,7 +49,7 @@ public class TrialDialogueManager : MonoBehaviour
             effectController.Reset();
         }
 
-        ((CourtTextBoxAnimator)(DialogueSystem.instance.dialogueBoxAnimator)).ChangeFace(node.character.name);
+        ((CourtTextBoxAnimator)(DialogueSystem.instance.dialogueBoxAnimator)).ChangeFace(node.character.faceSprite);
         
         foreach (CameraEffect cameraEffect in node.cameraEffects)
         {

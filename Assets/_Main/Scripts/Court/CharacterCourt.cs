@@ -15,4 +15,5 @@ public class CharacterCourt : ScriptableObject
     public string displayName;
     public GameObject vnObjectPrefab;
     public List<Sprite> Sprites;
+    public Sprite faceSprite;
 }

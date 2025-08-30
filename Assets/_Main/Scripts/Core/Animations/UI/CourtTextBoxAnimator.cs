@@ -17,8 +17,8 @@ public class CourtTextBoxAnimator : TextBoxAnimations
         characterFace.DiscussionFaceContainerDisappear(duration);
     }
 
-    public void ChangeFace(string characterName)
+    public void ChangeFace(Sprite sprite)
     {
-        characterFace.SetFace(characterName);
+        characterFace.SetFace(sprite);
     }
 }
