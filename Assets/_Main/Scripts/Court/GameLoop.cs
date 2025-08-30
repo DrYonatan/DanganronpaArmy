@@ -57,7 +57,6 @@ public class GameLoop : MonoBehaviour
     [SerializeField] EvidenceManager evidenceManager;
     [SerializeField] MusicManager musicManager;
     [SerializeField] Text timerText;
-    [SerializeField] GameObject shatterTransform;
     public DebateUIAnimator debateUIAnimator;
     public bool isShooting;
     public GameObject noThatsWrong;
@@ -82,6 +81,7 @@ public class GameLoop : MonoBehaviour
     public Camera statementsCamera;
     public DebateText currentAimedText;
     public Camera renderTextureCamera;
+    public ScreenShatterNew screenShatter;
 
     public void PlayDebate(Stage debate)
     {
@@ -347,9 +347,6 @@ public class GameLoop : MonoBehaviour
 
     IEnumerator DebateHitEffect()
     {
-        renderTextureCamera.gameObject.SetActive(true);
-        cameraController.camera.targetTexture = 
-            Resources.Load<RenderTexture>("Models/Materials/OtherMaterials/ScreenShatterTexture");
         effectController.Reset();
         Vector3 firstTargetPosition = new Vector3(1f, 3f, -8f);
         Vector3 secondTargetPosition = firstTargetPosition - new Vector3(0f, 0f, 8f);
@@ -359,13 +356,10 @@ public class GameLoop : MonoBehaviour
         StartCoroutine(cameraController.MoveCameraOnXAndZ(secondTargetPosition, Quaternion.Euler(0f, 0f, 30f), 4f));
         yield return new WaitForSeconds(3f);
         cameraController.camera.targetTexture = null;
-        shatterTransform.SetActive(true);
-        renderTextureCamera.gameObject.SetActive(false);
-        yield return new WaitForSeconds(4f);
+        screenShatter.gameObject.SetActive(true);
+        yield return StartCoroutine(screenShatter.ScreenShatter());
         ImageScript.instance.FadeToBlack(0.01f);
         yield return new WaitForSeconds(0.01f);
-        debateUIAnimator.gameObject.SetActive(false);
-        shatterTransform.SetActive(false);
         
         ImageScript.instance.UnFadeToBlack(0.5f);
         yield return cameraController.DiscussionIntroMovement(1f);
