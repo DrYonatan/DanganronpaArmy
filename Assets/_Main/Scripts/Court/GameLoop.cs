@@ -81,7 +81,7 @@ public class GameLoop : MonoBehaviour
     public Camera statementsCamera;
     public DebateText currentAimedText;
     public Camera renderTextureCamera;
-    public ScreenShatterNew screenShatter;
+    public ScreenShatterManager screenShatter;
 
     public void PlayDebate(Stage debate)
     {

@@ -1,134 +1,119 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.PostProcessing;
 
-public class ScreenShatter : MonoBehaviour
-{
-    public GameObject explosionPositionObject;
-    public Image flashImage;
-    public GameObject breakText;
-    public GameObject pieces;
 
-    private void Awake()
+
+public class ScreenShatterManager : MonoBehaviour
+{ 
+    [Serializable]
+    class FlashGroup 
     {
-        flashImage.color = new Color(1, 1, 1, 0); // Ensure transparent at start
+        public List<Image> pieces = new ();
+    }
+    
+    [SerializeField] private RawImage screenImage;
+    [SerializeField] private CanvasGroup canvasGroup;
+    [SerializeField] private List<FlashGroup> flashGroups = new ();
+    [SerializeField] private List<ScreenPiece> pieces;
+    [SerializeField] private RawImage blackImage;
+    [SerializeField] private PostProcessVolume  psVolume;
+    [SerializeField] private GameObject breakText;
 
-        Camera camera = transform.Find("ShatterCamera")?.GetComponent<Camera>();
-        StartCoroutine(Shatter(camera));
+    public IEnumerator ScreenShatter()
+    {
+        yield return new WaitForEndOfFrame();
+        Texture2D screenShot = ScreenCapture.CaptureScreenshotAsTexture();
+        Texture2D newScreenShot = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
+        newScreenShot.SetPixels(screenShot.GetPixels());
+        newScreenShot.Apply();
+        
+        ChangePiecesTransparency(0f);
+        yield return new WaitForEndOfFrame();
+        screenImage.texture = newScreenShot;
+        screenImage.color = new Color(255, 255, 255, 1);
+        canvasGroup.alpha = 1f;
+        GameLoop.instance.debateUIAnimator.gameObject.SetActive(false);
+        yield return FlashPieces();
+        ChangePiecesTransparency(1f);
+        
+        screenImage.color = Color.black;
+        foreach (ScreenPiece piece in pieces)
+        {
+            piece.image.texture = newScreenShot;
+        }
+
+        yield return new WaitForSeconds(0.25f);
+        yield return Shatter();
+    }
+    
+    public IEnumerator FlashPieces()
+    {
+        foreach(FlashGroup flashGroup in flashGroups)
+        {
+            if (flashGroup.pieces.Count == 0)
+            {
+                yield return new WaitForSeconds(0.05f);
+                continue;
+            }
+            foreach (Image piece in flashGroup.pieces)
+            {
+                piece.color = new Color(255, 255, 255, 1);
+            }
+            yield return new WaitForSeconds(0.05f);
+            foreach (Image piece in flashGroup.pieces)
+            {
+                piece.color = new Color(255, 255, 255, 0);
+            }
+        }
+        
     }
 
-    private IEnumerator Shatter(Camera camera)
+    public void ChangePiecesTransparency(float transparency)
+    { 
+        foreach (ScreenPiece piece in pieces) 
+        { 
+            piece.mask.color = new Color(255, 255, 255, transparency);
+        }
+    }
+
+    IEnumerator Shatter()
     {
-        foreach (Transform child in pieces.transform)
+        foreach (ScreenPiece piece in pieces)
         {
-            if (child.TryGetComponent<Rigidbody>(out Rigidbody childRigidbody))
-            {
-                SwapAndReswap(0, 1, child.gameObject);
-                yield return null;
-            }
+            StartCoroutine(piece.Move(3f));
         }
 
-        yield return new WaitForSeconds(0.3f);
-
-        ScreenFlash(camera);
-        Vector3 explosionPosition = explosionPositionObject.transform.position;
-        foreach (Transform child in pieces.transform)
+        screenImage.texture = null;
+        screenImage.DOColor(Color.white, 0.8f)
+            .SetLoops(2, LoopType.Yoyo);
+        float elapsedTime = 0f;
+        while (elapsedTime < 1f)
         {
-            if (child.TryGetComponent(out Rigidbody childRigidbody))
-            {
-                float direction = Mathf.Sign(explosionPosition.x - child.position.x);
-                childRigidbody.AddExplosionForce(17f + direction * 8f, explosionPosition, 10f);
-                childRigidbody.AddTorque(0, 0, 0.2f + 0.3f * direction, ForceMode.Impulse);
-            }
+            psVolume.weight =  Mathf.Lerp(0f, 0.8f, elapsedTime / 1f);
+            elapsedTime += Time.deltaTime;
+            yield return null;
         }
-
-        yield return new WaitForSeconds(1.3f);
         
         breakText.SetActive(true);
-    }
 
-    private void ScreenFlash(Camera camera)
-    {
-        camera!.backgroundColor = Color.white;
-        StartCoroutine(ImageFlash(0.625f));
-        StartCoroutine(BackgroundFlash(camera, 0.5f));
-    }
-
-    IEnumerator BackgroundFlash(Camera cam, float duration)
-    {
-        yield return new WaitForSeconds(0.75f);
-        Color startColor = cam.backgroundColor;
-        Color endColor = Color.black;
-        float time = 0f;
-
-        while (time < duration)
+        elapsedTime = 0f;
+        while (elapsedTime < 0.5f)
         {
-            cam.backgroundColor = Color.Lerp(startColor, endColor, time / duration);
-            time += Time.deltaTime;
+            psVolume.weight =  Mathf.Lerp(0.8f, 0f, elapsedTime / 0.5f);
+            elapsedTime += Time.deltaTime;
             yield return null;
         }
-
-        cam.backgroundColor = endColor; // Ensure it's exactly black at the end
+        
+        blackImage.DOColor(Color.black, 1f);
+        yield return new WaitForSeconds(2f);
+        ImageScript.instance.FadeToBlack(0f);
+        canvasGroup.alpha = 0;
     }
-
-    public void SwapMaterials(int index1, int index2, GameObject obj)
-    {
-        MeshRenderer renderer = obj.GetComponent<MeshRenderer>();
-        if (renderer == null)
-        {
-            Debug.LogError("MeshRenderer not found.");
-            return;
-        }
-
-        Material[] materials = renderer.materials;
-
-        // Swap the two materials by index
-        Material temp = materials[index1];
-        materials[index1] = materials[index2];
-        materials[index2] = temp;
-
-        // Apply the changes
-        renderer.materials = materials;
-    }
-
-    public void SwapAndReswap(int index1, int index2, GameObject obj)
-    {
-        StartCoroutine(SwapAndReswapCoroutine(index1, index2, obj));
-    }
-
-    private IEnumerator SwapAndReswapCoroutine(int index1, int index2, GameObject obj)
-    {
-        SwapMaterials(index1, index2, obj);
-
-        yield return new WaitForSeconds(0.1f);
-
-        SwapMaterials(index1, index2, obj);
-    }
-
-    private IEnumerator ImageFlash(float flashDuration)
-    {
-        Color startColor = new Color(1, 1, 1, 0);
-        Color endColor = new Color(1, 1, 1, 0.5f);
-        float time = 0f;
-
-        while (time < flashDuration)
-        {
-            flashImage.color = Color.Lerp(startColor, endColor, time / flashDuration);
-            time += Time.deltaTime;
-            yield return null;
-        }
-
-        flashImage.color = endColor; // Ensure it's exactly black at the end
-
-        time = 0f;
-
-        while (time < flashDuration)
-        {
-            flashImage.color = Color.Lerp(endColor, startColor, time / flashDuration);
-            time += Time.deltaTime;
-            yield return null;
-        }
-
-        flashImage.color = startColor; // Ensure it's exactly black at the end
-    }
+    
 }
