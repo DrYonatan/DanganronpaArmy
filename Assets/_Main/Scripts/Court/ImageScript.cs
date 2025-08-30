@@ -44,16 +44,18 @@ public class ImageScript : MonoBehaviour
         StartCoroutine(ShowingOrHiding(blackFadeCanvasGroup, duration, 0f));
     }
 
-    public IEnumerator ShowingOrHiding(CanvasGroup canvasGroup, float duration, float targetAlpha)
+    public IEnumerator ShowingOrHiding(CanvasGroup canvasGroupToShowOrHide, float duration, float targetAlpha)
     {        
         float elapsedTime = 0f;
-        float startAlpha = canvasGroup.alpha;
+        float startAlpha = canvasGroupToShowOrHide.alpha;
         while (elapsedTime < duration)
         {
             elapsedTime += Time.deltaTime;
-            canvasGroup.alpha = Mathf.MoveTowards(startAlpha, targetAlpha, elapsedTime / duration);
+            canvasGroupToShowOrHide.alpha = Mathf.MoveTowards(startAlpha, targetAlpha, elapsedTime / duration);
             yield return null;
         }
+
+        canvasGroupToShowOrHide.alpha = targetAlpha;
 
     }
 
