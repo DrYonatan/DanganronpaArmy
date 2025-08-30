@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using DIALOGUE;
 using UnityEngine.UI;
 using TMPro;
 
@@ -19,7 +20,8 @@ public class DebateUIAnimator : MonoBehaviour
     public GameObject nodeIndicatorPrefab;
     public Transform nodeIndicatorContainer;
     private List<Image> indicators = new List<Image>();
-    public TextMeshProUGUI nameText;
+    public DialogueContainer dialogueContainer = new DialogueContainer();
+    
 
     public RectTransform cylinder;
     public RectTransform bullet;
@@ -122,7 +124,7 @@ public class DebateUIAnimator : MonoBehaviour
 
     public void UpdateName(string characterName)
     {
-        nameText.text = characterName;
+        dialogueContainer.nameContainer.Show(characterName);
     }
 
     void UnLoadBullet()
@@ -158,17 +160,29 @@ public class DebateUIAnimator : MonoBehaviour
         bigCircle.GrowAndShrink(0.1f);
     }
 
-    void ShowCylinderAndCircles()
+    public void ShowCylinderAndCircles()
     {
         cylinder.DOAnchorPosX(0, 0.5f);
         circles.DOAnchorPosX(-52, 0.5f);
         LoadBullet();
     }
 
-    void HideCylinderAndCircles()
+    public void HideCylinderAndCircles()
     {
         cylinder.DOAnchorPosX(-200f, 0.5f);
         circles.DOAnchorPosX(-252f, 0.5f);
         UnLoadBullet();
+    }
+
+    public void ShowTextBox()
+    {
+        namePart.DOAnchorPosY(0, 0.3f);
+        facePart.DOAnchorPos(new Vector2(26.57f, 125), 0.3f);
+    }
+
+    public void HideTextBox()
+    {
+        namePart.DOAnchorPosY(namePartOriginalPos.anchoredPosition.y, 0.3f);
+        facePart.DOAnchorPos(facePartOriginalPos.anchoredPosition, 0.3f);
     }
 }

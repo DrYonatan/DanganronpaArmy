@@ -82,7 +82,7 @@ public class CameraController : MonoBehaviour
         float elapsedTime = 0f;
         while (elapsedTime < duration)
         {
-            pivot.Rotate(Vector3.up, Time.deltaTime * -80f);
+            pivot.Rotate(Vector3.up, Time.deltaTime * -90f);
             cameraTransform.localPosition = Vector3.Lerp(cameraStartPos, cameraDefaultLocalPosition + Vector3.up * 3f, elapsedTime  / duration);
            
             cameraTransform.localRotation = Quaternion.Lerp(cameraStartRot, Quaternion.Euler(0f, 0f, 0f), elapsedTime / duration);
@@ -98,11 +98,11 @@ public class CameraController : MonoBehaviour
         camera.fieldOfView = 15f;
         elapsedTime = 0f;
         bool triggeredUI = false;
-        while (elapsedTime < duration * 2f)
+        while (elapsedTime < duration * 2.5f)
         {
-            pivot.Rotate(Vector3.up, Time.deltaTime * -30f);
+            pivot.Rotate(Vector3.up, Time.deltaTime * -20f);
             elapsedTime += Time.deltaTime;
-            if (!triggeredUI && elapsedTime >= (duration * 2f - 1f))
+            if (!triggeredUI && elapsedTime >= (duration * 2.5f - 1f))
             {
                 Sequence sequence = DOTween.Sequence();
                 sequence.AppendCallback(() => GameLoop.instance.debateUIAnimator.CloseBulletSelectionMenu());

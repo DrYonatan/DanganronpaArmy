@@ -5,6 +5,27 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
+public class FinishNodesPopup : PopupWindowContent
+{
+   private List<DiscussionNode> nodes;
+
+   public FinishNodesPopup(List<DiscussionNode> nodes)
+   {
+      this.nodes = nodes;
+   }
+
+   public override Vector2 GetWindowSize() => new(650, 600);
+
+   public override void OnGUI(Rect rect)
+   {
+      foreach (DiscussionNode node in nodes)
+      {
+         node.DrawNode(650, 650);
+      }
+   }
+
+}
+
 public class DebateEditor : EditorWindow
 {
    public Stage container;
@@ -63,12 +84,25 @@ public class DebateEditor : EditorWindow
       GUILayout.EndScrollView();
       GUILayout.EndArea();
    }
+
+   private void DrawDebateSettings()
+   {
+      GUILayout.BeginVertical(GUILayout.Width(300));
+      container.audioClip = (AudioClip)EditorGUILayout.ObjectField("Music", container.audioClip, typeof(AudioClip), false);
+      if (GUILayout.Button("Finish Nodes"))
+      {
+         var popup = new FinishNodesPopup( container.finishNodes);
+         PopupWindow.Show(new Rect(new Vector2(100, 50), Vector2.zero), popup);
+         Event.current.Use(); // Optional: Consume the event
+      }
+      GUILayout.EndVertical();
+   }
    
    private void DrawEditor()
    {
       if (container != null)
       {
-         GUILayout.Box("", GUILayout.Height(150), GUILayout.Width(300));
+         DrawDebateSettings();
          for (int i = 0; i < container.dialogueNodes.Count; i++)
          {
             if (GUILayout.Button("X", GUILayout.Width(50)))

@@ -199,7 +199,6 @@ public class TextArchitect
         while(tmpro.maxVisibleCharacters < tmpro.textInfo.characterCount)
         {
             tmpro.maxVisibleCharacters += charactersPerCycle;
-
             yield return new WaitForSeconds(0.015f / speed);
         }
     }

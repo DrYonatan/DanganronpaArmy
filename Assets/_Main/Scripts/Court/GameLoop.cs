@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using System;
 using _Main.Scripts.Court;
+using DIALOGUE;
 using Text = TMPro.TextMeshProUGUI;
 
 public class GameLoop : MonoBehaviour
@@ -56,7 +57,6 @@ public class GameLoop : MonoBehaviour
     [SerializeField] EvidenceManager evidenceManager;
     [SerializeField] MusicManager musicManager;
     [SerializeField] Text timerText;
-    [SerializeField] GameObject shatterTransform;
     public DebateUIAnimator debateUIAnimator;
     public bool isShooting;
     public GameObject noThatsWrong;
@@ -81,7 +81,7 @@ public class GameLoop : MonoBehaviour
     public Camera statementsCamera;
     public DebateText currentAimedText;
     public Camera renderTextureCamera;
-    public ScreenShatterNew screenShatter;
+    public ScreenShatterManager screenShatter;
 
     public void PlayDebate(Stage debate)
     {
@@ -96,12 +96,13 @@ public class GameLoop : MonoBehaviour
     IEnumerator StartDebate()
     {
         ImageScript.instance.FadeToBlack(2f);
+        DialogueSystem.instance.SetTextBox(debateUIAnimator.dialogueContainer);
         yield return cameraController.DiscussionOutroMovement(2.5f);
         debateUIAnimator.gameObject.SetActive(true);
         debateUIAnimator.DebateUIDisappear();
         yield return 0;
         ImageScript.instance.UnFadeToBlack(1f);
-        yield return StartCoroutine(cameraController.DebateStartCameraMovement(4f));
+        yield return StartCoroutine(cameraController.DebateStartCameraMovement(3f));
         isActive = true;
        
     }
@@ -204,11 +205,15 @@ public class GameLoop : MonoBehaviour
 
     IEnumerator StartFinishNodes(List<DiscussionNode> finishNodes)
     {
-        finishNodes[0].textData = new VNTextData();
-        ((VNTextData)(finishNodes[0].textData)).text = "שלוס שלוס";
+        debateUIAnimator.HideCylinderAndCircles();
+        yield return new WaitForSeconds(1f);
+        debateUIAnimator.ShowTextBox();
         yield return TrialDialogueManager.instance.RunNodes(finishNodes);
+        debateUIAnimator.HideTextBox();
+        yield return new WaitForSeconds(1f);
         reachedEnd = false;
         isActive = true;
+        debateUIAnimator.ShowCylinderAndCircles();
     }
     private void GameOver()
     {
@@ -355,11 +360,10 @@ public class GameLoop : MonoBehaviour
         yield return StartCoroutine(screenShatter.ScreenShatter());
         ImageScript.instance.FadeToBlack(0.01f);
         yield return new WaitForSeconds(0.01f);
-        shatterTransform.SetActive(false);
-        musicManager.StopSong();
         
         ImageScript.instance.UnFadeToBlack(0.5f);
         yield return cameraController.DiscussionIntroMovement(1f);
+        musicManager.StopSong();
         stage.Finish();
 
     }
