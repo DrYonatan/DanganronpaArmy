@@ -36,7 +36,8 @@ public class DebateNodeDraw : DiscussionNodeDraw
             textData.textLines.Add(new TextLine());
         }
         
-        
+        node.textLinesScrollPosition = GUILayout.BeginScrollView(node.textLinesScrollPosition, GUILayout.Width(width));
+        GUILayout.BeginHorizontal();
         for (int i = 0; i < textData.textLines.Count; i++)
         {
             TextLine textLine = textData.textLines[i];
@@ -58,6 +59,9 @@ public class DebateNodeDraw : DiscussionNodeDraw
                 textData.textLines.Insert(i + 1, new TextLine());
             }
         }
+        GUILayout.EndHorizontal();
+
+        GUILayout.EndScrollView();
     }
 
     private void ShowTextEffect(ref TextLine textLine, ref DebateNode b)

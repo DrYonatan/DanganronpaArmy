@@ -116,6 +116,7 @@ public class DebateEditor : EditorWindow
 
    private void DrawDebateSettings()
    {
+      EditorGUILayout.Space(20);
       GUILayout.BeginVertical(GUILayout.Width(300));
       
       if (GUILayout.Button("Debate Settings"))
