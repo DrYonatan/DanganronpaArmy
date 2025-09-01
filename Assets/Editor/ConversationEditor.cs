@@ -121,7 +121,11 @@ public class ConversationEditor : EditorWindow
                GameObject.DestroyImmediate(discussionNode.previewPivot.gameObject);
 
             if (discussionNode.previewTexture != null)
+            {
                discussionNode.previewTexture.Release();
+               DestroyImmediate(discussionNode.previewTexture);
+            }
+               
          }
       }
    }

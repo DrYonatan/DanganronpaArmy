@@ -13,10 +13,11 @@ public class DiscussionNode : DialogueNode
     public Vector3 positionOffset;
     public Vector3 rotationOffset;
 
+    #if UNITY_EDITOR
     [NonSerialized] public GameObject previewPivot;
     [NonSerialized] public Camera previewCamera;
     [NonSerialized] public RenderTexture previewTexture;
-    
+    #endif
     public DiscussionNode(DrawNode _drawNode) : base(_drawNode)
     {
         textData = new VNTextData();
