@@ -157,6 +157,14 @@ public class DebateEditor : EditorWindow
             if (node.previewTexture != null)
                node.previewTexture.Release();
          }
+         foreach (var node in container.finishNodes)
+         {
+            if (node.previewCamera != null)
+               GameObject.DestroyImmediate(node.previewPivot.gameObject);
+
+            if (node.previewTexture != null)
+               node.previewTexture.Release();
+         }
       }
    }
 }
