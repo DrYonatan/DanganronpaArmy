@@ -100,6 +100,7 @@ public class GameLoop : MonoBehaviour
         yield return cameraController.DiscussionOutroMovement(2.5f);
         debateUIAnimator.gameObject.SetActive(true);
         debateUIAnimator.DebateUIDisappear();
+        ((CourtTextBoxAnimator)(DialogueSystem.instance.dialogueBoxAnimator)).ChangeFace(null);
         yield return 0;
         ImageScript.instance.UnFadeToBlack(1f);
         yield return StartCoroutine(cameraController.DebateStartCameraMovement(3f));
@@ -152,7 +153,7 @@ public class GameLoop : MonoBehaviour
             {
                 if (reachedEnd)
                 {
-                    
+                    debateUIAnimator.UnHighlightAllNodes();
                     DeactivateDebate();
                     StartCoroutine(StartFinishNodes(stage.finishNodes));
                 }
@@ -206,14 +207,20 @@ public class GameLoop : MonoBehaviour
     IEnumerator StartFinishNodes(List<DiscussionNode> finishNodes)
     {
         debateUIAnimator.HideCylinderAndCircles();
+        CursorManager.instance.Hide();
+        debateUIAnimator.ChangeFace(null);
+        DialogueSystem.instance.ClearTextBox();
         yield return new WaitForSeconds(1f);
         debateUIAnimator.ShowTextBox();
         yield return TrialDialogueManager.instance.RunNodes(finishNodes);
+        debateUIAnimator.ChangeFace(null);
+        DialogueSystem.instance.ClearTextBox();
         debateUIAnimator.HideTextBox();
         yield return new WaitForSeconds(1f);
         reachedEnd = false;
         isActive = true;
         debateUIAnimator.ShowCylinderAndCircles();
+        CursorManager.instance.Show();
     }
     private void GameOver()
     {

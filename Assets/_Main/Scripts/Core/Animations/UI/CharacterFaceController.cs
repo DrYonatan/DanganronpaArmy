@@ -39,6 +39,7 @@ public class CharacterFaceController : MonoBehaviour
         // After flash, swap sprite
         seq.AppendCallback(() => {
             faceImage.sprite = sprite;
+            faceImage.color = sprite == null ? new Color(255, 255, 255, 0) : Color.white;
         });
 
         // Fade white overlay out
@@ -57,6 +58,7 @@ public class CharacterFaceController : MonoBehaviour
 
         seq.AppendCallback(() => {
             debateFaceImage.sprite = sprite;
+            debateFaceImage.color = sprite == null ? new Color(255, 255, 255, 0) : Color.white;
         });
 
         seq.Append(faceRect.DOScaleY(0f, faceFlashDuration));

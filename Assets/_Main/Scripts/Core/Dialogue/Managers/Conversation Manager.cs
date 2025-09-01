@@ -53,8 +53,8 @@ namespace DIALOGUE
         {
             VNTextData textData = node.textData as VNTextData;
             DialogueSystem.instance.ShowSpeakerName(node.character.displayName);
-            yield return BuildDialogue(textData.text);
             yield return Line_RunCommands(textData.commands);
+            yield return BuildDialogue(textData.text);
             yield return WaitForUserInput();
             SoundManager.instance.PlayTextBoxSound();
         }

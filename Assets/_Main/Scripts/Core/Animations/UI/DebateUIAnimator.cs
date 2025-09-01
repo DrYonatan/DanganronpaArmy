@@ -110,16 +110,25 @@ public class DebateUIAnimator : MonoBehaviour
 
     public void HighlightNode(int index)
     {
-        for (int i = 0; i < indicators.Count; i++)
+        
+        UnHighlightAllNodes();
+        if (index < indicators.Count)
         {
-            indicators[i].color = Color.gray;
-            indicators[i].DOComplete(); // Stop any running tweens
-            indicators[i].DOKill();
+            indicators[index].DOColor(new Color(1f, 1f, 0.5f), 0.5f)
+                .SetLoops(-1, LoopType.Yoyo)
+                .SetEase(Ease.InOutSine);
         }
+        
+    }
 
-        indicators[index].DOColor(new Color(1f, 1f, 0.5f), 0.5f)
-            .SetLoops(-1, LoopType.Yoyo)
-            .SetEase(Ease.InOutSine);
+    public void UnHighlightAllNodes()
+    {
+        foreach (Image indicator in indicators)
+        {
+            indicator.color = Color.gray;
+            indicator.DOComplete(); // Stop any running tweens
+            indicator.DOKill();
+        }
     }
 
     public void UpdateName(string characterName)

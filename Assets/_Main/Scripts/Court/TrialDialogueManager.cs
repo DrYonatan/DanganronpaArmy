@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DIALOGUE;
+using UnityEngine.Android;
 
 public class TrialDialogueManager : MonoBehaviour
 {
@@ -22,7 +23,10 @@ public class TrialDialogueManager : MonoBehaviour
     {
         DialogueSystem.instance.SetTextBox(dialogueContainer);
         DialogueSystem.instance.dialogueBoxAnimator.gameObject.SetActive(true);
-        ((CourtTextBoxAnimator)(DialogueSystem.instance.dialogueBoxAnimator)).FaceAppear();
+        CourtTextBoxAnimator animator = ((CourtTextBoxAnimator)(DialogueSystem.instance.dialogueBoxAnimator));
+        animator.ChangeFace(null);
+        animator.FaceAppear();
+        
         StartCoroutine(RunDiscussion(discussion));
     }
 

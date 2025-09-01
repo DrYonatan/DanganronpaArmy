@@ -91,10 +91,10 @@ public class CameraController : MonoBehaviour
             yield return null;
         }
         
-        cameraTransform.localPosition = cameraDefaultLocalPosition + Vector3.up * 3.5f;
+        cameraTransform.localPosition = cameraDefaultLocalPosition + Vector3.up * 4f;
         GameLoop.instance.debateUIAnimator.OpenBulletSelectionMenu();
         GameLoop.instance.LoadBullets();
-        cameraTransform.localRotation = Quaternion.Euler(0f, 0f, 5f);
+        cameraTransform.localRotation = Quaternion.Euler(0f, 0f, -5f);
         camera.fieldOfView = 15f;
         elapsedTime = 0f;
         bool triggeredUI = false;

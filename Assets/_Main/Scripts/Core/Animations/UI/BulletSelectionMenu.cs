@@ -13,12 +13,13 @@ public class BulletSelectionMenu : MonoBehaviour
     [SerializeField] List<UIBullet> bullets;
     [SerializeField] private UIBullet bulletPrefab;
     [SerializeField] private RectTransform cylinder;
+    [SerializeField] private float bulletSpaceFromCylinder;
     public bool isOpen;
 
     public void Appear()
     {
         rectTransform.anchoredPosition = new Vector2(0, 0);
-        rectTransform.DOAnchorPosX(400f, startDuration);
+        rectTransform.DOAnchorPosX(500f, startDuration);
         isOpen = true;
     }
 
@@ -28,7 +29,7 @@ public class BulletSelectionMenu : MonoBehaviour
 
         sequence.AppendCallback(() => { UnLoadBullets(); });
 
-        sequence.AppendCallback(() => { rectTransform.anchoredPosition = new Vector2(400f, 0); });
+        sequence.AppendCallback(() => { rectTransform.anchoredPosition = new Vector2(500f, 0); });
 
         sequence.Append(rectTransform.DOAnchorPosX(0, startDuration));
         isOpen = false;
@@ -51,7 +52,7 @@ public class BulletSelectionMenu : MonoBehaviour
             RectTransform rt = bulletGO.GetComponent<RectTransform>();
 
             // Final position
-            Vector2 targetPos = new Vector2(1090 + xOffset, yOffset);
+            Vector2 targetPos = new Vector2(bulletSpaceFromCylinder + xOffset, yOffset);
 
             // Step 1: Teleport off-screen to the right (e.g., x = 2000)
             rt.anchoredPosition = new Vector2(3000, yOffset);
@@ -60,8 +61,9 @@ public class BulletSelectionMenu : MonoBehaviour
             bullets[i].text.text = evidences[i].Name;
 
             // Step 2: Animate to targetPos
-            sequence.Append(rt.DOAnchorPos(targetPos, 0.4f).SetEase(Ease.Linear));
-            sequence.Append(cylinder.DOLocalRotate(new Vector3(0, 0, 60) * (i + 1), 0.2f));
+            sequence.Append(rt.DOAnchorPos(targetPos, 0.25f).SetEase(Ease.Linear));
+            sequence.Append(cylinder.DOLocalRotate(new Vector3(0, 0, 60) * (i + 1), 0.12f));
+            sequence.AppendInterval(0.1f);
         }
     }
 
@@ -87,7 +89,7 @@ public class BulletSelectionMenu : MonoBehaviour
 
             float yOffset = -offset * bulletSpacing + evenOffset;
             float xOffset = -Math.Abs(offset) * 10f;
-            Vector2 targetPos = new Vector2(1090 + xOffset, yOffset);
+            Vector2 targetPos = new Vector2(bulletSpaceFromCylinder + xOffset, yOffset);
             RectTransform rt = bullets[i].GetComponent<RectTransform>();
             rt.DOAnchorPos(targetPos, 0.4f).SetEase(Ease.Linear);
             bullets[i].image.color = bullets[i].originalColor;
@@ -113,7 +115,7 @@ public class BulletSelectionMenu : MonoBehaviour
         {
             bullet.image.DOFade(0f, bulletsFadeDuration);
             bullet.text.DOFade(0f, bulletsFadeDuration);
-            bullet.GetComponent<RectTransform>().DOAnchorPos(new Vector2(1090, 0), bulletsFadeDuration);
+            bullet.GetComponent<RectTransform>().DOAnchorPos(new Vector2(bulletSpaceFromCylinder, 0), bulletsFadeDuration);
         }
     }
 }
