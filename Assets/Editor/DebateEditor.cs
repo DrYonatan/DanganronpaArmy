@@ -26,6 +26,35 @@ public class FinishNodesPopup : PopupWindowContent
 
 }
 
+public class DebateSettingsPopup : PopupWindowContent
+{
+   private Stage container; // your reference
+   public DebateSettingsPopup(Stage container)
+   {
+      this.container = container;
+   }
+
+   public override Vector2 GetWindowSize()
+   {
+      return new Vector2(600, 400); // size of popup, tweak as needed
+   }
+
+   public override void OnGUI(Rect rect)
+   {
+      if (container == null) return;
+
+      EditorGUILayout.LabelField("Debate Settings", EditorStyles.boldLabel);
+      GUILayout.BeginVertical();
+      container.audioClip = (AudioClip)EditorGUILayout.ObjectField("Music", container.audioClip, typeof(AudioClip), false);
+      for (int i = 0; i < container.evidences.Length; i++)
+      {
+         container.evidences[i] = (Evidence)EditorGUILayout.ObjectField("Evidence #" + i, container.evidences[i], typeof(Evidence), false);
+      }
+      GUILayout.EndVertical();
+
+   }
+}
+
 public class DebateEditor : EditorWindow
 {
    public Stage container;
@@ -88,7 +117,14 @@ public class DebateEditor : EditorWindow
    private void DrawDebateSettings()
    {
       GUILayout.BeginVertical(GUILayout.Width(300));
-      container.audioClip = (AudioClip)EditorGUILayout.ObjectField("Music", container.audioClip, typeof(AudioClip), false);
+      
+      if (GUILayout.Button("Debate Settings"))
+      {
+         var popup = new DebateSettingsPopup( container);
+         PopupWindow.Show(new Rect(new Vector2(100, 50), Vector2.zero), popup);
+         Event.current.Use(); // Optional: Consume the event
+      }
+      
       if (GUILayout.Button("Finish Nodes"))
       {
          var popup = new FinishNodesPopup( container.finishNodes);
@@ -163,7 +199,11 @@ public class DebateEditor : EditorWindow
                GameObject.DestroyImmediate(node.previewPivot.gameObject);
 
             if (node.previewTexture != null)
+            {
                node.previewTexture.Release();
+               DestroyImmediate(node.previewTexture);
+            }
+               
          }
       }
    }
