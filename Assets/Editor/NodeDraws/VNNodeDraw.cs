@@ -13,6 +13,7 @@ public class VNNodeDraw : DrawNode
         GUILayout.BeginHorizontal(style);
         
         GUILayout.BeginVertical(GUILayout.Width(300));
+
         b.character = (CharacterCourt)EditorGUILayout.ObjectField(b.character, typeof(CharacterCourt), false);
         b.expression = (CharacterState)EditorGUILayout.EnumPopup(b.expression);
         ShowPreviewImage(b);
