@@ -13,8 +13,12 @@ public class AnagramUIAnimator : MonoBehaviour
     public RawImage stars;
     public RawImage stars2;
     
+    public RawImage circlePrefab;
+    
     public float growFactor = 1.2f;
     public float growDuration = 0.3f;
+
+    public float circlesGrowDuration = 1f;
     
     public RectTransform silhouette;
 
@@ -32,33 +36,69 @@ public class AnagramUIAnimator : MonoBehaviour
             .SetLoops(-1, LoopType.Restart);
 
         StartCoroutine(StarsGrow());
-
-// Sequence for stars2 (same, but delayed start)
-
-
+        SpawnCircles();
 
     }
 
     IEnumerator StarsGrow()
     {
         Sequence seq1 = DOTween.Sequence();
+        // Scale and fade happen together
         seq1.Append(stars.transform.DOScale(growFactor, growDuration).SetEase(Ease.OutQuad));
-        seq1.Append(stars.DOFade(0f, growDuration));
+        seq1.Join(stars.DOFade(0f, growDuration));
+        // Reset instantly
         seq1.Append(stars.transform.DOScale(1f, 0f));
         seq1.Append(stars.DOFade(1f, 0f));
         seq1.SetLoops(-1);
-        
-        yield return new WaitForSeconds(growDuration);
-        
+
+        yield return new WaitForSeconds(growDuration / 2);
+
         Sequence seq2 = DOTween.Sequence();
+        // Same logic for stars2, with smaller growth
         seq2.Append(stars2.transform.DOScale(growFactor * 0.8f, growDuration).SetEase(Ease.OutQuad));
-        seq2.Append(stars2.DOFade(0f, growDuration));
+        seq2.Join(stars2.DOFade(0f, growDuration));
         seq2.Append(stars2.transform.DOScale(1f, 0f));
         seq2.Append(stars2.DOFade(1f, 0f));
         seq2.SetLoops(-1);
     }
+
+    void SpawnCircles()
+    {
+        Sequence pattern = DOTween.Sequence().SetLoops(-1); // infinite loop
+
+        // 1st circle
+        pattern.AppendCallback(() => SpawnCircle());
+        pattern.AppendInterval(0.5f);
+
+        // 2nd circle
+        pattern.AppendCallback(() => SpawnCircle());
+        pattern.AppendInterval(0.2f);
+
+        // 3rd circle
+        pattern.AppendCallback(() => SpawnCircle());
+        pattern.AppendInterval(0.5f);
+    }
+    
+    void SpawnCircle()
+    {
+        RawImage circle = Instantiate(circlePrefab, transform);
+        circle.color = Color.blue;
+        circle.transform.localScale = Vector3.one;
+
+        // Sequence for this individual circle
+        Sequence circleSeq = DOTween.Sequence();
+
+        circleSeq.Append(circle.transform.DOScale(5f, circlesGrowDuration).SetEase(Ease.OutQuad));
+        circleSeq.Join(circle.DOColor(Color.red, circlesGrowDuration));
+
+        // Destroy the circle after animation finishes
+        circleSeq.OnComplete(() => Destroy(circle.gameObject));
+    }
+    
     void Update()
     {
         shade.transform.Rotate(0, 0 , -40f * Time.deltaTime);
     }
+    
+    
 }
