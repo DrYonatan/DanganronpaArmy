@@ -79,7 +79,7 @@ public class GameLoop : MonoBehaviour
     public Transform shootOrigin;
     public Transform textStartPosition;
     public Camera statementsCamera;
-    public DebateText currentAimedText;
+    public TrialHoverable currentAimedText;
     public Camera renderTextureCamera;
     public ScreenShatterManager screenShatter;
 
@@ -229,7 +229,7 @@ public class GameLoop : MonoBehaviour
 
     void HandleMouseControl()
     {
-        CursorManager.instance.ReticleAsCursor();
+        TrialCursorManager.instance.ReticleAsCursor();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
 

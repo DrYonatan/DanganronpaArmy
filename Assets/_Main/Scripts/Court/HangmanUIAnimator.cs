@@ -4,7 +4,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AnagramUIAnimator : MonoBehaviour
+public class HangmanUIAnimator : MonoBehaviour
 {
     public RawImage mist;
 
@@ -21,6 +21,8 @@ public class AnagramUIAnimator : MonoBehaviour
     public float circlesGrowDuration = 1f;
     
     public RectTransform silhouette;
+    public RectTransform circles;
+
 
     void Start()
     {
@@ -39,6 +41,8 @@ public class AnagramUIAnimator : MonoBehaviour
         SpawnCircles();
 
     }
+    
+    
 
     IEnumerator StarsGrow()
     {
@@ -81,7 +85,7 @@ public class AnagramUIAnimator : MonoBehaviour
     
     void SpawnCircle()
     {
-        RawImage circle = Instantiate(circlePrefab, transform);
+        RawImage circle = Instantiate(circlePrefab, circles);
         circle.color = Color.blue;
         circle.transform.localScale = Vector3.one;
 

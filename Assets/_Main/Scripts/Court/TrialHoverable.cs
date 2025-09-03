@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DebateText : MonoBehaviour
+public class TrialHoverable : MonoBehaviour
 {
     void OnMouseEnter()
     {
-        GameLoop.instance.currentAimedText = this;
+        TrialCursorManager.instance.isHovering = true;
     }
     void OnMouseExit()
     {
-        GameLoop.instance.currentAimedText = null;
+        TrialCursorManager.instance.isHovering = false;
     }
 }
