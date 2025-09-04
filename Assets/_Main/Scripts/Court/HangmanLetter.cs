@@ -9,14 +9,17 @@ public class HangmanLetter : MonoBehaviour
     public TextMeshProUGUI text;
     public Image image;
     public CanvasGroup canvasGroup;
+    public int maxHealth = 3;
     public int health = 3;
+    public Color maxLifeColor = Color.white;
+    public Color minLifeColor = Color.red;
     void Start()
     {
         Cursor.lockState = CursorLockMode.Confined;
         text.text = letter.ToString();
         canvasGroup.alpha = 0f;
         canvasGroup.DOFade(1f, 0.5f);
-        health = Random.Range(1, 4);
+        health = Random.Range(1, maxHealth + 1);
         UpdateColor();
     }
 
@@ -49,15 +52,18 @@ public class HangmanLetter : MonoBehaviour
 
     void UpdateColor()
     {
-        if(health == 1)
-            image.color = Color.red;
-        else if (health == 2)
+        if (health == maxHealth)
         {
-            image.color = new Color(1, 140f/255f, 140f/255f, 1f);
+            image.color = maxLifeColor;
+        }
+        else if (health == 1)
+        {
+            image.color = minLifeColor;
         }
         else
         {
-            image.color = Color.white;
+            float t = 1f - (health - 1f) / (maxHealth - 1f);
+            image.color = Color.Lerp(maxLifeColor, minLifeColor, t);
         }
     }
 }
