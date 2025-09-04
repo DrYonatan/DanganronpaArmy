@@ -5,13 +5,25 @@ using UnityEngine;
 
 public class HangmanManager : MonoBehaviour
 {
+    public static HangmanManager instance { get; private set; }
+
+    public HangmanUIAnimator animator;
+
     public HangmansGambit game;
-    public List<HangmanLetter> letters = new List<HangmanLetter>();
+    public List<HangmanLetter> letterObjects = new List<HangmanLetter>();
     public HangmanLetter letterPrefab;
     public AudioClip music;
+    public int letterIndex = 0;
+    
 
-    void Start()
+    void Awake()
     {
+        instance = this;
+    }
+    public void Play(HangmansGambit game)
+    {
+        this.game = game;
+        StartCoroutine(animator.GenerateLetterBlocks(game.correctLetters));
         StartCoroutine(SpawnLetters(game.possibleLetters));
         MusicManager.instance.PlaySong(music);
     }
@@ -20,7 +32,7 @@ public class HangmanManager : MonoBehaviour
     {
         CursorManager.instance.ReticleAsCursor();
     }
-   
+    
     IEnumerator SpawnLetters(char[] chars)
     {
         while (game.isActive)
@@ -34,6 +46,39 @@ public class HangmanManager : MonoBehaviour
         }
     }
 
+    public void CheckLetter(char letter)
+    {
+        if (game.correctLetters[letterIndex].letter == letter)
+        {
+            game.correctLetters[letterIndex].isAquired = true;
+            animator.UpdateBlock(letterIndex);
+            ProceedToNextLetter();
+        }
+        else
+        {
+            Debug.Log("Wrong! Correct Letter: " + game.correctLetters[letterIndex].letter);
+            // TODO make player lose HP if they got it wrong
+        }
+    }
+
+    void ProceedToNextLetter()
+    {
+        letterIndex++;
+        if (letterIndex >= game.correctLetters.Count)
+        {
+            game.isActive = false;
+        }
+        for (int i = letterIndex; i < game.correctLetters.Count; i++)
+        {
+            if (game.correctLetters[i].isAquired)
+                letterIndex++;
+            else
+            {
+                return;
+            }
+        }
+    }
+
     void SpawnLetter(char c)
     {
         HangmanLetter letter = Instantiate(letterPrefab, transform);
@@ -44,13 +89,13 @@ public class HangmanManager : MonoBehaviour
         float randomY = Random.Range(-parentRect.rect.height / 3f, parentRect.rect.height / 3f);
 
         letter.GetComponent<RectTransform>().anchoredPosition = new Vector2(randomX, randomY);
-        letters.Add(letter);
+        letterObjects.Add(letter);
         letter.canvasGroup.DOFade(0f, 0.5f)
             .SetDelay(3f) // wait 3 seconds before fading
             .OnComplete(() =>
             {
-                letters.Remove(letter);
-                Destroy(letter.gameObject);
+                letterObjects.Remove(letter);
+                letter.Kill();
             });
     }
 }

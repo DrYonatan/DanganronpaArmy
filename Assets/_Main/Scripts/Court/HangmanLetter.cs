@@ -7,13 +7,13 @@ using UnityEngine.UI;
 public class HangmanLetter : MonoBehaviour
 {
     private RectTransform rectTransform;
-    public char letter = 'ש';
+    public char letter = 'A';
     public TextMeshProUGUI text;
     public Image image;
     public CanvasGroup canvasGroup;
     public int maxHealth = 3;
     public int health = 3;
-    public Color maxLifeColor = Color.white;
+    public Color maxLifeColor = Color.yellow;
     public Color minLifeColor = Color.red;
     void Start()
     {
@@ -46,9 +46,16 @@ public class HangmanLetter : MonoBehaviour
 
     void OnMouseDown()
     {
-        if (health > 0)
+        if (health > 1)
         {
             ReduceHealth();
+        }
+        else
+        {
+            rectTransform.DOKill();
+            canvasGroup.DOKill();
+            HangmanManager.instance.CheckLetter(letter);
+            Kill();
         }
     }
 
@@ -59,6 +66,11 @@ public class HangmanLetter : MonoBehaviour
         Shake();
     }
 
+    public void Kill()
+    {
+        TrialCursorManager.instance.isHovering = false;
+        Destroy(gameObject);
+    }
     void Shake()
     {
         rectTransform.DOKill();

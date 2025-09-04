@@ -2468,6 +2468,66 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &347006571
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 347006572}
+  - component: {fileID: 347006573}
+  m_Layer: 5
+  m_Name: LetterBlocksContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &347006572
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 347006571}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 963476060}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 166, y: -379}
+  m_SizeDelta: {x: 1490.2, y: 127.3}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &347006573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 347006571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 5
+  m_StartCorner: 1
+  m_StartAxis: 0
+  m_CellSize: {x: 100, y: 100}
+  m_Spacing: {x: 40, y: 0}
+  m_Constraint: 0
+  m_ConstraintCount: 2
 --- !u!1 &350227423
 GameObject:
   m_ObjectHideFlags: 0
@@ -7274,6 +7334,7 @@ RectTransform:
   - {fileID: 1438130489}
   - {fileID: 718159842}
   - {fileID: 346015623}
+  - {fileID: 347006572}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -7303,6 +7364,9 @@ MonoBehaviour:
   circlesGrowDuration: 1
   silhouette: {fileID: 718159842}
   circles: {fileID: 346015623}
+  blocksContainer: {fileID: 347006572}
+  blockPrefab: {fileID: -1125531341613091977, guid: 14bd0c12e5054c64bbf37fef7f096a02, type: 3}
+  blockObjects: []
 --- !u!114 &963476062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7315,10 +7379,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ea5814140bd8a64599ee45c7bbe17e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  game: {fileID: 11400000, guid: c8f905213147a1a4aa52c099d842872c, type: 2}
-  letters: []
+  animator: {fileID: 963476061}
+  game: {fileID: 0}
+  letterObjects: []
   letterPrefab: {fileID: -5698946257740356805, guid: 4cb5c4b747b7ac244a903c917728b492, type: 3}
   music: {fileID: 8300000, guid: 011b8082d9ead584784f988a61b71bdf, type: 3}
+  letterIndex: 0
 --- !u!1 &982967281
 GameObject:
   m_ObjectHideFlags: 0

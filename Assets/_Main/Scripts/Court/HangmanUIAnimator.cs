@@ -23,6 +23,10 @@ public class HangmanUIAnimator : MonoBehaviour
     public RectTransform silhouette;
     public RectTransform circles;
 
+    public RectTransform blocksContainer;
+    public HangmanLetterBlock blockPrefab;
+    public List<HangmanLetterBlock> blockObjects = new List<HangmanLetterBlock>();
+
 
     void Start()
     {
@@ -42,7 +46,21 @@ public class HangmanUIAnimator : MonoBehaviour
 
     }
     
-    
+    public IEnumerator GenerateLetterBlocks(List<Letter> letters)
+    {
+        foreach (Letter letter in letters)
+        {
+            HangmanLetterBlock block = Instantiate(blockPrefab, blocksContainer);
+            block.letterRepresented = letter.letter;
+            blockObjects.Add(block);
+            if (letter.isAquired)
+            {
+                block.GetAquired();
+            }
+            
+        }
+        yield return null;
+    }
 
     IEnumerator StarsGrow()
     {
@@ -102,6 +120,11 @@ public class HangmanUIAnimator : MonoBehaviour
     void Update()
     {
         shade.transform.Rotate(0, 0 , -40f * Time.deltaTime);
+    }
+
+    public void UpdateBlock(int index)
+    {
+        blockObjects[index].GetAquired();
     }
     
     

@@ -15,12 +15,14 @@ public class TrialManager : MonoBehaviour
     }
     void Start()
     {
-        segments[currentIndex].Play();
+        TrialSegment segment = Instantiate(segments[currentIndex]);
+        segment.Play();
     }
 
     public void OnSegmentFinished()
     {
         currentIndex++;
-        segments[currentIndex].Play();
+        TrialSegment segment = Instantiate(segments[currentIndex]);
+        segment.Play();
     }
 }
