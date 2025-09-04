@@ -220,7 +220,8 @@ GameObject:
   - component: {fileID: 4467044987019714706}
   - component: {fileID: -5698946257740356805}
   - component: {fileID: 5604670429560552430}
-  - component: {fileID: 2881490736364956835}
+  - component: {fileID: 1988253277546513169}
+  - component: {fileID: 4895002278990389050}
   m_Layer: 5
   m_Name: ClickableLetter
   m_TagString: Untagged
@@ -246,8 +247,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 455.77, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 486.0935, y: -30.3235}
+  m_SizeDelta: {x: 160.6471, y: 160.6471}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &-5698946257740356805
 MonoBehaviour:
@@ -281,7 +282,15 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!61 &2881490736364956835
+--- !u!222 &1988253277546513169
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8817196215829711448}
+  m_CullTransparentMesh: 1
+--- !u!61 &4895002278990389050
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -310,10 +319,10 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 3.3507385, y: 0}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -324,5 +333,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 169.43427, y: 159.66006}
+  m_Size: {x: 140.94, y: 144.26}
   m_EdgeRadius: 0

@@ -1,10 +1,12 @@
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class HangmanLetter : MonoBehaviour
 {
+    private RectTransform rectTransform;
     public char letter = 'ש';
     public TextMeshProUGUI text;
     public Image image;
@@ -15,6 +17,7 @@ public class HangmanLetter : MonoBehaviour
     public Color minLifeColor = Color.red;
     void Start()
     {
+        rectTransform =  GetComponent<RectTransform>();
         Cursor.lockState = CursorLockMode.Confined;
         text.text = letter.ToString();
         canvasGroup.alpha = 0f;
@@ -31,6 +34,16 @@ public class HangmanLetter : MonoBehaviour
         image.transform.Rotate(0, 0, 360f * Time.deltaTime);
     }
 
+    void OnMouseEnter()
+    {
+        TrialCursorManager.instance.isHovering = true;
+    }
+
+    void OnMouseExit()
+    {
+        TrialCursorManager.instance.isHovering = false;
+    }
+
     void OnMouseDown()
     {
         if (health > 0)
@@ -39,15 +52,18 @@ public class HangmanLetter : MonoBehaviour
         }
     }
 
-    void OnMouseEnter()
-    {
-        
-    }
-
     void ReduceHealth()
     {
         health--;
         UpdateColor();
+        Shake();
+    }
+
+    void Shake()
+    {
+        rectTransform.DOKill();
+        rectTransform.DOShakeAnchorPos(0.2f, strength: new Vector2(10f, 10f), vibrato: 10, randomness: 90, snapping: true,
+            fadeOut: false);
     }
 
     void UpdateColor()
