@@ -66,7 +66,7 @@ public class HangmanManager : MonoBehaviour
         letterIndex++;
         if (letterIndex >= game.correctLetters.Count)
         {
-            game.isActive = false;
+            FinishGame();
         }
         for (int i = letterIndex; i < game.correctLetters.Count; i++)
         {
@@ -77,6 +77,18 @@ public class HangmanManager : MonoBehaviour
                 return;
             }
         }
+    }
+
+    void FinishGame()
+    {
+        game.isActive = false;
+        StartCoroutine(FinishPipeline());
+    }
+
+    IEnumerator FinishPipeline()
+    {
+        yield return animator.FinishAnimation();
+        game.Finish();
     }
 
     void SpawnLetter(char c)

@@ -26,6 +26,8 @@ public class HangmanUIAnimator : MonoBehaviour
     public RectTransform blocksContainer;
     public HangmanLetterBlock blockPrefab;
     public List<HangmanLetterBlock> blockObjects = new List<HangmanLetterBlock>();
+    
+    public ScreenShatterManager screenShatterManager;
 
 
     void Start()
@@ -44,6 +46,12 @@ public class HangmanUIAnimator : MonoBehaviour
         StartCoroutine(StarsGrow());
         SpawnCircles();
 
+    }
+
+    public IEnumerator FinishAnimation()
+    {
+        yield return screenShatterManager.ScreenShatter();
+        MusicManager.instance.StopSong();
     }
     
     public IEnumerator GenerateLetterBlocks(List<Letter> letters)

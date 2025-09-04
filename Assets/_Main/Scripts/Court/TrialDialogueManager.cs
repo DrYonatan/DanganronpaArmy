@@ -23,6 +23,7 @@ public class TrialDialogueManager : MonoBehaviour
     {
         DialogueSystem.instance.SetTextBox(dialogueContainer);
         DialogueSystem.instance.dialogueBoxAnimator.gameObject.SetActive(true);
+        ImageScript.instance.UnFadeToBlack(0.5f);
         CourtTextBoxAnimator animator = ((CourtTextBoxAnimator)(DialogueSystem.instance.dialogueBoxAnimator));
         animator.ChangeFace(null);
         animator.FaceAppear();

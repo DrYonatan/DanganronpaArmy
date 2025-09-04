@@ -19,6 +19,12 @@ public class HangmansGambit : TrialSegment
     public char[] possibleLetters;
     public List<Letter> correctLetters = new List<Letter>();
 
+    public override void Finish()
+    {
+        base.Finish();
+        HangmanManager.instance.gameObject.SetActive(false);
+    }
+
     public override void Play()
     {
         HangmanManager.instance.Play(this);
