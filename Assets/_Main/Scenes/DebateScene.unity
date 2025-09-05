@@ -627,6 +627,7 @@ Transform:
   - {fileID: 1882886021}
   - {fileID: 875651028}
   - {fileID: 2105477578}
+  - {fileID: 686745635}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &108793658
@@ -1403,23 +1404,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectController: {fileID: 284596573}
   cameraController: {fileID: 284596572}
-  characterStands:
-  - {fileID: 333186945}
-  - {fileID: 747270071}
-  - {fileID: 389076126}
-  - {fileID: 1364570980}
-  - {fileID: 731471275}
-  - {fileID: 127597228}
-  - {fileID: 66366025}
-  - {fileID: 1293946264}
-  - {fileID: 1142983464}
-  - {fileID: 612266541}
-  - {fileID: 1869341973}
-  - {fileID: 1829181448}
-  - {fileID: 387703067}
-  - {fileID: 204596452}
-  - {fileID: 1437043601}
-  - {fileID: 1713902452}
   dialogueContainer:
     root: {fileID: 1100453881}
     nameContainer:
@@ -5165,6 +5149,56 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: 0, y: 0, z: 0, w: 0}
   m_Softness: {x: 0, y: 0}
+--- !u!1 &686745634
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 686745635}
+  - component: {fileID: 686745636}
+  m_Layer: 0
+  m_Name: Hangman Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &686745635
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 686745634}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 94256287}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &686745636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 686745634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ea5814140bd8a64599ee45c7bbe17e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 963476061}
+  game: {fileID: 0}
+  letterObjects: []
+  letterPrefab: {fileID: -5698946257740356805, guid: 4cb5c4b747b7ac244a903c917728b492, type: 3}
+  music: {fileID: 8300000, guid: 011b8082d9ead584784f988a61b71bdf, type: 3}
+  letterIndex: 0
 --- !u!1 &699762284
 GameObject:
   m_ObjectHideFlags: 0
@@ -5846,7 +5880,7 @@ Transform:
   m_GameObject: {fileID: 779956799}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.23921145, z: -0, w: 0.9709676}
-  m_LocalPosition: {x: 0.187, y: 1.227, z: -0.687}
+  m_LocalPosition: {x: 0.187, y: 1.628, z: -0.687}
   m_LocalScale: {x: 0.12, y: 0.12, z: 0.12}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7242,15 +7276,15 @@ GameObject:
   - component: {fileID: 963476059}
   - component: {fileID: 963476058}
   - component: {fileID: 963476057}
-  - component: {fileID: 963476062}
   - component: {fileID: 963476061}
+  - component: {fileID: 963476062}
   m_Layer: 5
   m_Name: Hangmans Gambit UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &963476057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7354,6 +7388,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b912d0131ac38641a3c7fadd9c6111e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasGroup: {fileID: 963476062}
   mist: {fileID: 734468053}
   shade: {fileID: 49688928}
   stars: {fileID: 313865488}
@@ -7368,24 +7403,18 @@ MonoBehaviour:
   blockPrefab: {fileID: -1125531341613091977, guid: 14bd0c12e5054c64bbf37fef7f096a02, type: 3}
   blockObjects: []
   screenShatterManager: {fileID: 924420849}
---- !u!114 &963476062
-MonoBehaviour:
+--- !u!225 &963476062
+CanvasGroup:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963476056}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ea5814140bd8a64599ee45c7bbe17e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 963476061}
-  game: {fileID: 0}
-  letterObjects: []
-  letterPrefab: {fileID: -5698946257740356805, guid: 4cb5c4b747b7ac244a903c917728b492, type: 3}
-  music: {fileID: 8300000, guid: 011b8082d9ead584784f988a61b71bdf, type: 3}
-  letterIndex: 0
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &982967281
 GameObject:
   m_ObjectHideFlags: 0
@@ -7776,7 +7805,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.02641511, g: 0.02641511, b: 0.02641511, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -9000,7 +9029,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.015686275}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -10268,7 +10297,7 @@ Transform:
   m_GameObject: {fileID: 1364570978}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.20535019, z: -0, w: 0.9786886}
-  m_LocalPosition: {x: -2.17, y: 2.7, z: 5.38}
+  m_LocalPosition: {x: -2.041, y: 2.7, z: 5.085}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -12696,7 +12725,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.015686275}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -13277,7 +13306,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.02745098}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -14351,10 +14380,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   segments:
-  - {fileID: 11400000, guid: c8f905213147a1a4aa52c099d842872c, type: 2}
   - {fileID: 11400000, guid: 03110a6c3b052c84489dfd897a46394b, type: 2}
+  - {fileID: 11400000, guid: c8f905213147a1a4aa52c099d842872c, type: 2}
   - {fileID: 11400000, guid: cbf13f5ddfc24354c86038115c120537, type: 2}
   - {fileID: 11400000, guid: 03110a6c3b052c84489dfd897a46394b, type: 2}
+  characterStands:
+  - {fileID: 333186945}
+  - {fileID: 747270071}
+  - {fileID: 389076126}
+  - {fileID: 1364570980}
+  - {fileID: 731471275}
+  - {fileID: 127597228}
+  - {fileID: 66366025}
+  - {fileID: 1293946264}
+  - {fileID: 1142983464}
+  - {fileID: 612266541}
+  - {fileID: 1869341973}
+  - {fileID: 1829181448}
+  - {fileID: 387703067}
+  - {fileID: 204596452}
+  - {fileID: 1437043601}
+  - {fileID: 1713902452}
 --- !u!1 &2111263185
 GameObject:
   m_ObjectHideFlags: 0

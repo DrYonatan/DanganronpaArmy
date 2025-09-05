@@ -15,6 +15,7 @@ public class Letter
 [CreateAssetMenu(menuName = "Data/Hangmans Gambit")]
 public class HangmansGambit : TrialSegment
 {
+    public CharacterCourt character;
     public bool isActive = true;
     public char[] possibleLetters;
     public List<Letter> correctLetters = new List<Letter>();
@@ -22,7 +23,7 @@ public class HangmansGambit : TrialSegment
     public override void Finish()
     {
         base.Finish();
-        HangmanManager.instance.gameObject.SetActive(false);
+        HangmanManager.instance.animator.gameObject.SetActive(false);
     }
 
     public override void Play()

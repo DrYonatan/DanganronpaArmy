@@ -23,14 +23,36 @@ public class HangmanManager : MonoBehaviour
     public void Play(HangmansGambit game)
     {
         this.game = game;
-        StartCoroutine(animator.GenerateLetterBlocks(game.correctLetters));
-        StartCoroutine(SpawnLetters(game.possibleLetters));
+        game.isActive = false;
         MusicManager.instance.PlaySong(music);
+        StartCoroutine(StartGame());
+    }
+
+    IEnumerator StartGame()
+    {
+        CharacterStand characterStand = TrialManager.instance.characterStands.Find(stand => stand.character == game.character);
+        yield return CameraController.instance.DiscussionOutroMovement(2.5f);
+        ImageScript.instance.UnFadeToBlack(1f);
+        CameraController.instance.TeleportToTarget(characterStand.transform, characterStand.heightPivot, new Vector3(0, -0.2f, -3f), Vector3.zero, 0);
+        yield return new WaitForSeconds(0.5f);
+        animator.gameObject.SetActive(true);
+        animator.canvasGroup.alpha = 0f;
+        yield return new WaitForSeconds(0.5f);
+        animator.ShowHangmanUI();
+        yield return animator.GenerateLetterBlocks(game.correctLetters);
+        game.isActive = true;
+        animator.canvasGroup.DOFade(1f, 0.5f);
+        CursorManager.instance.Show();
+        CheckAquiredLetters();
+        StartCoroutine(SpawnLetters(game.possibleLetters));
     }
 
     void Update()
     {
-        CursorManager.instance.ReticleAsCursor();
+        if (game != null && game.isActive)
+        {
+            CursorManager.instance.ReticleAsCursor();
+        }
     }
     
     IEnumerator SpawnLetters(char[] chars)
@@ -68,6 +90,11 @@ public class HangmanManager : MonoBehaviour
         {
             FinishGame();
         }
+        
+    }
+
+    void CheckAquiredLetters()
+    {
         for (int i = letterIndex; i < game.correctLetters.Count; i++)
         {
             if (game.correctLetters[i].isAquired)
@@ -88,14 +115,21 @@ public class HangmanManager : MonoBehaviour
     IEnumerator FinishPipeline()
     {
         yield return animator.FinishAnimation();
+        animator.canvasGroup.DOFade(0f, 0f);
+        ImageScript.instance.FadeToBlack(0.01f);
+        yield return new WaitForSeconds(0.01f);
+        ImageScript.instance.UnFadeToBlack(0.5f);
+        StartCoroutine(CameraController.instance.ChangeFov(20f, 1f));
+        yield return CameraController.instance.MoveAndRotate(new Vector3(0f, 0f, 1.5f), new Vector3(0f, 0f, 0f), 1f);
+        MusicManager.instance.StopSong();
         game.Finish();
     }
 
     void SpawnLetter(char c)
     {
-        HangmanLetter letter = Instantiate(letterPrefab, transform);
+        HangmanLetter letter = Instantiate(letterPrefab, animator.transform);
         letter.letter = c;
-        RectTransform parentRect = transform as RectTransform;
+        RectTransform parentRect = animator.transform as RectTransform;
 
         float randomX = Random.Range(-parentRect.rect.width / 3f, parentRect.rect.width / 3f);
         float randomY = Random.Range(-parentRect.rect.height / 3f, parentRect.rect.height / 3f);

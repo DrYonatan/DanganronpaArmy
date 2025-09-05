@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class HangmanUIAnimator : MonoBehaviour
 {
+    
+    public CanvasGroup canvasGroup;
+    
     public RawImage mist;
 
     public RawImage shade;
@@ -30,7 +33,7 @@ public class HangmanUIAnimator : MonoBehaviour
     public ScreenShatterManager screenShatterManager;
 
 
-    void Start()
+    public void ShowHangmanUI()
     {
         Color c = mist.color;
         c.a = 0f;
@@ -45,13 +48,11 @@ public class HangmanUIAnimator : MonoBehaviour
 
         StartCoroutine(StarsGrow());
         SpawnCircles();
-
     }
 
     public IEnumerator FinishAnimation()
     {
         yield return screenShatterManager.ScreenShatter();
-        MusicManager.instance.StopSong();
     }
     
     public IEnumerator GenerateLetterBlocks(List<Letter> letters)

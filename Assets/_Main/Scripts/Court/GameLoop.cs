@@ -49,7 +49,6 @@ public class GameLoop : MonoBehaviour
     }
 
     [SerializeField] CameraController cameraController;
-    [SerializeField] List<CharacterStand> characterStands;
     public Stage stage;
     [SerializeField] Transform textPivot;
     [SerializeField] GameObject textPrefab;
@@ -95,7 +94,6 @@ public class GameLoop : MonoBehaviour
 
     IEnumerator StartDebate()
     {
-        ImageScript.instance.FadeToBlack(2f);
         DialogueSystem.instance.SetTextBox(debateUIAnimator.dialogueContainer);
         yield return cameraController.DiscussionOutroMovement(2.5f);
         debateUIAnimator.gameObject.SetActive(true);
@@ -425,7 +423,7 @@ public class GameLoop : MonoBehaviour
 
         if (nextNode.character != null)
         {
-            characterStand = characterStands.Find(stand => stand.character == nextNode.character);
+            characterStand = TrialManager.instance.characterStands.Find(stand => stand.character == nextNode.character);
         }
 
         if (characterStand != null)

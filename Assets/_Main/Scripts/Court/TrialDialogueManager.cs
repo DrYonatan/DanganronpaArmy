@@ -10,7 +10,6 @@ public class TrialDialogueManager : MonoBehaviour
     
     [SerializeField] CameraEffectController effectController;
     [SerializeField] CameraController cameraController;
-    [SerializeField] List<CharacterStand> characterStands;
     
     public DialogueContainer dialogueContainer;
 
@@ -47,7 +46,7 @@ public class TrialDialogueManager : MonoBehaviour
 
     IEnumerator PlayConversationNode(DiscussionNode node)
     {
-        CharacterStand characterStand = characterStands.Find(stand => stand.character == node.character);
+        CharacterStand characterStand = TrialManager.instance.characterStands.Find(stand => stand.character == node.character);
         if (!node.usePrevCamera)
         {
             cameraController.TeleportToTarget(characterStand.transform, characterStand.heightPivot, node.positionOffset, node.rotationOffset, node.fovOffset);
