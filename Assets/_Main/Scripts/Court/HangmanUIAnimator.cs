@@ -31,7 +31,8 @@ public class HangmanUIAnimator : MonoBehaviour
     public List<HangmanLetterBlock> blockObjects = new List<HangmanLetterBlock>();
     
     public ScreenShatterManager screenShatterManager;
-
+    
+    public List<Image> masks = new ();
 
     public void ShowHangmanUI()
     {
@@ -48,6 +49,15 @@ public class HangmanUIAnimator : MonoBehaviour
 
         StartCoroutine(StarsGrow());
         SpawnCircles();
+    }
+
+    public void SetSilhouette(CharacterStand stand)
+    {
+        silhouette.anchoredPosition = new Vector2(0, (1.8f - stand.heightPivot.localPosition.y - 0.05f) * 277.46f);
+        foreach (Image mask in masks)
+        {
+            mask.sprite = stand.spriteRenderer.sprite;
+        }
     }
 
     public IEnumerator FinishAnimation()
@@ -121,6 +131,7 @@ public class HangmanUIAnimator : MonoBehaviour
 
         circleSeq.Append(circle.transform.DOScale(5f, circlesGrowDuration).SetEase(Ease.OutQuad));
         circleSeq.Join(circle.DOColor(Color.red, circlesGrowDuration));
+        circleSeq.Join(circle.transform.DOLocalRotate(new Vector3(0, 0, 60f), circlesGrowDuration));
 
         // Destroy the circle after animation finishes
         circleSeq.OnComplete(() => Destroy(circle.gameObject));

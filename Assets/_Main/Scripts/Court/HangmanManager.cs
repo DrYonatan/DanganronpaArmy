@@ -33,11 +33,11 @@ public class HangmanManager : MonoBehaviour
         CharacterStand characterStand = TrialManager.instance.characterStands.Find(stand => stand.character == game.character);
         yield return CameraController.instance.DiscussionOutroMovement(2.5f);
         ImageScript.instance.UnFadeToBlack(1f);
-        CameraController.instance.TeleportToTarget(characterStand.transform, characterStand.heightPivot, new Vector3(0, -0.2f, -3f), Vector3.zero, 0);
-        yield return new WaitForSeconds(0.5f);
+        CameraController.instance.TeleportToTarget(characterStand.transform, characterStand.heightPivot, new Vector3(0, -0.2f, -3.5f), Vector3.zero, 0);
+        yield return CameraController.instance.MoveAndRotate(new Vector3(0, 0, 0.5f), Vector3.zero, 1.5f);
         animator.gameObject.SetActive(true);
         animator.canvasGroup.alpha = 0f;
-        yield return new WaitForSeconds(0.5f);
+        animator.SetSilhouette(characterStand);
         animator.ShowHangmanUI();
         yield return animator.GenerateLetterBlocks(game.correctLetters);
         game.isActive = true;
@@ -119,8 +119,8 @@ public class HangmanManager : MonoBehaviour
         ImageScript.instance.FadeToBlack(0.01f);
         yield return new WaitForSeconds(0.01f);
         ImageScript.instance.UnFadeToBlack(0.5f);
-        StartCoroutine(CameraController.instance.ChangeFov(20f, 1f));
-        yield return CameraController.instance.MoveAndRotate(new Vector3(0f, 0f, 1.5f), new Vector3(0f, 0f, 0f), 1f);
+        StartCoroutine(CameraController.instance.ChangeFov(25f, 1.5f));
+        yield return CameraController.instance.MoveAndRotate(new Vector3(0f, 0f, 2f), new Vector3(0f, 0f, 0f), 1.5f);
         MusicManager.instance.StopSong();
         game.Finish();
     }
