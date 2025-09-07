@@ -53,7 +53,7 @@ public class HangmanUIAnimator : MonoBehaviour
 
     public void SetSilhouette(CharacterStand stand)
     {
-        silhouette.anchoredPosition = new Vector2(0, (1.8f - stand.heightPivot.localPosition.y - 0.05f) * 277.46f);
+        silhouette.anchoredPosition = new Vector2(0, (1.8f - stand.heightPivot.localPosition.y - 0.05f) * 394.41f);
         foreach (Image mask in masks)
         {
             mask.sprite = stand.spriteRenderer.sprite;

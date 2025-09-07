@@ -85,7 +85,11 @@ public class HangmanManager : MonoBehaviour
 
     void ProceedToNextLetter()
     {
-        letterIndex++;
+        for (int i = letterIndex; i < game.correctLetters.Count; i++)
+        {
+            if (game.correctLetters[i].isAquired)
+                letterIndex++;
+        }
         if (letterIndex >= game.correctLetters.Count)
         {
             FinishGame();
