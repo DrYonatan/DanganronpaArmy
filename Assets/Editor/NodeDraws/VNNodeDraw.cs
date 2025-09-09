@@ -91,7 +91,7 @@ public class VNNodeDraw : DrawNode
     {
         GUILayout.BeginHorizontal();
         GUILayout.FlexibleSpace();
-        if (node.character.faceSprite != null)
+        if (node.character != null && node.character.faceSprite != null)
             GUILayout.Label(node.character.faceSprite.texture, GUILayout.Width(150), GUILayout.Height(150));
         else
             GUILayout.Box("", GUILayout.Width(150), GUILayout.Height(150));
