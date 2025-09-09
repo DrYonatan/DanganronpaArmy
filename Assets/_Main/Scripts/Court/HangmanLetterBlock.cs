@@ -9,6 +9,7 @@ public class HangmanLetterBlock : MonoBehaviour
 {
     public Image image;
     public TextMeshProUGUI text;
+    public CanvasGroup canvasGroup;
     public char letterRepresented;
 
     public void GetAquired()

@@ -23,7 +23,7 @@ public class HangmanUIAnimator : MonoBehaviour
 
     public float circlesGrowDuration = 1f;
     
-    public RectTransform silhouette;
+    public Image silhouette;
     public RectTransform circles;
 
     public RectTransform blocksContainer;
@@ -32,8 +32,6 @@ public class HangmanUIAnimator : MonoBehaviour
     
     public ScreenShatterManager screenShatterManager;
     
-    public List<Image> masks = new ();
-
     public void ShowHangmanUI()
     {
         Color c = mist.color;
@@ -44,7 +42,7 @@ public class HangmanUIAnimator : MonoBehaviour
             .SetLoops(-1, LoopType.Yoyo) // -1 = infinite
             .SetEase(Ease.Linear);  
         
-        silhouette.DOShakeAnchorPos(5f, strength: new Vector2(5f, 5f), vibrato: 1, randomness: 90, snapping: false, fadeOut: false)
+        silhouette.GetComponent<RectTransform>().DOShakeAnchorPos(5f, strength: new Vector2(5f, 5f), vibrato: 1, randomness: 90, snapping: false, fadeOut: false)
             .SetLoops(-1, LoopType.Restart);
 
         StartCoroutine(StarsGrow());
@@ -53,11 +51,8 @@ public class HangmanUIAnimator : MonoBehaviour
 
     public void SetSilhouette(CharacterStand stand)
     {
-        silhouette.anchoredPosition = new Vector2(0, (1.8f - stand.heightPivot.localPosition.y - 0.05f) * 394.41f);
-        foreach (Image mask in masks)
-        {
-            mask.sprite = stand.spriteRenderer.sprite;
-        }
+        silhouette.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, (1.8f - stand.heightPivot.localPosition.y - 0.05f) * 394.41f - 625f);
+        silhouette.sprite = stand.spriteRenderer.sprite;
     }
 
     public IEnumerator FinishAnimation()
@@ -72,11 +67,23 @@ public class HangmanUIAnimator : MonoBehaviour
             HangmanLetterBlock block = Instantiate(blockPrefab, blocksContainer);
             block.letterRepresented = letter.letter;
             blockObjects.Add(block);
+        }
+        BlocksStartAnimation();
+        yield return new WaitForSeconds(1f);
+        StartCoroutine(AquireBlocks(letters));
+        yield return null;
+    }
+
+    public IEnumerator AquireBlocks(List<Letter> letters)
+    {
+        foreach (Letter letter in letters)
+        {
+            HangmanLetterBlock block = blockObjects.Find((block) => block.letterRepresented == letter.letter);
             if (letter.isAquired)
             {
                 block.GetAquired();
+                yield return new WaitForSeconds(0.5f);
             }
-            
         }
         yield return null;
     }
@@ -145,6 +152,66 @@ public class HangmanUIAnimator : MonoBehaviour
     public void UpdateBlock(int index)
     {
         blockObjects[index].GetAquired();
+    }
+
+    public void BlocksStartAnimation()
+    {
+        foreach (HangmanLetterBlock block in blockObjects)
+        {
+            block.canvasGroup.alpha = 0f;
+            block.transform.DOScaleY(0f, 0f);
+        }
+        Sequence seq = DOTween.Sequence();
+
+        float delayBetweenBlocks = 0.1f; // time between each block starting
+        float animDuration = 0.5f;       // duration for each block's grow/fade animation
+
+        for (int i = 0; i < blockObjects.Count; i++)
+        {
+            HangmanLetterBlock block = blockObjects[i];
+
+            // Create a tween for this block
+            Tween scaleTween = block.transform.DOScaleY(1f, animDuration).SetEase(Ease.OutBack);
+            Tween alphaTween = block.canvasGroup.DOFade(1f, animDuration);
+
+            // Add both tweens to the sequence so they run together
+            seq.Insert(i * delayBetweenBlocks, scaleTween);
+            seq.Insert(i * delayBetweenBlocks, alphaTween);
+        }
+        
+        BlocksBlinkRandomly();
+    }
+    
+    
+    public void BlocksBlinkRandomly()
+    {
+        int blinkCount = 5;              // total number of blink events
+        float blinkDuration = 0.1f;      // fade out/in time
+        float timeBetweenBlinks = 0.1f;  // pause between blink events
+
+        Sequence blinkSequence = DOTween.Sequence();
+
+        for (int i = 0; i < blinkCount; i++)
+        {
+            // Pick a random number of blocks to blink this round
+            int blocksToBlink = Random.Range(1, blockObjects.Count + 1);
+
+            // Pick unique random indices
+            var indices = new System.Collections.Generic.HashSet<int>();
+            while (indices.Count < blocksToBlink)
+            {
+                indices.Add(Random.Range(0, blockObjects.Count));
+            }
+
+            // For each selected block, create a quick fade out and fade in
+            foreach (int index in indices)
+            {
+                HangmanLetterBlock block = blockObjects[index];
+                // Fade out then back in
+                blinkSequence.Insert(i * (blinkDuration + timeBetweenBlinks), 
+                    block.canvasGroup.DOFade(0f, blinkDuration / 2).SetLoops(2, LoopType.Yoyo));
+            }
+        }
     }
     
     
