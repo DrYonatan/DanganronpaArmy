@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class HangmanManager : MonoBehaviour
 {
@@ -14,6 +16,8 @@ public class HangmanManager : MonoBehaviour
     public HangmanLetter letterPrefab;
     public AudioClip music;
     public int letterIndex = 0;
+
+    public float timeLeft = 600f;
     
 
     void Awake()
@@ -52,6 +56,9 @@ public class HangmanManager : MonoBehaviour
         if (game != null && game.isActive)
         {
             CursorManager.instance.ReticleAsCursor();
+            timeLeft -= Time.deltaTime;
+            TimeSpan timeSpan = TimeSpan.FromSeconds(timeLeft);
+            animator.UpdateTimerText(timeSpan);
         }
     }
     

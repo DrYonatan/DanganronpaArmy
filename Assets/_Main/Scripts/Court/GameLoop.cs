@@ -361,7 +361,7 @@ public class GameLoop : MonoBehaviour
         StartCoroutine(cameraController.MoveCameraOnXAndZ(secondTargetPosition, Quaternion.Euler(0f, 0f, 30f), 4f));
         yield return new WaitForSeconds(3f);
         cameraController.camera.targetTexture = null;
-        screenShatter.gameObject.SetActive(true);
+        screenShatter = Instantiate(screenShatter);
         yield return StartCoroutine(screenShatter.ScreenShatter());
         ImageScript.instance.FadeToBlack(0.01f);
         yield return new WaitForSeconds(0.01f);

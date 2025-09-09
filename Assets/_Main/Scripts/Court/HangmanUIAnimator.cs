@@ -1,12 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class HangmanUIAnimator : MonoBehaviour
 {
-    
+    public TextMeshProUGUI timerText;
     public CanvasGroup canvasGroup;
     
     public RawImage mist;
@@ -57,6 +60,7 @@ public class HangmanUIAnimator : MonoBehaviour
 
     public IEnumerator FinishAnimation()
     {
+        screenShatterManager = Instantiate(screenShatterManager);
         yield return screenShatterManager.ScreenShatter();
     }
     
@@ -212,6 +216,11 @@ public class HangmanUIAnimator : MonoBehaviour
                     block.canvasGroup.DOFade(0f, blinkDuration / 2).SetLoops(2, LoopType.Yoyo));
             }
         }
+    }
+
+    public void UpdateTimerText(TimeSpan time)
+    {
+        timerText.text = time.ToString(@"mm\:ss\:ffff");
     }
     
     

@@ -114,6 +114,7 @@ public class ScreenShatterManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
         ImageScript.instance.FadeToBlack(0f);
         canvasGroup.alpha = 0;
+        Destroy(gameObject);
     }
     
 }
