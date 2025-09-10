@@ -34,6 +34,7 @@ public class HangmanUIAnimator : MonoBehaviour
     public List<HangmanLetterBlock> blockObjects = new List<HangmanLetterBlock>();
     
     public ScreenShatterManager screenShatterManager;
+    public HangmanNowIUnderstand nowIUnderstand;
     
     public void ShowHangmanUI()
     {
@@ -51,6 +52,7 @@ public class HangmanUIAnimator : MonoBehaviour
         StartCoroutine(StarsGrow());
         SpawnCircles();
     }
+    
 
     public void SetSilhouette(CharacterStand stand)
     {
@@ -60,6 +62,9 @@ public class HangmanUIAnimator : MonoBehaviour
 
     public IEnumerator FinishAnimation()
     {
+        nowIUnderstand.gameObject.SetActive(true);
+        yield return nowIUnderstand.Show();
+        nowIUnderstand.gameObject.SetActive(false);
         screenShatterManager = Instantiate(screenShatterManager);
         yield return screenShatterManager.ScreenShatter();
     }
