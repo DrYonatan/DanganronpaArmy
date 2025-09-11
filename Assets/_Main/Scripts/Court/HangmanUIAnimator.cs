@@ -91,7 +91,7 @@ public class HangmanUIAnimator : MonoBehaviour
             if (letter.isAquired)
             {
                 block.GetAquired();
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(0.6f);
             }
         }
         yield return null;

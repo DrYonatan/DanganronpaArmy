@@ -15,6 +15,7 @@ public class HangmanNowIUnderstand : MonoBehaviour
 
     public RawImage glow;
 
+    public AudioClip voiceLine;
     public IEnumerator Show()
     {
         RectTransform topBarRect = topBar.GetComponent<RectTransform>();
@@ -29,6 +30,7 @@ public class HangmanNowIUnderstand : MonoBehaviour
         bottomBar.DOFade(0f, 0f);
         background.DOFade(0f, 0f);
         backgroundRect.DOScaleY(0f, 0f);
+        SoundManager.instance.PlaySoundEffect(voiceLine.name);
         
         topBarRect.DOAnchorPosY(162, appearDuration).SetEase(Ease.Linear);
         bottomBarRect.DOAnchorPosY(-162f, appearDuration).SetEase(Ease.Linear);
@@ -51,12 +53,19 @@ public class HangmanNowIUnderstand : MonoBehaviour
             .SetEase(Ease.InOutSine)
             .SetLoops(-1, LoopType.Yoyo);
         
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
         glow.DOFade(1f, 0.2f).SetEase(Ease.InOutSine).SetLoops(2, LoopType.Yoyo);
         glow.GetComponent<RectTransform>().DOScaleY(1f, 0.4f);
 
         yield return new WaitForSeconds(0.2f);
 
+        topBar.DOFade(0f, 0f);
+        bottomBar.DOFade(0f, 0f);
+        background.DOFade(0f, 0f);
+        face.gameObject.SetActive(false);
+        
+
+        yield return new WaitForSeconds(0.5f);
     }
 }
