@@ -24,6 +24,7 @@ public class ScreenShatterManager : MonoBehaviour
     [SerializeField] private RawImage blackImage;
     [SerializeField] private PostProcessVolume  psVolume;
     [SerializeField] private GameObject breakText;
+    [SerializeField] private float flashDuration = 0.05f;
 
     public IEnumerator ScreenShatter()
     {
@@ -58,14 +59,14 @@ public class ScreenShatterManager : MonoBehaviour
         {
             if (flashGroup.pieces.Count == 0)
             {
-                yield return new WaitForSeconds(0.05f);
+                yield return new WaitForSeconds(flashDuration);
                 continue;
             }
             foreach (Image piece in flashGroup.pieces)
             {
                 piece.color = new Color(255, 255, 255, 1);
             }
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(flashDuration);
             foreach (Image piece in flashGroup.pieces)
             {
                 piece.color = new Color(255, 255, 255, 0);
