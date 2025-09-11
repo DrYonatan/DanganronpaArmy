@@ -24,8 +24,8 @@ public class HangmanNowIUnderstand : MonoBehaviour
         face.gameObject.SetActive(false);
         glow.DOFade(0f, 0f);
         
-        topBarRect.DOAnchorPosY(16f, 0f);
-        bottomBarRect.DOAnchorPosY(-82f, 0f);
+        topBarRect.anchoredPosition = new Vector2(topBarRect.anchoredPosition.x, 16);
+        bottomBarRect.anchoredPosition = new Vector2(bottomBarRect.anchoredPosition.x, -82);
         topBar.DOFade(0f, 0f);
         bottomBar.DOFade(0f, 0f);
         background.DOFade(0f, 0f);
@@ -53,7 +53,7 @@ public class HangmanNowIUnderstand : MonoBehaviour
             .SetEase(Ease.InOutSine)
             .SetLoops(-1, LoopType.Yoyo);
         
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
 
         glow.DOFade(1f, 0.2f).SetEase(Ease.InOutSine).SetLoops(2, LoopType.Yoyo);
         glow.GetComponent<RectTransform>().DOScaleY(1f, 0.4f);
@@ -66,6 +66,6 @@ public class HangmanNowIUnderstand : MonoBehaviour
         face.gameObject.SetActive(false);
         
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
     }
 }

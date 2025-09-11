@@ -62,11 +62,22 @@ public class HangmanUIAnimator : MonoBehaviour
 
     public IEnumerator FinishAnimation()
     {
+        yield return new WaitForSeconds(1f);
+        yield return FlashBlocks();
         nowIUnderstand.gameObject.SetActive(true);
         yield return nowIUnderstand.Show();
         nowIUnderstand.gameObject.SetActive(false);
         screenShatterManager = Instantiate(screenShatterManager);
         yield return screenShatterManager.ScreenShatter();
+    }
+
+    IEnumerator FlashBlocks()
+    {
+        for(int i = 0; i < blockObjects.Count; i++)
+        {
+            blockObjects[i].glow.DOFade(1f, 0.2f).SetLoops(2, LoopType.Yoyo).SetDelay(i * 0.02f);
+        }
+        yield return new WaitForSeconds(blockObjects.Count * 0.2f);
     }
     
     public IEnumerator GenerateLetterBlocks(List<Letter> letters)
