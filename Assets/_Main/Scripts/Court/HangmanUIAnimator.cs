@@ -90,8 +90,7 @@ public class HangmanUIAnimator : MonoBehaviour
         }
         BlocksStartAnimation();
         yield return new WaitForSeconds(1f);
-        StartCoroutine(AquireBlocks(letters));
-        yield return null;
+        yield return StartCoroutine(AquireBlocks(letters));
     }
 
     public IEnumerator AquireBlocks(List<Letter> letters)
@@ -169,9 +168,14 @@ public class HangmanUIAnimator : MonoBehaviour
         shade.transform.Rotate(0, 0 , -40f * Time.deltaTime);
     }
 
-    public void UpdateBlock(int index)
+    public void AquireBlock(int index)
     {
         blockObjects[index].GetAquired();
+    }
+
+    public void TurnBlockIntoCurrent(int index)
+    {
+        blockObjects[index].TurnIntoCurrentLetter();
     }
 
     public void BlocksStartAnimation()

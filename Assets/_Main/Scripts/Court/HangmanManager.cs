@@ -80,7 +80,7 @@ public class HangmanManager : MonoBehaviour
         if (game.correctLetters[letterIndex].letter == letter)
         {
             game.correctLetters[letterIndex].isAquired = true;
-            animator.UpdateBlock(letterIndex);
+            animator.AquireBlock(letterIndex);
             ProceedToNextLetter();
         }
         else
@@ -101,6 +101,10 @@ public class HangmanManager : MonoBehaviour
         {
             FinishGame();
         }
+        else
+        {
+            animator.TurnBlockIntoCurrent(letterIndex);
+        }
         
     }
 
@@ -112,6 +116,7 @@ public class HangmanManager : MonoBehaviour
                 letterIndex++;
             else
             {
+                animator.TurnBlockIntoCurrent(letterIndex);
                 return;
             }
         }
