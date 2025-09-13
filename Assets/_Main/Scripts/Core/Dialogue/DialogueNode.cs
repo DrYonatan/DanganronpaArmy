@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using CHARACTERS;
+using DIALOGUE;
 using UnityEngine;
 
 [Serializable]
@@ -11,14 +13,13 @@ public class DialogueNode
 
     public string title;
     public DrawNode drawNode;
-    
+
     public CharacterCourt character;
 
     public CharacterState expression;
-    
-    [SerializeReference]
-    public TextData textData;
-    
+
+    [SerializeReference] public TextData textData;
+
     public DialogueNode(DrawNode drawNode)
     {
         this.drawNode = drawNode;
@@ -36,5 +37,15 @@ public class DialogueNode
     protected virtual void InitializeTextData()
     {
         this.textData = new VNTextData();
+    }
+
+    public virtual IEnumerator Play()
+    {
+        VNCharacterInfo info = VNNodePlayer.instance.currentConversation.CharacterInfos.Find(characterInfo =>
+            characterInfo.Character == character);
+        VNCharacterManager.instance.ShowOnlySpeaker(character);
+        VNCharacterManager.instance.SwitchEmotion(character, expression);
+        CameraManager.instance.MoveCamera(info.LookDirection, 0.4f);
+        yield return DialogueSystem.instance.Say(this);
     }
 }

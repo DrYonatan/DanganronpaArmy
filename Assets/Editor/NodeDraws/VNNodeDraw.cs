@@ -8,9 +8,9 @@ public class VNNodeDraw : DrawNode
     public override void DrawWindow(DialogueNode b, float windowWidth, float windowHeight)
     {
         GUIStyle style = new GUIStyle();
-        style.normal.background = Texture2D.grayTexture;
+        style.normal.background = Texture2D.whiteTexture;
         
-        GUILayout.BeginHorizontal(style);
+        GUILayout.BeginHorizontal();
         
         GUILayout.BeginVertical(GUILayout.Width(300));
         b.character = (CharacterCourt)EditorGUILayout.ObjectField(b.character, typeof(CharacterCourt), false);

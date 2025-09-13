@@ -36,11 +36,11 @@ namespace CHARACTERS
             characterObjects.Add(characterInfo.Character, characterObj);
         }
 
-        public void ShowOnlySpeaker(VNCharacterInfo characterInfo)
+        public void ShowOnlySpeaker(CharacterCourt character)
         {
             foreach (KeyValuePair<CharacterCourt, GameObject> characterObj in characterObjects)
             {
-                if (characterObj.Key.Equals(characterInfo.Character))
+                if (characterObj.Key.Equals(character))
                 {
                     ShowCharacter(characterObj.Value);
                 }

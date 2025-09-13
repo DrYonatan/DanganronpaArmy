@@ -7,6 +7,7 @@ public class VNDialogueEditor : EditorWindow
    public VNConversationSegment container;
    protected DialogueNode selectedNode;
    public DrawNode textNode;
+   public ChoiceNodeDraw choiceNode;
    Vector2 scrollPosition;
    
    static EditorWindow window;
@@ -66,7 +67,7 @@ public class VNDialogueEditor : EditorWindow
       
       foreach (var node in container.nodes)
       {
-         if (node.drawNode != null)
+         if (node.drawNode == null)
          {
             node.drawNode = textNode;
          }
@@ -74,7 +75,7 @@ public class VNDialogueEditor : EditorWindow
       EditorUtility.SetDirty(container);
       
       GUILayout.BeginArea(new Rect(0, 0, window.position.width, window.position.height));
-
+      
       scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Height((window.position.height * 0.8f)));
 
       BeginWindows();
@@ -91,8 +92,31 @@ public class VNDialogueEditor : EditorWindow
       {
          GUILayout.Box("", GUILayout.Height(150), GUILayout.Width(300));
          for (int i = 0; i < container.nodes.Count; i++)
-         {
-            if (GUILayout.Button("X", GUILayout.Width(50)))
+         { 
+            GUILayout.BeginHorizontal();
+            
+            GUIStyle indexStyle = new GUIStyle();
+            indexStyle.normal.background = Texture2D.whiteTexture;
+            GUILayout.BeginVertical(indexStyle, GUILayout.Width(0.025f * window.position.width));
+            GUILayout.Label("#" + (i+1));
+            GUILayout.FlexibleSpace();
+            GUILayout.EndVertical();
+            
+            GUIStyle boxStyle = new GUIStyle();
+            boxStyle.normal.background = Texture2D.grayTexture;
+            boxStyle.padding = new RectOffset(10, 10, 10, 10);
+            boxStyle.alignment = TextAnchor.MiddleCenter;
+            GUILayout.BeginVertical(boxStyle, GUILayout.Width(window.position.width * 0.95f));
+
+            GUILayout.BeginHorizontal();
+            GUILayout.FlexibleSpace();
+            Color originalColor = GUI.backgroundColor;
+            GUI.backgroundColor = Color.red;
+            bool button = GUILayout.Button("X", GUILayout.Width(50));
+            GUI.backgroundColor = originalColor;
+            GUILayout.EndHorizontal();
+            
+            if (button)
             {
                RemoveNode(i);
             }
@@ -100,22 +124,45 @@ public class VNDialogueEditor : EditorWindow
             {
                DrawNode(i);
             }
+
+            int buttonsHeight = 50;
+            GUILayout.BeginHorizontal(GUILayout.Height(buttonsHeight));
             
-            if (GUILayout.Button("ADD NODE", GUILayout.Width(1400)))
+            if (GUILayout.Button("ADD NODE", GUILayout.Height(buttonsHeight)))
             {
                AddNode(i+1);
             }
+            
+            if (GUILayout.Button("ADD CHOICE NODE", GUILayout.Height(buttonsHeight)))
+            {
+               AddChoiceNode(i+1);
+            }
+            
+            GUILayout.EndHorizontal();
+
+            
+            GUILayout.EndVertical();
+            
+            GUILayout.EndHorizontal();
+
+            
+            GUILayout.Space(20);
          }
       }
    }
    
    void DrawNode(int id)
    {
-      container.nodes[id].DrawNode(window.position.width * 0.8f, window.position.height * 0.2f);
+      container.nodes[id].DrawNode(window.position.width * 0.95f, window.position.height * 0.2f);
    }
    public void AddNode(int index)
    {
       container.nodes.Insert(index, new DialogueNode(textNode));
+   }
+
+   public void AddChoiceNode(int index)
+   {
+      container.nodes.Insert(index, new ChoiceNode(choiceNode));
    }
 
    void RemoveNode(int index)

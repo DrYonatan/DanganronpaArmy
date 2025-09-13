@@ -32,20 +32,8 @@ using UnityEngine;
         {
             foreach (DialogueNode node in nodes)
             {
-                yield return PlayConversationNode(node);
+                yield return node.Play();
             }
-        }
-        
-
-        public IEnumerator PlayConversationNode(DialogueNode node)
-        {
-            CharacterCourt speaker = node.character;
-            VNCharacterInfo info =
-                currentConversation.CharacterInfos.Find(characterInfo => characterInfo.Character == speaker);
-            VNCharacterManager.instance.ShowOnlySpeaker(info);
-            VNCharacterManager.instance.SwitchEmotion(info.Character, node.expression);
-            CameraManager.instance.MoveCamera(info.LookDirection, 0.4f);
-            yield return DialogueSystem.instance.Say(node);
         }
 
         public void HandleConversationEnd()
