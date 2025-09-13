@@ -2,6 +2,73 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+public class ConversationSettingsPopup : PopupWindowContent
+{
+   private VNConversationSegment container; // your reference
+   private Vector2 scrollPosition;
+
+   public ConversationSettingsPopup(VNConversationSegment container)
+   {
+      this.container = container;
+   }
+
+   public override Vector2 GetWindowSize()
+   {
+      return new Vector2(600, 400); // size of popup, tweak as needed
+   }
+
+   public override void OnGUI(Rect rect)
+   {
+      if (container == null) return;
+
+      EditorGUILayout.LabelField("Conversation Settings", EditorStyles.boldLabel);
+      EditorGUILayout.Space(2);
+      if (GUILayout.Button("Add Character"))
+      {
+         container.CharacterInfos.Add(new VNCharacterInfo());
+      }
+      scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition, EditorStyles.helpBox);
+
+      for (int i = container.CharacterInfos.Count - 1; i >= 0; i--)
+      {
+         VNCharacterInfo characterInfo = container.CharacterInfos[i];
+
+         EditorGUILayout.BeginVertical("box");
+         EditorGUILayout.BeginHorizontal();
+
+         if (GUILayout.Button("X", GUILayout.Width(20)))
+         {
+            container.CharacterInfos.RemoveAt(i);
+            EditorGUILayout.EndHorizontal();
+            EditorGUILayout.EndVertical();
+            continue;
+         }
+
+         // Character field
+         EditorGUILayout.LabelField("Character", GUILayout.Width(60));
+         characterInfo.Character = (CharacterCourt)EditorGUILayout.ObjectField(
+            characterInfo.Character,
+            typeof(CharacterCourt),
+            false,
+            GUILayout.Width(120)
+         );
+
+         EditorGUILayout.EndHorizontal();
+
+         // Look direction dropdown
+         characterInfo.LookDirection = (CameraLookDirection)EditorGUILayout.EnumPopup(
+            "Position",
+            characterInfo.LookDirection
+         );
+
+         EditorGUILayout.EndVertical();
+         EditorGUILayout.Space(2);
+      }
+
+      EditorGUILayout.EndScrollView();
+   }
+}
+
 public class VNDialogueEditor : EditorWindow
 {
    public VNConversationSegment container;
@@ -21,19 +88,15 @@ public class VNDialogueEditor : EditorWindow
 
    void SetConversationSettings()
    {
-      if (container != null)
+      if (GUILayout.Button("Character Settings", GUILayout.Width(150)))
       {
-         foreach(VNCharacterInfo characterInfo in container.CharacterInfos)
-         {
-            characterInfo.Character = (CharacterCourt)EditorGUILayout.ObjectField(characterInfo.Character, typeof(CharacterCourt), false, GUILayout.Width(50));
-            characterInfo.LookDirection = (CameraLookDirection)EditorGUILayout.EnumPopup(
-               "Character Position",
-               characterInfo.LookDirection
-            );
-         }
+         PopupWindow.Show(
+            new Rect(Event.current.mousePosition, Vector2.zero),
+            new ConversationSettingsPopup(container)
+         );
       }
-      
    }
+
 
    void SetContainer()
    {
@@ -48,7 +111,6 @@ public class VNDialogueEditor : EditorWindow
    private void OnGUI()
    {
       SetContainer();
-      SetConversationSettings();
       
       if (container == null)
       {
@@ -90,7 +152,8 @@ public class VNDialogueEditor : EditorWindow
    {
       if (container != null)
       {
-         GUILayout.Box("", GUILayout.Height(150), GUILayout.Width(300));
+         EditorGUILayout.Space(20);
+         SetConversationSettings();
          for (int i = 0; i < container.nodes.Count; i++)
          { 
             GUILayout.BeginHorizontal();
