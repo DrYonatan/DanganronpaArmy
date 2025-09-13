@@ -56,13 +56,13 @@ public class HangmanLetterBlock : MonoBehaviour
 
         // Frame0 anim
         seq.Append(frame0.DOFade(1f, 0.2f)); // fade in
-        seq.Join(frame0.transform.DOScale(2f, 1f)); // scale up
-        seq.Join(frame0.DOFade(0f, 1f).SetDelay(0.2f)); // fade out overlapping with scale
+        seq.Join(frame0.transform.DOScale(2f, 0.5f)); // scale up
+        seq.Join(frame0.DOFade(0f, 0.5f).SetDelay(0.1f)); // fade out overlapping with scale
 
         // Frame1 anim, starts halfway through frame0’s growth
         seq.Insert(0.5f, frame1.DOFade(1f, 0.2f));
-        seq.Insert(0.5f, frame1.transform.DOScale(2f, 1f));
-        seq.Insert(0.7f, frame1.DOFade(0f, 1f));
+        seq.Insert(0.5f, frame1.transform.DOScale(2f, 0.5f));
+        seq.Insert(0.7f, frame1.DOFade(0f, 0.5f));
 
         // Wait 1 second after both done
         seq.AppendInterval(1f);

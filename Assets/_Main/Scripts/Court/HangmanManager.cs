@@ -66,12 +66,11 @@ public class HangmanManager : MonoBehaviour
     {
         while (game.isActive)
         {
-            float waitTime = Random.Range(1f, 3f);
-            yield return new WaitForSeconds(waitTime);
-
             // Spawn a letter
             int randomInt = Random.Range(0, chars.Length);
             SpawnLetter(chars[randomInt]);
+            float waitTime = Random.Range(1f, 3f);
+            yield return new WaitForSeconds(waitTime);
         }
     }
 
@@ -125,7 +124,17 @@ public class HangmanManager : MonoBehaviour
     void FinishGame()
     {
         game.isActive = false;
+        HideAllLetterObjects();
         StartCoroutine(FinishPipeline());
+    }
+    
+    public void HideAllLetterObjects()
+    {
+        foreach (HangmanLetter letter in letterObjects)
+        {
+            letter.canvasGroup.DOKill();
+            letter.canvasGroup.DOFade(0f, 0.5f);
+        }
     }
 
     IEnumerator FinishPipeline()

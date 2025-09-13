@@ -15,6 +15,8 @@ public class HangmanLetter : MonoBehaviour
     public int health = 3;
     public Color maxLifeColor = Color.yellow;
     public Color minLifeColor = Color.red;
+    public Image clickEffect;
+    public Image explosionEffect;
     void Start()
     {
         rectTransform =  GetComponent<RectTransform>();
@@ -44,8 +46,22 @@ public class HangmanLetter : MonoBehaviour
         TrialCursorManager.instance.isHovering = false;
     }
 
+    void ExplosionEffect()
+    {
+        Image explosion = Instantiate(explosionEffect, transform.parent);
+        explosion.transform.position = transform.position;
+        explosion.transform.DOScale(5f, 0.2f);
+        explosion.DOFade(0f, 0.2f);
+        
+        Image effect = Instantiate(clickEffect, transform.parent);
+        effect.transform.position = transform.position;
+        effect.transform.DOScale(5f, 0.5f);
+        effect.DOFade(0f, 0.5f);
+    }
+
     void OnMouseDown()
     {
+        ExplosionEffect();
         if (health > 1)
         {
             ReduceHealth();
