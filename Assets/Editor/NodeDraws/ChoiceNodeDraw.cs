@@ -7,7 +7,7 @@ public class ChoiceNodeDraw: VNNodeDraw
     public override void DrawWindow(DialogueNode b, float windowWidth, float windowHeight)
     {
         ChoiceNode node = b as ChoiceNode;
-        // base.DrawWindow(b, windowWidth, windowHeight);
+        base.DrawWindow(b, windowWidth, windowHeight);
         GUILayout.BeginVertical();
         if (node != null)
         {

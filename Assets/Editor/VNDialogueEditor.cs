@@ -157,14 +157,6 @@ public class VNDialogueEditor : EditorWindow
          for (int i = 0; i < container.nodes.Count; i++)
          { 
             GUILayout.BeginHorizontal();
-            
-            GUIStyle indexStyle = new GUIStyle();
-            indexStyle.normal.background = Texture2D.whiteTexture;
-            GUILayout.BeginVertical(indexStyle, GUILayout.Width(0.025f * window.position.width));
-            GUILayout.Label("#" + (i+1));
-            GUILayout.FlexibleSpace();
-            GUILayout.EndVertical();
-            
             GUIStyle boxStyle = new GUIStyle();
             boxStyle.normal.background = Texture2D.grayTexture;
             boxStyle.padding = new RectOffset(10, 10, 10, 10);
@@ -172,6 +164,10 @@ public class VNDialogueEditor : EditorWindow
             GUILayout.BeginVertical(boxStyle, GUILayout.Width(window.position.width * 0.95f));
 
             GUILayout.BeginHorizontal();
+            GUIStyle indexLabelStyle = new GUIStyle();
+            indexLabelStyle.normal.background = Texture2D.whiteTexture;
+            indexLabelStyle.alignment = TextAnchor.MiddleCenter;
+            GUILayout.Label("#" + (i+1), indexLabelStyle, GUILayout.Width(25));
             GUILayout.FlexibleSpace();
             Color originalColor = GUI.backgroundColor;
             GUI.backgroundColor = Color.red;

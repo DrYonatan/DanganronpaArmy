@@ -7,9 +7,6 @@ public class VNNodeDraw : DrawNode
 {
     public override void DrawWindow(DialogueNode b, float windowWidth, float windowHeight)
     {
-        GUIStyle style = new GUIStyle();
-        style.normal.background = Texture2D.whiteTexture;
-        
         GUILayout.BeginHorizontal();
         
         GUILayout.BeginVertical(GUILayout.Width(300));
@@ -22,7 +19,6 @@ public class VNNodeDraw : DrawNode
         ShowTextData(b, windowWidth * 0.5f);
         
         GUILayout.EndHorizontal();
-        
     }
 
     protected virtual void ShowTextData(DialogueNode b, float width)
