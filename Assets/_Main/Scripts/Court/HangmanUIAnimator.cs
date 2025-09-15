@@ -11,6 +11,8 @@ public class HangmanUIAnimator : MonoBehaviour
 {
     public TextMeshProUGUI timerText;
     public CanvasGroup canvasGroup;
+    public Image lettersLeftCount;
+    public Image lettersLeftGlow;
     
     public RawImage mist;
 
@@ -32,9 +34,11 @@ public class HangmanUIAnimator : MonoBehaviour
     public RectTransform blocksContainer;
     public HangmanLetterBlock blockPrefab;
     public List<HangmanLetterBlock> blockObjects = new List<HangmanLetterBlock>();
-    
+    public RectTransform letterObjectsContainer;
     public ScreenShatterManager screenShatterManager;
     public HangmanNowIUnderstand nowIUnderstand;
+
+    private int lettersLeft;
     
     public void ShowHangmanUI()
     {
@@ -60,9 +64,29 @@ public class HangmanUIAnimator : MonoBehaviour
         silhouette.sprite = stand.spriteRenderer.sprite;
     }
 
+    public void SetLettersLeftCount(int lettersLeft)
+    {
+        float initialY = lettersLeftCount.GetComponent<RectTransform>().anchoredPosition.y;
+        Image newLettersLeftCount = Instantiate(lettersLeftCount, lettersLeftCount.transform.parent);
+        newLettersLeftCount.transform.SetAsFirstSibling();
+        newLettersLeftCount.transform.position = lettersLeftCount.transform.position;
+        newLettersLeftCount.sprite = Resources.Load<Sprite>($"Images/UI/Hangman/Numbers/{lettersLeft}");
+        lettersLeftCount.GetComponent<RectTransform>().DOAnchorPosY(initialY - 10f, 0.2f);
+        lettersLeftCount.DOFade(0f, 0.2f);
+
+        newLettersLeftCount.GetComponent<RectTransform>().anchoredPosition -= new Vector2(0, 10f);
+        newLettersLeftCount.GetComponent<RectTransform>().DOAnchorPosY(initialY, 0.2f);
+        newLettersLeftCount.DOFade(1f, 0.2f);
+        
+        Destroy(lettersLeftCount.gameObject, 2f);
+        lettersLeftCount = newLettersLeftCount;
+    }
+
     public IEnumerator FinishAnimation()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
+        lettersLeftGlow.DOFade(1f, 0.2f).SetLoops(2, LoopType.Yoyo);
+        yield return new WaitForSeconds(0.5f);
         yield return FlashBlocks();
         nowIUnderstand.gameObject.SetActive(true);
         yield return nowIUnderstand.Show();
@@ -80,8 +104,16 @@ public class HangmanUIAnimator : MonoBehaviour
         yield return new WaitForSeconds(blockObjects.Count * 0.2f);
     }
     
+    public void HideLetterObjects()
+    {
+        letterObjectsContainer.GetComponent<CanvasGroup>().DOFade(0f, 0.5f);
+    }
+    
     public IEnumerator GenerateLetterBlocks(List<Letter> letters)
     {
+        lettersLeft = letters.Count;
+        SetLettersLeftCount(lettersLeft);
+        
         foreach (Letter letter in letters)
         {
             HangmanLetterBlock block = Instantiate(blockPrefab, blocksContainer);
@@ -93,6 +125,12 @@ public class HangmanUIAnimator : MonoBehaviour
         yield return StartCoroutine(AquireBlocks(letters));
     }
 
+    public void DecreaseLettersLeftCount()
+    {
+        lettersLeft--;
+        SetLettersLeftCount(lettersLeft);
+    }
+
     public IEnumerator AquireBlocks(List<Letter> letters)
     {
         foreach (Letter letter in letters)
@@ -100,6 +138,7 @@ public class HangmanUIAnimator : MonoBehaviour
             HangmanLetterBlock block = blockObjects.Find((block) => block.letterRepresented == letter.letter);
             if (letter.isAquired)
             {
+                DecreaseLettersLeftCount();
                 block.GetAquired();
                 yield return new WaitForSeconds(0.6f);
             }
@@ -170,6 +209,7 @@ public class HangmanUIAnimator : MonoBehaviour
 
     public void AquireBlock(int index)
     {
+        DecreaseLettersLeftCount();
         blockObjects[index].GetAquired();
     }
 

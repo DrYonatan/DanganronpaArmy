@@ -80,6 +80,7 @@ public class HangmanManager : MonoBehaviour
         {
             game.correctLetters[letterIndex].isAquired = true;
             animator.AquireBlock(letterIndex);
+            
             ProceedToNextLetter();
         }
         else
@@ -124,18 +125,10 @@ public class HangmanManager : MonoBehaviour
     void FinishGame()
     {
         game.isActive = false;
-        HideAllLetterObjects();
+        animator.HideLetterObjects();
         StartCoroutine(FinishPipeline());
     }
     
-    public void HideAllLetterObjects()
-    {
-        foreach (HangmanLetter letter in letterObjects)
-        {
-            letter.canvasGroup.DOKill();
-            letter.canvasGroup.DOFade(0f, 0.5f);
-        }
-    }
 
     IEnumerator FinishPipeline()
     {
@@ -152,12 +145,14 @@ public class HangmanManager : MonoBehaviour
 
     void SpawnLetter(char c)
     {
-        HangmanLetter letter = Instantiate(letterPrefab, animator.transform);
-        letter.letter = c;
-        RectTransform parentRect = animator.transform as RectTransform;
+        RectTransform parentRect = animator.letterObjectsContainer;
 
-        float randomX = Random.Range(-parentRect.rect.width / 3f, parentRect.rect.width / 3f);
-        float randomY = Random.Range(-parentRect.rect.height / 3f, parentRect.rect.height / 3f);
+        HangmanLetter letter = Instantiate(letterPrefab, parentRect);
+        letter.transform.SetAsFirstSibling();
+        letter.letter = c;
+
+        float randomX = Random.Range(-parentRect.rect.width, parentRect.rect.width);
+        float randomY = Random.Range(-parentRect.rect.height, parentRect.rect.height);
 
         letter.GetComponent<RectTransform>().anchoredPosition = new Vector2(randomX, randomY);
         letterObjects.Add(letter);
