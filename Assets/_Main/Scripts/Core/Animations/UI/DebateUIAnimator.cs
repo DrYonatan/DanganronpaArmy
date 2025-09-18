@@ -83,7 +83,7 @@ public class DebateUIAnimator : MonoBehaviour
         facePart.anchoredPosition = facePartOriginalPos.anchoredPosition + new Vector2(moveAmountX, 0);
         timePart.anchoredPosition = timePartOriginalPos.anchoredPosition + new Vector2(0, moveAmountY);
         HideCylinderAndCircles();
-        CursorManager.instance.Hide();
+        TrialCursorManager.instance.Hide();
     }
 
     public void ChangeFace(Sprite sprite)

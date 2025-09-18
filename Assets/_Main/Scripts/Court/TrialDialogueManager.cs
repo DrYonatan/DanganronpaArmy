@@ -10,7 +10,6 @@ public class TrialDialogueManager : MonoBehaviour
     
     [SerializeField] CameraEffectController effectController;
     [SerializeField] CameraController cameraController;
-    [SerializeField] List<CharacterStand> characterStands;
     
     public DialogueContainer dialogueContainer;
 
@@ -23,9 +22,11 @@ public class TrialDialogueManager : MonoBehaviour
     {
         DialogueSystem.instance.SetTextBox(dialogueContainer);
         DialogueSystem.instance.dialogueBoxAnimator.gameObject.SetActive(true);
+        ImageScript.instance.UnFadeToBlack(0.5f);
         CourtTextBoxAnimator animator = ((CourtTextBoxAnimator)(DialogueSystem.instance.dialogueBoxAnimator));
         animator.ChangeFace(null);
         animator.FaceAppear();
+        animator.TextBoxAppear();
         
         StartCoroutine(RunDiscussion(discussion));
     }
@@ -46,7 +47,7 @@ public class TrialDialogueManager : MonoBehaviour
 
     IEnumerator PlayConversationNode(DiscussionNode node)
     {
-        CharacterStand characterStand = characterStands.Find(stand => stand.character == node.character);
+        CharacterStand characterStand = TrialManager.instance.characterStands.Find(stand => stand.character == node.character);
         if (!node.usePrevCamera)
         {
             cameraController.TeleportToTarget(characterStand.transform, characterStand.heightPivot, node.positionOffset, node.rotationOffset, node.fovOffset);

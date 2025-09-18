@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class UISpriteSheetAnimator : MonoBehaviour
 {
-    public string spriteSheetName; // Name of the sprite sheet file (without extension)
+    public string spritesheetPath; // Name of the sprite sheet file (without extension)
     public float frameRate = 10f;
     public bool isLoop;
 
@@ -17,7 +17,7 @@ public class UISpriteSheetAnimator : MonoBehaviour
         _image = GetComponent<Image>();
 
         // Load all sliced sprites from the sprite sheet in Resources folder
-        _frames = Resources.LoadAll<Sprite>("Images/" + spriteSheetName);
+        _frames = Resources.LoadAll<Sprite>("Images/" + spritesheetPath);
 
         if (_frames == null || _frames.Length == 0)
         {
