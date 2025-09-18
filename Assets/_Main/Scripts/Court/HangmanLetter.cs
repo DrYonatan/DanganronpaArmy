@@ -17,6 +17,7 @@ public class HangmanLetter : MonoBehaviour
     public Color minLifeColor = Color.red;
     public Image clickEffect;
     public Image explosionEffect;
+    public AudioClip clickSound;
     void Start()
     {
         rectTransform =  GetComponent<RectTransform>();
@@ -62,6 +63,7 @@ public class HangmanLetter : MonoBehaviour
     void OnMouseDown()
     {
         ExplosionEffect();
+        SoundManager.instance.PlaySoundEffect(clickSound.name);
         if (health > 1)
         {
             ReduceHealth();

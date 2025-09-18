@@ -15,6 +15,7 @@ public class HangmanNowIUnderstand : MonoBehaviour
 
     public RawImage glow;
 
+    public AudioClip openSound;
     public AudioClip voiceLine;
     public IEnumerator Show()
     {
@@ -30,6 +31,7 @@ public class HangmanNowIUnderstand : MonoBehaviour
         bottomBar.DOFade(0f, 0f);
         background.DOFade(0f, 0f);
         backgroundRect.DOScaleY(0f, 0f);
+        SoundManager.instance.PlaySoundEffect(openSound.name);
         SoundManager.instance.PlaySoundEffect(voiceLine.name);
         
         topBarRect.DOAnchorPosY(162, appearDuration).SetEase(Ease.Linear);

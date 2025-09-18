@@ -10,6 +10,7 @@ public class ScreenPiece : MonoBehaviour
     public RawImage image;
     RectTransform rectTransform;
     public Vector2 direction;
+    public Vector3 targetScale = Vector3.one;
     public float speed;
     public float angularVelocity;
 
@@ -21,12 +22,14 @@ public class ScreenPiece : MonoBehaviour
     public IEnumerator Move(float duration)
     {
         float elapsedTime = 0f;
+        Vector3 startScale = rectTransform.localScale;
         Vector2 startPosition = rectTransform.anchoredPosition;
         Vector2 targetPosition = rectTransform.anchoredPosition + direction.normalized * (speed * duration);
         while (elapsedTime < duration)
         {
             elapsedTime += Time.deltaTime;
             rectTransform.anchoredPosition = Vector2.Lerp(startPosition, targetPosition, elapsedTime / duration);
+            rectTransform.localScale = Vector3.Lerp(startScale, targetScale, elapsedTime / duration);
             rectTransform.Rotate(0f, 0f, angularVelocity * Time.deltaTime);
             yield return null;
         }

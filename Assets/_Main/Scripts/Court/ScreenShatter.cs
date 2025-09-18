@@ -25,9 +25,11 @@ public class ScreenShatterManager : MonoBehaviour
     [SerializeField] private PostProcessVolume  psVolume;
     [SerializeField] private GameObject breakText;
     [SerializeField] private float flashDuration = 0.05f;
+    [SerializeField] private AudioClip shatterSound;
 
     public IEnumerator ScreenShatter()
     {
+        SoundManager.instance.PlaySoundEffect(shatterSound.name);
         yield return new WaitForEndOfFrame();
         Texture2D screenShot = ScreenCapture.CaptureScreenshotAsTexture();
         Texture2D newScreenShot = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);

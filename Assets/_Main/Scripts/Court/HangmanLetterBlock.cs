@@ -15,6 +15,7 @@ public class HangmanLetterBlock : MonoBehaviour
     public TextMeshProUGUI text;
     public CanvasGroup canvasGroup;
     public char letterRepresented;
+    public AudioClip aquireSound;
 
     private bool isAquired;
     
@@ -30,6 +31,7 @@ public class HangmanLetterBlock : MonoBehaviour
     
     public void GetAquired()
     {
+        SoundManager.instance.PlaySoundEffect(aquireSound.name);
         questionMark.DOKill(); // Stop the blinking set in the Start
         text.text = letterRepresented.ToString();
         text.alpha = 0f;

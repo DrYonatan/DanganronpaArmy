@@ -37,6 +37,8 @@ public class HangmanUIAnimator : MonoBehaviour
     public RectTransform letterObjectsContainer;
     public ScreenShatterManager screenShatterManager;
     public HangmanNowIUnderstand nowIUnderstand;
+    
+    public Color shadeFlashColor;
 
     private int lettersLeft;
     
@@ -48,7 +50,13 @@ public class HangmanUIAnimator : MonoBehaviour
         
         mist.DOFade(1f, 3f)
             .SetLoops(-1, LoopType.Yoyo) // -1 = infinite
-            .SetEase(Ease.Linear);  
+            .SetEase(Ease.Linear);
+
+        
+        Sequence seq = DOTween.Sequence();
+        seq.Append(shade.DOColor(shadeFlashColor, 0.5f).SetLoops(2, LoopType.Yoyo));
+        seq.AppendInterval(3f);
+        seq.SetLoops(-1);
         
         silhouette.GetComponent<RectTransform>().DOShakeAnchorPos(5f, strength: new Vector2(5f, 5f), vibrato: 1, randomness: 90, snapping: false, fadeOut: false)
             .SetLoops(-1, LoopType.Restart);
