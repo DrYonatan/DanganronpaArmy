@@ -67,7 +67,7 @@ public class ConversationEditor : EditorWindow
    {
       if (container != null)
       {
-         GUILayout.Box("", GUILayout.Height(150), GUILayout.Width(300));
+         EditorGUILayout.Space(20);
          for (int i = 0; i < container.discussionNodes.Count; i++)
          {
             if (GUILayout.Button("X", GUILayout.Width(50)))
@@ -121,7 +121,11 @@ public class ConversationEditor : EditorWindow
                GameObject.DestroyImmediate(discussionNode.previewPivot.gameObject);
 
             if (discussionNode.previewTexture != null)
+            {
                discussionNode.previewTexture.Release();
+               DestroyImmediate(discussionNode.previewTexture);
+            }
+               
          }
       }
    }
