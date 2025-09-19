@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using DIALOGUE;
 using UnityEngine;
 
 [Serializable]
@@ -22,4 +24,27 @@ public class DiscussionNode : DialogueNode
     {
         textData = new VNTextData();
     }
+
+    public override IEnumerator Play()
+    {
+        CharacterStand characterStand = TrialDialogueManager.instance.characterStands.Find(stand => stand.character == character);
+        if (!usePrevCamera)
+        {
+            TrialDialogueManager.instance.cameraController.TeleportToTarget(characterStand.transform,
+                characterStand.heightPivot, positionOffset, rotationOffset, fovOffset);
+            TrialDialogueManager.instance.effectController.Reset();
+        }
+
+        ((CourtTextBoxAnimator)(DialogueSystem.instance.dialogueBoxAnimator)).ChangeFace(character.faceSprite);
+        
+        foreach (CameraEffect cameraEffect in cameraEffects)
+        {
+            TrialDialogueManager.instance.effectController.StartEffect(cameraEffect);
+        }
+        characterStand.state = expression;
+        characterStand.SetSprite();
+
+        yield return DialogueSystem.instance.Say(this);
+    }
+    
 }

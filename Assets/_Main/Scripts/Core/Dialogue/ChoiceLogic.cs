@@ -10,30 +10,27 @@ public class Option
     
 }
 [Serializable]
-public class ChoiceNode: DialogueNode
+public class ChoiceLogic
 {
     public List<Option> options;
     public bool loopIfWrong = false;
     
-    public ChoiceNode(DrawNode drawNode) : base(drawNode)
+    public ChoiceLogic()
     {
-        textData = new VNTextData();
         options = new List<Option>();
     }
 
-    public override IEnumerator Play()
+    public IEnumerator Play()
     {
-        yield return base.Play();
-        
-        Option pickedOption = new Option();
+        Option pickedOption;
 
-        while (!pickedOption.isCorrect || !loopIfWrong)
+        do
         {
             pickedOption = options[0];
             foreach (DialogueNode node in pickedOption.dialogue)
             {
                 yield return node.Play();
             }
-        }
+        } while (!pickedOption.isCorrect && loopIfWrong);
     }
 }

@@ -9,6 +9,7 @@ public class ConversationEditor : EditorWindow
    public DiscussionSegment container;
    protected DialogueNode selectedNode;
    public DrawNode textNode;
+   public DiscussionChoiceNodeDraw choiceNode;
    protected Vector2 scrollPosition;
    
    static EditorWindow window;
@@ -41,7 +42,7 @@ public class ConversationEditor : EditorWindow
       
       foreach (var node in container.discussionNodes)
       {
-         if (node.drawNode != null)
+         if (node.drawNode == null)
          {
             node.drawNode = textNode;
          }
@@ -83,6 +84,11 @@ public class ConversationEditor : EditorWindow
             {
                AddNode(i+1);
             }
+            
+            if (GUILayout.Button("ADD CHOICE NODE"))
+            {
+               AddChoiceNode(i+1);
+            }
          }
       }
    }
@@ -102,6 +108,11 @@ public class ConversationEditor : EditorWindow
    void AddNode(int index)
    {
       container.discussionNodes.Insert(index, new DiscussionNode(textNode));
+   }
+
+   void AddChoiceNode(int index)
+   {
+      container.discussionNodes.Insert(index, new DiscussionChoiceNode(choiceNode));
    }
 
    void RemoveNode(int index)

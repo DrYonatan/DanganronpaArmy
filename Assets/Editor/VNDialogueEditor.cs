@@ -221,7 +221,7 @@ public class VNDialogueEditor : EditorWindow
 
    public void AddChoiceNode(int index)
    {
-      container.nodes.Insert(index, new ChoiceNode(choiceNode));
+      container.nodes.Insert(index, new VNChoiceNode(choiceNode));
    }
 
    void RemoveNode(int index)
