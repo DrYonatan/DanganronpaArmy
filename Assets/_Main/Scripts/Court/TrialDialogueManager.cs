@@ -60,8 +60,7 @@ public class TrialDialogueManager : MonoBehaviour
         {
             effectController.StartEffect(cameraEffect);
         }
-        characterStand.state = node.expression;
-        characterStand.SetSprite();
+        characterStand.SetSprite(node.expression);
 
         yield return DialogueSystem.instance.Say(node);
 

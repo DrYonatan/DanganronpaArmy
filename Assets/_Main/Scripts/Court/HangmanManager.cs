@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -31,11 +32,17 @@ public class HangmanManager : MonoBehaviour
         MusicManager.instance.PlaySong(music);
         StartCoroutine(StartGame());
     }
+    
 
     IEnumerator StartGame()
     {
         CharacterStand characterStand = TrialManager.instance.characterStands.Find(stand => stand.character == game.character);
         yield return CameraController.instance.DiscussionOutroMovement(2.5f);
+        CharacterState concentrating = game.character.FindStateByName("concentrating");
+        if (concentrating != null)
+        {
+            characterStand.SetSprite(concentrating);
+        }
         ImageScript.instance.UnFadeToBlack(1f);
         CameraController.instance.TeleportToTarget(characterStand.transform, characterStand.heightPivot, new Vector3(0, -0.2f, -3.5f), Vector3.zero, 0);
         yield return CameraController.instance.MoveAndRotate(new Vector3(0, 0, 0.5f), Vector3.zero, 1.5f);

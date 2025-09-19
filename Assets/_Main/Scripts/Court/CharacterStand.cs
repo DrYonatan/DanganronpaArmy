@@ -8,35 +8,23 @@ public class CharacterStand : MonoBehaviour
 {
 
     public CharacterCourt character;
-    public CharacterState state;
     public SpriteRenderer spriteRenderer;
     public SpriteRenderer silhouetteRenderer;
     public Transform heightPivot;
     // Start is called before the first frame update
     void Start()
     {
-        SetSprite();
+        SetSprite(character.FindStateByName("default"));
     }
 
   
 
-    internal void SetSprite()
+    internal void SetSprite(CharacterState state)
     {
-        
-        int stateIndex = (int)state;
-        if (character.Sprites.Count < stateIndex)
+        if (state != null)
         {
-            spriteRenderer.sprite = character.Sprites[0];
-            silhouetteRenderer.sprite = character.Sprites[0];
-            return;
+            spriteRenderer.sprite = state.sprite;
+            silhouetteRenderer.sprite = state.sprite;
         }
-        if(character.Sprites[stateIndex] == null)
-        {
-            spriteRenderer.sprite = character.Sprites[0];
-            silhouetteRenderer.sprite = character.Sprites[0];
-            return;
-        }
-        spriteRenderer.sprite = character.Sprites[stateIndex];
-        silhouetteRenderer.sprite = character.Sprites[stateIndex];
     }
 }

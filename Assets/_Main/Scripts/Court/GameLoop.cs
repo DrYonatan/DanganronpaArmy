@@ -428,8 +428,7 @@ public class GameLoop : MonoBehaviour
 
         if (characterStand != null)
         {
-            characterStand.state = nextNode.expression;
-            characterStand.SetSprite();
+            characterStand.SetSprite(nextNode.expression);
         }
 
         DebateTextData textData = nextNode.textData as DebateTextData;
