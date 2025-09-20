@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
+using UnityEditor.Callbacks;
 using UnityEngine;
 
 public class ConversationEditor : EditorWindow
@@ -19,6 +20,26 @@ public class ConversationEditor : EditorWindow
    {
       window = GetWindow(typeof(ConversationEditor));
       window.minSize = new Vector2(600, 800);
+   }
+
+   static void Open(DiscussionSegment segment)
+   {
+      var window = GetWindow<ConversationEditor>("Court Discussion Editor");
+      window.container = segment;
+      ShowEditor();
+   }
+
+   [OnOpenAsset]
+   public static bool OnOpenAsset(int instanceID, int line)
+   {
+      var obj = EditorUtility.InstanceIDToObject(instanceID) as DiscussionSegment;
+      if (obj != null)
+      {
+         Open(obj);
+         return true;
+      }
+
+      return false;
    }
 
    private void OnGUI()
@@ -71,7 +92,26 @@ public class ConversationEditor : EditorWindow
          EditorGUILayout.Space(20);
          for (int i = 0; i < container.discussionNodes.Count; i++)
          {
-            if (GUILayout.Button("X", GUILayout.Width(50)))
+            GUILayout.BeginHorizontal();
+            GUIStyle boxStyle = new GUIStyle();
+            boxStyle.normal.background = Texture2D.grayTexture;
+            boxStyle.padding = new RectOffset(10, 10, 10, 10);
+            boxStyle.alignment = TextAnchor.MiddleCenter;
+            GUILayout.BeginVertical(boxStyle, GUILayout.Width(window.position.width * 0.95f));
+
+            GUILayout.BeginHorizontal();
+            GUIStyle indexLabelStyle = new GUIStyle();
+            indexLabelStyle.normal.background = Texture2D.whiteTexture;
+            indexLabelStyle.alignment = TextAnchor.MiddleCenter;
+            GUILayout.Label("#" + (i + 1), indexLabelStyle, GUILayout.Width(25));
+            GUILayout.FlexibleSpace();
+            Color originalColor = GUI.backgroundColor;
+            GUI.backgroundColor = Color.red;
+            bool button = GUILayout.Button("X", GUILayout.Width(50));
+            GUI.backgroundColor = originalColor;
+            GUILayout.EndHorizontal();
+
+            if (button)
             {
                RemoveNode(i);
             }
@@ -80,15 +120,27 @@ public class ConversationEditor : EditorWindow
                DrawNode(i);
             }
             
-            if (GUILayout.Button("ADD NODE"))
+            GUILayout.Space(10);
+
+            int buttonsHeight = 50;
+            GUILayout.BeginHorizontal(GUILayout.Height(buttonsHeight));
+            
+            if (GUILayout.Button("ADD NODE", GUILayout.Height(buttonsHeight)))
             {
                AddNode(i+1);
             }
             
-            if (GUILayout.Button("ADD CHOICE NODE"))
+            if (GUILayout.Button("ADD CHOICE NODE", GUILayout.Height(buttonsHeight)))
             {
                AddChoiceNode(i+1);
             }
+            
+            GUILayout.EndHorizontal();
+
+            GUILayout.EndVertical();
+
+            GUILayout.EndHorizontal();
+            GUILayout.Space(20);
          }
       }
    }
