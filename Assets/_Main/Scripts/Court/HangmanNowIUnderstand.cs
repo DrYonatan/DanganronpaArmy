@@ -31,8 +31,8 @@ public class HangmanNowIUnderstand : MonoBehaviour
         bottomBar.DOFade(0f, 0f);
         background.DOFade(0f, 0f);
         backgroundRect.DOScaleY(0f, 0f);
-        SoundManager.instance.PlaySoundEffect(openSound.name);
-        SoundManager.instance.PlaySoundEffect(voiceLine.name);
+        SoundManager.instance.PlaySoundEffect(openSound);
+        SoundManager.instance.PlaySoundEffect(voiceLine);
         
         topBarRect.DOAnchorPosY(162, appearDuration).SetEase(Ease.Linear);
         bottomBarRect.DOAnchorPosY(-162f, appearDuration).SetEase(Ease.Linear);

@@ -20,8 +20,8 @@ public class NoThatsWrongAnimator : MonoBehaviour
 
     public IEnumerator Show()
     {
-        SoundManager.instance.PlaySoundEffect(voiceLine.name);
-        SoundManager.instance.PlaySoundEffect(counterSound.name);
+        SoundManager.instance.PlaySoundEffect(voiceLine);
+        SoundManager.instance.PlaySoundEffect(counterSound);
         
         RectTransform topBarRect = topBar.GetComponent<RectTransform>();
         RectTransform bottomBarRect = bottomBar.GetComponent<RectTransform>();

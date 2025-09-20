@@ -16,7 +16,7 @@ public abstract class Interactable : MonoBehaviour
         StartCoroutine(MoveAndRotateCameraTo());
         yield return StartCoroutine(PlayerInputManager.instance.shooter.ShootQuestionMark(this.transform.position));
         FinishInteraction();
-        SoundManager.instance.PlaySoundEffect("click");
+        SoundManager.instance.PlaySoundEffect(Resources.Load<AudioClip>("Audio/Sound Effects/click"));
     }
 
     private IEnumerator MoveAndRotateCameraTo()

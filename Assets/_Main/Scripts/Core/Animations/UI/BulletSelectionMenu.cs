@@ -14,6 +14,7 @@ public class BulletSelectionMenu : MonoBehaviour
     [SerializeField] private UIBullet bulletPrefab;
     [SerializeField] private RectTransform cylinder;
     [SerializeField] private float bulletSpaceFromCylinder;
+    [SerializeField] private AudioClip bulletLoadSound;
     public bool isOpen;
 
     public void Appear()
@@ -63,6 +64,10 @@ public class BulletSelectionMenu : MonoBehaviour
             // Step 2: Animate to targetPos
             sequence.Append(rt.DOAnchorPos(targetPos, 0.25f).SetEase(Ease.Linear));
             sequence.Append(cylinder.DOLocalRotate(new Vector3(0, 0, 60) * (i + 1), 0.12f));
+            sequence.AppendCallback(() =>
+            {
+                SoundManager.instance.PlaySoundEffect(bulletLoadSound);
+            });
             sequence.AppendInterval(0.1f);
         }
     }

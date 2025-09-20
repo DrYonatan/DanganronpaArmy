@@ -359,7 +359,7 @@ public class GameLoop : MonoBehaviour
         StartCoroutine(cameraController.ChangeFov(cameraController.camera.fieldOfView, 8, 0.7f));
         yield return cameraController.MoveCameraOnXAndZ(firstTargetPosition, Quaternion.Euler(0f, -5f, 0f), 0.4f);
         StartCoroutine(cameraController.MoveCameraOnXAndZ(secondTargetPosition, Quaternion.Euler(0f, 0f, 30f), 4f));
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(3.6f);
         cameraController.camera.targetTexture = null;
         screenShatter = Instantiate(screenShatter);
         yield return StartCoroutine(screenShatter.ScreenShatter());

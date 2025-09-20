@@ -63,7 +63,7 @@ public class HangmanLetter : MonoBehaviour
     void OnMouseDown()
     {
         ExplosionEffect();
-        SoundManager.instance.PlaySoundEffect(clickSound.name);
+        SoundManager.instance.PlaySoundEffect(clickSound);
         if (health > 1)
         {
             ReduceHealth();

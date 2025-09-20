@@ -31,7 +31,7 @@ public class HangmanLetterBlock : MonoBehaviour
     
     public void GetAquired()
     {
-        SoundManager.instance.PlaySoundEffect(aquireSound.name);
+        SoundManager.instance.PlaySoundEffect(aquireSound);
         questionMark.DOKill(); // Stop the blinking set in the Start
         text.text = letterRepresented.ToString();
         text.alpha = 0f;

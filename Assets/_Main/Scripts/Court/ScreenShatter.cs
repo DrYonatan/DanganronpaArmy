@@ -29,7 +29,7 @@ public class ScreenShatterManager : MonoBehaviour
 
     public IEnumerator ScreenShatter()
     {
-        SoundManager.instance.PlaySoundEffect(shatterSound.name);
+        SoundManager.instance.PlaySoundEffect(shatterSound);
         yield return new WaitForEndOfFrame();
         Texture2D screenShot = ScreenCapture.CaptureScreenshotAsTexture();
         Texture2D newScreenShot = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
