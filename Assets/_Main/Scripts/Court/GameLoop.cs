@@ -58,7 +58,7 @@ public class GameLoop : MonoBehaviour
     [SerializeField] Text timerText;
     public DebateUIAnimator debateUIAnimator;
     public bool isShooting;
-    public GameObject noThatsWrong;
+    public NoThatsWrongAnimator noThatsWrong;
     private bool reachedEnd = false;
 
     float timer;
@@ -359,7 +359,7 @@ public class GameLoop : MonoBehaviour
         StartCoroutine(cameraController.ChangeFov(cameraController.camera.fieldOfView, 8, 0.7f));
         yield return cameraController.MoveCameraOnXAndZ(firstTargetPosition, Quaternion.Euler(0f, -5f, 0f), 0.4f);
         StartCoroutine(cameraController.MoveCameraOnXAndZ(secondTargetPosition, Quaternion.Euler(0f, 0f, 30f), 4f));
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(4f);
         cameraController.camera.targetTexture = null;
         screenShatter = Instantiate(screenShatter);
         yield return StartCoroutine(screenShatter.ScreenShatter());
@@ -377,12 +377,9 @@ public class GameLoop : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
 
-        noThatsWrong.SetActive(true);
-        SoundManager.instance.PlaySoundEffect("nothatswrong");
-
-        yield return new WaitForSeconds(3f);
-
-        noThatsWrong.SetActive(false);
+        noThatsWrong.gameObject.SetActive(true);
+        yield return noThatsWrong.Show();
+        noThatsWrong.gameObject.SetActive(false);
     }
 
     IEnumerator StartNewNode(int dialogueNodeIndex)
