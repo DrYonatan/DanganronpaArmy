@@ -20,7 +20,7 @@ public class ChoiceNodeDraw: VNNodeDraw
             style.padding = new RectOffset(10, 10, 0, 0);
             GUILayout.Label("#Choice", style, GUILayout.ExpandWidth(false));
             base.DrawWindow(b, windowWidth, windowHeight);
-            choiceLogicDraw.DrawLogic(node.choiceLogic);
+            choiceLogicDraw.DrawLogic(node.choiceLogic, VNDialogueEditor.Open);
         }
     }
 }

@@ -85,6 +85,13 @@ public class VNDialogueEditor : EditorWindow
       window = GetWindow(typeof(VNDialogueEditor));
       window.minSize = new Vector2(600, 800);
    }
+   
+   public static void Open(List<DialogueNode> nodes)
+   {
+      var window = CreateInstance<VNDialogueEditor>();
+      window.container.nodes = nodes;
+      ShowEditor();
+   }
 
    void SetConversationSettings()
    {

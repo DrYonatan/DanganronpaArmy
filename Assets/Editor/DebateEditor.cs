@@ -128,9 +128,10 @@ public class DebateEditor : EditorWindow
       
       if (GUILayout.Button("Finish Nodes"))
       {
-         var popup = new FinishNodesPopup( container.finishNodes);
-         PopupWindow.Show(new Rect(new Vector2(100, 50), Vector2.zero), popup);
-         Event.current.Use(); // Optional: Consume the event
+         // var popup = new FinishNodesPopup( container.finishNodes);
+         // PopupWindow.Show(new Rect(new Vector2(100, 50), Vector2.zero), popup);
+         // Event.current.Use(); // Optional: Consume the event
+         ConversationEditor.Open(container.finishNodes);
       }
       GUILayout.EndVertical();
    }

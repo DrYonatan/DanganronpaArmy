@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 [CreateAssetMenu(menuName = "Behaviour Editor/Draw/Choice Logic Draw")]
 public class ChoiceLogicDraw : ScriptableObject
 {
-    public void DrawLogic(ChoiceLogic logic)
+    public void DrawLogic(ChoiceLogic logic, Action<List<DialogueNode>> open)
     {
         GUILayout.BeginHorizontal(GUILayout.Width(100));
         GUILayout.Label("Options");
@@ -25,7 +27,11 @@ public class ChoiceLogicDraw : ScriptableObject
             }
             GUILayout.EndHorizontal();
             option.text = GUILayout.TextField(option.text, GUILayout.Height(30));
-            GUILayout.Label("Result dialogue");
+            if (GUILayout.Button("Result dialogue"))
+            {
+                open(option.dialogue);
+            }
+            
             GUILayout.EndVertical();
             index++;
         }

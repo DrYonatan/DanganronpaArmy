@@ -1,13 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+﻿using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
 
 public class ConversationEditor : EditorWindow
 {
-   public DiscussionSegment container;
+    public List<DiscussionNode> discussionNodes;
    protected DialogueNode selectedNode;
    public DrawNode textNode;
    public DiscussionChoiceNodeDraw choiceNode;
@@ -22,10 +20,10 @@ public class ConversationEditor : EditorWindow
       window.minSize = new Vector2(600, 800);
    }
 
-   static void Open(DiscussionSegment segment)
+   public static void Open(List<DiscussionNode> discussionNodes)
    {
       var window = GetWindow<ConversationEditor>("Court Discussion Editor");
-      window.container = segment;
+      window.discussionNodes = discussionNodes;
       ShowEditor();
    }
 
@@ -35,7 +33,7 @@ public class ConversationEditor : EditorWindow
       var obj = EditorUtility.InstanceIDToObject(instanceID) as DiscussionSegment;
       if (obj != null)
       {
-         Open(obj);
+         Open(obj.discussionNodes);
          return true;
       }
 
@@ -44,31 +42,34 @@ public class ConversationEditor : EditorWindow
 
    private void OnGUI()
    {
-      container = (DiscussionSegment)EditorGUILayout.ObjectField(container, typeof(DiscussionSegment), false, GUILayout.Width(200));
-
-      if (container == null)
-      {
-         return;
-      }
+      // if (discussionNodes == null)
+      // {
+      //    segment = (DiscussionSegment)EditorGUILayout.ObjectField(segment, typeof(DiscussionSegment), false, GUILayout.Width(200));
+      //
+      //    if (segment != null)
+      //    {
+      //       discussionNodes = segment.discussionNodes;
+      //       EditorUtility.SetDirty(segment);
+      //    }
+      // }
       
-      if (container.discussionNodes == null)
+      if (discussionNodes == null)
       {
-         container.discussionNodes = new List<DiscussionNode>();
+         discussionNodes = new List<DiscussionNode>();
       }
 
-      if (container.discussionNodes.Count == 0)
+      if (discussionNodes.Count == 0)
       {
          AddNode(0);
       }
       
-      foreach (var node in container.discussionNodes)
+      foreach (var node in discussionNodes)
       {
          if (node.drawNode == null)
          {
             node.drawNode = textNode;
          }
       }
-      EditorUtility.SetDirty(container);
       
       GUILayout.BeginArea(new Rect(0, 0, window.position.width, window.position.height));
 
@@ -87,10 +88,10 @@ public class ConversationEditor : EditorWindow
    
    private void DrawEditor()
    {
-      if (container != null)
+      if (discussionNodes != null)
       {
          EditorGUILayout.Space(20);
-         for (int i = 0; i < container.discussionNodes.Count; i++)
+         for (int i = 0; i < discussionNodes.Count; i++)
          {
             GUILayout.BeginHorizontal();
             GUIStyle boxStyle = new GUIStyle();
@@ -147,41 +148,37 @@ public class ConversationEditor : EditorWindow
    
    void DrawNode(int id)
    {
-      container.discussionNodes[id].DrawNode(window.position.width * 0.8f, window.position.height * 0.2f);
+      discussionNodes[id].DrawNode(window.position.width * 0.8f, window.position.height * 0.2f);
    }
    
    private void UserInput(Event e)
    {
-      if (container != null)
-      {
-         
-      }
+    
    }
    void AddNode(int index)
    {
-      container.discussionNodes.Insert(index, new DiscussionNode(textNode));
+      discussionNodes.Insert(index, new DiscussionNode(textNode));
    }
 
    void AddChoiceNode(int index)
    {
-      container.discussionNodes.Insert(index, new DiscussionChoiceNode(choiceNode));
+      discussionNodes.Insert(index, new DiscussionChoiceNode(choiceNode));
    }
 
    void RemoveNode(int index)
    {
-      container.discussionNodes.RemoveAt(index);
+      discussionNodes.RemoveAt(index);
    }
    private Rect windowRect;
    
    private void OnDisable()
    {
-      if (container != null && container.discussionNodes != null)
+      if (discussionNodes != null)
       {
-         foreach (var node in container.discussionNodes)
+         foreach (var discussionNode in discussionNodes)
          {
-            DiscussionNode discussionNode = node as DiscussionNode;
             if (discussionNode.previewCamera != null)
-               GameObject.DestroyImmediate(discussionNode.previewPivot.gameObject);
+               DestroyImmediate(discussionNode.previewPivot.gameObject);
 
             if (discussionNode.previewTexture != null)
             {
