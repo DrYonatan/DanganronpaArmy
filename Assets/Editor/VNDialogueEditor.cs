@@ -138,7 +138,15 @@ public class VNDialogueEditor : EditorWindow
       {
          if (node.drawNode == null)
          {
-            node.drawNode = textNode;
+            if (node is VNChoiceNode)
+            {
+               node.drawNode = choiceNode;
+            }
+
+            else
+            {
+               node.drawNode = textNode;
+            }
          }
       }
       EditorUtility.SetDirty(container);
@@ -221,12 +229,12 @@ public class VNDialogueEditor : EditorWindow
    {
       container.nodes[id].DrawNode(window.position.width * 0.95f, window.position.height * 0.2f);
    }
-   public void AddNode(int index)
+   void AddNode(int index)
    {
       container.nodes.Insert(index, new DialogueNode(textNode));
    }
 
-   public void AddChoiceNode(int index)
+   void AddChoiceNode(int index)
    {
       container.nodes.Insert(index, new VNChoiceNode(choiceNode));
    }

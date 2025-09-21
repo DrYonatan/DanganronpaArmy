@@ -24,5 +24,5 @@ public class VNCharacterInfo
 public class VNConversationSegment : ScriptableObject
 {
     public List<VNCharacterInfo> CharacterInfos = new ();
-    public List<DialogueNode> nodes = new List<DialogueNode>();
+    [SerializeReference] public List<DialogueNode> nodes = new List<DialogueNode>();
 }

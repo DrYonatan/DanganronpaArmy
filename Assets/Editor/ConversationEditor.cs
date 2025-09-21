@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class ConversationEditor : EditorWindow
 {
-    public List<DiscussionNode> discussionNodes;
+   [SerializeReference]
+   public List<DiscussionNode> discussionNodes;
    protected DialogueNode selectedNode;
    public DrawNode textNode;
    public DiscussionChoiceNodeDraw choiceNode;
@@ -22,7 +23,7 @@ public class ConversationEditor : EditorWindow
 
    public static void Open(List<DiscussionNode> discussionNodes)
    {
-      var window = GetWindow<ConversationEditor>("Court Discussion Editor");
+      var window = CreateInstance<ConversationEditor>();
       window.discussionNodes = discussionNodes;
       ShowEditor();
    }
@@ -67,7 +68,15 @@ public class ConversationEditor : EditorWindow
       {
          if (node.drawNode == null)
          {
-            node.drawNode = textNode;
+            if (node is DiscussionChoiceNode)
+            {
+               node.drawNode = choiceNode;
+            }
+
+            else
+            {
+               node.drawNode = textNode;
+            }
          }
       }
       
@@ -167,6 +176,14 @@ public class ConversationEditor : EditorWindow
 
    void RemoveNode(int index)
    {
+      if (discussionNodes[index].previewCamera != null)
+         DestroyImmediate(discussionNodes[index].previewPivot.gameObject);
+
+      if (discussionNodes[index].previewTexture != null)
+      {
+         discussionNodes[index].previewTexture.Release();
+         DestroyImmediate(discussionNodes[index].previewTexture);
+      }
       discussionNodes.RemoveAt(index);
    }
    private Rect windowRect;

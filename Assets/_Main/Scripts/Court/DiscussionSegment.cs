@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName ="Data/Conversation Segment")]
 public class DiscussionSegment : TrialSegment
 {
-    public List<DiscussionNode> discussionNodes;
+    [SerializeReference] public List<DiscussionNode> discussionNodes;
 
     public override void Play()
     {

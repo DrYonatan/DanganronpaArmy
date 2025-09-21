@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 
+[Serializable]
 public class DiscussionChoiceNode: DiscussionNode
 {
     public ChoiceLogic choiceLogic = new ChoiceLogic();

@@ -24,59 +24,51 @@ MonoBehaviour:
   - Character: {fileID: 11400000, guid: e3e234827f8a3ae4f8247e56776c48c3, type: 2}
     LookDirection: 3
   nodes:
-  - nodeRect:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 0
-      height: 0
-    commandsScrollPosition: {x: 0, y: 0}
-    title: 
-    drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
-    character: {fileID: 0}
-    expression: 0
-    textData:
-      rid: 3434194034742001703
-  - nodeRect:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 0
-      height: 0
-    commandsScrollPosition: {x: 0, y: 0}
-    title: 
-    drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
-    character: {fileID: 0}
-    expression: 0
-    textData:
-      rid: 3434194034742001704
-  - nodeRect:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 0
-      height: 0
-    commandsScrollPosition: {x: 0, y: 0}
-    title: 
-    drawNode: {fileID: 11400000, guid: 43e4e6c8d47167a40a1e714ec75c32f3, type: 2}
-    character: {fileID: 0}
-    expression: 0
-    textData:
-      rid: 3434194034742001705
+  - rid: 4827846089663315984
+  - rid: 4827846089663315986
   references:
     version: 2
     RefIds:
-    - rid: 3434194034742001703
+    - rid: 4827846089663315984
+      type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
+        character: {fileID: 0}
+        expression: 0
+        textData:
+          rid: 4827846089663315985
+    - rid: 4827846089663315985
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
         text: 
         commands: []
-    - rid: 3434194034742001704
-      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+    - rid: 4827846089663315986
+      type: {class: VNChoiceNode, ns: , asm: Assembly-CSharp}
       data:
-        text: 
-        commands: []
-    - rid: 3434194034742001705
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: 43e4e6c8d47167a40a1e714ec75c32f3, type: 2}
+        character: {fileID: 0}
+        expression: 0
+        textData:
+          rid: 4827846089663315987
+        choiceLogic:
+          loopIfWrong: 0
+    - rid: 4827846089663315987
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
         text: 
