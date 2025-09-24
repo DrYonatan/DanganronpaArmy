@@ -23,7 +23,7 @@ public class ChoiceNodeDraw: VNNodeDraw
             base.DrawWindow(b, settings, windowWidth, windowHeight);
             choiceLogicDraw.DrawLogic(node.choiceLogic, (nodes) =>
             {
-                VNDialogueEditor.Open(nodes, settings);
+                VNDialogueEditor.Open(nodes, settings, false);
             });
         }
     }

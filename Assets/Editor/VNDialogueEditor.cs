@@ -74,6 +74,7 @@ public class VNDialogueEditor : EditorWindow
 {
    public List<DialogueNode> nodes;
    public ConversationSettings settings;
+   public bool isSettingsEditable;
    public DrawNode textNode;
    public ChoiceNodeDraw choiceNode;
    Vector2 scrollPosition;
@@ -87,11 +88,12 @@ public class VNDialogueEditor : EditorWindow
       window.minSize = new Vector2(600, 800);
    }
    
-   public static void Open(List<DialogueNode> nodes, ConversationSettings settings)
+   public static void Open(List<DialogueNode> nodes, ConversationSettings settings, bool isSettingsEditable)
    {
       var window = CreateInstance<VNDialogueEditor>();
       window.nodes = nodes;
       window.settings = settings;
+      window.isSettingsEditable = isSettingsEditable;
       ShowEditor();
    }
 
@@ -101,7 +103,7 @@ public class VNDialogueEditor : EditorWindow
       var obj = EditorUtility.InstanceIDToObject(instanceID) as VNConversationSegment;
       if (obj != null)
       {
-         Open(obj.nodes, obj.settings);
+         Open(obj.nodes, obj.settings, true);
          return true;
       }
 
@@ -177,7 +179,12 @@ public class VNDialogueEditor : EditorWindow
       if (nodes != null)
       {
          EditorGUILayout.Space(20);
-         SetConversationSettings();
+         
+         if (isSettingsEditable)
+         {
+            SetConversationSettings();
+         }
+         
          for (int i = 0; i < nodes.Count; i++)
          { 
             GUILayout.BeginHorizontal();
