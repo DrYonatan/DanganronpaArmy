@@ -41,7 +41,7 @@ MonoBehaviour:
         commandsScrollPosition: {x: 0, y: 0}
         title: 
         drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
-        character: {fileID: 0}
+        character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
         expression: 0
         textData:
           rid: 4827846089663315985
@@ -62,13 +62,43 @@ MonoBehaviour:
         commandsScrollPosition: {x: 0, y: 0}
         title: 
         drawNode: {fileID: 11400000, guid: 43e4e6c8d47167a40a1e714ec75c32f3, type: 2}
-        character: {fileID: 0}
+        character: {fileID: 11400000, guid: 86ac77b9ffadf3643938e479c302689d, type: 2}
         expression: 0
         textData:
           rid: 4827846089663315987
         choiceLogic:
+          options:
+          - rid: 4827846116561649671
           loopIfWrong: 0
     - rid: 4827846089663315987
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: 
+        commands: []
+    - rid: 4827846116561649671
+      type: {class: Option, ns: , asm: Assembly-CSharp}
+      data:
+        text: 
+        dialogue:
+        - rid: 4827846116561649672
+        isCorrect: 0
+    - rid: 4827846116561649672
+      type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
+        character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
+        expression: 0
+        textData:
+          rid: 4827846116561649673
+    - rid: 4827846116561649673
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
         text: 

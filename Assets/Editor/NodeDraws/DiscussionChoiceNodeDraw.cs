@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Behaviour Editor/Draw/Discussion Choice Node Draw")]
 public class DiscussionChoiceNodeDraw : DiscussionNodeDraw
 {
-    public ChoiceLogicDraw choiceLogicDraw;
+    public ChoiceLogicDraw<DiscussionNode> choiceLogicDraw;
     public Texture2D backgroundTexture;
 
     public override void DrawWindow(DialogueNode b, float windowWidth, float windowHeight)
@@ -24,16 +25,7 @@ public class DiscussionChoiceNodeDraw : DiscussionNodeDraw
             base.DrawWindow(b, windowWidth, windowHeight);
             choiceLogicDraw.DrawLogic(node.choiceLogic, (nodes) =>
             {
-                List<DiscussionNode> discussionNodes = new List<DiscussionNode>();
-                if (nodes != null)
-                {
-                    foreach (DialogueNode dialogueNode in nodes)
-                    {
-                        discussionNodes.Insert(discussionNodes.Count, (DiscussionNode)dialogueNode);
-                    }
-                }
-
-                ConversationEditor.Open(discussionNodes);
+                ConversationEditor.Open(nodes);
             });
         }
     }

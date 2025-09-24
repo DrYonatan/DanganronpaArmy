@@ -7,7 +7,6 @@ public class ConversationEditor : EditorWindow
 {
    [SerializeReference]
    public List<DiscussionNode> discussionNodes;
-   protected DialogueNode selectedNode;
    public DrawNode textNode;
    public DiscussionChoiceNodeDraw choiceNode;
    protected Vector2 scrollPosition;
@@ -53,11 +52,6 @@ public class ConversationEditor : EditorWindow
       //       EditorUtility.SetDirty(segment);
       //    }
       // }
-      
-      if (discussionNodes == null)
-      {
-         discussionNodes = new List<DiscussionNode>();
-      }
 
       if (discussionNodes.Count == 0)
       {

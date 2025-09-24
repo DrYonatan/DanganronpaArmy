@@ -1,33 +1,35 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
-public class Option
+[Serializable]
+public class Option<T> where T : DialogueNode
 {
     public string text;
-    public List<DialogueNode> dialogue;
+    [SerializeReference] public List<T> dialogue = new List<T>();
     public bool isCorrect = false;
     
 }
 [Serializable]
-public class ChoiceLogic
+public class ChoiceLogic<T> where T : DialogueNode
 {
-    public List<Option> options;
+    [SerializeReference] public List<Option<T>> options;
     public bool loopIfWrong = false;
     
     public ChoiceLogic()
     {
-        options = new List<Option>();
+        options = new List<Option<T>>();
     }
 
     public IEnumerator Play()
     {
-        Option pickedOption;
+        Option<T> pickedOption;
 
         do
         {
             pickedOption = options[0];
-            foreach (DialogueNode node in pickedOption.dialogue)
+            foreach (T node in pickedOption.dialogue)
             {
                 yield return node.Play();
             }

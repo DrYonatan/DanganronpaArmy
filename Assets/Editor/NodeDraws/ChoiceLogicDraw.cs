@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Behaviour Editor/Draw/Choice Logic Draw")]
-public class ChoiceLogicDraw : ScriptableObject
+public class ChoiceLogicDraw<T> : ScriptableObject where T : DialogueNode
 {
-    public void DrawLogic(ChoiceLogic logic, Action<List<DialogueNode>> open)
+    public void DrawLogic(ChoiceLogic<T> logic, Action<List<T>> open)
     {
         GUILayout.BeginHorizontal(GUILayout.Width(100));
         GUILayout.Label("Options");
@@ -16,20 +16,20 @@ public class ChoiceLogicDraw : ScriptableObject
 
         int index = 0;
         
-        foreach (Option option in logic!.options)
+        for(int i = logic.options.Count-1; i >= 0; i--)
         {
             GUILayout.BeginVertical(GUILayout.MaxWidth(100));
             GUILayout.BeginHorizontal();
-            option.isCorrect = GUILayout.Toggle(option.isCorrect, "Correct");
+            logic.options[i].isCorrect = GUILayout.Toggle(logic.options[i].isCorrect, "Correct");
             if (GUILayout.Button("X"))
             {
                 RemoveOption(logic, index);
             }
             GUILayout.EndHorizontal();
-            option.text = GUILayout.TextField(option.text, GUILayout.Height(30));
+            logic.options[i].text = GUILayout.TextField(logic.options[i].text, GUILayout.Height(30));
             if (GUILayout.Button("Result dialogue"))
             {
-                open(option.dialogue);
+                open(logic.options[i].dialogue);
             }
             
             GUILayout.EndVertical();
@@ -49,12 +49,12 @@ public class ChoiceLogicDraw : ScriptableObject
         GUILayout.EndHorizontal();
     }
 
-    void AddOption(ChoiceLogic logic)
+    void AddOption(ChoiceLogic<T> logic)
     {
-        logic.options.Insert(logic.options.Count, new Option());
+        logic.options.Insert(logic.options.Count, new Option<T>());
     }
 
-    void RemoveOption(ChoiceLogic logic, int index)
+    void RemoveOption(ChoiceLogic<T> logic, int index)
     {
         logic.options.RemoveAt(index);
     }

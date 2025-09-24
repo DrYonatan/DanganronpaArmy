@@ -4,7 +4,7 @@ using System.Collections;
 [Serializable]
 public class DiscussionChoiceNode: DiscussionNode
 {
-    public ChoiceLogic choiceLogic = new ChoiceLogic();
+    public ChoiceLogic<DiscussionNode> choiceLogic = new ChoiceLogic<DiscussionNode>();
 
     public DiscussionChoiceNode(DrawNode drawNode) : base(drawNode)
     {

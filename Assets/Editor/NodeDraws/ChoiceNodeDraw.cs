@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class ChoiceNodeDraw: VNNodeDraw
 {
-    public ChoiceLogicDraw choiceLogicDraw;
+    public ChoiceLogicDraw<DialogueNode> choiceLogicDraw;
     public Texture2D backgroundTexture;
     public override void DrawWindow(DialogueNode b, float windowWidth, float windowHeight)
     {

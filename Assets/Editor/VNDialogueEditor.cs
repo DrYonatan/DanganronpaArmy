@@ -1,15 +1,16 @@
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEditor.Callbacks;
 using UnityEngine;
 
 public class ConversationSettingsPopup : PopupWindowContent
 {
-   private VNConversationSegment container; // your reference
+   private List<VNCharacterInfo> characterInfos; // your reference
    private Vector2 scrollPosition;
 
-   public ConversationSettingsPopup(VNConversationSegment container)
+   public ConversationSettingsPopup(List<VNCharacterInfo> characterInfos)
    {
-      this.container = container;
+      this.characterInfos = characterInfos;
    }
 
    public override Vector2 GetWindowSize()
@@ -19,26 +20,26 @@ public class ConversationSettingsPopup : PopupWindowContent
 
    public override void OnGUI(Rect rect)
    {
-      if (container == null) return;
+      if (characterInfos == null) return;
 
       EditorGUILayout.LabelField("Conversation Settings", EditorStyles.boldLabel);
       EditorGUILayout.Space(2);
       if (GUILayout.Button("Add Character"))
       {
-         container.CharacterInfos.Add(new VNCharacterInfo());
+         characterInfos.Add(new VNCharacterInfo());
       }
       scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition, EditorStyles.helpBox);
 
-      for (int i = container.CharacterInfos.Count - 1; i >= 0; i--)
+      for (int i = characterInfos.Count - 1; i >= 0; i--)
       {
-         VNCharacterInfo characterInfo = container.CharacterInfos[i];
+         VNCharacterInfo characterInfo = characterInfos[i];
 
          EditorGUILayout.BeginVertical("box");
          EditorGUILayout.BeginHorizontal();
 
          if (GUILayout.Button("X", GUILayout.Width(20)))
          {
-            container.CharacterInfos.RemoveAt(i);
+            characterInfos.RemoveAt(i);
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.EndVertical();
             continue;
@@ -71,8 +72,8 @@ public class ConversationSettingsPopup : PopupWindowContent
 
 public class VNDialogueEditor : EditorWindow
 {
-   public VNConversationSegment container;
-   protected DialogueNode selectedNode;
+   public List<DialogueNode> nodes;
+   public List<VNCharacterInfo> characterInfos;
    public DrawNode textNode;
    public ChoiceNodeDraw choiceNode;
    Vector2 scrollPosition;
@@ -89,8 +90,21 @@ public class VNDialogueEditor : EditorWindow
    public static void Open(List<DialogueNode> nodes)
    {
       var window = CreateInstance<VNDialogueEditor>();
-      window.container.nodes = nodes;
+      window.nodes = nodes;
       ShowEditor();
+   }
+
+   [OnOpenAsset]
+   public static bool OnOpenAsset(int instanceID, int line)
+   {
+      var obj = EditorUtility.InstanceIDToObject(instanceID) as VNConversationSegment;
+      if (obj != null)
+      {
+         Open(obj.nodes);
+         return true;
+      }
+
+      return false;
    }
 
    void SetConversationSettings()
@@ -99,42 +113,37 @@ public class VNDialogueEditor : EditorWindow
       {
          PopupWindow.Show(
             new Rect(Event.current.mousePosition, Vector2.zero),
-            new ConversationSettingsPopup(container)
+            new ConversationSettingsPopup(characterInfos)
          );
       }
    }
 
 
-   void SetContainer()
-   {
-      container = (VNConversationSegment)EditorGUILayout.ObjectField(container, typeof(VNConversationSegment), false, GUILayout.Width(200));
-   }
-
-   void SetNewList()
-   {
-      container.nodes = new List<DialogueNode>();
-   }
+   // void SetContainer()
+   // {
+   //    container = (VNConversationSegment)EditorGUILayout.ObjectField(container, typeof(VNConversationSegment), false, GUILayout.Width(200));
+   // }
+   //
+   // void SetNewList()
+   // {
+   //    container.nodes = new List<DialogueNode>();
+   // }
 
    private void OnGUI()
    {
-      SetContainer();
+      // SetContainer();
       
-      if (container == null)
+      if (nodes == null)
       {
          return;
       }
-      
-      if (container.nodes == null)
-      {
-         SetNewList();
-      }
 
-      if (container.nodes.Count == 0)
+      if (nodes.Count == 0)
       {
          AddNode(0);
       }
       
-      foreach (var node in container.nodes)
+      foreach (var node in nodes)
       {
          if (node.drawNode == null)
          {
@@ -149,7 +158,6 @@ public class VNDialogueEditor : EditorWindow
             }
          }
       }
-      EditorUtility.SetDirty(container);
       
       GUILayout.BeginArea(new Rect(0, 0, window.position.width, window.position.height));
       
@@ -165,11 +173,11 @@ public class VNDialogueEditor : EditorWindow
    
    private void DrawEditor()
    {
-      if (container != null)
+      if (nodes != null)
       {
          EditorGUILayout.Space(20);
          SetConversationSettings();
-         for (int i = 0; i < container.nodes.Count; i++)
+         for (int i = 0; i < nodes.Count; i++)
          { 
             GUILayout.BeginHorizontal();
             GUIStyle boxStyle = new GUIStyle();
@@ -227,20 +235,20 @@ public class VNDialogueEditor : EditorWindow
    
    void DrawNode(int id)
    {
-      container.nodes[id].DrawNode(window.position.width * 0.95f, window.position.height * 0.2f);
+      nodes[id].DrawNode(window.position.width * 0.95f, window.position.height * 0.2f);
    }
    void AddNode(int index)
    {
-      container.nodes.Insert(index, new DialogueNode(textNode));
+      nodes.Insert(index, new DialogueNode(textNode));
    }
 
    void AddChoiceNode(int index)
    {
-      container.nodes.Insert(index, new VNChoiceNode(choiceNode));
+      nodes.Insert(index, new VNChoiceNode(choiceNode));
    }
 
    void RemoveNode(int index)
    {
-      container.nodes.RemoveAt(index);
+      nodes.RemoveAt(index);
    }
 }

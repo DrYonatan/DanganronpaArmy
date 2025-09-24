@@ -4,7 +4,7 @@ using System.Collections;
 [Serializable]
 public class VNChoiceNode : DialogueNode
 {
-    public ChoiceLogic choiceLogic = new ChoiceLogic();
+    public ChoiceLogic<DialogueNode> choiceLogic = new ChoiceLogic<DialogueNode>();
 
     public VNChoiceNode(DrawNode drawNode) : base(drawNode)
     {
