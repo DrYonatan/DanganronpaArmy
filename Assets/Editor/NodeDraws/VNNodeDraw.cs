@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Behaviour Editor/Draw/Dialogue Node Draw")]
 public class VNNodeDraw : DrawNode
 {
-    public override void DrawWindow(DialogueNode b, float windowWidth, float windowHeight)
+    public override void DrawWindow(DialogueNode b, ConversationSettings settings, float windowWidth, float windowHeight)
     {
         GUILayout.BeginHorizontal();
         

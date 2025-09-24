@@ -9,7 +9,7 @@ public class DiscussionChoiceNodeDraw : DiscussionNodeDraw
     public ChoiceLogicDraw<DiscussionNode> choiceLogicDraw;
     public Texture2D backgroundTexture;
 
-    public override void DrawWindow(DialogueNode b, float windowWidth, float windowHeight)
+    public override void DrawWindow(DialogueNode b, ConversationSettings settings, float windowWidth, float windowHeight)
     {
         DiscussionChoiceNode node = (DiscussionChoiceNode)b;
         if (node != null)
@@ -22,10 +22,10 @@ public class DiscussionChoiceNodeDraw : DiscussionNodeDraw
             style.fontSize = 20;
             style.padding = new RectOffset(10, 10, 0, 0);
             GUILayout.Label("#Choice", style, GUILayout.ExpandWidth(false));
-            base.DrawWindow(b, windowWidth, windowHeight);
+            base.DrawWindow(b, settings, windowWidth, windowHeight);
             choiceLogicDraw.DrawLogic(node.choiceLogic, (nodes) =>
             {
-                ConversationEditor.Open(nodes);
+                ConversationEditor.Open(nodes, settings);
             });
         }
     }

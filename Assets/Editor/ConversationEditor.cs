@@ -7,6 +7,7 @@ public class ConversationEditor : EditorWindow
 {
    [SerializeReference]
    public List<DiscussionNode> discussionNodes;
+   public ConversationSettings settings;
    public DrawNode textNode;
    public DiscussionChoiceNodeDraw choiceNode;
    protected Vector2 scrollPosition;
@@ -20,10 +21,11 @@ public class ConversationEditor : EditorWindow
       window.minSize = new Vector2(600, 800);
    }
 
-   public static void Open(List<DiscussionNode> discussionNodes)
+   public static void Open(List<DiscussionNode> discussionNodes, ConversationSettings settings)
    {
       var window = CreateInstance<ConversationEditor>();
       window.discussionNodes = discussionNodes;
+      window.settings = settings;
       ShowEditor();
    }
 
@@ -33,7 +35,7 @@ public class ConversationEditor : EditorWindow
       var obj = EditorUtility.InstanceIDToObject(instanceID) as DiscussionSegment;
       if (obj != null)
       {
-         Open(obj.discussionNodes);
+         Open(obj.discussionNodes, obj.settings);
          return true;
       }
 
@@ -121,7 +123,7 @@ public class ConversationEditor : EditorWindow
             }
             else
             {
-               DrawNode(i);
+               DrawNode(i, settings);
             }
             
             GUILayout.Space(10);
@@ -149,9 +151,9 @@ public class ConversationEditor : EditorWindow
       }
    }
    
-   void DrawNode(int id)
+   void DrawNode(int id, ConversationSettings settings)
    {
-      discussionNodes[id].DrawNode(window.position.width * 0.8f, window.position.height * 0.2f);
+      discussionNodes[id].DrawNode(settings, window.position.width * 0.8f, window.position.height * 0.2f);
    }
    
    private void UserInput(Event e)

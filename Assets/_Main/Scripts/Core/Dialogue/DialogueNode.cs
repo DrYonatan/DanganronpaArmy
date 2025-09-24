@@ -26,11 +26,11 @@ public class DialogueNode
         this.InitializeTextData();
     }
 
-    public void DrawNode(float windowWidth, float windowHeight)
+    public void DrawNode(ConversationSettings settings, float windowWidth, float windowHeight)
     {
         if (drawNode != null)
         {
-            drawNode.DrawWindow(this, windowWidth, windowHeight);
+            drawNode.DrawWindow(this, settings, windowWidth, windowHeight);
         }
     }
 

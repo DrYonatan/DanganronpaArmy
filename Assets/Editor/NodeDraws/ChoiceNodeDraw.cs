@@ -7,7 +7,7 @@ public class ChoiceNodeDraw: VNNodeDraw
 {
     public ChoiceLogicDraw<DialogueNode> choiceLogicDraw;
     public Texture2D backgroundTexture;
-    public override void DrawWindow(DialogueNode b, float windowWidth, float windowHeight)
+    public override void DrawWindow(DialogueNode b, ConversationSettings settings, float windowWidth, float windowHeight)
     {
         VNChoiceNode node = (VNChoiceNode)b;
         if (node != null)
@@ -20,10 +20,10 @@ public class ChoiceNodeDraw: VNNodeDraw
             style.fontSize = 20;
             style.padding = new RectOffset(10, 10, 0, 0);
             GUILayout.Label("#Choice", style, GUILayout.ExpandWidth(false));
-            base.DrawWindow(b, windowWidth, windowHeight);
+            base.DrawWindow(b, settings, windowWidth, windowHeight);
             choiceLogicDraw.DrawLogic(node.choiceLogic, (nodes) =>
             {
-                VNDialogueEditor.Open(nodes, null);
+                VNDialogueEditor.Open(nodes, settings);
             });
         }
     }

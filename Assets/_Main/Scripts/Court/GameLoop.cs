@@ -87,8 +87,8 @@ public class GameLoop : MonoBehaviour
     {
         this.stage = debate;
         textLines = new List<TextLine>();
-        evidenceManager.ShowEvidence(stage.evidences);
-        MusicManager.instance.PlaySong(stage.audioClip);
+        evidenceManager.ShowEvidence(stage.settings.evidences);
+        MusicManager.instance.PlaySong(stage.settings.audioClip);
         stageTimer = defaultStageTime;
         StartCoroutine(StartDebate());
     }

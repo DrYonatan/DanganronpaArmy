@@ -6,10 +6,10 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Behaviour Editor/Draw/Debate Dialogue Node Draw")]
 public class DebateNodeDraw : DiscussionNodeDraw
 {
-    public override void DrawWindow(DialogueNode b, float windowWidth, float windowHeight)
+    public override void DrawWindow(DialogueNode b, ConversationSettings settings, float windowWidth, float windowHeight)
     {
         GUILayout.BeginHorizontal();
-        base.DrawWindow(b, windowWidth, windowHeight);
+        base.DrawWindow(b, settings, windowWidth, windowHeight);
         DebateNode node = (DebateNode)b;
 
         GUIStyle style = new GUIStyle();

@@ -2,5 +2,5 @@
 
 public abstract class DrawNode : ScriptableObject
 {
-    public abstract void DrawWindow(DialogueNode b, float windowWidth, float windowHeight);
+    public abstract void DrawWindow(DialogueNode b, ConversationSettings settings, float windowWidth, float windowHeight);
 }

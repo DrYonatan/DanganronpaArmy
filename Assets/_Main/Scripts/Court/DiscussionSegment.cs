@@ -6,6 +6,7 @@ using UnityEngine;
 public class DiscussionSegment : TrialSegment
 {
     [SerializeReference] public List<DiscussionNode> discussionNodes;
+    public ConversationSettings settings;
 
     public override void Play()
     {

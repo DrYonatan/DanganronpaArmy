@@ -205,7 +205,7 @@ public class VNDialogueEditor : EditorWindow
             }
             else
             {
-               DrawNode(i);
+               DrawNode(i, settings);
             }
 
             int buttonsHeight = 50;
@@ -234,9 +234,9 @@ public class VNDialogueEditor : EditorWindow
       }
    }
    
-   void DrawNode(int id)
+   void DrawNode(int id, ConversationSettings settings)
    {
-      nodes[id].DrawNode(window.position.width * 0.95f, window.position.height * 0.2f);
+      nodes[id].DrawNode(settings,window.position.width * 0.95f, window.position.height * 0.2f);
    }
    void AddNode(int index)
    {
