@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class ConversationSettingsPopup : PopupWindowContent
 {
-   private List<VNCharacterInfo> characterInfos; // your reference
+   private ConversationSettings settings; // your reference
    private Vector2 scrollPosition;
 
-   public ConversationSettingsPopup(List<VNCharacterInfo> characterInfos)
+   public ConversationSettingsPopup(ConversationSettings settings)
    {
-      this.characterInfos = characterInfos;
+      this.settings = settings;
    }
 
    public override Vector2 GetWindowSize()
@@ -20,26 +20,26 @@ public class ConversationSettingsPopup : PopupWindowContent
 
    public override void OnGUI(Rect rect)
    {
-      if (characterInfos == null) return;
+      if (settings == null) return;
 
       EditorGUILayout.LabelField("Conversation Settings", EditorStyles.boldLabel);
       EditorGUILayout.Space(2);
       if (GUILayout.Button("Add Character"))
       {
-         characterInfos.Add(new VNCharacterInfo());
+         settings.characterPositions.Add(new CharacterPositionMapping());
       }
       scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition, EditorStyles.helpBox);
 
-      for (int i = characterInfos.Count - 1; i >= 0; i--)
+      for (int i = settings.characterPositions.Count - 1; i >= 0; i--)
       {
-         VNCharacterInfo characterInfo = characterInfos[i];
+         CharacterPositionMapping characterInfo = settings.characterPositions[i];
 
          EditorGUILayout.BeginVertical("box");
          EditorGUILayout.BeginHorizontal();
 
          if (GUILayout.Button("X", GUILayout.Width(20)))
          {
-            characterInfos.RemoveAt(i);
+            settings.characterPositions.RemoveAt(i);
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.EndVertical();
             continue;
@@ -47,8 +47,8 @@ public class ConversationSettingsPopup : PopupWindowContent
 
          // Character field
          EditorGUILayout.LabelField("Character", GUILayout.Width(60));
-         characterInfo.Character = (CharacterCourt)EditorGUILayout.ObjectField(
-            characterInfo.Character,
+         characterInfo.character = (CharacterCourt)EditorGUILayout.ObjectField(
+            characterInfo.character,
             typeof(CharacterCourt),
             false,
             GUILayout.Width(120)
@@ -57,9 +57,9 @@ public class ConversationSettingsPopup : PopupWindowContent
          EditorGUILayout.EndHorizontal();
 
          // Look direction dropdown
-         characterInfo.LookDirection = (CameraLookDirection)EditorGUILayout.EnumPopup(
+         characterInfo.position = (int)(CameraLookDirection)EditorGUILayout.EnumPopup(
             "Position",
-            characterInfo.LookDirection
+            (CameraLookDirection)characterInfo.position
          );
 
          EditorGUILayout.EndVertical();
@@ -73,7 +73,7 @@ public class ConversationSettingsPopup : PopupWindowContent
 public class VNDialogueEditor : EditorWindow
 {
    public List<DialogueNode> nodes;
-   public List<VNCharacterInfo> characterInfos;
+   public ConversationSettings settings;
    public DrawNode textNode;
    public ChoiceNodeDraw choiceNode;
    Vector2 scrollPosition;
@@ -87,10 +87,11 @@ public class VNDialogueEditor : EditorWindow
       window.minSize = new Vector2(600, 800);
    }
    
-   public static void Open(List<DialogueNode> nodes)
+   public static void Open(List<DialogueNode> nodes, ConversationSettings settings)
    {
       var window = CreateInstance<VNDialogueEditor>();
       window.nodes = nodes;
+      window.settings = settings;
       ShowEditor();
    }
 
@@ -100,7 +101,7 @@ public class VNDialogueEditor : EditorWindow
       var obj = EditorUtility.InstanceIDToObject(instanceID) as VNConversationSegment;
       if (obj != null)
       {
-         Open(obj.nodes);
+         Open(obj.nodes, obj.settings);
          return true;
       }
 
@@ -109,11 +110,11 @@ public class VNDialogueEditor : EditorWindow
 
    void SetConversationSettings()
    {
-      if (GUILayout.Button("Character Settings", GUILayout.Width(150)))
+      if (GUILayout.Button("Participating Characters", GUILayout.Width(150)))
       {
          PopupWindow.Show(
             new Rect(Event.current.mousePosition, Vector2.zero),
-            new ConversationSettingsPopup(characterInfos)
+            new ConversationSettingsPopup(settings)
          );
       }
    }

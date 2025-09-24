@@ -14,7 +14,7 @@ public class Option<T> where T : DialogueNode
 [Serializable]
 public class ChoiceLogic<T> where T : DialogueNode
 {
-    [SerializeReference] public List<Option<T>> options;
+    public List<Option<T>> options;
     public bool loopIfWrong = false;
     
     public ChoiceLogic()

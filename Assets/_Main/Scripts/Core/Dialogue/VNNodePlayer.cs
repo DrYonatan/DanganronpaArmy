@@ -15,7 +15,7 @@ using UnityEngine;
         public void StartConversation(VNConversationSegment segment)
         {
             this.currentConversation = segment;
-            foreach (VNCharacterInfo characterInfo in segment.CharacterInfos)
+            foreach (CharacterPositionMapping characterInfo in segment.settings.characterPositions)
             {
                 VNCharacterManager.instance.CreateCharacter(characterInfo);
             }

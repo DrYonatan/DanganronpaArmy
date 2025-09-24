@@ -41,11 +41,11 @@ public class DialogueNode
 
     public virtual IEnumerator Play()
     {
-        VNCharacterInfo info = VNNodePlayer.instance.currentConversation.CharacterInfos.Find(characterInfo =>
-            characterInfo.Character == character);
+        CharacterPositionMapping info = VNNodePlayer.instance.currentConversation.settings.characterPositions.Find(characterInfo =>
+            characterInfo.character == character);
         VNCharacterManager.instance.ShowOnlySpeaker(character);
         VNCharacterManager.instance.SwitchEmotion(character, expression);
-        CameraManager.instance.MoveCamera(info.LookDirection, 0.4f);
+        CameraManager.instance.MoveCamera((CameraLookDirection)info.position, 0.4f);
         yield return DialogueSystem.instance.Say(this);
     }
 }
