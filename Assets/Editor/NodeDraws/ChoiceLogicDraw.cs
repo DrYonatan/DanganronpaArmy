@@ -13,27 +13,29 @@ public class ChoiceLogicDraw<T> : ScriptableObject where T : DialogueNode
         GUILayout.EndHorizontal();
         
         GUILayout.BeginHorizontal();
-
-        int index = 0;
         
-        for(int i = logic.options.Count-1; i >= 0; i--)
+        for(int i = 0; i < logic.options.Count; i++)
         {
             GUILayout.BeginVertical(GUILayout.MaxWidth(100));
             GUILayout.BeginHorizontal();
             logic.options[i].isCorrect = GUILayout.Toggle(logic.options[i].isCorrect, "Correct");
-            if (GUILayout.Button("X"))
-            {
-                RemoveOption(logic, index);
-            }
+            bool xButton = GUILayout.Button("X");
             GUILayout.EndHorizontal();
-            logic.options[i].text = GUILayout.TextField(logic.options[i].text, GUILayout.Height(30));
-            if (GUILayout.Button("Result dialogue"))
+
+            if (xButton)
             {
-                open(logic.options[i].dialogue);
+                RemoveOption(logic, i);
+            }
+            else
+            {
+                logic.options[i].text = GUILayout.TextField(logic.options[i].text, GUILayout.Height(30));
+                if (GUILayout.Button("Result dialogue"))
+                {
+                    open(logic.options[i].dialogue);
+                } 
             }
             
             GUILayout.EndVertical();
-            index++;
         }
 
         GUIStyle plusStyle = GUIStyle.none;

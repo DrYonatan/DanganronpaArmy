@@ -19,15 +19,15 @@ namespace DIALOGUE
             {
                 uiOptions[selectedIndex].OnDeselect();
                 selectedIndex = (selectedIndex - 1 + uiOptions.Count) % uiOptions.Count;
-                uiOptions[selectedIndex].OnSelect();
-              //  SoundManager.instance.PlaySoundEffect(moveSelectionSound.name);
+                uiOptions[selectedIndex].OnSelect(); 
+                SoundManager.instance.PlaySoundEffect(moveSelectionSound);
             }
             else if (Input.GetKeyDown(KeyCode.S))
             {
                 uiOptions[selectedIndex].OnDeselect();
                 selectedIndex = (selectedIndex + 1) % uiOptions.Count;
                 uiOptions[selectedIndex].OnSelect();;
-               // SoundManager.instance.PlaySoundEffect(moveSelectionSound.name);
+               SoundManager.instance.PlaySoundEffect(moveSelectionSound);
             }
         }
         
@@ -67,7 +67,7 @@ namespace DIALOGUE
 
         public void ClickSelectedOption()
         {
-            // SoundManager.instance.PlaySoundEffect(clickSound.name);
+            SoundManager.instance.PlaySoundEffect(clickSound);
             uiOptions[selectedIndex].OnClick();
         }
         

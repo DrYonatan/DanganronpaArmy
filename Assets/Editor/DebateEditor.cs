@@ -105,7 +105,7 @@ public class DebateEditor : EditorWindow
       
       if (GUILayout.Button("Finish Nodes"))
       {
-         ConversationEditor.Open(container.finishNodes, container.settings);
+         ConversationEditor.Open(container.finishNodes, container.settings, null);
       }
       GUILayout.EndVertical();
    }

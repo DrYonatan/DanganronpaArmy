@@ -25,7 +25,7 @@ public class DiscussionChoiceNodeDraw : DiscussionNodeDraw
             base.DrawWindow(b, settings, windowWidth, windowHeight);
             choiceLogicDraw.DrawLogic(node.choiceLogic, (nodes) =>
             {
-                ConversationEditor.Open(nodes, settings);
+                ConversationEditor.Open(nodes, settings, null);
             });
         }
     }

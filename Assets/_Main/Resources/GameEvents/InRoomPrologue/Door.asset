@@ -12,17 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac78edb917e5f4142b7f642498064325, type: 3}
   m_Name: Door
   m_EditorClassIdentifier: 
-  CharacterInfos:
-  - Character: {fileID: 11400000, guid: e556e59756b89ea4ab97f97255a16dac, type: 2}
-    LookDirection: 4
-  - Character: {fileID: 11400000, guid: e518102ea47577a499c54e7bb8334338, type: 2}
-    LookDirection: 0
-  - Character: {fileID: 11400000, guid: 86ac77b9ffadf3643938e479c302689d, type: 2}
-    LookDirection: 4
-  - Character: {fileID: 11400000, guid: e5e319997f8a6c943997082245a52a96, type: 2}
-    LookDirection: 0
-  - Character: {fileID: 11400000, guid: e3e234827f8a3ae4f8247e56776c48c3, type: 2}
-    LookDirection: 3
+  settings:
+    characterPositions:
+    - character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
+      position: 2
+    - character: {fileID: 11400000, guid: c6f821f9019b92c44b2eb05215b152b0, type: 2}
+      position: 4
+    - character: {fileID: 11400000, guid: 86ac77b9ffadf3643938e479c302689d, type: 2}
+      position: 3
   nodes:
   - rid: 4827846089663315984
   - rid: 4827846089663315986
@@ -42,7 +39,9 @@ MonoBehaviour:
         title: 
         drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
         character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
-        expression: 0
+        expression:
+          name: default
+          sprite: {fileID: 21300000, guid: 813f990a70aa4b648818f3d7cb5bff18, type: 3}
         textData:
           rid: 4827846089663315985
     - rid: 4827846089663315985
@@ -63,26 +62,28 @@ MonoBehaviour:
         title: 
         drawNode: {fileID: 11400000, guid: 43e4e6c8d47167a40a1e714ec75c32f3, type: 2}
         character: {fileID: 11400000, guid: 86ac77b9ffadf3643938e479c302689d, type: 2}
-        expression: 0
+        expression:
+          name: default
+          sprite: {fileID: 21300000, guid: ba7e69f4346c2524ebd33963605775e9, type: 3}
         textData:
           rid: 4827846089663315987
         choiceLogic:
           options:
-          - rid: 4827846116561649671
-          loopIfWrong: 0
+          - text: "\u05E0\u05DB\u05D5\u05DF"
+            dialogue:
+            - rid: 4827846191720693762
+            isCorrect: 1
+          - text: "\u05DC\u05D0 \u05E0\u05DB\u05D5\u05DF"
+            dialogue:
+            - rid: 4827846191720693760
+            isCorrect: 0
+          loopIfWrong: 1
     - rid: 4827846089663315987
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
         text: 
         commands: []
-    - rid: 4827846116561649671
-      type: {class: Option, ns: , asm: Assembly-CSharp}
-      data:
-        text: 
-        dialogue:
-        - rid: 4827846116561649672
-        isCorrect: 0
-    - rid: 4827846116561649672
+    - rid: 4827846191720693760
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
         nodeRect:
@@ -95,11 +96,36 @@ MonoBehaviour:
         title: 
         drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
         character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
-        expression: 0
+        expression:
+          name: default
+          sprite: {fileID: 21300000, guid: 813f990a70aa4b648818f3d7cb5bff18, type: 3}
         textData:
-          rid: 4827846116561649673
-    - rid: 4827846116561649673
+          rid: 4827846191720693761
+    - rid: 4827846191720693761
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
-        text: 
+        text: assaddsds
+        commands: []
+    - rid: 4827846191720693762
+      type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
+        character: {fileID: 11400000, guid: e3e234827f8a3ae4f8247e56776c48c3, type: 2}
+        expression:
+          name: default
+          sprite: {fileID: 21300000, guid: 547fd952dffdbd045af76c4dc2cb5e17, type: 3}
+        textData:
+          rid: 4827846191720693763
+    - rid: 4827846191720693763
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: dsdsds
         commands: []

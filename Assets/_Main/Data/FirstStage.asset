@@ -50,8 +50,8 @@ MonoBehaviour:
     drawNode: {fileID: 11400000, guid: 81b17a11177a0f4449f7df8eebe49b4b, type: 2}
     character: {fileID: 11400000, guid: 86ac77b9ffadf3643938e479c302689d, type: 2}
     expression:
-      name: thinking
-      sprite: {fileID: 21300000, guid: 0792ed8c0c3887c4b96bf97e6516c5c4, type: 3}
+      name: default
+      sprite: {fileID: 21300000, guid: ba7e69f4346c2524ebd33963605775e9, type: 3}
     textData:
       rid: 3042479732272136192
     usePrevCamera: 0
@@ -153,8 +153,8 @@ MonoBehaviour:
     drawNode: {fileID: 11400000, guid: 6344f4092040cbd4183fc5d6dc877647, type: 2}
     character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
     expression:
-      name: serious
-      sprite: {fileID: 21300000, guid: a147b0d75216a834cae8121fdd7fcc66, type: 3}
+      name: default
+      sprite: {fileID: 21300000, guid: 813f990a70aa4b648818f3d7cb5bff18, type: 3}
     textData:
       rid: 3042480029218373755
     usePrevCamera: 1
@@ -173,10 +173,33 @@ MonoBehaviour:
     title: 
     drawNode: {fileID: 11400000, guid: 6344f4092040cbd4183fc5d6dc877647, type: 2}
     character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
-    expression: 1
+    expression:
+      name: default
+      sprite: {fileID: 21300000, guid: 813f990a70aa4b648818f3d7cb5bff18, type: 3}
     textData:
       rid: 4827846089663315969
     usePrevCamera: 0
+    characterStand: {fileID: 0}
+    cameraEffects: []
+    fovOffset: 0
+    positionOffset: {x: 0, y: 0, z: 0}
+    rotationOffset: {x: 0, y: 0, z: 0}
+  - nodeRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    commandsScrollPosition: {x: 0, y: 0}
+    title: 
+    drawNode: {fileID: 11400000, guid: 6344f4092040cbd4183fc5d6dc877647, type: 2}
+    character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
+    expression:
+      name: default
+      sprite: {fileID: 21300000, guid: 813f990a70aa4b648818f3d7cb5bff18, type: 3}
+    textData:
+      rid: 4827846191357100036
+    usePrevCamera: 1
     characterStand: {fileID: 0}
     cameraEffects: []
     fovOffset: 0
@@ -262,4 +285,9 @@ MonoBehaviour:
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
         text: vcvcvc
+        commands: []
+    - rid: 4827846191357100036
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: hello
         commands: []

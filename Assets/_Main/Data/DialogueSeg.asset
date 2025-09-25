@@ -15,6 +15,9 @@ MonoBehaviour:
   discussionNodes:
   - rid: 4827846089663315980
   - rid: 4827846089663315982
+  - rid: 4827846191764471810
+  settings:
+    characterPositions: []
   references:
     version: 2
     RefIds:
@@ -31,7 +34,9 @@ MonoBehaviour:
         title: 
         drawNode: {fileID: 11400000, guid: 6344f4092040cbd4183fc5d6dc877647, type: 2}
         character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
-        expression: 0
+        expression:
+          name: default
+          sprite: {fileID: 21300000, guid: 813f990a70aa4b648818f3d7cb5bff18, type: 3}
         textData:
           rid: 4827846089663315981
         usePrevCamera: 0
@@ -43,7 +48,7 @@ MonoBehaviour:
     - rid: 4827846089663315981
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
-        text: 
+        text: We
         commands: []
     - rid: 4827846089663315982
       type: {class: DiscussionChoiceNode, ns: , asm: Assembly-CSharp}
@@ -57,8 +62,10 @@ MonoBehaviour:
         commandsScrollPosition: {x: 0, y: 0}
         title: 
         drawNode: {fileID: 11400000, guid: 76846e25f3c59c8469f240cc5205a8fd, type: 2}
-        character: {fileID: 11400000, guid: e556e59756b89ea4ab97f97255a16dac, type: 2}
-        expression: 0
+        character: {fileID: 11400000, guid: 86ac77b9ffadf3643938e479c302689d, type: 2}
+        expression:
+          name: default
+          sprite: {fileID: 21300000, guid: ba7e69f4346c2524ebd33963605775e9, type: 3}
         textData:
           rid: 4827846089663315983
         usePrevCamera: 0
@@ -69,16 +76,104 @@ MonoBehaviour:
         rotationOffset: {x: 0, y: 0, z: 0}
         choiceLogic:
           options:
-          - rid: 4827846095462989824
+          - text: Shalos
+            dialogue:
+            - rid: 4827846191635759106
+            isCorrect: 0
+          - text: Kaki
+            dialogue:
+            - rid: 4827846191764471808
+            isCorrect: 0
           loopIfWrong: 0
     - rid: 4827846089663315983
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
-        text: 
+        text: Hello Hello
         commands: []
-    - rid: 4827846095462989824
-      type: {class: Option, ns: , asm: Assembly-CSharp}
+    - rid: 4827846191635759106
+      type: {class: DiscussionNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: 6344f4092040cbd4183fc5d6dc877647, type: 2}
+        character: {fileID: 11400000, guid: e3e234827f8a3ae4f8247e56776c48c3, type: 2}
+        expression:
+          name: default
+          sprite: {fileID: 21300000, guid: 547fd952dffdbd045af76c4dc2cb5e17, type: 3}
+        textData:
+          rid: 4827846191635759107
+        usePrevCamera: 0
+        characterStand: {fileID: 0}
+        cameraEffects: []
+        fovOffset: 0
+        positionOffset: {x: 0, y: 0, z: 0}
+        rotationOffset: {x: 0, y: 0, z: 0}
+    - rid: 4827846191635759107
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: UwU Hello
+        commands: []
+    - rid: 4827846191764471808
+      type: {class: DiscussionNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: 6344f4092040cbd4183fc5d6dc877647, type: 2}
+        character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
+        expression:
+          name: default
+          sprite: {fileID: 21300000, guid: 813f990a70aa4b648818f3d7cb5bff18, type: 3}
+        textData:
+          rid: 4827846191764471809
+        usePrevCamera: 0
+        characterStand: {fileID: 0}
+        cameraEffects: []
+        fovOffset: 0
+        positionOffset: {x: 0, y: 0, z: 0}
+        rotationOffset: {x: 0, y: 0, z: 0}
+    - rid: 4827846191764471809
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: ewwewe
+        commands: []
+    - rid: 4827846191764471810
+      type: {class: DiscussionNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: 6344f4092040cbd4183fc5d6dc877647, type: 2}
+        character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
+        expression:
+          name: default
+          sprite: {fileID: 21300000, guid: 813f990a70aa4b648818f3d7cb5bff18, type: 3}
+        textData:
+          rid: 4827846191764471811
+        usePrevCamera: 0
+        characterStand: {fileID: 0}
+        cameraEffects: []
+        fovOffset: 0
+        positionOffset: {x: 0, y: 0, z: 0}
+        rotationOffset: {x: 0, y: 0, z: 0}
+    - rid: 4827846191764471811
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
         text: 
-        dialogue: []
-        isCorrect: 0
+        commands: []

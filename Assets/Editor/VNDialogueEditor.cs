@@ -74,6 +74,7 @@ public class VNDialogueEditor : EditorWindow
 {
    public List<DialogueNode> nodes;
    public ConversationSettings settings;
+   public VNConversationSegment segment;
    public bool isSettingsEditable;
    public DrawNode textNode;
    public ChoiceNodeDraw choiceNode;
@@ -88,11 +89,13 @@ public class VNDialogueEditor : EditorWindow
       window.minSize = new Vector2(600, 800);
    }
    
-   public static void Open(List<DialogueNode> nodes, ConversationSettings settings, bool isSettingsEditable)
+   // The Reason this receives both the segment and the nodes and settings is beacuse sometimes only the nodes and settings are sent
+   public static void Open(List<DialogueNode> nodes, ConversationSettings settings, VNConversationSegment seg, bool isSettingsEditable)
    {
       var window = CreateInstance<VNDialogueEditor>();
       window.nodes = nodes;
       window.settings = settings;
+      window.segment = seg;
       window.isSettingsEditable = isSettingsEditable;
       ShowEditor();
    }
@@ -103,7 +106,7 @@ public class VNDialogueEditor : EditorWindow
       var obj = EditorUtility.InstanceIDToObject(instanceID) as VNConversationSegment;
       if (obj != null)
       {
-         Open(obj.nodes, obj.settings, true);
+         Open(obj.nodes, obj.settings, obj,  true);
          return true;
       }
 
@@ -120,22 +123,12 @@ public class VNDialogueEditor : EditorWindow
          );
       }
    }
-
-
-   // void SetContainer()
-   // {
-   //    container = (VNConversationSegment)EditorGUILayout.ObjectField(container, typeof(VNConversationSegment), false, GUILayout.Width(200));
-   // }
-   //
-   // void SetNewList()
-   // {
-   //    container.nodes = new List<DialogueNode>();
-   // }
+   
 
    private void OnGUI()
    {
-      // SetContainer();
-      
+      if(segment != null)
+         EditorUtility.SetDirty(segment);
       if (nodes == null)
       {
          return;
