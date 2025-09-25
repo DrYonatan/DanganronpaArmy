@@ -99,13 +99,15 @@ namespace DIALOGUE
             conversationManager.SetArchitect(architect);
         }
 
-        public IEnumerator OpenSelectionMenu<T>(List<Option<T>> options, Action<Option<T>> onSelect) where T : DialogueNode
+        public IEnumerator HandleSelection<T>(List<Option<T>> options, Action<Option<T>> onSelect) where T : DialogueNode
         {
             optionSelectionManager.gameObject.SetActive(true);
-        //    optionSelectionManager.options = options.Cast<Option<DialogueNode>>().ToList();
-            yield return conversationManager.HandleSelection();
+            optionSelectionManager.GenerateUIOptions(options);
+            yield return conversationManager.WaitForUserInput();
+            optionSelectionManager.DestroyUIOptions();
             optionSelectionManager.gameObject.SetActive(false);
             onSelect(options[optionSelectionManager.selectedIndex]);
         }
+        
     }
 }

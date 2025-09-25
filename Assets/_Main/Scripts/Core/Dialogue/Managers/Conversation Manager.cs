@@ -95,7 +95,7 @@ namespace DIALOGUE
 
         }
 
-        IEnumerator WaitForUserInput()
+        public IEnumerator WaitForUserInput()
         {
             while (!userPrompt)
                 yield return null;
@@ -106,10 +106,6 @@ namespace DIALOGUE
         {
             architect.Clear();
         }
-
-        public IEnumerator HandleSelection()
-        {
-            yield return WaitForUserInput();
-        }
+        
     }
 }

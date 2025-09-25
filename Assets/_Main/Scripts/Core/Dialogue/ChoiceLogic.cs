@@ -32,7 +32,7 @@ public class ChoiceLogic<T> where T : DialogueNode
         {
             yield return playOriginalNode();
             
-            yield return DialogueSystem.instance.OpenSelectionMenu(options, (selectedOption) =>
+            yield return DialogueSystem.instance.HandleSelection(options, (selectedOption) =>
             {
                 pickedOption = selectedOption;
             });
