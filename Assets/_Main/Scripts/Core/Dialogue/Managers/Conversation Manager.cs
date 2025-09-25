@@ -16,6 +16,8 @@ namespace DIALOGUE
 
         private bool userPrompt = false;
         
+        public bool isAuto = false;
+        
         public ConversationManager(TextArchitect architect)
         {
             this.architect = architect;
@@ -55,8 +57,11 @@ namespace DIALOGUE
             DialogueSystem.instance.ShowSpeakerName(node.character.displayName);
             yield return Line_RunCommands(textData.commands);
             yield return BuildDialogue(textData.text);
-            yield return WaitForUserInput();
-            SoundManager.instance.PlayTextBoxSound();
+            if (!isAuto)
+            {
+                yield return WaitForUserInput();
+                SoundManager.instance.PlayTextBoxSound();
+            }
         }
         
 
@@ -95,7 +100,7 @@ namespace DIALOGUE
 
         }
 
-        IEnumerator WaitForUserInput()
+        public IEnumerator WaitForUserInput()
         {
             while (!userPrompt)
                 yield return null;
@@ -106,5 +111,6 @@ namespace DIALOGUE
         {
             architect.Clear();
         }
+        
     }
 }

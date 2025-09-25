@@ -2,14 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DIALOGUE;
-using UnityEngine.Android;
 
 public class TrialDialogueManager : MonoBehaviour
 {
     public static TrialDialogueManager instance { get; private set; }
     
-    [SerializeField] CameraEffectController effectController;
-    [SerializeField] CameraController cameraController;
+    [SerializeField] public CameraEffectController effectController;
+    [SerializeField] public CameraController cameraController;
     
     public DialogueContainer dialogueContainer;
 
@@ -41,29 +40,8 @@ public class TrialDialogueManager : MonoBehaviour
     {
         foreach (DiscussionNode discussionNode in nodes)
         {
-            yield return PlayConversationNode(discussionNode);
+            yield return discussionNode.Play();
         }
-    }
-
-    IEnumerator PlayConversationNode(DiscussionNode node)
-    {
-        CharacterStand characterStand = TrialManager.instance.characterStands.Find(stand => stand.character == node.character);
-        if (!node.usePrevCamera)
-        {
-            cameraController.TeleportToTarget(characterStand.transform, characterStand.heightPivot, node.positionOffset, node.rotationOffset, node.fovOffset);
-            effectController.Reset();
-        }
-
-        ((CourtTextBoxAnimator)(DialogueSystem.instance.dialogueBoxAnimator)).ChangeFace(node.character.faceSprite);
-        
-        foreach (CameraEffect cameraEffect in node.cameraEffects)
-        {
-            effectController.StartEffect(cameraEffect);
-        }
-        characterStand.SetSprite(node.expression);
-
-        yield return DialogueSystem.instance.Say(node);
-
     }
 
     public void HandleConversationEnd(DiscussionSegment discussion)

@@ -25,22 +25,22 @@ namespace CHARACTERS
         {
             instance = this;
         }
-        public void CreateCharacter(VNCharacterInfo characterInfo)
+        public void CreateCharacter(CharacterPositionMapping characterInfo)
         {
-            GameObject characterObj = Instantiate(characterInfo.Character.vnObjectPrefab, characterLayer);
+            GameObject characterObj = Instantiate(characterInfo.character.vnObjectPrefab, characterLayer);
             CanvasGroup canvasGroup = characterObj.GetComponent<CanvasGroup>();
             canvasGroup.alpha = 0f;
             canvasGroup.DOFade(1f, 0.25f);
-            characterObj.name = characterInfo.Character.name;
-            characterObj.transform.position = new Vector3(GetCharacterPosition(characterInfo.LookDirection).x, characterObj.transform.position.y, characterObj.transform.position.z);
-            characterObjects.Add(characterInfo.Character, characterObj);
+            characterObj.name = characterInfo.character.name;
+            characterObj.transform.position = new Vector3(GetCharacterPosition((CameraLookDirection)characterInfo.position).x, characterObj.transform.position.y, characterObj.transform.position.z);
+            characterObjects.Add(characterInfo.character, characterObj);
         }
 
-        public void ShowOnlySpeaker(VNCharacterInfo characterInfo)
+        public void ShowOnlySpeaker(CharacterCourt character)
         {
             foreach (KeyValuePair<CharacterCourt, GameObject> characterObj in characterObjects)
             {
-                if (characterObj.Key.Equals(characterInfo.Character))
+                if (characterObj.Key.Equals(character))
                 {
                     ShowCharacter(characterObj.Value);
                 }

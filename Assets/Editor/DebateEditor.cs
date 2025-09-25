@@ -1,30 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using _Main.Scripts.Court;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
-
-public class FinishNodesPopup : PopupWindowContent
-{
-   private List<DiscussionNode> nodes;
-
-   public FinishNodesPopup(List<DiscussionNode> nodes)
-   {
-      this.nodes = nodes;
-   }
-
-   public override Vector2 GetWindowSize() => new(650, 600);
-
-   public override void OnGUI(Rect rect)
-   {
-      foreach (DiscussionNode node in nodes)
-      {
-         node.DrawNode(650, 650);
-      }
-   }
-
-}
 
 public class DebateSettingsPopup : PopupWindowContent
 {
@@ -45,10 +22,10 @@ public class DebateSettingsPopup : PopupWindowContent
 
       EditorGUILayout.LabelField("Debate Settings", EditorStyles.boldLabel);
       GUILayout.BeginVertical();
-      container.audioClip = (AudioClip)EditorGUILayout.ObjectField("Music", container.audioClip, typeof(AudioClip), false);
-      for (int i = 0; i < container.evidences.Length; i++)
+      container.settings.audioClip = (AudioClip)EditorGUILayout.ObjectField("Music", container.settings.audioClip, typeof(AudioClip), false);
+      for (int i = 0; i < container.settings.evidences.Length; i++)
       {
-         container.evidences[i] = (Evidence)EditorGUILayout.ObjectField("Evidence #" + i, container.evidences[i], typeof(Evidence), false);
+         container.settings.evidences[i] = (Evidence)EditorGUILayout.ObjectField("Evidence #" + i, container.settings.evidences[i], typeof(Evidence), false);
       }
       GUILayout.EndVertical();
 
@@ -128,9 +105,7 @@ public class DebateEditor : EditorWindow
       
       if (GUILayout.Button("Finish Nodes"))
       {
-         var popup = new FinishNodesPopup( container.finishNodes);
-         PopupWindow.Show(new Rect(new Vector2(100, 50), Vector2.zero), popup);
-         Event.current.Use(); // Optional: Consume the event
+         ConversationEditor.Open(container.finishNodes, container.settings, null);
       }
       GUILayout.EndVertical();
    }
@@ -148,7 +123,7 @@ public class DebateEditor : EditorWindow
             }
             else
             {
-               DrawNode(i);
+               DrawNode(i, container.settings);
             }
             
             if (GUILayout.Button("ADD NODE", GUILayout.Width(1400)))
@@ -159,9 +134,9 @@ public class DebateEditor : EditorWindow
       }
    }
    
-   void DrawNode(int id)
+   void DrawNode(int id, DebateSettings settings)
    {
-      container.dialogueNodes[id].DrawNode(window.position.width * 0.8f, window.position.height * 0.2f);
+      container.dialogueNodes[id].DrawNode(settings, window.position.width * 0.8f, window.position.height * 0.2f);
    }
    
    private void UserInput(Event e)
@@ -189,7 +164,7 @@ public class DebateEditor : EditorWindow
          foreach (var node in container.dialogueNodes)
          {
             if (node.previewCamera != null)
-               GameObject.DestroyImmediate(node.previewPivot.gameObject);
+               DestroyImmediate(node.previewPivot.gameObject);
 
             if (node.previewTexture != null)
                node.previewTexture.Release();
@@ -197,7 +172,7 @@ public class DebateEditor : EditorWindow
          foreach (var node in container.finishNodes)
          {
             if (node.previewCamera != null)
-               GameObject.DestroyImmediate(node.previewPivot.gameObject);
+               DestroyImmediate(node.previewPivot.gameObject);
 
             if (node.previewTexture != null)
             {

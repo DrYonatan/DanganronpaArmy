@@ -1,16 +1,20 @@
-using System.Collections;
 using System.Collections.Generic;
 using _Main.Scripts.Court;
 using UnityEngine;
 
-[CreateAssetMenu(menuName ="Data/Stage")]
-public class Stage : TrialSegment
+public class DebateSettings : ConversationSettings
 {
     public Evidence[] evidences = new Evidence[5];
     public AudioClip audioClip;
+}
+
+[CreateAssetMenu(menuName ="Data/Stage")]
+public class Stage : TrialSegment
+{
     public List<DebateNode> dialogueNodes;
     
     public List<DiscussionNode> finishNodes;
+    public DebateSettings settings = new ();
 
     public override void Play()
     {
