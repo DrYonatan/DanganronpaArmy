@@ -104,9 +104,15 @@ namespace DIALOGUE
             optionSelectionManager.gameObject.SetActive(true);
             optionSelectionManager.GenerateUIOptions(options);
             yield return conversationManager.WaitForUserInput();
-            optionSelectionManager.DestroyUIOptions();
-            optionSelectionManager.gameObject.SetActive(false);
+            optionSelectionManager.ClickSelectedOption();
+            yield return new WaitForSeconds(0.2f);
+            optionSelectionManager.CloseMenu();
             onSelect(options[optionSelectionManager.selectedIndex]);
+        }
+
+        public void SetAuto(bool isAuto)
+        {
+            conversationManager.isAuto = isAuto;
         }
         
     }

@@ -10,6 +10,8 @@ namespace DIALOGUE
         public List<UIOption> uiOptions;
         public UIOption optionPrefab;
         public RectTransform optionSelectionMenu;
+        public AudioClip clickSound;
+        public AudioClip moveSelectionSound;
 
         void SelectionMenuControl()
         {
@@ -18,12 +20,14 @@ namespace DIALOGUE
                 uiOptions[selectedIndex].OnDeselect();
                 selectedIndex = (selectedIndex - 1 + uiOptions.Count) % uiOptions.Count;
                 uiOptions[selectedIndex].OnSelect();
+              //  SoundManager.instance.PlaySoundEffect(moveSelectionSound.name);
             }
             else if (Input.GetKeyDown(KeyCode.S))
             {
                 uiOptions[selectedIndex].OnDeselect();
                 selectedIndex = (selectedIndex + 1) % uiOptions.Count;
                 uiOptions[selectedIndex].OnSelect();;
+               // SoundManager.instance.PlaySoundEffect(moveSelectionSound.name);
             }
         }
         
@@ -46,13 +50,25 @@ namespace DIALOGUE
             optionSelectionMenu.DOAnchorPosX(0, 0.2f);
         }
 
-        public void DestroyUIOptions()
+        public void CloseMenu()
+        {
+            DestroyUIOptions();
+            optionSelectionMenu.DOAnchorPosX(100, 0.3f).OnComplete(() => gameObject.SetActive(false));
+        }
+
+        void DestroyUIOptions()
         {
             foreach (UIOption option in uiOptions)
             {
-                Destroy(option.gameObject);
+                option.OnExit();
             }
             uiOptions.Clear();
+        }
+
+        public void ClickSelectedOption()
+        {
+            // SoundManager.instance.PlaySoundEffect(clickSound.name);
+            uiOptions[selectedIndex].OnClick();
         }
         
     }
