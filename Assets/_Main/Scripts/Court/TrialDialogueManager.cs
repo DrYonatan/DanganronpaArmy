@@ -9,7 +9,6 @@ public class TrialDialogueManager : MonoBehaviour
     
     [SerializeField] public CameraEffectController effectController;
     [SerializeField] public CameraController cameraController;
-    [SerializeField] public List<CharacterStand> characterStands;
     
     public DialogueContainer dialogueContainer;
 
@@ -22,9 +21,11 @@ public class TrialDialogueManager : MonoBehaviour
     {
         DialogueSystem.instance.SetTextBox(dialogueContainer);
         DialogueSystem.instance.dialogueBoxAnimator.gameObject.SetActive(true);
+        ImageScript.instance.UnFadeToBlack(0.5f);
         CourtTextBoxAnimator animator = ((CourtTextBoxAnimator)(DialogueSystem.instance.dialogueBoxAnimator));
         animator.ChangeFace(null);
         animator.FaceAppear();
+        animator.TextBoxAppear();
         
         StartCoroutine(RunDiscussion(discussion));
     }

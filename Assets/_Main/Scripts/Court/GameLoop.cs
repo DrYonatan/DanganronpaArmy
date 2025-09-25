@@ -49,7 +49,6 @@ public class GameLoop : MonoBehaviour
     }
 
     [SerializeField] CameraController cameraController;
-    [SerializeField] List<CharacterStand> characterStands;
     public Stage stage;
     [SerializeField] Transform textPivot;
     [SerializeField] GameObject textPrefab;
@@ -59,7 +58,7 @@ public class GameLoop : MonoBehaviour
     [SerializeField] Text timerText;
     public DebateUIAnimator debateUIAnimator;
     public bool isShooting;
-    public GameObject noThatsWrong;
+    public NoThatsWrongAnimator noThatsWrong;
     private bool reachedEnd = false;
 
     float timer;
@@ -79,7 +78,7 @@ public class GameLoop : MonoBehaviour
     public Transform shootOrigin;
     public Transform textStartPosition;
     public Camera statementsCamera;
-    public DebateText currentAimedText;
+    public TrialHoverable currentAimedText;
     public Camera renderTextureCamera;
     public ScreenShatterManager screenShatter;
 
@@ -95,7 +94,6 @@ public class GameLoop : MonoBehaviour
 
     IEnumerator StartDebate()
     {
-        ImageScript.instance.FadeToBlack(2f);
         DialogueSystem.instance.SetTextBox(debateUIAnimator.dialogueContainer);
         yield return cameraController.DiscussionOutroMovement(2.5f);
         debateUIAnimator.gameObject.SetActive(true);
@@ -229,7 +227,7 @@ public class GameLoop : MonoBehaviour
 
     void HandleMouseControl()
     {
-        CursorManager.instance.ReticleAsCursor();
+        TrialCursorManager.instance.ReticleAsCursor();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
 
@@ -361,9 +359,9 @@ public class GameLoop : MonoBehaviour
         StartCoroutine(cameraController.ChangeFov(cameraController.camera.fieldOfView, 8, 0.7f));
         yield return cameraController.MoveCameraOnXAndZ(firstTargetPosition, Quaternion.Euler(0f, -5f, 0f), 0.4f);
         StartCoroutine(cameraController.MoveCameraOnXAndZ(secondTargetPosition, Quaternion.Euler(0f, 0f, 30f), 4f));
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(3.6f);
         cameraController.camera.targetTexture = null;
-        screenShatter.gameObject.SetActive(true);
+        screenShatter = Instantiate(screenShatter);
         yield return StartCoroutine(screenShatter.ScreenShatter());
         ImageScript.instance.FadeToBlack(0.01f);
         yield return new WaitForSeconds(0.01f);
@@ -379,12 +377,9 @@ public class GameLoop : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
 
-        noThatsWrong.SetActive(true);
-        SoundManager.instance.PlaySoundEffect("nothatswrong");
-
-        yield return new WaitForSeconds(3f);
-
-        noThatsWrong.SetActive(false);
+        noThatsWrong.gameObject.SetActive(true);
+        yield return noThatsWrong.Show();
+        noThatsWrong.gameObject.SetActive(false);
     }
 
     IEnumerator StartNewNode(int dialogueNodeIndex)
@@ -425,13 +420,12 @@ public class GameLoop : MonoBehaviour
 
         if (nextNode.character != null)
         {
-            characterStand = characterStands.Find(stand => stand.character == nextNode.character);
+            characterStand = TrialManager.instance.characterStands.Find(stand => stand.character == nextNode.character);
         }
 
         if (characterStand != null)
         {
-            characterStand.state = nextNode.expression;
-            characterStand.SetSprite();
+            characterStand.SetSprite(nextNode.expression);
         }
 
         DebateTextData textData = nextNode.textData as DebateTextData;

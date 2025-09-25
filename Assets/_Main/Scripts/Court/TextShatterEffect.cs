@@ -11,11 +11,12 @@ public class TextShatterEffect : MonoBehaviour
     public float letterLifetime = 2f;
     public float spinAmount = 10f;
 
+    public AudioClip shatterSound;
     public GameObject hitEffectPrefab;
 
     public void Shatter(GameLoop.TextLine textLine)
     {
-        SoundManager.instance.PlaySoundEffect("shatter");
+        SoundManager.instance.PlaySoundEffect(shatterSound);
 
         TextMeshPro textToSeperate = textLine.textMeshPro;
         string text = Regex.Replace(textToSeperate.text, "<.*?>", "");

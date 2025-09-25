@@ -92,7 +92,7 @@ namespace CHARACTERS
 
             Image oldSprite = oldSpriteObj.GetComponent<Image>();
             Image newSprite = newSpriteObj.GetComponent<Image>();
-            Sprite sprite = character.Sprites[(int)expression];
+            Sprite sprite = expression.sprite;
             if (sprite.Equals(oldSprite.sprite))
                 return;
             

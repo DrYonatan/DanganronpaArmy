@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -12,8 +13,24 @@ public class VNNodeDraw : DrawNode
         GUILayout.BeginVertical(GUILayout.Width(300));
 
         b.character = (CharacterCourt)EditorGUILayout.ObjectField(b.character, typeof(CharacterCourt), false);
-        b.expression = (CharacterState)EditorGUILayout.EnumPopup(b.expression);
-        ShowPreviewImage(b);
+        if (b.character != null && b.character.emotions != null && b.character.emotions.Count > 0)
+        {
+            // Get list of emotion names
+            string[] options = b.character.emotions.Select(e => e.name).ToArray();
+
+            // Find current index of the selected state
+            int currentIndex = b.character.emotions.IndexOf(b.expression);
+
+            // Draw popup
+            int newIndex = EditorGUILayout.Popup("Expression", Mathf.Max(0, currentIndex), options);
+
+            // Assign selected state
+            b.expression = b.character.emotions[newIndex];
+        }
+        else
+        {
+            EditorGUILayout.LabelField("No emotions defined for this character.");
+        }        ShowPreviewImage(b);
         GUILayout.EndVertical();
         
         ShowTextData(b, windowWidth * 0.5f);

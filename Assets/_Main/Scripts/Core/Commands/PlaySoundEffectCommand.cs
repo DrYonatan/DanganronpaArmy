@@ -11,7 +11,7 @@ public class PlaySoundEffectCommand : Command
     public float volume = 1f;
     public override void Execute()
     {
-        SoundManager.instance.PlaySoundEffect(clip.name);
+        SoundManager.instance.PlaySoundEffect(clip);
     }
 
     #if UNITY_EDITOR
