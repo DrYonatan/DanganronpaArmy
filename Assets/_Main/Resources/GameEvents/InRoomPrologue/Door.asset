@@ -16,17 +16,18 @@ MonoBehaviour:
     characterPositions:
     - character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
       position: 2
-    - character: {fileID: 11400000, guid: c6f821f9019b92c44b2eb05215b152b0, type: 2}
+    - character: {fileID: 11400000, guid: e3e234827f8a3ae4f8247e56776c48c3, type: 2}
       position: 4
     - character: {fileID: 11400000, guid: 86ac77b9ffadf3643938e479c302689d, type: 2}
       position: 3
   nodes:
-  - rid: 4827846089663315984
-  - rid: 4827846089663315986
+  - rid: 4827846191764471818
+  - rid: 4827846191764471820
+  - rid: 4827846191764471822
   references:
     version: 2
     RefIds:
-    - rid: 4827846089663315984
+    - rid: 4827846191764471818
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
         nodeRect:
@@ -40,73 +41,16 @@ MonoBehaviour:
         drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
         character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
         expression:
-          name: default
-          sprite: {fileID: 21300000, guid: 813f990a70aa4b648818f3d7cb5bff18, type: 3}
+          name: serious
+          sprite: {fileID: 21300000, guid: a147b0d75216a834cae8121fdd7fcc66, type: 3}
         textData:
-          rid: 4827846089663315985
-    - rid: 4827846089663315985
+          rid: 4827846191764471819
+    - rid: 4827846191764471819
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
-        text: 
+        text: "\u05E9\u05DC\u05D5\u05DD"
         commands: []
-    - rid: 4827846089663315986
-      type: {class: VNChoiceNode, ns: , asm: Assembly-CSharp}
-      data:
-        nodeRect:
-          serializedVersion: 2
-          x: 0
-          y: 0
-          width: 0
-          height: 0
-        commandsScrollPosition: {x: 0, y: 0}
-        title: 
-        drawNode: {fileID: 11400000, guid: 43e4e6c8d47167a40a1e714ec75c32f3, type: 2}
-        character: {fileID: 11400000, guid: 86ac77b9ffadf3643938e479c302689d, type: 2}
-        expression:
-          name: default
-          sprite: {fileID: 21300000, guid: ba7e69f4346c2524ebd33963605775e9, type: 3}
-        textData:
-          rid: 4827846089663315987
-        choiceLogic:
-          options:
-          - text: "\u05E0\u05DB\u05D5\u05DF"
-            dialogue:
-            - rid: 4827846191720693762
-            isCorrect: 1
-          - text: "\u05DC\u05D0 \u05E0\u05DB\u05D5\u05DF"
-            dialogue:
-            - rid: 4827846191720693760
-            isCorrect: 0
-          loopIfWrong: 1
-    - rid: 4827846089663315987
-      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
-      data:
-        text: 
-        commands: []
-    - rid: 4827846191720693760
-      type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
-      data:
-        nodeRect:
-          serializedVersion: 2
-          x: 0
-          y: 0
-          width: 0
-          height: 0
-        commandsScrollPosition: {x: 0, y: 0}
-        title: 
-        drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
-        character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
-        expression:
-          name: default
-          sprite: {fileID: 21300000, guid: 813f990a70aa4b648818f3d7cb5bff18, type: 3}
-        textData:
-          rid: 4827846191720693761
-    - rid: 4827846191720693761
-      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
-      data:
-        text: assaddsds
-        commands: []
-    - rid: 4827846191720693762
+    - rid: 4827846191764471820
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
         nodeRect:
@@ -123,9 +67,89 @@ MonoBehaviour:
           name: default
           sprite: {fileID: 21300000, guid: 547fd952dffdbd045af76c4dc2cb5e17, type: 3}
         textData:
-          rid: 4827846191720693763
-    - rid: 4827846191720693763
+          rid: 4827846191764471821
+    - rid: 4827846191764471821
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
-        text: dsdsds
+        text: "\u05D4\u05D9\u05D9 \u05DE\u05D4 \u05E7\u05D5\u05E8\u05D4"
+        commands: []
+    - rid: 4827846191764471822
+      type: {class: VNChoiceNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: 43e4e6c8d47167a40a1e714ec75c32f3, type: 2}
+        character: {fileID: 11400000, guid: 86ac77b9ffadf3643938e479c302689d, type: 2}
+        expression:
+          name: default
+          sprite: {fileID: 21300000, guid: ba7e69f4346c2524ebd33963605775e9, type: 3}
+        textData:
+          rid: 4827846191764471823
+        choiceLogic:
+          options:
+          - text: "\u05E0\u05DB\u05D5\u05DF"
+            dialogue:
+            - rid: 4827846191764471824
+            isCorrect: 1
+          - text: "\u05DC\u05D0 \u05E0\u05DB\u05D5\u05DF"
+            dialogue:
+            - rid: 4827846191764471826
+            isCorrect: 0
+          loopIfWrong: 1
+    - rid: 4827846191764471823
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "\u05EA\u05D1\u05D7\u05E8 \u05D0\u05E4\u05E9\u05E8\u05D5\u05EA"
+        commands: []
+    - rid: 4827846191764471824
+      type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
+        character: {fileID: 11400000, guid: e3e234827f8a3ae4f8247e56776c48c3, type: 2}
+        expression:
+          name: default
+          sprite: {fileID: 21300000, guid: 547fd952dffdbd045af76c4dc2cb5e17, type: 3}
+        textData:
+          rid: 4827846191764471825
+    - rid: 4827846191764471825
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "\u05D6\u05D5 \u05D4\u05EA\u05E9\u05D5\u05D1\u05D4 \u05D4\u05E0\u05DB\u05D5\u05E0\u05D4"
+        commands: []
+    - rid: 4827846191764471826
+      type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
+        character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
+        expression:
+          name: default
+          sprite: {fileID: 21300000, guid: 813f990a70aa4b648818f3d7cb5bff18, type: 3}
+        textData:
+          rid: 4827846191764471827
+    - rid: 4827846191764471827
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "\u05D6\u05D5 \u05DC\u05D0 \u05D4\u05EA\u05E9\u05D5\u05D1\u05D4 \u05D4\u05E0\u05DB\u05D5\u05E0\u05D4"
         commands: []
