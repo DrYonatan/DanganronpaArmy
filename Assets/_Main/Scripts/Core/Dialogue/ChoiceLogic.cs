@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using DIALOGUE;
 using UnityEngine;
 
 [Serializable]
@@ -22,17 +24,24 @@ public class ChoiceLogic<T> where T : DialogueNode
         options = new List<Option<T>>();
     }
 
-    public IEnumerator Play()
+    public IEnumerator Play(Func<IEnumerator> playOriginalNode)
     {
-        Option<T> pickedOption;
+        Option<T> pickedOption = new Option<T>();
 
         do
         {
-            pickedOption = options[0];
+            yield return playOriginalNode();
+            
+            yield return DialogueSystem.instance.OpenSelectionMenu(options, (selectedOption) =>
+            {
+                pickedOption = selectedOption;
+            });
+            
             foreach (T node in pickedOption.dialogue)
             {
                 yield return node.Play();
-            }
+            }  
+           
         } while (!pickedOption.isCorrect && loopIfWrong);
     }
 }

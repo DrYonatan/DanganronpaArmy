@@ -13,7 +13,6 @@ public class VNChoiceNode : DialogueNode
 
     public override IEnumerator Play()
     {
-        yield return base.Play();
-        yield return choiceLogic.Play();
+        yield return choiceLogic.Play(base.Play);
     }
 }

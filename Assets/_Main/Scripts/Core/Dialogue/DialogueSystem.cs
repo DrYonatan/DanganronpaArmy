@@ -1,4 +1,7 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace DIALOGUE
@@ -18,6 +21,7 @@ namespace DIALOGUE
         public event DialogueSystemEvent onUserPrompt_Next;
 
         public TextBoxAnimations dialogueBoxAnimator;
+        public OptionSelectionManager optionSelectionManager;
 
         private void Awake()
         {
@@ -93,6 +97,15 @@ namespace DIALOGUE
             dialogueContainer = container;
             architect = new TextArchitect(dialogueContainer.dialogueText);
             conversationManager.SetArchitect(architect);
+        }
+
+        public IEnumerator OpenSelectionMenu<T>(List<Option<T>> options, Action<Option<T>> onSelect) where T : DialogueNode
+        {
+            optionSelectionManager.gameObject.SetActive(true);
+        //    optionSelectionManager.options = options.Cast<Option<DialogueNode>>().ToList();
+            yield return conversationManager.HandleSelection();
+            optionSelectionManager.gameObject.SetActive(false);
+            onSelect(options[optionSelectionManager.selectedIndex]);
         }
     }
 }

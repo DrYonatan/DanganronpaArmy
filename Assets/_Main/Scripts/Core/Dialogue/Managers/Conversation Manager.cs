@@ -106,5 +106,10 @@ namespace DIALOGUE
         {
             architect.Clear();
         }
+
+        public IEnumerator HandleSelection()
+        {
+            yield return WaitForUserInput();
+        }
     }
 }
