@@ -71,33 +71,6 @@ MonoBehaviour:
       x: 0
       y: 0
       width: 200
-      height: 58500
-    commandsScrollPosition: {x: 0, y: 0}
-    title: 
-    drawNode: {fileID: 11400000, guid: 81b17a11177a0f4449f7df8eebe49b4b, type: 2}
-    character: {fileID: 11400000, guid: e5e319997f8a6c943997082245a52a96, type: 2}
-    expression:
-      name: default
-      sprite: {fileID: 21300000, guid: 4f84501393002ac49bb32d1bc865b1ea, type: 3}
-    textData:
-      rid: 3042479711257624577
-    usePrevCamera: 0
-    characterStand: {fileID: 0}
-    cameraEffects:
-    - {fileID: 11400000, guid: 8087dd134ffdb1e48ad5c829514baaf6, type: 2}
-    - {fileID: 11400000, guid: d7b5a6678c2f5b34c816559f2046fca5, type: 2}
-    fovOffset: 0
-    positionOffset: {x: 0.65, y: 0, z: -2.24}
-    rotationOffset: {x: 0, y: 0, z: 0}
-    evidence: {fileID: 0}
-    statement: Statement
-    voiceLine: {fileID: 0}
-    textLinesScrollPosition: {x: 0, y: 0}
-  - nodeRect:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 200
       height: 3740
     commandsScrollPosition: {x: 0, y: 0}
     title: 
@@ -153,8 +126,8 @@ MonoBehaviour:
     drawNode: {fileID: 11400000, guid: 6344f4092040cbd4183fc5d6dc877647, type: 2}
     character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
     expression:
-      name: default
-      sprite: {fileID: 21300000, guid: 813f990a70aa4b648818f3d7cb5bff18, type: 3}
+      name: serious
+      sprite: {fileID: 21300000, guid: a147b0d75216a834cae8121fdd7fcc66, type: 3}
     textData:
       rid: 3042480029218373755
     usePrevCamera: 1
@@ -184,27 +157,15 @@ MonoBehaviour:
     fovOffset: 0
     positionOffset: {x: 0, y: 0, z: 0}
     rotationOffset: {x: 0, y: 0, z: 0}
-  - nodeRect:
-      serializedVersion: 2
-      x: 0
-      y: 0
-      width: 0
-      height: 0
-    commandsScrollPosition: {x: 0, y: 0}
-    title: 
-    drawNode: {fileID: 11400000, guid: 6344f4092040cbd4183fc5d6dc877647, type: 2}
-    character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
-    expression:
-      name: default
-      sprite: {fileID: 21300000, guid: 813f990a70aa4b648818f3d7cb5bff18, type: 3}
-    textData:
-      rid: 4827846191357100036
-    usePrevCamera: 1
-    characterStand: {fileID: 0}
-    cameraEffects: []
-    fovOffset: 0
-    positionOffset: {x: 0, y: 0, z: 0}
-    rotationOffset: {x: 0, y: 0, z: 0}
+  settings:
+    characterPositions: []
+    evidences:
+    - {fileID: 11400000, guid: 61f792b87e669574793f5e93b1753771, type: 2}
+    - {fileID: 11400000, guid: 4ba997dac63149946b503189cba49436, type: 2}
+    - {fileID: 11400000, guid: 55f6c2af98b373c458b3a6a909f35b54, type: 2}
+    - {fileID: 0}
+    - {fileID: 0}
+    audioClip: {fileID: 8300000, guid: e5521adcfa7ff4a419210e9743408f24, type: 3}
   references:
     version: 2
     RefIds:
@@ -218,32 +179,12 @@ MonoBehaviour:
           spawnOffset: {x: 0.2, y: 0.43, z: 0}
           scale: {x: 1, y: 1, z: 1}
           ttl: 3
-          textLineScrollPosition: {x: 0, y: 0}
+          textLineScrollPosition: {x: 0, y: 10}
         - text: '{0}'
           textEffect: []
           spawnOffset: {x: 0, y: 0, z: 0}
           scale: {x: 1, y: 1, z: 1}
           ttl: 1
-          textLineScrollPosition: {x: 0, y: 0}
-    - rid: 3042479711257624577
-      type: {class: DebateTextData, ns: , asm: Assembly-CSharp}
-      data:
-        textLines:
-        - text: "\u05DC\u05D0 \u05D9\u05DB\u05D5\u05DC \u05DC\u05D4\u05D9\u05D5\u05EA
-            \u05E9\u05DE\u05D9\u05E9\u05D4\u05D5"
-          textEffect:
-          - {fileID: 11400000, guid: e5ad80d2a8ee1f042bf34c66a49d1aef, type: 2}
-          spawnOffset: {x: 0.31, y: 0, z: 0}
-          scale: {x: 1, y: 1, z: 1}
-          ttl: 3
-          textLineScrollPosition: {x: 0, y: 0}
-        - text: "\u05E0\u05DB\u05E0\u05E1 \u05DC\u05E9\u05D9\u05E8\u05D5\u05EA\u05D9\u05DD
-            \u05D1\u05D6\u05DE\u05DF \u05D4\u05EA\u05D5\u05E8\u05E0\u05D5\u05EA?"
-          textEffect:
-          - {fileID: 11400000, guid: e5ad80d2a8ee1f042bf34c66a49d1aef, type: 2}
-          spawnOffset: {x: -0.31, y: -0.42, z: 0}
-          scale: {x: 1, y: 1, z: 1}
-          ttl: 3
           textLineScrollPosition: {x: 0, y: 0}
     - rid: 3042479711257624578
       type: {class: DebateTextData, ns: , asm: Assembly-CSharp}
@@ -255,7 +196,7 @@ MonoBehaviour:
           spawnOffset: {x: 0, y: 0, z: 0}
           scale: {x: 1, y: 1, z: 1}
           ttl: 3
-          textLineScrollPosition: {x: 0, y: 0}
+          textLineScrollPosition: {x: 0, y: 10}
     - rid: 3042479732272136192
       type: {class: DebateTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -267,7 +208,7 @@ MonoBehaviour:
           spawnOffset: {x: 0, y: 0.4, z: 0}
           scale: {x: 1, y: 1, z: 1}
           ttl: 3
-          textLineScrollPosition: {x: 0, y: 30}
+          textLineScrollPosition: {x: 0, y: 32}
         - text: "\u05D4\u05D9\u05D4 {0}"
           textEffect:
           - {fileID: 11400000, guid: 78cef4dbf176f274ba273d043b6ea500, type: 2}
@@ -285,9 +226,4 @@ MonoBehaviour:
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
         text: vcvcvc
-        commands: []
-    - rid: 4827846191357100036
-      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
-      data:
-        text: hello
         commands: []

@@ -36,7 +36,7 @@ public class DialogueNode
 
     protected virtual void InitializeTextData()
     {
-        this.textData = new VNTextData();
+        textData = new VNTextData();
     }
 
     public virtual IEnumerator Play()

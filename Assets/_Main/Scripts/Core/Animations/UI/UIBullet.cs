@@ -19,8 +19,8 @@ public class UIBullet : MonoBehaviour
 
     public float shootDuration = 0.75f;
     
-    const string WHITE_IMAGE_PATH = "Images/UI/whitebullet";
-    const string REGULAR_IMAGE_PATH = "Images/UI/bullet";
+    const string WHITE_IMAGE_PATH = "Images/UI/Debate/whitebullet";
+    const string REGULAR_IMAGE_PATH = "Images/UI/Debate/bullet";
 
     void Update()
     {

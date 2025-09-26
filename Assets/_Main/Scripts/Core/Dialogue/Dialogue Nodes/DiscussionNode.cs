@@ -22,7 +22,6 @@ public class DiscussionNode : DialogueNode
     #endif
     public DiscussionNode(DrawNode _drawNode) : base(_drawNode)
     {
-        textData = new VNTextData();
     }
     
     IEnumerator PlayConversationNode(DiscussionNode node)
