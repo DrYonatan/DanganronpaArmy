@@ -47,9 +47,9 @@ public class ConversationSettingsPopup : PopupWindowContent
 
          // Character field
          EditorGUILayout.LabelField("Character", GUILayout.Width(60));
-         characterInfo.character = (CharacterCourt)EditorGUILayout.ObjectField(
+         characterInfo.character = (Character)EditorGUILayout.ObjectField(
             characterInfo.character,
-            typeof(CharacterCourt),
+            typeof(Character),
             false,
             GUILayout.Width(120)
          );

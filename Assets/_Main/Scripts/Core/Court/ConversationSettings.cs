@@ -10,6 +10,6 @@ public class ConversationSettings
 [Serializable]
 public class CharacterPositionMapping
 {
-    public CharacterCourt character;
+    public Character character;
     public int position;
 }

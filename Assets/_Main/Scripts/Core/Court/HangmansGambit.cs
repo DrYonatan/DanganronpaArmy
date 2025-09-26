@@ -15,7 +15,7 @@ public class Letter
 [CreateAssetMenu(menuName = "Data/Hangmans Gambit")]
 public class HangmansGambit : TrialSegment
 {
-    public CharacterCourt character;
+    public Character character;
     public bool isActive = true;
     public char[] possibleLetters;
     public List<Letter> correctLetters = new List<Letter>();

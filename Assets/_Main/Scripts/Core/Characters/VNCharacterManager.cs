@@ -20,7 +20,7 @@ namespace CHARACTERS
         public RectTransform midRight;
         public RectTransform right;
         
-        Dictionary<CharacterCourt, GameObject> characterObjects = new ();
+        Dictionary<Character, GameObject> characterObjects = new ();
         private void Awake()
         {
             instance = this;
@@ -36,9 +36,9 @@ namespace CHARACTERS
             characterObjects.Add(characterInfo.character, characterObj);
         }
 
-        public void ShowOnlySpeaker(CharacterCourt character)
+        public void ShowOnlySpeaker(Character character)
         {
-            foreach (KeyValuePair<CharacterCourt, GameObject> characterObj in characterObjects)
+            foreach (KeyValuePair<Character, GameObject> characterObj in characterObjects)
             {
                 if (characterObj.Key.Equals(character))
                 {
@@ -66,13 +66,13 @@ namespace CHARACTERS
 
         public void DestroyCharacters()
         {
-            foreach (KeyValuePair<CharacterCourt, GameObject> characterObj in characterObjects)
+            foreach (KeyValuePair<Character, GameObject> characterObj in characterObjects)
             {
                 Destroy(characterObj.Value);
             }
         }
 
-        public void SwitchEmotion(CharacterCourt character, CharacterState expression)
+        public void SwitchEmotion(Character character, CharacterState expression)
         {
             Transform characterTransform = characterObjects[character].transform;
 

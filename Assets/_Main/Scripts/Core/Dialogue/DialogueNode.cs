@@ -14,7 +14,7 @@ public class DialogueNode
     public string title;
     public DrawNode drawNode;
 
-    public CharacterCourt character;
+    public Character character;
 
     public CharacterState expression;
 

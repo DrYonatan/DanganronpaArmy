@@ -384,7 +384,7 @@ public class GameLoop : MonoBehaviour
 
     IEnumerator StartNewNode(int dialogueNodeIndex)
     {
-        CharacterCourt prevCharacter = ScriptableObject.CreateInstance<CharacterCourt>();
+        Character prevCharacter = ScriptableObject.CreateInstance<Character>();
         if (dialogueNodeIndex > 0)
         {
             prevCharacter = stage.dialogueNodes[dialogueNodeIndex - 1].character;

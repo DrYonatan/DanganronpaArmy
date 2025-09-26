@@ -7,7 +7,7 @@ using System;
 public class CharacterStand : MonoBehaviour
 {
 
-    public CharacterCourt character;
+    public Character character;
     public SpriteRenderer spriteRenderer;
     public SpriteRenderer silhouetteRenderer;
     public Transform heightPivot;
