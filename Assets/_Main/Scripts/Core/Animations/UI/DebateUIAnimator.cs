@@ -36,7 +36,7 @@ public class DebateUIAnimator : MonoBehaviour
     public float moveAmountY = 40f;
     public float moveAmountX = 150f;
 
-    public float duration = 0.5f;
+    public float duration = 0.2f;
     public float reloadDuration = 0.2f;
 
     public void DebateUIAppear()
@@ -45,9 +45,13 @@ public class DebateUIAnimator : MonoBehaviour
         facePart.anchoredPosition = facePartOriginalPos.anchoredPosition + new Vector2(moveAmountX, 0);
         timePart.anchoredPosition = timePartOriginalPos.anchoredPosition + new Vector2(0, moveAmountY);
 
-        namePart.DOAnchorPos(namePartOriginalPos.anchoredPosition, duration).SetEase(Ease.OutQuad);
-        facePart.DOAnchorPos(facePartOriginalPos.anchoredPosition, duration).SetEase(Ease.OutQuad);
-        timePart.DOAnchorPos(timePartOriginalPos.anchoredPosition, duration).SetEase(Ease.OutQuad);
+        Sequence seq = DOTween.Sequence();
+
+        seq.Append(namePart.DOAnchorPos(namePartOriginalPos.anchoredPosition, duration).SetEase(Ease.OutQuad));
+        seq.Append(facePart.DOAnchorPos(facePartOriginalPos.anchoredPosition, duration).SetEase(Ease.OutQuad));
+        seq.Append(timePart.DOAnchorPos(timePartOriginalPos.anchoredPosition, duration).SetEase(Ease.OutQuad));
+
+        seq.OnComplete(() => TrialManager.instance.barsAnimator.ShowDebateBars(0.2f));
 
         CursorManager.instance.Show();
         GenerateIndicators();
@@ -99,7 +103,7 @@ public class DebateUIAnimator : MonoBehaviour
 
         indicators.Clear();
 
-        for (int i = 0; i < GameLoop.instance.stage.dialogueNodes.Count; i++)
+        for (int i = 0; i < GameLoop.instance.debateSegment.dialogueNodes.Count; i++)
         {
             GameObject indicator = Instantiate(nodeIndicatorPrefab, nodeIndicatorContainer);
             Image image = indicator.GetComponent<Image>();

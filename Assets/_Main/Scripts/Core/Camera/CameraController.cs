@@ -75,6 +75,7 @@ public class CameraController : MonoBehaviour
 
     public IEnumerator DebateStartCameraMovement(float duration)
     {
+        TrialManager.instance.barsAnimator.HideDebateBars(0f);
         camera.fieldOfView = 30f;
         
         cameraTransform.localRotation *= Quaternion.Euler(new Vector3(10f, 0f, 10f));

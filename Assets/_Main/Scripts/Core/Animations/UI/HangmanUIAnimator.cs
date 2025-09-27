@@ -9,6 +9,9 @@ using Random = UnityEngine.Random;
 
 public class HangmanUIAnimator : MonoBehaviour
 {
+    public RectTransform timerRect;
+    public RectTransform lettersLeftRect;
+    
     public TextMeshProUGUI timerText;
     public CanvasGroup canvasGroup;
     public Image lettersLeftCount;
@@ -61,6 +64,18 @@ public class HangmanUIAnimator : MonoBehaviour
         silhouette.GetComponent<RectTransform>().DOShakeAnchorPos(5f, strength: new Vector2(5f, 5f), vibrato: 1, randomness: 90, snapping: false, fadeOut: false)
             .SetLoops(-1, LoopType.Restart);
 
+        float timerOriginalX = timerRect.anchoredPosition.x;
+        float lettersLeftOriginalX = lettersLeftRect.anchoredPosition.x;
+
+        Sequence appearSeq = DOTween.Sequence();
+
+        appearSeq.Append(timerRect.DOAnchorPosX(timerOriginalX + 500f, 0f));
+        appearSeq.Append(lettersLeftRect.DOAnchorPosX(lettersLeftOriginalX - 700f, 0f));
+        appearSeq.Append(canvasGroup.DOFade(1f, 0.5f));
+        appearSeq.Append(timerRect.DOAnchorPosX(timerOriginalX, 0.4f));
+        appearSeq.Join(lettersLeftRect.DOAnchorPosX(lettersLeftOriginalX, 0.4f));
+
+        appearSeq.OnComplete(() => TrialManager.instance.barsAnimator.ShowGlobalBars(0.2f));
         StartCoroutine(StarsGrow());
         SpawnCircles();
     }

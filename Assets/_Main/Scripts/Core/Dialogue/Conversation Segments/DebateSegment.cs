@@ -10,8 +10,8 @@ public class DebateSettings : ConversationSettings
     public AudioClip audioClip;
 }
 
-[CreateAssetMenu(menuName ="Data/Stage")]
-public class Stage : TrialSegment
+[CreateAssetMenu(menuName ="Data/Debate Segment")]
+public class DebateSegment : TrialSegment
 {
     public List<DebateNode> dialogueNodes;
     

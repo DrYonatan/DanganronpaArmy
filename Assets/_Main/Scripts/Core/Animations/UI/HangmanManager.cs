@@ -51,7 +51,6 @@ public class HangmanManager : MonoBehaviour
         animator.SetSilhouette(characterStand);
         animator.ShowHangmanUI();
         game.isActive = true;
-        animator.canvasGroup.DOFade(1f, 0.5f);
         CursorManager.instance.Show();
         yield return animator.GenerateLetterBlocks(game.correctLetters);
         CheckAquiredLetters();

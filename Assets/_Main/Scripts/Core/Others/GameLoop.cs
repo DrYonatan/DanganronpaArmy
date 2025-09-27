@@ -49,7 +49,7 @@ public class GameLoop : MonoBehaviour
     }
 
     [SerializeField] CameraController cameraController;
-    public Stage stage;
+    public DebateSegment debateSegment;
     [SerializeField] Transform textPivot;
     [SerializeField] GameObject textPrefab;
     [SerializeField] CameraEffectController effectController;
@@ -82,12 +82,12 @@ public class GameLoop : MonoBehaviour
     public Camera renderTextureCamera;
     public ScreenShatterManager screenShatter;
 
-    public void PlayDebate(Stage debate)
+    public void PlayDebate(DebateSegment debate)
     {
-        this.stage = debate;
+        this.debateSegment = debate;
         textLines = new List<TextLine>();
-        evidenceManager.ShowEvidence(stage.settings.evidences);
-        MusicManager.instance.PlaySong(stage.settings.audioClip);
+        evidenceManager.ShowEvidence(debateSegment.settings.evidences);
+        MusicManager.instance.PlaySong(debateSegment.settings.audioClip);
         stageTimer = defaultStageTime;
         StartCoroutine(StartDebate());
     }
@@ -130,7 +130,7 @@ public class GameLoop : MonoBehaviour
                 return;
             }
 
-            if (stage.dialogueNodes.Count <= textIndex)
+            if (debateSegment.dialogueNodes.Count <= textIndex)
             {
                 textIndex = 0;
                 reachedEnd = true;
@@ -153,7 +153,7 @@ public class GameLoop : MonoBehaviour
                 {
                     debateUIAnimator.UnHighlightAllNodes();
                     DeactivateDebate();
-                    StartCoroutine(StartFinishNodes(stage.finishNodes));
+                    StartCoroutine(StartFinishNodes(debateSegment.finishNodes));
                 }
                 else
                 {
@@ -371,7 +371,7 @@ public class GameLoop : MonoBehaviour
         ImageScript.instance.UnFadeToBlack(0.5f);
         yield return cameraController.DiscussionIntroMovement(1f);
         musicManager.StopSong();
-        stage.Finish();
+        debateSegment.Finish();
 
     }
     
@@ -389,10 +389,10 @@ public class GameLoop : MonoBehaviour
         Character prevCharacter = ScriptableObject.CreateInstance<Character>();
         if (dialogueNodeIndex > 0)
         {
-            prevCharacter = stage.dialogueNodes[dialogueNodeIndex - 1].character;
+            prevCharacter = debateSegment.dialogueNodes[dialogueNodeIndex - 1].character;
         }
         
-        DebateNode nextNode = stage.dialogueNodes[dialogueNodeIndex];
+        DebateNode nextNode = debateSegment.dialogueNodes[dialogueNodeIndex];
         SpawnText(nextNode);
         effectController.Reset();
         

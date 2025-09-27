@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class DebateSettingsPopup : PopupWindowContent
 {
-   private Stage container; // your reference
-   public DebateSettingsPopup(Stage container)
+   private DebateSegment container; // your reference
+   public DebateSettingsPopup(DebateSegment container)
    {
       this.container = container;
    }
@@ -34,7 +34,7 @@ public class DebateSettingsPopup : PopupWindowContent
 
 public class DebateEditor : EditorWindow
 {
-   public Stage container;
+   public DebateSegment container;
    protected DialogueNode selectedNode;
    public DrawNode textNode;
    protected Vector2 scrollPosition;
@@ -50,7 +50,7 @@ public class DebateEditor : EditorWindow
 
    private void OnGUI()
    {
-      container = (Stage)EditorGUILayout.ObjectField(container, typeof(Stage), false, GUILayout.Width(200));
+      container = (DebateSegment)EditorGUILayout.ObjectField(container, typeof(DebateSegment), false, GUILayout.Width(200));
 
       if (container == null)
       {
