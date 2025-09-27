@@ -11,13 +11,26 @@ public class BulletCollision : MonoBehaviour
     {
         if(!didHit)
         {
-         if(CheckHitLocation(collision))
-         GameLoop.instance.Hit(collision.contacts[0].point);
-         else
-         StartCoroutine(
-         GameLoop.instance.gameObject.GetComponent<TextShatterEffect>().Deflect(
-          gameObject.GetComponent<TextMeshPro>(),
-         collision.contacts[0].point));
+            if (CheckHitLocation(collision))
+            {
+                if(GameLoop.instance.CheckEvidence())
+                    GameLoop.instance.Hit(collision.contacts[0].point);
+                else
+                {
+                    StartCoroutine(
+                        GameLoop.instance.gameObject.GetComponent<TextShatterEffect>().Deflect(
+                            gameObject.GetComponent<TextMeshPro>(),
+                            collision.contacts[0].point));
+                }
+            }
+
+            else
+            {
+                StartCoroutine(
+                    GameLoop.instance.gameObject.GetComponent<TextShatterEffect>().Deflect(
+                        gameObject.GetComponent<TextMeshPro>(),
+                        collision.contacts[0].point));
+            }
 
         }
         

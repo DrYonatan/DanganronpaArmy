@@ -92,8 +92,7 @@ public class HangmanManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Wrong! Correct Letter: " + game.correctLetters[letterIndex].letter);
-            // TODO make player lose HP if they got it wrong
+            TrialManager.instance.DecreaseHealth(1f);
         }
     }
 

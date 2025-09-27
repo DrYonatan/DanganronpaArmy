@@ -326,11 +326,13 @@ public class GameLoop : MonoBehaviour
 
     public void Hit(Vector3 point)
     {
-        if (evidenceManager.Check(correctEvidence))
-        {
-            CorrectChoice();
-            gameObject.GetComponent<TextShatterEffect>().Explosion(point);
-        }
+        CorrectChoice();
+        gameObject.GetComponent<TextShatterEffect>().Explosion(point);
+    }
+
+    public bool CheckEvidence()
+    {
+        return evidenceManager.Check(correctEvidence);
     }
 
     private void CorrectChoice()
