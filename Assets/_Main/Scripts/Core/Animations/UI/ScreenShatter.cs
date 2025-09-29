@@ -87,6 +87,7 @@ public class ScreenShatterManager : MonoBehaviour
 
     IEnumerator Shatter()
     {
+        TrialManager.instance.barsAnimator.HideGlobalBars(0f);
         foreach (ScreenPiece piece in pieces)
         {
             StartCoroutine(piece.Move(3f));

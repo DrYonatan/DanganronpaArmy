@@ -49,7 +49,7 @@ public class TrialManager : MonoBehaviour
     public void IncreaseHealth(float amount)
     {
         if (playerStats.hp < playerStats.maxHP)
-            barsAnimator.DecreaseHealth(amount);
+            barsAnimator.IncreaseHealth(amount);
         playerStats.hp += Math.Min(amount, playerStats.maxHP);
     }
 
