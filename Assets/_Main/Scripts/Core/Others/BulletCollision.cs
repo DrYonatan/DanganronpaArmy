@@ -17,10 +17,12 @@ public class BulletCollision : MonoBehaviour
                     GameLoop.instance.Hit(collision.contacts[0].point);
                 else
                 {
+                    
                     StartCoroutine(
                         GameLoop.instance.gameObject.GetComponent<TextShatterEffect>().Deflect(
                             gameObject.GetComponent<TextMeshPro>(),
                             collision.contacts[0].point));
+                    GameLoop.instance.WrongHit();
                 }
             }
 

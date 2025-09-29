@@ -316,7 +316,8 @@ public class GameLoop : MonoBehaviour
 
         Destroy(bullet);
         isShooting = false;
-        debateUIAnimator.LoadBullet();
+        if(isActive)
+           debateUIAnimator.LoadBullet();
     }
 
     public void LoadBullets()
@@ -347,7 +348,19 @@ public class GameLoop : MonoBehaviour
         CursorManager.instance.Hide();
     }
 
-    public void OnHitStatement()
+    public void WrongHit()
+    {
+        textIndex = 0;
+        foreach(TextLine text in textLines)
+        {
+            StartCoroutine(DestroyText(text.textGO));
+        }
+        textLines.Clear();
+        DeactivateDebate();
+        StartCoroutine(StartFinishNodes(debateSegment.finishNodes));
+    }
+
+    void OnHitStatement()
     {
         StartCoroutine(DebateHitEffect());
     }
