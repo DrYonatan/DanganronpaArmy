@@ -427,7 +427,7 @@ public class GameLoop : MonoBehaviour
 
         if (characterStand != null)
         {
-            characterStand.SetSprite(nextNode.expression);
+            characterStand.SetSprite(nextNode.character.emotions[nextNode.expressionIndex]);
         }
 
         DebateTextData textData = nextNode.textData as DebateTextData;

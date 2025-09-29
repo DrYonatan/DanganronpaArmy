@@ -39,7 +39,7 @@ public class DiscussionNode : DialogueNode
         {
             TrialDialogueManager.instance.effectController.StartEffect(cameraEffect);
         }
-        characterStand.SetSprite(node.expression);
+        characterStand.SetSprite(node.character.emotions[node.expressionIndex]);
 
         yield return DialogueSystem.instance.Say(node);
 
@@ -60,7 +60,7 @@ public class DiscussionNode : DialogueNode
         {
             TrialDialogueManager.instance.effectController.StartEffect(cameraEffect);
         }
-        characterStand.SetSprite(expression);
+        characterStand.SetSprite(character.emotions[expressionIndex]);
 
         yield return DialogueSystem.instance.Say(this);
     }

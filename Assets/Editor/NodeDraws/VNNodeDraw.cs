@@ -19,13 +19,13 @@ public class VNNodeDraw : DrawNode
             string[] options = b.character.emotions.Select(e => e.name).ToArray();
 
             // Find current index of the selected state
-            int currentIndex = b.character.emotions.IndexOf(b.expression);
+            int currentIndex = b.expressionIndex;
 
             // Draw popup
             int newIndex = EditorGUILayout.Popup("Expression", Mathf.Max(0, currentIndex), options);
 
             // Assign selected state
-            b.expression = b.character.emotions[newIndex];
+            b.expressionIndex = newIndex;
         }
         else
         {
