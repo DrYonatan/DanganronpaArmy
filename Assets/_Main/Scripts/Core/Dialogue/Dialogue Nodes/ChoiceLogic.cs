@@ -24,7 +24,7 @@ public class ChoiceLogic<T> where T : DialogueNode
         options = new List<Option<T>>();
     }
 
-    public IEnumerator Play(Func<IEnumerator> playOriginalNode)
+    public IEnumerator Play(Func<IEnumerator> playOriginalNode, Action onCorrect, Action onWrong)
     {
         Option<T> pickedOption = new Option<T>();
 
@@ -39,11 +39,17 @@ public class ChoiceLogic<T> where T : DialogueNode
                 pickedOption = selectedOption;
             });
             
+            if(onCorrect != null && pickedOption.isCorrect)
+               onCorrect();
+            
             foreach (T node in pickedOption.dialogue)
             {
                 yield return node.Play();
-            }  
-           
+            }
+
+            if (onWrong != null && !pickedOption.isCorrect)
+                onWrong();
+
         } while (!pickedOption.isCorrect && loopIfWrong);
     }
 }

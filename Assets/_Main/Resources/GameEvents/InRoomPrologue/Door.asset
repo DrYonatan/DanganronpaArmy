@@ -26,6 +26,7 @@ MonoBehaviour:
   - rid: 4827846191764471820
   - rid: 4827846191764471822
   - rid: 4827846207225987072
+  - rid: 4827846275499032580
   references:
     version: 2
     RefIds:
@@ -42,9 +43,7 @@ MonoBehaviour:
         title: 
         drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
         character: {fileID: 11400000, guid: e3e234827f8a3ae4f8247e56776c48c3, type: 2}
-        expression:
-          name: default
-          sprite: {fileID: 21300000, guid: 547fd952dffdbd045af76c4dc2cb5e17, type: 3}
+        expressionIndex: 1
         textData:
           rid: 4827846191764471821
     - rid: 4827846191764471821
@@ -65,9 +64,7 @@ MonoBehaviour:
         title: 
         drawNode: {fileID: 11400000, guid: 43e4e6c8d47167a40a1e714ec75c32f3, type: 2}
         character: {fileID: 11400000, guid: 86ac77b9ffadf3643938e479c302689d, type: 2}
-        expression:
-          name: default
-          sprite: {fileID: 21300000, guid: ba7e69f4346c2524ebd33963605775e9, type: 3}
+        expressionIndex: 0
         textData:
           rid: 4827846191764471823
         choiceLogic:
@@ -99,9 +96,7 @@ MonoBehaviour:
         title: 
         drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
         character: {fileID: 11400000, guid: e3e234827f8a3ae4f8247e56776c48c3, type: 2}
-        expression:
-          name: default
-          sprite: {fileID: 21300000, guid: 547fd952dffdbd045af76c4dc2cb5e17, type: 3}
+        expressionIndex: 0
         textData:
           rid: 4827846191764471825
     - rid: 4827846191764471825
@@ -122,9 +117,7 @@ MonoBehaviour:
         title: 
         drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
         character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
-        expression:
-          name: default
-          sprite: {fileID: 21300000, guid: 813f990a70aa4b648818f3d7cb5bff18, type: 3}
+        expressionIndex: 0
         textData:
           rid: 4827846191764471827
     - rid: 4827846191764471827
@@ -145,13 +138,32 @@ MonoBehaviour:
         title: 
         drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
         character: {fileID: 11400000, guid: c6f821f9019b92c44b2eb05215b152b0, type: 2}
-        expression:
-          name: default
-          sprite: {fileID: 21300000, guid: 79eb1fc1a2be4044ab2fcf087fe4eb1f, type: 3}
+        expressionIndex: 1
         textData:
           rid: 4827846207225987073
     - rid: 4827846207225987073
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
         text: "\u05E9\u05DC\u05D5\u05E1"
+        commands: []
+    - rid: 4827846275499032580
+      type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
+        character: {fileID: 11400000, guid: c6f821f9019b92c44b2eb05215b152b0, type: 2}
+        expressionIndex: 0
+        textData:
+          rid: 4827846275499032581
+    - rid: 4827846275499032581
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "\u05D8\u05D5\u05D1"
         commands: []

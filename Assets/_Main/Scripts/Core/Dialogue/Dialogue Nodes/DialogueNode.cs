@@ -16,7 +16,7 @@ public class DialogueNode
 
     public Character character;
 
-    public CharacterState expression;
+    public int expressionIndex;
 
     [SerializeReference] public TextData textData;
 
@@ -36,7 +36,7 @@ public class DialogueNode
 
     protected virtual void InitializeTextData()
     {
-        this.textData = new VNTextData();
+        textData = new VNTextData();
     }
 
     public virtual IEnumerator Play()
@@ -44,7 +44,7 @@ public class DialogueNode
         CharacterPositionMapping info = VNNodePlayer.instance.currentConversation.settings.characterPositions.Find(characterInfo =>
             characterInfo.character == character);
         VNCharacterManager.instance.ShowOnlySpeaker(character);
-        VNCharacterManager.instance.SwitchEmotion(character, expression);
+        VNCharacterManager.instance.SwitchEmotion(character, character.emotions[expressionIndex]);
         CameraManager.instance.MoveCamera((CameraLookDirection)info.position, 0.4f);
         yield return DialogueSystem.instance.Say(this);
     }

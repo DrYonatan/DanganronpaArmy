@@ -22,7 +22,6 @@ public class DiscussionNode : DialogueNode
     #endif
     public DiscussionNode(DrawNode _drawNode) : base(_drawNode)
     {
-        textData = new VNTextData();
     }
     
     IEnumerator PlayConversationNode(DiscussionNode node)
@@ -40,7 +39,7 @@ public class DiscussionNode : DialogueNode
         {
             TrialDialogueManager.instance.effectController.StartEffect(cameraEffect);
         }
-        characterStand.SetSprite(node.expression);
+        characterStand.SetSprite(node.character.emotions[node.expressionIndex]);
 
         yield return DialogueSystem.instance.Say(node);
 
@@ -61,7 +60,7 @@ public class DiscussionNode : DialogueNode
         {
             TrialDialogueManager.instance.effectController.StartEffect(cameraEffect);
         }
-        characterStand.SetSprite(expression);
+        characterStand.SetSprite(character.emotions[expressionIndex]);
 
         yield return DialogueSystem.instance.Say(this);
     }

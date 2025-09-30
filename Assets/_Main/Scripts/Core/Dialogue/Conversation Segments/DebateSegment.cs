@@ -1,15 +1,17 @@
+using System;
 using System.Collections.Generic;
 using _Main.Scripts.Court;
 using UnityEngine;
 
+[Serializable]
 public class DebateSettings : ConversationSettings
 {
     public Evidence[] evidences = new Evidence[5];
     public AudioClip audioClip;
 }
 
-[CreateAssetMenu(menuName ="Data/Stage")]
-public class Stage : TrialSegment
+[CreateAssetMenu(menuName ="Data/Debate Segment")]
+public class DebateSegment : TrialSegment
 {
     public List<DebateNode> dialogueNodes;
     

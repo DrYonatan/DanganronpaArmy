@@ -51,7 +51,6 @@ public class HangmanManager : MonoBehaviour
         animator.SetSilhouette(characterStand);
         animator.ShowHangmanUI();
         game.isActive = true;
-        animator.canvasGroup.DOFade(1f, 0.5f);
         CursorManager.instance.Show();
         yield return animator.GenerateLetterBlocks(game.correctLetters);
         CheckAquiredLetters();
@@ -92,8 +91,7 @@ public class HangmanManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Wrong! Correct Letter: " + game.correctLetters[letterIndex].letter);
-            // TODO make player lose HP if they got it wrong
+            TrialManager.instance.DecreaseHealth(1f);
         }
     }
 

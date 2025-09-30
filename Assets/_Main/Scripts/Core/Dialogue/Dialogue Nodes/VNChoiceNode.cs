@@ -14,6 +14,6 @@ public class VNChoiceNode : DialogueNode
 
     public override IEnumerator Play()
     {
-        yield return choiceLogic.Play(base.Play);
+        yield return choiceLogic.Play(base.Play, null, null);
     }
 }
