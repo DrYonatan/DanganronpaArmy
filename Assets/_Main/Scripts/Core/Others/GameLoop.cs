@@ -357,7 +357,15 @@ public class GameLoop : MonoBehaviour
         }
         textLines.Clear();
         DeactivateDebate();
-        StartCoroutine(StartFinishNodes(debateSegment.finishNodes));
+        StartCoroutine(PlayWrongHitNodes());
+    }
+
+    IEnumerator PlayWrongHitNodes()
+    {
+        List<DiscussionNode> nodes = new List<DiscussionNode>();
+        nodes.Add(UtilityNodesRuntimeBank.instance.nodesCollection.debateWrongEvidence);
+        TrialManager.instance.DecreaseHealth(1f);
+        yield return StartFinishNodes(nodes);
     }
 
     void OnHitStatement()

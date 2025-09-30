@@ -82,7 +82,6 @@ public class VNDialogueEditor : EditorWindow
    
    static EditorWindow window;
    
-   [MenuItem("Dialogue Editors/VNDialogueEditor")]
    static void ShowEditor()
    {
       window = GetWindow(typeof(VNDialogueEditor));

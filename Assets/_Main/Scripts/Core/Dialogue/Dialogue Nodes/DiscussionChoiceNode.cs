@@ -16,17 +16,19 @@ public class DiscussionChoiceNode: DiscussionNode
     {
         TrialManager.instance.barsAnimator.ShowGlobalBars(0.2f);
         yield return choiceLogic.Play(base.Play, OnCorrect, OnWrong);
-        TrialManager.instance.barsAnimator.HideGlobalBars(0.5f);
     }
 
-    public void OnCorrect()
+    public IEnumerator OnCorrect()
     {
         TrialManager.instance.IncreaseHealth(0.5f);
+        yield return new WaitForSeconds(1f);
+        TrialManager.instance.barsAnimator.HideGlobalBars(0.2f);
     }
 
-    public void OnWrong()
+    public IEnumerator OnWrong()
     {
         TrialManager.instance.DecreaseHealth(1f);
+        yield return UtilityNodesRuntimeBank.instance.nodesCollection.wrongAnswer.Play();
     }
     
 }

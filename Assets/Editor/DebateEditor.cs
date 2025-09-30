@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using _Main.Scripts.Court;
 using UnityEditor;
+using UnityEditor.Callbacks;
 using UnityEngine;
 
 public class DebateSettingsPopup : PopupWindowContent
@@ -41,11 +42,30 @@ public class DebateEditor : EditorWindow
    
    static EditorWindow window;
    
-   [MenuItem("Dialogue Editors/Debate Editor")]
    static void ShowEditor()
    {
       window = GetWindow(typeof(DebateEditor));
       window.minSize = new Vector2(600, 800);
+   }
+   
+   public static void Open(DebateSegment seg)
+   {
+      var window = CreateInstance<DebateEditor>();
+      window.container = seg;
+      ShowEditor();
+   }
+
+   [OnOpenAsset]
+   public static bool OnOpenAsset(int instanceID, int line)
+   {
+      var obj = EditorUtility.InstanceIDToObject(instanceID) as DebateSegment;
+      if (obj != null)
+      {
+         Open(obj);
+         return true;
+      }
+      
+      return false;
    }
 
    private void OnGUI()
