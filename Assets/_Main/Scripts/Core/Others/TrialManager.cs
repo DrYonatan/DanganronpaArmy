@@ -32,6 +32,7 @@ public class TrialManager : MonoBehaviour
     {
         instance = this;
         playerStats.InitializeMeters();
+        barsAnimator.UpdateHealthBars(playerStats.hp);
     }
     void Start()
     {
@@ -49,14 +50,17 @@ public class TrialManager : MonoBehaviour
     public void IncreaseHealth(float amount)
     {
         if (playerStats.hp < playerStats.maxHP)
-            barsAnimator.IncreaseHealth(amount);
-        playerStats.hp += Math.Min(amount, playerStats.maxHP);
+        {
+            barsAnimator.IncreaseHealth(Math.Min(amount, playerStats.maxHP - playerStats.hp), 0.5f); // Fill either the amount, or what remains to fill before the meter if already full
+        }
+        playerStats.hp = Math.Min(playerStats.hp + amount, playerStats.maxHP);
+       
     }
 
     public void DecreaseHealth(float amount)
     {
         playerStats.hp -= amount;
-        barsAnimator.DecreaseHealth(amount);
+        barsAnimator.DecreaseHealth(amount, 0.5f);
         if (playerStats.hp <= 0)
             GameOver();
     }

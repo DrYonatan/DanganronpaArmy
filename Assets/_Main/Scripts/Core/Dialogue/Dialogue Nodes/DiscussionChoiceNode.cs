@@ -16,6 +16,7 @@ public class DiscussionChoiceNode: DiscussionNode
     {
         TrialManager.instance.barsAnimator.ShowGlobalBars(0.2f);
         yield return choiceLogic.Play(base.Play, OnCorrect, OnWrong);
+        TrialManager.instance.barsAnimator.HideGlobalBars(0.5f);
     }
 
     public void OnCorrect()
@@ -27,4 +28,5 @@ public class DiscussionChoiceNode: DiscussionNode
     {
         TrialManager.instance.DecreaseHealth(1f);
     }
+    
 }
