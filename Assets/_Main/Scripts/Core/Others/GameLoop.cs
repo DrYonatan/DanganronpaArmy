@@ -204,13 +204,24 @@ public class GameLoop : MonoBehaviour
 
     IEnumerator StartFinishNodes(List<DiscussionNode> finishNodes)
     {
+        yield return SwitchToTextBoxMode();
+        yield return TrialDialogueManager.instance.RunNodes(finishNodes);
+        yield return SwitchToDebateMode();
+
+    }
+
+    IEnumerator SwitchToTextBoxMode()
+    {
         debateUIAnimator.HideCylinderAndCircles();
         CursorManager.instance.Hide();
         debateUIAnimator.ChangeFace(null);
         DialogueSystem.instance.ClearTextBox();
         yield return new WaitForSeconds(1f);
         debateUIAnimator.ShowTextBox();
-        yield return TrialDialogueManager.instance.RunNodes(finishNodes);
+    }
+
+    IEnumerator SwitchToDebateMode()
+    {
         debateUIAnimator.ChangeFace(null);
         DialogueSystem.instance.ClearTextBox();
         debateUIAnimator.HideTextBox();
@@ -220,6 +231,8 @@ public class GameLoop : MonoBehaviour
         debateUIAnimator.ShowCylinderAndCircles();
         CursorManager.instance.Show();
     }
+    
+    
     private void GameOver()
     {
         DeactivateDebate();
@@ -364,10 +377,21 @@ public class GameLoop : MonoBehaviour
     {
         List<DiscussionNode> wrongNodes = UtilityNodesRuntimeBank.instance.nodesCollection.characterDefaultWrongNodes.Find(
             item => item.character == debateSegment.dialogueNodes[textIndex].character).nodes;
-        yield return StartFinishNodes(wrongNodes);
+        
+        List<DiscussionNode> protagWrongNode =  new List<DiscussionNode>();
+        protagWrongNode.Add(UtilityNodesRuntimeBank.instance.nodesCollection.debateWrongEvidence);
+        
+        yield return SwitchToTextBoxMode();
+        yield return TrialDialogueManager.instance.RunNodes(wrongNodes);
         TrialManager.instance.DecreaseHealth(1f);
-        yield return UtilityNodesRuntimeBank.instance.nodesCollection.debateWrongEvidence.Play();
+        yield return TrialDialogueManager.instance.RunNodes(protagWrongNode);
+        CharacterStand characterStand =
+            TrialManager.instance.characterStands.Find((stand) => stand.character.name == "Alon");
+        characterStand.SetSprite(characterStand.character.emotions[1]);
+        yield return SwitchToDebateMode();
+        
     }
+    
 
     void OnHitStatement()
     {
