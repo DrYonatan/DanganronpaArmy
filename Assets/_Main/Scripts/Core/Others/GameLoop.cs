@@ -362,10 +362,11 @@ public class GameLoop : MonoBehaviour
 
     IEnumerator PlayWrongHitNodes()
     {
-        List<DiscussionNode> nodes = new List<DiscussionNode>();
-        nodes.Add(UtilityNodesRuntimeBank.instance.nodesCollection.debateWrongEvidence);
+        List<DiscussionNode> wrongNodes = UtilityNodesRuntimeBank.instance.nodesCollection.characterDefaultWrongNodes.Find(
+            item => item.character == debateSegment.dialogueNodes[textIndex].character).nodes;
+        yield return StartFinishNodes(wrongNodes);
         TrialManager.instance.DecreaseHealth(1f);
-        yield return StartFinishNodes(nodes);
+        yield return UtilityNodesRuntimeBank.instance.nodesCollection.debateWrongEvidence.Play();
     }
 
     void OnHitStatement()
