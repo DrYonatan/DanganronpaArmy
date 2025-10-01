@@ -6,7 +6,7 @@ using UnityEngine;
 public class CharacterDefaultWrongNodes
 {
     public Character character;
-    public List<DiscussionNode> nodes;
+    public List<DiscussionNode> nodes = new List<DiscussionNode>();
 }
 
 [CreateAssetMenu(menuName = "Data/Utility Nodes Collection")]
@@ -14,7 +14,7 @@ public class UtilityNodesCollection : ScriptableObject
 {
     public VNChoiceNode getOutOfRoom = new VNChoiceNode(null);
     
-    public DiscussionNode wrongAnswer = new DiscussionNode(null);
+    public List<DiscussionNode> wrongAnswer = new List<DiscussionNode>();
 
     public DiscussionNode debateWrongEvidence = new DiscussionNode(null);
     

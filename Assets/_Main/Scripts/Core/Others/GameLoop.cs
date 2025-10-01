@@ -217,6 +217,8 @@ public class GameLoop : MonoBehaviour
         debateUIAnimator.ChangeFace(null);
         DialogueSystem.instance.ClearTextBox();
         yield return new WaitForSeconds(1f);
+        yield return new WaitForEndOfFrame();
+        debateUIAnimator.FadeFromAngleToAngle();
         debateUIAnimator.ShowTextBox();
     }
 
@@ -254,6 +256,7 @@ public class GameLoop : MonoBehaviour
     {
         if(Input.GetAxis("Mouse ScrollWheel") < 0)
         {
+            evidenceManager.SelectNextEvidence();
             evidenceManager.SelectNextEvidence();
         }
 
@@ -363,7 +366,6 @@ public class GameLoop : MonoBehaviour
 
     public void WrongHit()
     {
-        textIndex = 0;
         foreach(TextLine text in textLines)
         {
             StartCoroutine(DestroyText(text.textGO));
@@ -376,18 +378,21 @@ public class GameLoop : MonoBehaviour
     IEnumerator PlayWrongHitNodes()
     {
         List<DiscussionNode> wrongNodes = UtilityNodesRuntimeBank.instance.nodesCollection.characterDefaultWrongNodes.Find(
-            item => item.character == debateSegment.dialogueNodes[textIndex].character).nodes;
+            item => item.character == debateSegment.dialogueNodes[textIndex-1].character).nodes;
         
         List<DiscussionNode> protagWrongNode =  new List<DiscussionNode>();
         protagWrongNode.Add(UtilityNodesRuntimeBank.instance.nodesCollection.debateWrongEvidence);
         
         yield return SwitchToTextBoxMode();
         yield return TrialDialogueManager.instance.RunNodes(wrongNodes);
+        yield return new WaitForEndOfFrame();
+        debateUIAnimator.FadeFromAngleToAngle();
         TrialManager.instance.DecreaseHealth(1f);
         yield return TrialDialogueManager.instance.RunNodes(protagWrongNode);
         CharacterStand characterStand =
             TrialManager.instance.characterStands.Find((stand) => stand.character.name == "Alon");
         characterStand.SetSprite(characterStand.character.emotions[1]);
+        textIndex = 0;
         yield return SwitchToDebateMode();
         
     }

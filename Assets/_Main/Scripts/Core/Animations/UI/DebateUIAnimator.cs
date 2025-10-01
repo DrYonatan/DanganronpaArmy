@@ -21,7 +21,8 @@ public class DebateUIAnimator : MonoBehaviour
     public Transform nodeIndicatorContainer;
     private List<Image> indicators = new List<Image>();
     public DialogueContainer dialogueContainer = new DialogueContainer();
-    
+
+    public RawImage fadeScreenshotImage;
 
     public RectTransform cylinder;
     public RectTransform bullet;
@@ -79,6 +80,17 @@ public class DebateUIAnimator : MonoBehaviour
             bulletSelectionMenu.Disappear();
             ShowCylinderAndCircles();
         }
+    }
+
+    public void FadeFromAngleToAngle()
+    {
+        Texture2D screenShot = ScreenCapture.CaptureScreenshotAsTexture();
+        Texture2D newScreenShot = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
+        newScreenShot.SetPixels(screenShot.GetPixels());
+        newScreenShot.Apply();
+        fadeScreenshotImage.texture = newScreenShot;
+        fadeScreenshotImage.color = Color.white;
+        fadeScreenshotImage.DOFade(0f, 0.5f);
     }
 
     public void DebateUIDisappear()
