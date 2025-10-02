@@ -8,6 +8,7 @@ using System.Linq;
 public class RoomGate : Interactable
 {
     public Room roomToLoad;
+    public string entryPoint;
 
     public override void FinishInteraction()
     {
@@ -32,6 +33,6 @@ public class RoomGate : Interactable
         yield return CameraManager.instance.MoveCameraTo(targetPosition, 0.5f);
         ImageScript.instance.FadeToBlack(1f);
         yield return CameraManager.instance.MoveCameraTo(targetPosition + -5 * transform.forward, 1.5f);
-        WorldManager.instance.StartLoadingRoom(roomToLoad);
+        WorldManager.instance.StartLoadingRoom(roomToLoad, entryPoint);
     }
 }

@@ -8,6 +8,7 @@ using Cinemachine;
 public class PointAndClickRoom : Room
 {
     public Room exitRoom;
+    public string exitLocation;
 
     [SerializeField] float cameraDollySpeed = 2f;
 
@@ -53,7 +54,7 @@ public class PointAndClickRoom : Room
             
             else
             {
-                WorldManager.instance.StartLoadingRoom(exitRoom);
+                WorldManager.instance.StartLoadingRoom(exitRoom, exitLocation);
             }
         }
         
