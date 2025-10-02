@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DIALOGUE;
 using CHARACTERS;
+using JetBrains.Annotations;
 
 public class WorldManager : MonoBehaviour
 {
@@ -17,7 +19,7 @@ public class WorldManager : MonoBehaviour
      void Start()
     {
         instance = this;
-        StartLoadingRoom(currentRoom);
+        StartLoadingRoom(currentRoom, null);
         Dictionary<string, GameEvent> runtimeGameEvents = ProgressManager.instance.runtimeGameEvents;
         currentGameEvent = runtimeGameEvents["InsideRoom"];
         ReturningToWorld();
@@ -88,12 +90,12 @@ public class WorldManager : MonoBehaviour
         Destroy(characters);
     }
 
-    public void StartLoadingRoom(Room room)
+    public void StartLoadingRoom(Room room, [CanBeNull] string entryPoint)
     {
-        StartCoroutine(LoadRoom(room));
+        StartCoroutine(LoadRoom(room, entryPoint));
     }
 
-    public IEnumerator LoadRoom(Room room)
+    public IEnumerator LoadRoom(Room room, [CanBeNull] string entryPoint)
     {
          CameraManager.instance?.StopAllPreviousOperations();
 
@@ -143,7 +145,8 @@ public class WorldManager : MonoBehaviour
         
         if(GameObject.Find("World/World Objects") != null)
         characterPanel = GameObject.Find("World/World Objects");
-        Transform cameraStartPos = GameObject.Find("World/CameraStartPos").transform;
+        string cameraStartPosName = !String.IsNullOrEmpty(entryPoint) ? $":{entryPoint}" : "";
+        Transform cameraStartPos = GameObject.Find($"World/CameraStartPos{cameraStartPosName}").transform;
         if(CameraManager.instance)
         CameraManager.instance.initialRotation = cameraStartPos.rotation; // Sets only the Camera Manager's initial position value for later, not actually changing position of camera
         
