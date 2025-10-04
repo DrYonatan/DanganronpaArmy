@@ -66,6 +66,30 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 0
+      width: 0
+      height: 70760
+    commandsScrollPosition: {x: 0, y: 0}
+    title: 
+    drawNode: {fileID: 11400000, guid: 81b17a11177a0f4449f7df8eebe49b4b, type: 2}
+    character: {fileID: 11400000, guid: e518102ea47577a499c54e7bb8334338, type: 2}
+    expressionIndex: 0
+    textData:
+      rid: 4653702784916127750
+    usePrevCamera: 0
+    characterStand: {fileID: 0}
+    cameraEffects:
+    - {fileID: 11400000, guid: 2b0b273d7412a6b469741fc4eda2fd17, type: 2}
+    fovOffset: 0
+    positionOffset: {x: 0, y: 1.17, z: -2.85}
+    rotationOffset: {x: 5.64, y: 0, z: 0}
+    evidence: {fileID: 11400000, guid: 61f792b87e669574793f5e93b1753771, type: 2}
+    statement: "\u05E9\u05DC\u05D5\u05E1"
+    voiceLine: {fileID: 0}
+    textLinesScrollPosition: {x: 0, y: 0}
+  - nodeRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
       width: 200
       height: 3740
     commandsScrollPosition: {x: 0, y: 0}
@@ -82,7 +106,7 @@ MonoBehaviour:
     fovOffset: -10.5
     positionOffset: {x: 2.05, y: 1.29, z: -29.73}
     rotationOffset: {x: 2.55, y: -2.38, z: 0}
-    evidence: {fileID: 0}
+    evidence: {fileID: 11400000, guid: 61f792b87e669574793f5e93b1753771, type: 2}
     statement: Statement
     voiceLine: {fileID: 0}
     textLinesScrollPosition: {x: 0, y: 0}
@@ -117,7 +141,7 @@ MonoBehaviour:
     title: 
     drawNode: {fileID: 11400000, guid: 6344f4092040cbd4183fc5d6dc877647, type: 2}
     character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
-    expressionIndex: 0
+    expressionIndex: 1
     textData:
       rid: 3042480029218373755
     usePrevCamera: 1
@@ -134,7 +158,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 55f6c2af98b373c458b3a6a909f35b54, type: 2}
     - {fileID: 0}
     - {fileID: 0}
-    audioClip: {fileID: 8300000, guid: e5521adcfa7ff4a419210e9743408f24, type: 3}
+    audioClip: {fileID: 8300000, guid: 50ccd526b9c78ae4794f48fcf26738b6, type: 3}
   references:
     version: 2
     RefIds:
@@ -159,7 +183,7 @@ MonoBehaviour:
       type: {class: DebateTextData, ns: , asm: Assembly-CSharp}
       data:
         textLines:
-        - text: "\u05DC\u05E8 \u05D9\u05DB\u05D5\u05DC \u05DC\u05D4\u05D9\u05D5\u05EA..."
+        - text: "\u05DC\u05E8 \u05D9\u05DB\u05D5\u05DC \u05DC\u05D4\u05D9\u05D5\u05EA...{0}"
           textEffect:
           - {fileID: 11400000, guid: 1783f855e5ca44a46918165450f0b808, type: 2}
           spawnOffset: {x: 0, y: 0, z: 0}
@@ -185,9 +209,20 @@ MonoBehaviour:
           spawnOffset: {x: 0, y: 0.05, z: 0}
           scale: {x: 1, y: 1, z: 1}
           ttl: 3
-          textLineScrollPosition: {x: 0, y: 30}
+          textLineScrollPosition: {x: 0, y: 32}
     - rid: 3042480029218373755
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
         text: "\u05E9\u05DC\u05D5\u05E1 \u05E9\u05DC\u05D5\u05E1"
         commands: []
+    - rid: 4653702784916127750
+      type: {class: DebateTextData, ns: , asm: Assembly-CSharp}
+      data:
+        textLines:
+        - text: "\u05E9\u05D9\u05DE\u05D5\u05EA\u05D5 \u05D4 {0}"
+          textEffect:
+          - {fileID: 11400000, guid: 776df99a68a7fa04d9cebde19eafed87, type: 2}
+          spawnOffset: {x: 0, y: 0, z: 0}
+          scale: {x: 1, y: 1, z: 1}
+          ttl: 3
+          textLineScrollPosition: {x: 0, y: 0}

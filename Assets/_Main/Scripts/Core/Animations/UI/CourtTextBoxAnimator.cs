@@ -21,4 +21,5 @@ public class CourtTextBoxAnimator : TextBoxAnimations
     {
         characterFace.SetFace(sprite);
     }
+    
 }

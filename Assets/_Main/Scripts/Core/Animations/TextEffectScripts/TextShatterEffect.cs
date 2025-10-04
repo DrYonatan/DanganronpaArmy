@@ -65,7 +65,7 @@ public class TextShatterEffect : MonoBehaviour
             Vector3 camForward = GameLoop.instance.statementsCamera.transform.forward;
             rb.AddTorque(camForward * Random.Range(-spinAmount, spinAmount) * spinFactor, ForceMode.Impulse);
 
-            StartCoroutine(FadeCharacterAway(charObj.GetComponent<TextMeshPro>(), 1f));
+            StartCoroutine(FadeCharacterAway(charObj.GetComponent<TextMeshPro>(), Random.Range(0.5f, 1.5f)));
             Destroy(charObj, letterLifetime);
             
         }

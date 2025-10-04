@@ -15,7 +15,6 @@ public class ConversationEditor : EditorWindow
    
    static EditorWindow window;
    
-   [MenuItem("Dialogue Editors/Court Discussion Editor")]
    static void ShowEditor()
    {
       window = GetWindow(typeof(ConversationEditor));
