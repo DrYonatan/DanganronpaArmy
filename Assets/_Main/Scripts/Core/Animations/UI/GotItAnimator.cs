@@ -10,6 +10,8 @@ public class GotItAnimator : MonoBehaviour
     public RectTransform container;
     public RectTransform backgroundRect;
     public Image face;
+    public AudioClip voiceLine;
+    public AudioClip soundEffect;
 
     public float appearDuration;
     public float growFactor = 1.5f;
@@ -17,6 +19,8 @@ public class GotItAnimator : MonoBehaviour
 
     public IEnumerator Show()
     {
+        SoundManager.instance.PlaySoundEffect(voiceLine);
+        SoundManager.instance.PlaySoundEffect(soundEffect);
         DialogueSystem.instance.ClearTextBox();
         container.localScale = new Vector3(growFactor, 0f, growFactor);
         
@@ -29,7 +33,7 @@ public class GotItAnimator : MonoBehaviour
         container.localScale = Vector3.one;
         backgroundRect.DOAnchorPosY(20f, 0.05f).SetLoops(-1, LoopType.Yoyo);
         face.DOFade(1f, appearDuration);
-        face.GetComponent<RectTransform>().DOAnchorPosY(20f, stayDuration);
+        face.GetComponent<RectTransform>().DOAnchorPosY(40f, stayDuration);
         
         yield return new WaitForSeconds(stayDuration);
 
