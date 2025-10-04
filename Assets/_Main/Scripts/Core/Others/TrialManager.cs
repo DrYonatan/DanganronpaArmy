@@ -62,11 +62,13 @@ public class TrialManager : MonoBehaviour
         playerStats.hp -= amount;
         barsAnimator.DecreaseHealth(amount, 0.5f);
         if (playerStats.hp <= 0)
-            GameOver();
+            StartCoroutine(GameOver());
     }
-    
-    void GameOver()
+
+    IEnumerator GameOver()
     {
+        yield return TrialDialogueManager.instance.RunNodes(UtilityNodesRuntimeBank.instance.nodesCollection
+            .gameOverNodes);
         playerStats.hp = 5f;
         TrialSegment segment = Instantiate(segments[currentIndex]);
         segment.Play();

@@ -1,3 +1,4 @@
+using System;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
@@ -5,18 +6,19 @@ using UnityEngine;
 public class UtilityNodesHub : EditorWindow
 {
     public UtilityNodesCollection utilityNodesCollection;
-    static EditorWindow window;
     private Vector2 characterDefaultWrongNodesScrollPosition;
 
+    [MenuItem("Tools/Utility Nodes Hub")]
     static void ShowEditor()
     {
-        window = GetWindow(typeof(UtilityNodesHub));
+        GetWindow<UtilityNodesHub>("Utility Nodes Hub");
     }
+
     static void Open(UtilityNodesCollection nodesCollection)
     {
-        var window = CreateInstance<UtilityNodesHub>();
+        var window = GetWindow<UtilityNodesHub>("Utility Nodes Hub");
         window.utilityNodesCollection = nodesCollection;
-        ShowEditor();
+        window.Show();
     }
 
     [OnOpenAsset]
@@ -28,7 +30,7 @@ public class UtilityNodesHub : EditorWindow
             Open(obj);
             return true;
         }
-      
+
         return false;
     }
 
@@ -36,51 +38,84 @@ public class UtilityNodesHub : EditorWindow
     {
         if (utilityNodesCollection != null)
             EditorUtility.SetDirty(utilityNodesCollection);
-        
-        GUILayout.BeginHorizontal();
-        DrawCharactersDefaultNodes();
-        DrawWrongAnswerNode();
-        GUILayout.EndHorizontal();
 
+        EditorGUILayout.Space();
+        EditorGUILayout.LabelField("Utility Nodes Hub", EditorStyles.boldLabel);
+        EditorGUILayout.Space();
+
+        EditorGUILayout.BeginHorizontal();
+
+        DrawCharactersDefaultNodes();
+
+        EditorGUILayout.BeginVertical("box", GUILayout.Width(220));
+        DrawGenericNodesOpen("Discussion Wrong Answer Nodes", 
+            () => ConversationEditor.Open(utilityNodesCollection.wrongAnswer, null, null));
+        DrawGenericNodesOpen("Debate Wrong Evidence Nodes", 
+            () => ConversationEditor.Open(utilityNodesCollection.debateWrongEvidence, null, null));
+        DrawGenericNodesOpen("Get Out of Room Nodes", 
+            () => VNDialogueEditor.Open(utilityNodesCollection.getOutOfRoom, null, null, false));
+        DrawGenericNodesOpen("Game Over Nodes", 
+            () => ConversationEditor.Open(utilityNodesCollection.gameOverNodes, null, null));
+        EditorGUILayout.EndVertical();
+
+        EditorGUILayout.EndHorizontal();
     }
 
     private void DrawCharactersDefaultNodes()
     {
-        GUILayout.BeginVertical();
-        GUILayout.Label("Character Default Wrong Nodes");
-        if (GUILayout.Button("Add",  GUILayout.Width(100)))
+        EditorGUILayout.BeginVertical("box", GUILayout.Width(420));
+        EditorGUILayout.LabelField("Character Default Wrong Nodes", EditorStyles.boldLabel);
+
+        if (GUILayout.Button("➕ Add Character Nodes", GUILayout.Height(25)))
         {
             utilityNodesCollection.characterDefaultWrongNodes.Add(new CharacterDefaultWrongNodes());
         }
 
-        characterDefaultWrongNodesScrollPosition = GUILayout.BeginScrollView(characterDefaultWrongNodesScrollPosition, GUILayout.Height(300), GUILayout.Width(400));
+        EditorGUILayout.Space();
+
+        characterDefaultWrongNodesScrollPosition = EditorGUILayout.BeginScrollView(characterDefaultWrongNodesScrollPosition,
+            GUILayout.Height(320));
+
         for (int i = 0; i < utilityNodesCollection.characterDefaultWrongNodes.Count; i++)
         {
-            GUILayout.BeginHorizontal(GUILayout.Height(50));
-            
-            utilityNodesCollection.characterDefaultWrongNodes[i].character = (Character)EditorGUILayout.ObjectField(utilityNodesCollection.characterDefaultWrongNodes[i].character, typeof(Character), false,
-                GUILayout.Width(200));
+            var entry = utilityNodesCollection.characterDefaultWrongNodes[i];
+
+            EditorGUILayout.BeginVertical(EditorStyles.helpBox);
+            EditorGUILayout.BeginHorizontal();
+
+            entry.character = (Character)EditorGUILayout.ObjectField(
+                entry.character, typeof(Character), false, GUILayout.Width(220));
+
             if (GUILayout.Button("Edit Nodes", GUILayout.Width(100)))
             {
-                ConversationEditor.Open(utilityNodesCollection.characterDefaultWrongNodes[i].nodes, null, null);
+                ConversationEditor.Open(entry.nodes, null, null);
             }
 
-            if (GUILayout.Button("X", GUILayout.Width(20)))
+            GUI.backgroundColor = Color.red;
+            if (GUILayout.Button("X", GUILayout.Width(25)))
             {
                 utilityNodesCollection.characterDefaultWrongNodes.RemoveAt(i);
+                GUI.backgroundColor = Color.white;
+                break;
             }
-            GUILayout.EndHorizontal();
+            GUI.backgroundColor = Color.white;
+
+            EditorGUILayout.EndHorizontal();
+            EditorGUILayout.EndVertical();
         }
-        GUILayout.EndScrollView();
-        GUILayout.EndVertical();
+
+        EditorGUILayout.EndScrollView();
+        EditorGUILayout.EndVertical();
     }
 
-    private void DrawWrongAnswerNode()
+    private void DrawGenericNodesOpen(string label, Action onOpen)
     {
-        GUILayout.Label("Wrong Answer Node");
-        if (GUILayout.Button("Open", GUILayout.Width(100)))
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.LabelField(label, GUILayout.Width(150));
+        if (GUILayout.Button("Open", GUILayout.Width(60)))
         {
-            ConversationEditor.Open(utilityNodesCollection.wrongAnswer, null, null);
+            onOpen();
         }
+        EditorGUILayout.EndHorizontal();
     }
 }

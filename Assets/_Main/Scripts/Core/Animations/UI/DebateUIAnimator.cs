@@ -90,7 +90,7 @@ public class DebateUIAnimator : MonoBehaviour
         newScreenShot.Apply();
         fadeScreenshotImage.texture = newScreenShot;
         fadeScreenshotImage.color = Color.white;
-        fadeScreenshotImage.DOFade(0f, 0.5f);
+        fadeScreenshotImage.DOFade(0f, 0.8f);
     }
 
     public void DebateUIDisappear()

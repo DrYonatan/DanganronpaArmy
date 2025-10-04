@@ -281,7 +281,7 @@ public class GameLoop : MonoBehaviour
     void SetPause(bool _pause)
     {
         pause = _pause;
-        if (pause == true)
+        if (pause)
         {
             MusicManager.instance.LowerVolume();
         }
@@ -378,17 +378,15 @@ public class GameLoop : MonoBehaviour
     IEnumerator PlayWrongHitNodes()
     {
         List<DiscussionNode> wrongNodes = UtilityNodesRuntimeBank.instance.nodesCollection.characterDefaultWrongNodes.Find(
-            item => item.character == debateSegment.dialogueNodes[textIndex-1].character).nodes;
+            item => item.character == debateSegment.dialogueNodes[textIndex-1 >= 0 ? textIndex - 1 : debateSegment.dialogueNodes.Count-1].character).nodes;
         
-        List<DiscussionNode> protagWrongNode =  new List<DiscussionNode>();
-        protagWrongNode.Add(UtilityNodesRuntimeBank.instance.nodesCollection.debateWrongEvidence);
         
         yield return SwitchToTextBoxMode();
         yield return TrialDialogueManager.instance.RunNodes(wrongNodes);
         yield return new WaitForEndOfFrame();
         debateUIAnimator.FadeFromAngleToAngle();
         TrialManager.instance.DecreaseHealth(1f);
-        yield return TrialDialogueManager.instance.RunNodes(protagWrongNode);
+        yield return TrialDialogueManager.instance.RunNodes(UtilityNodesRuntimeBank.instance.nodesCollection.debateWrongEvidence);
         CharacterStand characterStand =
             TrialManager.instance.characterStands.Find((stand) => stand.character.name == "Alon");
         characterStand.SetSprite(characterStand.character.emotions[1]);
@@ -406,12 +404,12 @@ public class GameLoop : MonoBehaviour
     IEnumerator DebateHitEffect()
     {
         effectController.Reset();
-        Vector3 firstTargetPosition = new Vector3(1f, 3f, -8f);
+        Vector3 firstTargetPosition = new Vector3(1f, 4.2f, -8f);
         Vector3 secondTargetPosition = firstTargetPosition - new Vector3(0f, 0f, 8f);
         StartCoroutine(PlayNoThatsWrong(1.5f));
         StartCoroutine(cameraController.ChangeFov(cameraController.camera.fieldOfView, 8, 0.7f));
-        yield return cameraController.MoveCameraOnXAndZ(firstTargetPosition, Quaternion.Euler(0f, -5f, 0f), 0.4f);
-        StartCoroutine(cameraController.MoveCameraOnXAndZ(secondTargetPosition, Quaternion.Euler(0f, 0f, 30f), 4f));
+        yield return cameraController.MoveCamera(firstTargetPosition, Quaternion.Euler(0f, -5f, 0f), 0.4f);
+        StartCoroutine(cameraController.MoveCamera(secondTargetPosition, Quaternion.Euler(0f, 0f, 30f), 4f));
         yield return new WaitForSeconds(3.6f);
         cameraController.camera.targetTexture = null;
         screenShatter = Instantiate(screenShatter);

@@ -12,6 +12,8 @@ public class TrialDialogueManager : MonoBehaviour
     
     public DialogueContainer dialogueContainer;
 
+    public GotItAnimator gotItAnimator;
+
     private void Awake()
     {
         instance = this;

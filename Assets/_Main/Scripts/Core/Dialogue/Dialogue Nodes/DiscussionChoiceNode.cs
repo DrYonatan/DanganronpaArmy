@@ -21,7 +21,7 @@ public class DiscussionChoiceNode: DiscussionNode
     public IEnumerator OnCorrect()
     {
         TrialManager.instance.IncreaseHealth(0.5f);
-        yield return new WaitForSeconds(1f);
+        yield return TrialDialogueManager.instance.gotItAnimator.Show();
         TrialManager.instance.barsAnimator.HideGlobalBars(0.2f);
     }
 

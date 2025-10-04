@@ -186,11 +186,10 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    public IEnumerator MoveCameraOnXAndZ(Vector3 targetPosition, Quaternion targetRotation, float duration)
+    public IEnumerator MoveCamera(Vector3 targetPosition, Quaternion targetRotation, float duration)
     {
         Vector3 startPos = cameraTransform.localPosition;
         Quaternion startRotation = cameraTransform.localRotation;
-        targetPosition.y = startPos.y;
         float elapsedTime = 0;
 
         while (elapsedTime < duration)

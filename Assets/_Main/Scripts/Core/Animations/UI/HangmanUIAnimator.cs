@@ -107,6 +107,7 @@ public class HangmanUIAnimator : MonoBehaviour
 
     public IEnumerator FinishAnimation()
     {
+        TrialCursorManager.instance.Hide();
         yield return new WaitForSeconds(0.5f);
         lettersLeftGlow.DOFade(1f, 0.2f).SetLoops(2, LoopType.Yoyo);
         yield return new WaitForSeconds(0.5f);
