@@ -11,6 +11,8 @@ public class PlayerBarsAnimator : MonoBehaviour
     
     public Image globalHealthBar;
     public Image globalHealthBackground;
+    private CanvasGroup globalHealthBarCanvasGroup;
+    private CanvasGroup globalHealthBackgroundCanvasGroup;
 
     public Image globalConcentrationBar;
     public Image globalConcentrationBackground;
@@ -22,6 +24,13 @@ public class PlayerBarsAnimator : MonoBehaviour
     public Image debateConcentrationBackground;
 
     public AudioClip damageSound;
+
+    void Start()
+    {
+        globalHealthBarCanvasGroup = globalHealthBar.GetComponent<CanvasGroup>();
+        globalHealthBackgroundCanvasGroup = globalHealthBackground.GetComponent<CanvasGroup>();
+    }
+    
 
     public void IncreaseHealth(float amount, float duration)
     {
@@ -92,13 +101,13 @@ public class PlayerBarsAnimator : MonoBehaviour
     
     public void ShowGlobalBars(float duration)
     {
-        globalHealthBar.DOFade(1f, duration);
-        globalHealthBackground.DOFade(1f, duration);
+        globalHealthBarCanvasGroup.DOFade(1f, duration);
+        globalHealthBackgroundCanvasGroup.DOFade(1f, duration);
     }
 
     public void HideGlobalBars(float duration)
     {
-        globalHealthBar.DOFade(0f, duration);
-        globalHealthBackground.DOFade(0f, duration);
+        globalHealthBarCanvasGroup.DOFade(0f, duration);
+        globalHealthBackgroundCanvasGroup.DOFade(0f, duration);
     }
 }
