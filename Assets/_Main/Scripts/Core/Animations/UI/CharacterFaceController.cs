@@ -48,20 +48,20 @@ public class CharacterFaceController : MonoBehaviour
 
     void SetDebateFace(Sprite sprite)
     {
-        Sequence seq = DOTween.Sequence();
+        Sequence seq = DOTween.Sequence().SetUpdate(true);
 
         // Ensure white overlay is enabled and fully transparent
         debateFaceYellowOverlay.gameObject.SetActive(true);
         RectTransform faceRect = debateFaceYellowOverlay.GetComponent<RectTransform>();
 
-        seq.Append(faceRect.DOScaleY(1f, faceFlashDuration));
+        seq.Append(faceRect.DOScaleY(1f, faceFlashDuration).SetUpdate(true));
 
         seq.AppendCallback(() => {
             debateFaceImage.sprite = sprite;
             debateFaceImage.color = sprite == null ? new Color(255, 255, 255, 0) : Color.white;
         });
 
-        seq.Append(faceRect.DOScaleY(0f, faceFlashDuration));
+        seq.Append(faceRect.DOScaleY(0f, faceFlashDuration).SetUpdate(true));
     }
 
     public void DiscussionFaceContainerAppear(float duration)

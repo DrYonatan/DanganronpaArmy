@@ -132,7 +132,7 @@ public class DebateUIAnimator : MonoBehaviour
         {
             indicators[index].DOColor(new Color(1f, 1f, 0.5f), 0.5f)
                 .SetLoops(-1, LoopType.Yoyo)
-                .SetEase(Ease.InOutSine);
+                .SetEase(Ease.InOutSine).SetUpdate(true);
         }
         
     }
@@ -161,7 +161,7 @@ public class DebateUIAnimator : MonoBehaviour
     {
         bullet.GetComponent<UIBullet>().UnWhitenBullet();
         bullet.anchoredPosition = bulletOriginalPos.anchoredPosition - new Vector2(500f, 0);
-        bullet.DOAnchorPosX(bulletOriginalPos.anchoredPosition.x, reloadDuration).SetEase(Ease.OutQuad);
+        bullet.DOAnchorPosX(bulletOriginalPos.anchoredPosition.x, reloadDuration).SetEase(Ease.OutQuad).SetUpdate(true);
     }
 
     public void MoveCylinder()
@@ -171,11 +171,11 @@ public class DebateUIAnimator : MonoBehaviour
         Color originalColor = image.color;
 
         image.DOColor(Color.white, 0.1f);
-        cylinder.DOAnchorPos(originalPosition + Vector3.right * 200f, 0.1f)
+        cylinder.DOAnchorPos(originalPosition + Vector3.right * 200f, 0.1f).SetUpdate(true)
             .OnComplete(() =>
             {
-                cylinder.DOAnchorPos(originalPosition, 0.1f);
-                image.DOColor(originalColor, 0.1f);
+                cylinder.DOAnchorPos(originalPosition, 0.1f).SetUpdate(true);
+                image.DOColor(originalColor, 0.1f).SetUpdate(true);
             });
     }
 
@@ -187,15 +187,15 @@ public class DebateUIAnimator : MonoBehaviour
 
     public void ShowCylinderAndCircles()
     {
-        cylinder.DOAnchorPosX(0, 0.5f);
-        circles.DOAnchorPosX(-52, 0.5f);
+        cylinder.DOAnchorPosX(0, 0.5f).SetUpdate(true);
+        circles.DOAnchorPosX(-52, 0.5f).SetUpdate(true);
         LoadBullet();
     }
 
     public void HideCylinderAndCircles()
     {
-        cylinder.DOAnchorPosX(-200f, 0.5f);
-        circles.DOAnchorPosX(-252f, 0.5f);
+        cylinder.DOAnchorPosX(-200f, 0.5f).SetUpdate(true);
+        circles.DOAnchorPosX(-252f, 0.5f).SetUpdate(true);
         UnLoadBullet();
     }
 

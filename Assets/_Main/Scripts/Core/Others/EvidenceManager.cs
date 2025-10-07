@@ -62,7 +62,7 @@ public class EvidenceManager : MonoBehaviour
         else
         {
             GameLoop.instance.debateUIAnimator.LoadBullet();
-            cylinder.DOLocalRotate(cylinder.localRotation.eulerAngles + new Vector3(0, 0, 60), 0.4f);
+            cylinder.DOLocalRotate(cylinder.localRotation.eulerAngles + new Vector3(0, 0, 60), 0.4f).SetUpdate(true);
         }
 
         UpdateEvidence();
@@ -84,7 +84,7 @@ public class EvidenceManager : MonoBehaviour
         else
         {
             GameLoop.instance.debateUIAnimator.LoadBullet();
-            cylinder.DOLocalRotate(cylinder.localRotation.eulerAngles + new Vector3(0, 0, -60), 0.4f);
+            cylinder.DOLocalRotate(cylinder.localRotation.eulerAngles + new Vector3(0, 0, -60), 0.4f).SetUpdate(true);
         }
         
         UpdateEvidence();

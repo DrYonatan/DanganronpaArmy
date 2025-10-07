@@ -109,6 +109,7 @@ public class GameLoop : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        cameraController.camera.cullingMask = ~0; 
         if (isActive)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -119,6 +120,10 @@ public class GameLoop : MonoBehaviour
             if (Input.GetKey(KeyCode.LeftControl))
             {
                 Time.timeScale = 4f;
+            }
+            else if (Input.GetKey(KeyCode.Space))
+            {
+                Concentrate();
             }
             else
             {
@@ -191,7 +196,7 @@ public class GameLoop : MonoBehaviour
                 HandleMouseScroll();
                 HandleMouseControl();
             }
-            
+              
         }
     }
 
@@ -238,6 +243,12 @@ public class GameLoop : MonoBehaviour
     private void GameOver()
     {
         DeactivateDebate();
+    }
+
+    void Concentrate()
+    {
+        Time.timeScale = 0.25f;
+        cameraController.camera.cullingMask = LayerMask.GetMask("Court Characters", "UI");
     }
 
     void HandleMouseControl()
@@ -325,8 +336,8 @@ public class GameLoop : MonoBehaviour
         float elapsedTime = 0f;
         while (elapsedTime < duration)
         {
-            bullet.transform.position += direction * (shootForce * Time.deltaTime);
-            elapsedTime += Time.deltaTime;
+            bullet.transform.position += direction * (shootForce * Time.unscaledDeltaTime);
+            elapsedTime += Time.unscaledDeltaTime;
             yield return null;
         }
 
