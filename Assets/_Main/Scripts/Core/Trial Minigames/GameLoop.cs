@@ -103,7 +103,7 @@ public class GameLoop : MonoBehaviour
         ImageScript.instance.UnFadeToBlack(1f);
         yield return StartCoroutine(cameraController.DebateStartCameraMovement(3f));
         isActive = true;
-        ConcentrationManager.instance.isInputActive = true;
+        TimeManipulationManager.instance.isInputActive = true;
 
     }
 
@@ -115,11 +115,6 @@ public class GameLoop : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 SetPause(!pause);
-            }
-
-            if (Input.GetKey(KeyCode.LeftControl))
-            {
-                Time.timeScale = 4f;
             }
 
             if (pause == true || !isActive)
@@ -196,7 +191,7 @@ public class GameLoop : MonoBehaviour
     {
         Time.timeScale = 1f;
         isActive = false;
-        ConcentrationManager.instance.DeActivateInput();
+        TimeManipulationManager.instance.DeActivateInput();
     }
 
 
@@ -228,7 +223,7 @@ public class GameLoop : MonoBehaviour
         yield return new WaitForSeconds(1f);
         reachedEnd = false;
         isActive = true;
-        ConcentrationManager.instance.isInputActive = true;
+        TimeManipulationManager.instance.isInputActive = true;
         debateUIAnimator.ShowCylinderAndCircles();
         CursorManager.instance.Show();
     }

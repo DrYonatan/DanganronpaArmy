@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ConcentrationManager : MonoBehaviour
+public class TimeManipulationManager : MonoBehaviour
 {
-    public static ConcentrationManager instance { get; private set; }
+    public static TimeManipulationManager instance { get; private set; }
     public bool isInputActive;
     public GameObject concentrationSpace;
 
@@ -18,14 +18,16 @@ public class ConcentrationManager : MonoBehaviour
     {
         if (isInputActive)
         {
+            DeactivateConcentration();
             if (Input.GetKey(KeyCode.Space))
             {
                 ActivateConcentration();
             }
-            else
+            else if (Input.GetKey(KeyCode.LeftControl))
             {
-                DeactivateConcentration();
+                Time.timeScale = 4f;
             }
+            
         }
         
     }
@@ -41,7 +43,7 @@ public class ConcentrationManager : MonoBehaviour
         CameraController.instance.camera.cullingMask = ~0;
         concentrationSpace.SetActive(true);
         Time.timeScale = 0.25f;
-        CameraController.instance.camera.cullingMask = LayerMask.GetMask("Court Characters", "UI");
+        CameraController.instance.camera.cullingMask = LayerMask.GetMask("Concentration Visible");
     }
 
     void DeactivateConcentration()

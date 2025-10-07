@@ -55,6 +55,7 @@ public class HangmanManager : MonoBehaviour
         yield return animator.GenerateLetterBlocks(game.correctLetters);
         CheckAquiredLetters();
         StartCoroutine(SpawnLetters(game.possibleLetters));
+        TimeManipulationManager.instance.isInputActive = true;
     }
 
     void Update()
@@ -129,6 +130,7 @@ public class HangmanManager : MonoBehaviour
 
     void FinishGame()
     {
+        TimeManipulationManager.instance.DeActivateInput();
         game.isActive = false;
         animator.HideLetterObjects();
         StartCoroutine(FinishPipeline());
