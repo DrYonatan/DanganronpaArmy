@@ -18,7 +18,7 @@ public class DebateCircle : MonoBehaviour
         Vector3 originalScale = transform.localScale;
         Vector3 targetScale = originalScale * scaleMultiplier;
 
-        Sequence sequence = DOTween.Sequence();
+        Sequence sequence = DOTween.Sequence().SetUpdate(true);
         sequence.Append(transform.DOScale(targetScale, duration).SetEase(Ease.OutQuad));
         sequence.Append(transform.DOScale(originalScale, duration).SetEase(Ease.InQuad));
     }

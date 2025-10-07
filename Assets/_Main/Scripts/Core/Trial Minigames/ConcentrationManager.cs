@@ -5,7 +5,7 @@ using UnityEngine;
 public class ConcentrationManager : MonoBehaviour
 {
     public static ConcentrationManager instance { get; private set; }
-    public bool isActive;
+    public bool isInputActive;
     public GameObject concentrationSpace;
 
     void Awake()
@@ -16,15 +16,24 @@ public class ConcentrationManager : MonoBehaviour
 
     void Update()
     {
-        DeactivateConcentration();
-        if (isActive)
+        if (isInputActive)
         {
             if (Input.GetKey(KeyCode.Space))
             {
                 ActivateConcentration();
             }
+            else
+            {
+                DeactivateConcentration();
+            }
         }
         
+    }
+
+    public void DeActivateInput()
+    {
+        isInputActive = false;
+        DeactivateConcentration();
     }
 
     void ActivateConcentration()

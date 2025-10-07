@@ -46,7 +46,7 @@ public class CursorManager : MonoBehaviour
                 ShowOrHideConversationIcon(false);
             }
        
-        reticle.Rotate(0, 0, actualSpeed * Time.deltaTime);
+        reticle.Rotate(0, 0, actualSpeed * Time.unscaledDeltaTime);
     }
 
     public void ReticleAsCursor()

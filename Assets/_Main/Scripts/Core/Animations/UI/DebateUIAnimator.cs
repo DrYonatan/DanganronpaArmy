@@ -170,7 +170,7 @@ public class DebateUIAnimator : MonoBehaviour
         Vector3 originalPosition = cylinder.anchoredPosition;
         Color originalColor = image.color;
 
-        image.DOColor(Color.white, 0.1f);
+        image.DOColor(Color.white, 0.1f).SetUpdate(true);
         cylinder.DOAnchorPos(originalPosition + Vector3.right * 200f, 0.1f).SetUpdate(true)
             .OnComplete(() =>
             {

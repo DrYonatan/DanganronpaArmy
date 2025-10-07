@@ -54,14 +54,14 @@ public class CharacterFaceController : MonoBehaviour
         debateFaceYellowOverlay.gameObject.SetActive(true);
         RectTransform faceRect = debateFaceYellowOverlay.GetComponent<RectTransform>();
 
-        seq.Append(faceRect.DOScaleY(1f, faceFlashDuration).SetUpdate(true));
+        seq.Append(faceRect.DOScaleY(1f, faceFlashDuration));
 
         seq.AppendCallback(() => {
             debateFaceImage.sprite = sprite;
             debateFaceImage.color = sprite == null ? new Color(255, 255, 255, 0) : Color.white;
         });
 
-        seq.Append(faceRect.DOScaleY(0f, faceFlashDuration).SetUpdate(true));
+        seq.Append(faceRect.DOScaleY(0f, faceFlashDuration));
     }
 
     public void DiscussionFaceContainerAppear(float duration)

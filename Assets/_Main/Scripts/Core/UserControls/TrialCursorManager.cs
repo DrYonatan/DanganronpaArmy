@@ -17,8 +17,8 @@ public class TrialCursorManager : CursorManager
             actualSpeed = 0;
             goalScale = hoverScale;  
         }
-        cursor.localScale = Vector3.Lerp(cursor.localScale, goalScale, Time.deltaTime * 20f);
-        reticle.Rotate(0, 0, actualSpeed * Time.deltaTime);
+        cursor.localScale = Vector3.Lerp(cursor.localScale, goalScale, Time.unscaledDeltaTime * 20f);
+        reticle.Rotate(0, 0, actualSpeed * Time.unscaledDeltaTime);
 
     }
 }
