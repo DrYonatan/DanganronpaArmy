@@ -117,7 +117,7 @@ public class GameLoop : MonoBehaviour
                 SetPause(!pause);
             }
 
-            if (pause == true || !isActive)
+            if (pause || !isActive)
             {
                 return;
             }

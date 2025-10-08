@@ -6,7 +6,9 @@ public class TimeManipulationManager : MonoBehaviour
 {
     public static TimeManipulationManager instance { get; private set; }
     public bool isInputActive;
+    private bool isAlreadyConcentrating;
     public GameObject concentrationSpace;
+    public AudioClip concentrationSound;
 
     void Awake()
     {
@@ -18,14 +20,19 @@ public class TimeManipulationManager : MonoBehaviour
     {
         if (isInputActive)
         {
-            DeactivateConcentration();
             if (Input.GetKey(KeyCode.Space))
             {
-                ActivateConcentration();
+                if(!isAlreadyConcentrating)
+                   ActivateConcentration();
             }
-            else if (Input.GetKey(KeyCode.LeftControl))
+            
+            else
             {
-                Time.timeScale = 4f;
+                DeactivateConcentration();
+                if (Input.GetKey(KeyCode.LeftControl))
+                {
+                    Time.timeScale = 4f;
+                }
             }
             
         }
@@ -40,6 +47,8 @@ public class TimeManipulationManager : MonoBehaviour
 
     void ActivateConcentration()
     {
+        isAlreadyConcentrating = true;
+        SoundManager.instance.PlaySoundEffect(concentrationSound);
         CameraController.instance.camera.cullingMask = ~0;
         concentrationSpace.SetActive(true);
         Time.timeScale = 0.25f;
@@ -48,6 +57,8 @@ public class TimeManipulationManager : MonoBehaviour
 
     void DeactivateConcentration()
     {
+        isAlreadyConcentrating = false;
+        SoundManager.instance.StopSoundEffect(concentrationSound.name);
         CameraController.instance.camera.cullingMask = ~0;
         concentrationSpace.SetActive(false);
         Time.timeScale = 1f;
