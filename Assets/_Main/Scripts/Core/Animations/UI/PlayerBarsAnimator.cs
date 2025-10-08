@@ -11,24 +11,26 @@ public class PlayerBarsAnimator : MonoBehaviour
     
     public RectTransform globalHealthContainer;
     public Image globalHealthMeter;
-    private CanvasGroup globalHealthBarCanvasGroup;
 
-    public Image globalConcentrationBar;
+    public RectTransform globalConcentrationContainer;
+    public Image globalConcentrationMeter;
+    
+    public CanvasGroup globalBarsContainer;
 
     public RectTransform debateHealthContainer;
     public Image debateHealthMeter;
-    private CanvasGroup debateHealthBarCanvasGroup;
 
-    public Image debateConcentrationBar;
-
+    public RectTransform debateConcentrationContainer;
+    public Image debateConcentrationMeter;
+    
+    public CanvasGroup debateBarsContainer;
+    
     public AudioClip damageSound;
 
-    void Start()
+    void Awake()
     {
-        globalHealthBarCanvasGroup = globalHealthContainer.GetComponent<CanvasGroup>();
-        debateHealthBarCanvasGroup = debateHealthContainer.GetComponent<CanvasGroup>();
+        SetBarsFillAmount(TrialManager.instance.playerStats.hp, TrialManager.instance.playerStats.concentration);
     }
-    
 
     public void IncreaseHealth(float amount, float duration)
     {
@@ -40,7 +42,7 @@ public class PlayerBarsAnimator : MonoBehaviour
         globalHealthMeter.DOColor(Color.green, duration).OnComplete(() => globalHealthMeter.DOColor(Color.white, duration));
         debateHealthMeter.DOColor(Color.green, duration).OnComplete(() => debateHealthMeter.DOColor(Color.white, duration));
         
-        ChangeFillAmount(newFillAmount, duration);
+        ChangeHealthFillAmount(newFillAmount, duration);
     }
 
     public void DecreaseHealth(float amount, float duration)
@@ -57,19 +59,47 @@ public class PlayerBarsAnimator : MonoBehaviour
         
         SoundManager.instance.PlaySoundEffect(damageSound);
         
-        ChangeFillAmount(newFillAmount, duration);
+        ChangeHealthFillAmount(newFillAmount, duration);
+    }
+
+    private void StopCurrentBarsAnimation()
+    {
+        globalConcentrationMeter.DOKill();
+        debateConcentrationMeter.DOKill();
+    }
+
+    public void FillConcentration(float duration)
+    {
+        StopCurrentBarsAnimation();
+        globalConcentrationMeter.DOFillAmount(1f, duration).SetEase(Ease.Linear).SetUpdate(true);
+        debateConcentrationMeter.DOFillAmount(1f, duration).SetEase(Ease.Linear).SetUpdate(true);
+    }
+
+    public void DrainConcentration(float duration)
+    {
+        StopCurrentBarsAnimation();
+        globalConcentrationMeter.DOFillAmount(0f, duration).SetEase(Ease.Linear);
+        debateConcentrationMeter.DOFillAmount(0f, duration).SetEase(Ease.Linear);
     }
     
-    public void UpdateHealthBars(float newAmount)
+    public void SetBarsFillAmount(float healthFillAmount, float concentrationFillAmount)
     {
-        float newFillAmount = newAmount / fullHpImageDivideAmount;
+        float newHealthFillAmount = healthFillAmount / fullHpImageDivideAmount;
+        float newConcentrationFillAmount = concentrationFillAmount / fullConcentrationImageDivideAmount;
 
-        globalHealthMeter.fillAmount = newFillAmount;
-        debateHealthMeter.fillAmount = newFillAmount;
+        globalHealthMeter.fillAmount = newHealthFillAmount;
+        debateHealthMeter.fillAmount = newHealthFillAmount;
+
+        globalConcentrationMeter.fillAmount = newConcentrationFillAmount;
+        debateConcentrationMeter.fillAmount = newConcentrationFillAmount;
     }
+    
 
-    void ChangeFillAmount(float fillAmount, float duration)
+    void ChangeHealthFillAmount(float fillAmount, float duration)
     {
+        float originalGlobalConcentrationY = globalConcentrationContainer.anchoredPosition.y;
+        float originalDebateConcentrationY = debateConcentrationContainer.anchoredPosition.y;
+        
         Sequence seq = DOTween.Sequence();
 
         seq.Append(globalHealthMeter.DOFillAmount(fillAmount, duration));
@@ -77,27 +107,31 @@ public class PlayerBarsAnimator : MonoBehaviour
 
         seq.Join(globalHealthContainer.DOScale(1.5f, duration));
         seq.Join(debateHealthContainer.DOScale(1.5f, duration));
+        seq.Join(globalConcentrationContainer.DOAnchorPosY(originalGlobalConcentrationY - globalHealthMeter.GetComponent<RectTransform>().rect.height * 0.5f, duration));
+        seq.Join(debateConcentrationContainer.DOAnchorPosY(originalDebateConcentrationY - debateHealthMeter.GetComponent<RectTransform>().rect.height * 0.5f, duration));
         
         seq.Append(globalHealthContainer.DOScale(1f, duration));
-        seq.Append(debateHealthContainer.DOScale(1f, duration));
+        seq.Join(debateHealthContainer.DOScale(1f, duration));
+        seq.Join(globalConcentrationContainer.DOAnchorPosY(originalGlobalConcentrationY, duration));
+        seq.Join(debateConcentrationContainer.DOAnchorPosY(originalDebateConcentrationY, duration));
     }
 
     public void ShowDebateBars(float duration)
     {
-        debateHealthBarCanvasGroup.DOFade(1f, duration);
+        debateBarsContainer.DOFade(1f, duration);
     }
     public void HideDebateBars(float duration)
     {
-        debateHealthBarCanvasGroup.DOFade(0f, duration);
+        debateBarsContainer.DOFade(0f, duration);
     }
     
     public void ShowGlobalBars(float duration)
     {
-        globalHealthBarCanvasGroup.DOFade(1f, duration);
+        globalBarsContainer.DOFade(1f, duration);
     }
 
     public void HideGlobalBars(float duration)
     {
-        globalHealthBarCanvasGroup.DOFade(0f, duration);
+        globalBarsContainer.DOFade(0f, duration);
     }
 }

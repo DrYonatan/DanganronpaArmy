@@ -32,7 +32,7 @@ public class TrialManager : MonoBehaviour
     {
         instance = this;
         playerStats.InitializeMeters();
-        barsAnimator.UpdateHealthBars(playerStats.hp);
+        
     }
     void Start()
     {

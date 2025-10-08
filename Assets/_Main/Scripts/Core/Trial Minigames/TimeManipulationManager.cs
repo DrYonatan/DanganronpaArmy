@@ -22,13 +22,14 @@ public class TimeManipulationManager : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.Space))
             {
-                if(!isAlreadyConcentrating)
+                if (!isAlreadyConcentrating)
                    ActivateConcentration();
             }
             
             else
             {
-                DeactivateConcentration();
+                if(isAlreadyConcentrating)
+                   DeactivateConcentration();
                 if (Input.GetKey(KeyCode.LeftControl))
                 {
                     Time.timeScale = 4f;
@@ -53,6 +54,7 @@ public class TimeManipulationManager : MonoBehaviour
         concentrationSpace.SetActive(true);
         Time.timeScale = 0.25f;
         CameraController.instance.camera.cullingMask = LayerMask.GetMask("Concentration Visible");
+        TrialManager.instance.barsAnimator.DrainConcentration(TrialManager.instance.playerStats.concentration * 0.2f);
     }
 
     void DeactivateConcentration()
@@ -62,6 +64,7 @@ public class TimeManipulationManager : MonoBehaviour
         CameraController.instance.camera.cullingMask = ~0;
         concentrationSpace.SetActive(false);
         Time.timeScale = 1f;
+        TrialManager.instance.barsAnimator.FillConcentration((TrialManager.instance.playerStats.maxConsentration - TrialManager.instance.playerStats.concentration) * 0.5f);
     }
     
 }
