@@ -103,7 +103,8 @@ public class GameLoop : MonoBehaviour
         ImageScript.instance.UnFadeToBlack(1f);
         yield return StartCoroutine(cameraController.DebateStartCameraMovement(3f));
         isActive = true;
-       
+        TimeManipulationManager.instance.isInputActive = true;
+
     }
 
     // Update is called once per frame
@@ -116,16 +117,7 @@ public class GameLoop : MonoBehaviour
                 SetPause(!pause);
             }
 
-            if (Input.GetKey(KeyCode.LeftControl))
-            {
-                Time.timeScale = 4f;
-            }
-            else
-            {
-                Time.timeScale = 1f;
-            }
-
-            if (pause == true || !isActive)
+            if (pause || !isActive)
             {
                 return;
             }
@@ -191,7 +183,7 @@ public class GameLoop : MonoBehaviour
                 HandleMouseScroll();
                 HandleMouseControl();
             }
-            
+              
         }
     }
 
@@ -199,6 +191,7 @@ public class GameLoop : MonoBehaviour
     {
         Time.timeScale = 1f;
         isActive = false;
+        TimeManipulationManager.instance.DeActivateInput();
     }
 
 
@@ -230,6 +223,7 @@ public class GameLoop : MonoBehaviour
         yield return new WaitForSeconds(1f);
         reachedEnd = false;
         isActive = true;
+        TimeManipulationManager.instance.isInputActive = true;
         debateUIAnimator.ShowCylinderAndCircles();
         CursorManager.instance.Show();
     }
@@ -239,7 +233,7 @@ public class GameLoop : MonoBehaviour
     {
         DeactivateDebate();
     }
-
+    
     void HandleMouseControl()
     {
         TrialCursorManager.instance.ReticleAsCursor();
@@ -325,8 +319,8 @@ public class GameLoop : MonoBehaviour
         float elapsedTime = 0f;
         while (elapsedTime < duration)
         {
-            bullet.transform.position += direction * (shootForce * Time.deltaTime);
-            elapsedTime += Time.deltaTime;
+            bullet.transform.position += direction * (shootForce * Time.unscaledDeltaTime);
+            elapsedTime += Time.unscaledDeltaTime;
             yield return null;
         }
 

@@ -19,6 +19,8 @@ public class HangmanManager : MonoBehaviour
     public int letterIndex = 0;
 
     public float timeLeft = 600f;
+
+    private Vector3 originalCameraPosition;
     
 
     void Awake()
@@ -32,29 +34,47 @@ public class HangmanManager : MonoBehaviour
         MusicManager.instance.PlaySong(music);
         StartCoroutine(StartGame());
     }
-    
 
-    IEnumerator StartGame()
+
+    private void SetCharacter()
     {
         CharacterStand characterStand = TrialManager.instance.characterStands.Find(stand => stand.character == game.character);
-        yield return CameraController.instance.DiscussionOutroMovement(2.5f);
         CharacterState concentrating = game.character.FindStateByName("concentrating");
         if (concentrating != null)
         {
             characterStand.SetSprite(concentrating);
         }
-        ImageScript.instance.UnFadeToBlack(1f);
         CameraController.instance.TeleportToTarget(characterStand.transform, characterStand.heightPivot, new Vector3(0, -0.2f, -3.5f), Vector3.zero, 0);
-        yield return CameraController.instance.MoveAndRotate(new Vector3(0, 0, 0.5f), Vector3.zero, 1.5f);
+        animator.SetSilhouette(characterStand);
+
+    }
+
+    private void ActivateGame()
+    {
         animator.gameObject.SetActive(true);
         animator.canvasGroup.alpha = 0f;
-        animator.SetSilhouette(characterStand);
         animator.ShowHangmanUI();
         game.isActive = true;
+        TimeManipulationManager.instance.isInputActive = true;
         CursorManager.instance.Show();
+    }
+    IEnumerator StartGame()
+    {
+        yield return CameraController.instance.DiscussionOutroMovement(2.5f);
+        SetCharacter();
+        ImageScript.instance.UnFadeToBlack(1f);
+        yield return CameraController.instance.MoveAndRotate(new Vector3(0, 0, 0.5f), Vector3.zero, 1.5f);
+        ActivateGame();
         yield return animator.GenerateLetterBlocks(game.correctLetters);
         CheckAquiredLetters();
         StartCoroutine(SpawnLetters(game.possibleLetters));
+        MoveCameraAway();
+    }
+
+    private void MoveCameraAway()
+    {
+        originalCameraPosition = CameraController.instance.cameraTransform.position;
+        CameraController.instance.cameraTransform.position = new Vector3(1000, 1000, 1000); // Teleport far far away
     }
 
     void Update()
@@ -129,6 +149,8 @@ public class HangmanManager : MonoBehaviour
 
     void FinishGame()
     {
+        CameraController.instance.cameraTransform.position = originalCameraPosition;
+        TimeManipulationManager.instance.DeActivateInput();
         game.isActive = false;
         animator.HideLetterObjects();
         StartCoroutine(FinishPipeline());

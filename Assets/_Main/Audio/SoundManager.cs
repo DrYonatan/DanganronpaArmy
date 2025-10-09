@@ -27,6 +27,11 @@ public class SoundManager : MonoBehaviour
         Destroy(tempAudio, clip.length);
     }
 
+    public void StopSoundEffect(string clipName)
+    {
+        Destroy(GameObject.Find($"TempAudio_{clipName}"));
+    }
+
     public void PlayTextBoxSound()
     {
         textBoxAudio.Stop();

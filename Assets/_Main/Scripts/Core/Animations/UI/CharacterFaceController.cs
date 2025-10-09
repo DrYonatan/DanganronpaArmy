@@ -48,7 +48,7 @@ public class CharacterFaceController : MonoBehaviour
 
     void SetDebateFace(Sprite sprite)
     {
-        Sequence seq = DOTween.Sequence();
+        Sequence seq = DOTween.Sequence().SetUpdate(true);
 
         // Ensure white overlay is enabled and fully transparent
         debateFaceYellowOverlay.gameObject.SetActive(true);

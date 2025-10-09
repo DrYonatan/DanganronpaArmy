@@ -61,6 +61,10 @@ public class HangmanUIAnimator : MonoBehaviour
         seq.AppendInterval(3f);
         seq.SetLoops(-1);
         
+        shade.transform
+            .DOLocalRotate(new Vector3(0f, 0f, -360f), 12f, RotateMode.FastBeyond360)
+            .SetLoops(-1, LoopType.Incremental);
+        
         silhouette.GetComponent<RectTransform>().DOShakeAnchorPos(5f, strength: new Vector2(5f, 5f), vibrato: 1, randomness: 90, snapping: false, fadeOut: false)
             .SetLoops(-1, LoopType.Restart);
 
@@ -115,6 +119,7 @@ public class HangmanUIAnimator : MonoBehaviour
         nowIUnderstand.gameObject.SetActive(true);
         yield return nowIUnderstand.Show();
         nowIUnderstand.gameObject.SetActive(false);
+        shade.DOKill();
         screenShatterManager = Instantiate(screenShatterManager);
         yield return screenShatterManager.ScreenShatter();
     }
@@ -224,11 +229,6 @@ public class HangmanUIAnimator : MonoBehaviour
 
         // Destroy the circle after animation finishes
         circleSeq.OnComplete(() => Destroy(circle.gameObject));
-    }
-    
-    void Update()
-    {
-        shade.transform.Rotate(0, 0 , -40f * Time.deltaTime);
     }
 
     public void AquireBlock(int index)

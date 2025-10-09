@@ -35,7 +35,7 @@ public class UIBullet : MonoBehaviour
         image.sprite = Resources.Load<Sprite>(WHITE_IMAGE_PATH);
         image.color = Color.white;
         text.alpha = 0f;
-        GetComponent<RectTransform>().DOAnchorPosX(imageTransform.anchoredPosition.x + 2000f, shootDuration).SetEase(Ease.Linear);
+        GetComponent<RectTransform>().DOAnchorPosX(imageTransform.anchoredPosition.x + 2000f, shootDuration).SetEase(Ease.Linear).SetUpdate(true);
     }
 
     public void UnWhitenBullet()
