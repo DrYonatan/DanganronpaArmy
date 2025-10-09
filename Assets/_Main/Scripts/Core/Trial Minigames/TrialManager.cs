@@ -9,13 +9,10 @@ public class PlayerStats
 {
     public float maxHP = 5f;
     public float hp;
-    public float maxConsentration = 5f;
-    public float concentration;
 
     public void InitializeMeters()
     {
         hp = maxHP;
-        concentration = maxConsentration;
     }
 }
 

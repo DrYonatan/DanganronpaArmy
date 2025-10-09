@@ -29,7 +29,7 @@ public class PlayerBarsAnimator : MonoBehaviour
 
     void Awake()
     {
-        SetBarsFillAmount(TrialManager.instance.playerStats.hp, TrialManager.instance.playerStats.concentration);
+        SetBarsFillAmount(TrialManager.instance.playerStats.hp, TimeManipulationManager.instance.concentration);
     }
 
     public void IncreaseHealth(float amount, float duration)
@@ -71,15 +71,15 @@ public class PlayerBarsAnimator : MonoBehaviour
     public void FillConcentration(float duration)
     {
         StopCurrentBarsAnimation();
-        globalConcentrationMeter.DOFillAmount(1f, duration).SetEase(Ease.Linear).SetUpdate(true);
-        debateConcentrationMeter.DOFillAmount(1f, duration).SetEase(Ease.Linear).SetUpdate(true);
+        globalConcentrationMeter.DOFillAmount(TimeManipulationManager.instance.maxConsentration / fullConcentrationImageDivideAmount, duration).SetEase(Ease.Linear);
+        debateConcentrationMeter.DOFillAmount(TimeManipulationManager.instance.maxConsentration / fullConcentrationImageDivideAmount, duration).SetEase(Ease.Linear);
     }
 
     public void DrainConcentration(float duration)
     {
         StopCurrentBarsAnimation();
-        globalConcentrationMeter.DOFillAmount(0f, duration).SetEase(Ease.Linear);
-        debateConcentrationMeter.DOFillAmount(0f, duration).SetEase(Ease.Linear);
+        globalConcentrationMeter.DOFillAmount(0f, duration).SetEase(Ease.Linear).SetUpdate(true);
+        debateConcentrationMeter.DOFillAmount(0f, duration).SetEase(Ease.Linear).SetUpdate(true);
     }
     
     public void SetBarsFillAmount(float healthFillAmount, float concentrationFillAmount)
