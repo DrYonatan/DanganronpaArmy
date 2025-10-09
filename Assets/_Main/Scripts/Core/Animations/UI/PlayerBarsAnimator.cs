@@ -39,10 +39,15 @@ public class PlayerBarsAnimator : MonoBehaviour
 
         float newFillAmount = globalHealthMeter.fillAmount + amount / fullHpImageDivideAmount;
 
-        globalHealthMeter.DOColor(Color.green, duration).OnComplete(() => globalHealthMeter.DOColor(Color.white, duration));
-        debateHealthMeter.DOColor(Color.green, duration).OnComplete(() => debateHealthMeter.DOColor(Color.white, duration));
+        GlowMeter(globalHealthMeter, Color.green, duration);
+        GlowMeter(debateHealthMeter, Color.green, duration);
         
         ChangeHealthFillAmount(newFillAmount, duration);
+    }
+
+    private void GlowMeter(Image meter, Color color, float duration)
+    {
+        meter.DOColor(color, 0.05f).OnComplete(() => meter.DOColor(Color.white, 0.05f).SetDelay(duration));
     }
 
     public void DecreaseHealth(float amount, float duration)
@@ -52,37 +57,50 @@ public class PlayerBarsAnimator : MonoBehaviour
 
         float newFillAmount = globalHealthMeter.fillAmount - amount / fullHpImageDivideAmount;
         
-        globalHealthMeter.DOColor(Color.red, 0.05f)
-            .SetLoops(6, LoopType.Yoyo).OnComplete(() => globalHealthMeter.color = Color.white);
-        debateHealthMeter.DOColor(Color.red, 0.05f)
-            .SetLoops(6, LoopType.Yoyo).OnComplete(() => globalHealthMeter.color = Color.white);;
+        BlinkMeter(globalHealthMeter, Color.red, 6);
+        BlinkMeter(debateHealthMeter, Color.red, 6);
         
         SoundManager.instance.PlaySoundEffect(damageSound);
         
         ChangeHealthFillAmount(newFillAmount, duration);
     }
 
-    private void StopCurrentBarsAnimation()
+    private void StopCurrentConcentrationBarsAnimation()
     {
+        globalConcentrationMeter.color = Color.white;
+        debateConcentrationMeter.color = Color.white;
         globalConcentrationMeter.DOKill();
         debateConcentrationMeter.DOKill();
     }
 
-    public void FillConcentration(float duration)
+    private void BlinkMeter(Image meter, Color color, int repeatAmount)
     {
-        StopCurrentBarsAnimation();
-        globalConcentrationMeter.DOFillAmount(TimeManipulationManager.instance.maxConsentration / fullConcentrationImageDivideAmount, duration).SetEase(Ease.Linear);
-        debateConcentrationMeter.DOFillAmount(TimeManipulationManager.instance.maxConsentration / fullConcentrationImageDivideAmount, duration).SetEase(Ease.Linear);
+        meter.DOColor(color, 0.05f).SetUpdate(true)
+            .SetLoops(repeatAmount, LoopType.Yoyo).OnComplete(() => globalHealthMeter.color = Color.white);
     }
 
-    public void DrainConcentration(float duration)
+    public void UpdateConcentration(float newConcentration)
     {
-        StopCurrentBarsAnimation();
-        globalConcentrationMeter.DOFillAmount(0f, duration).SetEase(Ease.Linear).SetUpdate(true);
-        debateConcentrationMeter.DOFillAmount(0f, duration).SetEase(Ease.Linear).SetUpdate(true);
+        globalConcentrationMeter.fillAmount = newConcentration / fullConcentrationImageDivideAmount;
+        debateConcentrationMeter.fillAmount = newConcentration / fullConcentrationImageDivideAmount;
+    }
+
+    public void FillConcentrationEffect(float duration)
+    {
+        StopCurrentConcentrationBarsAnimation();
+        GlowMeter(globalConcentrationMeter, Color.green, duration);
+        GlowMeter(debateConcentrationMeter, Color.green, duration);
+    }
+
+    public void DrainConcentrationEffect()
+    {
+        StopCurrentConcentrationBarsAnimation();
+        
+        BlinkMeter(globalConcentrationMeter, Color.blue, -1);
+        BlinkMeter(debateConcentrationMeter, Color.blue, -1);
     }
     
-    public void SetBarsFillAmount(float healthFillAmount, float concentrationFillAmount)
+    private void SetBarsFillAmount(float healthFillAmount, float concentrationFillAmount)
     {
         float newHealthFillAmount = healthFillAmount / fullHpImageDivideAmount;
         float newConcentrationFillAmount = concentrationFillAmount / fullConcentrationImageDivideAmount;

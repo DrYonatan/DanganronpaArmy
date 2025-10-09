@@ -23,6 +23,7 @@ public class TimeManipulationManager : MonoBehaviour
 
     void Update()
     {
+        TrialManager.instance.barsAnimator.UpdateConcentration(concentration);
         if (isInputActive)
         {
             if (Input.GetKey(KeyCode.Space))
@@ -76,7 +77,7 @@ public class TimeManipulationManager : MonoBehaviour
         Time.timeScale = 0.25f;
         CameraController.instance.camera.cullingMask = LayerMask.GetMask("Concentration Visible");
         DOTween.To(() => concentration, x => concentration = x, 0f, concentration * 0.2f).SetEase(Ease.Linear).SetUpdate(true);
-        TrialManager.instance.barsAnimator.DrainConcentration(concentration * 0.2f);
+        TrialManager.instance.barsAnimator.DrainConcentrationEffect();
     }
 
     void DeactivateConcentration()
@@ -89,7 +90,7 @@ public class TimeManipulationManager : MonoBehaviour
         float fillDuration = maxConsentration -
                              concentration;
         DOTween.To(() => concentration, x => concentration = x, maxConsentration, fillDuration).SetEase(Ease.Linear);
-        TrialManager.instance.barsAnimator.FillConcentration(fillDuration);
+        TrialManager.instance.barsAnimator.FillConcentrationEffect(fillDuration);
     }
     
 }

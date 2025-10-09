@@ -19,6 +19,8 @@ public class HangmanManager : MonoBehaviour
     public int letterIndex = 0;
 
     public float timeLeft = 600f;
+
+    private Vector3 originalCameraPosition;
     
 
     void Awake()
@@ -56,6 +58,8 @@ public class HangmanManager : MonoBehaviour
         CheckAquiredLetters();
         StartCoroutine(SpawnLetters(game.possibleLetters));
         TimeManipulationManager.instance.isInputActive = true;
+        originalCameraPosition = CameraController.instance.cameraTransform.position;
+        CameraController.instance.cameraTransform.position = new Vector3(1000, 1000, 1000); // Teleport far far away
     }
 
     void Update()
@@ -130,6 +134,7 @@ public class HangmanManager : MonoBehaviour
 
     void FinishGame()
     {
+        CameraController.instance.cameraTransform.position = originalCameraPosition;
         TimeManipulationManager.instance.DeActivateInput();
         game.isActive = false;
         animator.HideLetterObjects();
