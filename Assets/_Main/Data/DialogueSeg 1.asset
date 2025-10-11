@@ -15,6 +15,8 @@ MonoBehaviour:
   discussionNodes:
   - rid: 4827846089663315980
   - rid: 4827846089663315982
+  settings:
+    characterPositions: []
   references:
     version: 2
     RefIds:
@@ -31,7 +33,7 @@ MonoBehaviour:
         title: 
         drawNode: {fileID: 11400000, guid: 6344f4092040cbd4183fc5d6dc877647, type: 2}
         character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
-        expression: 0
+        expressionIndex: 0
         textData:
           rid: 4827846089663315981
         usePrevCamera: 0
@@ -58,7 +60,7 @@ MonoBehaviour:
         title: 
         drawNode: {fileID: 11400000, guid: 76846e25f3c59c8469f240cc5205a8fd, type: 2}
         character: {fileID: 11400000, guid: e556e59756b89ea4ab97f97255a16dac, type: 2}
-        expression: 0
+        expressionIndex: 0
         textData:
           rid: 4827846089663315983
         usePrevCamera: 0
@@ -69,16 +71,12 @@ MonoBehaviour:
         rotationOffset: {x: 0, y: 0, z: 0}
         choiceLogic:
           options:
-          - rid: 4827846095462989824
+          - text: 
+            dialogue: []
+            isCorrect: 0
           loopIfWrong: 0
     - rid: 4827846089663315983
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
         text: 
         commands: []
-    - rid: 4827846095462989824
-      type: {class: Option, ns: , asm: Assembly-CSharp}
-      data:
-        text: 
-        dialogue: []
-        isCorrect: 0
