@@ -522,7 +522,10 @@ public class GameLoop : MonoBehaviour
 
         for (int i = 0; i < results.Length; i++)
         {
-            textLineObjects.Add(GenerateTextLine(instantiated.transform, results[i], i));
+            GameObject textLine = GenerateTextLine(instantiated.transform, results[i], i);
+            textLineObjects.Add(textLine);
+            
+            GenerateTextLineColliders(textLine.GetComponent<TextMeshPro>());
         }
         
 
@@ -536,21 +539,34 @@ public class GameLoop : MonoBehaviour
             correctCharacterIndexEnd
         );
 
-        // floatingText.textMeshPro.ForceMeshUpdate();
-        // if (correctCharacterIndexBegin !=
-        //     -1) // if there's a statement, build box colliders for the segment before, in and after the statement
-        // {
-        //     CreateColliderAroundTextRange(textLine, 0, correctCharacterIndexBegin - 1, false);
-        //     CreateColliderAroundTextRange(textLine, correctCharacterIndexBegin, correctCharacterIndexEnd, true);
-        //     CreateColliderAroundTextRange(textLine, correctCharacterIndexEnd,
-        //         textLine.textMeshPro.textInfo.characterCount - 1, false);
-        // }
-        // else // if there's no statement, just build one box collider
-        // {
-        //     CreateColliderAroundTextRange(textLine, 0, textLine.textMeshPro.textInfo.characterCount - 1, false);
-        // }
+      
 
         debateTexts.Add(floatingText);
+    }
+
+    void GenerateTextLineColliders(TextMeshPro textLine)
+    {
+        int orangeStartIndex = textLine.text.IndexOf("<color=orange>");
+        int orangeEndIndex = textLine.text.IndexOf("</color>");
+        
+        textLine.ForceMeshUpdate();
+        
+        if (orangeEndIndex == -1)
+        {
+            orangeEndIndex =  textLine.textInfo.characterCount + "<color=orange>".Length;
+        }
+        
+        if (orangeStartIndex != -1) // if there's a statement, build box colliders for the segment before, in and after the statement
+        {
+            CreateColliderAroundTextRange(textLine.gameObject, 0, orangeStartIndex-1, false);
+            CreateColliderAroundTextRange(textLine.gameObject, orangeStartIndex, orangeEndIndex-"<color=orange>".Length, true);
+            CreateColliderAroundTextRange(textLine.gameObject, orangeEndIndex-"<color=orange>".Length,
+                textLine.textInfo.characterCount - 1, false);
+        }
+        else // if there's no statement, just build one box collider
+        {
+            CreateColliderAroundTextRange(textLine.gameObject, 0, textLine.textInfo.characterCount - 1, false);
+        }
     }
 
     void SpawnText(DebateNode nextNode)
@@ -606,7 +622,7 @@ public class GameLoop : MonoBehaviour
     }
 
     // Gets the textLine to create for, the range and whether or not to make a child (AKA the orange part)
-    public void CreateColliderAroundTextRange(GameObject textGameObject,  int startIndex, int endIndex, bool createChildObject)
+    void CreateColliderAroundTextRange(GameObject textGameObject,  int startIndex, int endIndex, bool createChildObject)
     {
         TextMeshPro tmp =  textGameObject.GetComponent<TextMeshPro>();
         tmp.ForceMeshUpdate();
@@ -618,7 +634,7 @@ public class GameLoop : MonoBehaviour
         {
             return;
         }
-
+        
         Vector3 min = Vector3.positiveInfinity;
         Vector3 max = Vector3.negativeInfinity;
 
