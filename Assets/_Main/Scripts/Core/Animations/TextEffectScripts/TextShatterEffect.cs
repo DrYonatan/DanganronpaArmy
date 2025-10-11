@@ -14,11 +14,13 @@ public class TextShatterEffect : MonoBehaviour
     public AudioClip shatterSound;
     public GameObject hitEffectPrefab;
 
-    public void Shatter(GameLoop.TextLine textLine)
+    public void Shatter(TextMeshPro textToSeperate)
     {
         SoundManager.instance.PlaySoundEffect(shatterSound);
 
-        TextMeshPro textToSeperate = textLine.textMeshPro;
+        int orangeStart = textToSeperate.text.IndexOf("<color=orange>");
+        int orangeEnd = textToSeperate.text.IndexOf("</color>");
+        
         string text = Regex.Replace(textToSeperate.text, "<.*?>", "");
         Vector3 startPosition = textToSeperate.transform.position;
         float charSpacing = 0.15f;
@@ -33,11 +35,11 @@ public class TextShatterEffect : MonoBehaviour
             tmp.text = text[i].ToString();
             tmp.font = textToSeperate.font;
             tmp.fontSize = textToSeperate.fontSize;
-            if(i >= textLine.correctCharacterIndexBegin && i <= textLine.correctCharacterIndexEnd)
-            isStatementCharacter = true;
+            if(i >= orangeStart && (i <= orangeEnd || orangeEnd == -1))
+               isStatementCharacter = true;
             
             if(isStatementCharacter)
-            tmp.color = new Color32(255, 165, 0, 255); // give it an orange color
+               tmp.color = new Color32(255, 165, 0, 255); // give it an orange color
             tmp.alignment = textToSeperate.alignment;
 
             charObj.transform.position = startPosition +

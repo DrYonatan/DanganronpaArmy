@@ -17,7 +17,7 @@ public class DebateNodeDraw : DiscussionNodeDraw
         
         GUILayout.BeginVertical(style);
         node.evidence = (Evidence)EditorGUILayout.ObjectField(node.evidence, typeof(Evidence), false);
-        node.statement = GUILayout.TextField(node.statement);
+        node.statement = GUILayout.TextArea(node.statement);
         node.voiceLine = (AudioClip)EditorGUILayout.ObjectField(node.voiceLine, typeof(AudioClip), false);
         GUILayout.EndVertical();
         GUILayout.EndHorizontal();
@@ -43,7 +43,7 @@ public class DebateNodeDraw : DiscussionNodeDraw
             TextLine textLine = textData.textLines[i];
             GUILayout.BeginVertical(style, GUILayout.Width(150));
             GUILayout.Label($"Line {i}#");
-            textLine.text = GUILayout.TextField(textLine.text, GUILayout.Width(150));
+            textLine.text = GUILayout.TextArea(textLine.text, GUILayout.Width(150));
             textLine.spawnOffset = EditorGUILayout.Vector3Field("Spawn Offset", textLine.spawnOffset);
             textLine.scale = EditorGUILayout.Vector3Field("Scale", textLine.scale);
             textLine.ttl = EditorGUILayout.FloatField("Time", textLine.ttl);

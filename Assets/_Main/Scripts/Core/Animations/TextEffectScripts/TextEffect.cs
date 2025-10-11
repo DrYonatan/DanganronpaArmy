@@ -4,5 +4,5 @@ using UnityEngine;
 
 public abstract class TextEffect : ScriptableObject
 {
-    public abstract void Apply(RectTransform target);
+    public abstract void Apply(Transform target);
 }

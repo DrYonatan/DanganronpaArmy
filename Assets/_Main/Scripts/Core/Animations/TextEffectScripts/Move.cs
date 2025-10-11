@@ -6,7 +6,7 @@ using UnityEngine;
 public class Move : TextEffect
 {
     [SerializeField] Vector3 moveVector;
-    public override void Apply(RectTransform target)
+    public override void Apply(Transform target)
     {
         target.position += moveVector * Time.deltaTime/3;
     }

@@ -7,7 +7,7 @@ public class ShakeTextEffect : TextEffect
 {
     [SerializeField] float intensity;
     private Vector3 prevOffset;
-    public override void Apply(RectTransform target)
+    public override void Apply(Transform target)
     {
         float offsetX = Random.Range(-1f, 1f) * intensity;
         float offsetY = Random.Range(-1f, 1f) * intensity;

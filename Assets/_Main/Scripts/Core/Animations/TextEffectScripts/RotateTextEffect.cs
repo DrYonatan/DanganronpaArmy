@@ -6,8 +6,8 @@ using UnityEngine;
 public class RotateTextEffect : TextEffect
 {
     [SerializeField] float speed;
-    public override void Apply(RectTransform target)
+    public override void Apply(Transform target)
     {
-        target.Rotate(Vector3.forward * Time.deltaTime * speed);
+        target.Rotate( Time.deltaTime * speed * Vector3.forward);
     }
 }
