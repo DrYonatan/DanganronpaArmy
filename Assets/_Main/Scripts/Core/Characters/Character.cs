@@ -26,4 +26,12 @@ public class Character : ScriptableObject
 
         return emotions.FirstOrDefault(e => e.name == stateName);
     }
+
+    public CharacterState FindStateBySprite(Sprite sprite)
+    {
+        if (emotions == null)
+            return null;
+
+        return emotions.FirstOrDefault(e => e.sprite == sprite);
+    }
 }

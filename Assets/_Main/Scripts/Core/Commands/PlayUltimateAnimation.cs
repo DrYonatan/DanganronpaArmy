@@ -1,17 +1,19 @@
+using System;
 using System.Collections;
 using DIALOGUE;
 using UnityEditor;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
-
+[Serializable]
 public class PlayUltimateAnimation : Command
 {
-    private Color backgroundColor;
-    private Color nameColor;
-    private Color descriptionColor;
-    private Character character;
-    private string nameText;
-    private string descriptionText;
+    public Color backgroundColor = Color.blue;
+    public Color nameColor = Color.black;
+    public Color descriptionColor = Color.black;
+    public Character character;
+    public string nameText;
+    public string descriptionText;
 
     private const string ultimatePrefabPath = "UI Objects/Ultimate Animation";
     private const string ultimateAnimationParentPath = "VN controller/Root/Canvas - Main/LAYERS/1 - Background";
@@ -41,8 +43,8 @@ public class PlayUltimateAnimation : Command
         backgroundColor = EditorGUILayout.ColorField("Background Color", backgroundColor);
         nameText = EditorGUILayout.TextField("Name Text", nameText);
         nameColor = EditorGUILayout.ColorField("Name Color", nameColor);
-        descriptionColor = EditorGUILayout.ColorField("Description Color", descriptionColor);
         descriptionText = EditorGUILayout.TextField("Description Text", descriptionText);
+        descriptionColor = EditorGUILayout.ColorField("Description Color", descriptionColor);
         character = EditorGUILayout.ObjectField("Character", character, typeof(Character), false) as Character;
     }
 #endif

@@ -65,7 +65,7 @@ namespace DIALOGUE
         public Coroutine Say(DialogueNode node)
         {
             if(!isActive)
-            SetIsActive(true);
+               SetIsActive(true);
             return conversationManager.PlayNodeText(node);
         }
 

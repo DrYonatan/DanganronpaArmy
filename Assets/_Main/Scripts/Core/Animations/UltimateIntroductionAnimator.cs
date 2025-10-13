@@ -1,4 +1,5 @@
 using System.Collections;
+using CHARACTERS;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -21,15 +22,19 @@ public class UltimateIntroductionAnimator : MonoBehaviour
     public IEnumerator Play(Character character, Color backgroundColor, string characterNameText, string descriptionText,
         Color characterNameColor, Color descriptionColor)
     {
-        SetAttributes(character.emotions[0].sprite, backgroundColor, characterNameText, descriptionText, characterNameColor,
+        SetAttributes(character.FindStateByName("default").sprite, backgroundColor, characterNameText, descriptionText, characterNameColor,
             descriptionColor);
-
+        
         RectTransform characterTransform = GameObject.Find($"{charactersLayerPath}/{character.name}").GetComponent<RectTransform>();
-
+        CharacterState prevEmotion = character.FindStateBySprite(characterTransform.GetChild(0).GetComponent<Image>().sprite);
+        VNCharacterManager.instance.SwitchEmotion(character, character.FindStateByName("default"));
+        
         cylinder.rectTransform.anchoredPosition = new Vector2(-1500, 0);
         whiteBar.rectTransform.localScale = new Vector2(1, 0);
         blackBars.anchoredPosition = new Vector2(-2000, -407);
         silhouetteMask.rectTransform.anchoredPosition = new Vector2(-600f, -600f);
+        characterName.DOFade(0f, 0f);
+        description.DOFade(0f, 0f);
 
         cylinder.rectTransform.DOAnchorPosX(690f, 0.3f).OnComplete(() => cylinder.rectTransform
             .DOLocalRotate(new Vector3(0f, 0f, -360f), 2f, RotateMode.FastBeyond360).SetEase(Ease.Linear)
@@ -37,6 +42,8 @@ public class UltimateIntroductionAnimator : MonoBehaviour
         blackBars.DOAnchorPosX(64f, 0.5f).SetEase(Ease.Linear);
         whiteBar.rectTransform.DOScaleY(1f, 0.2f).SetDelay(0.15f);
         silhouetteMask.rectTransform.DOAnchorPosY(-500f, duration);
+        characterName.DOFade(1f, 0.2f).SetDelay(0.1f);
+        description.DOFade(1f, 0.2f).SetDelay(0.1f);
 
         float initialCharacterX = characterTransform.anchoredPosition.x;
         characterTransform.DOAnchorPosX(initialCharacterX - 500f, 0.3f);
@@ -50,8 +57,12 @@ public class UltimateIntroductionAnimator : MonoBehaviour
         blackBars.DOAnchorPosX(2200, 0.4f);
         silhouetteMask.DOFade(0f, 0.1f);
         characterTransform.DOAnchorPosX(initialCharacterX, 0.2f);
+        characterName.DOFade(0f, 0.2f);
+        description.DOFade(0f, 0.2f);
 
         yield return new WaitForSeconds(0.5f);
+        
+        VNCharacterManager.instance.SwitchEmotion(character, prevEmotion);
         
     }
 

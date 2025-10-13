@@ -43,7 +43,7 @@ namespace DIALOGUE
             return process;
         }
 
-        public void StopPreviousText()
+        private void StopPreviousText()
         {
             if (!isRunning)
                 return;
@@ -54,8 +54,8 @@ namespace DIALOGUE
         IEnumerator RunNodeText(DialogueNode node)
         {
             VNTextData textData = node.textData as VNTextData;
-            DialogueSystem.instance.ShowSpeakerName(node.character.displayName);
             yield return Line_RunCommands(textData.commands);
+            DialogueSystem.instance.ShowSpeakerName(node.character.displayName);
             yield return BuildDialogue(textData.text);
             if (!isAuto)
             {
