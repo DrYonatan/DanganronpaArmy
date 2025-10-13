@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEditor;
 using UnityEngine;
 
@@ -8,9 +9,10 @@ public class PlayMusicCommand : Command
    public AudioClip music;
    public float volume = 1f;
    
-   public override void Execute()
+   public override IEnumerator Execute()
    {
       MusicManager.instance.PlaySong(music);
+      yield return  new WaitForSeconds(music.length);
    }
 
    #if UNITY_EDITOR

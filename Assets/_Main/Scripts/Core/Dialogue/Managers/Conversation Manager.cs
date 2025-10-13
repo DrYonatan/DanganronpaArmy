@@ -69,8 +69,7 @@ namespace DIALOGUE
         {
             foreach (Command command in commands)
             {
-                command.Execute();
-                yield return null;
+                yield return command.Execute();
             }
             
         }

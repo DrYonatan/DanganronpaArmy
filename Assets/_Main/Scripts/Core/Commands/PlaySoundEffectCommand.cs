@@ -9,9 +9,10 @@ public class PlaySoundEffectCommand : Command
 {
     public AudioClip clip;
     public float volume = 1f;
-    public override void Execute()
+    public override IEnumerator Execute()
     {
         SoundManager.instance.PlaySoundEffect(clip);
+        yield return new WaitForSeconds(clip.length);
     }
 
     #if UNITY_EDITOR
