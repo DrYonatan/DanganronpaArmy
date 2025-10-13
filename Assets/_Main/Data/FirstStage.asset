@@ -36,7 +36,7 @@ MonoBehaviour:
     evidence: {fileID: 11400000, guid: 61f792b87e669574793f5e93b1753771, type: 2}
     statement: 
     voiceLine: {fileID: 0}
-    textLinesScrollPosition: {x: 0, y: 26}
+    textLinesScrollPosition: {x: 0, y: 19.600006}
   - nodeRect:
       serializedVersion: 2
       x: 0
@@ -61,7 +61,7 @@ MonoBehaviour:
     statement: "\u05D4\u05DE\u05EA\u05E0\u05D3\u05D1\u05D9\u05DD \u05DC\u05E0\u05D9\u05E7\u05D5\u05D9
       \u05D4\u05E9\u05D9\u05E8\u05D5\u05EA\u05D9\u05DD!"
     voiceLine: {fileID: 0}
-    textLinesScrollPosition: {x: 0, y: 0}
+    textLinesScrollPosition: {x: 0, y: 19.600006}
   - nodeRect:
       serializedVersion: 2
       x: 0
@@ -85,7 +85,7 @@ MonoBehaviour:
     evidence: {fileID: 11400000, guid: 61f792b87e669574793f5e93b1753771, type: 2}
     statement: "\u05E9\u05DC\u05D5\u05E1"
     voiceLine: {fileID: 0}
-    textLinesScrollPosition: {x: 0, y: 0}
+    textLinesScrollPosition: {x: 0, y: 19.600006}
   - nodeRect:
       serializedVersion: 2
       x: 0
@@ -166,21 +166,28 @@ MonoBehaviour:
       type: {class: DebateTextData, ns: , asm: Assembly-CSharp}
       data:
         textLines:
-        - text: "\u05E9\u05DC\u05D5\u05E1 {\u05DE\u05D4\n\u05E7\u05D5\u05E8\u05D4}
-            \u05E9\u05DC\u05D5\u05DE\u05E4\n\u05E8\u05D7\u05D5\u05E7"
-          textEffect: []
+        - text: "\u05D1\u05D5\u05D0 \u05D0\u05DC\u05D9\u05E0\u05D5 \u05DC\u05E2\u05D5\u05DC\u05DD
+            \u05E7\u05E8\u05E7\u05E1\n\u05D1\u05D5\u05D0 \u05E2\u05DB\u05E9\u05D9\u05D5
+            \u05D5\u05DE\u05D9\u05D3"
+          textEffect:
+          - {fileID: 11400000, guid: e5ad80d2a8ee1f042bf34c66a49d1aef, type: 2}
+          introEffect: {fileID: 11400000, guid: 79d05a79f475ef643a1ecc36ad08d221, type: 2}
           spawnOffset: {x: 0.2, y: 0.43, z: 0}
+          rotationOffset: {x: 0, y: 0, z: 0}
           scale: {x: 1, y: 1, z: 1}
           ttl: 3
-          textLineScrollPosition: {x: 0, y: 0}
+          textLineScrollPosition: {x: 0, y: 14}
     - rid: 3042479711257624578
       type: {class: DebateTextData, ns: , asm: Assembly-CSharp}
       data:
         textLines:
-        - text: "\u05DC\u05E8 \u05D9\u05DB\u05D5\u05DC \u05DC\u05D4\u05D9\u05D5\u05EA...{0}"
+        - text: "\u05DB\u05D5\u05DC\u05DD \u05D8\u05D5\u05E8\u05E7\u05E1\u05D9\u05DD
+            \u05E4\u05D4"
           textEffect:
           - {fileID: 11400000, guid: 1783f855e5ca44a46918165450f0b808, type: 2}
+          introEffect: {fileID: 0}
           spawnOffset: {x: 0, y: 0, z: 0}
+          rotationOffset: {x: 0, y: 0, z: 0}
           scale: {x: 1, y: 1, z: 1}
           ttl: 3
           textLineScrollPosition: {x: 0, y: 6}
@@ -188,15 +195,14 @@ MonoBehaviour:
       type: {class: DebateTextData, ns: , asm: Assembly-CSharp}
       data:
         textLines:
-        - text: "\u05DE\u05D4 \u05E9\u05D0\u05D5\u05DE\u05E8 \u05E9\u05D4\u05E8\u05D5\u05E6\u05D7"
-          textEffect: []
+        - text: "\u05D1\u05D5\u05D0 \u05D9\u05E9 {\u05D7\u05D2\u05D9\u05D2\u05D4
+            \u05D8\u05D5\u05E8\u05E7\u05D9\u05EA \u05E4\u05D4\n\u05D1\u05D0\u05D4\u05D9\u05DC}"
+          textEffect:
+          - {fileID: 11400000, guid: 776df99a68a7fa04d9cebde19eafed87, type: 2}
+          - {fileID: 11400000, guid: 78cef4dbf176f274ba273d043b6ea500, type: 2}
+          introEffect: {fileID: 11400000, guid: 79d05a79f475ef643a1ecc36ad08d221, type: 2}
           spawnOffset: {x: 0, y: 0.4, z: 0}
-          scale: {x: 1, y: 1, z: 1}
-          ttl: 3
-          textLineScrollPosition: {x: 0, y: 0}
-        - text: "\u05D4\u05D9\u05D4 {0}"
-          textEffect: []
-          spawnOffset: {x: 0, y: 0.05, z: 0}
+          rotationOffset: {x: 0, y: 0, z: 0}
           scale: {x: 1, y: 1, z: 1}
           ttl: 3
           textLineScrollPosition: {x: 0, y: 0}
@@ -209,10 +215,13 @@ MonoBehaviour:
       type: {class: DebateTextData, ns: , asm: Assembly-CSharp}
       data:
         textLines:
-        - text: "\u05E9\u05D9\u05DE\u05D5\u05EA\u05D5 \u05D4 {0}"
+        - text: "\u05DC\u05D0 \u05D0\u05E0\u05D7\u05E0\u05D5 \u05DC\u05D0 {\u05D8\u05D5\u05E8\u05E7\u05D9\u05DD}
+            \u05E4\u05D4\n\u05D1\u05DB\u05DC\u05DC"
           textEffect:
           - {fileID: 11400000, guid: 776df99a68a7fa04d9cebde19eafed87, type: 2}
+          introEffect: {fileID: 0}
           spawnOffset: {x: 0, y: 0, z: 0}
+          rotationOffset: {x: 0, y: 0, z: 0}
           scale: {x: 1, y: 1, z: 1}
           ttl: 3
           textLineScrollPosition: {x: 0, y: 0}

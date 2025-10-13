@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using System;
 using _Main.Scripts.Court;
+using DG.Tweening;
 using DIALOGUE;
 using Text = TMPro.TextMeshProUGUI;
 
@@ -13,12 +14,13 @@ public class GameLoop : MonoBehaviour
     {
         public List<GameObject> linesGameObjects;
         public Transform textTransform;
+        public TextEffect introEffect;
         public List<TextEffect> textEffects;
         public float ttl;
         public List<TextMeshPro> linesTextMeshPros;
         public int correctCharacterIndexBegin, correctCharacterIndexEnd;
 
-        public FloatingText(List<GameObject> linesGameObjects, Transform textTransform, List<TextEffect> textEffects,
+        public FloatingText(List<GameObject> linesGameObjects, Transform textTransform, List<TextEffect> textEffects, TextEffect introEffect,
             float ttl,
             List<TextMeshPro> linesTextMeshPros, int correctCharacterIndexBegin, int correctCharacterIndexEnd)
         {
@@ -26,17 +28,10 @@ public class GameLoop : MonoBehaviour
             this.linesGameObjects = linesGameObjects;
             this.textTransform = textTransform;
             this.textEffects = textEffects;
+            this.introEffect = introEffect;
             this.ttl = ttl;
             this.correctCharacterIndexBegin = correctCharacterIndexBegin;
             this.correctCharacterIndexEnd = correctCharacterIndexEnd;
-        }
-
-        internal void Apply()
-        {
-            foreach (TextEffect effect in textEffects)
-            {
-                effect.Apply(textTransform);
-            }
         }
     }
 
@@ -165,14 +160,6 @@ public class GameLoop : MonoBehaviour
                 }
 
                 index++;
-            }
-
-            if (debateTexts.Count > 0)
-            {
-                foreach (FloatingText text in debateTexts)
-                {
-                    text.Apply();
-                }
             }
 
             if (!isShooting)
@@ -458,7 +445,7 @@ public class GameLoop : MonoBehaviour
 
     string[] AddOrangeToText(string[] strings, int orangeStartIndex, int orangeEndIndex)
     {
-        string[] results =  new string[strings.Length];
+        string[] results = new string[strings.Length];
         int overallIndex = 0;
         for (int j = 0; j < strings.Length; j++)
         {
@@ -490,7 +477,7 @@ public class GameLoop : MonoBehaviour
     {
         GameObject textLine = Instantiate(textPrefab, parent);
         textLine.transform.localPosition += index * 0.2f * Vector3.down;
-        
+
         TextMeshPro tmp = textLine.GetComponent<TextMeshPro>();
         tmp.text = text;
         StartCoroutine(FadeText(tmp, 0f, 1f, 0.2f));
@@ -498,17 +485,18 @@ public class GameLoop : MonoBehaviour
         return textLine;
     }
 
-    void GenerateTextLines(TextLine nodeText)
+    void GenerateTextLines(DebateText nodeDebateText)
     {
         int correctCharacterIndexBegin = -1;
         int correctCharacterIndexEnd = -1;
 
-        GameObject go = new GameObject();
-        GameObject instantiated = Instantiate(go, statementsCamera.transform.parent);
-        instantiated.transform.position = textStartPosition.position + nodeText.spawnOffset;;
-        instantiated.transform.localScale = nodeText.scale;
-        
-        string str = nodeText.text;
+        GameObject go = new GameObject("Text");
+        go.transform.SetParent(statementsCamera.transform.parent);
+        go.transform.position = textStartPosition.position + nodeDebateText.spawnOffset;
+        ;
+        go.transform.localScale = nodeDebateText.scale;
+
+        string str = nodeDebateText.text;
         int orangeStartIndex = str.IndexOf("{");
         if (orangeStartIndex != -1)
         {
@@ -516,51 +504,63 @@ public class GameLoop : MonoBehaviour
             correctCharacterIndexEnd = str.IndexOf("}");
         }
 
-        string[] results = AddOrangeToText( str.Split("\n"), correctCharacterIndexBegin, correctCharacterIndexEnd);
+        string[] results = AddOrangeToText(str.Split("\n"), correctCharacterIndexBegin, correctCharacterIndexEnd);
 
         List<GameObject> textLineObjects = new List<GameObject>();
 
         for (int i = 0; i < results.Length; i++)
         {
-            GameObject textLine = GenerateTextLine(instantiated.transform, results[i], i);
+            GameObject textLine = GenerateTextLine(go.transform, results[i], i);
             textLineObjects.Add(textLine);
-            
+
             GenerateTextLineColliders(textLine.GetComponent<TextMeshPro>());
         }
-        
+
 
         FloatingText floatingText = new FloatingText(
             textLineObjects,
-            instantiated.transform,
-            nodeText.textEffect,
-            nodeText.ttl,
+            go.transform,
+            nodeDebateText.textEffect,
+            nodeDebateText.introEffect,
+            nodeDebateText.ttl,
             textLineObjects.ConvertAll(x => x.GetComponent<TextMeshPro>()),
             correctCharacterIndexBegin,
             correctCharacterIndexEnd
         );
 
-      
-
         debateTexts.Add(floatingText);
+        StartCoroutine(StartTextEffects(floatingText));
+    }
+
+    IEnumerator StartTextEffects(FloatingText floatingText)
+    {
+        if (floatingText.introEffect != null)
+           yield return floatingText.introEffect.Apply(floatingText.textTransform);
+        foreach (TextEffect textEffect in floatingText.textEffects)
+        {
+            StartCoroutine(textEffect.Apply(floatingText.textTransform));
+        }
     }
 
     void GenerateTextLineColliders(TextMeshPro textLine)
     {
         int orangeStartIndex = textLine.text.IndexOf("<color=orange>");
         int orangeEndIndex = textLine.text.IndexOf("</color>");
-        
+
         textLine.ForceMeshUpdate();
-        
+
         if (orangeEndIndex == -1)
         {
-            orangeEndIndex =  textLine.textInfo.characterCount + "<color=orange>".Length;
+            orangeEndIndex = textLine.textInfo.characterCount + "<color=orange>".Length;
         }
-        
-        if (orangeStartIndex != -1) // if there's a statement, build box colliders for the segment before, in and after the statement
+
+        if (orangeStartIndex !=
+            -1) // if there's a statement, build box colliders for the segment before, in and after the statement
         {
-            CreateColliderAroundTextRange(textLine.gameObject, 0, orangeStartIndex-1, false);
-            CreateColliderAroundTextRange(textLine.gameObject, orangeStartIndex, orangeEndIndex-"<color=orange>".Length, true);
-            CreateColliderAroundTextRange(textLine.gameObject, orangeEndIndex-"<color=orange>".Length,
+            CreateColliderAroundTextRange(textLine.gameObject, 0, orangeStartIndex - 1, false);
+            CreateColliderAroundTextRange(textLine.gameObject, orangeStartIndex,
+                orangeEndIndex - "<color=orange>".Length, true);
+            CreateColliderAroundTextRange(textLine.gameObject, orangeEndIndex - "<color=orange>".Length,
                 textLine.textInfo.characterCount - 1, false);
         }
         else // if there's no statement, just build one box collider
@@ -592,19 +592,25 @@ public class GameLoop : MonoBehaviour
 
     IEnumerator FadeText(TextMeshPro tmp, float from, float to, float duration)
     {
-        Color color = tmp.color;
-        color.a = from;
-        float elapsedTime = 0f;
-        while (elapsedTime < duration)
-        {
-            elapsedTime += Time.deltaTime;
-            color.a = Mathf.Lerp(from, to, elapsedTime / duration);
-            tmp.color = color;
-            yield return null;
-        }
-
-        color.a = to;
-        tmp.color = color;
+        float alpha = tmp.color.a;
+        Color color = tmp.color * to;
+        color.a = alpha;
+        tmp.DOColor(color, duration);
+        //tmp.DOFade(to,  duration * 0.5f);
+        yield return null;
+        // Color color = tmp.color;
+        // color.a = from;
+        // float elapsedTime = 0f;
+        // while (elapsedTime < duration)
+        // {
+        //     elapsedTime += Time.deltaTime;
+        //     color.a = Mathf.Lerp(from, to, elapsedTime / duration);
+        //     tmp.color = Color.Lerp(color * from, color * to, elapsedTime / duration);
+        //     yield return null;
+        // }
+        //
+        // color.a = to;
+        // tmp.color = color * to;
     }
 
     IEnumerator DestroyText(FloatingText text)
@@ -618,13 +624,14 @@ public class GameLoop : MonoBehaviour
 
         yield return new WaitForSeconds(duration);
 
+        text.textTransform.DOKill();
         Destroy(text.textTransform.gameObject);
     }
 
     // Gets the textLine to create for, the range and whether or not to make a child (AKA the orange part)
-    void CreateColliderAroundTextRange(GameObject textGameObject,  int startIndex, int endIndex, bool createChildObject)
+    void CreateColliderAroundTextRange(GameObject textGameObject, int startIndex, int endIndex, bool createChildObject)
     {
-        TextMeshPro tmp =  textGameObject.GetComponent<TextMeshPro>();
+        TextMeshPro tmp = textGameObject.GetComponent<TextMeshPro>();
         tmp.ForceMeshUpdate();
         TMP_TextInfo textInfo = tmp.textInfo;
 
@@ -634,7 +641,7 @@ public class GameLoop : MonoBehaviour
         {
             return;
         }
-        
+
         Vector3 min = Vector3.positiveInfinity;
         Vector3 max = Vector3.negativeInfinity;
 

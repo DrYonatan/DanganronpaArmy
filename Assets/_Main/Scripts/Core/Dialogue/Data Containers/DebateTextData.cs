@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class TextLine
+public class DebateText
 {
     public string text;
     public List<TextEffect> textEffect;
+    public TextEffect introEffect;
     public Vector3 spawnOffset;
+    public Vector3 rotationOffset;
     public Vector3 scale = Vector3.one;
     public float ttl = 1f;
     public Vector2 textLineScrollPosition;
 
-    public TextLine()
+    public DebateText()
     {
         text = "";
         textEffect = new List<TextEffect>();
@@ -24,10 +26,10 @@ public class TextLine
 
 public class DebateTextData : TextData
 {
-    public List<TextLine> textLines;
+    public List<DebateText> textLines;
 
     public DebateTextData()
     {
-        textLines = new List<TextLine>();
+        textLines = new List<DebateText>();
     }
 }

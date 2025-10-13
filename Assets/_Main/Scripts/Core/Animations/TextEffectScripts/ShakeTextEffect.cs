@@ -1,19 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Behaviour Editor/Text Effect/Shake")]
 public class ShakeTextEffect : TextEffect
 {
     [SerializeField] float intensity;
-    private Vector3 prevOffset;
-    public override void Apply(Transform target)
+    public override IEnumerator Apply(Transform target)
     {
-        float offsetX = Random.Range(-1f, 1f) * intensity;
-        float offsetY = Random.Range(-1f, 1f) * intensity;
-
-        Vector3 offset = new Vector3(offsetX, offsetY);
-        target.localPosition += -prevOffset + offset;
-        prevOffset = offset;
+        target.DOShakePosition(
+            duration: 1f,      
+            strength: intensity,   
+            vibrato: 20,      
+            randomness: 90f, 
+            snapping: false,     
+            fadeOut: false       
+        ).SetEase(Ease.Linear).SetLoops(-1);
+        yield return null;
     }
 }

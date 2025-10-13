@@ -33,21 +33,21 @@ public class DebateNodeDraw : DiscussionNodeDraw
 
         if (textData.textLines.Count == 0)
         {
-            textData.textLines.Add(new TextLine());
+            textData.textLines.Add(new DebateText());
         }
         
         node.textLinesScrollPosition = GUILayout.BeginScrollView(node.textLinesScrollPosition, GUILayout.Width(width));
         GUILayout.BeginHorizontal();
         for (int i = 0; i < textData.textLines.Count; i++)
         {
-            TextLine textLine = textData.textLines[i];
+            DebateText debateText = textData.textLines[i];
             GUILayout.BeginVertical(style, GUILayout.Width(150));
             GUILayout.Label($"Line {i}#");
-            textLine.text = GUILayout.TextArea(textLine.text, GUILayout.Width(150));
-            textLine.spawnOffset = EditorGUILayout.Vector3Field("Spawn Offset", textLine.spawnOffset);
-            textLine.scale = EditorGUILayout.Vector3Field("Scale", textLine.scale);
-            textLine.ttl = EditorGUILayout.FloatField("Time", textLine.ttl);
-            ShowTextEffect(ref textLine, ref node);
+            debateText.text = GUILayout.TextArea(debateText.text, GUILayout.Width(150));
+            debateText.spawnOffset = EditorGUILayout.Vector3Field("Spawn Offset", debateText.spawnOffset);
+            debateText.scale = EditorGUILayout.Vector3Field("Scale", debateText.scale);
+            debateText.ttl = EditorGUILayout.FloatField("Time", debateText.ttl);
+            ShowTextEffect(ref debateText, ref node);
             
             GUILayout.EndVertical();
             if (GUILayout.Button("X", GUILayout.Width(20), GUILayout.Height(20)))
@@ -56,7 +56,7 @@ public class DebateNodeDraw : DiscussionNodeDraw
             }
             if (GUILayout.Button("+", GUILayout.Width(20), GUILayout.Height(20)))
             {
-                textData.textLines.Insert(i + 1, new TextLine());
+                textData.textLines.Insert(i + 1, new DebateText());
             }
         }
         GUILayout.EndHorizontal();
@@ -64,23 +64,23 @@ public class DebateNodeDraw : DiscussionNodeDraw
         GUILayout.EndScrollView();
     }
 
-    private void ShowTextEffect(ref TextLine textLine, ref DebateNode b)
+    private void ShowTextEffect(ref DebateText debateText, ref DebateNode b)
     {
-        textLine.textLineScrollPosition = GUILayout.BeginScrollView(textLine.textLineScrollPosition);
-        for(int i = 0; i < textLine.textEffect.Count; i++)
+        debateText.textLineScrollPosition = GUILayout.BeginScrollView(debateText.textLineScrollPosition);
+        for(int i = 0; i < debateText.textEffect.Count; i++)
         {
             GUILayout.BeginHorizontal();
-            textLine.textEffect[i] = (TextEffect)EditorGUILayout.ObjectField(textLine.textEffect[i], typeof(TextEffect), false);
+            debateText.textEffect[i] = (TextEffect)EditorGUILayout.ObjectField(debateText.textEffect[i], typeof(TextEffect), false);
             if(GUILayout.Button("X", GUILayout.Width(20)))
             {
-                textLine.textEffect.RemoveAt(i);
+                debateText.textEffect.RemoveAt(i);
             }
             
             GUILayout.EndHorizontal();
         }
         if(GUILayout.Button("Add text effect"))
         {
-            textLine.textEffect.Add(null);
+            debateText.textEffect.Add(null);
         }
         
         GUILayout.EndScrollView();
