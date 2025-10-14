@@ -29,7 +29,7 @@ public class TextShatterEffect : MonoBehaviour
         for (int i = 0; i < text.Length; i++)
         {
             GameObject charObj = new GameObject($"Char_{i}");
-            charObj.transform.SetParent(textToSeperate.transform.parent);
+            charObj.transform.SetParent(textToSeperate.transform.parent.transform.parent);
 
             TextMeshPro tmp = charObj.AddComponent<TextMeshPro>();
             tmp.text = text[i].ToString();

@@ -55,9 +55,9 @@ public class CameraController : MonoBehaviour
     public IEnumerator DiscussionIntroMovement(float duration)
     {
         float elapsedTime = 0f;
-        Vector3 startPos = new Vector3(0f, 11f, -18f);
+        Vector3 startPos = new Vector3(0f, 8f, -18f);
         pivot.rotation = new Quaternion(0f, 0f, 0f, 0f);
-        cameraTransform.localRotation = Quaternion.Euler(new Vector3(27f, 0, 0));
+        cameraTransform.localRotation = Quaternion.Euler(new Vector3(15f, 0, 0));
         camera.fieldOfView = 30f;
         bool uiAppeared = false;
         while (elapsedTime < duration)
@@ -67,7 +67,7 @@ public class CameraController : MonoBehaviour
                 DialogueSystem.instance.dialogueBoxAnimator.TextBoxAppear();
                 uiAppeared = true;
             }
-            cameraTransform.localPosition = Vector3.Lerp(startPos, startPos + cameraTransform.forward * 2f, elapsedTime / duration);
+            cameraTransform.localPosition = Vector3.Lerp(startPos, startPos + cameraTransform.forward * 4f, elapsedTime / duration);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
