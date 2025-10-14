@@ -54,14 +54,39 @@ namespace DIALOGUE
         IEnumerator RunNodeText(DialogueNode node)
         {
             VNTextData textData = node.textData as VNTextData;
-            yield return Line_RunCommands(textData.commands);
+
+            List<Command> beforeCommands = GetBeforeCommands(textData.commands);
+            List<Command> parallelCommands = GetParallelCommands(textData.commands);
+            List<Command> afterCommands = GetAfterCommands(textData.commands);
+            
+            yield return Line_RunCommands(beforeCommands);
+            
+            Line_RunCommandsAsync(parallelCommands);
+            
             DialogueSystem.instance.ShowSpeakerName(node.character.displayName);
             yield return BuildDialogue(textData.text);
+            
+            yield return Line_RunCommands(afterCommands);
             if (!isAuto)
             {
                 yield return WaitForUserInput();
                 SoundManager.instance.PlayTextBoxSound();
             }
+        }
+
+        List<Command> GetBeforeCommands(List<Command> commands)
+        {
+            return commands.FindAll((Command command) => command.executeTime == Command.ExecuteTime.Before);
+        }
+        
+        List<Command> GetParallelCommands(List<Command> commands)
+        {
+            return commands.FindAll((Command command) => command.executeTime == Command.ExecuteTime.Parallel);
+        }
+        
+        List<Command> GetAfterCommands(List<Command> commands)
+        {
+            return commands.FindAll((Command command) => command.executeTime == Command.ExecuteTime.After);
         }
         
 
@@ -72,6 +97,14 @@ namespace DIALOGUE
                 yield return command.Execute();
             }
             
+        }
+
+        void Line_RunCommandsAsync(List<Command> commands)
+        {
+            foreach (Command command in commands)
+            {
+                DialogueSystem.instance.StartCoroutineHelper(command.Execute());
+            }
         }
         
 

@@ -18,6 +18,7 @@ public class PlayMusicCommand : Command
    #if UNITY_EDITOR
    public override void DrawGUI()
    {
+      base.DrawGUI();
       music = (AudioClip)EditorGUILayout.ObjectField("Music", music, typeof(AudioClip), false);
       volume = EditorGUILayout.Slider("Volume", volume, 0f, 1f);
    }

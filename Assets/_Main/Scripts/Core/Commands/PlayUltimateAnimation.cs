@@ -40,6 +40,7 @@ public class PlayUltimateAnimation : Command
 #if UNITY_EDITOR
     public override void DrawGUI()
     {
+        base.DrawGUI();
         backgroundColor = EditorGUILayout.ColorField("Background Color", backgroundColor);
         nameText = EditorGUILayout.TextField("Name Text", nameText);
         nameColor = EditorGUILayout.ColorField("Name Color", nameColor);

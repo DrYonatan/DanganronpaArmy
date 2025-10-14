@@ -92,6 +92,11 @@ namespace DIALOGUE
             conversationManager.ClearTextBox();
         }
 
+        public void StartCoroutineHelper(IEnumerator enumerator)
+        {
+            StartCoroutine(enumerator);
+        }
+
         public void SetTextBox(DialogueContainer container)
         {
             dialogueContainer = container;

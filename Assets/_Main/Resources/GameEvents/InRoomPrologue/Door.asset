@@ -43,7 +43,7 @@ MonoBehaviour:
           y: 0
           width: 0
           height: 0
-        commandsScrollPosition: {x: 0, y: 4}
+        commandsScrollPosition: {x: 0, y: 24}
         title: 
         drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
         character: {fileID: 11400000, guid: e5e319997f8a6c943997082245a52a96, type: 2}
@@ -80,6 +80,7 @@ MonoBehaviour:
     - rid: 4653703066474512384
       type: {class: PlayUltimateAnimation, ns: , asm: Assembly-CSharp}
       data:
+        executeTime: 0
         backgroundColor: {r: 0, g: 0.4490565, b: 0.19323951, a: 1}
         nameColor: {r: 0, g: 0, b: 0, a: 1}
         descriptionColor: {r: 0, g: 0, b: 0, a: 1}
@@ -89,12 +90,25 @@ MonoBehaviour:
     - rid: 4653703066474512385
       type: {class: PlayUltimateAnimation, ns: , asm: Assembly-CSharp}
       data:
+        executeTime: 0
         backgroundColor: {r: 0, g: 0.83510137, b: 1, a: 1}
         nameColor: {r: 0, g: 0, b: 0, a: 1}
         descriptionColor: {r: 0, g: 0, b: 0, a: 1}
         character: {fileID: 11400000, guid: e5e319997f8a6c943997082245a52a96, type: 2}
         nameText: "\u05E0\u05E2\u05D4 \u05DC\u05D9\u05D1\u05D5\u05D1\u05D9\u05E5'"
         descriptionText: "\u05E8\u05E2\"\u05E6\u05D9\u05EA \u05EA\"\u05E9"
+    - rid: 4653703079291256832
+      type: {class: PlaySoundEffectCommand, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 1
+        clip: {fileID: 8300000, guid: c0bb6e51f37a71348a6a82273ec8e348, type: 3}
+        volume: 1
+    - rid: 4653703079291256833
+      type: {class: PlaySoundEffectCommand, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 2
+        clip: {fileID: 8300000, guid: 671ad944bf2cc6e4c8c6a6b7d3de530b, type: 3}
+        volume: 1
     - rid: 4827846191764471820
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -115,7 +129,8 @@ MonoBehaviour:
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
         text: "\u05D4\u05D9\u05D9 \u05DE\u05D4 \u05E7\u05D5\u05E8\u05D4"
-        commands: []
+        commands:
+        - rid: 4653703079291256833
     - rid: 4827846191764471822
       type: {class: VNChoiceNode, ns: , asm: Assembly-CSharp}
       data:
@@ -220,7 +235,7 @@ MonoBehaviour:
           y: 0
           width: 0
           height: 0
-        commandsScrollPosition: {x: 0, y: 4}
+        commandsScrollPosition: {x: 0, y: 114}
         title: 
         drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
         character: {fileID: 11400000, guid: c6f821f9019b92c44b2eb05215b152b0, type: 2}
@@ -233,3 +248,4 @@ MonoBehaviour:
         text: "\u05D8\u05D5\u05D1"
         commands:
         - rid: 4653703066474512384
+        - rid: 4653703079291256832

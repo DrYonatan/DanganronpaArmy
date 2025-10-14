@@ -18,6 +18,7 @@ public class PlaySoundEffectCommand : Command
     #if UNITY_EDITOR
     public override void DrawGUI()
     {
+        base.DrawGUI();
         clip = (AudioClip)EditorGUILayout.ObjectField("Clip", clip, typeof(AudioClip), false);
         volume = EditorGUILayout.Slider("Volume", volume, 0f, 1f);
     }

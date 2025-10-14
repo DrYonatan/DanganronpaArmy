@@ -32,7 +32,7 @@ public class UltimateIntroductionAnimator : MonoBehaviour
         cylinder.rectTransform.anchoredPosition = new Vector2(-1500, 0);
         whiteBar.rectTransform.localScale = new Vector2(1, 0);
         blackBars.anchoredPosition = new Vector2(-2000, -407);
-        silhouetteMask.rectTransform.anchoredPosition = new Vector2(-600f, -600f);
+        silhouetteMask.rectTransform.anchoredPosition = new Vector2(-550f, -600f);
         characterName.DOFade(0f, 0f);
         description.DOFade(0f, 0f);
 
@@ -41,7 +41,7 @@ public class UltimateIntroductionAnimator : MonoBehaviour
             .SetLoops(-1, LoopType.Incremental));
         blackBars.DOAnchorPosX(64f, 0.5f).SetEase(Ease.Linear);
         whiteBar.rectTransform.DOScaleY(1f, 0.2f).SetDelay(0.15f);
-        silhouetteMask.rectTransform.DOAnchorPosY(-500f, duration);
+        silhouetteMask.rectTransform.DOAnchorPosY(-400f, duration).SetEase(Ease.Linear);
         characterName.DOFade(1f, 0.2f).SetDelay(0.1f);
         description.DOFade(1f, 0.2f).SetDelay(0.1f);
 
@@ -57,8 +57,10 @@ public class UltimateIntroductionAnimator : MonoBehaviour
         blackBars.DOAnchorPosX(2200, 0.4f);
         silhouetteMask.DOFade(0f, 0.1f);
         characterTransform.DOAnchorPosX(initialCharacterX, 0.2f);
+        yield return new WaitForSeconds(0.1f);
         characterName.DOFade(0f, 0.2f);
         description.DOFade(0f, 0.2f);
+        background.DOFade(0f, 0.2f);
 
         yield return new WaitForSeconds(0.5f);
         
