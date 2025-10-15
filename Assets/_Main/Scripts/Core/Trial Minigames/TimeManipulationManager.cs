@@ -13,6 +13,7 @@ public class TimeManipulationManager : MonoBehaviour
     public AudioClip concentrationSound;
     public float maxConsentration = 5f;
     public float concentration;
+    private Tween concentrationChangeTween;
 
     void Awake()
     {
@@ -76,7 +77,8 @@ public class TimeManipulationManager : MonoBehaviour
         concentrationSpace.SetActive(true);
         Time.timeScale = 0.25f;
         CameraController.instance.camera.cullingMask = LayerMask.GetMask("Concentration Visible");
-        DOTween.To(() => concentration, x => concentration = x, 0f, concentration * 0.2f).SetEase(Ease.Linear).SetUpdate(true);
+        concentrationChangeTween.Kill();
+        concentrationChangeTween = DOTween.To(() => concentration, x => concentration = x, 0f, concentration * 0.2f).SetEase(Ease.Linear).SetUpdate(true);
         TrialManager.instance.barsAnimator.DrainConcentrationEffect();
     }
 
@@ -89,7 +91,8 @@ public class TimeManipulationManager : MonoBehaviour
         Time.timeScale = 1f;
         float fillDuration = maxConsentration -
                              concentration;
-        DOTween.To(() => concentration, x => concentration = x, maxConsentration, fillDuration).SetEase(Ease.Linear);
+        concentrationChangeTween.Kill();
+        concentrationChangeTween = DOTween.To(() => concentration, x => concentration = x, maxConsentration, fillDuration).SetEase(Ease.Linear);
         TrialManager.instance.barsAnimator.FillConcentrationEffect(fillDuration);
     }
     
