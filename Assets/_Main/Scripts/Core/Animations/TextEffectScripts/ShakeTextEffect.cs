@@ -7,12 +7,15 @@ using UnityEngine;
 public class ShakeTextEffect : TextEffect
 {
     [SerializeField] float intensity;
+
     public override IEnumerator Apply(Transform target)
     {
-        GameObject parent = new GameObject();
-        parent.name = "ShakeParent";
-        parent.transform.position = target.position;
-        parent.transform.rotation = target.rotation;
+        GameObject shakeParent = new GameObject
+        {
+            name = "ShakeParent"
+        };
+        shakeParent.transform.position = target.position;
+        shakeParent.transform.rotation = target.rotation;
 
         List<Transform> children = new List<Transform>();
         foreach (Transform child in target)
@@ -22,18 +25,18 @@ public class ShakeTextEffect : TextEffect
 
         foreach (Transform child in children)
         {
-            child.SetParent(parent.transform);
+            child.SetParent(shakeParent.transform);
         }
-        
-        parent.transform.SetParent(target);
-        
-        parent.transform.DOShakePosition(
-            duration: 1f,      
-            strength: intensity,   
-            vibrato: 30,      
-            randomness: 90f, 
-            snapping: false,     
-            fadeOut: false       
+
+        shakeParent.transform.SetParent(target);
+
+        shakeParent.transform.DOShakePosition(
+            duration: 1f,
+            strength: intensity / 100,
+            vibrato: 30,
+            randomness: 90f,
+            snapping: false,
+            fadeOut: false
         ).SetEase(Ease.Linear).SetLoops(-1).SetTarget(target);
         yield return null;
     }
