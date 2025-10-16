@@ -480,7 +480,7 @@ public class GameLoop : MonoBehaviour
 
         TextMeshPro tmp = textLine.GetComponent<TextMeshPro>();
         tmp.text = text;
-        StartCoroutine(FadeText(tmp, 0f, 1f, 0.2f));
+        FadeText(tmp, 1f, 0.2f);
 
         return textLine;
     }
@@ -590,27 +590,10 @@ public class GameLoop : MonoBehaviour
         }
     }
 
-    IEnumerator FadeText(TextMeshPro tmp, float from, float to, float duration)
+    void FadeText(TextMeshPro tmp, float to, float duration)
     {
-        float alpha = tmp.color.a;
         Color color = tmp.color * to;
-        color.a = alpha;
         tmp.DOColor(color, duration);
-        //tmp.DOFade(to,  duration * 0.5f);
-        yield return null;
-        // Color color = tmp.color;
-        // color.a = from;
-        // float elapsedTime = 0f;
-        // while (elapsedTime < duration)
-        // {
-        //     elapsedTime += Time.deltaTime;
-        //     color.a = Mathf.Lerp(from, to, elapsedTime / duration);
-        //     tmp.color = Color.Lerp(color * from, color * to, elapsedTime / duration);
-        //     yield return null;
-        // }
-        //
-        // color.a = to;
-        // tmp.color = color * to;
     }
 
     IEnumerator DestroyText(FloatingText text)
@@ -619,7 +602,7 @@ public class GameLoop : MonoBehaviour
 
         foreach (TextMeshPro line in text.linesTextMeshPros)
         {
-            StartCoroutine(FadeText(line, 1f, 0f, duration));
+            FadeText(line,  0f, duration);
         }
 
         yield return new WaitForSeconds(duration);
