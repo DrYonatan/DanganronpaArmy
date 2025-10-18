@@ -1,17 +1,25 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MapContainer : MonoBehaviour
 {
     public CanvasGroup canvasGroup;
-    void Update()
+    public Image map;
+    
+    public static MapContainer instance {get; private set;}
+
+    void Awake()
     {
-        if (Input.GetKey(KeyCode.Tab))
-        {
-            canvasGroup.alpha = 0.8f;
-        }
-        else
-        {
-            canvasGroup.alpha = 0f;
-        }
+        instance = this;
+    }
+
+    public void SetMap(Sprite map)
+    {
+        this.map.sprite = map;
+    }
+
+    public void HandleMapVisibility()
+    {
+        canvasGroup.alpha = Input.GetKey(KeyCode.Tab) ? 0.8f : 0f;
     }
 }
