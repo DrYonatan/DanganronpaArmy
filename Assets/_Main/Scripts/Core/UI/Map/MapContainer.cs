@@ -22,4 +22,9 @@ public class MapContainer : MonoBehaviour
     {
         canvasGroup.alpha = Input.GetKey(KeyCode.Tab) ? 0.8f : 0f;
     }
+
+    public void HideMap()
+    {
+        canvasGroup.alpha = 0f;
+    }
 }

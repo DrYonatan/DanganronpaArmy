@@ -181,7 +181,11 @@ public class WorldManager : MonoBehaviour
     void Update()
     {
         if(!DialogueSystem.instance.isActive && !PlayerInputManager.instance.isPaused && !isLoading)
-        currentRoom.MovementControl();
+           currentRoom.MovementControl();
+        else
+        {
+            MapContainer.instance.HideMap();
+        }
     }
 
 }
