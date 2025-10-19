@@ -116,10 +116,9 @@ public class FreeRoamRoom : Room
         }
     }
 
-    public void CenterCursor()
+    void CenterCursor()
     {
-        RectTransform cursor = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/6 - Controls/Cursor")
-            .GetComponent<RectTransform>();
+        RectTransform cursor = CursorManager.instance.cursor;
         cursor.anchorMin = new Vector2(0.5f, 0.5f);
         cursor.anchorMax = new Vector2(0.5f, 0.5f);
         cursor.pivot = new Vector2(0.5f, 0.5f);
