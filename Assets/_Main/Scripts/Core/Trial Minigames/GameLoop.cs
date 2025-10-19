@@ -8,34 +8,34 @@ using DG.Tweening;
 using DIALOGUE;
 using Text = TMPro.TextMeshProUGUI;
 
+
+public class FloatingText : MonoBehaviour
+{
+    public List<GameObject> linesGameObjects = new ();
+    public TextEffect introEffect;
+    public TextEffect outroEffect;
+    public List<TextEffect> textEffects;
+    public float ttl;
+    public List<TextMeshPro> linesTextMeshPros = new ();
+    public Evidence correctEvidence;
+    public int correctCharacterIndexBegin, correctCharacterIndexEnd;
+
+    public void Initialize(List<TextEffect> textEffects, TextEffect introEffect, TextEffect outroEffect,
+        float ttl,
+        Evidence correctEvidence, int correctCharacterIndexBegin, int correctCharacterIndexEnd)
+    {
+        this.textEffects = textEffects;
+        this.introEffect = introEffect;
+        this.outroEffect = outroEffect;
+        this.ttl = ttl;
+        this.correctEvidence = correctEvidence;
+        this.correctCharacterIndexBegin = correctCharacterIndexBegin;
+        this.correctCharacterIndexEnd = correctCharacterIndexEnd;
+    }
+}
+
 public class GameLoop : MonoBehaviour
 {
-    public class FloatingText
-    {
-        public List<GameObject> linesGameObjects;
-        public Transform textTransform;
-        public TextEffect introEffect;
-        public List<TextEffect> textEffects;
-        public float ttl;
-        public List<TextMeshPro> linesTextMeshPros;
-        public int correctCharacterIndexBegin, correctCharacterIndexEnd;
-
-        public FloatingText(List<GameObject> linesGameObjects, Transform textTransform, List<TextEffect> textEffects, TextEffect introEffect,
-            float ttl,
-            List<TextMeshPro> linesTextMeshPros, int correctCharacterIndexBegin, int correctCharacterIndexEnd)
-        {
-            this.linesTextMeshPros = linesTextMeshPros;
-            this.linesGameObjects = linesGameObjects;
-            this.textTransform = textTransform;
-            this.textEffects = textEffects;
-            this.introEffect = introEffect;
-            this.ttl = ttl;
-            this.correctCharacterIndexBegin = correctCharacterIndexBegin;
-            this.correctCharacterIndexEnd = correctCharacterIndexEnd;
-        }
-    }
-
-
     public static GameLoop instance { get; private set; }
 
     private void Awake()
@@ -61,7 +61,6 @@ public class GameLoop : MonoBehaviour
 
     List<FloatingText> debateTexts;
     CharacterStand characterStand;
-    Evidence correctEvidence;
 
     bool pause;
     bool isActive = false;
@@ -323,9 +322,9 @@ public class GameLoop : MonoBehaviour
         gameObject.GetComponent<TextShatterEffect>().Explosion(point);
     }
 
-    public bool CheckEvidence()
+    public bool CheckEvidence(Evidence evidence)
     {
-        return evidenceManager.Check(correctEvidence);
+        return evidenceManager.Check(evidence);
     }
 
     private void CorrectChoice()
@@ -490,12 +489,6 @@ public class GameLoop : MonoBehaviour
         int correctCharacterIndexBegin = -1;
         int correctCharacterIndexEnd = -1;
 
-        GameObject go = new GameObject("Text");
-        go.transform.SetParent(statementsCamera.transform.parent);
-        go.transform.position = textStartPosition.position + nodeDebateText.spawnOffset;
-        ;
-        go.transform.localScale = nodeDebateText.scale;
-
         string str = nodeDebateText.text;
         int orangeStartIndex = str.IndexOf("{");
         if (orangeStartIndex != -1)
@@ -506,27 +499,31 @@ public class GameLoop : MonoBehaviour
 
         string[] results = AddOrangeToText(str.Split("\n"), correctCharacterIndexBegin, correctCharacterIndexEnd);
 
-        List<GameObject> textLineObjects = new List<GameObject>();
+
+        GameObject textGo = new GameObject();
+        FloatingText floatingText = textGo.AddComponent<FloatingText>();
+
+        floatingText.Initialize(nodeDebateText.textEffects,
+            nodeDebateText.introEffect,
+            nodeDebateText.outroEffect,
+            nodeDebateText.ttl,
+            nodeDebateText.correctEvidence,
+            correctCharacterIndexBegin,
+            correctCharacterIndexEnd);
+
+        floatingText.transform.SetParent(statementsCamera.transform.parent);
+        floatingText.transform.position = textStartPosition.position + nodeDebateText.spawnOffset;
+        floatingText.transform.localScale = nodeDebateText.scale;
 
         for (int i = 0; i < results.Length; i++)
         {
-            GameObject textLine = GenerateTextLine(go.transform, results[i], i);
-            textLineObjects.Add(textLine);
+            GameObject textLine = GenerateTextLine(floatingText.transform, results[i], i);
+            floatingText.linesGameObjects.Add(textLine);
 
             GenerateTextLineColliders(textLine.GetComponent<TextMeshPro>());
         }
 
-
-        FloatingText floatingText = new FloatingText(
-            textLineObjects,
-            go.transform,
-            nodeDebateText.textEffect,
-            nodeDebateText.introEffect,
-            nodeDebateText.ttl,
-            textLineObjects.ConvertAll(x => x.GetComponent<TextMeshPro>()),
-            correctCharacterIndexBegin,
-            correctCharacterIndexEnd
-        );
+        floatingText.linesTextMeshPros = floatingText.linesGameObjects.ConvertAll(x => x.GetComponent<TextMeshPro>());
 
         debateTexts.Add(floatingText);
         StartCoroutine(StartTextEffects(floatingText));
@@ -535,10 +532,10 @@ public class GameLoop : MonoBehaviour
     IEnumerator StartTextEffects(FloatingText floatingText)
     {
         if (floatingText.introEffect != null)
-           yield return floatingText.introEffect.Apply(floatingText.textTransform);
+            yield return floatingText.introEffect.Apply(floatingText.transform);
         foreach (TextEffect textEffect in floatingText.textEffects)
         {
-            StartCoroutine(textEffect.Apply(floatingText.textTransform));
+            StartCoroutine(textEffect.Apply(floatingText.transform));
         }
     }
 
@@ -571,8 +568,6 @@ public class GameLoop : MonoBehaviour
 
     void SpawnText(DebateNode nextNode)
     {
-        correctEvidence = nextNode.evidence;
-
         if (nextNode.character != null)
         {
             characterStand = TrialManager.instance.characterStands.Find(stand => stand.character == nextNode.character);
@@ -600,15 +595,27 @@ public class GameLoop : MonoBehaviour
     {
         float duration = 0.2f;
 
-        foreach (TextMeshPro line in text.linesTextMeshPros)
+        if (text.outroEffect != null)
         {
-            FadeText(line,  0f, duration);
+            yield return text.outroEffect.Apply(text.transform); 
         }
+        else
+        {
+            foreach (TextMeshPro line in text.linesTextMeshPros)
+            {
+                FadeText(line, 0f, duration);
+            }
+        
+            yield return new WaitForSeconds(duration);
 
-        yield return new WaitForSeconds(duration);
-
-        text.textTransform.DOKill();
-        Destroy(text.textTransform.gameObject);
+            text.transform.DOKill();
+            Destroy(text.gameObject);
+        }
+        
+        text.transform.DOKill();
+        Destroy(text.gameObject);
+        
+        
     }
 
     // Gets the textLine to create for, the range and whether or not to make a child (AKA the orange part)

@@ -6,18 +6,20 @@ using UnityEngine;
 public class DebateText
 {
     public string text;
-    public List<TextEffect> textEffect;
+    public List<TextEffect> textEffects;
     public TextEffect introEffect;
+    public TextEffect outroEffect;
     public Vector3 spawnOffset;
     public Vector3 rotationOffset;
     public Vector3 scale = Vector3.one;
     public float ttl = 1f;
     public Vector2 textLineScrollPosition;
+    public Evidence correctEvidence;
 
     public DebateText()
     {
         text = "";
-        textEffect = new List<TextEffect>();
+        textEffects = new List<TextEffect>();
         spawnOffset = Vector3.zero;
         ttl = 1f;
         textLineScrollPosition = new Vector2(0, 0);

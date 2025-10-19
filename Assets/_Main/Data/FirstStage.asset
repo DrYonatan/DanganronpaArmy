@@ -18,7 +18,7 @@ MonoBehaviour:
       x: 0
       y: 0
       width: 200
-      height: 42620
+      height: 47340
     commandsScrollPosition: {x: 0, y: 0}
     title: 
     drawNode: {fileID: 11400000, guid: 81b17a11177a0f4449f7df8eebe49b4b, type: 2}
@@ -33,16 +33,15 @@ MonoBehaviour:
     fovOffset: -9.86
     positionOffset: {x: 1.39, y: 0, z: -13.57}
     rotationOffset: {x: 0, y: -2.1, z: -2.59}
-    evidence: {fileID: 11400000, guid: 61f792b87e669574793f5e93b1753771, type: 2}
     statement: 
     voiceLine: {fileID: 0}
-    textLinesScrollPosition: {x: 0, y: 19.600006}
+    textLinesScrollPosition: {x: 0, y: 0}
   - nodeRect:
       serializedVersion: 2
       x: 0
       y: 0
       width: 200
-      height: 129580
+      height: 326940
     commandsScrollPosition: {x: 0, y: 0}
     title: 
     drawNode: {fileID: 11400000, guid: 81b17a11177a0f4449f7df8eebe49b4b, type: 2}
@@ -54,14 +53,13 @@ MonoBehaviour:
     characterStand: {fileID: 0}
     cameraEffects:
     - {fileID: 11400000, guid: 2b0b273d7412a6b469741fc4eda2fd17, type: 2}
-    fovOffset: 0
-    positionOffset: {x: 0.05, y: -0, z: -0.98}
+    fovOffset: 4.56
+    positionOffset: {x: 0.05, y: -0, z: 1.64}
     rotationOffset: {x: 0, y: -1.59, z: 2.91}
-    evidence: {fileID: 11400000, guid: 4ba997dac63149946b503189cba49436, type: 2}
     statement: "\u05D4\u05DE\u05EA\u05E0\u05D3\u05D1\u05D9\u05DD \u05DC\u05E0\u05D9\u05E7\u05D5\u05D9
       \u05D4\u05E9\u05D9\u05E8\u05D5\u05EA\u05D9\u05DD!"
     voiceLine: {fileID: 0}
-    textLinesScrollPosition: {x: 0, y: 19.600006}
+    textLinesScrollPosition: {x: 0, y: 0}
   - nodeRect:
       serializedVersion: 2
       x: 0
@@ -82,10 +80,9 @@ MonoBehaviour:
     fovOffset: 0
     positionOffset: {x: 0, y: 1.17, z: -2.85}
     rotationOffset: {x: 5.64, y: 0, z: 0}
-    evidence: {fileID: 11400000, guid: 61f792b87e669574793f5e93b1753771, type: 2}
     statement: "\u05E9\u05DC\u05D5\u05E1"
     voiceLine: {fileID: 0}
-    textLinesScrollPosition: {x: 0, y: 19.600006}
+    textLinesScrollPosition: {x: 0, y: 0}
   - nodeRect:
       serializedVersion: 2
       x: 0
@@ -106,7 +103,6 @@ MonoBehaviour:
     fovOffset: -10.5
     positionOffset: {x: 2.05, y: 1.29, z: -29.73}
     rotationOffset: {x: 2.55, y: -2.38, z: 0}
-    evidence: {fileID: 11400000, guid: 61f792b87e669574793f5e93b1753771, type: 2}
     statement: Statement
     voiceLine: {fileID: 0}
     textLinesScrollPosition: {x: 0, y: 0}
@@ -116,7 +112,7 @@ MonoBehaviour:
       x: 0
       y: 0
       width: 0
-      height: 4240
+      height: 12960
     commandsScrollPosition: {x: 0, y: 0}
     title: 
     drawNode: {fileID: 11400000, guid: 6344f4092040cbd4183fc5d6dc877647, type: 2}
@@ -169,43 +165,59 @@ MonoBehaviour:
         - text: "\u05D1\u05D5\u05D0 \u05D0\u05DC\u05D9\u05E0\u05D5 \u05DC\u05E2\u05D5\u05DC\u05DD
             \u05E7\u05E8\u05E7\u05E1\n\u05D1\u05D5\u05D0 \u05E2\u05DB\u05E9\u05D9\u05D5
             \u05D5\u05DE\u05D9\u05D3"
-          textEffect:
+          textEffects:
           - {fileID: 11400000, guid: e5ad80d2a8ee1f042bf34c66a49d1aef, type: 2}
           introEffect: {fileID: 11400000, guid: 6c738300247b4e044bea12b9fa18f612, type: 2}
+          outroEffect: {fileID: 11400000, guid: 44c54d965927e7d4cb461be6d320c7af, type: 2}
           spawnOffset: {x: 0.2, y: 0, z: 0}
-          rotationOffset: {x: 0, y: 0, z: 0}
+          rotationOffset: {x: 0.2, y: 0, z: 0}
           scale: {x: 1, y: 1, z: 1}
           ttl: 3
-          textLineScrollPosition: {x: 0, y: 14}
+          textLineScrollPosition: {x: 0, y: 0}
+          correctEvidence: {fileID: 0}
     - rid: 3042479711257624578
       type: {class: DebateTextData, ns: , asm: Assembly-CSharp}
       data:
         textLines:
         - text: "\u05DB\u05D5\u05DC\u05DD \u05D8\u05D5\u05E8\u05E7\u05E1\u05D9\u05DD
             \u05E4\u05D4"
-          textEffect:
+          textEffects:
           - {fileID: 11400000, guid: 1783f855e5ca44a46918165450f0b808, type: 2}
           introEffect: {fileID: 0}
+          outroEffect: {fileID: 0}
           spawnOffset: {x: 0, y: 0, z: 0}
           rotationOffset: {x: 0, y: 0, z: 0}
           scale: {x: 1, y: 1, z: 1}
           ttl: 3
-          textLineScrollPosition: {x: 0, y: 6}
+          textLineScrollPosition: {x: 0, y: 0}
+          correctEvidence: {fileID: 0}
     - rid: 3042479732272136192
       type: {class: DebateTextData, ns: , asm: Assembly-CSharp}
       data:
         textLines:
         - text: "\u05D1\u05D5\u05D0 \u05D9\u05E9 {\u05D7\u05D2\u05D9\u05D2\u05D4
             \u05D8\u05D5\u05E8\u05E7\u05D9\u05EA \u05E4\u05D4\n\u05D1\u05D0\u05D4\u05D9\u05DC}"
-          textEffect:
-          - {fileID: 11400000, guid: 776df99a68a7fa04d9cebde19eafed87, type: 2}
+          textEffects:
           - {fileID: 11400000, guid: 78cef4dbf176f274ba273d043b6ea500, type: 2}
+          - {fileID: 11400000, guid: 776df99a68a7fa04d9cebde19eafed87, type: 2}
           introEffect: {fileID: 11400000, guid: 79d05a79f475ef643a1ecc36ad08d221, type: 2}
+          outroEffect: {fileID: 0}
           spawnOffset: {x: 0, y: 0, z: 0}
           rotationOffset: {x: 0, y: 0, z: 0}
           scale: {x: 1, y: 1, z: 1}
           ttl: 3
           textLineScrollPosition: {x: 0, y: 0}
+          correctEvidence: {fileID: 11400000, guid: 55f6c2af98b373c458b3a6a909f35b54, type: 2}
+        - text: "\u05D9\u05E9 {\u05D4\u05D5\u05DB\u05D7\u05D4}"
+          textEffects: []
+          introEffect: {fileID: 0}
+          outroEffect: {fileID: 0}
+          spawnOffset: {x: -0.97, y: -0.5, z: 0}
+          rotationOffset: {x: -0.97, y: -0.5, z: 0}
+          scale: {x: 1, y: 1, z: 1}
+          ttl: 3.96
+          textLineScrollPosition: {x: 0, y: 0}
+          correctEvidence: {fileID: 11400000, guid: 4ba997dac63149946b503189cba49436, type: 2}
     - rid: 3042480029218373755
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -217,11 +229,13 @@ MonoBehaviour:
         textLines:
         - text: "\u05DC\u05D0 \u05D0\u05E0\u05D7\u05E0\u05D5 \u05DC\u05D0 {\u05D8\u05D5\u05E8\u05E7\u05D9\u05DD}
             \u05E4\u05D4\n\u05D1\u05DB\u05DC\u05DC"
-          textEffect:
+          textEffects:
           - {fileID: 11400000, guid: 776df99a68a7fa04d9cebde19eafed87, type: 2}
           introEffect: {fileID: 0}
+          outroEffect: {fileID: 0}
           spawnOffset: {x: 0, y: 0, z: 0}
           rotationOffset: {x: 0, y: 0, z: 0}
           scale: {x: 1, y: 1, z: 1}
           ttl: 3
           textLineScrollPosition: {x: 0, y: 0}
+          correctEvidence: {fileID: 0}
