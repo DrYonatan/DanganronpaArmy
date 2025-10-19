@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DIALOGUE;
 using UnityEngine;
+using UnityEngine.UI;
 
 [CreateAssetMenu(menuName = "Rooms/Free Roam Room")]
 public class FreeRoamRoom : Room
@@ -15,8 +16,16 @@ public class FreeRoamRoom : Room
 
     float playerReach = 14f;
 
+    public Sprite map;
+
+    void Awake()
+    {
+        MapContainer.instance.SetMap(map);
+    }
+
     public override void MovementControl()
     {
+        MapContainer.instance.HandleMapVisibility();
         Move();
         Look();
         Interact();
