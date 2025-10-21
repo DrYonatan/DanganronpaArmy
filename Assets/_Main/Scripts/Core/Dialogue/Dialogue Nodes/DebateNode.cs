@@ -9,7 +9,7 @@ namespace _Main.Scripts.Court
     {
         public string statement;
         public AudioClip voiceLine;
-        public Vector2 textLinesScrollPosition;
+        public int textLinesPage;
 
         public DebateNode(DrawNode _drawNode) : base(_drawNode)
         {
