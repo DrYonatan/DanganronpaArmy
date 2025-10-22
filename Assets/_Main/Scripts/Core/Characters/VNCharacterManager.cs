@@ -28,11 +28,12 @@ namespace CHARACTERS
         public void CreateCharacter(CharacterPositionMapping characterInfo)
         {
             GameObject characterObj = Instantiate(characterInfo.character.vnObjectPrefab, characterLayer);
+            characterObj.transform.localPosition = Vector3.zero;
             CanvasGroup canvasGroup = characterObj.GetComponent<CanvasGroup>();
             canvasGroup.alpha = 0f;
             canvasGroup.DOFade(1f, 0.25f);
             characterObj.name = characterInfo.character.name;
-            characterObj.transform.position = new Vector3(GetCharacterPosition((CameraLookDirection)characterInfo.position).x, characterObj.transform.position.y, characterObj.transform.position.z);
+            characterObj.transform.localPosition = new Vector3(GetCharacterPosition((CameraLookDirection)characterInfo.position).x, characterInfo.character.vnObjectPrefab.transform.localPosition.y, 0);
             characterObjects.Add(characterInfo.character, characterObj);
         }
 
@@ -117,19 +118,19 @@ namespace CHARACTERS
             switch (lookDirection)
             {
                 case CameraLookDirection.Left:
-                    res = left.position;
+                    res = left.localPosition;
                     break;
                 case CameraLookDirection.MidLeft:
-                    res = midLeft.position;
+                    res = midLeft.localPosition;
                     break;
                 case CameraLookDirection.Middle:
-                    res = middle.position;
+                    res = middle.localPosition;
                     break;
                 case CameraLookDirection.MidRight:
-                    res = midRight.position;
+                    res = midRight.localPosition;
                     break;
                 case CameraLookDirection.Right:
-                    res = right.position;
+                    res = right.localPosition;
                     break;
             }
             
