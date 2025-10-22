@@ -65,7 +65,7 @@ namespace DIALOGUE
         public Coroutine Say(DialogueNode node)
         {
             if(!isActive)
-            SetIsActive(true);
+               SetIsActive(true);
             return conversationManager.PlayNodeText(node);
         }
 
@@ -90,6 +90,11 @@ namespace DIALOGUE
         {
             ClearSpeakerName();
             conversationManager.ClearTextBox();
+        }
+
+        public void StartCoroutineHelper(IEnumerator enumerator)
+        {
+            StartCoroutine(enumerator);
         }
 
         public void SetTextBox(DialogueContainer container)

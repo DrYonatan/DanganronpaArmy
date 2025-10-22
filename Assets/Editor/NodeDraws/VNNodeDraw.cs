@@ -82,6 +82,7 @@ public class VNNodeDraw : DrawNode
             GenericMenu menu = new GenericMenu();
             menu.AddItem(new GUIContent("Play Sound Effect"), false, () => AddCommand(node, new PlaySoundEffectCommand()));
             menu.AddItem(new GUIContent("Play Music"), false, () => AddCommand(node, new PlayMusicCommand()));
+            menu.AddItem(new GUIContent("Play Ultimate Animation"), false, () => AddCommand(node, new PlayUltimateAnimation()));
             // Add more as needed
             menu.ShowAsContext();
         }

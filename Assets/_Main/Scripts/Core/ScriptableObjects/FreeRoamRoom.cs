@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DIALOGUE;
 using UnityEngine;
+using UnityEngine.UI;
 
 [CreateAssetMenu(menuName = "Rooms/Free Roam Room")]
 public class FreeRoamRoom : Room
@@ -15,8 +16,16 @@ public class FreeRoamRoom : Room
 
     float playerReach = 14f;
 
+    public Sprite map;
+
+    void Awake()
+    {
+        MapContainer.instance.SetMap(map);
+    }
+
     public override void MovementControl()
     {
+        MapContainer.instance.HandleMapVisibility();
         Move();
         Look();
         Interact();
@@ -107,10 +116,9 @@ public class FreeRoamRoom : Room
         }
     }
 
-    public void CenterCursor()
+    void CenterCursor()
     {
-        RectTransform cursor = GameObject.Find("VN controller/Root/Canvas - Main/LAYERS/6 - Controls/Cursor")
-            .GetComponent<RectTransform>();
+        RectTransform cursor = CursorManager.instance.cursor;
         cursor.anchorMin = new Vector2(0.5f, 0.5f);
         cursor.anchorMax = new Vector2(0.5f, 0.5f);
         cursor.pivot = new Vector2(0.5f, 0.5f);
