@@ -4,43 +4,38 @@ using UnityEngine;
 using TMPro;
 using System;
 using _Main.Scripts.Court;
+using DG.Tweening;
 using DIALOGUE;
 using Text = TMPro.TextMeshProUGUI;
 
+
+public class FloatingText : MonoBehaviour
+{
+    public List<GameObject> linesGameObjects = new ();
+    public TextEffect introEffect;
+    public TextEffect outroEffect;
+    public List<TextEffect> textEffects;
+    public float ttl;
+    public List<TextMeshPro> linesTextMeshPros = new ();
+    public Evidence correctEvidence;
+    public int correctCharacterIndexBegin, correctCharacterIndexEnd;
+
+    public void Initialize(List<TextEffect> textEffects, TextEffect introEffect, TextEffect outroEffect,
+        float ttl,
+        Evidence correctEvidence, int correctCharacterIndexBegin, int correctCharacterIndexEnd)
+    {
+        this.textEffects = textEffects;
+        this.introEffect = introEffect;
+        this.outroEffect = outroEffect;
+        this.ttl = ttl;
+        this.correctEvidence = correctEvidence;
+        this.correctCharacterIndexBegin = correctCharacterIndexBegin;
+        this.correctCharacterIndexEnd = correctCharacterIndexEnd;
+    }
+}
+
 public class GameLoop : MonoBehaviour
 {
-    public class TextLine
-    {
-        public GameObject textGO;
-        public RectTransform textRT;
-        public List<TextEffect> textEffect;
-        public float ttl;
-        public TextMeshPro textMeshPro;
-        public int correctTMPIndex, correctCharacterIndexBegin, correctCharacterIndexEnd;
-
-        public TextLine(GameObject textGO, RectTransform textRT, List<TextEffect> textEffect, float ttl,
-            TextMeshPro tmp, int correctTMPIndex, int correctCharacterIndexBegin, int correctCharacterIndexEnd)
-        {
-            this.textMeshPro = tmp;
-            this.textGO = textGO;
-            this.textRT = textRT;
-            this.textEffect = textEffect;
-            this.ttl = ttl;
-            this.correctTMPIndex = correctTMPIndex;
-            this.correctCharacterIndexBegin = correctCharacterIndexBegin;
-            this.correctCharacterIndexEnd = correctCharacterIndexEnd;
-        }
-
-        internal void Apply()
-        {
-            for (int i = 0; i < textEffect.Count; i++)
-            {
-                textEffect[i].Apply(textRT);
-            }
-        }
-    }
-
-
     public static GameLoop instance { get; private set; }
 
     private void Awake()
@@ -64,9 +59,8 @@ public class GameLoop : MonoBehaviour
     float timer;
     int textIndex;
 
-    List<TextLine> textLines;
+    List<FloatingText> debateTexts;
     CharacterStand characterStand;
-    Evidence correctEvidence;
 
     bool pause;
     bool isActive = false;
@@ -85,7 +79,7 @@ public class GameLoop : MonoBehaviour
     public void PlayDebate(DebateSegment debate)
     {
         this.debateSegment = debate;
-        textLines = new List<TextLine>();
+        debateTexts = new List<FloatingText>();
         evidenceManager.ShowEvidence(debateSegment.settings.evidences);
         MusicManager.instance.PlaySong(debateSegment.settings.audioClip);
         stageTimer = defaultStageTime;
@@ -104,7 +98,6 @@ public class GameLoop : MonoBehaviour
         yield return StartCoroutine(cameraController.DebateStartCameraMovement(3f));
         isActive = true;
         TimeManipulationManager.instance.isInputActive = true;
-
     }
 
     // Update is called once per frame
@@ -127,7 +120,7 @@ public class GameLoop : MonoBehaviour
                 textIndex = 0;
                 reachedEnd = true;
             }
-            
+
 
             timer += Time.deltaTime;
             stageTimer -= Time.deltaTime;
@@ -138,8 +131,8 @@ public class GameLoop : MonoBehaviour
             {
                 GameOver();
             }
-        
-            if (textLines.Count == 0)
+
+            if (debateTexts.Count == 0)
             {
                 if (reachedEnd)
                 {
@@ -153,28 +146,19 @@ public class GameLoop : MonoBehaviour
                     timer = 0;
                     textIndex++;
                 }
-                
             }
 
             int index = 0;
-            while (index < textLines.Count)
+            while (index < debateTexts.Count)
             {
-                if (textLines[index].ttl < timer)
+                if (debateTexts[index].ttl < timer)
                 {
-                    StartCoroutine(DestroyText(textLines[index].textGO));
-                    textLines.RemoveAt(index);
+                    StartCoroutine(DestroyText(debateTexts[index]));
+                    debateTexts.RemoveAt(index);
                     index--;
                 }
 
                 index++;
-            }
-
-            if (textLines.Count > 0)
-            {
-                for (int i = 0; i < textLines.Count; i++)
-                {
-                    textLines[i].Apply();
-                }
             }
 
             if (!isShooting)
@@ -183,7 +167,6 @@ public class GameLoop : MonoBehaviour
                 HandleMouseScroll();
                 HandleMouseControl();
             }
-              
         }
     }
 
@@ -200,7 +183,6 @@ public class GameLoop : MonoBehaviour
         yield return SwitchToTextBoxMode();
         yield return TrialDialogueManager.instance.RunNodes(finishNodes);
         yield return SwitchToDebateMode();
-
     }
 
     IEnumerator SwitchToTextBoxMode()
@@ -227,13 +209,13 @@ public class GameLoop : MonoBehaviour
         debateUIAnimator.ShowCylinderAndCircles();
         CursorManager.instance.Show();
     }
-    
-    
+
+
     private void GameOver()
     {
         DeactivateDebate();
     }
-    
+
     void HandleMouseControl()
     {
         TrialCursorManager.instance.ReticleAsCursor();
@@ -248,7 +230,7 @@ public class GameLoop : MonoBehaviour
 
     void HandleMouseScroll()
     {
-        if(Input.GetAxis("Mouse ScrollWheel") < 0)
+        if (Input.GetAxis("Mouse ScrollWheel") < 0)
         {
             evidenceManager.SelectNextEvidence();
             evidenceManager.SelectNextEvidence();
@@ -309,9 +291,8 @@ public class GameLoop : MonoBehaviour
                 StartCoroutine(MoveBullet(bullet, direction, 1f));
                 debateUIAnimator.MoveCylinder();
                 debateUIAnimator.GrowAndShrinkCircles();
-            } 
+            }
         }
-        
     }
 
     IEnumerator MoveBullet(GameObject bullet, Vector3 direction, float duration)
@@ -326,8 +307,8 @@ public class GameLoop : MonoBehaviour
 
         Destroy(bullet);
         isShooting = false;
-        if(isActive)
-           debateUIAnimator.LoadBullet();
+        if (isActive)
+            debateUIAnimator.LoadBullet();
     }
 
     public void LoadBullets()
@@ -341,17 +322,20 @@ public class GameLoop : MonoBehaviour
         gameObject.GetComponent<TextShatterEffect>().Explosion(point);
     }
 
-    public bool CheckEvidence()
+    public bool CheckEvidence(Evidence evidence)
     {
-        return evidenceManager.Check(correctEvidence);
+        return evidenceManager.Check(evidence);
     }
 
     private void CorrectChoice()
     {
         DeactivateDebate();
-        foreach (TextLine text in textLines)
+        foreach (FloatingText text in debateTexts)
         {
-            gameObject.GetComponent<TextShatterEffect>().Shatter(text);
+            foreach (TextMeshPro lineTMP in text.linesTextMeshPros)
+            {
+                gameObject.GetComponent<TextShatterEffect>().Shatter(lineTMP);
+            }
         }
 
         OnHitStatement();
@@ -360,35 +344,38 @@ public class GameLoop : MonoBehaviour
 
     public void WrongHit()
     {
-        foreach(TextLine text in textLines)
+        foreach (FloatingText text in debateTexts)
         {
-            StartCoroutine(DestroyText(text.textGO));
+            StartCoroutine(DestroyText(text));
         }
-        textLines.Clear();
+
+        debateTexts.Clear();
         DeactivateDebate();
         StartCoroutine(PlayWrongHitNodes());
     }
 
     IEnumerator PlayWrongHitNodes()
     {
-        List<DiscussionNode> wrongNodes = UtilityNodesRuntimeBank.instance.nodesCollection.characterDefaultWrongNodes.Find(
-            item => item.character == debateSegment.dialogueNodes[textIndex-1 >= 0 ? textIndex - 1 : debateSegment.dialogueNodes.Count-1].character).nodes;
-        
-        
+        List<DiscussionNode> wrongNodes = UtilityNodesRuntimeBank.instance.nodesCollection.characterDefaultWrongNodes
+            .Find(item => item.character == debateSegment
+                .dialogueNodes[textIndex - 1 >= 0 ? textIndex - 1 : debateSegment.dialogueNodes.Count - 1].character)
+            .nodes;
+
+
         yield return SwitchToTextBoxMode();
         yield return TrialDialogueManager.instance.RunNodes(wrongNodes);
         yield return new WaitForEndOfFrame();
         debateUIAnimator.FadeFromAngleToAngle();
         TrialManager.instance.DecreaseHealth(1f);
-        yield return TrialDialogueManager.instance.RunNodes(UtilityNodesRuntimeBank.instance.nodesCollection.debateWrongEvidence);
+        yield return TrialDialogueManager.instance.RunNodes(UtilityNodesRuntimeBank.instance.nodesCollection
+            .debateWrongEvidence);
         CharacterStand characterStand =
             TrialManager.instance.characterStands.Find((stand) => stand.character.name == "Alon");
         characterStand.SetSprite(characterStand.character.emotions[1]);
         textIndex = 0;
         yield return SwitchToDebateMode();
-        
     }
-    
+
 
     void OnHitStatement()
     {
@@ -410,14 +397,13 @@ public class GameLoop : MonoBehaviour
         yield return StartCoroutine(screenShatter.ScreenShatter());
         ImageScript.instance.FadeToBlack(0.01f);
         yield return new WaitForSeconds(0.01f);
-        
+
         ImageScript.instance.UnFadeToBlack(0.5f);
         yield return cameraController.DiscussionIntroMovement(1f);
         musicManager.StopSong();
         debateSegment.Finish();
-
     }
-    
+
     IEnumerator PlayNoThatsWrong(float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -434,35 +420,154 @@ public class GameLoop : MonoBehaviour
         {
             prevCharacter = debateSegment.dialogueNodes[dialogueNodeIndex - 1].character;
         }
-        
+
         DebateNode nextNode = debateSegment.dialogueNodes[dialogueNodeIndex];
         SpawnText(nextNode);
         effectController.Reset();
-        
+
         if (dialogueNodeIndex == 0 || prevCharacter != nextNode.character)
         {
             debateUIAnimator.ChangeFace(nextNode.character.faceSprite);
         }
-        
-        
+
+
         debateUIAnimator.UpdateName(nextNode.character.displayName);
         debateUIAnimator.HighlightNode(textIndex);
-        yield return cameraController.SpinToTarget(characterStand.transform, characterStand.heightPivot, nextNode.positionOffset, nextNode.rotationOffset, nextNode.fovOffset);
-       
+        yield return cameraController.SpinToTarget(characterStand.transform, characterStand.heightPivot,
+            nextNode.positionOffset, nextNode.rotationOffset, nextNode.fovOffset);
+
         foreach (CameraEffect cameraEffect in nextNode.cameraEffects)
-        { 
+        {
             effectController.StartEffect(cameraEffect);
+        }
+    }
+
+    string[] AddOrangeToText(string[] strings, int orangeStartIndex, int orangeEndIndex)
+    {
+        string[] results = new string[strings.Length];
+        int overallIndex = 0;
+        for (int j = 0; j < strings.Length; j++)
+        {
+            results[j] = strings[j];
+            int statementStartIndex = strings[j].IndexOf("{");
+            if (statementStartIndex != -1)
+            {
+                results[j] = strings[j].Replace("{", "<color=orange>");
+            }
+            else if (overallIndex <= orangeEndIndex && overallIndex >= orangeStartIndex)
+            {
+                results[j] = "<color=orange>" + strings[j];
+            }
+
+
+            int statementEndIndex = strings[j].IndexOf("}");
+            if (statementEndIndex != -1)
+            {
+                results[j] = results[j].Replace("}", "</color>");
+            }
+
+            overallIndex += strings[j].Length;
+        }
+
+        return results;
+    }
+
+    GameObject GenerateTextLine(Transform parent, string text, int index)
+    {
+        GameObject textLine = Instantiate(textPrefab, parent);
+        textLine.transform.localPosition += index * 0.2f * Vector3.down;
+
+        TextMeshPro tmp = textLine.GetComponent<TextMeshPro>();
+        tmp.text = text;
+        FadeText(tmp, 1f, 0.2f);
+
+        return textLine;
+    }
+
+    void GenerateTextLines(DebateText nodeDebateText)
+    {
+        int correctCharacterIndexBegin = -1;
+        int correctCharacterIndexEnd = -1;
+
+        string str = nodeDebateText.text;
+        int orangeStartIndex = str.IndexOf("{");
+        if (orangeStartIndex != -1)
+        {
+            correctCharacterIndexBegin = orangeStartIndex;
+            correctCharacterIndexEnd = str.IndexOf("}");
+        }
+
+        string[] results = AddOrangeToText(str.Split("\n"), correctCharacterIndexBegin, correctCharacterIndexEnd);
+
+
+        GameObject textGo = new GameObject();
+        FloatingText floatingText = textGo.AddComponent<FloatingText>();
+
+        floatingText.Initialize(nodeDebateText.textEffects,
+            nodeDebateText.introEffect,
+            nodeDebateText.outroEffect,
+            nodeDebateText.ttl,
+            nodeDebateText.correctEvidence,
+            correctCharacterIndexBegin,
+            correctCharacterIndexEnd);
+
+        floatingText.transform.SetParent(statementsCamera.transform.parent);
+        floatingText.transform.position = textStartPosition.position + nodeDebateText.spawnOffset;
+        floatingText.transform.localScale = nodeDebateText.scale;
+
+        for (int i = 0; i < results.Length; i++)
+        {
+            GameObject textLine = GenerateTextLine(floatingText.transform, results[i], i);
+            floatingText.linesGameObjects.Add(textLine);
+
+            GenerateTextLineColliders(textLine.GetComponent<TextMeshPro>());
+        }
+
+        floatingText.linesTextMeshPros = floatingText.linesGameObjects.ConvertAll(x => x.GetComponent<TextMeshPro>());
+
+        debateTexts.Add(floatingText);
+        StartCoroutine(StartTextEffects(floatingText));
+    }
+
+    IEnumerator StartTextEffects(FloatingText floatingText)
+    {
+        if (floatingText.introEffect != null)
+            yield return floatingText.introEffect.Apply(floatingText.transform);
+        foreach (TextEffect textEffect in floatingText.textEffects)
+        {
+            StartCoroutine(textEffect.Apply(floatingText.transform));
+        }
+    }
+
+    void GenerateTextLineColliders(TextMeshPro textLine)
+    {
+        int orangeStartIndex = textLine.text.IndexOf("<color=orange>");
+        int orangeEndIndex = textLine.text.IndexOf("</color>");
+
+        textLine.ForceMeshUpdate();
+
+        if (orangeEndIndex == -1)
+        {
+            orangeEndIndex = textLine.textInfo.characterCount + "<color=orange>".Length;
+        }
+
+        if (orangeStartIndex !=
+            -1) // if there's a statement, build box colliders for the segment before, in and after the statement
+        {
+            CreateColliderAroundTextRange(textLine.gameObject, 0, orangeStartIndex - 1, false);
+            CreateColliderAroundTextRange(textLine.gameObject, orangeStartIndex,
+                orangeEndIndex - "<color=orange>".Length, true);
+            CreateColliderAroundTextRange(textLine.gameObject, orangeEndIndex - "<color=orange>".Length,
+                textLine.textInfo.characterCount - 1, false);
+        }
+        else // if there's no statement, just build one box collider
+        {
+            CreateColliderAroundTextRange(textLine.gameObject, 0, textLine.textInfo.characterCount - 1, false);
         }
     }
 
     void SpawnText(DebateNode nextNode)
     {
-        int correctTMPIndex = -1;
-        int correctCharacterIndexBegin = -1;
-        int correctCharacterIndexEnd = -1;
-
-        correctEvidence = nextNode.evidence;
-
         if (nextNode.character != null)
         {
             characterStand = TrialManager.instance.characterStands.Find(stand => stand.character == nextNode.character);
@@ -476,88 +581,47 @@ public class GameLoop : MonoBehaviour
         DebateTextData textData = nextNode.textData as DebateTextData;
         for (int i = 0; i < textData.textLines.Count; i++)
         {
-            correctTMPIndex = -1;
-            correctCharacterIndexBegin = -1;
-            correctCharacterIndexEnd = -1;
-
-            GameObject go = Instantiate(textPrefab, statementsCamera.transform.parent);
-            go.transform.position = textStartPosition.position;
-            go.transform.position += textData.textLines[i].spawnOffset;
-            go.transform.localScale = textData.textLines[i].scale;
-
-            TextMeshPro tmp = go.GetComponent<TextMeshPro>();
-             
-            string str = textData.textLines[i].text;
-            int indexOf = str.IndexOf("{0}");
-            if (indexOf != -1)
-            {
-                correctTMPIndex = i;
-                correctCharacterIndexBegin = indexOf;
-                correctCharacterIndexEnd = indexOf + nextNode.statement.Length;
-                str = string.Format(textData.textLines[i].text,
-                    "<color=orange>" + nextNode.statement +
-                    "</color>"); //  + ColorUtility.ToHtmlStringRGBA(nextDialogueNode.statementColor) +">" + nextDialogueNode.statement + 
-            }
-
-            tmp.text = str;
-            StartCoroutine(FadeText(tmp, 0f, 1f, 0.2f));
-
-            TextLine textLine = new TextLine(
-                go,
-                go.GetComponent<RectTransform>(),
-                textData.textLines[i].textEffect,
-                textData.textLines[i].ttl,
-                go.GetComponent<TextMeshPro>(),
-                correctTMPIndex,
-                correctCharacterIndexBegin,
-                correctCharacterIndexEnd
-            );
-
-            textLine.textMeshPro.ForceMeshUpdate();
-            if (correctCharacterIndexBegin !=
-                -1) // if there's a statement, build box colliders for the segment before, in and after the statement
-            {
-                CreateColliderAroundTextRange(textLine, 0, correctCharacterIndexBegin - 1, false);
-                CreateColliderAroundTextRange(textLine, correctCharacterIndexBegin, correctCharacterIndexEnd, true);
-                CreateColliderAroundTextRange(textLine, correctCharacterIndexEnd,
-                    textLine.textMeshPro.textInfo.characterCount - 1, false);
-            }
-            else // if there's no statement, just build one box collider
-            {
-                CreateColliderAroundTextRange(textLine, 0, textLine.textMeshPro.textInfo.characterCount - 1, false);
-            }
-
-            textLines.Add(textLine);
+            GenerateTextLines(textData.textLines[i]);
         }
     }
 
-    IEnumerator FadeText(TextMeshPro tmp, float from, float to, float duration)
+    void FadeText(TextMeshPro tmp, float to, float duration)
     {
-        Color color = tmp.color;
-        color.a = from;
-        float elapsedTime = 0f;
-        while (elapsedTime < duration)
+        Color color = tmp.color * to;
+        tmp.DOColor(color, duration);
+    }
+
+    IEnumerator DestroyText(FloatingText text)
+    {
+        float duration = 0.2f;
+
+        if (text.outroEffect != null)
         {
-            elapsedTime += Time.deltaTime;
-            color.a = Mathf.Lerp(from, to, elapsedTime / duration);
-            tmp.color = color;
-            yield return null;
+            yield return text.outroEffect.Apply(text.transform); 
         }
+        else
+        {
+            foreach (TextMeshPro line in text.linesTextMeshPros)
+            {
+                FadeText(line, 0f, duration);
+            }
+        
+            yield return new WaitForSeconds(duration);
 
-        color.a = to;
-        tmp.color = color;
-    }
-
-    IEnumerator DestroyText(GameObject tmp)
-    {
-        yield return FadeText(tmp.GetComponent<TextMeshPro>(), 1f, 0f, 0.2f);
-        Destroy(tmp);
+            text.transform.DOKill();
+            Destroy(text.gameObject);
+        }
+        
+        text.transform.DOKill();
+        Destroy(text.gameObject);
+        
+        
     }
 
     // Gets the textLine to create for, the range and whether or not to make a child (AKA the orange part)
-    public void CreateColliderAroundTextRange(TextLine textLine, int startIndex, int endIndex, bool createChildObject)
+    void CreateColliderAroundTextRange(GameObject textGameObject, int startIndex, int endIndex, bool createChildObject)
     {
-        TextMeshPro tmp = textLine.textMeshPro;
+        TextMeshPro tmp = textGameObject.GetComponent<TextMeshPro>();
         tmp.ForceMeshUpdate();
         TMP_TextInfo textInfo = tmp.textInfo;
 
@@ -598,7 +662,7 @@ public class GameLoop : MonoBehaviour
             orangeHitbox.tag = "OrangeHitBox";
         }
         else
-            boxCollider = textLine.textGO.AddComponent<BoxCollider>();
+            boxCollider = textGameObject.AddComponent<BoxCollider>();
 
         boxCollider.center = center;
         boxCollider.size = size;

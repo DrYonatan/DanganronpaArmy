@@ -14,11 +14,13 @@ public class TextShatterEffect : MonoBehaviour
     public AudioClip shatterSound;
     public GameObject hitEffectPrefab;
 
-    public void Shatter(GameLoop.TextLine textLine)
+    public void Shatter(TextMeshPro textToSeperate)
     {
         SoundManager.instance.PlaySoundEffect(shatterSound);
 
-        TextMeshPro textToSeperate = textLine.textMeshPro;
+        int orangeStart = textToSeperate.text.IndexOf("<color=orange>");
+        int orangeEnd = textToSeperate.text.IndexOf("</color>");
+
         string text = Regex.Replace(textToSeperate.text, "<.*?>", "");
         Vector3 startPosition = textToSeperate.transform.position;
         float charSpacing = 0.15f;
@@ -27,35 +29,38 @@ public class TextShatterEffect : MonoBehaviour
         for (int i = 0; i < text.Length; i++)
         {
             GameObject charObj = new GameObject($"Char_{i}");
-            charObj.transform.SetParent(textToSeperate.transform.parent);
+            charObj.transform.SetParent(textToSeperate.transform.parent.transform.parent);
 
             TextMeshPro tmp = charObj.AddComponent<TextMeshPro>();
             tmp.text = text[i].ToString();
             tmp.font = textToSeperate.font;
             tmp.fontSize = textToSeperate.fontSize;
-            if(i >= textLine.correctCharacterIndexBegin && i <= textLine.correctCharacterIndexEnd)
-            isStatementCharacter = true;
-            
-            if(isStatementCharacter)
-            tmp.color = new Color32(255, 165, 0, 255); // give it an orange color
+
+            isStatementCharacter = (orangeStart != -1 &&
+                                    (i >= orangeStart &&
+                                     (i <= orangeEnd - "<color=orange>".Length || orangeEnd == -1)));
+
+            if (isStatementCharacter)
+                tmp.color = new Color32(255, 165, 0, 255); // give it an orange color
             tmp.alignment = textToSeperate.alignment;
 
             charObj.transform.position = startPosition +
                                          textToSeperate.transform.right * charSpacing * (text.Length / 2f - i);
-            
+
             Rigidbody rb = charObj.AddComponent<Rigidbody>();
             rb.useGravity = false;
             rb.drag = 0.5f;
             // Get the direction from the text to the camera
-            Vector3 toCamera = (GameLoop.instance.statementsCamera.transform.position - textToSeperate.transform.position).normalized;
-            
+            Vector3 toCamera =
+                (GameLoop.instance.statementsCamera.transform.position - textToSeperate.transform.position).normalized;
+
             // Blend the horizontal randomness with the direction to the camera
             Vector3 dir = (toCamera).normalized;
-            
+
             float forceFactor = Random.Range(0.7f, 1.8f);
             float spinFactor = 2f;
 
-            if(!isStatementCharacter)
+            if (!isStatementCharacter)
             {
                 forceFactor = 0.1f;
                 spinFactor = 0.1f;
@@ -67,20 +72,18 @@ public class TextShatterEffect : MonoBehaviour
 
             StartCoroutine(FadeCharacterAway(charObj.GetComponent<TextMeshPro>(), Random.Range(0.5f, 1.5f)));
             Destroy(charObj, letterLifetime);
-            
         }
-        
-        textToSeperate.gameObject.SetActive(false);
 
+        textToSeperate.gameObject.SetActive(false);
     }
 
     public IEnumerator Deflect(TextMeshPro textToDeflect, Vector3 hitPosition)
     {
         string text = textToDeflect.text;
-        for (int i = text.Length-1; i >= 0; i--)
+        for (int i = text.Length - 1; i >= 0; i--)
         {
             textToDeflect.text = text;
-            textToDeflect.ForceMeshUpdate();            
+            textToDeflect.ForceMeshUpdate();
             GameObject charObj = new GameObject($"Char_{i}");
             charObj.transform.SetParent(textToDeflect.transform.parent);
 
@@ -93,8 +96,8 @@ public class TextShatterEffect : MonoBehaviour
             charObj.transform.position = hitPosition;
             charObj.transform.rotation = textToDeflect.transform.rotation * Quaternion.Euler(0, -90f, 0);
 
-            if(text.Length > 1)
-            text = text.Remove(i, 1);
+            if (text.Length > 1)
+                text = text.Remove(i, 1);
 
             Rigidbody rb = charObj.AddComponent<Rigidbody>();
             rb.useGravity = false;
@@ -103,8 +106,8 @@ public class TextShatterEffect : MonoBehaviour
             // Blend the horizontal randomness with the direction to the camera
             Vector3 randomVertical = Vector3.up * Random.Range(0.4f, -0.4f);
             Vector3 dir = charObj.transform.right * -1 + randomVertical;
-            
-            
+
+
             rb.AddForce(dir * explosionForce, ForceMode.Impulse);
 
             Destroy(charObj, letterLifetime);
@@ -113,9 +116,8 @@ public class TextShatterEffect : MonoBehaviour
 
 
             yield return new WaitForSeconds(0.05f);
-            
         }
-        
+
         textToDeflect.gameObject.SetActive(false);
     }
 
@@ -129,7 +131,7 @@ public class TextShatterEffect : MonoBehaviour
     public IEnumerator FadeCharacterAway(TextMeshPro charObj, float duration)
     {
         float elapsedTime = 0f;
-        
+
         while (elapsedTime < duration)
         {
             float alpha = Mathf.MoveTowards(1f, 0f, elapsedTime / duration);

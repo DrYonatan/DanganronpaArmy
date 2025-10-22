@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using _Main.Scripts.Court;
 using UnityEngine;
 using TMPro;
 
@@ -13,11 +14,10 @@ public class BulletCollision : MonoBehaviour
         {
             if (CheckHitLocation(collision))
             {
-                if(GameLoop.instance.CheckEvidence())
+                if(GameLoop.instance.CheckEvidence(collision.collider.GetComponentInParent<FloatingText>().correctEvidence))
                     GameLoop.instance.Hit(collision.contacts[0].point);
                 else
                 {
-                    
                     StartCoroutine(
                         GameLoop.instance.gameObject.GetComponent<TextShatterEffect>().Deflect(
                             gameObject.GetComponent<TextMeshPro>(),
@@ -47,13 +47,10 @@ public class BulletCollision : MonoBehaviour
             didHit = true;
            return true;
         }
-        else if (other.CompareTag("WhiteHitBox"))
+        if (other.CompareTag("WhiteHitBox"))
         {
-           // Handle white (default) hit
            didHit = true;
-           return false;
         }
-        else 
         return false;
     }
     
