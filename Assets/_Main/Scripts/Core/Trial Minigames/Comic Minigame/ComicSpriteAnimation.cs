@@ -1,41 +1,111 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class SpriteAnimationState
+[Serializable]
+public class SpriteAnimationKeyFrame<T>
 {
-    public Vector3 position;
-    public Vector3 rotation;
-    public Vector3 scale;
-    public float opacity;
+    public T attribute;
+    public float duration;
 }
+
 public class ComicSpriteAnimation : MonoBehaviour
 {
     private RectTransform rectTransform;
     private Image image;
-    public SpriteAnimationState startState;
-    public SpriteAnimationState endState;
-    public float duration;
+    public List<SpriteAnimationKeyFrame<Vector2>> positionKeyFrames = new();
+    public List<SpriteAnimationKeyFrame<float>> rotationKeyFrames = new();
+    public List<SpriteAnimationKeyFrame<Vector3>> scaleKeyFrames = new();
+    public List<SpriteAnimationKeyFrame<Color>> colorKeyFrames = new();
 
     void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
+        image = GetComponent<Image>();
     }
 
-    public void Animate()
+    public IEnumerator PlayFrames()
     {
-        rectTransform.position = startState.position;
-        rectTransform.DOAnchorPos(endState.position, duration);
+        int running = 4;
         
-        rectTransform.rotation = Quaternion.Euler(startState.rotation);
-        rectTransform.DOLocalRotate(endState.rotation, duration);
+        StartCoroutine(AnimatePosition(positionKeyFrames, () => running--));
         
-        rectTransform.localScale = startState.scale;
-        rectTransform.DOScale(endState.scale, duration);
+        StartCoroutine(AnimateRotation(rotationKeyFrames, () => running--));
 
-        Color color = image.color;
-        color.a = startState.opacity;
-        image.color = color;
-        image.DOFade(endState.opacity, duration);
+        StartCoroutine(AnimateScale(scaleKeyFrames, () => running--));
+        
+        StartCoroutine(AnimateColor(colorKeyFrames, () => running--));
+        
+        while (running > 0)
+           yield return null;
+    }
+
+    IEnumerator AnimatePosition(List<SpriteAnimationKeyFrame<Vector2>> frames, Action onFinish)
+    {
+        for (int i = 0; i < frames.Count-1; i++)
+        {
+            SpriteAnimationKeyFrame<Vector2> startKeyFrame = frames[i];
+            SpriteAnimationKeyFrame<Vector2> endKeyFrame = frames[i+1];
+            
+            rectTransform.anchoredPosition = startKeyFrame.attribute;
+
+            rectTransform.DOAnchorPos(endKeyFrame.attribute, endKeyFrame.duration);
+            
+            yield return new WaitForSeconds(endKeyFrame.duration);
+        }
+        
+        onFinish?.Invoke();
+    }
+
+    IEnumerator AnimateRotation(List<SpriteAnimationKeyFrame<float>> frames, Action onFinish)
+    {
+        for (int i = 0; i < frames.Count - 1; i++)
+        {
+            SpriteAnimationKeyFrame<float> startKeyFrame = frames[i];
+            SpriteAnimationKeyFrame<float> endKeyFrame = frames[i+1];
+            
+            rectTransform.localRotation = Quaternion.Euler(new Vector3(0, 0, startKeyFrame.attribute));
+
+            rectTransform.DOLocalRotate(new Vector3(0, 0, endKeyFrame.attribute), endKeyFrame.duration);
+
+            yield return new WaitForSeconds(endKeyFrame.duration);
+        }
+        onFinish?.Invoke();
+    }
+
+    IEnumerator AnimateScale(List<SpriteAnimationKeyFrame<Vector3>> frames, Action onFinish)
+    {
+        for (int i = 0; i < frames.Count - 1; i++)
+        {
+            SpriteAnimationKeyFrame<Vector3> startKeyFrame = frames[i];
+            SpriteAnimationKeyFrame<Vector3> endKeyFrame = frames[i+1];
+            
+            rectTransform.localScale = startKeyFrame.attribute;
+
+            rectTransform.DOScale(endKeyFrame.attribute, endKeyFrame.duration);
+
+            yield return new WaitForSeconds(endKeyFrame.duration);
+        }
+        onFinish?.Invoke();
+    }
+
+    IEnumerator AnimateColor(List<SpriteAnimationKeyFrame<Color>> frames, Action onFinish)
+    {
+        for (int i = 0; i < frames.Count - 1; i++)
+        {
+            SpriteAnimationKeyFrame<Color> startKeyFrame = frames[i];
+            SpriteAnimationKeyFrame<Color> endKeyFrame = frames[i+1];
+            
+            image.color = startKeyFrame.attribute;
+
+            image.DOColor(endKeyFrame.attribute, endKeyFrame.duration);
+
+            yield return new WaitForSeconds(endKeyFrame.duration);
+        }
+        onFinish?.Invoke();
     }
 }
