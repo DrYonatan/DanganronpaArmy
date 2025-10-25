@@ -14,18 +14,20 @@ public class ComicManager : MonoBehaviour
         instance = this;
     }
 
-    public void StartComic(ComicSegment newSegment)
+    public void PresentComic(ComicSegment newSegment)
     {
+        comicTransform.gameObject.SetActive(true);
         segment = Instantiate(newSegment);
-        segment.pages[0] = Instantiate(segment.pages[0], comicTransform);
-        StartCoroutine(PresentComic());
+        StartCoroutine(PlayComic());
     }
 
-    IEnumerator PresentComic()
+    IEnumerator PlayComic()
     {
-        foreach (ComicPage comicPage in segment.pages)
+        for (int i = 0; i < segment.pages.Count; i++)
         {
-            yield return comicPage.Play();
+            segment.pages[i] = Instantiate(segment.pages[i], comicTransform);
+            yield return segment.pages[i].Play();
+            Destroy(segment.pages[i].gameObject);
         }
     }
 }

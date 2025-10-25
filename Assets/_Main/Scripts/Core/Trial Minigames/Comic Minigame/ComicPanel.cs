@@ -8,12 +8,17 @@ using UnityEngine.UI;
 [Serializable]
 public class ComicPanel : MonoBehaviour
 {
-    public Image blackOverlay;
+    private CanvasGroup canvasGroup;
     public List<ComicSpriteAnimation> spriteAnimations = new List<ComicSpriteAnimation>();
 
+    void Awake()
+    {
+        canvasGroup = GetComponent<CanvasGroup>();
+        canvasGroup.alpha = 0;
+    }
     public IEnumerator Play()
     {
-        blackOverlay.DOFade(0f, 0.1f);
+        canvasGroup.DOFade(1f, 0.1f);
         int animationsRunning = spriteAnimations.Count;
         foreach (ComicSpriteAnimation spriteAnimation in spriteAnimations)
         {

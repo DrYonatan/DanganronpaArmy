@@ -8,6 +8,6 @@ public class ComicSegment : TrialSegment
     public List<ComicPage> pages = new List<ComicPage>();
     public override void Play()
     {
-        ComicManager.instance.StartComic(this);
+        ComicManager.instance.PresentComic(this);
     }
 }
