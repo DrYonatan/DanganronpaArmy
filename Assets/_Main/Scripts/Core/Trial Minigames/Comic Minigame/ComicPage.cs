@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ComicPage : MonoBehaviour
 {
-    public List<ComicPanel> panels = new List<ComicPanel>();
+    [SerializeReference] public List<ComicPanel> panels = new List<ComicPanel>();
 
     public IEnumerator Play()
     {

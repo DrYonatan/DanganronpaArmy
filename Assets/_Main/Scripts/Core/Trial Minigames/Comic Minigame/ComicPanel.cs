@@ -16,7 +16,7 @@ public class ComicPanel : MonoBehaviour
         canvasGroup = GetComponent<CanvasGroup>();
         canvasGroup.alpha = 0;
     }
-    public IEnumerator Play()
+    public virtual IEnumerator Play()
     {
         canvasGroup.DOFade(1f, 0.1f);
         int animationsRunning = spriteAnimations.Count;
