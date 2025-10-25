@@ -48,7 +48,14 @@ namespace DIALOGUE
         {
             isPaused = !isPaused;
             pauseMenu.SetActive(isPaused);
-            CursorManager.instance.cursor.gameObject.SetActive(!isPaused);
+            if (isPaused)
+            {
+                CursorManager.instance.Hide();
+            }
+            else
+            {
+                CursorManager.instance.Show();
+            }
         }
 
        

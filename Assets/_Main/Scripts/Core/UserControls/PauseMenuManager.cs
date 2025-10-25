@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class PauseMenuManager : MonoBehaviour
 {
-    public List<GameObject> menuItems;
+    public List<MenuButton> menuItems;
     public int currentItemIndex;
     public Image menuTopEffect;
 
@@ -14,35 +14,37 @@ public class PauseMenuManager : MonoBehaviour
     void Start()
     {
         currentItemIndex = 0;
-        EventSystem.current.SetSelectedGameObject(menuItems[0]);
         UpdateCurrentItem();
     }
 
     // Update is called once per frame
     void Update()
     {
-    
-        if(Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.W))
         {
-            if(currentItemIndex > 0)
-            currentItemIndex--; 
+            if (currentItemIndex > 0)
+                currentItemIndex--;
             UpdateCurrentItem();
         }
-        else if(Input.GetKeyDown(KeyCode.S))
+        else if (Input.GetKeyDown(KeyCode.S))
         {
-            if(currentItemIndex < menuItems.Count-1)
-            currentItemIndex++;
+            if (currentItemIndex < menuItems.Count - 1)
+                currentItemIndex++;
             UpdateCurrentItem();
+        }
+        else if (Input.GetKeyDown(KeyCode.Space))
+        {
+            menuItems[currentItemIndex].Click();
         }
     }
 
     public void UpdateCurrentItem()
     {
-        GameObject currentItem = menuItems[currentItemIndex];
-        menuTopEffect.material.SetColor(
-            "_ColorTop",
-             currentItem.GetComponent<Button>().colors.highlightedColor);
-             
-        EventSystem.current.SetSelectedGameObject(currentItem);
+        foreach (MenuButton menuButton in menuItems)
+        {
+            menuButton.SetIsHovered(false);
+        }
+
+        menuItems[currentItemIndex].SetIsHovered(true);
     }
 }
