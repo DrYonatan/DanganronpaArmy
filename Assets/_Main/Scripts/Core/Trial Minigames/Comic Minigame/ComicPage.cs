@@ -10,6 +10,11 @@ public class ComicPage : MonoBehaviour
     {
         foreach (ComicPanel panel in panels)
         {
+            panel.StartUpAnimation();
+        }
+        
+        foreach (ComicPanel panel in panels)
+        {
             yield return panel.Play();
         }
     }

@@ -14,7 +14,7 @@ public class ComicPanel : MonoBehaviour
     public List<DialogueNode> textBeforePanel = new();
     public List<DialogueNode> textAfterPanel = new();
 
-    void Awake()
+    public virtual void StartUpAnimation()
     {
         canvasGroup = GetComponent<CanvasGroup>();
         canvasGroup.alpha = 0;
@@ -33,8 +33,9 @@ public class ComicPanel : MonoBehaviour
         }
         
         OverlayTextBoxManager.instance.Hide();
-
-        canvasGroup.DOFade(1f, 0.1f);
+        
+        OnAppear();
+        
         int animationsRunning = spriteAnimations.Count;
         foreach (ComicSpriteAnimation spriteAnimation in spriteAnimations)
         {
@@ -61,5 +62,11 @@ public class ComicPanel : MonoBehaviour
     {
         yield return spriteAnimation.PlayFrames();
         onFinish?.Invoke();
+    }
+
+    protected virtual void OnAppear()
+    {
+        canvasGroup.DOFade(1f, 0.1f);
+
     }
 }
