@@ -8,6 +8,8 @@ public class ComicManager : MonoBehaviour
 
     public RectTransform comicTransform;
 
+    public ScreenShatterManager screenShatter;
+    
     private ComicSegment segment;
     
     void Awake()
@@ -31,5 +33,9 @@ public class ComicManager : MonoBehaviour
             yield return segment.pages[i].Play();
             Destroy(segment.pages[i].gameObject);
         }
+
+        screenShatter = Instantiate(screenShatter);
+        yield return screenShatter.ScreenShatter();
+        segment.Finish();
     }
 }
