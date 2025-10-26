@@ -1,4 +1,5 @@
 using System.Collections;
+using DIALOGUE;
 using UnityEngine;
 
 public class ComicManager : MonoBehaviour
@@ -8,7 +9,7 @@ public class ComicManager : MonoBehaviour
     public RectTransform comicTransform;
 
     private ComicSegment segment;
-
+    
     void Awake()
     {
         instance = this;
@@ -18,6 +19,7 @@ public class ComicManager : MonoBehaviour
     {
         comicTransform.gameObject.SetActive(true);
         segment = Instantiate(newSegment);
+        OverlayTextBoxManager.instance.SetAsTextBox();
         StartCoroutine(PlayComic());
     }
 

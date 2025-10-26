@@ -8,9 +8,9 @@ public class ComicPage : MonoBehaviour
 
     public IEnumerator Play()
     {
-        foreach (ComicPanel comicPanel in panels)
+        foreach (ComicPanel panel in panels)
         {
-            yield return comicPanel.Play();
+            yield return panel.Play();
         }
     }
 }
