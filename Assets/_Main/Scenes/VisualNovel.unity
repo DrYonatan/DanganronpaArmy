@@ -337,13 +337,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 64712566}
+  - component: {fileID: 64712567}
   m_Layer: 5
   m_Name: Pause Screens
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &64712566
 RectTransform:
   m_ObjectHideFlags: 0
@@ -369,6 +370,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &64712567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 64712565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9145d12b95f8f044b92fc855f3701381, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &93912741
 GameObject:
   m_ObjectHideFlags: 0
@@ -1026,6 +1039,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuToOpen: {fileID: 1813701522}
   buttonTexture: {fileID: 219885781}
+  menuScreenContainer: {fileID: 64712567}
 --- !u!1 &240088587
 GameObject:
   m_ObjectHideFlags: 0
@@ -1152,6 +1166,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuToOpen: {fileID: 1716723375}
   buttonTexture: {fileID: 249591113}
+  menuScreenContainer: {fileID: 64712567}
 --- !u!1 &273489449
 GameObject:
   m_ObjectHideFlags: 0
@@ -2348,6 +2363,7 @@ MonoBehaviour:
   - {fileID: 1246559008}
   currentItemIndex: 0
   menuTopEffect: {fileID: 168053700}
+  menuScreenContainer: {fileID: 64712567}
 --- !u!1 &587191999
 GameObject:
   m_ObjectHideFlags: 0
@@ -4442,6 +4458,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuToOpen: {fileID: 9001703}
   buttonTexture: {fileID: 1246559005}
+  menuScreenContainer: {fileID: 64712567}
 --- !u!1 &1307510507
 GameObject:
   m_ObjectHideFlags: 0
@@ -4991,6 +5008,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuToOpen: {fileID: 306327827}
   buttonTexture: {fileID: 1573753405}
+  menuScreenContainer: {fileID: 64712567}
 --- !u!1 &1575056479
 GameObject:
   m_ObjectHideFlags: 0
@@ -5484,6 +5502,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuToOpen: {fileID: 1754331083}
   buttonTexture: {fileID: 1642571251}
+  menuScreenContainer: {fileID: 64712567}
 --- !u!1 &1653381921
 GameObject:
   m_ObjectHideFlags: 0
@@ -6003,6 +6022,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuToOpen: {fileID: 1482036892}
   buttonTexture: {fileID: 1895050015}
+  menuScreenContainer: {fileID: 64712567}
 --- !u!1 &1941290550
 GameObject:
   m_ObjectHideFlags: 0
