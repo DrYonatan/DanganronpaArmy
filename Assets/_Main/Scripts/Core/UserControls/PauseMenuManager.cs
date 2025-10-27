@@ -9,7 +9,7 @@ public class PauseMenuManager : MonoBehaviour
     public List<MenuButton> menuItems;
     public int currentItemIndex;
     public Image menuTopEffect;
-
+    public MenuScreenContainer menuScreenContainer;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,21 +20,24 @@ public class PauseMenuManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.W))
+        if (!menuScreenContainer.gameObject.activeSelf)
         {
-            if (currentItemIndex > 0)
-                currentItemIndex--;
-            UpdateCurrentItem();
-        }
-        else if (Input.GetKeyDown(KeyCode.S))
-        {
-            if (currentItemIndex < menuItems.Count - 1)
-                currentItemIndex++;
-            UpdateCurrentItem();
-        }
-        else if (Input.GetKeyDown(KeyCode.Space))
-        {
-            menuItems[currentItemIndex].Click();
+            if (Input.GetKeyDown(KeyCode.W))
+            {
+                if (currentItemIndex > 0)
+                    currentItemIndex--;
+                UpdateCurrentItem();
+            }
+            else if (Input.GetKeyDown(KeyCode.S))
+            {
+                if (currentItemIndex < menuItems.Count - 1)
+                    currentItemIndex++;
+                UpdateCurrentItem();
+            }
+            else if (Input.GetKeyDown(KeyCode.Space))
+            {
+                menuItems[currentItemIndex].Click();
+            }
         }
     }
 

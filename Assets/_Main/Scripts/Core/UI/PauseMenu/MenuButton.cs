@@ -6,7 +6,7 @@ public class MenuButton : MonoBehaviour
     public GameObject menuToOpen;
     private bool isHovered = false;
     public Image buttonTexture;
-
+    public MenuScreenContainer menuScreenContainer;
 
     void Update()
     {
@@ -14,6 +14,7 @@ public class MenuButton : MonoBehaviour
     }
     public void Click()
     {
+        menuScreenContainer.OpenMenu();
         menuToOpen.SetActive(true);
     }
 
