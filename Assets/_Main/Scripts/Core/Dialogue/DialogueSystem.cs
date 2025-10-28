@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace DIALOGUE
 {
@@ -22,6 +23,7 @@ namespace DIALOGUE
 
         public TextBoxAnimations dialogueBoxAnimator;
         public OptionSelectionManager optionSelectionManager;
+        public Button inputButton;
 
         private void Awake()
         {
@@ -78,11 +80,13 @@ namespace DIALOGUE
                 VirutalCameraManager.instance?.DisableVirtualCamera();
                 dialogueBoxAnimator.TextBoxAppear();
                 CursorManager.instance.Hide();
+                inputButton.gameObject.SetActive(true);
             }
             else
             {
                 dialogueBoxAnimator.TextBoxDisappear();
                 CursorManager.instance.Show();
+                inputButton.gameObject.SetActive(false);
             }
         }
 

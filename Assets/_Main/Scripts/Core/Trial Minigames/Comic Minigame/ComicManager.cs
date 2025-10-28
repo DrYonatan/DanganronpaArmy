@@ -1,4 +1,5 @@
 using System.Collections;
+using DG.Tweening;
 using DIALOGUE;
 using UnityEngine;
 
@@ -9,20 +10,53 @@ public class ComicManager : MonoBehaviour
     public RectTransform comicTransform;
 
     public ScreenShatterManager screenShatter;
+
+    public RectTransform questionPanelsSpawnLocation;
     
     private ComicSegment segment;
+    
+    public CanvasGroup puzzleCanvasGroup;
+    public CanvasGroup solutionCanvasGroup;
+
+    private bool isInPuzzle;
     
     void Awake()
     {
         instance = this;
     }
 
-    public void PresentComic(ComicSegment newSegment)
+    void Update()
     {
+        if(isInPuzzle)
+           TrialCursorManager.instance.ReticleAsCursor();
+    }
+
+    public void StartComicPuzzle(ComicSegment newSegment)
+    {
+        
+        OverlayTextBoxManager.instance.SetAsTextBox();
         comicTransform.gameObject.SetActive(true);
         segment = Instantiate(newSegment);
-        OverlayTextBoxManager.instance.SetAsTextBox();
+        isInPuzzle = true;
+        SwitchToPuzzleMode();
+    }
+
+    public void SwitchToPuzzleMode()
+    {
+        puzzleCanvasGroup.alpha = 1f;
+        solutionCanvasGroup.alpha = 0f;
+        TrialCursorManager.instance.Show();
+        DialogueSystem.instance.inputButton.gameObject.SetActive(false);
+    }
+
+    public void PresentComic()
+    {
+        isInPuzzle = false;
+        puzzleCanvasGroup.alpha = 0f;
+        solutionCanvasGroup.alpha = 1f;
         StartCoroutine(PlayComic());
+        TrialCursorManager.instance.Hide();
+        DialogueSystem.instance.inputButton.gameObject.SetActive(true);
     }
 
     IEnumerator PlayComic()
