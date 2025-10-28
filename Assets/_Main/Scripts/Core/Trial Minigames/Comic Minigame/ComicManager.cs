@@ -7,16 +7,11 @@ public class ComicManager : MonoBehaviour
 {
     public static ComicManager instance { get; private set; }
 
-    public RectTransform comicTransform;
-
-    public ScreenShatterManager screenShatter;
-
-    public RectTransform questionPanelsSpawnLocation;
+    public ComicUIAnimator animator;
     
     private ComicSegment segment;
     
-    public CanvasGroup puzzleCanvasGroup;
-    public CanvasGroup solutionCanvasGroup;
+    public ScreenShatterManager screenShatter;
 
     private bool isInPuzzle;
     
@@ -27,15 +22,21 @@ public class ComicManager : MonoBehaviour
 
     void Update()
     {
-        if(isInPuzzle)
-           TrialCursorManager.instance.ReticleAsCursor();
+        if (isInPuzzle)
+        {
+            TrialCursorManager.instance.ReticleAsCursor();
+            if (Input.GetMouseButton(1))
+            {
+                PresentComic();
+            }
+        }
     }
 
     public void StartComicPuzzle(ComicSegment newSegment)
     {
         
         OverlayTextBoxManager.instance.SetAsTextBox();
-        comicTransform.gameObject.SetActive(true);
+        animator.gameObject.SetActive(true);
         segment = Instantiate(newSegment);
         isInPuzzle = true;
         SwitchToPuzzleMode();
@@ -43,17 +44,14 @@ public class ComicManager : MonoBehaviour
 
     public void SwitchToPuzzleMode()
     {
-        puzzleCanvasGroup.alpha = 1f;
-        solutionCanvasGroup.alpha = 0f;
+        animator.ShowPuzzleUI();
         TrialCursorManager.instance.Show();
         DialogueSystem.instance.inputButton.gameObject.SetActive(false);
     }
 
-    public void PresentComic()
+    void PresentComic()
     {
         isInPuzzle = false;
-        puzzleCanvasGroup.alpha = 0f;
-        solutionCanvasGroup.alpha = 1f;
         StartCoroutine(PlayComic());
         TrialCursorManager.instance.Hide();
         DialogueSystem.instance.inputButton.gameObject.SetActive(true);
@@ -63,7 +61,7 @@ public class ComicManager : MonoBehaviour
     {
         for (int i = 0; i < segment.pages.Count; i++)
         {
-            segment.pages[i] = Instantiate(segment.pages[i], comicTransform);
+            segment.pages[i] = Instantiate(segment.pages[i], animator.transform);
             yield return segment.pages[i].Play();
             Destroy(segment.pages[i].gameObject);
         }

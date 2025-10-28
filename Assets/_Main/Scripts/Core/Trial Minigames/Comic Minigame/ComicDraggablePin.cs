@@ -9,6 +9,8 @@ public class ComicDraggablePin : MonoBehaviour, IDragHandler, IBeginDragHandler,
     public Image image;
     private RectTransform rectTransform;
     private Canvas canvas;
+
+    private RectTransform parent;
     
     private void Awake()
     {
@@ -29,11 +31,14 @@ public class ComicDraggablePin : MonoBehaviour, IDragHandler, IBeginDragHandler,
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        
+        TrialCursorManager.instance.Hide();
+        rectTransform.localScale *= 1.5f;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        
+        TrialCursorManager.instance.Show();
+        rectTransform.localScale /= 1.5f;
+        rectTransform.anchoredPosition = Vector2.zero;
     }
 }

@@ -38,7 +38,7 @@ public class ComicQuestionPanel : ComicPanel
     {
         blueQuestionMarkOverlay.DOFade(1f, 0f);
         Vector2 originalPos = rectTransform.anchoredPosition;
-        rectTransform.anchoredPosition = ComicManager.instance.questionPanelsSpawnLocation.anchoredPosition;
+        rectTransform.anchoredPosition = ComicManager.instance.animator.questionPanelsSpawnLocation.anchoredPosition;
         rectTransform.localRotation = Quaternion.Euler(0, 0, -20);
         rectTransform.DOLocalRotate(Vector3.zero, 0.2f);
         rectTransform.DOAnchorPos(originalPos, 0.2f);
