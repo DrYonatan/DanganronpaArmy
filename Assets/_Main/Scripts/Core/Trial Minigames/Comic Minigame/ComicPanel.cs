@@ -6,7 +6,6 @@ using DIALOGUE;
 using UnityEngine;
 using UnityEngine.UI;
 
-[Serializable]
 public class ComicPanel : MonoBehaviour
 {
     private CanvasGroup canvasGroup;
@@ -20,7 +19,7 @@ public class ComicPanel : MonoBehaviour
         canvasGroup.alpha = 0;
     }
 
-    public virtual IEnumerator Play()
+    public IEnumerator Play()
     {
         if (textBeforePanel.Count > 0)
         {
@@ -67,6 +66,5 @@ public class ComicPanel : MonoBehaviour
     protected virtual void OnAppear()
     {
         canvasGroup.DOFade(1f, 0.1f);
-
     }
 }

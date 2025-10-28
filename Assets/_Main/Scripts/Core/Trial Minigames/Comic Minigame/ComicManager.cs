@@ -14,6 +14,8 @@ public class ComicManager : MonoBehaviour
     public ScreenShatterManager screenShatter;
 
     private bool isInPuzzle;
+
+    public Coroutine runningComicCoroutine;
     
     void Awake()
     {
@@ -34,11 +36,12 @@ public class ComicManager : MonoBehaviour
 
     public void StartComicPuzzle(ComicSegment newSegment)
     {
-        
         OverlayTextBoxManager.instance.SetAsTextBox();
         animator.gameObject.SetActive(true);
         segment = Instantiate(newSegment);
         isInPuzzle = true;
+        animator.GeneratePuzzlePages(segment.pages);
+        animator.GenerateComicPins(segment.availablePins);
         SwitchToPuzzleMode();
     }
 
@@ -52,7 +55,8 @@ public class ComicManager : MonoBehaviour
     void PresentComic()
     {
         isInPuzzle = false;
-        StartCoroutine(PlayComic());
+        animator.ShowSolutionUI();
+        runningComicCoroutine = StartCoroutine(PlayComic());
         TrialCursorManager.instance.Hide();
         DialogueSystem.instance.inputButton.gameObject.SetActive(true);
     }
@@ -61,7 +65,7 @@ public class ComicManager : MonoBehaviour
     {
         for (int i = 0; i < segment.pages.Count; i++)
         {
-            segment.pages[i] = Instantiate(segment.pages[i], animator.transform);
+            segment.pages[i] = Instantiate(segment.pages[i], animator.solutionCanvasGroup.transform);
             yield return segment.pages[i].Play();
             Destroy(segment.pages[i].gameObject);
         }

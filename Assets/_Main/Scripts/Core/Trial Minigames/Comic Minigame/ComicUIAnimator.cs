@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class ComicUIAnimator : MonoBehaviour
@@ -9,16 +10,74 @@ public class ComicUIAnimator : MonoBehaviour
     public CanvasGroup puzzleCanvasGroup;
     public CanvasGroup solutionCanvasGroup;
 
+    public RectTransform puzzlePagesContainer;
+    public RectTransform pinsContainer;
+    
+    public ComicDraggablePin pinPrefab;
+
+    public List<ComicPage> pageObjects = new List<ComicPage>();
+    public List<ComicDraggablePin> draggablePins = new List<ComicDraggablePin>();
+
+    private Vector2 pinsContainerOriginalPos;
+
+    public ComicDraggablePin currentDraggedPin;
+
+    public void GeneratePuzzlePages(List<ComicPage> pages)
+    {
+        foreach (ComicPage page in pages)
+        {
+            ComicPage instantiated = Instantiate(page, puzzlePagesContainer);
+            instantiated.transform.localScale *= 0.7f;
+            pageObjects.Add(instantiated);
+        }
+    }
+
+    public void GenerateComicPins(List<ComicPin> pins)
+    {
+        foreach (ComicPin pin in pins)
+        {
+            GameObject parent =  GeneratePinParent();
+            ComicDraggablePin draggablePin = Instantiate(pinPrefab, parent.transform);
+            draggablePin.SetPin(pin);
+            draggablePin.parent = parent.GetComponent<RectTransform>();
+            draggablePin.transform.localPosition = Vector3.zero;
+            
+            draggablePins.Add(draggablePin);
+        }
+    }
+
+    private GameObject GeneratePinParent()
+    {
+        GameObject parent = new GameObject("PinContainer");
+        parent.AddComponent<RectTransform>();
+        parent.transform.SetParent(pinsContainer);
+        parent.transform.localScale = Vector3.one;
+        parent.transform.localPosition = Vector3.zero;
+        parent.transform.localRotation = Quaternion.Euler(Vector3.zero);
+        return parent;
+    }
+
     public void ShowPuzzleUI()
     {
         puzzleCanvasGroup.alpha = 1f;
         solutionCanvasGroup.alpha = 0f;
+        pinsContainerOriginalPos = pinsContainer.anchoredPosition;
     }
 
     public void ShowSolutionUI()
     {
         puzzleCanvasGroup.alpha = 0f;
         solutionCanvasGroup.alpha = 1f;
+    }
+
+    public void LowerPinsContainer()
+    {
+        pinsContainer.DOAnchorPosY(pinsContainerOriginalPos.y-400, 0.2f);
+    }
+
+    public void RaisePinsContainer()
+    {
+        pinsContainer.DOAnchorPosY(pinsContainerOriginalPos.y, 0.2f);
     }
     
 }
