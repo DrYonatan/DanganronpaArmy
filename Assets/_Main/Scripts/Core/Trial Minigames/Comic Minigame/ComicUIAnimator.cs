@@ -10,6 +10,8 @@ public class ComicUIAnimator : MonoBehaviour
     public CanvasGroup puzzleCanvasGroup;
     public CanvasGroup solutionCanvasGroup;
 
+    public RectTransform solutionPagesContainer;
+
     public RectTransform puzzlePagesContainer;
     public RectTransform pinsContainer;
     
@@ -44,6 +46,18 @@ public class ComicUIAnimator : MonoBehaviour
             
             draggablePins.Add(draggablePin);
         }
+    }
+
+    public ComicPage GenerateSolutionPage(int index)
+    {
+        ComicPage newPage = Instantiate(pageObjects[index], solutionPagesContainer);
+        newPage.rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
+        newPage.rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
+        newPage.rectTransform.sizeDelta = new Vector2(1920, 1080);
+        newPage.transform.localScale = Vector3.one;
+        newPage.transform.localPosition = Vector3.zero;
+        
+        return newPage;
     }
 
     private GameObject GeneratePinParent()

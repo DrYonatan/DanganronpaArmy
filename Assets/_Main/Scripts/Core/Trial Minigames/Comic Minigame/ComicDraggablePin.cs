@@ -11,7 +11,7 @@ public class ComicDraggablePin : MonoBehaviour, IDragHandler, IBeginDragHandler,
     private Canvas canvas;
 
     public RectTransform parent;
-    public bool assignedToPanel;
+    public ComicQuestionPanel assignedPanel;
     
     private void Awake()
     {
@@ -38,7 +38,9 @@ public class ComicDraggablePin : MonoBehaviour, IDragHandler, IBeginDragHandler,
         rectTransform.SetParent(parent.parent.parent);
         ComicManager.instance.animator.LowerPinsContainer();
         GetComponent<Image>().raycastTarget = false;
-        assignedToPanel = false;
+        if(assignedPanel)
+            assignedPanel.selectedPin = null;
+        assignedPanel = null;
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -49,7 +51,7 @@ public class ComicDraggablePin : MonoBehaviour, IDragHandler, IBeginDragHandler,
         ComicManager.instance.animator.currentDraggedPin = null;
         ComicManager.instance.animator.RaisePinsContainer();
 
-        if (!assignedToPanel)
+        if (assignedPanel == null)
         {
             rectTransform.SetParent(parent);
             rectTransform.localPosition = Vector3.zero;

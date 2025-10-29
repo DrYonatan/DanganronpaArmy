@@ -8044,6 +8044,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 970460777}
+  - {fileID: 1077263623}
   - {fileID: 482258482}
   m_Father: {fileID: 1821188198}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9840,6 +9841,41 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1293946263}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1077263622
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1077263623}
+  m_Layer: 5
+  m_Name: Pages
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1077263623
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1077263622}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 872128673}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1085317735
 GameObject:
   m_ObjectHideFlags: 0
@@ -15194,6 +15230,7 @@ MonoBehaviour:
   questionPanelsSpawnLocation: {fileID: 482258482}
   puzzleCanvasGroup: {fileID: 983227399}
   solutionCanvasGroup: {fileID: 872128674}
+  solutionPagesContainer: {fileID: 1077263623}
   puzzlePagesContainer: {fileID: 1271662560}
   pinsContainer: {fileID: 304501719}
   pinPrefab: {fileID: 992266978753937622, guid: b69238579a24fb442ab527b90068fa80, type: 3}

@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -14,8 +13,8 @@ public class ComicPin
 public class ComicQuestionPanel : ComicPanel, IDropHandler
 {
     public ComicPin truePin;
-    public ComicPin selectedPin;
-    public Image blueQuestionMarkOverlay;
+    public ComicDraggablePin selectedPin;
+    public CanvasGroup blueQuestionMarkOverlay;
     private RectTransform rectTransform;
     public Image questionMark;
 
@@ -37,7 +36,8 @@ public class ComicQuestionPanel : ComicPanel, IDropHandler
 
     protected override void OnAppear()
     {
-        if(selectedPin.pinName == truePin.pinName)
+        selectedPin = GetComponentInChildren<ComicDraggablePin>();
+        if(selectedPin.pin.pinName.Equals(truePin.pinName))
            blueQuestionMarkOverlay.DOFade(0f, 0.2f);
         else
         {
@@ -51,11 +51,10 @@ public class ComicQuestionPanel : ComicPanel, IDropHandler
     {
         if (selectedPin == null)
         {
-            ComicDraggablePin pin = ComicManager.instance.animator.currentDraggedPin;
-            pin.transform.SetParent(transform);
-            pin.transform.localPosition = questionMark.transform.localPosition;
-            pin.assignedToPanel = true;
-            selectedPin = pin.pin;
+            selectedPin = ComicManager.instance.animator.currentDraggedPin;
+            selectedPin.transform.SetParent(blueQuestionMarkOverlay.transform);
+            selectedPin.transform.localPosition = questionMark.transform.localPosition;
+            selectedPin.assignedPanel = this;
         }
     }
 }

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3625204179922174264}
   - component: {fileID: 7167257827773651778}
   - component: {fileID: 1075969714651004965}
+  - component: {fileID: 1996967655194433731}
   m_Layer: 5
   m_Name: QuestionForeground
   m_TagString: Untagged
@@ -29,7 +30,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 751420621859955136}
   m_Father: {fileID: 1942814287695580441}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -75,6 +77,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &1996967655194433731
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 693434556331985997}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1044526846180183086
 GameObject:
   m_ObjectHideFlags: 0
@@ -110,7 +124,6 @@ RectTransform:
   m_Children:
   - {fileID: 1543358451828115882}
   - {fileID: 3625204179922174264}
-  - {fileID: 751420621859955136}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
@@ -146,12 +159,10 @@ MonoBehaviour:
   textBeforePanel: []
   textAfterPanel: []
   truePin:
-    pinName: 
+    pinName: E
     pinImage: {fileID: 0}
-  selectedPin:
-    pinName: 
-    pinImage: {fileID: 0}
-  blueQuestionMarkOverlay: {fileID: 1075969714651004965}
+  selectedPin: {fileID: 0}
+  blueQuestionMarkOverlay: {fileID: 1996967655194433731}
   questionMark: {fileID: 1495492107433246428}
   references:
     version: 2
@@ -307,12 +318,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9083363955966169131}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1942814287695580441}
+  m_Father: {fileID: 3625204179922174264}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

@@ -65,7 +65,7 @@ public class ComicManager : MonoBehaviour
     {
         for (int i = 0; i < segment.pages.Count; i++)
         {
-            segment.pages[i] = Instantiate(segment.pages[i], animator.solutionCanvasGroup.transform);
+            segment.pages[i] = animator.GenerateSolutionPage(i);
             yield return segment.pages[i].Play();
             Destroy(segment.pages[i].gameObject);
         }

@@ -59,7 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -448,7 +448,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -484,7 +484,11 @@ MonoBehaviour:
     duration: 0
   - attribute: {x: 1, y: 1, z: 1}
     duration: 0.3
-  colorKeyFrames: []
+  colorKeyFrames:
+  - attribute: {r: 1, g: 1, b: 1, a: 1}
+    duration: 0
+  - attribute: {r: 1, g: 1, b: 1, a: 1}
+    duration: 0
 --- !u!1 &5941288336726177070
 GameObject:
   m_ObjectHideFlags: 0
@@ -536,6 +540,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccf299a6f78180a42839b27031a1bc17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rectTransform: {fileID: 0}
   panels:
   - {fileID: 744240813938816805}
   - {fileID: 3449886191086063607}
@@ -777,7 +782,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -838,6 +843,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 96e310ab1cf675e4e867746078ef1066, type: 3}
+    - target: {fileID: 4573132170685396223, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4573132170685396223, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
       propertyPath: m_RaycastTarget
       value: 0
@@ -1116,6 +1125,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7967205396056975286}
     m_Modifications:
+    - target: {fileID: 693434556331985997, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1044526846180183086, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
       propertyPath: m_Name
       value: Panel
@@ -1208,9 +1221,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1996967655194433731, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
+      propertyPath: m_Alpha
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
       propertyPath: truePin.pinName
-      value: correct
+      value: Explosion
       objectReference: {fileID: 0}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
       propertyPath: selectedPin.pinName
