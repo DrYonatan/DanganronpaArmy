@@ -31,6 +31,15 @@ public class ComicManager : MonoBehaviour
             {
                 PresentComic();
             }
+
+            if (Input.GetKey(KeyCode.A))
+            {
+                animator.puzzlePagesContainer.transform.localPosition += new Vector3(2f, 0, 0);
+            }
+            else if (Input.GetKey(KeyCode.D))
+            {
+                animator.puzzlePagesContainer.transform.localPosition -= new Vector3(2f, 0, 0);
+            }
         }
     }
 

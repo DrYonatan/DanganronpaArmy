@@ -6,7 +6,7 @@ using UnityEngine;
 public class ComicUIAnimator : MonoBehaviour
 {
     public RectTransform questionPanelsSpawnLocation;
-    
+
     public CanvasGroup puzzleCanvasGroup;
     public CanvasGroup solutionCanvasGroup;
 
@@ -14,7 +14,7 @@ public class ComicUIAnimator : MonoBehaviour
 
     public RectTransform puzzlePagesContainer;
     public RectTransform pinsContainer;
-    
+
     public ComicDraggablePin pinPrefab;
 
     public List<ComicPage> pageObjects = new List<ComicPage>();
@@ -23,6 +23,11 @@ public class ComicUIAnimator : MonoBehaviour
     private Vector2 pinsContainerOriginalPos;
 
     public ComicDraggablePin currentDraggedPin;
+
+    public RectTransform movingMist;
+    public RectTransform frontMist;
+
+    private Tween beatTween;
 
     public void GeneratePuzzlePages(List<ComicPage> pages)
     {
@@ -38,12 +43,12 @@ public class ComicUIAnimator : MonoBehaviour
     {
         foreach (ComicPin pin in pins)
         {
-            GameObject parent =  GeneratePinParent();
+            GameObject parent = GeneratePinParent();
             ComicDraggablePin draggablePin = Instantiate(pinPrefab, parent.transform);
             draggablePin.SetPin(pin);
             draggablePin.parent = parent.GetComponent<RectTransform>();
             draggablePin.transform.localPosition = Vector3.zero;
-            
+
             draggablePins.Add(draggablePin);
         }
     }
@@ -56,7 +61,7 @@ public class ComicUIAnimator : MonoBehaviour
         newPage.rectTransform.sizeDelta = new Vector2(1920, 1080);
         newPage.transform.localScale = Vector3.one;
         newPage.transform.localPosition = Vector3.zero;
-        
+
         return newPage;
     }
 
@@ -76,22 +81,51 @@ public class ComicUIAnimator : MonoBehaviour
         puzzleCanvasGroup.alpha = 1f;
         solutionCanvasGroup.alpha = 0f;
         pinsContainerOriginalPos = pinsContainer.anchoredPosition;
+        AnimatePuzzleBackground();
     }
 
     public void ShowSolutionUI()
     {
         puzzleCanvasGroup.alpha = 0f;
         solutionCanvasGroup.alpha = 1f;
+        StopAnimatingPuzzleBackground();
     }
 
     public void LowerPinsContainer()
     {
-        pinsContainer.DOAnchorPosY(pinsContainerOriginalPos.y-400, 0.2f);
+        pinsContainer.DOAnchorPosY(pinsContainerOriginalPos.y - 400, 0.2f);
     }
 
     public void RaisePinsContainer()
     {
         pinsContainer.DOAnchorPosY(pinsContainerOriginalPos.y, 0.2f);
     }
+
+    private void AnimatePuzzleBackground()
+    {
+        Vector2 originalPos = movingMist.anchoredPosition;
+
+        movingMist.DOAnchorPosX(originalPos.x + 1000, 10f).SetEase(Ease.Linear)
+            .SetLoops(-1, LoopType.Restart);
+        
+        StartBeating();
+        
+    }
+
+    private void StopAnimatingPuzzleBackground()
+    {
+        movingMist.DOKill();
+        beatTween.Kill();
+    }
     
+    private void StartBeating()
+    {
+        Sequence beatSequence = DOTween.Sequence()
+            .Append(frontMist.DOScale(1.2f, 0.05f).SetEase(Ease.OutQuad))
+            .Append(frontMist.DOScale(1f, 0.05f).SetEase(Ease.InQuad))
+            .AppendInterval(2f)
+            .SetLoops(-1, LoopType.Restart);
+
+        beatTween = beatSequence;
+    }
 }
