@@ -67,4 +67,11 @@ public class ComicPanel : MonoBehaviour
     {
         canvasGroup.DOFade(1f, 0.1f);
     }
+
+    public virtual bool IsReady()
+    {
+        return true;
+    }
+    
+    
 }

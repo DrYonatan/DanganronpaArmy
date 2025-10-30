@@ -26,7 +26,7 @@ public class ComicManager : MonoBehaviour
         if (isInPuzzle)
         {
             TrialCursorManager.instance.ReticleAsCursor();
-            if (Input.GetMouseButton(1))
+            if (Input.GetMouseButton(1) && CheckQuestionPanelsPins())
             {
                 StartCoroutine(PresentComic());
             }
@@ -73,7 +73,7 @@ public class ComicManager : MonoBehaviour
         TrialCursorManager.instance.Hide();
         DialogueSystem.instance.inputButton.gameObject.SetActive(true);
     }
-
+    
     IEnumerator PlayComic()
     {
         for (int i = 0; i < segment.pages.Count; i++)
@@ -86,5 +86,22 @@ public class ComicManager : MonoBehaviour
         screenShatter = Instantiate(screenShatter);
         yield return screenShatter.ScreenShatter();
         segment.Finish();
+        animator.gameObject.SetActive(false);
     }
+
+    private bool CheckQuestionPanelsPins()
+    {
+        foreach (ComicPage page in animator.pageObjects)
+        {
+            foreach(ComicPanel panel in page.panels)
+            {
+                if (!panel.IsReady())
+                    return false;
+            }
+        }
+
+        return true;
+    }
+    
+
 }

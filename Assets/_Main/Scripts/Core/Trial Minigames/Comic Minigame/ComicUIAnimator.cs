@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
@@ -135,7 +133,6 @@ public class ComicUIAnimator : MonoBehaviour
         movingMist.DOFade(1f, 4f).SetLoops(-1, LoopType.Yoyo);
         
         StartBeating();
-        
     }
 
     private void StopAnimatingPuzzleBackground()

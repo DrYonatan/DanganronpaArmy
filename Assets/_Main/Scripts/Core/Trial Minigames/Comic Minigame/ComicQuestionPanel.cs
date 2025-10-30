@@ -57,4 +57,9 @@ public class ComicQuestionPanel : ComicPanel, IDropHandler
             selectedPin.assignedPanel = this;
         }
     }
+
+    public override bool IsReady()
+    {
+        return selectedPin != null;
+    }
 }
