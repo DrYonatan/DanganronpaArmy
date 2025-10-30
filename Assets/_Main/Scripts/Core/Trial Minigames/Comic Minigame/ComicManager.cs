@@ -33,14 +33,14 @@ public class ComicManager : MonoBehaviour
             }
 
             if (Input.GetKey(KeyCode.A) && animator.puzzlePagesContainer.transform.localPosition.x <
-                animator.pagesContainerStartPos + (animator.pageObjects.Count - 1) * animator.pageWidth * 2)
+                animator.pagesContainerStartPos + (animator.pageObjects.Count - 1) * animator.pageWidth)
             {
-                animator.puzzlePagesContainer.transform.localPosition += new Vector3(4f, 0, 0);
+                animator.ScrollPuzzlePagesContainer(4f);
             }
             else if (Input.GetKey(KeyCode.D) && animator.puzzlePagesContainer.transform.localPosition.x >
                      animator.pagesContainerStartPos)
             {
-                animator.puzzlePagesContainer.transform.localPosition -= new Vector3(4f, 0, 0);
+                animator.ScrollPuzzlePagesContainer(-4f);
             }
         }
     }

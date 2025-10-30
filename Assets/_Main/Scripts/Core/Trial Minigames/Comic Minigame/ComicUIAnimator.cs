@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +17,8 @@ public class ComicUIAnimator : MonoBehaviour
 
     public RectTransform puzzlePagesContainer;
     public RectTransform pinsContainer;
+
+    public TextMeshProUGUI pagesCount;
 
     public ComicDraggablePin pinPrefab;
 
@@ -95,6 +99,7 @@ public class ComicUIAnimator : MonoBehaviour
         solutionCanvasGroup.alpha = 0f;
         pinsContainerOriginalPos = pinsContainer.anchoredPosition;
         AnimatePuzzleBackground();
+        UpdatePageNumber();
     }
 
     public void ShowSolutionUI()
@@ -146,5 +151,19 @@ public class ComicUIAnimator : MonoBehaviour
             .SetLoops(-1, LoopType.Restart);
 
         beatTween = beatSequence;
+    }
+
+    public void ScrollPuzzlePagesContainer(float amount)
+    {
+        puzzlePagesContainer.localPosition += new Vector3(amount, 0, 0);
+        UpdatePageNumber();
+    }
+    
+    private void UpdatePageNumber()
+    {
+        float pageNumber = Mathf.Ceil((puzzlePagesContainer.localPosition.x + 900) / pageWidth) + 1;
+        string pageNumberTwoDigit = pageNumber < 10 ? "0" : "";
+        string pageCountTwoDigit = pageObjects.Count < 10 ? "0" : "";
+        pagesCount.text = $"{pageNumberTwoDigit + pageNumber}/{pageCountTwoDigit + pageObjects.Count}";
     }
 }
