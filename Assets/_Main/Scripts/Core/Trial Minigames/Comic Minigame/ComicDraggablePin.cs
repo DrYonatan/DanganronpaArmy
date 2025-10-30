@@ -7,6 +7,7 @@ public class ComicDraggablePin : MonoBehaviour, IDragHandler, IBeginDragHandler,
 {
     public ComicPin pin;
     public Image image;
+    public Image outline;
     private RectTransform rectTransform;
     private Canvas canvas;
 

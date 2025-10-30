@@ -8,15 +8,15 @@ public class ComicManager : MonoBehaviour
     public static ComicManager instance { get; private set; }
 
     public ComicUIAnimator animator;
-    
+
     private ComicSegment segment;
-    
+
     public ScreenShatterManager screenShatter;
 
     private bool isInPuzzle;
 
     public Coroutine runningComicCoroutine;
-    
+
     void Awake()
     {
         instance = this;
@@ -32,13 +32,15 @@ public class ComicManager : MonoBehaviour
                 PresentComic();
             }
 
-            if (Input.GetKey(KeyCode.A))
+            if (Input.GetKey(KeyCode.A) && animator.puzzlePagesContainer.transform.localPosition.x <
+                animator.pagesContainerStartPos + (animator.pageObjects.Count - 1) * animator.pageWidth * 2)
             {
-                animator.puzzlePagesContainer.transform.localPosition += new Vector3(2f, 0, 0);
+                animator.puzzlePagesContainer.transform.localPosition += new Vector3(4f, 0, 0);
             }
-            else if (Input.GetKey(KeyCode.D))
+            else if (Input.GetKey(KeyCode.D) && animator.puzzlePagesContainer.transform.localPosition.x >
+                     animator.pagesContainerStartPos)
             {
-                animator.puzzlePagesContainer.transform.localPosition -= new Vector3(2f, 0, 0);
+                animator.puzzlePagesContainer.transform.localPosition -= new Vector3(4f, 0, 0);
             }
         }
     }

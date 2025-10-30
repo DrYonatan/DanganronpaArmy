@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ComicUIAnimator : MonoBehaviour
 {
@@ -24,10 +25,13 @@ public class ComicUIAnimator : MonoBehaviour
 
     public ComicDraggablePin currentDraggedPin;
 
-    public RectTransform movingMist;
+    public Image movingMist;
     public RectTransform frontMist;
 
     private Tween beatTween;
+    
+    public float pagesContainerStartPos = -900;
+    public float pageWidth = 440;
 
     public void GeneratePuzzlePages(List<ComicPage> pages)
     {
@@ -48,6 +52,15 @@ public class ComicUIAnimator : MonoBehaviour
             draggablePin.SetPin(pin);
             draggablePin.parent = parent.GetComponent<RectTransform>();
             draggablePin.transform.localPosition = Vector3.zero;
+
+            ComicDraggablePin shadowPin = Instantiate(draggablePin, parent.transform);
+            shadowPin.transform.localPosition = Vector3.zero;
+            shadowPin.image.color = new Color(0.2f, 0.2f, 0.2f);
+            shadowPin.outline.color = new Color(0.2f, 0.2f, 0.2f);
+            
+            shadowPin.transform.SetAsFirstSibling();
+            
+            Destroy(shadowPin); // Destroys only the Draggable Pin Component, not the entire object
 
             draggablePins.Add(draggablePin);
         }
@@ -103,10 +116,16 @@ public class ComicUIAnimator : MonoBehaviour
 
     private void AnimatePuzzleBackground()
     {
-        Vector2 originalPos = movingMist.anchoredPosition;
+        Vector2 originalPos = movingMist.rectTransform.anchoredPosition;
 
-        movingMist.DOAnchorPosX(originalPos.x + 1000, 10f).SetEase(Ease.Linear)
+        movingMist.rectTransform.DOAnchorPosX(-originalPos.x, 8f).SetEase(Ease.Linear)
             .SetLoops(-1, LoopType.Restart);
+
+        Color color = movingMist.color;
+        color.a = 0f;
+        movingMist.color = color;
+        
+        movingMist.DOFade(1f, 4f).SetLoops(-1, LoopType.Yoyo);
         
         StartBeating();
         
