@@ -39,7 +39,7 @@ public class HangmanUIAnimator : MonoBehaviour
     public List<HangmanLetterBlock> blockObjects = new List<HangmanLetterBlock>();
     public RectTransform letterObjectsContainer;
     public ScreenShatterManager screenShatterManager;
-    public HangmanNowIUnderstand nowIUnderstand;
+    public NowIUnderstandAnimator nowIUnderstandAnimator;
     
     public Color shadeFlashColor;
 
@@ -116,9 +116,9 @@ public class HangmanUIAnimator : MonoBehaviour
         lettersLeftGlow.DOFade(1f, 0.2f).SetLoops(2, LoopType.Yoyo);
         yield return new WaitForSeconds(0.5f);
         yield return FlashBlocks();
-        nowIUnderstand.gameObject.SetActive(true);
-        yield return nowIUnderstand.Show();
-        nowIUnderstand.gameObject.SetActive(false);
+        nowIUnderstandAnimator.gameObject.SetActive(true);
+        yield return nowIUnderstandAnimator.Show();
+        nowIUnderstandAnimator.gameObject.SetActive(false);
         shade.DOKill();
         screenShatterManager = Instantiate(screenShatterManager);
         yield return screenShatterManager.ScreenShatter();

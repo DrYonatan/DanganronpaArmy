@@ -1,5 +1,4 @@
 using System.Collections;
-using DG.Tweening;
 using DIALOGUE;
 using UnityEngine;
 
@@ -29,7 +28,7 @@ public class ComicManager : MonoBehaviour
             TrialCursorManager.instance.ReticleAsCursor();
             if (Input.GetMouseButton(1))
             {
-                PresentComic();
+                StartCoroutine(PresentComic());
             }
 
             if (Input.GetKey(KeyCode.A) && animator.puzzlePagesContainer.transform.localPosition.x <
@@ -63,9 +62,12 @@ public class ComicManager : MonoBehaviour
         DialogueSystem.instance.inputButton.gameObject.SetActive(false);
     }
 
-    void PresentComic()
+    IEnumerator PresentComic()
     {
         isInPuzzle = false;
+        animator.nowIUnderstand.gameObject.SetActive(true);
+        yield return animator.nowIUnderstand.Show();
+        animator.nowIUnderstand.gameObject.SetActive(false);
         animator.ShowSolutionUI();
         runningComicCoroutine = StartCoroutine(PlayComic());
         TrialCursorManager.instance.Hide();

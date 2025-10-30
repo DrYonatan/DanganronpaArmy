@@ -32,6 +32,8 @@ public class ComicUIAnimator : MonoBehaviour
     public Image movingMist;
     public RectTransform frontMist;
 
+    public NowIUnderstandAnimator nowIUnderstand;
+
     private Tween beatTween;
     
     public float pagesContainerStartPos = -900;

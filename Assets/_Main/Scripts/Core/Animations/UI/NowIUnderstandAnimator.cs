@@ -4,7 +4,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HangmanNowIUnderstand : MonoBehaviour
+public class NowIUnderstandAnimator : MonoBehaviour
 {
     public float appearDuration;
     public RawImage topBar;
@@ -17,6 +17,10 @@ public class HangmanNowIUnderstand : MonoBehaviour
 
     public AudioClip openSound;
     public AudioClip voiceLine;
+
+    public float glowFinalScale = 1f;
+    public float duration = 0.5f;
+    
     public IEnumerator Show()
     {
         RectTransform topBarRect = topBar.GetComponent<RectTransform>();
@@ -55,10 +59,15 @@ public class HangmanNowIUnderstand : MonoBehaviour
             .SetEase(Ease.InOutSine)
             .SetLoops(-1, LoopType.Yoyo);
         
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(duration);
 
-        glow.DOFade(1f, 0.2f).SetEase(Ease.InOutSine).SetLoops(2, LoopType.Yoyo);
-        glow.GetComponent<RectTransform>().DOScaleY(1f, 0.4f);
+        if(glowFinalScale <= 2)
+           glow.DOFade(1f, 0.2f).SetEase(Ease.InOutSine).SetLoops(2, LoopType.Yoyo);
+        else
+        {
+            glow.DOFade(1f, 0.2f).SetEase(Ease.InOutSine);
+        }
+        glow.GetComponent<RectTransform>().DOScaleY(glowFinalScale, 0.4f);
 
         yield return new WaitForSeconds(0.2f);
 
