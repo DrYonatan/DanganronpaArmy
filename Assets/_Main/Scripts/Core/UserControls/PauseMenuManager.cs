@@ -1,23 +1,15 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
 public class PauseMenuManager : MonoBehaviour
 {
     public List<MenuButton> menuItems;
     public int currentItemIndex;
     public Image menuTopEffect;
-    public MenuScreenContainer menuScreenContainer;
-    // Start is called before the first frame update
-    void Start()
-    {
-        currentItemIndex = 0;
-        UpdateCurrentItem();
-    }
 
-    // Update is called once per frame
+    public MenuScreenContainer menuScreenContainer;
+
     void Update()
     {
         if (!menuScreenContainer.gameObject.activeSelf)
@@ -49,5 +41,19 @@ public class PauseMenuManager : MonoBehaviour
         }
 
         menuItems[currentItemIndex].SetIsHovered(true);
+    }
+
+
+    public void CloseMenu()
+    {
+        gameObject.SetActive(false);
+        menuScreenContainer.CloseMenu();
+    }
+
+    public void OpenMenu()
+    {
+        gameObject.SetActive(true);
+        currentItemIndex = 0;
+        UpdateCurrentItem();
     }
 }

@@ -8,7 +8,7 @@ namespace DIALOGUE
 
         public QuestionMarkShooter shooter;
 
-        public GameObject pauseMenu;
+        public PauseMenuManager pauseMenu;
 
         public bool isPaused;
 
@@ -47,14 +47,15 @@ namespace DIALOGUE
         public void TogglePause()
         {
             isPaused = !isPaused;
-            pauseMenu.SetActive(isPaused);
             if (isPaused)
             {
                 CursorManager.instance.Hide();
+                pauseMenu.OpenMenu();
             }
             else
             {
                 CursorManager.instance.Show();
+                pauseMenu.CloseMenu();
             }
         }
 

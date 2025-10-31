@@ -12,7 +12,7 @@ public class MenuScreenContainer : MonoBehaviour
         }
     }
 
-    void CloseMenu()
+    public void CloseMenu()
     {
         gameObject.SetActive(false);
         
