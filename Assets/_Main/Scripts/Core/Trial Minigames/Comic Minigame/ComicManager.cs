@@ -2,11 +2,21 @@ using System.Collections;
 using DIALOGUE;
 using UnityEngine;
 
+
 public class ComicManager : MonoBehaviour
 {
+    public enum ControlScheme
+    {
+        Scroll,
+        Jump
+    }
     public static ComicManager instance { get; private set; }
 
     public ComicUIAnimator animator;
+
+    public AudioClip puzzleMusic;
+    
+    public ControlScheme controlScheme;
 
     private ComicSegment segment;
 
@@ -31,25 +41,49 @@ public class ComicManager : MonoBehaviour
                 StartCoroutine(PresentComic());
             }
 
-            if (Input.GetKey(KeyCode.A) && animator.puzzlePagesContainer.transform.localPosition.x <
-                animator.pagesContainerStartPos + (animator.pageObjects.Count - 1) * animator.pageWidth)
-            {
-                animator.ScrollPuzzlePagesContainer(4f);
-            }
-            else if (Input.GetKey(KeyCode.D) && animator.puzzlePagesContainer.transform.localPosition.x >
-                     animator.pagesContainerStartPos)
-            {
-                animator.ScrollPuzzlePagesContainer(-4f);
-            }
+            PagesControl();
         }
     }
+
+    private void PagesControl()
+    {
+        if(controlScheme == ControlScheme.Jump)
+            JumpControl();
+        else if(controlScheme == ControlScheme.Scroll)
+            ScrollControl();
+    }
+
+    private void JumpControl()
+    {
+        if (Input.GetKeyDown(KeyCode.A) && animator.pageNumber < animator.pageObjects.Count-1)
+        {
+            animator.JumpToNextPage();
+        }
+        else if (Input.GetKeyDown(KeyCode.D) && animator.pageNumber > 0)
+        {
+            animator.JumpToPrevPage();
+        }
+    }
+
+    private void ScrollControl()
+    {
+        if (Input.GetKey(KeyCode.A))
+        {
+            animator.ScrollPuzzlePagesContainer(4f);
+
+        }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            animator.ScrollPuzzlePagesContainer(-4f);
+        }
+    }
+    
 
     public void StartComicPuzzle(ComicSegment newSegment)
     {
         OverlayTextBoxManager.instance.SetAsTextBox();
         animator.gameObject.SetActive(true);
         segment = Instantiate(newSegment);
-        isInPuzzle = true;
         animator.GeneratePuzzlePages(segment.pages);
         animator.GenerateComicPins(segment.availablePins);
         SwitchToPuzzleMode();
@@ -57,6 +91,8 @@ public class ComicManager : MonoBehaviour
 
     public void SwitchToPuzzleMode()
     {
+        MusicManager.instance.PlaySong(puzzleMusic);
+        isInPuzzle = true;
         animator.ShowPuzzleUI();
         TrialCursorManager.instance.Show();
         DialogueSystem.instance.inputButton.gameObject.SetActive(false);
@@ -64,6 +100,7 @@ public class ComicManager : MonoBehaviour
 
     IEnumerator PresentComic()
     {
+        MusicManager.instance.StopSong();
         isInPuzzle = false;
         animator.nowIUnderstand.gameObject.SetActive(true);
         yield return animator.nowIUnderstand.Show();

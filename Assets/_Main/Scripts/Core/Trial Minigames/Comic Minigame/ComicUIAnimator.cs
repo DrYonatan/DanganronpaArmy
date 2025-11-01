@@ -37,6 +37,8 @@ public class ComicUIAnimator : MonoBehaviour
     public float pagesContainerStartPos = -900;
     public float pageWidth = 440;
 
+    public int pageNumber;
+
     public void GeneratePuzzlePages(List<ComicPage> pages)
     {
         foreach (ComicPage page in pages)
@@ -157,12 +159,31 @@ public class ComicUIAnimator : MonoBehaviour
         puzzlePagesContainer.localPosition += new Vector3(amount, 0, 0);
         UpdatePageNumber();
     }
+
+    public void JumpToNextPage()
+    {
+        pageNumber++;
+        puzzlePagesContainer.localPosition = new Vector3(-900 + pageNumber * pageWidth, 0, 0);
+        UpdatePageNumberText();
+    }
+    
+    public void JumpToPrevPage()
+    {
+        pageNumber--;
+        puzzlePagesContainer.localPosition = new Vector3(-900 + pageNumber * pageWidth, 0, 0);
+        UpdatePageNumberText();
+    }
     
     private void UpdatePageNumber()
     {
-        float pageNumber = Mathf.Ceil((puzzlePagesContainer.localPosition.x + 900) / pageWidth) + 1;
-        string pageNumberTwoDigit = pageNumber < 10 ? "0" : "";
+        pageNumber = (int)Mathf.Ceil((puzzlePagesContainer.localPosition.x + 900) / pageWidth);
+        UpdatePageNumberText();
+    }
+
+    private void UpdatePageNumberText()
+    {
+        string pageNumberTwoDigit = pageNumber < 9 ? "0" : "";
         string pageCountTwoDigit = pageObjects.Count < 10 ? "0" : "";
-        pagesCount.text = $"{pageNumberTwoDigit + pageNumber}/{pageCountTwoDigit + pageObjects.Count}";
+        pagesCount.text = $"{pageNumberTwoDigit + (pageNumber+1)}/{pageCountTwoDigit + pageObjects.Count}";
     }
 }
