@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using DIALOGUE;
 using UnityEngine;
 
 public class TimeManipulationManager : MonoBehaviour
@@ -25,7 +26,7 @@ public class TimeManipulationManager : MonoBehaviour
     void Update()
     {
         TrialManager.instance.barsAnimator.UpdateConcentration(concentration);
-        if (isInputActive)
+        if (isInputActive && !PlayerInputManager.instance.isPaused)
         {
             if (Input.GetKey(KeyCode.Space))
             {

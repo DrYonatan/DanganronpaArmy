@@ -62,7 +62,6 @@ public class GameLoop : MonoBehaviour
     List<FloatingText> debateTexts;
     CharacterStand characterStand;
 
-    bool pause;
     bool isActive = false;
     float stageTimer;
     float defaultStageTime = 600f;
@@ -105,12 +104,7 @@ public class GameLoop : MonoBehaviour
     {
         if (isActive)
         {
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                SetPause(!pause);
-            }
-
-            if (pause || !isActive)
+            if (PlayerInputManager.instance.isPaused || !isActive)
             {
                 return;
             }
@@ -251,19 +245,6 @@ public class GameLoop : MonoBehaviour
         else
         {
             debateUIAnimator.CloseBulletSelectionMenu();
-        }
-    }
-
-    void SetPause(bool _pause)
-    {
-        pause = _pause;
-        if (pause)
-        {
-            MusicManager.instance.LowerVolume();
-        }
-        else
-        {
-            MusicManager.instance.RaiseVolume();
         }
     }
 
