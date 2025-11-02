@@ -271,7 +271,7 @@ public class HangmanUIAnimator : MonoBehaviour
     }
     
     
-    public void BlocksBlinkRandomly()
+    private void BlocksBlinkRandomly()
     {
         int blinkCount = 5;              // total number of blink events
         float blinkDuration = 0.1f;      // fade out/in time

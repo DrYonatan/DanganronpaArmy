@@ -41,9 +41,7 @@ public class ComicQuestionPanel : ComicPanel, IDropHandler
            blueQuestionMarkOverlay.DOFade(0f, 0.2f);
         else
         {
-            TrialManager.instance.DecreaseHealth(1f);
-            ComicManager.instance.SwitchToPuzzleMode();
-            StopCoroutine(ComicManager.instance.runningComicCoroutine);
+            ComicManager.instance.WrongAnswer();
         }
     }
 

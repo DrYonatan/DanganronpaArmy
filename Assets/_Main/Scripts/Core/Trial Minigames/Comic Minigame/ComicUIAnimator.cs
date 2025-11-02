@@ -14,7 +14,7 @@ public class ComicUIAnimator : MonoBehaviour
     public RectTransform solutionPagesContainer;
 
     public RectTransform puzzlePagesContainer;
-    public RectTransform pinsContainer;
+    public GridLayoutGroup pinsContainer;
 
     public TextMeshProUGUI pagesCount;
 
@@ -38,6 +38,7 @@ public class ComicUIAnimator : MonoBehaviour
     public float pageWidth = 440;
 
     public int pageNumber;
+    public int firstPinNumber;
 
     public void GeneratePuzzlePages(List<ComicPage> pages)
     {
@@ -88,7 +89,8 @@ public class ComicUIAnimator : MonoBehaviour
     {
         GameObject parent = new GameObject("PinContainer");
         parent.AddComponent<RectTransform>();
-        parent.transform.SetParent(pinsContainer);
+        parent.AddComponent<CanvasGroup>();
+        parent.transform.SetParent(pinsContainer.transform);
         parent.transform.localScale = Vector3.one;
         parent.transform.localPosition = Vector3.zero;
         parent.transform.localRotation = Quaternion.Euler(Vector3.zero);
@@ -99,7 +101,6 @@ public class ComicUIAnimator : MonoBehaviour
     {
         puzzleCanvasGroup.alpha = 1f;
         solutionCanvasGroup.alpha = 0f;
-        pinsContainerOriginalPos = pinsContainer.anchoredPosition;
         AnimatePuzzleBackground();
         UpdatePageNumber();
     }
@@ -113,12 +114,12 @@ public class ComicUIAnimator : MonoBehaviour
 
     public void LowerPinsContainer()
     {
-        pinsContainer.DOAnchorPosY(pinsContainerOriginalPos.y - 400, 0.2f);
+        pinsContainer.GetComponent<RectTransform>().DOAnchorPosY(pinsContainerOriginalPos.y - 400, 0.2f);
     }
 
     public void RaisePinsContainer()
     {
-        pinsContainer.DOAnchorPosY(pinsContainerOriginalPos.y, 0.2f);
+        pinsContainer.GetComponent<RectTransform>().DOAnchorPosY(pinsContainerOriginalPos.y, 0.2f);
     }
 
     private void AnimatePuzzleBackground()
@@ -185,5 +186,42 @@ public class ComicUIAnimator : MonoBehaviour
         string pageNumberTwoDigit = pageNumber < 9 ? "0" : "";
         string pageCountTwoDigit = pageObjects.Count < 10 ? "0" : "";
         pagesCount.text = $"{pageNumberTwoDigit + (pageNumber+1)}/{pageCountTwoDigit + pageObjects.Count}";
+    }
+
+    public void ScrollPinContainer()
+    {
+        RectTransform pinsContainerTransform = pinsContainer.GetComponent<RectTransform>();
+        float newX = pinsContainerOriginalPos.x + firstPinNumber * (pinsContainer.cellSize.x + pinsContainer.spacing.x);
+        pinsContainerTransform.DOAnchorPosX(newX, 0.2f);
+        
+        UpdatePinsVisibility(0.3f);
+    }
+
+    public void UpdatePinsVisibility(float duration)
+    {
+        RectTransform pinsContainerTransform = pinsContainer.GetComponent<RectTransform>();
+        int i = 0;
+        foreach (RectTransform child in pinsContainerTransform)
+        {
+            UpdatePinVisibility(child.GetComponent<CanvasGroup>(), i, duration);
+            i++;
+        }
+    }
+
+    private void UpdatePinVisibility(CanvasGroup pin, int index, float duration)
+    {
+        if (index < firstPinNumber || index > firstPinNumber + 4)
+        {
+            pin.DOFade(0f, duration);
+        }
+        else
+        {
+            pin.DOFade(1f, duration);
+        }
+    }
+
+    public void SetPinsContainerStartPos()
+    {
+        pinsContainerOriginalPos = pinsContainer.transform.localPosition;
     }
 }

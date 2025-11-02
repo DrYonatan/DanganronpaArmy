@@ -24,7 +24,9 @@ public class ComicManager : MonoBehaviour
 
     private bool isInPuzzle;
 
-    public Coroutine runningComicCoroutine;
+    private Coroutine runningComicCoroutine;
+
+    private ComicPage currentPresentedPage;
 
     void Awake()
     {
@@ -42,6 +44,22 @@ public class ComicManager : MonoBehaviour
             }
 
             PagesControl();
+            PinsControl();
+            
+        }
+    }
+
+    private void PinsControl()
+    {
+        if (Input.GetAxis("Mouse ScrollWheel") > 0 && animator.firstPinNumber < animator.draggablePins.Count - 5)
+        {
+            animator.firstPinNumber++;
+            animator.ScrollPinContainer();
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && animator.firstPinNumber > 0)
+        {
+            animator.firstPinNumber--;
+            animator.ScrollPinContainer();
         }
     }
 
@@ -67,12 +85,12 @@ public class ComicManager : MonoBehaviour
 
     private void ScrollControl()
     {
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A) && animator.puzzlePagesContainer.localPosition.x < -900 + (animator.pageObjects.Count - 1) * animator.pageWidth)
         {
             animator.ScrollPuzzlePagesContainer(4f);
 
         }
-        else if (Input.GetKey(KeyCode.D))
+        else if (Input.GetKey(KeyCode.D) && animator.puzzlePagesContainer.localPosition.x > -900)
         {
             animator.ScrollPuzzlePagesContainer(-4f);
         }
@@ -86,10 +104,12 @@ public class ComicManager : MonoBehaviour
         segment = Instantiate(newSegment);
         animator.GeneratePuzzlePages(segment.pages);
         animator.GenerateComicPins(segment.availablePins);
+        animator.SetPinsContainerStartPos();
+        animator.UpdatePinsVisibility(0);
         SwitchToPuzzleMode();
     }
 
-    public void SwitchToPuzzleMode()
+    private void SwitchToPuzzleMode()
     {
         MusicManager.instance.PlaySong(puzzleMusic);
         isInPuzzle = true;
@@ -115,9 +135,9 @@ public class ComicManager : MonoBehaviour
     {
         for (int i = 0; i < segment.pages.Count; i++)
         {
-            segment.pages[i] = animator.GenerateSolutionPage(i);
-            yield return segment.pages[i].Play();
-            Destroy(segment.pages[i].gameObject);
+            currentPresentedPage = animator.GenerateSolutionPage(i);
+            yield return currentPresentedPage.Play();
+            Destroy(currentPresentedPage.gameObject);
         }
 
         screenShatter = Instantiate(screenShatter);
@@ -139,6 +159,13 @@ public class ComicManager : MonoBehaviour
 
         return true;
     }
-    
+
+    public void WrongAnswer()
+    {
+        TrialManager.instance.DecreaseHealth(1f);
+        SwitchToPuzzleMode();
+        Destroy(currentPresentedPage.gameObject);
+        StopCoroutine(runningComicCoroutine);
+    }
 
 }

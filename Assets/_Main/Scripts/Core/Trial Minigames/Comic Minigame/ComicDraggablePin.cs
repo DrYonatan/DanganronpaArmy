@@ -1,19 +1,25 @@
 ﻿using System;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ComicDraggablePin : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
+public class ComicDraggablePin : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler, IPointerEnterHandler,
+    IPointerExitHandler
 {
     public ComicPin pin;
+    public Image mask;
     public Image image;
     public Image outline;
+    public Image glow;
     private RectTransform rectTransform;
     private Canvas canvas;
 
     public RectTransform parent;
     public ComicQuestionPanel assignedPanel;
-    
+
+    private bool isDragged;
+
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
@@ -33,20 +39,26 @@ public class ComicDraggablePin : MonoBehaviour, IDragHandler, IBeginDragHandler,
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        isDragged = true;
         ComicManager.instance.animator.currentDraggedPin = this;
+        mask.raycastTarget = false;
         TrialCursorManager.instance.Hide();
         rectTransform.localScale *= 1.5f;
         rectTransform.SetParent(parent.parent.parent);
         ComicManager.instance.animator.LowerPinsContainer();
-        GetComponent<Image>().raycastTarget = false;
-        if(assignedPanel)
+        if (assignedPanel)
+        {
             assignedPanel.selectedPin = null;
+            StartGlowing();
+        }
         assignedPanel = null;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        GetComponent<Image>().raycastTarget = true;
+        isDragged = false;
+        StopGlowing();
+        mask.raycastTarget = true;
         rectTransform.localScale /= 1.5f;
         TrialCursorManager.instance.Show();
         ComicManager.instance.animator.currentDraggedPin = null;
@@ -57,5 +69,31 @@ public class ComicDraggablePin : MonoBehaviour, IDragHandler, IBeginDragHandler,
             rectTransform.SetParent(parent);
             rectTransform.localPosition = Vector3.zero;
         }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (assignedPanel == null)
+        {
+            StartGlowing();
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if(!isDragged)
+            StopGlowing();
+    }
+
+    private void StartGlowing()
+    {
+        glow.DOFade(1f, 0.1f);
+        glow.rectTransform.localScale = Vector3.one;
+        glow.rectTransform.DOScale(1.1f, 0.2f).SetLoops(-1, LoopType.Yoyo);
+    }
+
+    private void StopGlowing()
+    {
+        glow.DOFade(0f, 0.1f).OnComplete(() => glow.DOKill()).OnComplete(() => glow.rectTransform.DOKill());
     }
 }
