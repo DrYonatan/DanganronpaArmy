@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -34,11 +35,15 @@ public class ComicQuestionPanel : ComicPanel, IDropHandler
         rectTransform.DOAnchorPos(originalPos, 0.2f);
     }
 
-    protected override void OnAppear()
+    protected override IEnumerator OnAppear()
     {
         selectedPin = GetComponentInChildren<ComicDraggablePin>();
-        if(selectedPin.pin.pinName.Equals(truePin.pinName))
-           blueQuestionMarkOverlay.DOFade(0f, 0.2f);
+        if (selectedPin.pin.pinName.Equals(truePin.pinName))
+        {
+            selectedPin.CorrectAnimation();
+            yield return new WaitForSeconds(0.4f);
+            blueQuestionMarkOverlay.DOFade(0f, 0.2f);
+        }
         else
         {
             ComicManager.instance.WrongAnswer();

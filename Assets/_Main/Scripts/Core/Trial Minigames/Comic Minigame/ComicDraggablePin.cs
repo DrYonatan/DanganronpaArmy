@@ -12,6 +12,8 @@ public class ComicDraggablePin : MonoBehaviour, IDragHandler, IBeginDragHandler,
     public Image image;
     public Image outline;
     public Image glow;
+    public Image underlayRing;
+    public Image overlayRing;
     private RectTransform rectTransform;
     private Canvas canvas;
 
@@ -95,5 +97,21 @@ public class ComicDraggablePin : MonoBehaviour, IDragHandler, IBeginDragHandler,
     private void StopGlowing()
     {
         glow.DOFade(0f, 0.1f).OnComplete(() => glow.DOKill()).OnComplete(() => glow.rectTransform.DOKill());
+    }
+
+    public void CorrectAnimation()
+    {
+        float fullOpacity = 0.7f;
+        float duration = 0.1f;
+        
+        Sequence seq = DOTween.Sequence();
+        seq.Append(overlayRing.DOFade(fullOpacity, 0.05f)
+            .SetLoops(4, LoopType.Yoyo));
+        seq.Append(overlayRing.DOFade(fullOpacity, 0f));
+        seq.Append(overlayRing.rectTransform.DOScale(1.2f, duration));
+        seq.Join(overlayRing.DOFade(0f, duration));
+        seq.Join(underlayRing.DOFade(fullOpacity, duration * 0.8f).SetDelay(duration / 2));
+        seq.Append(underlayRing.DOFade(0f, duration));
+        seq.Join(underlayRing.rectTransform.DOScale(1.2f, duration));
     }
 }

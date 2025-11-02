@@ -33,7 +33,7 @@ public class ComicPanel : MonoBehaviour
         
         OverlayTextBoxManager.instance.Hide();
         
-        OnAppear();
+        yield return OnAppear();
         
         int animationsRunning = spriteAnimations.Count;
         foreach (ComicSpriteAnimation spriteAnimation in spriteAnimations)
@@ -63,9 +63,10 @@ public class ComicPanel : MonoBehaviour
         onFinish?.Invoke();
     }
 
-    protected virtual void OnAppear()
+    protected virtual IEnumerator OnAppear()
     {
         canvasGroup.DOFade(1f, 0.1f);
+        yield return null;
     }
 
     public virtual bool IsReady()
