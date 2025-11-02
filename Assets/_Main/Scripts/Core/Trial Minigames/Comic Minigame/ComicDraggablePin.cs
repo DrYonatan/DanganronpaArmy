@@ -17,6 +17,8 @@ public class ComicDraggablePin : MonoBehaviour, IDragHandler, IBeginDragHandler,
     private RectTransform rectTransform;
     private Canvas canvas;
 
+    public AudioClip dragSound;
+
     public RectTransform parent;
     public ComicQuestionPanel assignedPanel;
 
@@ -42,6 +44,7 @@ public class ComicDraggablePin : MonoBehaviour, IDragHandler, IBeginDragHandler,
     public void OnBeginDrag(PointerEventData eventData)
     {
         isDragged = true;
+        SoundManager.instance.PlaySoundEffect(dragSound);
         ComicManager.instance.animator.currentDraggedPin = this;
         mask.raycastTarget = false;
         TrialCursorManager.instance.Hide();

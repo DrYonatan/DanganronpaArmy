@@ -27,6 +27,7 @@ public class ComicManager : MonoBehaviour
     private Coroutine runningComicCoroutine;
 
     private ComicPage currentPresentedPage;
+    
 
     void Awake()
     {
@@ -121,6 +122,7 @@ public class ComicManager : MonoBehaviour
     IEnumerator PresentComic()
     {
         MusicManager.instance.StopSong();
+        TrialCursorManager.instance.Hide();
         isInPuzzle = false;
         animator.nowIUnderstand.gameObject.SetActive(true);
         yield return animator.nowIUnderstand.Show();

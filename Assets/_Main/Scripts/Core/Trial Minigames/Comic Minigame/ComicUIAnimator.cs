@@ -39,6 +39,10 @@ public class ComicUIAnimator : MonoBehaviour
 
     public int pageNumber;
     public int firstPinNumber;
+    
+    public AudioClip pinsScrollSound;
+
+    public AudioClip pagesScrollSound;
 
     public void GeneratePuzzlePages(List<ComicPage> pages)
     {
@@ -163,6 +167,7 @@ public class ComicUIAnimator : MonoBehaviour
 
     public void JumpToNextPage()
     {
+        SoundManager.instance.PlaySoundEffect(pagesScrollSound);
         pageNumber++;
         puzzlePagesContainer.localPosition = new Vector3(-900 + pageNumber * pageWidth, 0, 0);
         UpdatePageNumberText();
@@ -170,6 +175,7 @@ public class ComicUIAnimator : MonoBehaviour
     
     public void JumpToPrevPage()
     {
+        SoundManager.instance.PlaySoundEffect(pagesScrollSound);
         pageNumber--;
         puzzlePagesContainer.localPosition = new Vector3(-900 + pageNumber * pageWidth, 0, 0);
         UpdatePageNumberText();
@@ -190,6 +196,7 @@ public class ComicUIAnimator : MonoBehaviour
 
     public void ScrollPinContainer()
     {
+        SoundManager.instance.PlaySoundEffect(pinsScrollSound);
         RectTransform pinsContainerTransform = pinsContainer.GetComponent<RectTransform>();
         float newX = pinsContainerOriginalPos.x + firstPinNumber * (pinsContainer.cellSize.x + pinsContainer.spacing.x);
         pinsContainerTransform.DOAnchorPosX(newX, 0.2f);

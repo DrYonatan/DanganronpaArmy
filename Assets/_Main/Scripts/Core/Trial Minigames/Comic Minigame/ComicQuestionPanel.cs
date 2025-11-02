@@ -19,6 +19,8 @@ public class ComicQuestionPanel : ComicPanel, IDropHandler
     private RectTransform rectTransform;
     public Image questionMark;
 
+    public AudioClip pinAssignSound;
+
     void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
@@ -54,6 +56,7 @@ public class ComicQuestionPanel : ComicPanel, IDropHandler
     {
         if (selectedPin == null)
         {
+            SoundManager.instance.PlaySoundEffect(pinAssignSound);
             selectedPin = ComicManager.instance.animator.currentDraggedPin;
             selectedPin.transform.SetParent(blueQuestionMarkOverlay.transform);
             selectedPin.transform.localPosition = questionMark.transform.localPosition;
