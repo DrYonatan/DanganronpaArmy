@@ -32,9 +32,9 @@ public class TextShatterExplosion : MonoBehaviour
         // Fade sequence
         master.Append(glow.DOFade(1f, 0.05f));
         master.Join(orangeLines.DOFade(1f, 0.05f));
-        master.Join(lightBlue.DOFade(1f, 0.3f / speed));
-        master.Join(darkBlue.DOFade(1f, 0.3f / speed));
-        master.Join(blueRing.DOFade(0.8f, 0.3f / speed));
+        master.Join(lightBlue.DOFade(1f, 0.2f / speed));
+        master.Join(darkBlue.DOFade(1f, 0.2f / speed));
+        master.Join(blueRing.DOFade(0.8f, 0.2f / speed));
         
         master.Join(orangeLines.rectTransform.DOScale(5f, 0.7f / speed));
         master.Join(glow.rectTransform.DOScale(3f, 0.7f / speed));
@@ -47,12 +47,12 @@ public class TextShatterExplosion : MonoBehaviour
         
         master.Append(shards.DOFade(1f, 0.1f));
         
-        master.Join(glow.DOFade(0f, 0.5f / speed));
-        master.Join(lightBlue.DOFade(0f, 0.5f / speed));
-        master.Join(darkBlue.DOFade(0f, 0.5f / speed));
-        master.Join(orangeLines.DOFade(0f, 0.5f / speed));
-        master.Join(blueRing.DOFade(0f, 0.2f / speed));
-        master.Append(shards.DOFade(0f, 0.2f / speed));
+        master.Join(glow.DOFade(0f, 0.3f / speed));
+        master.Join(lightBlue.DOFade(0f, 0.3f / speed));
+        master.Join(darkBlue.DOFade(0f, 0.3f / speed));
+        master.Join(orangeLines.DOFade(0f, 0.3f / speed));
+        master.Join(blueRing.DOFade(0f, 0.3f / speed));
+        master.Append(shards.DOFade(0f, 0.3f / speed));
     }
 
 }
