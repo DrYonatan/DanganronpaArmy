@@ -18,11 +18,6 @@ public class FreeRoamRoom : Room
 
     public Sprite map;
 
-    void Awake()
-    {
-        MapContainer.instance.SetMap(map);
-    }
-
     public override void MovementControl()
     {
         MapContainer.instance.HandleMapVisibility();
@@ -125,5 +120,12 @@ public class FreeRoamRoom : Room
 
         // Set position to center
         cursor.anchoredPosition = Vector2.zero;
+    }
+
+    public override IEnumerator OnLoad()
+    {
+        base.OnLoad();
+        MapContainer.instance.SetMap(map);
+        yield return null;
     }
 }

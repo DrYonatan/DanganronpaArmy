@@ -8,7 +8,7 @@ namespace DIALOGUE
 
         public QuestionMarkShooter shooter;
 
-        public GameObject pauseMenu;
+        public PauseMenuManager pauseMenu;
 
         public bool isPaused;
 
@@ -47,8 +47,20 @@ namespace DIALOGUE
         public void TogglePause()
         {
             isPaused = !isPaused;
-            pauseMenu.SetActive(isPaused);
-            CursorManager.instance.cursor.gameObject.SetActive(!isPaused);
+            if (isPaused)
+            {
+                MusicManager.instance.LowerVolume();
+                Time.timeScale = 0f;
+                CursorManager.instance.Hide();
+                pauseMenu.OpenMenu();
+            }
+            else
+            {
+                MusicManager.instance.RaiseVolume();
+                Time.timeScale = 1f;
+                CursorManager.instance.Show();
+                pauseMenu.CloseMenu();
+            }
         }
 
        
