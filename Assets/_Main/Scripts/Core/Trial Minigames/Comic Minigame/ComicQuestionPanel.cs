@@ -61,6 +61,7 @@ public class ComicQuestionPanel : ComicPanel, IDropHandler
             selectedPin.transform.SetParent(blueQuestionMarkOverlay.transform);
             selectedPin.transform.localPosition = questionMark.transform.localPosition;
             selectedPin.assignedPanel = this;
+            ComicManager.instance.UpdateIsReadyToPresent();
         }
     }
 

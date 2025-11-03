@@ -57,6 +57,7 @@ public class ComicDraggablePin : MonoBehaviour, IDragHandler, IBeginDragHandler,
             StartGlowing();
         }
         assignedPanel = null;
+        ComicManager.instance.UpdateIsReadyToPresent();
     }
 
     public void OnEndDrag(PointerEventData eventData)

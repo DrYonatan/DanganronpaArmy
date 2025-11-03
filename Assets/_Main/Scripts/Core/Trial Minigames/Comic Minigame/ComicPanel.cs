@@ -4,12 +4,19 @@ using System.Collections.Generic;
 using DG.Tweening;
 using DIALOGUE;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ComicPanel : MonoBehaviour
 {
+    [Serializable]
+    public class ComicSound
+    {
+        public AudioClip soundEffect;
+        public float delay;
+    }
+    
     private CanvasGroup canvasGroup;
     public List<ComicSpriteAnimation> spriteAnimations = new List<ComicSpriteAnimation>();
+    public List<ComicSound> soundEffects = new List<ComicSound>();
     public List<DialogueNode> textBeforePanel = new();
     public List<DialogueNode> textAfterPanel = new();
 
@@ -39,6 +46,12 @@ public class ComicPanel : MonoBehaviour
         foreach (ComicSpriteAnimation spriteAnimation in spriteAnimations)
         {
             StartCoroutine(PlaySpriteAnimation(spriteAnimation, () => animationsRunning--));
+            
+        }
+
+        foreach (ComicSound sound in soundEffects)
+        {
+            StartCoroutine(PlayComicSound(sound));
         }
 
         while (animationsRunning > 0)
@@ -72,6 +85,12 @@ public class ComicPanel : MonoBehaviour
     public virtual bool IsReady()
     {
         return true;
+    }
+
+    private IEnumerator PlayComicSound(ComicSound sound)
+    {
+        yield return new WaitForSeconds(sound.delay);
+        SoundManager.instance.PlaySoundEffect(sound.soundEffect);
     }
     
     

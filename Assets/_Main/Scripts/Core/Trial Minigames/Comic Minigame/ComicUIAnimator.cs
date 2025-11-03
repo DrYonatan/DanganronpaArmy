@@ -33,6 +33,8 @@ public class ComicUIAnimator : MonoBehaviour
     public NowIUnderstandAnimator nowIUnderstand;
 
     private Tween beatTween;
+
+    public Image reEnactIcon;
     
     public float pagesContainerStartPos = -900;
     public float pageWidth = 440;
@@ -43,6 +45,8 @@ public class ComicUIAnimator : MonoBehaviour
     public AudioClip pinsScrollSound;
 
     public AudioClip pagesScrollSound;
+
+    public AudioClip readyToPresentSound;
 
     public void GeneratePuzzlePages(List<ComicPage> pages)
     {
@@ -230,5 +234,17 @@ public class ComicUIAnimator : MonoBehaviour
     public void SetPinsContainerStartPos()
     {
         pinsContainerOriginalPos = pinsContainer.transform.localPosition;
+    }
+
+    public void BlinkReEnact()
+    {
+        SoundManager.instance.PlaySoundEffect(readyToPresentSound);
+        reEnactIcon.DOFade(1f, 0.2f).SetLoops(-1, LoopType.Yoyo);
+    }
+
+    public void StopBlinkingReEnact()
+    {
+        reEnactIcon.DOKill();
+        reEnactIcon.DOFade(0f, 0.1f);
     }
 }

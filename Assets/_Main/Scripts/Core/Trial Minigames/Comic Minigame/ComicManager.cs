@@ -24,6 +24,8 @@ public class ComicManager : MonoBehaviour
 
     private bool isInPuzzle;
 
+    private bool isReadyToPresent;
+
     private Coroutine runningComicCoroutine;
 
     private ComicPage currentPresentedPage;
@@ -39,7 +41,7 @@ public class ComicManager : MonoBehaviour
         if (isInPuzzle)
         {
             TrialCursorManager.instance.ReticleAsCursor();
-            if (Input.GetMouseButton(1) && CheckQuestionPanelsPins())
+            if (Input.GetMouseButton(1) && isReadyToPresent)
             {
                 StartCoroutine(PresentComic());
             }
@@ -48,6 +50,15 @@ public class ComicManager : MonoBehaviour
             PinsControl();
             
         }
+    }
+
+    public void UpdateIsReadyToPresent()
+    {
+        isReadyToPresent = CheckQuestionPanelsPins();
+        if(isReadyToPresent)
+            animator.BlinkReEnact();
+        else
+            animator.StopBlinkingReEnact();
     }
 
     private void PinsControl()
@@ -124,6 +135,7 @@ public class ComicManager : MonoBehaviour
         MusicManager.instance.StopSong();
         TrialCursorManager.instance.Hide();
         isInPuzzle = false;
+        animator.StopBlinkingReEnact();
         animator.nowIUnderstand.gameObject.SetActive(true);
         yield return animator.nowIUnderstand.Show();
         animator.nowIUnderstand.gameObject.SetActive(false);
