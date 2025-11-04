@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
@@ -6,6 +7,8 @@ using UnityEngine.UI;
 
 public class ComicUIAnimator : MonoBehaviour
 {
+    public Image sideBars;
+    
     public RectTransform questionPanelsSpawnLocation;
 
     public CanvasGroup puzzleCanvasGroup;
@@ -15,6 +18,9 @@ public class ComicUIAnimator : MonoBehaviour
 
     public RectTransform puzzlePagesContainer;
     public GridLayoutGroup pinsContainer;
+
+    public RectTransform timerRect;
+    public RectTransform pagesRect;
 
     public TextMeshProUGUI pagesCount;
 
@@ -48,6 +54,30 @@ public class ComicUIAnimator : MonoBehaviour
 
     public AudioClip readyToPresentSound;
 
+    public ClimaxIntroAnimation introAnimation;
+
+    private float timerOriginalX;
+    private float pagesOriginalX;
+
+    public IEnumerator Intro()
+    {
+        InitializeUI();
+        introAnimation.gameObject.SetActive(true);
+        yield return introAnimation.PlayAnimation();
+        introAnimation.gameObject.SetActive(false);
+    }
+
+    private void InitializeUI()
+    {
+        timerOriginalX = timerRect.anchoredPosition.x;
+        pagesOriginalX = pagesRect.anchoredPosition.x;
+        
+        timerRect.DOAnchorPosX(timerOriginalX + 500f, 0f);
+        pagesRect.DOAnchorPosX(pagesOriginalX - 700f, 0f);
+
+        sideBars.DOFade(0f, 0f);
+    }
+    
     public void GeneratePuzzlePages(List<ComicPage> pages)
     {
         foreach (ComicPage page in pages)
@@ -109,8 +139,14 @@ public class ComicUIAnimator : MonoBehaviour
     {
         puzzleCanvasGroup.alpha = 1f;
         solutionCanvasGroup.alpha = 0f;
+
+        timerRect.DOAnchorPosX(timerOriginalX, 0.4f);
+        pagesRect.DOAnchorPosX(pagesOriginalX, 0.4f);
+        
         AnimatePuzzleBackground();
         UpdatePageNumber();
+        
+        sideBars.DOFade(0.5f, 0f);
     }
 
     public void ShowSolutionUI()

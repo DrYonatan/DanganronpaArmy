@@ -28,6 +28,7 @@ public class NowIUnderstandAnimator : MonoBehaviour
         RectTransform backgroundRect = background.GetComponent<RectTransform>();
         face.gameObject.SetActive(false);
         glow.DOFade(0f, 0f);
+        glow.rectTransform.DOScaleY(0f, 0f);
         
         topBarRect.anchoredPosition = new Vector2(topBarRect.anchoredPosition.x, 16);
         bottomBarRect.anchoredPosition = new Vector2(bottomBarRect.anchoredPosition.x, -82);

@@ -8,6 +8,6 @@ public class ComicSegment : TrialSegment
     public List<ComicPin> availablePins = new List<ComicPin>();
     public override void Play()
     {
-        ComicManager.instance.StartComicPuzzle(this);
+        ComicManager.instance.StartMiniGame(this);
     }
 }

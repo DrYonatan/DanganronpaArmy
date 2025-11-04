@@ -52,6 +52,22 @@ public class ComicManager : MonoBehaviour
         }
     }
 
+    public void StartMiniGame(ComicSegment newSegment)
+    {
+        segment = Instantiate(newSegment);
+        StartCoroutine(StartPipeline());
+    }
+
+    private IEnumerator StartPipeline()
+    {
+        ImageScript.instance.FadeToBlack(0.1f);
+        yield return new WaitForSeconds(0.5f);
+        ImageScript.instance.UnFadeToBlack(0.1f);
+        animator.gameObject.SetActive(true);
+        yield return animator.Intro();
+        StartComicPuzzle();
+    }
+
     public void UpdateIsReadyToPresent()
     {
         isReadyToPresent = CheckQuestionPanelsPins();
@@ -109,11 +125,9 @@ public class ComicManager : MonoBehaviour
     }
     
 
-    public void StartComicPuzzle(ComicSegment newSegment)
+    private void StartComicPuzzle()
     {
         OverlayTextBoxManager.instance.SetAsTextBox();
-        animator.gameObject.SetActive(true);
-        segment = Instantiate(newSegment);
         animator.GeneratePuzzlePages(segment.pages);
         animator.GenerateComicPins(segment.availablePins);
         animator.SetPinsContainerStartPos();
