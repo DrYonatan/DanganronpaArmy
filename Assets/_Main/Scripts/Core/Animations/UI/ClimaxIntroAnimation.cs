@@ -26,10 +26,13 @@ public class ClimaxIntroAnimation : MonoBehaviour
 
     public Image lines;
 
+    public AudioClip soundEffect;
+
     public IEnumerator PlayAnimation()
     {
         Initialize();
         
+        SoundManager.instance.PlaySoundEffect(soundEffect);
         float framesDuration = 0.1f;
         Sequence seq =  DOTween.Sequence();
         seq.Append(frame1.DOFade(0f, framesDuration));
