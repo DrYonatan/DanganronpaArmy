@@ -14,8 +14,7 @@ public class MenuButton : MonoBehaviour
     }
     public void Click()
     {
-        menuScreenContainer.OpenMenu();
-        menuToOpen.SetActive(true);
+        menuScreenContainer.OpenMenu(menuToOpen);
     }
 
     public void SetIsHovered(bool isHovered)

@@ -8,4 +8,6 @@ public class Evidence : ScriptableObject
     public string Name;
     [TextArea]
     public string description;
+
+    public Sprite icon;
 }

@@ -6,6 +6,7 @@ using System;
 using _Main.Scripts.Court;
 using DG.Tweening;
 using DIALOGUE;
+using UnityEngine.Serialization;
 using Text = TMPro.TextMeshProUGUI;
 
 
@@ -48,7 +49,7 @@ public class GameLoop : MonoBehaviour
     [SerializeField] Transform textPivot;
     [SerializeField] GameObject textPrefab;
     [SerializeField] CameraEffectController effectController;
-    [SerializeField] EvidenceManager evidenceManager;
+    [FormerlySerializedAs("evidenceManager")] [SerializeField] BulletManager bulletManager;
     [SerializeField] MusicManager musicManager;
     [SerializeField] Text timerText;
     public DebateUIAnimator debateUIAnimator;
@@ -79,7 +80,7 @@ public class GameLoop : MonoBehaviour
     {
         this.debateSegment = debate;
         debateTexts = new List<FloatingText>();
-        evidenceManager.ShowEvidence(debateSegment.settings.evidences);
+        bulletManager.ShowEvidence(debateSegment.settings.evidences);
         MusicManager.instance.PlaySong(debateSegment.settings.audioClip);
         stageTimer = defaultStageTime;
         StartCoroutine(StartDebate());
@@ -226,13 +227,13 @@ public class GameLoop : MonoBehaviour
     {
         if (Input.GetAxis("Mouse ScrollWheel") < 0)
         {
-            evidenceManager.SelectNextEvidence();
-            evidenceManager.SelectNextEvidence();
+            bulletManager.SelectNextEvidence();
+            bulletManager.SelectNextEvidence();
         }
 
         if (Input.GetAxis("Mouse ScrollWheel") > 0)
         {
-            evidenceManager.SelectPreviousEvidence();
+            bulletManager.SelectPreviousEvidence();
         }
     }
 
@@ -266,9 +267,9 @@ public class GameLoop : MonoBehaviour
 
                 Quaternion rotation = Quaternion.LookRotation(direction, statementsCamera.transform.up) *
                                       Quaternion.Euler(0, 90f, 0);
-                evidenceManager.ShootBullet();
+                bulletManager.ShootBullet();
                 GameObject bullet = Instantiate(textBulletPrefab, shootOrigin.position, rotation);
-                bullet.GetComponent<TextMeshPro>().text = evidenceManager.GetSelectedEvidence();
+                bullet.GetComponent<TextMeshPro>().text = bulletManager.GetSelectedEvidence();
                 StartCoroutine(MoveBullet(bullet, direction, 1f));
                 debateUIAnimator.MoveCylinder();
                 debateUIAnimator.GrowAndShrinkCircles();
@@ -294,7 +295,7 @@ public class GameLoop : MonoBehaviour
 
     public void LoadBullets()
     {
-        evidenceManager.LoadBullets();
+        bulletManager.LoadBullets();
     }
 
     public void Hit(Vector3 point)
@@ -305,7 +306,7 @@ public class GameLoop : MonoBehaviour
 
     public bool CheckEvidence(Evidence evidence)
     {
-        return evidenceManager.Check(evidence);
+        return bulletManager.Check(evidence);
     }
 
     private void CorrectChoice()
@@ -651,6 +652,6 @@ public class GameLoop : MonoBehaviour
 
     public int GetSelectedEvidenceIndex()
     {
-        return evidenceManager.selectedIndex;
+        return bulletManager.selectedIndex;
     }
 }

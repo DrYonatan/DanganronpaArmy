@@ -5,7 +5,7 @@ using DG.Tweening;
 
 
 
-public class EvidenceManager : MonoBehaviour
+public class BulletManager : MonoBehaviour
 {
     [SerializeField] UIBullet selectedBullet;
     List<Evidence> evidences;

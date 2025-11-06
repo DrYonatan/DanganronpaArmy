@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace DIALOGUE
 {
@@ -8,7 +9,7 @@ namespace DIALOGUE
 
         public QuestionMarkShooter shooter;
 
-        public PauseMenuManager pauseMenu;
+        public MenuScreenContainer pauseMenu;
 
         public bool isPaused;
 
@@ -17,7 +18,6 @@ namespace DIALOGUE
             isPaused = false;
             instance = this;
         }
-        // Update is called once per frame
         void Update()
         {
             Cursor.visible = false;
@@ -29,8 +29,8 @@ namespace DIALOGUE
                     PromptAdvance();
                 }
             }
-
-            if (Input.GetKeyDown(KeyCode.Alpha1))
+            
+            if (Input.GetKeyDown(KeyCode.Alpha1) && !pauseMenu.isSubmenuOpen)
             {
                 TogglePause();
             }
@@ -52,14 +52,14 @@ namespace DIALOGUE
                 MusicManager.instance.LowerVolume();
                 Time.timeScale = 0f;
                 CursorManager.instance.Hide();
-                pauseMenu.OpenMenu();
+                pauseMenu.OpenGeneralMenu();
             }
             else
             {
                 MusicManager.instance.RaiseVolume();
                 Time.timeScale = 1f;
                 CursorManager.instance.Show();
-                pauseMenu.CloseMenu();
+                pauseMenu.CloseGeneralMenu();
             }
         }
 
