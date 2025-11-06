@@ -48,6 +48,7 @@ public class ComicQuestionPanel : ComicPanel, IDropHandler
         }
         else
         {
+            selectedPin.WrongAnimation();
             ComicManager.instance.WrongAnswer();
         }
     }
