@@ -62,6 +62,7 @@ public class ComicUIAnimator : MonoBehaviour
     public IEnumerator Intro()
     {
         InitializeUI();
+        AnimatePuzzleBackground();
         introAnimation.gameObject.SetActive(true);
         yield return introAnimation.PlayAnimation();
         introAnimation.gameObject.SetActive(false);
@@ -143,7 +144,6 @@ public class ComicUIAnimator : MonoBehaviour
         timerRect.DOAnchorPosX(timerOriginalX, 0.4f);
         pagesRect.DOAnchorPosX(pagesOriginalX, 0.4f);
         
-        AnimatePuzzleBackground();
         UpdatePageNumber();
         
         sideBars.DOFade(0.5f, 0f);
@@ -153,7 +153,6 @@ public class ComicUIAnimator : MonoBehaviour
     {
         puzzleCanvasGroup.alpha = 0f;
         solutionCanvasGroup.alpha = 1f;
-        StopAnimatingPuzzleBackground();
     }
 
     public void LowerPinsContainer()

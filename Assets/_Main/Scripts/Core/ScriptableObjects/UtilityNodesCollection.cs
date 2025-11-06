@@ -21,4 +21,6 @@ public class UtilityNodesCollection : ScriptableObject
     public List<CharacterDefaultWrongNodes> characterDefaultWrongNodes = new List<CharacterDefaultWrongNodes>();
 
     [SerializeReference] public List<DiscussionNode> gameOverNodes = new List<DiscussionNode>();
+    
+    public List<DialogueNode> wrongComicNodes = new List<DialogueNode>();
 }

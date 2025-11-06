@@ -190,10 +190,32 @@ public class ComicManager : MonoBehaviour
 
     public void WrongAnswer()
     {
+        StartCoroutine(WrongAnswerPipeline());
+    }
+
+    private IEnumerator WrongAnswerPipeline()
+    {
+        Stop();
+        
+        OverlayTextBoxManager.instance.Show();
+        TrialManager.instance.barsAnimator.ShowGlobalBars(0.2f);
+        
         TrialManager.instance.DecreaseHealth(1f);
+        foreach (DialogueNode node in UtilityNodesRuntimeBank.instance.nodesCollection.wrongComicNodes)
+        {
+            yield return DialogueSystem.instance.Say(node);
+        }
+        
         SwitchToPuzzleMode();
         Destroy(currentPresentedPage.gameObject);
-        StopCoroutine(runningComicCoroutine);
+        OverlayTextBoxManager.instance.Hide();
+        TrialManager.instance.barsAnimator.HideGlobalBars(0.2f);
+    }
+
+    private void Stop()
+    {
+      StopCoroutine(runningComicCoroutine);
+      currentPresentedPage.Stop();
     }
 
 }

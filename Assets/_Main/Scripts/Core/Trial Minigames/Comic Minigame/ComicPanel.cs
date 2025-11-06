@@ -20,6 +20,9 @@ public class ComicPanel : MonoBehaviour
     public List<DialogueNode> textBeforePanel = new();
     public List<DialogueNode> textAfterPanel = new();
 
+    private Coroutine runningPanelCoroutine;
+    private bool isDone;
+
     public virtual void StartUpAnimation()
     {
         canvasGroup = GetComponent<CanvasGroup>();
@@ -27,6 +30,13 @@ public class ComicPanel : MonoBehaviour
     }
 
     public IEnumerator Play()
+    {
+        runningPanelCoroutine = StartCoroutine(PlayPanel());
+
+        yield return new WaitUntil(() => isDone);
+    }
+
+    private IEnumerator PlayPanel()
     {
         if (textBeforePanel.Count > 0)
         {
@@ -68,6 +78,8 @@ public class ComicPanel : MonoBehaviour
         {
             yield return DialogueSystem.instance.Say(node);
         }
+
+        isDone = true;
     }
 
     IEnumerator PlaySpriteAnimation(ComicSpriteAnimation spriteAnimation, Action onFinish)
@@ -91,6 +103,12 @@ public class ComicPanel : MonoBehaviour
     {
         yield return new WaitForSeconds(sound.delay);
         SoundManager.instance.PlaySoundEffect(sound.soundEffect);
+    }
+
+    public void Stop()
+    {
+        if(runningPanelCoroutine != null)
+           StopCoroutine(runningPanelCoroutine);
     }
     
     
