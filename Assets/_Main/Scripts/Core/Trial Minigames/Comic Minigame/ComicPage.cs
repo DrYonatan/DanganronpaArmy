@@ -9,6 +9,7 @@ public class ComicPage : MonoBehaviour
     [SerializeReference] public List<ComicPanel> panels = new List<ComicPanel>();
     private Coroutine runningPageCoroutine;
     private bool isDone;
+    public int currentPanelIndex;
 
     
     public void Awake()
@@ -32,6 +33,7 @@ public class ComicPage : MonoBehaviour
         foreach (ComicPanel panel in panels)
         {
             yield return panel.Play();
+            currentPanelIndex++;
         }
 
         isDone = true;
@@ -46,4 +48,5 @@ public class ComicPage : MonoBehaviour
             panel.Stop();
         }
     }
+    
 }

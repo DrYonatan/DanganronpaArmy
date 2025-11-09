@@ -114,6 +114,4 @@ public class ComicPanel : MonoBehaviour
            StopCoroutine(runningPanelCoroutine);
         isCancelled = true;
     }
-    
-    
 }

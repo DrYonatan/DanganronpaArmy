@@ -30,7 +30,7 @@ public class ComicManager : MonoBehaviour
 
     private ComicPage currentPresentedPage;
 
-    private int currentPageIndex;
+    public int currentPageIndex;
     
 
     void Awake()
@@ -177,6 +177,29 @@ public class ComicManager : MonoBehaviour
         animator.gameObject.SetActive(false);
     }
 
+    public void LockPin()
+    {
+        ComicQuestionPanel panel = animator.pageObjects[currentPageIndex]
+            .panels[currentPresentedPage.currentPanelIndex] as ComicQuestionPanel;
+        if (panel != null)
+        {
+            ComicDraggablePin pin = panel.selectedPin;
+            pin.Lock();
+        }
+    }
+
+    public void RemovePinFromPanel()
+    {
+        ComicQuestionPanel panel = animator.pageObjects[currentPageIndex]
+            .panels[currentPresentedPage.currentPanelIndex] as ComicQuestionPanel;
+
+        if (panel != null)
+        {
+            panel.selectedPin.ResetParent();
+            panel.selectedPin = null;
+        }
+    }
+
     private bool CheckQuestionPanelsPins()
     {
         foreach (ComicPage page in animator.pageObjects)
@@ -215,5 +238,4 @@ public class ComicManager : MonoBehaviour
       StopCoroutine(runningComicCoroutine);
       currentPresentedPage.Stop();
     }
-
 }

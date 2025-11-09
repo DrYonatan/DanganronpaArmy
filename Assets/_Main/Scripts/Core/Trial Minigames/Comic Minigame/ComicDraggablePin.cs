@@ -17,7 +17,7 @@ public class ComicDraggablePin : MonoBehaviour, IDragHandler, IBeginDragHandler,
     public CanvasGroup redX;
     public RectTransform redXLine1;
     public RectTransform redXLine2;
-    
+
     private RectTransform rectTransform;
     private Canvas canvas;
 
@@ -40,6 +40,11 @@ public class ComicDraggablePin : MonoBehaviour, IDragHandler, IBeginDragHandler,
         image.sprite = pin.pinImage;
     }
 
+    public void Lock()
+    {
+        mask.raycastTarget = false;
+    }
+
     public void OnDrag(PointerEventData eventData)
     {
         rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
@@ -60,6 +65,7 @@ public class ComicDraggablePin : MonoBehaviour, IDragHandler, IBeginDragHandler,
             assignedPanel.selectedPin = null;
             StartGlowing();
         }
+
         assignedPanel = null;
         ComicManager.instance.UpdateIsReadyToPresent();
     }
@@ -76,9 +82,14 @@ public class ComicDraggablePin : MonoBehaviour, IDragHandler, IBeginDragHandler,
 
         if (assignedPanel == null)
         {
-            rectTransform.SetParent(parent);
-            rectTransform.localPosition = Vector3.zero;
+            ResetParent();
         }
+    }
+
+    public void ResetParent()
+    {
+        rectTransform.SetParent(parent);
+        rectTransform.localPosition = Vector3.zero;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -91,7 +102,7 @@ public class ComicDraggablePin : MonoBehaviour, IDragHandler, IBeginDragHandler,
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if(!isDragged)
+        if (!isDragged)
             StopGlowing();
     }
 
@@ -111,7 +122,7 @@ public class ComicDraggablePin : MonoBehaviour, IDragHandler, IBeginDragHandler,
     {
         float fullOpacity = 0.7f;
         float duration = 0.1f;
-        
+
         Sequence seq = DOTween.Sequence();
         seq.Append(overlayRing.DOFade(fullOpacity, 0.05f)
             .SetLoops(4, LoopType.Yoyo));
@@ -127,7 +138,7 @@ public class ComicDraggablePin : MonoBehaviour, IDragHandler, IBeginDragHandler,
     {
         float fullOpacity = 0.7f;
         float duration = 0.2f;
-        
+
         Sequence seq = DOTween.Sequence();
         seq.Append(redX.DOFade(fullOpacity, 0.05f).SetLoops(6, LoopType.Yoyo));
         seq.Append(redX.DOFade(fullOpacity, 0.05f));

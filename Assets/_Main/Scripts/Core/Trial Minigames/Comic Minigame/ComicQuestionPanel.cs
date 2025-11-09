@@ -21,10 +21,10 @@ public class ComicQuestionPanel : ComicPanel, IDropHandler
 
     public AudioClip pinAssignSound;
 
+    private ComicQuestionPanel originalPanel;
     void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
-        selectedPin = null;
     }
 
     public override void StartUpAnimation()
@@ -42,12 +42,14 @@ public class ComicQuestionPanel : ComicPanel, IDropHandler
         selectedPin = GetComponentInChildren<ComicDraggablePin>();
         if (selectedPin.pin.pinName.Equals(truePin.pinName))
         {
+            ComicManager.instance.LockPin();
             selectedPin.CorrectAnimation();
             yield return new WaitForSeconds(0.4f);
             blueQuestionMarkOverlay.DOFade(0f, 0.2f);
         }
         else
         {
+            ComicManager.instance.RemovePinFromPanel();
             selectedPin.WrongAnimation();
             yield return ComicManager.instance.WrongAnswer();
         }
