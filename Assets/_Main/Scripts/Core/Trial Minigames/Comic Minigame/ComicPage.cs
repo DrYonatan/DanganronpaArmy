@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class ComicPage : MonoBehaviour
@@ -46,6 +47,14 @@ public class ComicPage : MonoBehaviour
         foreach (ComicPanel panel in panels)
         {
             panel.Stop();
+        }
+    }
+
+    public void KillPanelTweens()
+    {
+        foreach (ComicPanel panel in panels)
+        {
+            panel.DOKill();
         }
     }
     

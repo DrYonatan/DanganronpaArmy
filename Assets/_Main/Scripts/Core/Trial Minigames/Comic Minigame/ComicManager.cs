@@ -1,4 +1,5 @@
 using System.Collections;
+using DG.Tweening;
 using DIALOGUE;
 using UnityEngine;
 
@@ -168,6 +169,7 @@ public class ComicManager : MonoBehaviour
             currentPresentedPage = animator.GenerateSolutionPage(i);
             currentPageIndex = i;
             yield return currentPresentedPage.Play();
+            currentPresentedPage.KillPanelTweens();
             Destroy(currentPresentedPage.gameObject);
         }
 

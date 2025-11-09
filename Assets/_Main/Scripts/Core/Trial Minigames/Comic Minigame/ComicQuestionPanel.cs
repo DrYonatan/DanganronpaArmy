@@ -18,6 +18,9 @@ public class ComicQuestionPanel : ComicPanel, IDropHandler
     public CanvasGroup blueQuestionMarkOverlay;
     private RectTransform rectTransform;
     public Image questionMark;
+    public Image glow;
+    
+    private Sequence glowSequence;
 
     public AudioClip pinAssignSound;
 
@@ -25,8 +28,17 @@ public class ComicQuestionPanel : ComicPanel, IDropHandler
     void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
+        glowSequence = DOTween.Sequence();
+        AnimateGlow();
     }
 
+    private void AnimateGlow()
+    {
+        glowSequence.Append(glow.rectTransform.DOScale(1.1f, 0.2f).SetLoops(2, LoopType.Yoyo));
+        glowSequence.AppendInterval(1f);
+        glowSequence.SetLoops(-1);
+        glowSequence.SetTarget(this);
+    }
     public override void StartUpAnimation()
     {
         blueQuestionMarkOverlay.DOFade(1f, 0f);
