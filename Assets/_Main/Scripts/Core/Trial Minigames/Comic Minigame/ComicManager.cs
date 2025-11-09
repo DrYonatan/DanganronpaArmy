@@ -29,6 +29,8 @@ public class ComicManager : MonoBehaviour
     private Coroutine runningComicCoroutine;
 
     private ComicPage currentPresentedPage;
+
+    private int currentPageIndex;
     
 
     void Awake()
@@ -161,9 +163,10 @@ public class ComicManager : MonoBehaviour
     
     IEnumerator PlayComic()
     {
-        for (int i = 0; i < segment.pages.Count; i++)
+        for (int i = currentPageIndex; i < segment.pages.Count; i++)
         {
             currentPresentedPage = animator.GenerateSolutionPage(i);
+            currentPageIndex = i;
             yield return currentPresentedPage.Play();
             Destroy(currentPresentedPage.gameObject);
         }
@@ -187,13 +190,8 @@ public class ComicManager : MonoBehaviour
 
         return true;
     }
-
-    public void WrongAnswer()
-    {
-        StartCoroutine(WrongAnswerPipeline());
-    }
-
-    private IEnumerator WrongAnswerPipeline()
+    
+    public IEnumerator WrongAnswer()
     {
         Stop();
         

@@ -49,7 +49,7 @@ public class ComicQuestionPanel : ComicPanel, IDropHandler
         else
         {
             selectedPin.WrongAnimation();
-            ComicManager.instance.WrongAnswer();
+            yield return ComicManager.instance.WrongAnswer();
         }
     }
 

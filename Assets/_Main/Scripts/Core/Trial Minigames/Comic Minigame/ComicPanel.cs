@@ -22,6 +22,7 @@ public class ComicPanel : MonoBehaviour
 
     private Coroutine runningPanelCoroutine;
     private bool isDone;
+    private bool isCancelled;
 
     public virtual void StartUpAnimation()
     {
@@ -52,11 +53,13 @@ public class ComicPanel : MonoBehaviour
         
         yield return OnAppear();
         
+        if(isCancelled)
+            yield break;
+        
         int animationsRunning = spriteAnimations.Count;
         foreach (ComicSpriteAnimation spriteAnimation in spriteAnimations)
         {
             StartCoroutine(PlaySpriteAnimation(spriteAnimation, () => animationsRunning--));
-            
         }
 
         foreach (ComicSound sound in soundEffects)
@@ -109,6 +112,7 @@ public class ComicPanel : MonoBehaviour
     {
         if(runningPanelCoroutine != null)
            StopCoroutine(runningPanelCoroutine);
+        isCancelled = true;
     }
     
     
