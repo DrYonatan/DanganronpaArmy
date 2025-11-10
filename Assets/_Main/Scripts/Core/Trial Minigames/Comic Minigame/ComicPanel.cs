@@ -15,7 +15,7 @@ public class ComicPanel : MonoBehaviour
     }
     
     private CanvasGroup canvasGroup;
-    public List<ComicSpriteAnimation> spriteAnimations = new List<ComicSpriteAnimation>();
+    public List<ComicAnimatedSprite> spriteAnimations = new List<ComicAnimatedSprite>();
     public List<ComicSound> soundEffects = new List<ComicSound>();
     public List<DialogueNode> textBeforePanel = new();
     public List<DialogueNode> textAfterPanel = new();
@@ -57,7 +57,7 @@ public class ComicPanel : MonoBehaviour
             yield break;
         
         int animationsRunning = spriteAnimations.Count;
-        foreach (ComicSpriteAnimation spriteAnimation in spriteAnimations)
+        foreach (ComicAnimatedSprite spriteAnimation in spriteAnimations)
         {
             StartCoroutine(PlaySpriteAnimation(spriteAnimation, () => animationsRunning--));
         }
@@ -85,9 +85,9 @@ public class ComicPanel : MonoBehaviour
         isDone = true;
     }
 
-    IEnumerator PlaySpriteAnimation(ComicSpriteAnimation spriteAnimation, Action onFinish)
+    IEnumerator PlaySpriteAnimation(ComicAnimatedSprite animatedSprite, Action onFinish)
     {
-        yield return spriteAnimation.PlayFrames();
+        yield return animatedSprite.PlayFrames();
         onFinish?.Invoke();
     }
 

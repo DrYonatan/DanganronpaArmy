@@ -52,6 +52,7 @@ public class ComicPage : MonoBehaviour
 
     public void KillPanelTweens()
     {
+        this.DOKill();
         foreach (ComicPanel panel in panels)
         {
             panel.DOKill();

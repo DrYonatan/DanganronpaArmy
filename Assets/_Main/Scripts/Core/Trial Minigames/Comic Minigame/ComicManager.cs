@@ -29,7 +29,7 @@ public class ComicManager : MonoBehaviour
 
     private Coroutine runningComicCoroutine;
 
-    private ComicPage currentPresentedPage;
+    public ComicPage currentPresentedPage;
 
     public int currentPageIndex;
     
@@ -230,6 +230,7 @@ public class ComicManager : MonoBehaviour
         }
         
         SwitchToPuzzleMode();
+        currentPresentedPage.KillPanelTweens();
         Destroy(currentPresentedPage.gameObject);
         OverlayTextBoxManager.instance.Hide();
         TrialManager.instance.barsAnimator.HideGlobalBars(0.2f);

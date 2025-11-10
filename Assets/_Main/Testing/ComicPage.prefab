@@ -88,22 +88,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b251d3f16f80ac948be390d564018270, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  positionKeyFrames:
-  - attribute: {x: -438.98, y: 39.972}
-    duration: 0
-  - attribute: {x: -438.98, y: 39.972}
-    duration: 0.8
-  - attribute: {x: -438.98, y: 60}
-    duration: 0.4
-  rotationKeyFrames: []
-  scaleKeyFrames: []
-  colorKeyFrames:
-  - attribute: {r: 1, g: 1, b: 1, a: 0}
-    duration: 0
-  - attribute: {r: 1, g: 1, b: 1, a: 0}
-    duration: 0.8
-  - attribute: {r: 1, g: 1, b: 1, a: 1}
-    duration: 0.4
+  positionAnimation:
+    repeatTimes: 1
+    frames:
+    - attribute: {x: -438.98, y: 39.972}
+      duration: 0
+    - attribute: {x: -438.98, y: 39.972}
+      duration: 0.4
+    - attribute: {x: -438.98, y: 60}
+      duration: 0.2
+  rotationAnimation:
+    repeatTimes: 1
+    frames: []
+  scaleAnimation:
+    repeatTimes: 1
+    frames: []
+  colorAnimation:
+    repeatTimes: 1
+    frames:
+    - attribute: {r: 1, g: 1, b: 1, a: 0}
+      duration: 0
+    - attribute: {r: 1, g: 1, b: 1, a: 0}
+      duration: 0.4
+    - attribute: {r: 1, g: 1, b: 1, a: 1}
+      duration: 0.2
 --- !u!1 &1539439709146129394
 GameObject:
   m_ObjectHideFlags: 0
@@ -267,14 +275,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b251d3f16f80ac948be390d564018270, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  positionKeyFrames: []
-  rotationKeyFrames: []
-  scaleKeyFrames: []
-  colorKeyFrames:
-  - attribute: {r: 0, g: 0, b: 0, a: 0}
-    duration: 0
-  - attribute: {r: 1, g: 1, b: 1, a: 1}
-    duration: 0.5
+  positionAnimation:
+    repeatTimes: 1
+    frames: []
+  rotationAnimation:
+    repeatTimes: 1
+    frames: []
+  scaleAnimation:
+    repeatTimes: 1
+    frames: []
+  colorAnimation:
+    repeatTimes: 1
+    frames: []
 --- !u!1 &5653408332846742551
 GameObject:
   m_ObjectHideFlags: 0
@@ -478,18 +490,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b251d3f16f80ac948be390d564018270, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  positionKeyFrames: []
-  rotationKeyFrames: []
-  scaleKeyFrames:
-  - attribute: {x: 1.5, y: 1.5, z: 1.5}
-    duration: 0
-  - attribute: {x: 1, y: 1, z: 1}
-    duration: 0.3
-  colorKeyFrames:
-  - attribute: {r: 1, g: 1, b: 1, a: 1}
-    duration: 0
-  - attribute: {r: 1, g: 1, b: 1, a: 1}
-    duration: 0
+  positionAnimation:
+    repeatTimes: 1
+    frames: []
+  rotationAnimation:
+    repeatTimes: 1
+    frames: []
+  scaleAnimation:
+    repeatTimes: 1
+    frames:
+    - attribute: {x: 1.2, y: 1.2, z: 1.2}
+      duration: 0
+    - attribute: {x: 1, y: 1, z: 1}
+      duration: 0.2
+  colorAnimation:
+    repeatTimes: 1
+    frames:
+    - attribute: {r: 1, g: 1, b: 1, a: 1}
+      duration: 0
+    - attribute: {r: 1, g: 1, b: 1, a: 1}
+      duration: 0
 --- !u!1 &5941288336726177070
 GameObject:
   m_ObjectHideFlags: 0
@@ -549,6 +569,7 @@ MonoBehaviour:
   - {fileID: 3449886191086063607}
   - {fileID: 802418638597821333}
   - {fileID: 5628333847121211965}
+  currentPanelIndex: 0
 --- !u!1 &7164854056731314619
 GameObject:
   m_ObjectHideFlags: 0
@@ -712,22 +733,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b251d3f16f80ac948be390d564018270, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  positionKeyFrames:
-  - attribute: {x: -357, y: -9}
-    duration: 0
-  - attribute: {x: -357, y: -9}
-    duration: 0.5
-  - attribute: {x: -198, y: -9}
-    duration: 1
-  rotationKeyFrames: []
-  scaleKeyFrames: []
-  colorKeyFrames:
-  - attribute: {r: 0, g: 0, b: 0, a: 0}
-    duration: 0
-  - attribute: {r: 0, g: 0, b: 0, a: 1}
-    duration: 0.5
-  - attribute: {r: 1, g: 1, b: 1, a: 1}
-    duration: 0.5
+  positionAnimation:
+    repeatTimes: 1
+    frames:
+    - attribute: {x: -357, y: -9}
+      duration: 0
+    - attribute: {x: -357, y: -9}
+      duration: 0.4
+    - attribute: {x: -211, y: -9}
+      duration: 1
+  rotationAnimation:
+    repeatTimes: 1
+    frames: []
+  scaleAnimation:
+    repeatTimes: 1
+    frames: []
+  colorAnimation:
+    repeatTimes: 1
+    frames:
+    - attribute: {r: 0, g: 0, b: 0, a: 1}
+      duration: 0
+    - attribute: {r: 0, g: 0, b: 0, a: 1}
+      duration: 0.4
+    - attribute: {r: 1, g: 1, b: 1, a: 1}
+      duration: 1
 --- !u!1 &8161120123912643542
 GameObject:
   m_ObjectHideFlags: 0
@@ -816,22 +845,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b251d3f16f80ac948be390d564018270, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  positionKeyFrames:
-  - attribute: {x: 48.919, y: 29.936}
-    duration: 0
-  - attribute: {x: 48.919, y: 29.936}
-    duration: 0.6
-  - attribute: {x: 48.919, y: 50}
-    duration: 0.4
-  rotationKeyFrames: []
-  scaleKeyFrames: []
-  colorKeyFrames:
-  - attribute: {r: 1, g: 1, b: 1, a: 0}
-    duration: 0
-  - attribute: {r: 1, g: 1, b: 1, a: 0}
-    duration: 0.6
-  - attribute: {r: 1, g: 1, b: 1, a: 1}
-    duration: 0.4
+  positionAnimation:
+    repeatTimes: 1
+    frames:
+    - attribute: {x: 48.919, y: 29.936}
+      duration: 0
+    - attribute: {x: 48.919, y: 29.936}
+      duration: 0.3
+    - attribute: {x: 48.919, y: 50}
+      duration: 0.2
+  rotationAnimation:
+    repeatTimes: 1
+    frames: []
+  scaleAnimation:
+    repeatTimes: 1
+    frames: []
+  colorAnimation:
+    repeatTimes: 1
+    frames:
+    - attribute: {r: 1, g: 1, b: 1, a: 0}
+      duration: 0
+    - attribute: {r: 1, g: 1, b: 1, a: 0}
+      duration: 0.3
+    - attribute: {r: 1, g: 1, b: 1, a: 1}
+      duration: 0.2
 --- !u!1001 &175586042967456334
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -858,6 +895,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
       propertyPath: positionKeyFrames.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: colorAnimation.frames.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: positionAnimation.frames.Array.size
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
@@ -919,6 +964,90 @@ PrefabInstance:
     - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
       propertyPath: positionKeyFrames.Array.data[2].attribute.y
       value: -140.69
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: colorAnimation.frames.Array.data[0].duration
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: colorAnimation.frames.Array.data[1].duration
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: colorAnimation.frames.Array.data[2].duration
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: colorAnimation.frames.Array.data[0].attribute.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: colorAnimation.frames.Array.data[0].attribute.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: colorAnimation.frames.Array.data[0].attribute.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: colorAnimation.frames.Array.data[1].attribute.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: colorAnimation.frames.Array.data[1].attribute.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: colorAnimation.frames.Array.data[1].attribute.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: colorAnimation.frames.Array.data[2].attribute.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: colorAnimation.frames.Array.data[2].attribute.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: colorAnimation.frames.Array.data[2].attribute.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: colorAnimation.frames.Array.data[2].attribute.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: positionAnimation.frames.Array.data[1].duration
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: positionAnimation.frames.Array.data[2].duration
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: positionAnimation.frames.Array.data[0].attribute.x
+      value: -130.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: positionAnimation.frames.Array.data[0].attribute.y
+      value: -140.69
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: positionAnimation.frames.Array.data[1].attribute.x
+      value: -130.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: positionAnimation.frames.Array.data[1].attribute.y
+      value: -140.69
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: positionAnimation.frames.Array.data[2].attribute.x
+      value: -130.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: positionAnimation.frames.Array.data[2].attribute.y
+      value: -100
       objectReference: {fileID: 0}
     - target: {fileID: 7515970307521572328, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
       propertyPath: m_Pivot.x
@@ -1229,6 +1358,10 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: positionAnimation.frames.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
       propertyPath: colorKeyFrames.Array.data[0].duration
       value: 0.2
       objectReference: {fileID: 0}
@@ -1267,6 +1400,26 @@ PrefabInstance:
     - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
       propertyPath: positionKeyFrames.Array.data[2].attribute.y
       value: 176
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: positionAnimation.frames.Array.data[1].duration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: positionAnimation.frames.Array.data[0].attribute.x
+      value: -191
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: positionAnimation.frames.Array.data[0].attribute.y
+      value: 248
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: positionAnimation.frames.Array.data[1].attribute.x
+      value: -151
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: positionAnimation.frames.Array.data[1].attribute.y
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 7515970307521572328, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
       propertyPath: m_Pivot.x
@@ -1511,6 +1664,14 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: colorAnimation.frames.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: positionAnimation.frames.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
       propertyPath: colorKeyFrames.Array.data[1].duration
       value: 0.4
       objectReference: {fileID: 0}
@@ -1533,6 +1694,62 @@ PrefabInstance:
     - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
       propertyPath: positionKeyFrames.Array.data[1].attribute.y
       value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: colorAnimation.frames.Array.data[1].duration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: colorAnimation.frames.Array.data[0].attribute.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: colorAnimation.frames.Array.data[0].attribute.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: colorAnimation.frames.Array.data[0].attribute.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: colorAnimation.frames.Array.data[0].attribute.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: colorAnimation.frames.Array.data[1].attribute.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: colorAnimation.frames.Array.data[1].attribute.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: colorAnimation.frames.Array.data[1].attribute.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: colorAnimation.frames.Array.data[1].attribute.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: positionAnimation.frames.Array.data[1].duration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: positionAnimation.frames.Array.data[0].attribute.x
+      value: -63.79
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: positionAnimation.frames.Array.data[0].attribute.y
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: positionAnimation.frames.Array.data[1].attribute.x
+      value: -63.79
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: positionAnimation.frames.Array.data[1].attribute.y
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 7515970307521572328, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
       propertyPath: m_Pivot.x
@@ -2014,6 +2231,14 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: colorAnimation.frames.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: positionAnimation.frames.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
       propertyPath: colorKeyFrames.Array.data[2].duration
       value: 0
       objectReference: {fileID: 0}
@@ -2067,6 +2292,86 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
       propertyPath: positionKeyFrames.Array.data[2].attribute.y
+      value: -67
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: colorAnimation.frames.Array.data[1].duration
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: colorAnimation.frames.Array.data[2].duration
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: colorAnimation.frames.Array.data[0].attribute.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: colorAnimation.frames.Array.data[0].attribute.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: colorAnimation.frames.Array.data[0].attribute.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: colorAnimation.frames.Array.data[1].attribute.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: colorAnimation.frames.Array.data[1].attribute.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: colorAnimation.frames.Array.data[1].attribute.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: colorAnimation.frames.Array.data[2].attribute.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: colorAnimation.frames.Array.data[2].attribute.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: colorAnimation.frames.Array.data[2].attribute.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: colorAnimation.frames.Array.data[2].attribute.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: positionAnimation.frames.Array.data[1].duration
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: positionAnimation.frames.Array.data[2].duration
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: positionAnimation.frames.Array.data[0].attribute.x
+      value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: positionAnimation.frames.Array.data[0].attribute.y
+      value: -67
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: positionAnimation.frames.Array.data[1].attribute.x
+      value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: positionAnimation.frames.Array.data[1].attribute.y
+      value: -67
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: positionAnimation.frames.Array.data[2].attribute.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7130524896252495808, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
+      propertyPath: positionAnimation.frames.Array.data[2].attribute.y
       value: -67
       objectReference: {fileID: 0}
     - target: {fileID: 7515970307521572328, guid: 076792e96df63644b994bb9bb53a2ea7, type: 3}
