@@ -17,6 +17,7 @@ public class SpriteAnimationKeyFrame<T>
 public class SpriteAnimation<T>
 {
     public int repeatTimes = 1;
+    public float delay;
     public List<SpriteAnimationKeyFrame<T>> frames = new();
 }
 
@@ -56,6 +57,8 @@ public class ComicAnimatedSprite : MonoBehaviour
         if (spriteAnimation.repeatTimes == -1)
             onFinish?.Invoke();
 
+        yield return new WaitForSeconds(spriteAnimation.delay);
+
         int repeat = 0;
         while (repeat < spriteAnimation.repeatTimes || spriteAnimation.repeatTimes == -1)
         {
@@ -84,6 +87,8 @@ public class ComicAnimatedSprite : MonoBehaviour
         if (spriteAnimation.repeatTimes == -1)
             onFinish?.Invoke();
 
+        yield return new WaitForSeconds(spriteAnimation.delay);
+        
         int repeat = 0;
         while (repeat < spriteAnimation.repeatTimes || spriteAnimation.repeatTimes == -1)
         {
@@ -111,6 +116,8 @@ public class ComicAnimatedSprite : MonoBehaviour
     {
         if (spriteAnimation.repeatTimes == -1)
             onFinish?.Invoke();
+
+        yield return new WaitForSeconds(spriteAnimation.delay);
 
         int repeat = 0;
 
@@ -141,6 +148,8 @@ public class ComicAnimatedSprite : MonoBehaviour
     {
         if (spriteAnimation.repeatTimes == -1)
             onFinish?.Invoke();
+
+        yield return new WaitForSeconds(spriteAnimation.delay);
 
         int repeat = 0;
 

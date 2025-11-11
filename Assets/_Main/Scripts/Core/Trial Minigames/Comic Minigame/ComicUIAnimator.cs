@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class ComicUIAnimator : MonoBehaviour
 {
     public Image sideBars;
-    
+
     public RectTransform questionPanelsSpawnLocation;
 
     public CanvasGroup puzzleCanvasGroup;
@@ -41,13 +41,13 @@ public class ComicUIAnimator : MonoBehaviour
     private Tween beatTween;
 
     public Image reEnactIcon;
-    
+
     public float pagesContainerStartPos = -900;
     public float pageWidth = 440;
 
     public int pageNumber;
     public int firstPinNumber;
-    
+
     public AudioClip pinsScrollSound;
 
     public AudioClip pagesScrollSound;
@@ -72,13 +72,13 @@ public class ComicUIAnimator : MonoBehaviour
     {
         timerOriginalX = timerRect.anchoredPosition.x;
         pagesOriginalX = pagesRect.anchoredPosition.x;
-        
+
         timerRect.DOAnchorPosX(timerOriginalX + 500f, 0f);
         pagesRect.DOAnchorPosX(pagesOriginalX - 700f, 0f);
 
         sideBars.DOFade(0f, 0f);
     }
-    
+
     public void GeneratePuzzlePages(List<ComicPage> pages)
     {
         foreach (ComicPage page in pages)
@@ -103,9 +103,9 @@ public class ComicUIAnimator : MonoBehaviour
             shadowPin.transform.localPosition = Vector3.zero;
             shadowPin.image.color = new Color(0.2f, 0.2f, 0.2f);
             shadowPin.outline.color = new Color(0.2f, 0.2f, 0.2f);
-            
+
             shadowPin.transform.SetAsFirstSibling();
-            
+
             Destroy(shadowPin); // Destroys only the Draggable Pin Component, not the entire object
 
             draggablePins.Add(draggablePin);
@@ -115,6 +115,18 @@ public class ComicUIAnimator : MonoBehaviour
     public ComicPage GenerateSolutionPage(int index)
     {
         ComicPage newPage = Instantiate(pageObjects[index], solutionPagesContainer);
+        newPage.rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
+        newPage.rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
+        newPage.rectTransform.sizeDelta = new Vector2(1920, 1080);
+        newPage.transform.localScale = Vector3.one;
+        newPage.transform.localPosition = Vector3.zero;
+
+        return newPage;
+    }
+
+    public ComicPage GenerateSolutionPageFromPage(ComicPage page)
+    {
+        ComicPage newPage = Instantiate(page, solutionPagesContainer);
         newPage.rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
         newPage.rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
         newPage.rectTransform.sizeDelta = new Vector2(1920, 1080);
@@ -143,9 +155,9 @@ public class ComicUIAnimator : MonoBehaviour
 
         timerRect.DOAnchorPosX(timerOriginalX, 0.4f);
         pagesRect.DOAnchorPosX(pagesOriginalX, 0.4f);
-        
+
         UpdatePageNumber();
-        
+
         sideBars.DOFade(0.5f, 0f);
     }
 
@@ -175,9 +187,9 @@ public class ComicUIAnimator : MonoBehaviour
         Color color = movingMist.color;
         color.a = 0f;
         movingMist.color = color;
-        
+
         movingMist.DOFade(1f, 4f).SetLoops(-1, LoopType.Yoyo);
-        
+
         StartBeating();
     }
 
@@ -186,7 +198,7 @@ public class ComicUIAnimator : MonoBehaviour
         movingMist.DOKill();
         beatTween.Kill();
     }
-    
+
     private void StartBeating()
     {
         Sequence beatSequence = DOTween.Sequence()
@@ -211,7 +223,7 @@ public class ComicUIAnimator : MonoBehaviour
         puzzlePagesContainer.localPosition = new Vector3(-900 + pageNumber * pageWidth, 0, 0);
         UpdatePageNumberText();
     }
-    
+
     public void JumpToPrevPage()
     {
         SoundManager.instance.PlaySoundEffect(pagesScrollSound);
@@ -219,7 +231,7 @@ public class ComicUIAnimator : MonoBehaviour
         puzzlePagesContainer.localPosition = new Vector3(-900 + pageNumber * pageWidth, 0, 0);
         UpdatePageNumberText();
     }
-    
+
     private void UpdatePageNumber()
     {
         pageNumber = (int)Mathf.Ceil((puzzlePagesContainer.localPosition.x + 900) / pageWidth);
@@ -230,7 +242,7 @@ public class ComicUIAnimator : MonoBehaviour
     {
         string pageNumberTwoDigit = pageNumber < 9 ? "0" : "";
         string pageCountTwoDigit = pageObjects.Count < 10 ? "0" : "";
-        pagesCount.text = $"{pageNumberTwoDigit + (pageNumber+1)}/{pageCountTwoDigit + pageObjects.Count}";
+        pagesCount.text = $"{pageNumberTwoDigit + (pageNumber + 1)}/{pageCountTwoDigit + pageObjects.Count}";
     }
 
     public void ScrollPinContainer()
@@ -239,7 +251,7 @@ public class ComicUIAnimator : MonoBehaviour
         RectTransform pinsContainerTransform = pinsContainer.GetComponent<RectTransform>();
         float newX = pinsContainerOriginalPos.x + firstPinNumber * (pinsContainer.cellSize.x + pinsContainer.spacing.x);
         pinsContainerTransform.DOAnchorPosX(newX, 0.2f);
-        
+
         UpdatePinsVisibility(0.3f);
     }
 

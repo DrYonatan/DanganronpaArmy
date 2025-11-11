@@ -16,6 +16,7 @@ public class ComicManager : MonoBehaviour
     public ComicUIAnimator animator;
 
     public AudioClip puzzleMusic;
+    public AudioClip solutionMusic;
     
     public ControlScheme controlScheme;
 
@@ -155,6 +156,7 @@ public class ComicManager : MonoBehaviour
         animator.StopBlinkingReEnact();
         animator.nowIUnderstand.gameObject.SetActive(true);
         yield return animator.nowIUnderstand.Show();
+        MusicManager.instance.PlaySong(solutionMusic);
         animator.nowIUnderstand.gameObject.SetActive(false);
         animator.ShowSolutionUI();
         runningComicCoroutine = StartCoroutine(PlayComic());
@@ -173,10 +175,15 @@ public class ComicManager : MonoBehaviour
             Destroy(currentPresentedPage.gameObject);
         }
 
+        currentPresentedPage = animator.GenerateSolutionPageFromPage(segment.finalPage);
+        yield return currentPresentedPage.Play();
+        currentPresentedPage.KillPanelTweens();
+        
         screenShatter = Instantiate(screenShatter);
         yield return screenShatter.ScreenShatter();
         segment.Finish();
         animator.gameObject.SetActive(false);
+        OverlayTextBoxManager.instance.Hide();
     }
 
     public void LockPin()

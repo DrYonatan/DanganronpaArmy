@@ -75,6 +75,11 @@ public class ComicTextEditor : EditorWindow
                 page = comicPage;
             }
         }
+        
+        if (GUILayout.Button(segment.finalPage.name))
+        {
+            page = segment.finalPage;
+        }
         GUILayout.EndScrollView();
     }
 

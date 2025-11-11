@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -19,10 +20,15 @@ public class ComicQuestionPanel : ComicPanel, IDropHandler
     private RectTransform rectTransform;
     public Image questionMark;
     public Image glow;
+
+    public List<DialogueNode> infoNodes;
     
     private Sequence glowSequence;
 
     public AudioClip pinAssignSound;
+
+    public AudioClip correctSound;
+    public AudioClip wrongSound;
 
     private ComicQuestionPanel originalPanel;
     void Awake()
@@ -54,6 +60,7 @@ public class ComicQuestionPanel : ComicPanel, IDropHandler
         selectedPin = GetComponentInChildren<ComicDraggablePin>();
         if (selectedPin.pin.pinName.Equals(truePin.pinName))
         {
+            SoundManager.instance.PlaySoundEffect(correctSound);
             ComicManager.instance.LockPin();
             selectedPin.CorrectAnimation();
             yield return new WaitForSeconds(0.4f);
@@ -61,6 +68,7 @@ public class ComicQuestionPanel : ComicPanel, IDropHandler
         }
         else
         {
+            SoundManager.instance.PlaySoundEffect(wrongSound);
             ComicManager.instance.RemovePinFromPanel();
             selectedPin.WrongAnimation();
             yield return ComicManager.instance.WrongAnswer();

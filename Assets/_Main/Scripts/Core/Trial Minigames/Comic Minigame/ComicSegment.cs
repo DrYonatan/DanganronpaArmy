@@ -5,6 +5,7 @@ using UnityEngine;
 public class ComicSegment : TrialSegment
 {
     public List<ComicPage> pages = new List<ComicPage>();
+    public ComicPage finalPage;
     public List<ComicPin> availablePins = new List<ComicPin>();
     public override void Play()
     {
