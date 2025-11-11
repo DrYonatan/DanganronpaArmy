@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using DIALOGUE;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -12,7 +13,7 @@ public class ComicPin
     public string pinName;
     public Sprite pinImage;
 }
-public class ComicQuestionPanel : ComicPanel, IDropHandler
+public class ComicQuestionPanel : ComicPanel, IDropHandler, IPointerClickHandler
 {
     public ComicPin truePin;
     public ComicDraggablePin selectedPin;
@@ -86,6 +87,23 @@ public class ComicQuestionPanel : ComicPanel, IDropHandler
             selectedPin.assignedPanel = this;
             ComicManager.instance.UpdateIsReadyToPresent();
         }
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (selectedPin == null)
+        {
+            StartCoroutine(SayHint());
+        }
+    }
+
+    private IEnumerator SayHint()
+    {
+        DialogueSystem.instance.inputButton.gameObject.SetActive(true);
+        ComicManager.instance.isInPuzzle = false;
+        yield return ComicManager.instance.PlayComicNodes(infoNodes);
+        ComicManager.instance.isInPuzzle = true;
+        DialogueSystem.instance.inputButton.gameObject.SetActive(false);
     }
 
     public override bool IsReady()

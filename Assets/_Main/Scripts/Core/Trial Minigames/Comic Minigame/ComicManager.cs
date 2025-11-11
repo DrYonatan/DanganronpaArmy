@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using DIALOGUE;
 using UnityEngine;
@@ -24,7 +25,7 @@ public class ComicManager : MonoBehaviour
 
     public ScreenShatterManager screenShatter;
 
-    private bool isInPuzzle;
+    public bool isInPuzzle;
 
     private bool isReadyToPresent;
 
@@ -241,6 +242,22 @@ public class ComicManager : MonoBehaviour
         Destroy(currentPresentedPage.gameObject);
         OverlayTextBoxManager.instance.Hide();
         TrialManager.instance.barsAnimator.HideGlobalBars(0.2f);
+    }
+
+    public IEnumerator PlayComicNodes(List<DialogueNode> nodes)
+    {
+        if (nodes.Count > 0)
+        {
+            DialogueSystem.instance.dialogueBoxAnimator.gameObject.SetActive(true);
+            OverlayTextBoxManager.instance.Show();
+        }
+        
+        foreach (DialogueNode node in nodes)
+        {
+            yield return DialogueSystem.instance.Say(node);
+        }
+        
+        OverlayTextBoxManager.instance.Hide();
     }
 
     private void Stop()

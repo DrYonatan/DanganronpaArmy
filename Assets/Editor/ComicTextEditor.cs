@@ -100,6 +100,14 @@ public class ComicTextEditor : EditorWindow
     {
         if(GUILayout.Button("Before Text"))
             VNDialogueEditor.Open(panel.textBeforePanel, null, null, false);
+
+        var questionPanel = panel as ComicQuestionPanel;
+        if (questionPanel is not null)
+        {
+            if(GUILayout.Button("Info Text"))
+                VNDialogueEditor.Open(questionPanel.infoNodes, null, null, false);
+        }
+        
         if(GUILayout.Button("After Text"))
             VNDialogueEditor.Open(panel.textAfterPanel, null, null, false);
     }

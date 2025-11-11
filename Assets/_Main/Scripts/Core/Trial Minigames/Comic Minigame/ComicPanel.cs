@@ -39,17 +39,7 @@ public class ComicPanel : MonoBehaviour
 
     private IEnumerator PlayPanel()
     {
-        if (textBeforePanel.Count > 0)
-        {
-            DialogueSystem.instance.dialogueBoxAnimator.gameObject.SetActive(true);
-            OverlayTextBoxManager.instance.Show();
-        }
-        foreach (DialogueNode node in textBeforePanel)
-        {
-            yield return DialogueSystem.instance.Say(node);
-        }
-        
-        OverlayTextBoxManager.instance.Hide();
+        yield return ComicManager.instance.PlayComicNodes(textBeforePanel);
         
         yield return OnAppear();
         
@@ -72,15 +62,7 @@ public class ComicPanel : MonoBehaviour
             yield return null;
         }
 
-        if (textAfterPanel.Count > 0)
-        {
-            OverlayTextBoxManager.instance.Show();
-        }
-        
-        foreach (DialogueNode node in textAfterPanel)
-        {
-            yield return DialogueSystem.instance.Say(node);
-        }
+        yield return ComicManager.instance.PlayComicNodes(textAfterPanel);
 
         isDone = true;
     }

@@ -581,7 +581,6 @@ MonoBehaviour:
   - {fileID: 3449886191086063607}
   - {fileID: 802418638597821333}
   - {fileID: 5628333847121211965}
-  isInPuzzle: 1
   currentPanelIndex: 0
 --- !u!1 &7164854056731314619
 GameObject:
@@ -1998,6 +1997,10 @@ PrefabInstance:
       value: correct
       objectReference: {fileID: 0}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
+      propertyPath: infoNodes.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
       propertyPath: managedReferences[-2]
       value: 
       objectReference: {fileID: 0}
@@ -2022,6 +2025,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4890566216146532511}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
+      propertyPath: infoNodes.Array.data[0].drawNode
+      value: 
+      objectReference: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
+    - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
+      propertyPath: infoNodes.Array.data[0].textData
+      value: 6060276353684209665
+      objectReference: {fileID: 0}
+    - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
+      propertyPath: infoNodes.Array.data[0].character
+      value: 
+      objectReference: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
+    - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
       propertyPath: textAfterPanel.Array.data[0].drawNode
       value: 
       objectReference: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
@@ -2035,6 +2050,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
       propertyPath: managedReferences[4653703359911690241]
+      value: Assembly-CSharp VNTextData
+      objectReference: {fileID: 0}
+    - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
+      propertyPath: managedReferences[6060276353684209665]
       value: Assembly-CSharp VNTextData
       objectReference: {fileID: 0}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
@@ -2063,11 +2082,19 @@ PrefabInstance:
       value: "\u05D5\u05DC\u05D0\u05D7\u05E8 \u05DE\u05DB\u05DF \u05D4\u05E8\u05D5\u05E6\u05D7"
       objectReference: {fileID: 0}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
+      propertyPath: managedReferences[6060276353684209665].text
+      value: "\u05E7\u05D5\u05D3\u05DD \u05DB\u05DC \u05D4\u05E8\u05D5\u05E6\u05D7..."
+      objectReference: {fileID: 0}
+    - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
       propertyPath: managedReferences[4653703359911690240].commands.Array.size
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
       propertyPath: managedReferences[4653703359911690241].commands.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
+      propertyPath: managedReferences[6060276353684209665].commands.Array.size
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5008898048527417002, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
