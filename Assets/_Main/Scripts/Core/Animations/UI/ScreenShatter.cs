@@ -25,6 +25,7 @@ public class ScreenShatterManager : MonoBehaviour
     [SerializeField] private GameObject breakText;
     [SerializeField] private float flashDuration = 0.05f;
     [SerializeField] private AudioClip shatterSound;
+    [SerializeField] private float duration = 3f;
 
     public IEnumerator ScreenShatter()
     {
@@ -54,7 +55,7 @@ public class ScreenShatterManager : MonoBehaviour
         yield return Shatter();
     }
     
-    public IEnumerator FlashPieces()
+    private IEnumerator FlashPieces()
     {
         foreach(FlashGroup flashGroup in flashGroups)
         {
@@ -76,7 +77,7 @@ public class ScreenShatterManager : MonoBehaviour
         
     }
 
-    public void ChangePiecesTransparency(float transparency)
+    private void ChangePiecesTransparency(float transparency)
     { 
         foreach (ScreenPiece piece in pieces) 
         { 
@@ -84,19 +85,19 @@ public class ScreenShatterManager : MonoBehaviour
         }
     }
 
-    IEnumerator Shatter()
+    private IEnumerator Shatter()
     {
         TrialManager.instance.barsAnimator.HideGlobalBars(0f);
         foreach (ScreenPiece piece in pieces)
         {
-            StartCoroutine(piece.Move(3f));
+            StartCoroutine(piece.Move(duration));
         }
 
         screenImage.texture = null;
         screenImage.DOColor(Color.white, 0.8f)
             .SetLoops(2, LoopType.Yoyo);
         float elapsedTime = 0f;
-        while (elapsedTime < 1f)
+        while (elapsedTime < duration / 3)
         {
             psVolume.weight =  Mathf.Lerp(0f, 0.8f, elapsedTime / 1f);
             elapsedTime += Time.deltaTime;
@@ -113,7 +114,7 @@ public class ScreenShatterManager : MonoBehaviour
             yield return null;
         }
         
-        blackImage.DOColor(Color.black, 1f);
+        blackImage.DOColor(Color.black, duration / 3);
         yield return new WaitForSeconds(2f);
         ImageScript.instance.FadeToBlack(0f);
         canvasGroup.alpha = 0;

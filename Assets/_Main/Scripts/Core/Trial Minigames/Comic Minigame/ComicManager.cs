@@ -34,6 +34,8 @@ public class ComicManager : MonoBehaviour
     public ComicPage currentPresentedPage;
 
     public int currentPageIndex;
+
+    public CameraEffect finishEffect;
     
 
     void Awake()
@@ -184,9 +186,18 @@ public class ComicManager : MonoBehaviour
         
         screenShatter = Instantiate(screenShatter);
         yield return screenShatter.ScreenShatter();
-        segment.Finish();
         animator.gameObject.SetActive(false);
         OverlayTextBoxManager.instance.Hide();
+        ImageScript.instance.UnFadeToBlack(0.4f);
+        MusicManager.instance.StopSong();
+
+        TrialDialogueManager.instance.effectController.StartEffect(finishEffect);
+        yield return new WaitForSeconds(0.5f);
+        DialogueSystem.instance.dialogueBoxAnimator.TextBoxAppear();
+        yield return new WaitForSeconds(0.5f);
+        TrialDialogueManager.instance.effectController.Reset();
+        
+        segment.Finish();
     }
 
     public void LockPin()

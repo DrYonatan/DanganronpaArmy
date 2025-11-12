@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MoveTowardsCamera : MonoBehaviour
 {
-    private float duration = 10f;
+    public float duration = 10f;
     public Transform cameraTransform;
     public TextMeshPro tmpText;
     public float glowFadeDuration = 5f;
