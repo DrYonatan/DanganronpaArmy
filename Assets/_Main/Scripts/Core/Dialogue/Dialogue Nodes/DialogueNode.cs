@@ -41,11 +41,15 @@ public class DialogueNode
 
     public virtual IEnumerator Play()
     {
-        CharacterPositionMapping info = VNNodePlayer.instance.currentConversation.settings.characterPositions.Find(characterInfo =>
-            characterInfo.character == character);
-        VNCharacterManager.instance.ShowOnlySpeaker(character);
-        VNCharacterManager.instance.SwitchEmotion(character, character.emotions[expressionIndex]);
-        CameraManager.instance.MoveCamera((CameraLookDirection)info.position, 0.4f);
+        if (VNNodePlayer.instance.currentConversation.settings != null)
+        {
+            CharacterPositionMapping info = VNNodePlayer.instance.currentConversation.settings.characterPositions.Find(characterInfo =>
+                characterInfo.character == character);
+            VNCharacterManager.instance.ShowOnlySpeaker(character);
+            VNCharacterManager.instance.SwitchEmotion(character, character.emotions[expressionIndex]);
+            CameraManager.instance.MoveCamera((CameraLookDirection)info.position, 0.4f);
+        }
+        
         yield return DialogueSystem.instance.Say(this);
     }
 }
