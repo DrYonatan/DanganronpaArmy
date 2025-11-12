@@ -88,11 +88,13 @@ public class ComicManager : MonoBehaviour
         {
             animator.firstPinNumber++;
             animator.ScrollPinContainer();
+            animator.UpdateMouseIconsVisibility();
         }
         else if (Input.GetAxis("Mouse ScrollWheel") < 0 && animator.firstPinNumber > 0)
         {
             animator.firstPinNumber--;
             animator.ScrollPinContainer();
+            animator.UpdateMouseIconsVisibility();
         }
     }
 

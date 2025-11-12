@@ -22,6 +22,9 @@ public class ComicUIAnimator : MonoBehaviour
     public RectTransform timerRect;
     public RectTransform pagesRect;
 
+    public Image mouseL;
+    public Image mouseR;
+
     public TextMeshProUGUI pagesCount;
 
     public ComicDraggablePin pinPrefab;
@@ -77,6 +80,8 @@ public class ComicUIAnimator : MonoBehaviour
         pagesRect.DOAnchorPosX(pagesOriginalX - 700f, 0f);
 
         sideBars.DOFade(0f, 0f);
+        mouseL.DOFade(0f, 0f);
+        mouseR.DOFade(0f, 0f);
     }
 
     public void GeneratePuzzlePages(List<ComicPage> pages)
@@ -159,6 +164,9 @@ public class ComicUIAnimator : MonoBehaviour
         UpdatePageNumber();
 
         sideBars.DOFade(0.5f, 0f);
+
+        mouseL.DOFade(1f, 0f);
+        mouseR.DOFade(0f, 0f);
     }
 
     public void ShowSolutionUI()
@@ -243,6 +251,30 @@ public class ComicUIAnimator : MonoBehaviour
         string pageNumberTwoDigit = pageNumber < 9 ? "0" : "";
         string pageCountTwoDigit = pageObjects.Count < 10 ? "0" : "";
         pagesCount.text = $"{pageNumberTwoDigit + (pageNumber + 1)}/{pageCountTwoDigit + pageObjects.Count}";
+    }
+
+    public void UpdateMouseIconsVisibility()
+    {
+        if (firstPinNumber == draggablePins.Count - 5)
+        {
+            mouseL.DOKill();
+            mouseL.DOFade(0f, 0.1f);
+        }
+        else
+        {
+            mouseL.DOKill();
+            mouseL.DOFade(1f, 0.1f);
+        }
+        if (firstPinNumber == 0)
+        {
+            mouseR.DOKill();
+            mouseR.DOFade(0f, 0.1f);
+        }
+        else
+        {
+            mouseR.DOKill();
+            mouseR.DOFade(1f, 0.1f);
+        }
     }
 
     public void ScrollPinContainer()
