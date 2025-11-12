@@ -33,7 +33,8 @@ namespace DIALOGUE
         
         void Update()
         {
-            SelectionMenuControl();
+            if (!PlayerInputManager.instance.isPaused)
+               SelectionMenuControl();
         }
 
         public void GenerateUIOptions<T>(List<Option<T>> options) where T : DialogueNode
