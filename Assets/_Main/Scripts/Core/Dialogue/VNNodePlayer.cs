@@ -36,7 +36,7 @@ using UnityEngine;
             }
         }
 
-        public void HandleConversationEnd()
+        private void HandleConversationEnd()
         {
             VNCharacterManager.instance.DestroyCharacters();
             WorldManager.instance.HandleConversationEnd();

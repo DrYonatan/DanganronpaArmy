@@ -108,7 +108,7 @@ public class VNDialogueEditor : EditorWindow
          Open(obj.nodes, obj.settings, obj,  true);
          return true;
       }
-
+      
       return false;
    }
 

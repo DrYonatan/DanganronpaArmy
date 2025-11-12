@@ -48,14 +48,16 @@ public class UtilityNodesHub : EditorWindow
         DrawCharactersDefaultNodes();
 
         EditorGUILayout.BeginVertical("box", GUILayout.Width(220));
-        DrawGenericNodesOpen("Discussion Wrong Answer Nodes", 
+        DrawGenericNodesOpen("Discussion Wrong Answer Nodes",
             () => ConversationEditor.Open(utilityNodesCollection.wrongAnswer, null, null));
-        DrawGenericNodesOpen("Debate Wrong Evidence Nodes", 
+        DrawGenericNodesOpen("Debate Wrong Evidence Nodes",
             () => ConversationEditor.Open(utilityNodesCollection.debateWrongEvidence, null, null));
-        DrawGenericNodesOpen("Get Out of Room Nodes", 
+        DrawGenericNodesOpen("Get Out of Room Nodes",
             () => VNDialogueEditor.Open(utilityNodesCollection.getOutOfRoom, null, null, false));
-        DrawGenericNodesOpen("Game Over Nodes", 
+        DrawGenericNodesOpen("Game Over Nodes",
             () => ConversationEditor.Open(utilityNodesCollection.gameOverNodes, null, null));
+        DrawGenericNodesOpen("Wrong Comic Nodes",
+            () => VNDialogueEditor.Open(utilityNodesCollection.wrongComicNodes, null, null, false));
         EditorGUILayout.EndVertical();
 
         EditorGUILayout.EndHorizontal();
@@ -73,7 +75,8 @@ public class UtilityNodesHub : EditorWindow
 
         EditorGUILayout.Space();
 
-        characterDefaultWrongNodesScrollPosition = EditorGUILayout.BeginScrollView(characterDefaultWrongNodesScrollPosition,
+        characterDefaultWrongNodesScrollPosition = EditorGUILayout.BeginScrollView(
+            characterDefaultWrongNodesScrollPosition,
             GUILayout.Height(320));
 
         for (int i = 0; i < utilityNodesCollection.characterDefaultWrongNodes.Count; i++)
@@ -98,6 +101,7 @@ public class UtilityNodesHub : EditorWindow
                 GUI.backgroundColor = Color.white;
                 break;
             }
+
             GUI.backgroundColor = Color.white;
 
             EditorGUILayout.EndHorizontal();
@@ -116,6 +120,7 @@ public class UtilityNodesHub : EditorWindow
         {
             onOpen();
         }
+
         EditorGUILayout.EndHorizontal();
     }
 }

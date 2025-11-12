@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class HangmanLetter : MonoBehaviour
+public class HangmanLetter : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     private RectTransform rectTransform;
     public char letter = 'A';
@@ -37,12 +37,12 @@ public class HangmanLetter : MonoBehaviour
         image.transform.Rotate(0, 0, 360f * Time.deltaTime);
     }
 
-    void OnMouseEnter()
+    public void OnPointerEnter(PointerEventData eventData)
     {
         TrialCursorManager.instance.isHovering = true;
     }
 
-    void OnMouseExit()
+    public void OnPointerExit(PointerEventData eventData)
     {
         TrialCursorManager.instance.isHovering = false;
     }
@@ -58,9 +58,11 @@ public class HangmanLetter : MonoBehaviour
         effect.transform.position = transform.position;
         effect.transform.DOScale(5f, 0.5f);
         effect.DOFade(0f, 0.5f);
+        
+        Destroy(explosion.gameObject, 1f);
     }
 
-    void OnMouseDown()
+    public void OnPointerClick(PointerEventData eventData)
     {
         ExplosionEffect();
         SoundManager.instance.PlaySoundEffect(clickSound);
