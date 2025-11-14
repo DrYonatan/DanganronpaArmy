@@ -10,21 +10,14 @@ public class CharacterClickEffects : MonoBehaviour
     private Color[] startColors;
     public static CharacterClickEffects instance { get; private set; }
     
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         if (instance == null)
         {
             instance = this;
         }
         else
-        DestroyImmediate(gameObject);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+           DestroyImmediate(gameObject);
     }
 
     public void Interact(Transform characterTransform)

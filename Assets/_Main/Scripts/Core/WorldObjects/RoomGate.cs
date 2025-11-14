@@ -12,16 +12,16 @@ public class RoomGate : Interactable
 
     public override void FinishInteraction()
     {
-         if (((FreeRoamEvent)(WorldManager.instance.currentGameEvent)).allowedRooms.Any(item =>
+         if (((FreeRoamEvent)(ProgressManager.instance.currentGameEvent)).allowedRooms.Any(item =>
                 item.name == roomToLoad.name) ||
-            ((FreeRoamEvent)(WorldManager.instance.currentGameEvent)).allowedRooms.Count == 0)
+            ((FreeRoamEvent)(ProgressManager.instance.currentGameEvent)).allowedRooms.Count == 0)
         {
             StartCoroutine(RoomTransition());
         }
         else
         {
             // if the room is unallowed, read the "you can't go into this room" text
-            VNNodePlayer.instance.StartConversation(WorldManager.instance.currentGameEvent.unallowedText);
+            VNNodePlayer.instance.StartConversation(ProgressManager.instance.currentGameEvent.unallowedText);
         }
     }
 

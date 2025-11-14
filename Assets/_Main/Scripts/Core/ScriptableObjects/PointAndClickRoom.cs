@@ -46,10 +46,10 @@ public class PointAndClickRoom : Room
 
         if(Input.GetKey(KeyCode.R))
         {
-            GameEvent currentGameEvent = WorldManager.instance.currentGameEvent;
+            GameEvent currentGameEvent = ProgressManager.instance.currentGameEvent;
             if(currentGameEvent is PointAndClickEvent && !((PointAndClickEvent)(currentGameEvent)).isExitable)
             {
-                VNNodePlayer.instance.StartConversation(WorldManager.instance.currentGameEvent.unallowedText);
+                VNNodePlayer.instance.StartConversation(ProgressManager.instance.currentGameEvent.unallowedText);
             }
             
             else
@@ -66,5 +66,10 @@ public class PointAndClickRoom : Room
     {
         verticalRotation = 0f;
         horizontalRotation = 0f;
+    }
+
+    public override void OnConversationEnd()
+    {
+        CameraManager.instance.ReturnToDollyTrack();
     }
 }

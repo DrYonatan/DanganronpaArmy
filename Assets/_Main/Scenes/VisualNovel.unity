@@ -945,8 +945,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterPanel: {fileID: 0}
-  currentGameEvent: {fileID: 0}
   currentRoom: {fileID: 11400000, guid: 55447bfc884cd4340b110e2928249c70, type: 2}
+  currentRoomData:
+    name: 
+    characters: {fileID: 0}
+    worldObjects: {fileID: 0}
   isLoading: 0
 --- !u!1 &219885779
 GameObject:
@@ -2916,14 +2919,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f7f5d055480bfa498fef5eae8aa32e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  assetGameEvents:
-  - {fileID: 11400000, guid: 4adbca780071e3e4ba12cbe363be603f, type: 2}
-  - {fileID: 11400000, guid: 8d45a9a81615ef44683aba59b2fb1beb, type: 2}
-  - {fileID: 11400000, guid: 20ce7f4e6ca985245a6a73fb6bc89a08, type: 2}
-  - {fileID: 11400000, guid: b0a44118df67fa14c91d223c8c163a2d, type: 2}
-  - {fileID: 11400000, guid: 1ab8c3198da0117488708edc3a74e534, type: 2}
-  - {fileID: 11400000, guid: 239769e5e5d8f0a49ac8b94892829ea8, type: 2}
+  gameEvents: []
   characterEventsAsset: {fileID: 11400000, guid: 4df5623fd5cfef5469fde0dbab7737e7, type: 2}
+  currentGameEvent: {fileID: 11400000, guid: 4adbca780071e3e4ba12cbe363be603f, type: 2}
+  currentGameEventIndex: 0
 --- !u!1 &762051889
 GameObject:
   m_ObjectHideFlags: 0

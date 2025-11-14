@@ -17,4 +17,6 @@ public abstract class Room : ScriptableObject
         CameraManager.instance?.ChangeCameraBackground(isInside);
         return null;
     }
+
+    public abstract void OnConversationEnd();
 }

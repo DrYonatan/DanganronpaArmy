@@ -13,9 +13,9 @@ public abstract class ConversationInteractable : Interactable
         float duration = 0.5f;
         Vector3 targetPosition = Vector3.Lerp(Camera.main.transform.position, transform.position, 0.75f);
         CameraManager.instance.StartCameraCoroutine(CameraManager.instance.MoveCameraTo(targetPosition, duration));
-        if (WorldManager.instance.currentGameEvent != null)
+        if (ProgressManager.instance.currentGameEvent != null)
             StartConversation();
-        WorldManager.instance.currentGameEvent.UpdateEvent();
+        ProgressManager.instance.currentGameEvent.CheckIfFinished();
     }
 
     protected void StartConversation()

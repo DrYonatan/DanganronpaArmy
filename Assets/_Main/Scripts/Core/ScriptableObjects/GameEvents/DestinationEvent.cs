@@ -6,13 +6,12 @@ using DIALOGUE;
 [CreateAssetMenu(menuName = "Game Events/Free Roam Event/Destination Event")]
 public class DestinationEvent : FreeRoamEvent
 {
-    public GameObject characterPrefab;
     public string targetRoomName;
 
-    public override void UpdateEvent()
+    public override void CheckIfFinished()
     {
-        base.UpdateEvent();
-
+        base.CheckIfFinished();
+        
         if (WorldManager.instance.currentRoom.name.Equals(targetRoomName))
         {
             isFinished = true;
@@ -20,7 +19,7 @@ public class DestinationEvent : FreeRoamEvent
     }
 
 
-    public override void PlayEvent()
+    public override void OnStart()
     {
     }
 }

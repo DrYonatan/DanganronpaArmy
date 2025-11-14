@@ -19,7 +19,7 @@ public class CameraManager : MonoBehaviour
     
     private List<IEnumerator> operations = new List<IEnumerator>();
 
-    private void Start()
+    private void Awake()
     {
         instance = this;
         if(GameObject.Find("World/CameraStartPos") != null)

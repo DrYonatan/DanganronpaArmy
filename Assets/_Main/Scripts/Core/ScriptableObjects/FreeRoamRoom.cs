@@ -128,4 +128,9 @@ public class FreeRoamRoom : Room
         MapContainer.instance.SetMap(map);
         yield return null;
     }
+
+    public override void OnConversationEnd()
+    {
+        
+    }
 }

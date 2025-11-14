@@ -13,6 +13,14 @@ public class ObjectData
     }
 }
 
+[System.Serializable]
+public class RoomData
+{
+    public string name;
+    public GameObject characters;
+    public GameObject worldObjects;
+}
+
 public abstract class GameEvent : ScriptableObject
 {
     public bool isFinished;
@@ -20,10 +28,10 @@ public abstract class GameEvent : ScriptableObject
     public bool startEventImmediately = false; // used to know if to start the event as soon as the previous one ends or only after finish text
 
     public VNConversationSegment finishText;
-
-    public List<GameEvent> conditionEvents;
-
+    
     public VNConversationSegment unallowedText;
+
+    public List<RoomData> roomDatas;
 
     public Dictionary<string, ObjectData> charactersData = new Dictionary<string, ObjectData>();
 
@@ -31,31 +39,16 @@ public abstract class GameEvent : ScriptableObject
 
     public abstract void CheckIfFinished();
 
-    public abstract void UpdateEvent();
+    public abstract void OnStart();
 
-
-    public abstract void PlayEvent();
-
-    public virtual void OnFinish()
+    protected virtual void OnFinish()
     {
         if (finishText != null)
         {
             VNNodePlayer.instance.StartConversation(finishText);
-
             finishText = null;
         }
-    }
-
-    public bool CheckIfToPlay()
-    {
-        bool playScene = true;
-        if (conditionEvents != null)
-            foreach (GameEvent conditionEvent in conditionEvents)
-            {
-                if (!conditionEvent.isFinished)
-                    playScene = false;
-            }
-
-        return playScene;
+        
+        ProgressManager.instance.OnEventFinished();
     }
 }
