@@ -128,7 +128,7 @@ public class TextShatterEffect : MonoBehaviour
         Destroy(effect, 2f);
     }
 
-    public IEnumerator FadeCharacterAway(TextMeshPro charObj, float duration)
+    private IEnumerator FadeCharacterAway(TextMeshPro charObj, float duration)
     {
         float elapsedTime = 0f;
 

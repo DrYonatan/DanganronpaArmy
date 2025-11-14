@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
+using DIALOGUE;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -33,6 +34,7 @@ public class HangmanManager : MonoBehaviour
         game.isActive = false;
         MusicManager.instance.PlaySong(music);
         StartCoroutine(StartGame());
+        DialogueSystem.instance.dialogueBoxAnimator.gameObject.SetActive(false);
     }
 
 
@@ -154,6 +156,7 @@ public class HangmanManager : MonoBehaviour
         game.isActive = false;
         animator.HideLetterObjects();
         StartCoroutine(FinishPipeline());
+        DialogueSystem.instance.dialogueBoxAnimator.gameObject.SetActive(true);
     }
     
 

@@ -46,7 +46,7 @@ public class TrialDialogueManager : MonoBehaviour
         }
     }
 
-    public void HandleConversationEnd(DiscussionSegment discussion)
+    private void HandleConversationEnd(DiscussionSegment discussion)
     {
         DialogueSystem.instance.dialogueBoxAnimator.TextBoxDisappear();
         effectController.Reset();
