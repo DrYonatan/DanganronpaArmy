@@ -58,6 +58,7 @@ public class ComicUIAnimator : MonoBehaviour
     public AudioClip readyToPresentSound;
 
     public ClimaxIntroAnimation introAnimation;
+    public MinigameStartAnimation minigameStartAnimation;
 
     private float timerOriginalX;
     private float pagesOriginalX;
@@ -163,7 +164,7 @@ public class ComicUIAnimator : MonoBehaviour
 
         UpdatePageNumber();
 
-        sideBars.DOFade(0.5f, 0f);
+        sideBars.DOFade(0.5f, 0f).SetDelay(2f);
 
         mouseL.DOFade(1f, 0f);
         mouseR.DOFade(0f, 0f);

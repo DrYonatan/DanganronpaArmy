@@ -132,7 +132,6 @@ public class ComicManager : MonoBehaviour
             animator.ScrollPuzzlePagesContainer(-4f);
         }
     }
-    
 
     private void StartComicPuzzle()
     {
@@ -141,6 +140,8 @@ public class ComicManager : MonoBehaviour
         animator.GenerateComicPins(segment.availablePins);
         animator.SetPinsContainerStartPos();
         animator.UpdatePinsVisibility(0);
+        animator.minigameStartAnimation = Instantiate(animator.minigameStartAnimation, TrialManager.instance.globalUI);
+        animator.minigameStartAnimation.Animate(0f);
         SwitchToPuzzleMode();
     }
 

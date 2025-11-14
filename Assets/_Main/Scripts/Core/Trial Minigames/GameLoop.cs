@@ -74,6 +74,7 @@ public class GameLoop : MonoBehaviour
     public TrialHoverable currentAimedText;
     public Camera renderTextureCamera;
     public ScreenShatterManager screenShatter;
+    public MinigameStartAnimation startAnimation;
 
     public void PlayDebate(DebateSegment debate)
     {
@@ -94,6 +95,8 @@ public class GameLoop : MonoBehaviour
         ((CourtTextBoxAnimator)(DialogueSystem.instance.dialogueBoxAnimator)).ChangeFace(null);
         yield return 0;
         ImageScript.instance.UnFadeToBlack(1f);
+        startAnimation = Instantiate(startAnimation, TrialManager.instance.globalUI);
+        startAnimation.Animate(1f);
         yield return StartCoroutine(cameraController.DebateStartCameraMovement(3f));
         isActive = true;
         TimeManipulationManager.instance.isInputActive = true;

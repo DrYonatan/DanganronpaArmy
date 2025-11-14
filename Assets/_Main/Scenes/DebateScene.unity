@@ -10132,9 +10132,9 @@ RectTransform:
   - {fileID: 1947652570}
   - {fileID: 2108030941}
   - {fileID: 304501719}
-  - {fileID: 1195224599}
   - {fileID: 1383627987}
   - {fileID: 468171313}
+  - {fileID: 1195224599}
   m_Father: {fileID: 1821188198}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -17919,6 +17919,7 @@ MonoBehaviour:
   pagesScrollSound: {fileID: 8300000, guid: c6f4ce175651818429c3bc6b885aee86, type: 3}
   readyToPresentSound: {fileID: 8300000, guid: d98a1ad5fbd921d448631e143de99095, type: 3}
   introAnimation: {fileID: 822101942}
+  minigameStartAnimation: {fileID: -1107792925712374254, guid: d414791a9f12c484891d0368f7a19737, type: 3}
 --- !u!1 &1829181446
 GameObject:
   m_ObjectHideFlags: 0
@@ -20137,9 +20138,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   segments:
   - {fileID: 11400000, guid: 03110a6c3b052c84489dfd897a46394b, type: 2}
+  - {fileID: 11400000, guid: cbf13f5ddfc24354c86038115c120537, type: 2}
   - {fileID: 11400000, guid: d64974b17e93f864e876fd0ff95ca708, type: 2}
   - {fileID: 11400000, guid: 03110a6c3b052c84489dfd897a46394b, type: 2}
-  - {fileID: 11400000, guid: cbf13f5ddfc24354c86038115c120537, type: 2}
   - {fileID: 11400000, guid: c8f905213147a1a4aa52c099d842872c, type: 2}
   characterStands:
   - {fileID: 333186945}
@@ -20162,6 +20163,7 @@ MonoBehaviour:
     maxHP: 5
     hp: 0
   barsAnimator: {fileID: 2105477580}
+  globalUI: {fileID: 1930649389}
 --- !u!114 &2105477580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20654,6 +20656,10 @@ PrefabInstance:
       propertyPath: screenShatter
       value: 
       objectReference: {fileID: 4255035294558304679, guid: 05e784f88751f524fa75f5bb45bd6be0, type: 3}
+    - target: {fileID: 8309603348950177392, guid: f3c3c0f81946b3944a91edc1321502c0, type: 3}
+      propertyPath: startAnimation
+      value: 
+      objectReference: {fileID: -1107792925712374254, guid: dca3ad3edb8365d478861b3174933b76, type: 3}
     - target: {fileID: 8309603348950177392, guid: f3c3c0f81946b3944a91edc1321502c0, type: 3}
       propertyPath: evidenceManager
       value: 

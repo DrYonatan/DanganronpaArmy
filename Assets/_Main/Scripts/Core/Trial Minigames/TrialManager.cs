@@ -24,6 +24,7 @@ public class TrialManager : MonoBehaviour
     public List<CharacterStand> characterStands;
     public PlayerStats playerStats = new PlayerStats();
     public PlayerBarsAnimator barsAnimator;
+    public RectTransform globalUI;
 
     void Awake()
     {
