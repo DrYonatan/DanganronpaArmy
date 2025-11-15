@@ -164,7 +164,7 @@ public class ComicUIAnimator : MonoBehaviour
 
         UpdatePageNumber();
 
-        sideBars.DOFade(0.5f, 0f).SetDelay(2f);
+        sideBars.DOFade(0.5f, 0f).SetDelay(2f).OnComplete(() => TrialCursorManager.instance.Show());
 
         mouseL.DOFade(1f, 0f);
         mouseR.DOFade(0f, 0f);
@@ -266,6 +266,7 @@ public class ComicUIAnimator : MonoBehaviour
             mouseL.DOKill();
             mouseL.DOFade(1f, 0.1f);
         }
+
         if (firstPinNumber == 0)
         {
             mouseR.DOKill();

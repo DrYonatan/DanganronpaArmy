@@ -303,6 +303,7 @@ public class GameLoop : MonoBehaviour
     public void Hit(Vector3 point)
     {
         CorrectChoice();
+        TrialCursorManager.instance.isHovering = false;
         gameObject.GetComponent<TextShatterEffect>().Explosion(point);
     }
 

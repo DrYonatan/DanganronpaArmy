@@ -25,15 +25,24 @@ public class TrialManager : MonoBehaviour
     public PlayerStats playerStats = new PlayerStats();
     public PlayerBarsAnimator barsAnimator;
     public RectTransform globalUI;
+    public TrialIntro introAnimation;
 
     void Awake()
     {
         instance = this;
         playerStats.InitializeMeters();
-        
     }
     void Start()
     {
+        StartCoroutine(StartPipeline());
+    }
+
+    private IEnumerator StartPipeline()
+    {
+        introAnimation = Instantiate(introAnimation, globalUI);
+        introAnimation.transform.SetAsFirstSibling();
+        yield return introAnimation.Animate();
+        ImageScript.instance.UnFadeToBlack(0.2f);
         TrialSegment segment = Instantiate(segments[currentIndex]);
         segment.Play();
     }

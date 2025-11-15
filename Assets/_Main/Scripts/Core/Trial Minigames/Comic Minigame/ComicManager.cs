@@ -150,7 +150,6 @@ public class ComicManager : MonoBehaviour
         MusicManager.instance.PlaySong(puzzleMusic);
         isInPuzzle = true;
         animator.ShowPuzzleUI();
-        TrialCursorManager.instance.Show();
         DialogueSystem.instance.inputButton.gameObject.SetActive(false);
     }
 

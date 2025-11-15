@@ -19,7 +19,7 @@ public class MinigameStartAnimation : MonoBehaviour
         sequence.AppendInterval(delay);
         sequence.Append(rectTransform.DOAnchorPosX(0, 0.5f));
         sequence.Append(rectTransform.DOAnchorPosX(300, 1.2f).SetEase(Ease.Linear));
-        sequence.Join(bullet.DOAnchorPosX(460, 1f)).SetEase(Ease.Linear);
+        sequence.Join(bullet.DOAnchorPosX(600, 1f)).SetEase(Ease.Linear);
         sequence.Append(rectTransform.DOAnchorPosX(2200, 0.2f));
 
         sequence.OnComplete(() => Destroy(gameObject));
