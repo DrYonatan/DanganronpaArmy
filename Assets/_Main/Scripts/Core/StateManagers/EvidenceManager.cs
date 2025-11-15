@@ -14,6 +14,7 @@ public class EvidenceManager : MonoBehaviour
     void Start()
     {
         instance = this;
+        evidenceMenu.Initialize();
     }
     
     public void AddEvidence(Evidence evidence)

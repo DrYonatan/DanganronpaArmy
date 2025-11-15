@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class MenuButton : MonoBehaviour
 {
-    public GameObject menuToOpen;
+    public MenuScreen menuToOpen;
     private bool isHovered = false;
     public Image buttonTexture;
     public MenuScreenContainer menuScreenContainer;

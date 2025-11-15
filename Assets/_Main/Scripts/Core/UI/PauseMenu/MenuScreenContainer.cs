@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class MenuScreenContainer : MonoBehaviour
 {
-    public GameObject currentOpenMenu;
+    public MenuScreen currentOpenMenu;
     public GeneralMenu generalMenu;
     public bool isSubmenuOpen;
     void Update()
@@ -26,16 +26,16 @@ public class MenuScreenContainer : MonoBehaviour
 
     public void CloseMenu()
     {
-        currentOpenMenu?.SetActive(false);
+        currentOpenMenu?.Close();
         isSubmenuOpen = false;
         generalMenu.gameObject.SetActive(true);
     }
 
-    public void OpenMenu(GameObject menu)
+    public void OpenMenu(MenuScreen menu)
     {
         generalMenu.gameObject.SetActive(false);
         isSubmenuOpen = true;
-        menu.SetActive(true);
+        menu.Open();
         currentOpenMenu = menu;
     }
 }

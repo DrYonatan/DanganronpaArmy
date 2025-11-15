@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EvidenceMenu : MonoBehaviour
+public class EvidenceMenu : MenuScreen
 {
     public int currentEvidenceIndex;
     public Image evidenceIcon;
@@ -13,6 +14,8 @@ public class EvidenceMenu : MonoBehaviour
     public EvidenceItem evidenceItem;
     public List<EvidenceItem> evidenceListUI = new List<EvidenceItem>();
     public TextMeshProUGUI evidenceDescription;
+    public RectTransform evidenceListTransform;
+    public AudioClip moveSelectionSound;
 
     public void OnEvidenceAdded(Evidence evidence)
     {
@@ -27,7 +30,7 @@ public class EvidenceMenu : MonoBehaviour
         evidenceListUI.Add(instantiated);
     }
 
-    void Start()
+    public void Initialize()
     {
         foreach (Evidence evidence in EvidenceManager.instance.evidenceList)
         {
@@ -36,25 +39,30 @@ public class EvidenceMenu : MonoBehaviour
 
         UpdateUI();
     }
-
-    void Awake()
+    public override void Open()
     {
+        base.Open();
         currentEvidenceIndex = 0;
         UpdateUI();
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S))
+        if (isOpen)
         {
-            currentEvidenceIndex = (currentEvidenceIndex + 1) % EvidenceManager.instance.evidenceList.Count;
-            UpdateUI();
-        }
-        else if (Input.GetKeyDown(KeyCode.W))
-        {
-            currentEvidenceIndex = (currentEvidenceIndex - 1 + EvidenceManager.instance.evidenceList.Count) %
-                                   EvidenceManager.instance.evidenceList.Count;
-            UpdateUI();
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                currentEvidenceIndex = (currentEvidenceIndex + 1) % EvidenceManager.instance.evidenceList.Count;
+                UpdateUI();
+                SoundManager.instance.PlaySoundEffect(moveSelectionSound);
+            }
+            else if (Input.GetKeyDown(KeyCode.W))
+            {
+                currentEvidenceIndex = (currentEvidenceIndex - 1 + EvidenceManager.instance.evidenceList.Count) %
+                                       EvidenceManager.instance.evidenceList.Count;
+                UpdateUI();
+                SoundManager.instance.PlaySoundEffect(moveSelectionSound);
+            }
         }
     }
 
@@ -75,6 +83,9 @@ public class EvidenceMenu : MonoBehaviour
 
             if (evidenceListUI.Count > 0)
                 evidenceListUI[currentEvidenceIndex].isHovered = true;
+
+            evidenceListTransform.anchoredPosition = new Vector2(0, Mathf.Max((currentEvidenceIndex - 5) * 91, 0));
+
         }
     }
 }
