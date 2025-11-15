@@ -39,6 +39,7 @@ public class EvidenceMenu : MenuScreen
 
         UpdateUI();
     }
+
     public override void Open()
     {
         base.Open();
@@ -48,21 +49,18 @@ public class EvidenceMenu : MenuScreen
 
     void Update()
     {
-        if (isOpen)
+        if (Input.GetKeyDown(KeyCode.S))
         {
-            if (Input.GetKeyDown(KeyCode.S))
-            {
-                currentEvidenceIndex = (currentEvidenceIndex + 1) % EvidenceManager.instance.evidenceList.Count;
-                UpdateUI();
-                SoundManager.instance.PlaySoundEffect(moveSelectionSound);
-            }
-            else if (Input.GetKeyDown(KeyCode.W))
-            {
-                currentEvidenceIndex = (currentEvidenceIndex - 1 + EvidenceManager.instance.evidenceList.Count) %
-                                       EvidenceManager.instance.evidenceList.Count;
-                UpdateUI();
-                SoundManager.instance.PlaySoundEffect(moveSelectionSound);
-            }
+            currentEvidenceIndex = (currentEvidenceIndex + 1) % EvidenceManager.instance.evidenceList.Count;
+            UpdateUI();
+            SoundManager.instance.PlaySoundEffect(moveSelectionSound);
+        }
+        else if (Input.GetKeyDown(KeyCode.W))
+        {
+            currentEvidenceIndex = (currentEvidenceIndex - 1 + EvidenceManager.instance.evidenceList.Count) %
+                                   EvidenceManager.instance.evidenceList.Count;
+            UpdateUI();
+            SoundManager.instance.PlaySoundEffect(moveSelectionSound);
         }
     }
 
@@ -85,7 +83,6 @@ public class EvidenceMenu : MenuScreen
                 evidenceListUI[currentEvidenceIndex].isHovered = true;
 
             evidenceListTransform.anchoredPosition = new Vector2(0, Mathf.Max((currentEvidenceIndex - 5) * 91, 0));
-
         }
     }
 }

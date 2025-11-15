@@ -4,11 +4,10 @@ using UnityEngine;
 
 public abstract class MenuScreen : MonoBehaviour
 {
-    public bool isOpen;
     public CanvasGroup canvasGroup;
     public virtual void Open()
     {
-        isOpen = true;
+        gameObject.SetActive(true);
         canvasGroup.alpha = 1;
         transform.localScale = Vector3.zero;
         transform.DOScale(Vector3.one, 0.3f)
@@ -17,7 +16,7 @@ public abstract class MenuScreen : MonoBehaviour
 
     public virtual void Close()
     {
-        isOpen = false;
+        gameObject.SetActive(false);
         canvasGroup.alpha = 0;
     }
     
