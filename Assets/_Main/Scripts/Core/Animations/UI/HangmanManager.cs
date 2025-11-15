@@ -76,7 +76,7 @@ public class HangmanManager : MonoBehaviour
     private void MoveCameraAway()
     {
         originalCameraPosition = CameraController.instance.cameraTransform.position;
-        CameraController.instance.cameraTransform.position = new Vector3(1000, 1000, 1000); // Teleport far far away
+        CameraController.instance.cameraTransform.position = new Vector3(1000, 1000, 1000); // Teleport far, far away
     }
 
     void Update()
@@ -167,8 +167,7 @@ public class HangmanManager : MonoBehaviour
         ImageScript.instance.FadeToBlack(0.01f);
         yield return new WaitForSeconds(0.01f);
         ImageScript.instance.UnFadeToBlack(0.5f);
-        StartCoroutine(CameraController.instance.ChangeFov(25f, 1.5f));
-        yield return CameraController.instance.MoveAndRotate(new Vector3(0f, 0f, 2f), new Vector3(0f, 0f, 0f), 1.5f);
+        yield return CameraController.instance.FovOutro();
         MusicManager.instance.StopSong();
         game.Finish();
     }

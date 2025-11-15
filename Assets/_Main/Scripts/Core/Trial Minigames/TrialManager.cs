@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using _Main.Scripts.Court;
+using DIALOGUE;
 using UnityEngine;
 
 [Serializable]
@@ -43,6 +44,8 @@ public class TrialManager : MonoBehaviour
         introAnimation.transform.SetAsFirstSibling();
         yield return introAnimation.Animate();
         ImageScript.instance.UnFadeToBlack(0.2f);
+        DialogueSystem.instance.dialogueBoxAnimator.Initialize();
+        yield return CameraController.instance.FovOutro();
         TrialSegment segment = Instantiate(segments[currentIndex]);
         segment.Play();
     }

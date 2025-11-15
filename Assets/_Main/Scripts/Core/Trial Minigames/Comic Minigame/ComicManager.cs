@@ -35,9 +35,6 @@ public class ComicManager : MonoBehaviour
 
     public int currentPageIndex;
 
-    public CameraEffect finishEffect;
-    
-
     void Awake()
     {
         instance = this;
@@ -191,11 +188,9 @@ public class ComicManager : MonoBehaviour
         ImageScript.instance.UnFadeToBlack(0.4f);
         MusicManager.instance.StopSong();
 
-        TrialDialogueManager.instance.effectController.StartEffect(finishEffect);
         yield return new WaitForSeconds(0.5f);
         DialogueSystem.instance.dialogueBoxAnimator.TextBoxAppear();
         yield return new WaitForSeconds(0.5f);
-        TrialDialogueManager.instance.effectController.Reset();
         
         segment.Finish();
     }

@@ -29,7 +29,12 @@ public class TrialIntro : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
         
-        ImageScript.instance.FadeToBlack(0.2f);
+        ImageScript.instance.FadeToBlack(0.1f);
+        foreach (Image letter in letters)
+        {
+            LetterDisappear(letter);
+            yield return new WaitForSeconds(0.01f);
+        }
         
         yield return new WaitForSeconds(0.2f);
         Destroy(gameObject);
@@ -77,6 +82,14 @@ public class TrialIntro : MonoBehaviour
         letter.rectTransform.DOAnchorPosY(originalY - 30f, 0.05f).SetLoops(4, LoopType.Yoyo);
 
 
+    }
+
+    private void LetterDisappear(Image letter)
+    {
+        Vector3 originalRotation = letter.rectTransform.eulerAngles;
+        letter.rectTransform.DOLocalRotate(originalRotation + new Vector3(0, 0, 180), 0.1f);
+        letter.DOFade(0f, 0.1f);
+        letter.rectTransform.DOScale(letter.rectTransform.localScale * 2f, 0.1f);
     }
 
 }
