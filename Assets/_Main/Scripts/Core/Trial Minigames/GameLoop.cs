@@ -91,6 +91,7 @@ public class GameLoop : MonoBehaviour
     {
         evidenceManager.ResetList();
         textIndex = 0;
+        reachedEnd = false;
     }
 
     IEnumerator StartDebate()
@@ -191,7 +192,7 @@ public class GameLoop : MonoBehaviour
 
     IEnumerator SwitchToTextBoxMode()
     {
-        debateUIAnimator.HideCylinderAndCircles();
+        debateUIAnimator.HideCylinderAndCircles(0.5f);
         CursorManager.instance.Hide();
         debateUIAnimator.ChangeFace(null);
         DialogueSystem.instance.ClearTextBox();

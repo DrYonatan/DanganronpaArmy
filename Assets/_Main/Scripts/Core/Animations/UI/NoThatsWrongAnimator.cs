@@ -77,12 +77,13 @@ public class NoThatsWrongAnimator : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
 
         counterRect.DOAnchorPos(new Vector2(-200f, 60f), 1.8f).SetEase(Ease.Linear);
-        counterImage.rectTransform.anchoredPosition = new Vector2(0, 0);
+        counterImage.rectTransform.anchoredPosition = new Vector2(0, -15);
         counterImage.rectTransform.DOAnchorPosY(15f, 0.05f).SetLoops(-1, LoopType.Yoyo);
 
         yield return new WaitForSeconds(1.8f);
 
         counterImage.DOKill();
+        counterImage.rectTransform.DOKill();
         counterRect.DOKill();
         counterRect.DOAnchorPos(new Vector2(-732, 195), appearDuration).SetEase(Ease.Linear);
         face.DOFade(0f, appearDuration);
