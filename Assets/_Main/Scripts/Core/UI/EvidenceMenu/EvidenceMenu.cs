@@ -76,11 +76,11 @@ public class EvidenceMenu : MenuScreen
 
             foreach (EvidenceItem item in evidenceListUI)
             {
-                item.isHovered = false;
+                item.SetHovered(false);
             }
 
             if (evidenceListUI.Count > 0)
-                evidenceListUI[currentEvidenceIndex].isHovered = true;
+                evidenceListUI[currentEvidenceIndex].SetHovered(true);
 
             evidenceListTransform.anchoredPosition = new Vector2(0, Mathf.Max((currentEvidenceIndex - 5) * 91, 0));
         }
