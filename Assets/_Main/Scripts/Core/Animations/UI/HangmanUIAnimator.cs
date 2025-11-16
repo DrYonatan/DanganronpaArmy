@@ -45,6 +45,8 @@ public class HangmanUIAnimator : MonoBehaviour
 
     private int lettersLeft;
     
+    public MinigameStartAnimation startAnimation;
+    
     public void ShowHangmanUI()
     {
         Color c = mist.color;
@@ -120,8 +122,8 @@ public class HangmanUIAnimator : MonoBehaviour
         yield return nowIUnderstandAnimator.Show();
         nowIUnderstandAnimator.gameObject.SetActive(false);
         shade.DOKill();
-        screenShatterManager = Instantiate(screenShatterManager);
-        yield return screenShatterManager.ScreenShatter();
+        ScreenShatterManager shatter = Instantiate(screenShatterManager);
+        yield return shatter.ScreenShatter();
     }
 
     IEnumerator FlashBlocks()

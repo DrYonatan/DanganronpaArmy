@@ -5,6 +5,7 @@ public class MinigameStartAnimation : MonoBehaviour
 {
     private RectTransform rectTransform;
     public RectTransform bullet;
+    public AudioClip soundEffect;
 
     private void Awake()
     {
@@ -17,6 +18,7 @@ public class MinigameStartAnimation : MonoBehaviour
 
         Sequence sequence = DOTween.Sequence();
         sequence.AppendInterval(delay);
+        sequence.AppendCallback(() => SoundManager.instance.PlaySoundEffect(soundEffect));
         sequence.Append(rectTransform.DOAnchorPosX(0, 0.5f));
         sequence.Append(rectTransform.DOAnchorPosX(300, 1.2f).SetEase(Ease.Linear));
         sequence.Join(bullet.DOAnchorPosX(600, 1f)).SetEase(Ease.Linear);

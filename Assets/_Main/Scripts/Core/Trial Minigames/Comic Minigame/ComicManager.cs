@@ -137,8 +137,8 @@ public class ComicManager : MonoBehaviour
         animator.GenerateComicPins(segment.availablePins);
         animator.SetPinsContainerStartPos();
         animator.UpdatePinsVisibility(0);
-        animator.minigameStartAnimation = Instantiate(animator.minigameStartAnimation, TrialManager.instance.globalUI);
-        animator.minigameStartAnimation.Animate(0f);
+        MinigameStartAnimation startAnimation = Instantiate(animator.minigameStartAnimation, TrialManager.instance.globalUI);
+        startAnimation.Animate(0f);
         SwitchToPuzzleMode();
     }
 
@@ -181,8 +181,8 @@ public class ComicManager : MonoBehaviour
         yield return currentPresentedPage.Play();
         currentPresentedPage.KillPanelTweens();
         
-        screenShatter = Instantiate(screenShatter);
-        yield return screenShatter.ScreenShatter();
+        ScreenShatterManager shatter = Instantiate(screenShatter);
+        yield return shatter.ScreenShatter();
         animator.gameObject.SetActive(false);
         OverlayTextBoxManager.instance.Hide();
         ImageScript.instance.UnFadeToBlack(0.4f);

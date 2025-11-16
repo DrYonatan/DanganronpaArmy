@@ -11,6 +11,8 @@ public class TrialIntro : MonoBehaviour
     public Image allRise;
     public Image stains;
     public TextMeshProUGUI classTrial;
+    public AudioClip letterSound;
+    public AudioClip allRiseSound;
 
     public IEnumerator Animate()
     {
@@ -59,11 +61,13 @@ public class TrialIntro : MonoBehaviour
     {
         foreach (Image letter in letters)
         {
+            SoundManager.instance.PlaySoundEffect(letterSound);
             yield return LetterAppear(letter);
         }
         
         yield return new WaitForSeconds(0.2f);
-        
+       
+        SoundManager.instance.PlaySoundEffect(allRiseSound);
         yield return LetterAppear(allRise);
     }
 
@@ -75,7 +79,7 @@ public class TrialIntro : MonoBehaviour
         letter.rectTransform.DOLocalRotate(originalRotation, 0.2f);
         letter.DOFade(1f, 0.2f);
         letter.rectTransform.DOScale(letter.rectTransform.localScale / 2f, 0.2f);
-
+        
         yield return new WaitForSeconds(0.2f);
         
         float originalY = letter.rectTransform.anchoredPosition.y;

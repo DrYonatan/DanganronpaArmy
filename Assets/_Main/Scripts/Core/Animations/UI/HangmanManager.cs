@@ -22,7 +22,6 @@ public class HangmanManager : MonoBehaviour
     public float timeLeft = 600f;
 
     private Vector3 originalCameraPosition;
-    
 
     void Awake()
     {
@@ -65,6 +64,8 @@ public class HangmanManager : MonoBehaviour
         yield return CameraController.instance.DiscussionOutroMovement(2.5f);
         SetCharacter();
         ImageScript.instance.UnFadeToBlack(1f);
+        MinigameStartAnimation startAnimation = Instantiate(animator.startAnimation, TrialManager.instance.globalUI);
+        startAnimation.Animate(0f);
         yield return CameraController.instance.MoveAndRotate(new Vector3(0, 0, 0.5f), Vector3.zero, 1.5f);
         ActivateGame();
         yield return animator.GenerateLetterBlocks(game.correctLetters);
