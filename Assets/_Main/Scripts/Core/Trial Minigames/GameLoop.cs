@@ -74,15 +74,24 @@ public class GameLoop : MonoBehaviour
     public TrialHoverable currentAimedText;
     public Camera renderTextureCamera;
     public ScreenShatterManager screenShatter;
+    public MinigameStartAnimation startAnimation;
 
     public void PlayDebate(DebateSegment debate)
     {
         this.debateSegment = debate;
         debateTexts = new List<FloatingText>();
+        ResetValues();
         evidenceManager.ShowEvidence(debateSegment.settings.evidences);
         MusicManager.instance.PlaySong(debateSegment.settings.audioClip);
         stageTimer = defaultStageTime;
         StartCoroutine(StartDebate());
+    }
+
+    private void ResetValues()
+    {
+        evidenceManager.ResetList();
+        textIndex = 0;
+        reachedEnd = false;
     }
 
     IEnumerator StartDebate()
@@ -94,6 +103,8 @@ public class GameLoop : MonoBehaviour
         ((CourtTextBoxAnimator)(DialogueSystem.instance.dialogueBoxAnimator)).ChangeFace(null);
         yield return 0;
         ImageScript.instance.UnFadeToBlack(1f);
+        MinigameStartAnimation anim = Instantiate(startAnimation, TrialManager.instance.globalUI);
+        anim.Animate(1f);
         yield return StartCoroutine(cameraController.DebateStartCameraMovement(3f));
         isActive = true;
         TimeManipulationManager.instance.isInputActive = true;
@@ -181,7 +192,7 @@ public class GameLoop : MonoBehaviour
 
     IEnumerator SwitchToTextBoxMode()
     {
-        debateUIAnimator.HideCylinderAndCircles();
+        debateUIAnimator.HideCylinderAndCircles(0.5f);
         CursorManager.instance.Hide();
         debateUIAnimator.ChangeFace(null);
         DialogueSystem.instance.ClearTextBox();
@@ -300,6 +311,7 @@ public class GameLoop : MonoBehaviour
     public void Hit(Vector3 point)
     {
         CorrectChoice();
+        TrialCursorManager.instance.isHovering = false;
         gameObject.GetComponent<TextShatterEffect>().Explosion(point);
     }
 
@@ -374,8 +386,8 @@ public class GameLoop : MonoBehaviour
         StartCoroutine(cameraController.MoveCamera(secondTargetPosition, Quaternion.Euler(0f, 0f, 30f), 4f));
         yield return new WaitForSeconds(3.6f);
         cameraController.camera.targetTexture = null;
-        screenShatter = Instantiate(screenShatter);
-        yield return StartCoroutine(screenShatter.ScreenShatter());
+        ScreenShatterManager shatter = Instantiate(screenShatter);
+        yield return StartCoroutine(shatter.ScreenShatter());
         ImageScript.instance.FadeToBlack(0.01f);
         yield return new WaitForSeconds(0.01f);
 

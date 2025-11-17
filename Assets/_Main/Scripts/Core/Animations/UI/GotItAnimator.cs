@@ -23,6 +23,9 @@ public class GotItAnimator : MonoBehaviour
         SoundManager.instance.PlaySoundEffect(soundEffect);
         DialogueSystem.instance.ClearTextBox();
         container.localScale = new Vector3(growFactor, 0f, growFactor);
+        container.GetComponent<CanvasGroup>().alpha = 0f;
+        backgroundRect.anchoredPosition = new Vector2(46.237f, 0);
+        face.rectTransform.anchoredPosition = new Vector2(0, 20f);
         
         container.DOScaleY(growFactor, appearDuration);
         container.GetComponent<CanvasGroup>().DOFade(1f, appearDuration);
@@ -33,7 +36,7 @@ public class GotItAnimator : MonoBehaviour
         container.localScale = Vector3.one;
         backgroundRect.DOAnchorPosY(20f, 0.05f).SetLoops(-1, LoopType.Yoyo);
         face.DOFade(1f, appearDuration);
-        face.GetComponent<RectTransform>().DOAnchorPosY(40f, stayDuration);
+        face.rectTransform.DOAnchorPosY(40f, stayDuration);
         
         yield return new WaitForSeconds(stayDuration);
 
@@ -43,5 +46,7 @@ public class GotItAnimator : MonoBehaviour
 
         yield return new WaitForSeconds(appearDuration);
 
+        face.DOKill();
+        backgroundRect.DOKill();
     }
 }

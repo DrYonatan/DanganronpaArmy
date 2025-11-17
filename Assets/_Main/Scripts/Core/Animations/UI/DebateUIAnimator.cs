@@ -19,7 +19,7 @@ public class DebateUIAnimator : MonoBehaviour
     public CharacterFaceController characterFace;
     public GameObject nodeIndicatorPrefab;
     public Transform nodeIndicatorContainer;
-    private List<Image> indicators = new List<Image>();
+    public List<Image> indicators = new List<Image>();
     public DialogueContainer dialogueContainer = new DialogueContainer();
 
     public RawImage fadeScreenshotImage;
@@ -69,7 +69,7 @@ public class DebateUIAnimator : MonoBehaviour
         {
             bulletSelectionMenu.Appear();
             bulletSelectionMenu.OpenBullets();
-            HideCylinderAndCircles();
+            HideCylinderAndCircles(0.5f);
         }
     }
 
@@ -98,7 +98,8 @@ public class DebateUIAnimator : MonoBehaviour
         namePart.anchoredPosition = namePartOriginalPos.anchoredPosition + new Vector2(0, -moveAmountY);
         facePart.anchoredPosition = facePartOriginalPos.anchoredPosition + new Vector2(moveAmountX, 0);
         timePart.anchoredPosition = timePartOriginalPos.anchoredPosition + new Vector2(0, moveAmountY);
-        HideCylinderAndCircles();
+        bullet.DOAnchorPosX(bulletOriginalPos.anchoredPosition.x - 300f, 0).SetEase(Ease.OutQuad);
+        HideCylinderAndCircles(0f);
         TrialCursorManager.instance.Hide();
     }
 
@@ -111,7 +112,10 @@ public class DebateUIAnimator : MonoBehaviour
     {
         // Clear old indicators
         foreach (Transform child in nodeIndicatorContainer)
+        {
+            child.GetComponent<Image>().DOKill();
             Destroy(child.gameObject);
+        }
 
         indicators.Clear();
 
@@ -126,7 +130,6 @@ public class DebateUIAnimator : MonoBehaviour
 
     public void HighlightNode(int index)
     {
-        
         UnHighlightAllNodes();
         if (index < indicators.Count)
         {
@@ -192,10 +195,10 @@ public class DebateUIAnimator : MonoBehaviour
         LoadBullet();
     }
 
-    public void HideCylinderAndCircles()
+    public void HideCylinderAndCircles(float hideDuration)
     {
-        cylinder.DOAnchorPosX(-200f, 0.5f).SetUpdate(true);
-        circles.DOAnchorPosX(-252f, 0.5f).SetUpdate(true);
+        cylinder.DOAnchorPosX(-200f, hideDuration).SetUpdate(true);
+        circles.DOAnchorPosX(-252f, hideDuration).SetUpdate(true);
         UnLoadBullet();
     }
 
