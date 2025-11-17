@@ -54,6 +54,7 @@ public class HangmanManager : MonoBehaviour
     {
         animator.gameObject.SetActive(true);
         animator.canvasGroup.alpha = 0f;
+        letterIndex = 0;
         animator.ShowHangmanUI();
         game.isActive = true;
         TimeManipulationManager.instance.isInputActive = true;
@@ -65,8 +66,8 @@ public class HangmanManager : MonoBehaviour
         SetCharacter();
         ImageScript.instance.UnFadeToBlack(1f);
         MinigameStartAnimation startAnimation = Instantiate(animator.startAnimation, TrialManager.instance.globalUI);
-        startAnimation.Animate(0f);
-        yield return CameraController.instance.MoveAndRotate(new Vector3(0, 0, 0.5f), Vector3.zero, 1.5f);
+        startAnimation.Animate(0.5f);
+        yield return CameraController.instance.MoveAndRotate(new Vector3(0, 0, 1f), Vector3.zero, 2.5f);
         ActivateGame();
         yield return animator.GenerateLetterBlocks(game.correctLetters);
         CheckAquiredLetters();
@@ -170,6 +171,7 @@ public class HangmanManager : MonoBehaviour
         ImageScript.instance.UnFadeToBlack(0.5f);
         yield return CameraController.instance.FovOutro();
         MusicManager.instance.StopSong();
+        animator.transform.DOKill();
         game.Finish();
     }
 

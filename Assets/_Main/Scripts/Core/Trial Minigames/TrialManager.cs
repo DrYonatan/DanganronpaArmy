@@ -40,9 +40,9 @@ public class TrialManager : MonoBehaviour
 
     private IEnumerator StartPipeline()
     {
-        introAnimation = Instantiate(introAnimation, globalUI);
-        introAnimation.transform.SetAsFirstSibling();
-        yield return introAnimation.Animate();
+        TrialIntro intro = Instantiate(introAnimation, globalUI);
+        intro.transform.SetAsFirstSibling();
+        yield return intro.Animate();
         ImageScript.instance.UnFadeToBlack(0.2f);
         DialogueSystem.instance.dialogueBoxAnimator.Initialize();
         yield return CameraController.instance.FovOutro();

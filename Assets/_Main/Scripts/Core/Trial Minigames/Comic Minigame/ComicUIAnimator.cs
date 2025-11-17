@@ -178,11 +178,15 @@ public class ComicUIAnimator : MonoBehaviour
 
     public void LowerPinsContainer()
     {
+        mouseL.rectTransform.DOAnchorPosY(pinsContainerOriginalPos.y - 400f, 0.2f);
+        mouseR.rectTransform.DOAnchorPosY(pinsContainerOriginalPos.y - 400f, 0.2f);
         pinsContainer.GetComponent<RectTransform>().DOAnchorPosY(pinsContainerOriginalPos.y - 400, 0.2f);
     }
 
     public void RaisePinsContainer()
     {
+        mouseL.rectTransform.DOAnchorPosY(pinsContainerOriginalPos.y, 0.2f);
+        mouseR.rectTransform.DOAnchorPosY(pinsContainerOriginalPos.y, 0.2f);
         pinsContainer.GetComponent<RectTransform>().DOAnchorPosY(pinsContainerOriginalPos.y, 0.2f);
     }
 
