@@ -12,9 +12,9 @@ public class RoomGate : Interactable
 
     public override void FinishInteraction()
     {
-         if (((FreeRoamEvent)(ProgressManager.instance.currentGameEvent)).allowedRooms.Any(item =>
-                item.name == roomToLoad.name) ||
-            ((FreeRoamEvent)(ProgressManager.instance.currentGameEvent)).allowedRooms.Count == 0)
+         if (((FreeRoamEvent)(ProgressManager.instance.currentGameEvent)).roomDatas.Any(item =>
+                item.room.name == roomToLoad.name) ||
+            ((FreeRoamEvent)(ProgressManager.instance.currentGameEvent)).roomDatas.Count == 0)
         {
             StartCoroutine(RoomTransition());
         }

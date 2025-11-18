@@ -14,6 +14,9 @@ public class WorldManager : MonoBehaviour
     public RoomData currentRoomData;
     public bool isLoading = false;
 
+    public GameObject charactersObject;
+    public GameObject objectsObject;
+
     public static WorldManager instance { get; private set; }
 
     void Start()
@@ -36,7 +39,7 @@ public class WorldManager : MonoBehaviour
 
         float timeOut = 0.5f;
         float elapsedTime = 0f;
-        while (GameObject.Find("World/World Objects/Characters") != null && elapsedTime < timeOut)
+        while (charactersObject != null && elapsedTime < timeOut)
         {
             elapsedTime += Time.deltaTime;
             yield return null;
@@ -45,6 +48,9 @@ public class WorldManager : MonoBehaviour
 
     public GameObject CreateCharacters(GameObject prefab)
     {
+        if (prefab == null)
+            return null;
+
         GameObject ob = Instantiate(prefab, characterPanel.transform);
         ob.name = "Characters";
         ob.SetActive(true);
@@ -60,8 +66,11 @@ public class WorldManager : MonoBehaviour
         return ob;
     }
 
-    public GameObject CreateObjects(GameObject prefab)
+    private GameObject CreateObjects(GameObject prefab)
     {
+        if (prefab == null)
+            return null;
+
         GameObject ob = Instantiate(prefab, characterPanel.transform);
         ob.name = "Objects";
         ob.SetActive(true);
@@ -77,9 +86,7 @@ public class WorldManager : MonoBehaviour
 
     public void HideCharacters()
     {
-        GameObject characters = GameObject.Find("World Objects/Characters");
-
-        Destroy(characters);
+        Destroy(charactersObject);
     }
 
     public void StartLoadingRoom(Room room, [CanBeNull] string entryPoint)
@@ -101,23 +108,23 @@ public class WorldManager : MonoBehaviour
 
         currentRoom = Instantiate(room);
         currentRoom.name = room.name;
-        currentRoomData = ProgressManager.instance.currentGameEvent.roomDatas.First(roomData => roomData.name == room.name);
-        Transform characters = GameObject.Find("World/World Objects/Characters")?.transform;
+        currentRoomData =
+            ProgressManager.instance.currentGameEvent.roomDatas.First(roomData => roomData.room.name == room.name);
 
-        if (characters != null)
+        if (charactersObject != null)
         {
-            foreach (Transform character in characters)
+            foreach (Transform character in charactersObject.transform)
             {
                 ProgressManager.instance.currentGameEvent.charactersData[character.name] =
                     new ObjectData(character.gameObject.GetComponent<WorldCharacter>().isClicked);
             }
         }
 
-
-        Destroy(GameObject.Find("World"));
+        GameObject world = GameObject.Find("World");
+        Destroy(world);
 
         // Wait until World finished destroying (max 2 seconds to prevent infinite loops)
-        while (GameObject.Find("World") != null && elapsedTime < timeout)
+        while (world != null && elapsedTime < timeout)
         {
             elapsedTime += Time.deltaTime;
             yield return null;
@@ -127,17 +134,10 @@ public class WorldManager : MonoBehaviour
         GameObject ob = Instantiate(room.prefab);
         ob.name = "World";
         ob.SetActive(true);
-
-        elapsedTime = 0;
-        // Wait until "World Objects" is found (max 2 seconds to prevent infinite loops)
-        while (GameObject.Find("World/World Objects") == null && elapsedTime < timeout)
-        {
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-
-        if (GameObject.Find("World/World Objects") != null)
-            characterPanel = GameObject.Find("World/World Objects");
+        
+        GameObject objectsParent = GameObject.Find("World Objects");
+        if (objectsParent != null)
+            characterPanel = objectsParent;
         string cameraStartPosName = !String.IsNullOrEmpty(entryPoint) ? $":{entryPoint}" : "";
         Transform cameraStartPos = GameObject.Find($"World/CameraStartPos{cameraStartPosName}").transform;
         if (CameraManager.instance)
@@ -147,8 +147,9 @@ public class WorldManager : MonoBehaviour
 
         CharacterController controller = Camera.main.gameObject.GetComponent<CharacterController>();
         controller.enabled = false;
-        Camera.main.transform.position = cameraStartPos.position; // Actually changing position of camera
-        Camera.main.transform.rotation = cameraStartPos.rotation;
+        CameraManager.instance.cameraTransform.position =
+            cameraStartPos.position; // Actually changing position of camera
+        CameraManager.instance.cameraTransform.rotation = cameraStartPos.rotation;
         controller.enabled = true;
 
         ImageScript.instance.UnFadeToBlack(0.1f);
@@ -156,10 +157,16 @@ public class WorldManager : MonoBehaviour
             yield return StartCoroutine(room.OnLoad());
         isLoading = false;
 
-        CreateCharacters(ProgressManager.instance.currentGameEvent.roomDatas
-            .First(roomData => roomData.name == currentRoom.name).characters);
-        CreateObjects(ProgressManager.instance.currentGameEvent.roomDatas
-            .First(roomData => roomData.name == currentRoom.name).worldObjects);
+        charactersObject = CreateCharacters(ProgressManager.instance.currentGameEvent.roomDatas
+            .First(roomData => roomData.room.name == currentRoom.name).characters);
+        objectsObject = CreateObjects(ProgressManager.instance.currentGameEvent.roomDatas
+            .First(roomData => roomData.room.name == currentRoom.name).worldObjects);
+
+        yield return new WaitUntil(() =>
+            (charactersObject != null || currentRoomData.characters == null) &&
+            (objectsObject != null ||
+             currentRoomData.worldObjects ==
+             null)); // wait until both characters and objects loaded, or if there aren't any just go on
 
         ReturningToWorld();
     }

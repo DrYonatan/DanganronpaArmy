@@ -951,6 +951,8 @@ MonoBehaviour:
     characters: {fileID: 0}
     worldObjects: {fileID: 0}
   isLoading: 0
+  charactersObject: {fileID: 0}
+  objectsObject: {fileID: 0}
 --- !u!1 &219885779
 GameObject:
   m_ObjectHideFlags: 0
@@ -2919,7 +2921,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f7f5d055480bfa498fef5eae8aa32e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameEvents: []
+  gameEvents:
+  - {fileID: 11400000, guid: 4adbca780071e3e4ba12cbe363be603f, type: 2}
+  - {fileID: 11400000, guid: 1ab8c3198da0117488708edc3a74e534, type: 2}
   characterEventsAsset: {fileID: 11400000, guid: 4df5623fd5cfef5469fde0dbab7737e7, type: 2}
   currentGameEvent: {fileID: 11400000, guid: 4adbca780071e3e4ba12cbe363be603f, type: 2}
   currentGameEventIndex: 0
@@ -4624,7 +4628,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df5ceb9428534304c9850324f82acda3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraTransform: {fileID: 0}
+  cameraTransform: {fileID: 963194228}
   initialRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &1411524844
 GameObject:

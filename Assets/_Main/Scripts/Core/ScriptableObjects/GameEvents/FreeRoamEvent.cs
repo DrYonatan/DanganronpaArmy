@@ -6,8 +6,6 @@ using DIALOGUE;
 [CreateAssetMenu(menuName = "Game Events/Free Roam Event")]
 public class FreeRoamEvent : GameEvent
 {
-    public List<RoomData> allowedRooms;
-
     protected void OnFinish()
     {
         base.OnFinish();
@@ -18,7 +16,7 @@ public class FreeRoamEvent : GameEvent
         if(startEventImmediately)
         {
             // checks the current room's objects (mostly characters) in this event, and loads the event's current room objects
-            GameObject objects = (allowedRooms.Find(room => room.name == WorldManager.instance.currentRoom.name))
+            GameObject objects = (roomDatas.Find(room => room.room.name == WorldManager.instance.currentRoom.name))
                 ?.worldObjects;
             if (objects != null && GameObject.Find("World/World Objects/Characters") == null)
                 WorldManager.instance.CreateCharacters(objects);

@@ -16,7 +16,7 @@ public class ObjectData
 [System.Serializable]
 public class RoomData
 {
-    public string name;
+    public Room room;
     public GameObject characters;
     public GameObject worldObjects;
 }
