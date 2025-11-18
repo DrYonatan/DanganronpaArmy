@@ -46,10 +46,10 @@ public class WorldManager : MonoBehaviour
         }
     }
 
-    public GameObject CreateCharacters(GameObject prefab)
+    public void CreateCharacters(GameObject prefab)
     {
-        if (prefab == null)
-            return null;
+        if (prefab == null || characterPanel == null)
+            return;
 
         GameObject ob = Instantiate(prefab, characterPanel.transform);
         ob.name = "Characters";
@@ -62,14 +62,15 @@ public class WorldManager : MonoBehaviour
                         .GetComponent<WorldCharacter>().isClicked =
                     ProgressManager.instance.currentGameEvent.charactersData[characterName].isClicked;
         }
+        
+        charactersObject = ob;
 
-        return ob;
     }
 
-    private GameObject CreateObjects(GameObject prefab)
+    public void CreateObjects(GameObject prefab)
     {
-        if (prefab == null)
-            return null;
+        if (prefab == null || characterPanel == null)
+            return;
 
         GameObject ob = Instantiate(prefab, characterPanel.transform);
         ob.name = "Objects";
@@ -81,7 +82,7 @@ public class WorldManager : MonoBehaviour
                 ProgressManager.instance.currentGameEvent.objectsData[objectName].isClicked;
         }
 
-        return ob;
+        objectsObject = ob;
     }
 
     public void HideCharacters()
@@ -157,9 +158,9 @@ public class WorldManager : MonoBehaviour
             yield return StartCoroutine(room.OnLoad());
         isLoading = false;
 
-        charactersObject = CreateCharacters(ProgressManager.instance.currentGameEvent.roomDatas
+        CreateCharacters(ProgressManager.instance.currentGameEvent.roomDatas
             .First(roomData => roomData.room.name == currentRoom.name).characters);
-        objectsObject = CreateObjects(ProgressManager.instance.currentGameEvent.roomDatas
+        CreateObjects(ProgressManager.instance.currentGameEvent.roomDatas
             .First(roomData => roomData.room.name == currentRoom.name).worldObjects);
 
         yield return new WaitUntil(() =>
