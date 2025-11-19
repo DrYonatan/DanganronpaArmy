@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using DIALOGUE;
 
@@ -25,10 +26,12 @@ public abstract class GameEvent : ScriptableObject
 {
     public bool isFinished;
 
-    public bool startEventImmediately = false; // used to know if to start the event as soon as the previous one ends or only after finish text
+    public bool
+        startEventImmediately =
+            false; // used to know if to start the event as soon as the previous one ends or only after finish text
 
     public VNConversationSegment finishText;
-    
+
     public VNConversationSegment unallowedText;
 
     public List<RoomData> roomDatas;
@@ -39,7 +42,15 @@ public abstract class GameEvent : ScriptableObject
 
     public abstract void CheckIfFinished();
 
-    public abstract void OnStart();
+    public virtual void OnStart()
+    {
+        if (WorldManager.instance.charactersObject == null)
+            WorldManager.instance.CreateCharacters(roomDatas
+                .First(roomData => roomData.room.name == WorldManager.instance.currentRoom.name).characters);
+        if (WorldManager.instance.objectsObject == null)
+            WorldManager.instance.CreateObjects(roomDatas
+                .First(roomData => roomData.room.name == WorldManager.instance.currentRoom.name).worldObjects);
+    }
 
     protected virtual void OnFinish()
     {
@@ -48,7 +59,7 @@ public abstract class GameEvent : ScriptableObject
             VNNodePlayer.instance.StartConversation(finishText);
             finishText = null;
         }
-        
+
         ProgressManager.instance.OnEventFinished();
     }
 }

@@ -29,8 +29,4 @@ public class FreeRoamEvent : GameEvent
         if (isFinished)
             OnFinish();
     }
-
-    public override void OnStart()
-    {
-    }
 }

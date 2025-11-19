@@ -36,15 +36,6 @@ public class PointAndClickEvent : GameEvent
             OnFinish();
     }
 
-
-    public override void OnStart()
-    {
-        if(WorldManager.instance.charactersObject == null)
-           WorldManager.instance.CreateCharacters(roomDatas[0].characters);
-        if(WorldManager.instance.objectsObject == null)
-           WorldManager.instance.CreateObjects(roomDatas[0].worldObjects);
-    }
-
     protected override void OnFinish()
     {
         if (!isExitable)
