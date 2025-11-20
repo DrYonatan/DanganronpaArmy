@@ -46,8 +46,7 @@ public class PointAndClickRoom : Room
 
         if(Input.GetKey(KeyCode.R))
         {
-            GameEvent currentGameEvent = ProgressManager.instance.currentGameEvent;
-            if(currentGameEvent is PointAndClickEvent && !((PointAndClickEvent)(currentGameEvent)).isExitable)
+            if(!WorldManager.instance.currentRoomData.isExitable)
             {
                 VNNodePlayer.instance.StartConversation(ProgressManager.instance.currentGameEvent.unallowedText);
             }

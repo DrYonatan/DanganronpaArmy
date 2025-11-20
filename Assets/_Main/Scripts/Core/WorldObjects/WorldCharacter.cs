@@ -1,11 +1,9 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using DIALOGUE;
 
 public class WorldCharacter : ConversationInteractable
 {
-    public string name;
+    public string characterName;
 
     public override void FinishInteraction()
     {
@@ -13,18 +11,21 @@ public class WorldCharacter : ConversationInteractable
         Quaternion targetRotation = Quaternion.LookRotation(transform.forward);
         CameraManager.instance.StartCameraCoroutine(CameraManager.instance.RotateCameraTo(targetRotation, 0.5f));
         CameraManager.instance.initialRotation = transform.rotation;
+        if (ProgressManager.instance.currentGameEvent != null)
+        {
+            ProgressManager.instance.currentGameEvent.charactersData[name] = new ObjectData(true);
+        }
         base.FinishInteraction();
     }
 
     public override void OnLook()
     {
-        if(!isAlreadyLooking)
+        if (!isAlreadyLooking)
         {
             isAlreadyLooking = true;
             CursorManager.instance.ShowOrHideConversationIcon(true);
-            CursorManager.instance.ShowOrHideInteractableName(true, name);
+            CursorManager.instance.ShowOrHideInteractableName(true, characterName);
         }
-        
     }
 
     public override void OnStopLooking()

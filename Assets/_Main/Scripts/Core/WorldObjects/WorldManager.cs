@@ -1,10 +1,8 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using DIALOGUE;
-using CHARACTERS;
 using JetBrains.Annotations;
 
 public class WorldManager : MonoBehaviour
@@ -62,9 +60,14 @@ public class WorldManager : MonoBehaviour
                         .GetComponent<WorldCharacter>().isClicked =
                     ProgressManager.instance.currentGameEvent.charactersData[characterName].isClicked;
         }
-        
+
         charactersObject = ob;
 
+        foreach (Transform character in charactersObject.transform)
+        {
+            ProgressManager.instance.currentGameEvent.charactersData[character.name] =
+                new ObjectData(character.gameObject.GetComponent<WorldCharacter>().isClicked);
+        }
     }
 
     public void CreateObjects(GameObject prefab)
@@ -83,16 +86,22 @@ public class WorldManager : MonoBehaviour
         }
 
         objectsObject = ob;
-    }
 
-    public void HideCharacters()
-    {
-        Destroy(charactersObject);
+        foreach (Transform obj in objectsObject.transform)
+        {
+            ProgressManager.instance.currentGameEvent.objectsData[obj.name] =
+                new ObjectData(obj.gameObject.GetComponent<WorldObject>().isClicked);
+        }
     }
 
     public void StartLoadingRoom(Room room, [CanBeNull] string entryPoint)
     {
         StartCoroutine(LoadRoom(room, entryPoint));
+    }
+
+    public void UpdateRoomData(RoomData roomData)
+    {
+        currentRoomData = roomData;
     }
 
     private IEnumerator LoadRoom(Room room, [CanBeNull] string entryPoint)
@@ -109,8 +118,9 @@ public class WorldManager : MonoBehaviour
 
         currentRoom = Instantiate(room);
         currentRoom.name = room.name;
-        currentRoomData =
-            ProgressManager.instance.currentGameEvent.roomDatas.First(roomData => roomData.room.name == room.name);
+
+        UpdateRoomData(
+            ProgressManager.instance.currentGameEvent.roomDatas.First(roomData => roomData.room.name == room.name));
 
         if (charactersObject != null)
         {
@@ -135,7 +145,7 @@ public class WorldManager : MonoBehaviour
         GameObject ob = Instantiate(room.prefab);
         ob.name = "World";
         ob.SetActive(true);
-        
+
         GameObject objectsParent = GameObject.Find("World Objects");
         if (objectsParent != null)
             characterPanel = objectsParent;
@@ -159,9 +169,9 @@ public class WorldManager : MonoBehaviour
         isLoading = false;
 
         CreateCharacters(ProgressManager.instance.currentGameEvent.roomDatas
-            .First(roomData => roomData.room.name == currentRoom.name).characters);
+            .First(roomData => roomData.room.name.Equals(currentRoom.name)).characters);
         CreateObjects(ProgressManager.instance.currentGameEvent.roomDatas
-            .First(roomData => roomData.room.name == currentRoom.name).worldObjects);
+            .First(roomData => roomData.room.name.Equals(currentRoom.name)).worldObjects);
 
         yield return new WaitUntil(() =>
             (charactersObject != null || currentRoomData.characters == null) &&

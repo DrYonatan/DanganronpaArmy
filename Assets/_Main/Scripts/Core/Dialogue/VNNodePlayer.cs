@@ -14,7 +14,7 @@ using UnityEngine;
         
         public void StartConversation(VNConversationSegment segment)
         {
-            this.currentConversation = segment;
+            currentConversation = segment;
             VNCharacterManager.instance.characterLayer.anchoredPosition = Vector2.zero;
             foreach (CharacterPositionMapping characterInfo in segment.settings.characterPositions)
             {

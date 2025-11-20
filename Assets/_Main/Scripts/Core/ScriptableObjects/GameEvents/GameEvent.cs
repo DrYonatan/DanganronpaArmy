@@ -20,6 +20,7 @@ public class RoomData
     public Room room;
     public GameObject characters;
     public GameObject worldObjects;
+    public bool isExitable;
 }
 
 public abstract class GameEvent : ScriptableObject
@@ -44,12 +45,15 @@ public abstract class GameEvent : ScriptableObject
 
     public virtual void OnStart()
     {
+        RoomData currentRoomData = ProgressManager.instance.currentGameEvent.roomDatas
+            .First(roomData => roomData.room.name.Equals(WorldManager.instance.currentRoom.name));
+        
+        WorldManager.instance.UpdateRoomData(currentRoomData);
+        
         if (WorldManager.instance.charactersObject == null)
-            WorldManager.instance.CreateCharacters(roomDatas
-                .First(roomData => roomData.room.name == WorldManager.instance.currentRoom.name).characters);
+            WorldManager.instance.CreateCharacters(currentRoomData.characters);
         if (WorldManager.instance.objectsObject == null)
-            WorldManager.instance.CreateObjects(roomDatas
-                .First(roomData => roomData.room.name == WorldManager.instance.currentRoom.name).worldObjects);
+            WorldManager.instance.CreateObjects(currentRoomData.worldObjects);
     }
 
     protected virtual void OnFinish()

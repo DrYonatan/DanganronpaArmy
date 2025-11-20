@@ -1,24 +1,17 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DIALOGUE;
 
 [CreateAssetMenu(menuName = "Game Events/Point And Click Event")]
 public class PointAndClickEvent : GameEvent
 {
-    public bool isExitable = false;
-
-    private bool AreAllClicked(GameObject objects)
+    private bool AreAllClicked(Dictionary<string, ObjectData>.ValueCollection datas)
     {
         bool finished = true;
 
-        if (objects != null)
+        foreach (ObjectData data in datas)
         {
-            foreach (Transform interactableObject in objects.transform)
-            {
-                if (!interactableObject.GetComponent<ConversationInteractable>().isClicked)
-                    finished = false;
-            }
+            if (!data.isClicked)
+                finished = false;
         }
 
         return finished;
@@ -26,9 +19,9 @@ public class PointAndClickEvent : GameEvent
 
     public override void CheckIfFinished()
     {
-        bool allCharactersClicked = AreAllClicked(WorldManager.instance.charactersObject);
+        bool allCharactersClicked = AreAllClicked(charactersData.Values);
 
-        bool allObjectsClicked = AreAllClicked(WorldManager.instance.objectsObject);
+        bool allObjectsClicked = AreAllClicked(objectsData.Values);
 
         isFinished = allCharactersClicked && allObjectsClicked;
 
@@ -38,13 +31,12 @@ public class PointAndClickEvent : GameEvent
 
     protected override void OnFinish()
     {
-        if (!isExitable)
-        {
-            Destroy(WorldManager.instance.charactersObject);
-            Destroy(WorldManager.instance.objectsObject);
-            CameraManager.instance.MoveCameraTo(GameObject.Find("World/CameraStartPos").transform);
-        }
-
+        Destroy(WorldManager.instance.charactersObject);
+        Destroy(WorldManager.instance.objectsObject);
+        WorldManager.instance.charactersObject = null;
+        WorldManager.instance.objectsObject = null;
+        CameraManager.instance.MoveCameraTo(GameObject.Find("World/CameraStartPos").transform);
+        
         base.OnFinish();
     }
 }
