@@ -176,7 +176,7 @@ public class WorldManager : MonoBehaviour
     {
         DialogueSystem.instance.SetIsActive(false);
         DialogueSystem.instance.ClearTextBox();
-        CharacterClickEffects.instance.MakeCharactersReappear(currentRoomData.characters);
+        CharacterClickEffects.instance.MakeCharactersReappear(charactersObject);
         currentRoom.OnConversationEnd();
         ReturningToWorld();
     }

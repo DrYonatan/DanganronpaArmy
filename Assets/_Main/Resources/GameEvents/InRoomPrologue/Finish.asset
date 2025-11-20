@@ -13,8 +13,56 @@ MonoBehaviour:
   m_Name: Finish
   m_EditorClassIdentifier: 
   settings:
-    characterPositions: []
-  nodes: []
+    characterPositions:
+    - character: {fileID: 11400000, guid: e518102ea47577a499c54e7bb8334338, type: 2}
+      position: 2
+    - character: {fileID: 11400000, guid: e556e59756b89ea4ab97f97255a16dac, type: 2}
+      position: 4
+  nodes:
+  - rid: 6060276556525731840
+  - rid: 6060276556525731842
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 6060276556525731840
+      type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
+        character: {fileID: 11400000, guid: e518102ea47577a499c54e7bb8334338, type: 2}
+        expressionIndex: 0
+        textData:
+          rid: 6060276556525731841
+    - rid: 6060276556525731841
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "\u05E9\u05DC\u05D5\u05E1"
+        commands: []
+    - rid: 6060276556525731842
+      type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
+        character: {fileID: 11400000, guid: e556e59756b89ea4ab97f97255a16dac, type: 2}
+        expressionIndex: 1
+        textData:
+          rid: 6060276556525731843
+    - rid: 6060276556525731843
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "\u05E9\u05DC\u05D5\u05E1"
+        commands: []
