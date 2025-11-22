@@ -17,7 +17,6 @@ namespace DIALOGUE
             isPaused = false;
             instance = this;
         }
-        // Update is called once per frame
         void Update()
         {
             Cursor.visible = false;
@@ -33,6 +32,29 @@ namespace DIALOGUE
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
                 TogglePause();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                SaveData data = new SaveData();
+                data.gameEventIndex = ProgressManager.instance.currentGameEventIndex;
+                SaveSystem.SaveGame(data, 1);
+            }
+            
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                SaveData data = new SaveData();
+                data.gameEventIndex = ProgressManager.instance.currentGameEventIndex;
+                SaveSystem.SaveGame(data, 2);
+            }
+
+            if (Input.GetKeyDown(KeyCode.L))
+            {
+                ProgressManager.instance.currentGameEventIndex = SaveSystem.LoadGame(1).gameEventIndex;
+            }
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                ProgressManager.instance.currentGameEventIndex = SaveSystem.LoadGame(2).gameEventIndex;
             }
         }
 
