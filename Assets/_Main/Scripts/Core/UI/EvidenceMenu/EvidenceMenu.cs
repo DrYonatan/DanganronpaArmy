@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -16,6 +17,8 @@ public class EvidenceMenu : MenuScreen
     public TextMeshProUGUI evidenceDescription;
     public RectTransform evidenceListTransform;
     public AudioClip moveSelectionSound;
+    public QuestionBubble questionBubble;
+    public TextMeshProUGUI questionBubbleText;
 
     public void OnEvidenceAdded(Evidence evidence)
     {
@@ -84,5 +87,37 @@ public class EvidenceMenu : MenuScreen
 
             evidenceListTransform.anchoredPosition = new Vector2(0, Mathf.Max((currentEvidenceIndex - 5) * 91, 0));
         }
+    }
+
+    public IEnumerator SelectEvidence(string question, Func<Evidence, IEnumerator> onFinish)
+    {
+        Open();
+        bool isOpen = false;
+
+        while (!Input.GetKeyDown(KeyCode.Space))
+        {
+            if (Input.GetKey(KeyCode.Tab))
+            {
+                isOpen = true;
+                questionBubble.Open();
+                questionBubbleText.text = question;
+            }
+            else
+            {
+                if (isOpen)
+                {
+                    questionBubble.Close();
+                }
+                
+                isOpen = false;
+            }
+            yield return null;
+        }
+        
+        questionBubble.gameObject.SetActive(false);
+
+        Close();
+        Evidence currentEvidence = EvidenceManager.instance.evidenceList[currentEvidenceIndex];
+        yield return onFinish(currentEvidence);
     }
 }

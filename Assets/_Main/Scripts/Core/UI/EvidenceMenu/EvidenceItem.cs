@@ -39,18 +39,13 @@ public class EvidenceItem : MonoBehaviour
 
         blinkTween = background
             .DOColor(new Color(hoverColor.r, hoverColor.g, hoverColor.b, 0.2f), 0.5f)      // fade in
-            .SetLoops(-1, LoopType.Yoyo)    // fade out → fade in forever
+            .SetLoops(-1, LoopType.Yoyo) 
             .SetEase(Ease.InOutSine).SetUpdate(true);
     }
 
     private void StopBlink()
     {
         blinkTween?.Kill();
-        background.color = new Color(0, 0, 0, 0);  // reset to transparent
+        background.color = new Color(0, 0, 0, 0);
     }
-
-    // void Update()
-    // {
-    //     background.color = isHovered ? hoverColor : new Color(0, 0, 0, 0);
-    // }
 }
