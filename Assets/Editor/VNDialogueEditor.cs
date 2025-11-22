@@ -126,8 +126,16 @@ public class VNDialogueEditor : EditorWindow
 
    private void OnGUI()
    {
-      if(segment != null)
+      if (segment != null)
+      {
+         if (string.IsNullOrEmpty(segment.guid))
+         {
+            segment.guid = GUID.Generate().ToString();
+         }
+         
          EditorUtility.SetDirty(segment);
+
+      }
       if (nodes == null)
       {
          return;

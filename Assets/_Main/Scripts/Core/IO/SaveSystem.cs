@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -24,6 +25,7 @@ public class SaveSystem
         }
 
         string json = File.ReadAllText(path);
+        Debug.Log(json);
         return JsonUtility.FromJson<SaveData>(json);
     }
 }

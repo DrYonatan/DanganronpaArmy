@@ -36,16 +36,12 @@ namespace DIALOGUE
 
             if (Input.GetKeyDown(KeyCode.Alpha1))
             {
-                SaveData data = new SaveData();
-                data.gameEventIndex = ProgressManager.instance.currentGameEventIndex;
-                SaveSystem.SaveGame(data, 1);
+                ProgressManager.instance.SaveGame(1);
             }
             
             if (Input.GetKeyDown(KeyCode.Alpha2))
             {
-                SaveData data = new SaveData();
-                data.gameEventIndex = ProgressManager.instance.currentGameEventIndex;
-                SaveSystem.SaveGame(data, 2);
+                ProgressManager.instance.SaveGame(2);
             }
 
             if (Input.GetKeyDown(KeyCode.L))
@@ -66,7 +62,7 @@ namespace DIALOGUE
             }
         }
 
-        public void TogglePause()
+        private void TogglePause()
         {
             isPaused = !isPaused;
             if (isPaused)
