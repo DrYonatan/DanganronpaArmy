@@ -19,22 +19,26 @@ namespace DIALOGUE
         {
             isPaused = false;
             instance = this;
+            isInputActive = true;
         }
         void Update()
         {
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Confined;
-            if (!isPaused)
+            if (isInputActive)
             {
-                if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Confined;
+                if (!isPaused)
                 {
-                    PromptAdvance();
+                    if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+                    {
+                        PromptAdvance();
+                    }
                 }
-            }
             
-            if (Input.GetKeyDown(KeyCode.Alpha1) && !pauseMenu.isSubmenuOpen && isInputActive)
-            {
-                TogglePause();
+                if (Input.GetKeyDown(KeyCode.Alpha1) && !pauseMenu.isSubmenuOpen)
+                {
+                    TogglePause();
+                }
             }
         }
 
