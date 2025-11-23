@@ -83,6 +83,8 @@ public class VNNodeDraw : DrawNode
             menu.AddItem(new GUIContent("Play Sound Effect"), false, () => AddCommand(node, new PlaySoundEffectCommand()));
             menu.AddItem(new GUIContent("Play Music"), false, () => AddCommand(node, new PlayMusicCommand()));
             menu.AddItem(new GUIContent("Play Ultimate Animation"), false, () => AddCommand(node, new PlayUltimateAnimation()));
+            menu.AddItem(new GUIContent("Select Evidence"), false, () => AddCommand(node, new PromptEvidenceSelection()));
+
             // Add more as needed
             menu.ShowAsContext();
         }

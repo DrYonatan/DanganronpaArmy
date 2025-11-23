@@ -17,6 +17,8 @@ namespace DIALOGUE
         private bool userPrompt = false;
         
         public bool isAuto = false;
+
+        public bool isSingleTimeAuto = false;
         
         public ConversationManager(TextArchitect architect)
         {
@@ -36,7 +38,7 @@ namespace DIALOGUE
 
         public Coroutine PlayNodeText(DialogueNode node)
         {
-            StopPreviousText();
+            // StopPreviousText();
 
             process = dialogueSystem.StartCoroutine(RunNodeText(node));
 
@@ -65,9 +67,14 @@ namespace DIALOGUE
             
             DialogueSystem.instance.ShowSpeakerName(node.character.displayName);
             yield return BuildDialogue(textData.text);
-            
+
             yield return Line_RunCommands(afterCommands);
-            if (!isAuto)
+
+            if (isSingleTimeAuto)
+            {
+                isSingleTimeAuto = false;
+            }
+            else if (!isAuto)
             {
                 yield return WaitForUserInput();
                 SoundManager.instance.PlayTextBoxSound();
@@ -96,7 +103,6 @@ namespace DIALOGUE
             {
                 yield return command.Execute();
             }
-            
         }
 
         void Line_RunCommandsAsync(List<Command> commands)

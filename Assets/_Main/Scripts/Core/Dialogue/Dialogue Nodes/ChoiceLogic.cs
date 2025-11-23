@@ -30,10 +30,8 @@ public class ChoiceLogic<T> where T : DialogueNode
 
         do
         {
-            DialogueSystem.instance.SetAuto(true);
+            DialogueSystem.instance.TurnOnSingleTimeAuto();
             yield return playOriginalNode();
-            DialogueSystem.instance.SetAuto(false);
-            
             yield return DialogueSystem.instance.HandleSelection(options, (selectedOption) =>
             {
                 pickedOption = selectedOption;
