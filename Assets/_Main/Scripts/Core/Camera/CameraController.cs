@@ -204,7 +204,7 @@ public class CameraController : MonoBehaviour
         cameraTransform.localRotation = targetRotation;
     }
 
-    public IEnumerator ChangeFov(float targetFov, float duration)
+    private IEnumerator ChangeFov(float targetFov, float duration)
     {
         float elapsedTime = 0;
         float startFov = camera.fieldOfView;
@@ -229,5 +229,15 @@ public class CameraController : MonoBehaviour
             cameraTransform.localRotation = Quaternion.Slerp(startRotation, targetRotation, elapsedTime / duration);
             yield return null;
         }
+    }
+
+    public IEnumerator FovOutro()
+    {
+        cameraTransform.localPosition = new Vector3(0, 4, -4.7f);
+        StartCoroutine(ChangeFov(25f, 1.5f));
+        StartCoroutine(MoveAndRotate(new Vector3(0f, 0f, 2f), new Vector3(0f, 0f, 0f), 1.5f));
+        yield return new WaitForSeconds(1f);
+        DialogueSystem.instance.dialogueBoxAnimator.TextBoxAppear();
+        yield return new WaitForSeconds(0.5f);
     }
 }

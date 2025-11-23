@@ -58,6 +58,7 @@ public class ComicUIAnimator : MonoBehaviour
     public AudioClip readyToPresentSound;
 
     public ClimaxIntroAnimation introAnimation;
+    public MinigameStartAnimation minigameStartAnimation;
 
     private float timerOriginalX;
     private float pagesOriginalX;
@@ -163,7 +164,7 @@ public class ComicUIAnimator : MonoBehaviour
 
         UpdatePageNumber();
 
-        sideBars.DOFade(0.5f, 0f);
+        sideBars.DOFade(0.5f, 0f).SetDelay(2f).OnComplete(() => TrialCursorManager.instance.Show());
 
         mouseL.DOFade(1f, 0f);
         mouseR.DOFade(0f, 0f);
@@ -177,11 +178,15 @@ public class ComicUIAnimator : MonoBehaviour
 
     public void LowerPinsContainer()
     {
+        mouseL.rectTransform.DOAnchorPosY(pinsContainerOriginalPos.y - 400f, 0.2f);
+        mouseR.rectTransform.DOAnchorPosY(pinsContainerOriginalPos.y - 400f, 0.2f);
         pinsContainer.GetComponent<RectTransform>().DOAnchorPosY(pinsContainerOriginalPos.y - 400, 0.2f);
     }
 
     public void RaisePinsContainer()
     {
+        mouseL.rectTransform.DOAnchorPosY(pinsContainerOriginalPos.y, 0.2f);
+        mouseR.rectTransform.DOAnchorPosY(pinsContainerOriginalPos.y, 0.2f);
         pinsContainer.GetComponent<RectTransform>().DOAnchorPosY(pinsContainerOriginalPos.y, 0.2f);
     }
 
@@ -265,6 +270,7 @@ public class ComicUIAnimator : MonoBehaviour
             mouseL.DOKill();
             mouseL.DOFade(1f, 0.1f);
         }
+
         if (firstPinNumber == 0)
         {
             mouseR.DOKill();

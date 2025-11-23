@@ -45,6 +45,8 @@ public class HangmanUIAnimator : MonoBehaviour
 
     private int lettersLeft;
     
+    public MinigameStartAnimation startAnimation;
+    
     public void ShowHangmanUI()
     {
         Color c = mist.color;
@@ -82,6 +84,8 @@ public class HangmanUIAnimator : MonoBehaviour
         appearSeq.OnComplete(() => TrialManager.instance.barsAnimator.ShowGlobalBars(0.2f));
         StartCoroutine(StarsGrow());
         SpawnCircles();
+        
+        letterObjectsContainer.GetComponent<CanvasGroup>().DOFade(1f, 0f);
     }
     
 
@@ -91,7 +95,7 @@ public class HangmanUIAnimator : MonoBehaviour
         silhouette.sprite = stand.spriteRenderer.sprite;
     }
 
-    public void SetLettersLeftCount(int lettersLeft)
+    private void SetLettersLeftCount(int lettersLeft)
     {
         float initialY = lettersLeftCount.GetComponent<RectTransform>().anchoredPosition.y;
         Image newLettersLeftCount = Instantiate(lettersLeftCount, lettersLeftCount.transform.parent);
@@ -120,8 +124,8 @@ public class HangmanUIAnimator : MonoBehaviour
         yield return nowIUnderstandAnimator.Show();
         nowIUnderstandAnimator.gameObject.SetActive(false);
         shade.DOKill();
-        screenShatterManager = Instantiate(screenShatterManager);
-        yield return screenShatterManager.ScreenShatter();
+        ScreenShatterManager shatter = Instantiate(screenShatterManager);
+        yield return shatter.ScreenShatter();
     }
 
     IEnumerator FlashBlocks()
@@ -137,9 +141,21 @@ public class HangmanUIAnimator : MonoBehaviour
     {
         letterObjectsContainer.GetComponent<CanvasGroup>().DOFade(0f, 0.5f);
     }
+
+    private void DestroyLetterBlocks(List<HangmanLetterBlock> blocks)
+    {
+        foreach (HangmanLetterBlock block in blocks)
+        {
+            Destroy(block.gameObject);
+        }
+
+        blocks.Clear();
+    }
     
     public IEnumerator GenerateLetterBlocks(List<Letter> letters)
     {
+        DestroyLetterBlocks(blockObjects);
+        
         lettersLeft = letters.Count;
         SetLettersLeftCount(lettersLeft);
         
@@ -154,13 +170,13 @@ public class HangmanUIAnimator : MonoBehaviour
         yield return StartCoroutine(AquireBlocks(letters));
     }
 
-    public void DecreaseLettersLeftCount()
+    private void DecreaseLettersLeftCount()
     {
         lettersLeft--;
         SetLettersLeftCount(lettersLeft);
     }
 
-    public IEnumerator AquireBlocks(List<Letter> letters)
+    private IEnumerator AquireBlocks(List<Letter> letters)
     {
         foreach (Letter letter in letters)
         {
@@ -195,6 +211,9 @@ public class HangmanUIAnimator : MonoBehaviour
         seq2.Append(stars2.transform.DOScale(1f, 0f));
         seq2.Append(stars2.DOFade(1f, 0f));
         seq2.SetLoops(-1);
+
+        seq1.SetTarget(transform);
+        seq2.SetTarget(transform);
     }
 
     void SpawnCircles()
@@ -212,6 +231,8 @@ public class HangmanUIAnimator : MonoBehaviour
         // 3rd circle
         pattern.AppendCallback(() => SpawnCircle());
         pattern.AppendInterval(0.5f);
+        
+        pattern.SetTarget(transform);
     }
     
     void SpawnCircle()

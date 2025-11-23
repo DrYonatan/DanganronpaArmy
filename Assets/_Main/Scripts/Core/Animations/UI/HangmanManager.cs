@@ -22,7 +22,6 @@ public class HangmanManager : MonoBehaviour
     public float timeLeft = 600f;
 
     private Vector3 originalCameraPosition;
-    
 
     void Awake()
     {
@@ -55,6 +54,7 @@ public class HangmanManager : MonoBehaviour
     {
         animator.gameObject.SetActive(true);
         animator.canvasGroup.alpha = 0f;
+        letterIndex = 0;
         animator.ShowHangmanUI();
         game.isActive = true;
         TimeManipulationManager.instance.isInputActive = true;
@@ -65,7 +65,9 @@ public class HangmanManager : MonoBehaviour
         yield return CameraController.instance.DiscussionOutroMovement(2.5f);
         SetCharacter();
         ImageScript.instance.UnFadeToBlack(1f);
-        yield return CameraController.instance.MoveAndRotate(new Vector3(0, 0, 0.5f), Vector3.zero, 1.5f);
+        MinigameStartAnimation startAnimation = Instantiate(animator.startAnimation, TrialManager.instance.globalUI);
+        startAnimation.Animate(0.5f);
+        yield return CameraController.instance.MoveAndRotate(new Vector3(0, 0, 1f), Vector3.zero, 2.5f);
         ActivateGame();
         yield return animator.GenerateLetterBlocks(game.correctLetters);
         CheckAquiredLetters();
@@ -76,7 +78,7 @@ public class HangmanManager : MonoBehaviour
     private void MoveCameraAway()
     {
         originalCameraPosition = CameraController.instance.cameraTransform.position;
-        CameraController.instance.cameraTransform.position = new Vector3(1000, 1000, 1000); // Teleport far far away
+        CameraController.instance.cameraTransform.position = new Vector3(1000, 1000, 1000); // Teleport far, far away
     }
 
     void Update()
@@ -167,9 +169,9 @@ public class HangmanManager : MonoBehaviour
         ImageScript.instance.FadeToBlack(0.01f);
         yield return new WaitForSeconds(0.01f);
         ImageScript.instance.UnFadeToBlack(0.5f);
-        StartCoroutine(CameraController.instance.ChangeFov(25f, 1.5f));
-        yield return CameraController.instance.MoveAndRotate(new Vector3(0f, 0f, 2f), new Vector3(0f, 0f, 0f), 1.5f);
+        yield return CameraController.instance.FovOutro();
         MusicManager.instance.StopSong();
+        animator.transform.DOKill();
         game.Finish();
     }
 
