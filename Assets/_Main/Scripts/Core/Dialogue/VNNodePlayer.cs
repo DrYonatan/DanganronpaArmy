@@ -7,6 +7,7 @@ using UnityEngine;
     {
         public static VNNodePlayer instance { get; private set; }
         public VNConversationSegment currentConversation;
+        public int lineIndex;
         private void Awake()
         {
             instance = this;
@@ -31,9 +32,11 @@ using UnityEngine;
 
         IEnumerator RunNodes(List<DialogueNode> nodes)
         {
+            lineIndex = 0;
             foreach (DialogueNode node in nodes)
             {
                 yield return node.Play();
+                lineIndex++;
             }
         }
 
