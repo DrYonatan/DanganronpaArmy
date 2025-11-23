@@ -13,6 +13,8 @@ namespace DIALOGUE
 
         public bool isPaused;
 
+        public bool isInputActive;
+
         void Start()
         {
             isPaused = false;
@@ -30,7 +32,7 @@ namespace DIALOGUE
                 }
             }
             
-            if (Input.GetKeyDown(KeyCode.Alpha1) && !pauseMenu.isSubmenuOpen)
+            if (Input.GetKeyDown(KeyCode.Alpha1) && !pauseMenu.isSubmenuOpen && isInputActive)
             {
                 TogglePause();
             }

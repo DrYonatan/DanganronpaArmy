@@ -13,6 +13,7 @@ public class PromptEvidenceSelection : Command
     public override IEnumerator Execute()
     {
         PlayerInputManager.instance.isPaused = true;
+        PlayerInputManager.instance.isInputActive = false;
         yield return EvidenceManager.instance.evidenceMenu.SelectEvidence(question, OnEvidenceSelected);
         DialogueSystem.instance.TurnOnSingleTimeAuto();
     }
@@ -20,6 +21,7 @@ public class PromptEvidenceSelection : Command
     IEnumerator OnEvidenceSelected(Evidence selectedEvidence)
     {
         PlayerInputManager.instance.isPaused = false;
+        PlayerInputManager.instance.isInputActive = true;
         if (selectedEvidence.Name.Equals(correctEvidence.Name))
         {
             yield return OnCorrect();

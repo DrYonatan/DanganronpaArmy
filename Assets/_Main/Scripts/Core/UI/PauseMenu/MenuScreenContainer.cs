@@ -8,7 +8,7 @@ public class MenuScreenContainer : MonoBehaviour
     public bool isSubmenuOpen;
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !generalMenu.gameObject.activeSelf && PlayerInputManager.instance.isPaused)
+        if (Input.GetKeyDown(KeyCode.Escape) && isSubmenuOpen && !generalMenu.gameObject.activeSelf && PlayerInputManager.instance.isPaused)
         {
             CloseMenu();
         }
