@@ -1,6 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class ProgressManager : MonoBehaviour
 {
@@ -20,10 +20,9 @@ public class ProgressManager : MonoBehaviour
         instance = this;
     }
 
-    private void Start()
+    void Start()
     {
-        currentGameEvent = Instantiate(gameEvents[currentGameEventIndex]);
-        currentGameEvent.OnStart();
+        LoadValuesFromSave();
     }
 
     public void OnEventFinished()
@@ -33,12 +32,18 @@ public class ProgressManager : MonoBehaviour
         currentGameEvent.OnStart();
     }
 
-    public void SaveGame(int slot)
+    private void LoadValuesFromSave()
     {
-        SaveData data = new SaveData(currentGameEventIndex, WorldManager.instance.currentRoom.name,
-            VNNodePlayer.instance.currentConversation?.guid, VNNodePlayer.instance.lineIndex, MusicManager.instance.audio.name,
-            currentGameEvent.charactersData, currentGameEvent.objectsData, SceneManager.GetActiveScene().name,
-            charactersRanks);
-        SaveSystem.SaveGame(data, slot);
+        WorldManager.instance.isLoading = true;
+        SaveData data = SaveManager.instance != null ? SaveManager.instance.LoadCurrentSave() : SaveSystem.LoadGame(1);
+        currentGameEventIndex = data.gameEventIndex;
+        currentGameEvent = Instantiate(gameEvents[currentGameEventIndex]);
+        WorldManager.instance.currentRoom = Resources.Load<Room>($"Rooms/{data.currentRoom}");
+        MusicManager.instance.PlaySong(Resources.Load<AudioClip>($"Audio/Music/{data.currentMusic}"));
+        currentGameEvent.charactersData = data.charactersData.ToDictionary(c => c.key, c => c.value);
+        currentGameEvent.objectsData = data.objectsData.ToDictionary(c => c.key, c => c.value);
+
+        WorldManager.instance.Initialize();
+        currentGameEvent.OnStart();
     }
 }

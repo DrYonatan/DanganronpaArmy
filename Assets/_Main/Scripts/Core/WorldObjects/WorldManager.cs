@@ -17,9 +17,12 @@ public class WorldManager : MonoBehaviour
 
     public static WorldManager instance { get; private set; }
 
-    void Start()
+    void Awake()
     {
         instance = this;
+    }
+    public void Initialize()
+    {
         StartLoadingRoom(currentRoom, null);
     }
 

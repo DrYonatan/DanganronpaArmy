@@ -10,7 +10,6 @@ public class MusicManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        
     }
 
     public void PlaySong(AudioClip song)
