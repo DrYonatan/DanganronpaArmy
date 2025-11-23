@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 [Serializable]
 public class ObjectDataEntry
@@ -28,12 +29,14 @@ public class SaveData
     public List<ObjectDataEntry> objectsData;
     public string scene;
     public List<CharacterRankEntry> characterRanks;
+    public float[] playerPosition;
+    public float[] playerRotation;
 
     public SaveData(int gameEventIndex, string currentRoom, string currentConversation,
         int currentLineIndex, string currentMusic, Dictionary<string, ObjectData> charactersData,
         Dictionary<string, ObjectData> objectsData,
         string scene,
-        Dictionary<string, int> characterRanks)
+        Dictionary<string, int> characterRanks, Vector3 playerPosition, Vector3 playerRotation)
     {
         this.gameEventIndex = gameEventIndex;
         this.currentRoom = currentRoom;
@@ -49,5 +52,16 @@ public class SaveData
         this.characterRanks = characterRanks
             .Select(kvp => new CharacterRankEntry { key = kvp.Key, value = kvp.Value })
             .ToList();
+        
+        this.playerPosition = new float[3];
+        this.playerRotation = new float[3];
+        
+        this.playerPosition[0] = playerPosition.x;
+        this.playerPosition[1] = playerPosition.y;
+        this.playerPosition[2] = playerPosition.z;
+        
+        this.playerRotation[0] = playerRotation.x;
+        this.playerRotation[1] = playerRotation.y;
+        this.playerRotation[2] = playerRotation.z;
     }
 }

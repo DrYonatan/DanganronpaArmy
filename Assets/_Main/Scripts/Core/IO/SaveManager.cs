@@ -35,7 +35,8 @@ public class SaveManager : MonoBehaviour
             MusicManager.instance.audio.name,
             ProgressManager.instance.currentGameEvent.charactersData,
             ProgressManager.instance.currentGameEvent.objectsData, SceneManager.GetActiveScene().name,
-            ProgressManager.instance.charactersRanks);
+            ProgressManager.instance.charactersRanks, CameraManager.instance.cameraTransform.position,
+            CameraManager.instance.cameraTransform.rotation.eulerAngles);
         SaveSystem.SaveGame(data, slot);
     }
 }

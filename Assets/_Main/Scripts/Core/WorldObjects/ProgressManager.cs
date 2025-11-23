@@ -43,6 +43,11 @@ public class ProgressManager : MonoBehaviour
         currentGameEvent.charactersData = data.charactersData.ToDictionary(c => c.key, c => c.value);
         currentGameEvent.objectsData = data.objectsData.ToDictionary(c => c.key, c => c.value);
 
+        CameraManager.instance.cameraTransform.position =
+            new Vector3(data.playerPosition[0], data.playerPosition[1], data.playerPosition[2]);
+        CameraManager.instance.cameraTransform.rotation =
+            Quaternion.Euler(new Vector3(data.playerRotation[0], data.playerRotation[1], data.playerRotation[2]));
+        
         WorldManager.instance.Initialize();
         currentGameEvent.OnStart();
     }

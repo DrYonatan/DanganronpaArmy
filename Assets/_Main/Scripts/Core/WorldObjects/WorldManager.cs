@@ -23,7 +23,7 @@ public class WorldManager : MonoBehaviour
     }
     public void Initialize()
     {
-        StartLoadingRoom(currentRoom, null);
+        StartCoroutine(LoadRoom(currentRoom));
     }
 
     private void ReturningToWorld()
@@ -99,7 +99,7 @@ public class WorldManager : MonoBehaviour
 
     public void StartLoadingRoom(Room room, [CanBeNull] string entryPoint)
     {
-        StartCoroutine(LoadRoom(room, entryPoint));
+        StartCoroutine(MoveToRoom(room, entryPoint));
     }
 
     public void UpdateRoomData(RoomData roomData)
@@ -107,7 +107,34 @@ public class WorldManager : MonoBehaviour
         currentRoomData = roomData;
     }
 
-    private IEnumerator LoadRoom(Room room, [CanBeNull] string entryPoint)
+    private IEnumerator LoadRoom(Room room)
+    {
+        GameObject ob = Instantiate(room.prefab);
+        ob.name = "World";
+        ob.SetActive(true);
+
+        GameObject objectsParent = GameObject.Find("World Objects");
+        if (objectsParent != null)
+            characterPanel = objectsParent;   
+        
+        if (room.OnLoad() != null)
+            yield return StartCoroutine(room.OnLoad());
+        isLoading = false;
+        
+        CreateCharacters(ProgressManager.instance.currentGameEvent.roomDatas
+            .First(roomData => roomData.room.name.Equals(currentRoom.name)).characters);
+        CreateObjects(ProgressManager.instance.currentGameEvent.roomDatas
+            .First(roomData => roomData.room.name.Equals(currentRoom.name)).worldObjects);
+
+        yield return new WaitUntil(() =>
+            (charactersObject != null || currentRoomData.characters == null) &&
+            (objectsObject != null ||
+             currentRoomData.worldObjects ==
+             null)); // wait until both characters and objects loaded, or if there aren't any just go on
+
+        ReturningToWorld();
+    }
+    private IEnumerator MoveToRoom(Room room, [CanBeNull] string entryPoint)
     {
         CameraManager.instance?.StopAllPreviousOperations();
 
