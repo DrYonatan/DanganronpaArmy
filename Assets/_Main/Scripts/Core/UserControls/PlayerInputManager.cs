@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace DIALOGUE
 {
@@ -8,30 +9,36 @@ namespace DIALOGUE
 
         public QuestionMarkShooter shooter;
 
-        public PauseMenuManager pauseMenu;
+        public MenuScreenContainer pauseMenu;
 
         public bool isPaused;
+
+        public bool isInputActive;
 
         void Start()
         {
             isPaused = false;
             instance = this;
+            isInputActive = true;
         }
         void Update()
         {
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Confined;
-            if (!isPaused)
+            if (isInputActive)
             {
-                if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Confined;
+                if (!isPaused)
                 {
-                    PromptAdvance();
+                    if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+                    {
+                        PromptAdvance();
+                    }
                 }
-            }
-
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                TogglePause();
+            
+                if (Input.GetKeyDown(KeyCode.Alpha1) && !pauseMenu.isSubmenuOpen)
+                {
+                    TogglePause();
+                }
             }
 
             if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -56,7 +63,7 @@ namespace DIALOGUE
 
         public void PromptAdvance()
         {
-            if (!CutSceneManager.instance.isPlaying)
+            if (!CutSceneManager.instance.isPlaying && !isPaused)
             {
                 DialogueSystem.instance.OnUserPrompt_Next();
             }
@@ -70,14 +77,14 @@ namespace DIALOGUE
                 MusicManager.instance.LowerVolume();
                 Time.timeScale = 0f;
                 CursorManager.instance.Hide();
-                pauseMenu.OpenMenu();
+                pauseMenu.OpenGeneralMenu();
             }
             else
             {
                 MusicManager.instance.RaiseVolume();
                 Time.timeScale = 1f;
                 CursorManager.instance.Show();
-                pauseMenu.CloseMenu();
+                pauseMenu.CloseGeneralMenu();
             }
         }
 

@@ -114,7 +114,7 @@ public class BulletSelectionMenu : MonoBehaviour
         OpenBullets();
     }
 
-    public void UnLoadBullets()
+    private void UnLoadBullets()
     {
         foreach (UIBullet bullet in bullets)
         {
@@ -122,5 +122,15 @@ public class BulletSelectionMenu : MonoBehaviour
             bullet.text.DOFade(0f, bulletsFadeDuration);
             bullet.GetComponent<RectTransform>().DOAnchorPos(new Vector2(bulletSpaceFromCylinder, 0), bulletsFadeDuration);
         }
+    }
+
+    public void EmptyBullets()
+    {
+        foreach (UIBullet bullet in bullets)
+        {
+            Destroy(bullet.gameObject);
+        }
+        
+        bullets.Clear();
     }
 }

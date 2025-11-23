@@ -27,7 +27,6 @@ public class TrialDialogueManager : MonoBehaviour
         CourtTextBoxAnimator animator = ((CourtTextBoxAnimator)(DialogueSystem.instance.dialogueBoxAnimator));
         animator.ChangeFace(null);
         animator.FaceAppear();
-        animator.TextBoxAppear();
         
         StartCoroutine(RunDiscussion(discussion));
     }

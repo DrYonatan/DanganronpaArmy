@@ -35,9 +35,6 @@ public class ComicManager : MonoBehaviour
 
     public int currentPageIndex;
 
-    public CameraEffect finishEffect;
-    
-
     void Awake()
     {
         instance = this;
@@ -132,7 +129,6 @@ public class ComicManager : MonoBehaviour
             animator.ScrollPuzzlePagesContainer(-4f);
         }
     }
-    
 
     private void StartComicPuzzle()
     {
@@ -141,6 +137,8 @@ public class ComicManager : MonoBehaviour
         animator.GenerateComicPins(segment.availablePins);
         animator.SetPinsContainerStartPos();
         animator.UpdatePinsVisibility(0);
+        MinigameStartAnimation startAnimation = Instantiate(animator.minigameStartAnimation, TrialManager.instance.globalUI);
+        startAnimation.Animate(0f);
         SwitchToPuzzleMode();
     }
 
@@ -149,7 +147,6 @@ public class ComicManager : MonoBehaviour
         MusicManager.instance.PlaySong(puzzleMusic);
         isInPuzzle = true;
         animator.ShowPuzzleUI();
-        TrialCursorManager.instance.Show();
         DialogueSystem.instance.inputButton.gameObject.SetActive(false);
     }
 
@@ -184,18 +181,16 @@ public class ComicManager : MonoBehaviour
         yield return currentPresentedPage.Play();
         currentPresentedPage.KillPanelTweens();
         
-        screenShatter = Instantiate(screenShatter);
-        yield return screenShatter.ScreenShatter();
+        ScreenShatterManager shatter = Instantiate(screenShatter);
+        yield return shatter.ScreenShatter();
         animator.gameObject.SetActive(false);
         OverlayTextBoxManager.instance.Hide();
         ImageScript.instance.UnFadeToBlack(0.4f);
         MusicManager.instance.StopSong();
 
-        TrialDialogueManager.instance.effectController.StartEffect(finishEffect);
         yield return new WaitForSeconds(0.5f);
         DialogueSystem.instance.dialogueBoxAnimator.TextBoxAppear();
         yield return new WaitForSeconds(0.5f);
-        TrialDialogueManager.instance.effectController.Reset();
         
         segment.Finish();
     }

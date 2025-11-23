@@ -21,5 +21,11 @@ public class CourtTextBoxAnimator : TextBoxAnimations
     {
         characterFace.SetFace(sprite);
     }
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        characterFace.discussionFaceContainer.DOScaleY(0f, 0f);
+    }
     
 }

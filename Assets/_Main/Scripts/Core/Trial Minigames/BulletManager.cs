@@ -5,10 +5,10 @@ using DG.Tweening;
 
 
 
-public class EvidenceManager : MonoBehaviour
+public class BulletManager : MonoBehaviour
 {
     [SerializeField] UIBullet selectedBullet;
-    List<Evidence> evidences;
+    List<Evidence> evidences = new List<Evidence>();
     [SerializeField] private RectTransform cylinder;
     [SerializeField] private BulletSelectionMenu bulletSelectionMenu;
     public int selectedIndex;
@@ -88,5 +88,11 @@ public class EvidenceManager : MonoBehaviour
         }
         
         UpdateEvidence();
+    }
+
+    public void ResetList()
+    {
+        bulletSelectionMenu.EmptyBullets();
+        evidences.Clear();
     }
 }

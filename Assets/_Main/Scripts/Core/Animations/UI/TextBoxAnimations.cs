@@ -43,4 +43,11 @@ public class TextBoxAnimations : MonoBehaviour
         namePlate.DOAnchorPos(namePlateOriginalPos.anchoredPosition - new Vector2(0, namePlateMoveAmount), duration).SetEase(Ease.OutQuad);        
     }
 
+    public virtual void Initialize()
+    {
+        DialogueSystem.instance.ClearTextBox();
+        dialogueBoxCanvasGroup.alpha = 0f;
+        namePlateCanvasGroup.alpha = 0f;
+    }
+
 }

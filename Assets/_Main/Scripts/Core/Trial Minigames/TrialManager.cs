@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using _Main.Scripts.Court;
+using DIALOGUE;
 using UnityEngine;
 
 [Serializable]
@@ -24,15 +25,27 @@ public class TrialManager : MonoBehaviour
     public List<CharacterStand> characterStands;
     public PlayerStats playerStats = new PlayerStats();
     public PlayerBarsAnimator barsAnimator;
+    public RectTransform globalUI;
+    public TrialIntro introAnimation;
 
     void Awake()
     {
         instance = this;
         playerStats.InitializeMeters();
-        
     }
     void Start()
     {
+        StartCoroutine(StartPipeline());
+    }
+
+    private IEnumerator StartPipeline()
+    {
+        TrialIntro intro = Instantiate(introAnimation, globalUI);
+        intro.transform.SetAsFirstSibling();
+        yield return intro.Animate();
+        ImageScript.instance.UnFadeToBlack(0.2f);
+        DialogueSystem.instance.dialogueBoxAnimator.Initialize();
+        yield return CameraController.instance.FovOutro();
         TrialSegment segment = Instantiate(segments[currentIndex]);
         segment.Play();
     }

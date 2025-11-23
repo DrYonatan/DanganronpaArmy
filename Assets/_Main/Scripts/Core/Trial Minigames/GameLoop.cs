@@ -6,6 +6,7 @@ using System;
 using _Main.Scripts.Court;
 using DG.Tweening;
 using DIALOGUE;
+using UnityEngine.Serialization;
 using Text = TMPro.TextMeshProUGUI;
 
 
@@ -48,7 +49,7 @@ public class GameLoop : MonoBehaviour
     [SerializeField] Transform textPivot;
     [SerializeField] GameObject textPrefab;
     [SerializeField] CameraEffectController effectController;
-    [SerializeField] EvidenceManager evidenceManager;
+    [SerializeField] BulletManager bulletManager;
     [SerializeField] MusicManager musicManager;
     [SerializeField] Text timerText;
     public DebateUIAnimator debateUIAnimator;
@@ -74,15 +75,24 @@ public class GameLoop : MonoBehaviour
     public TrialHoverable currentAimedText;
     public Camera renderTextureCamera;
     public ScreenShatterManager screenShatter;
+    public MinigameStartAnimation startAnimation;
 
     public void PlayDebate(DebateSegment debate)
     {
         this.debateSegment = debate;
         debateTexts = new List<FloatingText>();
-        evidenceManager.ShowEvidence(debateSegment.settings.evidences);
+        ResetValues();
+        bulletManager.ShowEvidence(debateSegment.settings.evidences);
         MusicManager.instance.PlaySong(debateSegment.settings.audioClip);
         stageTimer = defaultStageTime;
         StartCoroutine(StartDebate());
+    }
+
+    private void ResetValues()
+    {
+        bulletManager.ResetList();
+        textIndex = 0;
+        reachedEnd = false;
     }
 
     IEnumerator StartDebate()
@@ -94,6 +104,8 @@ public class GameLoop : MonoBehaviour
         ((CourtTextBoxAnimator)(DialogueSystem.instance.dialogueBoxAnimator)).ChangeFace(null);
         yield return 0;
         ImageScript.instance.UnFadeToBlack(1f);
+        MinigameStartAnimation anim = Instantiate(startAnimation, TrialManager.instance.globalUI);
+        anim.Animate(1f);
         yield return StartCoroutine(cameraController.DebateStartCameraMovement(3f));
         isActive = true;
         TimeManipulationManager.instance.isInputActive = true;
@@ -181,7 +193,7 @@ public class GameLoop : MonoBehaviour
 
     IEnumerator SwitchToTextBoxMode()
     {
-        debateUIAnimator.HideCylinderAndCircles();
+        debateUIAnimator.HideCylinderAndCircles(0.5f);
         CursorManager.instance.Hide();
         debateUIAnimator.ChangeFace(null);
         DialogueSystem.instance.ClearTextBox();
@@ -226,13 +238,13 @@ public class GameLoop : MonoBehaviour
     {
         if (Input.GetAxis("Mouse ScrollWheel") < 0)
         {
-            evidenceManager.SelectNextEvidence();
-            evidenceManager.SelectNextEvidence();
+            bulletManager.SelectNextEvidence();
+            bulletManager.SelectNextEvidence();
         }
 
         if (Input.GetAxis("Mouse ScrollWheel") > 0)
         {
-            evidenceManager.SelectPreviousEvidence();
+            bulletManager.SelectPreviousEvidence();
         }
     }
 
@@ -266,9 +278,9 @@ public class GameLoop : MonoBehaviour
 
                 Quaternion rotation = Quaternion.LookRotation(direction, statementsCamera.transform.up) *
                                       Quaternion.Euler(0, 90f, 0);
-                evidenceManager.ShootBullet();
+                bulletManager.ShootBullet();
                 GameObject bullet = Instantiate(textBulletPrefab, shootOrigin.position, rotation);
-                bullet.GetComponent<TextMeshPro>().text = evidenceManager.GetSelectedEvidence();
+                bullet.GetComponent<TextMeshPro>().text = bulletManager.GetSelectedEvidence();
                 StartCoroutine(MoveBullet(bullet, direction, 1f));
                 debateUIAnimator.MoveCylinder();
                 debateUIAnimator.GrowAndShrinkCircles();
@@ -294,18 +306,19 @@ public class GameLoop : MonoBehaviour
 
     public void LoadBullets()
     {
-        evidenceManager.LoadBullets();
+        bulletManager.LoadBullets();
     }
 
     public void Hit(Vector3 point)
     {
         CorrectChoice();
+        TrialCursorManager.instance.isHovering = false;
         gameObject.GetComponent<TextShatterEffect>().Explosion(point);
     }
 
     public bool CheckEvidence(Evidence evidence)
     {
-        return evidenceManager.Check(evidence);
+        return bulletManager.Check(evidence);
     }
 
     private void CorrectChoice()
@@ -374,8 +387,8 @@ public class GameLoop : MonoBehaviour
         StartCoroutine(cameraController.MoveCamera(secondTargetPosition, Quaternion.Euler(0f, 0f, 30f), 4f));
         yield return new WaitForSeconds(3.6f);
         cameraController.camera.targetTexture = null;
-        screenShatter = Instantiate(screenShatter);
-        yield return StartCoroutine(screenShatter.ScreenShatter());
+        ScreenShatterManager shatter = Instantiate(screenShatter);
+        yield return StartCoroutine(shatter.ScreenShatter());
         ImageScript.instance.FadeToBlack(0.01f);
         yield return new WaitForSeconds(0.01f);
 
@@ -651,6 +664,6 @@ public class GameLoop : MonoBehaviour
 
     public int GetSelectedEvidenceIndex()
     {
-        return evidenceManager.selectedIndex;
+        return bulletManager.selectedIndex;
     }
 }

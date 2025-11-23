@@ -123,6 +123,11 @@ namespace DIALOGUE
         {
             conversationManager.isAuto = isAuto;
         }
+
+        public void TurnOnSingleTimeAuto()
+        {
+            conversationManager.isSingleTimeAuto = true;
+        }
         
     }
 }
