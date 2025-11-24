@@ -8,7 +8,7 @@ public class BounceEffect : RoomIntroEffect
     public float bounceFrequency = 2f; // number of bounces
     public float damping = 5f;         // how quickly it settles
     private Renderer renderer;
-    void Start()
+    void Awake()
     {
         renderer = GetComponent<Renderer>();
     }

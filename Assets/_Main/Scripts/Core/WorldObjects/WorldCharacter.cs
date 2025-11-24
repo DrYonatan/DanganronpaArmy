@@ -4,6 +4,8 @@ using UnityEngine;
 public class WorldCharacter : ConversationInteractable
 {
     public string characterName;
+    public RoomIntroEffect appearEffect;
+    public RoomIntroEffect appearEffectSilhouette;
 
     protected override void FinishInteraction()
     {
@@ -46,5 +48,11 @@ public class WorldCharacter : ConversationInteractable
         CameraManager.instance.StartCameraCoroutine(CameraManager.instance.RotateCameraTo(targetRotation, duration));
         CameraManager.instance.initialRotation = targetRotation;
         FinishInteraction();
+    }
+
+    public void AppearAnimation()
+    {
+        StartCoroutine(appearEffect.PlayEffect());
+        StartCoroutine(appearEffectSilhouette.PlayEffect());
     }
 }

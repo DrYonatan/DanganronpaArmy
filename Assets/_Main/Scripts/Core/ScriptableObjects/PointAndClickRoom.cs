@@ -26,7 +26,11 @@ public class PointAndClickRoom : Room
         base.OnLoad();
         VirutalCameraManager.instance.AssignVirtualCamera();
         yield return null;
-        //return VirutalCameraManager.instance.SlideAcrossRoom(3f, GameObject.Find("World/TrackSlidingPos").transform.position);
+    }
+
+    public override IEnumerator AppearAnimation()
+    {
+        yield return VirutalCameraManager.instance.SlideAcrossRoom(3f, GameObject.Find("World/TrackSlidingPos").transform.position);
     }
 
     public override void MovementControl()

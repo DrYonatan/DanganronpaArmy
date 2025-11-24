@@ -25,11 +25,11 @@ public class CharacterClickEffects : MonoBehaviour
         if (!isRunning && !DialogueSystem.instance.isActive)
         {
             StartCoroutine(HopCharacter(characterTransform));
-            MakeCharactersDisappear(characterTransform.parent.gameObject, 1f);
+            MakeCharactersDisappear(characterTransform.parent.GetComponent<WorldCharactersParent>(), 1f);
         }
     }
 
-    public void MakeCharactersDisappear(GameObject characters, float duration)
+    public void MakeCharactersDisappear(WorldCharactersParent characters, float duration)
     {
         if (characters != null)
         {

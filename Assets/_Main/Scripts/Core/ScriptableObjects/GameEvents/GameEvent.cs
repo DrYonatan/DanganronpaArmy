@@ -15,11 +15,11 @@ public class ObjectData
     }
 }
 
-[System.Serializable]
+[Serializable]
 public class RoomData
 {
     public Room room;
-    public GameObject characters;
+    public WorldCharactersParent characters;
     public GameObject worldObjects;
     public bool isExitable;
 }

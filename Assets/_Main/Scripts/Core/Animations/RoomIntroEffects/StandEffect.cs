@@ -24,7 +24,7 @@ public class StandEffect : RoomIntroEffect
         float positionY = transform.GetComponent<Renderer>().bounds.min.y;
         Vector3 parentPosition = new Vector3(transform.position.x, positionY, transform.position.z);
         parentObject = new GameObject(gameObject.name + " Parent");
-        parentObject.transform.SetParent(GameObject.Find("World").transform);
+        parentObject.transform.SetParent(transform.parent);
         parentObject.transform.position = parentPosition;
         transform.SetParent(parentObject.transform);
     }

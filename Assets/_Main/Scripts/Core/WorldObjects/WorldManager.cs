@@ -12,7 +12,7 @@ public class WorldManager : MonoBehaviour
     public RoomData currentRoomData;
     public bool isLoading = false;
 
-    public GameObject charactersObject;
+    public WorldCharactersParent charactersObject;
     public GameObject objectsObject;
 
     public static WorldManager instance { get; private set; }
@@ -47,14 +47,14 @@ public class WorldManager : MonoBehaviour
         }
     }
 
-    public void CreateCharacters(GameObject prefab)
+    public void CreateCharacters(WorldCharactersParent prefab)
     {
         if (prefab == null || characterPanel == null)
             return;
 
-        GameObject ob = Instantiate(prefab, characterPanel.transform);
+        WorldCharactersParent ob = Instantiate(prefab, characterPanel.transform);
         ob.name = "Characters";
-        ob.SetActive(true);
+        ob.gameObject.SetActive(true);
         foreach (string characterName in ProgressManager.instance.currentGameEvent.charactersData.Keys)
         {
             Transform character = ob.transform.Find(characterName);
@@ -109,9 +109,9 @@ public class WorldManager : MonoBehaviour
 
     private IEnumerator LoadRoom(Room room)
     {
-        GameObject ob = Instantiate(room.prefab);
+        RoomModel ob = Instantiate(room.prefab);
         ob.name = "World";
-        ob.SetActive(true);
+        ob.gameObject.SetActive(true);
 
         GameObject objectsParent = GameObject.Find("World Objects");
         if (objectsParent != null)
@@ -180,9 +180,9 @@ public class WorldManager : MonoBehaviour
         }
 
 
-        GameObject ob = Instantiate(room.prefab);
+        RoomModel ob = Instantiate(room.prefab);
         ob.name = "World";
-        ob.SetActive(true);
+        ob.gameObject.SetActive(true);
 
         GameObject objectsParent = GameObject.Find("World Objects");
         if (objectsParent != null)
@@ -204,6 +204,11 @@ public class WorldManager : MonoBehaviour
         ImageScript.instance.UnFadeToBlack(0.1f);
         if (room.OnLoad() != null)
             yield return StartCoroutine(room.OnLoad());
+        foreach (RoomIntroEffect effect in ob.roomIntroEffects)
+        {
+            StartCoroutine(effect.PlayEffect());
+        }
+        yield return room.AppearAnimation();
         isLoading = false;
 
         CreateCharacters(ProgressManager.instance.currentGameEvent.roomDatas
@@ -216,6 +221,9 @@ public class WorldManager : MonoBehaviour
             (objectsObject != null ||
              currentRoomData.worldObjects ==
              null)); // wait until both characters and objects loaded, or if there aren't any just go on
+        
+        if(charactersObject != null)
+           charactersObject.AnimateCharacters();
 
         ReturningToWorld();
     }
@@ -224,7 +232,8 @@ public class WorldManager : MonoBehaviour
     {
         DialogueSystem.instance.SetIsActive(false);
         DialogueSystem.instance.ClearTextBox();
-        CharacterClickEffects.instance.MakeCharactersReappear(charactersObject);
+        if(charactersObject != null)
+           CharacterClickEffects.instance.MakeCharactersReappear(charactersObject.gameObject);
         currentRoom.OnConversationEnd();
         ReturningToWorld();
     }

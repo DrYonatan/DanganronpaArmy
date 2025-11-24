@@ -13,20 +13,20 @@ public class FreeRoamEvent : GameEvent
 
     public override void CheckIfFinished()
     {
-        if(startEventImmediately)
-        {
-            // checks the current room's objects (mostly characters) in this event, and loads the event's current room objects
-            GameObject objects = (roomDatas.Find(room => room.room.name == WorldManager.instance.currentRoom.name))
-                ?.worldObjects;
-            if (objects != null && GameObject.Find("World/World Objects/Characters") == null)
-                WorldManager.instance.CreateCharacters(objects);
-        }
-        else
-        {
-            startEventImmediately = true;
-        }
-        
-        if (isFinished)
-            OnFinish();
+        // if(startEventImmediately)
+        // {
+        //     // checks the current room's objects (mostly characters) in this event, and loads the event's current room objects
+        //     GameObject objects = (roomDatas.Find(room => room.room.name == WorldManager.instance.currentRoom.name))
+        //         ?.worldObjects;
+        //     if (objects != null && GameObject.Find("World/World Objects/Characters") == null)
+        //         WorldManager.instance.CreateCharacters(objects);
+        // }
+        // else
+        // {
+        //     startEventImmediately = true;
+        // }
+        //
+        // if (isFinished)
+        //     OnFinish();
     }
 }
