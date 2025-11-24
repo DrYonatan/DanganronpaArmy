@@ -10,7 +10,7 @@ public class RoomGate : Interactable
     public Room roomToLoad;
     public string entryPoint;
 
-    public override void FinishInteraction()
+    protected override void FinishInteraction()
     {
         if (ProgressManager.instance.currentGameEvent.roomDatas.Any(item =>
                 item.room.name == roomToLoad.name) ||

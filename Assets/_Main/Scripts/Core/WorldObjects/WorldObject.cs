@@ -1,6 +1,6 @@
 public class WorldObject : ConversationInteractable
 {
-    public override void FinishInteraction()
+    protected override void FinishInteraction()
     {
         base.FinishInteraction();
 

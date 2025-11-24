@@ -6,12 +6,12 @@ using UnityEngine;
 public abstract class Interactable : MonoBehaviour
 {
     public bool isAlreadyLooking = false;
-    public virtual void Interact()
+    public void Interact()
     {
         StartCoroutine(DoInteraction());
     }
 
-    IEnumerator DoInteraction()
+    private IEnumerator DoInteraction()
     {
         StartCoroutine(MoveAndRotateCameraTo());
         yield return StartCoroutine(PlayerInputManager.instance.shooter.ShootQuestionMark(this.transform.position));
@@ -23,7 +23,7 @@ public abstract class Interactable : MonoBehaviour
     {
         float duration = 0.5f;
         Quaternion targetRotation =
-            Quaternion.LookRotation(transform.position - Camera.main.transform.position, Vector3.up);
+            Quaternion.LookRotation(transform.position - CameraManager.instance.cameraTransform.position, Vector3.up);
 
         yield return CameraManager.instance.StartCameraCoroutine(CameraManager.instance.RotateCameraTo(targetRotation, duration));
     }
@@ -39,5 +39,5 @@ public abstract class Interactable : MonoBehaviour
         CursorManager.instance.ShowOrHideMagnifyingGlass(false);
     }
 
-    public abstract void FinishInteraction();
+    protected abstract void FinishInteraction();
 }

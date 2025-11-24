@@ -22,8 +22,6 @@ public class CameraManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        if(GameObject.Find("World/CameraStartPos") != null)
-        initialRotation = GameObject.Find("World/CameraStartPos").transform.rotation;
     }
 
     public void MoveCamera(CameraLookDirection direction, float duration)
@@ -68,7 +66,7 @@ public class CameraManager : MonoBehaviour
     {
         isInFinalRotation = false;
 
-        Quaternion startRotate = Camera.main.transform.rotation;
+        Quaternion startRotate = cameraTransform.rotation;
 
         float elapsedTime = 0;
 
@@ -76,7 +74,7 @@ public class CameraManager : MonoBehaviour
         {
             if (rotation != null)
             {
-                Camera.main.transform.rotation = Quaternion.Slerp(startRotate, rotation, elapsedTime / duration);
+                cameraTransform.rotation = Quaternion.Slerp(startRotate, rotation, elapsedTime / duration);
             }
 
             elapsedTime += Time.deltaTime;
@@ -85,7 +83,7 @@ public class CameraManager : MonoBehaviour
 
         if (rotation != null)
         {
-            Camera.main.transform.rotation = rotation;
+            cameraTransform.rotation = rotation;
         }
 
         isInFinalRotation = true;
@@ -93,7 +91,7 @@ public class CameraManager : MonoBehaviour
 
     public IEnumerator MoveCameraTo(Vector3 location, float duration)
     {
-        Vector3 startPos = Camera.main.transform.position;
+        Vector3 startPos = cameraTransform.position;
 
         float elapsedTime = 0;
 
@@ -101,7 +99,7 @@ public class CameraManager : MonoBehaviour
         {
             if (location != null)
             {
-                Camera.main.transform.position = Vector3.Lerp(startPos, location, elapsedTime / duration);
+                cameraTransform.position = Vector3.Lerp(startPos, location, elapsedTime / duration);
             }
 
             elapsedTime += Time.deltaTime;
@@ -110,7 +108,7 @@ public class CameraManager : MonoBehaviour
 
         if (location != null)
         {
-            Camera.main.transform.position = location; // Ensure the camera reaches the exact target position
+            cameraTransform.position = location; // Ensure the camera reaches the exact target position
         }
     }
 
@@ -168,7 +166,7 @@ public class CameraManager : MonoBehaviour
                 break;
         }
 
-        Quaternion startRotate = Camera.main.transform.rotation;
+        Quaternion startRotate = cameraTransform.rotation;
         Quaternion targetRotate = initialRotation * rotation;
 
         Vector2 charactersStartPos = charactersLayer.anchoredPosition;
@@ -177,7 +175,7 @@ public class CameraManager : MonoBehaviour
 
         while (elapsedTime < duration)
         {
-            Camera.main.transform.rotation = Quaternion.Slerp(startRotate, targetRotate, elapsedTime / duration);
+            cameraTransform.rotation = Quaternion.Slerp(startRotate, targetRotate, elapsedTime / duration);
             charactersLayer.anchoredPosition =
                 Vector3.Lerp(charactersStartPos, charactersTargetPos, elapsedTime / duration);
             elapsedTime += Time.deltaTime;

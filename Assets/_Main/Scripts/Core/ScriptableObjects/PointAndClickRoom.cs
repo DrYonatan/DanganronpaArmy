@@ -25,7 +25,8 @@ public class PointAndClickRoom : Room
     {
         base.OnLoad();
         VirutalCameraManager.instance.AssignVirtualCamera();
-        return VirutalCameraManager.instance.SlideAcrossRoom(3f, GameObject.Find("World/TrackSlidingPos").transform.position);
+        yield return null;
+        //return VirutalCameraManager.instance.SlideAcrossRoom(3f, GameObject.Find("World/TrackSlidingPos").transform.position);
     }
 
     public override void MovementControl()
@@ -48,7 +49,8 @@ public class PointAndClickRoom : Room
         {
             if(!WorldManager.instance.currentRoomData.isExitable)
             {
-                VNNodePlayer.instance.StartConversation(ProgressManager.instance.currentGameEvent.unallowedText);
+                if(ProgressManager.instance.currentGameEvent.unallowedText != null)
+                   VNNodePlayer.instance.StartConversation(ProgressManager.instance.currentGameEvent.unallowedText);
             }
             
             else

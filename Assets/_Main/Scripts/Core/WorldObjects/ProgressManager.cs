@@ -13,7 +13,7 @@ public class ProgressManager : MonoBehaviour
     public GameEvent currentGameEvent;
     public int currentGameEventIndex;
 
-    ConversationDatabase conversationDatabase;
+    public ConversationDatabase conversationDatabase;
 
     private void Awake()
     {
@@ -48,7 +48,14 @@ public class ProgressManager : MonoBehaviour
         CameraManager.instance.cameraTransform.rotation =
             Quaternion.Euler(new Vector3(data.playerRotation[0], data.playerRotation[1], data.playerRotation[2]));
         
+        VNConversationSegment currentConversation = conversationDatabase.Get(data.currentConversation);
+        if (currentConversation != null)
+        {
+            VNNodePlayer.instance.lineIndex = data.currentLineIndex;
+            VNNodePlayer.instance.StartConversation(currentConversation);
+            CameraManager.instance.initialRotation = CameraManager.instance.cameraTransform.rotation;
+        }
+        
         WorldManager.instance.Initialize();
-        currentGameEvent.OnStart();
     }
 }

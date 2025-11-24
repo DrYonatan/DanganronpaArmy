@@ -1,23 +1,19 @@
 using System.Collections;
 using UnityEngine;
 
-public class SlideEffect : MonoBehaviour
+public class SlideEffect : RoomIntroEffect
 {
     public Vector3 offset = new Vector3(-3f, 0f, 0f); // Slide in from the left
     public float speed = 3f; // units per second
-    public float delay = 0f;
+    public float delay;
 
     private Vector3 targetPosition;
 
-    void Start()
+    public override IEnumerator PlayEffect()
     {
         targetPosition = transform.position;
         transform.position += offset;
-        StartCoroutine(PlayEffect());
-    }
-
-    private IEnumerator PlayEffect()
-    {
+        
         yield return new WaitForSeconds(delay);
 
         Vector3 start = transform.position;

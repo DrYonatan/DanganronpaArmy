@@ -6,7 +6,7 @@ public abstract class ConversationInteractable : Interactable
     public VNConversationSegment text1;
     public VNConversationSegment text2;
 
-    public override void FinishInteraction()
+    protected override void FinishInteraction()
     {
         float duration = 0.5f;
         Vector3 targetPosition =

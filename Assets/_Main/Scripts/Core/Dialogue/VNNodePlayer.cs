@@ -32,10 +32,9 @@ using UnityEngine;
 
         IEnumerator RunNodes(List<DialogueNode> nodes)
         {
-            lineIndex = 0;
-            foreach (DialogueNode node in nodes)
+            for (int i = lineIndex; i < nodes.Count; i++)
             {
-                yield return node.Play();
+                yield return nodes[i].Play();
                 lineIndex++;
             }
         }
@@ -44,6 +43,8 @@ using UnityEngine;
         {
             VNCharacterManager.instance.DestroyCharacters();
             WorldManager.instance.HandleConversationEnd();
+            currentConversation = null;
+            lineIndex = 0;
         }
 
     }

@@ -97,8 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: 6b2033af734721a438f1b1a1064b8fe3,
-    type: 2}
+  m_LightingDataAsset: {fileID: 112000000, guid: 6b2033af734721a438f1b1a1064b8fe3, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -1011,6 +1010,7 @@ MonoBehaviour:
     room: {fileID: 0}
     characters: {fileID: 0}
     worldObjects: {fileID: 0}
+    isExitable: 0
   isLoading: 0
   charactersObject: {fileID: 0}
   objectsObject: {fileID: 0}
@@ -1275,7 +1275,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: [{fileID: 1918782154}]
+  m_Children:
+  - {fileID: 1918782154}
   m_Father: {fileID: 64712566}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1295,17 +1296,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e0eeac844c3e7840b94eca0ad411e90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasGroup: {fileID: 306327830}
   currentEvidenceIndex: 0
   evidenceIcon: {fileID: 1622861038}
   evidenceIndexText: {fileID: 1847838111}
   evidenceContainer: {fileID: 882721907}
-  evidenceItem: {fileID: 8491389665968416165, guid: 4fa6734c3c11bd0439291cf642b6ad78,
-    type: 3}
+  evidenceItem: {fileID: 8491389665968416165, guid: 4fa6734c3c11bd0439291cf642b6ad78, type: 3}
   evidenceListUI: []
   evidenceDescription: {fileID: 1939316605}
   evidenceListTransform: {fileID: 882721906}
   moveSelectionSound: {fileID: 8300000, guid: 9ea6ec063fde8524d8adad660d374b40, type: 3}
+  questionBubble: {fileID: 0}
+  questionBubbleText: {fileID: 0}
 --- !u!225 &306327830
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1622,8 +1623,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedIndex: 0
   uiOptions: []
-  optionPrefab: {fileID: -6608027627429323448, guid: 299273a7db801e648ad1a7dbf5968402,
-    type: 3}
+  optionPrefab: {fileID: -6608027627429323448, guid: 299273a7db801e648ad1a7dbf5968402, type: 3}
   optionSelectionMenu: {fileID: 417735094}
   clickSound: {fileID: 8300000, guid: 114f394be7ae9c34a8b4d2634b4d0589, type: 3}
   moveSelectionSound: {fileID: 8300000, guid: 9ea6ec063fde8524d8adad660d374b40, type: 3}
@@ -3024,10 +3024,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4adbca780071e3e4ba12cbe363be603f, type: 2}
   - {fileID: 11400000, guid: 7f093d3ff12450e489b5ce173fef40f8, type: 2}
   - {fileID: 11400000, guid: 1ab8c3198da0117488708edc3a74e534, type: 2}
-  characterEventsAsset: {fileID: 11400000, guid: 4df5623fd5cfef5469fde0dbab7737e7,
-    type: 2}
+  characterEventsAsset: {fileID: 11400000, guid: 4df5623fd5cfef5469fde0dbab7737e7, type: 2}
   currentGameEvent: {fileID: 11400000, guid: 4adbca780071e3e4ba12cbe363be603f, type: 2}
   currentGameEventIndex: 0
+  conversationDatabase: {fileID: 11400000, guid: 2a3a64d466629d449bbf1528475bcf3a, type: 2}
 --- !u!1 &762051889
 GameObject:
   m_ObjectHideFlags: 0
@@ -3946,6 +3946,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentConversation: {fileID: 0}
+  lineIndex: 0
 --- !u!1 &1121746188
 GameObject:
   m_ObjectHideFlags: 0
@@ -4532,6 +4533,7 @@ MonoBehaviour:
   shooter: {fileID: 1237158329}
   pauseMenu: {fileID: 64712567}
   isPaused: 0
+  isInputActive: 0
 --- !u!114 &1237158329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4545,12 +4547,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 963194227}
-  questionMarkPrefab: {fileID: 1679103883713268576, guid: 7573bd93a29d34644b1940a068c5402c,
-    type: 3}
+  questionMarkPrefab: {fileID: 1679103883713268576, guid: 7573bd93a29d34644b1940a068c5402c, type: 3}
   travelTime: 0.5
   curveAmount: 5
-  hitEffectPrefab: {fileID: 4021103657954561961, guid: 5c755f9bc5253ea418e919994537dcc7,
-    type: 3}
+  hitEffectPrefab: {fileID: 4021103657954561961, guid: 5c755f9bc5253ea418e919994537dcc7, type: 3}
   hitEffectOffset: 0.2
 --- !u!1 &1291864661
 GameObject:
@@ -6227,18 +6227,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e4daf285e1979d4197b0e2ab7347153, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  evidenceList:
-  - {fileID: 11400000, guid: 61f792b87e669574793f5e93b1753771, type: 2}
-  - {fileID: 11400000, guid: 55f6c2af98b373c458b3a6a909f35b54, type: 2}
-  - {fileID: 11400000, guid: 4ba997dac63149946b503189cba49436, type: 2}
-  - {fileID: 11400000, guid: 39789c8ebaf5da040a9001495bf1316a, type: 2}
-  - {fileID: 11400000, guid: 6e9dfc624e849c647b7de3c59779d356, type: 2}
-  - {fileID: 11400000, guid: 61f792b87e669574793f5e93b1753771, type: 2}
-  - {fileID: 11400000, guid: 39789c8ebaf5da040a9001495bf1316a, type: 2}
-  - {fileID: 11400000, guid: 6e9dfc624e849c647b7de3c59779d356, type: 2}
-  - {fileID: 11400000, guid: 6e9dfc624e849c647b7de3c59779d356, type: 2}
-  - {fileID: 11400000, guid: 6e9dfc624e849c647b7de3c59779d356, type: 2}
-  evidenceMenu: {fileID: 306327829}
 --- !u!1 &1794959807
 GameObject:
   m_ObjectHideFlags: 0

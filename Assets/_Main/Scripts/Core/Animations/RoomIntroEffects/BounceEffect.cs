@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class BounceEffect : MonoBehaviour
+public class BounceEffect : RoomIntroEffect
 {
     public float delay = 0f;
     public float duration = 1f;
@@ -11,10 +11,9 @@ public class BounceEffect : MonoBehaviour
     void Start()
     {
         renderer = GetComponent<Renderer>();
-        StartCoroutine(PlayEffect());
     }
 
-    private IEnumerator PlayEffect()
+    public override IEnumerator PlayEffect()
     {
         Vector3 originalScale = transform.localScale;
         Vector3 startScale = new Vector3(originalScale.x, 0.1f, originalScale.z);

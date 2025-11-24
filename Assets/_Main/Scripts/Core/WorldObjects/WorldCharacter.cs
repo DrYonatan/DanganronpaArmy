@@ -5,7 +5,7 @@ public class WorldCharacter : ConversationInteractable
 {
     public string characterName;
 
-    public override void FinishInteraction()
+    protected override void FinishInteraction()
     {
         CharacterClickEffects.instance.Interact(transform);
         Quaternion targetRotation = Quaternion.LookRotation(transform.forward);

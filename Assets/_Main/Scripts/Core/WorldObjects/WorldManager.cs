@@ -125,14 +125,22 @@ public class WorldManager : MonoBehaviour
             .First(roomData => roomData.room.name.Equals(currentRoom.name)).characters);
         CreateObjects(ProgressManager.instance.currentGameEvent.roomDatas
             .First(roomData => roomData.room.name.Equals(currentRoom.name)).worldObjects);
+        
+        UpdateRoomData(
+            ProgressManager.instance.currentGameEvent.roomDatas.First(roomData => roomData.room.name == room.name));
 
         yield return new WaitUntil(() =>
             (charactersObject != null || currentRoomData.characters == null) &&
             (objectsObject != null ||
              currentRoomData.worldObjects ==
              null)); // wait until both characters and objects loaded, or if there aren't any just go on
-
-        ReturningToWorld();
+        
+        if(VNNodePlayer.instance.currentConversation == null)
+           ReturningToWorld();
+        else
+        {
+            CharacterClickEffects.instance.MakeCharactersDisappear(charactersObject, 0f);
+        }
     }
     private IEnumerator MoveToRoom(Room room, [CanBeNull] string entryPoint)
     {
