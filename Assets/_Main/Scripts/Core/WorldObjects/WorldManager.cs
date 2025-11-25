@@ -128,12 +128,6 @@ public class WorldManager : MonoBehaviour
         
         UpdateRoomData(
             ProgressManager.instance.currentGameEvent.roomDatas.First(roomData => roomData.room.name == room.name));
-
-        yield return new WaitUntil(() =>
-            (charactersObject != null || currentRoomData.characters == null) &&
-            (objectsObject != null ||
-             currentRoomData.worldObjects ==
-             null)); // wait until both characters and objects loaded, or if there aren't any just go on
         
         if(VNNodePlayer.instance.currentConversation == null)
            ReturningToWorld();
@@ -194,7 +188,7 @@ public class WorldManager : MonoBehaviour
                 cameraStartPos
                     .rotation; // Sets only the Camera Manager's initial position value for later, not actually changing position of camera
 
-        CharacterController controller = Camera.main.gameObject.GetComponent<CharacterController>();
+        CharacterController controller = CameraManager.instance.cameraTransform.gameObject.GetComponent<CharacterController>();
         controller.enabled = false;
         CameraManager.instance.cameraTransform.position =
             cameraStartPos.position; // Actually changing position of camera
@@ -215,12 +209,6 @@ public class WorldManager : MonoBehaviour
             .First(roomData => roomData.room.name.Equals(currentRoom.name)).characters);
         CreateObjects(ProgressManager.instance.currentGameEvent.roomDatas
             .First(roomData => roomData.room.name.Equals(currentRoom.name)).worldObjects);
-
-        yield return new WaitUntil(() =>
-            (charactersObject != null || currentRoomData.characters == null) &&
-            (objectsObject != null ||
-             currentRoomData.worldObjects ==
-             null)); // wait until both characters and objects loaded, or if there aren't any just go on
         
         if(charactersObject != null)
            charactersObject.AnimateCharacters();
