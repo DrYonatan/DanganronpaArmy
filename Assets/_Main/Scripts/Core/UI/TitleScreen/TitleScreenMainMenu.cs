@@ -7,7 +7,7 @@ public class TitleScreenMainMenu : MenuScreen
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            SaveManager.instance.SelectSaveSlot(1);
+            SaveManager.instance.SelectSaveSlot(2);
             SaveData data = SaveManager.instance.LoadCurrentSave();
             SceneManager.LoadScene($"_Main/Scenes/{data.scene}");        }
     }

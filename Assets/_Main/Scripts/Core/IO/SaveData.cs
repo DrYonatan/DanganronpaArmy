@@ -20,6 +20,7 @@ public class CharacterRankEntry
 [Serializable]
 public class SaveData
 {
+    // VN stuff
     public int gameEventIndex;
     public string currentRoom;
     public string currentConversation;
@@ -32,11 +33,17 @@ public class SaveData
     public float[] playerPosition;
     public float[] playerRotation;
 
+    // Trial stuff
+    public int trialSegmentIndex;
+    public float hp;
+    public float concentration;
+
     public SaveData(int gameEventIndex, string currentRoom, string currentConversation,
         int currentLineIndex, string currentMusic, Dictionary<string, ObjectData> charactersData,
         Dictionary<string, ObjectData> objectsData,
         string scene,
-        Dictionary<string, int> characterRanks, Vector3 playerPosition, Vector3 playerRotation)
+        Dictionary<string, int> characterRanks, Vector3 playerPosition, Vector3 playerRotation, int trialSegmentIndex,
+        float hp, float concentration)
     {
         this.gameEventIndex = gameEventIndex;
         this.currentRoom = currentRoom;
@@ -44,24 +51,31 @@ public class SaveData
         this.currentLineIndex = currentLineIndex;
         this.currentMusic = currentMusic;
         this.scene = scene;
-        this.objectsData = objectsData
-            .Select(kvp => new ObjectDataEntry { key = kvp.Key, value = kvp.Value })
-            .ToList();
-        this.charactersData = charactersData.Select(kvp => new ObjectDataEntry { key = kvp.Key, value = kvp.Value })
-            .ToList();
+        if (objectsData != null)
+            this.objectsData = objectsData
+                .Select(kvp => new ObjectDataEntry { key = kvp.Key, value = kvp.Value })
+                .ToList();
+
+        if (charactersData != null)
+            this.charactersData = charactersData.Select(kvp => new ObjectDataEntry { key = kvp.Key, value = kvp.Value })
+                .ToList();
         this.characterRanks = characterRanks
             .Select(kvp => new CharacterRankEntry { key = kvp.Key, value = kvp.Value })
             .ToList();
-        
+
         this.playerPosition = new float[3];
         this.playerRotation = new float[3];
-        
+
         this.playerPosition[0] = playerPosition.x;
         this.playerPosition[1] = playerPosition.y;
         this.playerPosition[2] = playerPosition.z;
-        
+
         this.playerRotation[0] = playerRotation.x;
         this.playerRotation[1] = playerRotation.y;
         this.playerRotation[2] = playerRotation.z;
+        
+        this.trialSegmentIndex = trialSegmentIndex;
+        this.hp = hp;
+        this.concentration = concentration;
     }
 }

@@ -14,6 +14,8 @@ public class TrialDialogueManager : MonoBehaviour
 
     public GotItAnimator gotItAnimator;
 
+    public int currentLineIndex;
+
     private void Awake()
     {
         instance = this;
@@ -39,9 +41,10 @@ public class TrialDialogueManager : MonoBehaviour
 
     public IEnumerator RunNodes(List<DiscussionNode> nodes)
     {
-        foreach (DiscussionNode discussionNode in nodes)
+        for (int i = currentLineIndex; i < nodes.Count; i++)
         {
-            yield return discussionNode.Play();
+            yield return nodes[i].Play();
+            currentLineIndex++;
         }
     }
 
@@ -49,6 +52,7 @@ public class TrialDialogueManager : MonoBehaviour
     {
         DialogueSystem.instance.dialogueBoxAnimator.TextBoxDisappear();
         effectController.Reset();
+        currentLineIndex = 0;
         
         discussion.Finish();
     }

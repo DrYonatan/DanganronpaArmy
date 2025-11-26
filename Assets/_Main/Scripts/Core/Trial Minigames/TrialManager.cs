@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using _Main.Scripts.Court;
 using DIALOGUE;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [Serializable]
@@ -21,7 +22,7 @@ public class TrialManager : MonoBehaviour
 {
     public static TrialManager instance { get; private set; }
     public List<TrialSegment> segments = new List<TrialSegment>();
-    private int currentIndex = 0;
+    public int currentIndex = 0;
     public List<CharacterStand> characterStands;
     public PlayerStats playerStats = new PlayerStats();
     public PlayerBarsAnimator barsAnimator;
@@ -31,11 +32,18 @@ public class TrialManager : MonoBehaviour
     void Awake()
     {
         instance = this;
+        LoadValuesFromSave(1);
         playerStats.InitializeMeters();
     }
     void Start()
     {
-        StartCoroutine(StartPipeline());
+        if(currentIndex == 0)
+           StartCoroutine(StartPipeline());
+        else
+        {
+            TrialSegment segment = Instantiate(segments[currentIndex]);
+            segment.Play();
+        }
     }
 
     private IEnumerator StartPipeline()
@@ -82,5 +90,15 @@ public class TrialManager : MonoBehaviour
         playerStats.hp = 5f;
         TrialSegment segment = Instantiate(segments[currentIndex]);
         segment.Play();
+    }
+
+    private void LoadValuesFromSave(int slot)
+    {
+        SaveData data = SaveManager.instance != null ? SaveManager.instance.LoadCurrentSave() : SaveSystem.LoadGame(slot);
+        
+        currentIndex = data.trialSegmentIndex;
+        TrialDialogueManager.instance.currentLineIndex = data.currentLineIndex;
+        playerStats.hp = data.hp;
+        TimeManipulationManager.instance.concentration = data.concentration;
     }
 }
