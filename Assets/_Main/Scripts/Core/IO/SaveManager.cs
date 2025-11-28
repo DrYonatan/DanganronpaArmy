@@ -7,7 +7,7 @@ public class SaveManager : MonoBehaviour
     public static SaveManager instance;
 
     public int currentSaveSlot;
-
+    
     private void Awake()
     {
         if (instance == null)
