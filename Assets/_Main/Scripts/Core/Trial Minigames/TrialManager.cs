@@ -33,12 +33,14 @@ public class TrialManager : MonoBehaviour
     {
         instance = this;
         LoadValuesFromSave(1);
-        playerStats.InitializeMeters();
     }
     void Start()
     {
-        if(currentIndex == 0)
-           StartCoroutine(StartPipeline());
+        if (currentIndex == 0)
+        {
+            playerStats.InitializeMeters();
+            StartCoroutine(StartPipeline());
+        }
         else
         {
             TrialSegment segment = Instantiate(segments[currentIndex]);
@@ -99,6 +101,5 @@ public class TrialManager : MonoBehaviour
         currentIndex = data.trialSegmentIndex;
         TrialDialogueManager.instance.currentLineIndex = data.currentLineIndex;
         playerStats.hp = data.hp;
-        TimeManipulationManager.instance.concentration = data.concentration;
     }
 }

@@ -36,14 +36,13 @@ public class SaveData
     // Trial stuff
     public int trialSegmentIndex;
     public float hp;
-    public float concentration;
 
     public SaveData(int gameEventIndex, string currentRoom, string currentConversation,
         int currentLineIndex, string currentMusic, Dictionary<string, ObjectData> charactersData,
         Dictionary<string, ObjectData> objectsData,
         string scene,
         Dictionary<string, int> characterRanks, Vector3 playerPosition, Vector3 playerRotation, int trialSegmentIndex,
-        float hp, float concentration)
+        float hp)
     {
         this.gameEventIndex = gameEventIndex;
         this.currentRoom = currentRoom;
@@ -76,6 +75,5 @@ public class SaveData
         
         this.trialSegmentIndex = trialSegmentIndex;
         this.hp = hp;
-        this.concentration = concentration;
     }
 }
