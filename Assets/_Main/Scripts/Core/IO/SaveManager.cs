@@ -6,6 +6,8 @@ public class SaveManager : MonoBehaviour
 {
     public static SaveManager instance;
 
+    public string firstScene;
+
     public int currentSaveSlot;
     
     private void Awake()
@@ -16,6 +18,12 @@ public class SaveManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
         else Destroy(gameObject);
+    }
+
+    public void StartNewGame()
+    {
+        currentSaveSlot = -1;
+        SceneManager.LoadScene(firstScene);
     }
 
     public void SelectSaveSlot(int slot)

@@ -22,7 +22,12 @@ public class ProgressManager : MonoBehaviour
 
     void Start()
     {
-        LoadValuesFromSave();
+        if(SaveManager.instance != null && SaveManager.instance.currentSaveSlot != -1)
+           LoadValuesFromSave();
+        else
+        {
+            StartNewGame();
+        }
     }
 
     public void OnEventFinished()
@@ -57,5 +62,10 @@ public class ProgressManager : MonoBehaviour
         }
         
         WorldManager.instance.Initialize();
+    }
+
+    private void StartNewGame()
+    {
+        WorldManager.instance.StartLoadingRoom(WorldManager.instance.currentRoom, null);
     }
 }

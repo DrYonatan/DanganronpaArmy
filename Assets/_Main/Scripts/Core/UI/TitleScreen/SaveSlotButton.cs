@@ -14,11 +14,11 @@ public class SaveSlotButton : TitleScreenMenuButton
         data = SaveSystem.LoadGame(slot);
         if (data != null)
         {
-            slotText.text = $"Save #{slot}";
+            slotText.text = $"שמירה  {slot}";
         }
         else
         {
-            slotText.text = "Empty";
+            slotText.text = "שמירה ריקה";
         }
     }
     
