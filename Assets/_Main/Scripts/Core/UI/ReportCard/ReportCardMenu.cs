@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -43,15 +45,20 @@ public class ReportCardMenu: MenuScreen
     public TextMeshProUGUI progressionLevel;
     public TextMeshProUGUI role;
     public TextMeshProUGUI roleDescription;
+    public List<RectTransform> blocks;
+    private List<float> originalPosYs = new List<float>();
     
-    void Start()
+    void Awake()
     {
         foreach (CharacterInfo characterInfo in characterInfoList)
         {
             AddCharacterToList(characterInfo);
         }
-        
-        UpdateUI();
+
+        foreach (RectTransform block in blocks)
+        {
+            originalPosYs.Add(block.anchoredPosition.y);
+        }
     }
     void AddCharacterToList(CharacterInfo characterInfo)
     {
@@ -70,14 +77,14 @@ public class ReportCardMenu: MenuScreen
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            currentCharacterIndex = (currentCharacterIndex + 1) % EvidenceManager.instance.evidenceList.Count;
+            currentCharacterIndex = (currentCharacterIndex + 1) % characterInfoList.Count;
             UpdateUI();
             SoundManager.instance.PlaySoundEffect(moveSelectionSound);
         }
         else if (Input.GetKeyDown(KeyCode.Q))
         {
-            currentCharacterIndex = (currentCharacterIndex - 1 + EvidenceManager.instance.evidenceList.Count) %
-                                    EvidenceManager.instance.evidenceList.Count;
+            currentCharacterIndex = (currentCharacterIndex - 1 + characterInfoList.Count) %
+                                    characterInfoList.Count;
             UpdateUI();
             SoundManager.instance.PlaySoundEffect(moveSelectionSound);
         }
@@ -109,6 +116,31 @@ public class ReportCardMenu: MenuScreen
 
             if (charactersListUI.Count > 0)
                 charactersListUI[currentCharacterIndex].StartHover();
+
+            BlocksIntro();
+        }
+    }
+
+    public override void LoadContent()
+    {
+        base.LoadContent();
+        UpdateUI();
+    }
+
+    void BlocksIntro()
+    {
+        int i = 0;
+        
+        foreach (RectTransform block in blocks)
+        {
+            block.DOKill();
+            CanvasGroup canvasGroup = block.GetComponent<CanvasGroup>();
+            canvasGroup.DOKill();
+            block.anchoredPosition = new UnityEngine.Vector2(block.anchoredPosition.x, originalPosYs[i]) + UnityEngine.Vector2.down * 100;
+            block.DOAnchorPosY(originalPosYs[i], 0.3f).SetDelay(i * 0.05f).SetUpdate(true);
+            canvasGroup.alpha = 0.3f;
+            canvasGroup.DOFade(1f, 0.6f).SetUpdate(true);
+            i++;
         }
     }
     

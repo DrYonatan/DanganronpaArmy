@@ -17,7 +17,7 @@ public abstract class MenuScreen : MonoBehaviour
             .SetEase(Ease.InOutSine).SetUpdate(true).OnComplete(() =>
             {
                 logo.alpha = 0f;
-                content.SetActive(true);
+                LoadContent();
             });
     }
 
@@ -26,5 +26,10 @@ public abstract class MenuScreen : MonoBehaviour
         gameObject.SetActive(false);
         logo.DOKill();
     }
-    
+
+    public virtual void LoadContent()
+    {
+        content.SetActive(true);
+    }
+
 }
