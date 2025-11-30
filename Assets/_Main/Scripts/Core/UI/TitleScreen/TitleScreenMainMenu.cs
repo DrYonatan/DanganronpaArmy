@@ -17,6 +17,12 @@ public class TitleScreenMainMenu : MonoBehaviour
     public Image underlay;
     public Image leftCharacter;
     public Image rightCharacter;
+    public Image glow;
+    public Image cylinder;
+    public Image bigRing;
+    public Image smallRing;
+
+    public List<Sprite> availableFaceSprites;
 
     void Awake()
     {
@@ -59,6 +65,12 @@ public class TitleScreenMainMenu : MonoBehaviour
         next.Initialize();
     }
 
+    private Sprite GetRandomSprite()
+    {
+        int index = Random.Range(0, availableFaceSprites.Count);
+        return availableFaceSprites[index];
+    }
+
     private void StartAnimation()
     {
         activeSubMenu.gameObject.SetActive(false);
@@ -69,9 +81,16 @@ public class TitleScreenMainMenu : MonoBehaviour
         underlay.rectTransform.localScale = Vector3.one * 0.5f;
         float originalLeft = leftCharacter.rectTransform.anchoredPosition.x;
         float originalRight = rightCharacter.rectTransform.anchoredPosition.x;
+        glow.DOFade(0f, 0f);
+
+        rightCharacter.sprite = GetRandomSprite();
         
         leftCharacter.rectTransform.DOAnchorPosX(originalLeft - 800f, 0);
         rightCharacter.rectTransform.DOAnchorPosX(originalRight + 800f, 0);
+        
+        cylinder.DOFade(0f, 0f);
+        bigRing.DOFade(0f, 0f);
+        smallRing.DOFade(0f, 0f);
         
         Sequence seq = DOTween.Sequence();
         seq.AppendInterval(0.2f);
@@ -82,17 +101,38 @@ public class TitleScreenMainMenu : MonoBehaviour
         seq.Join(underlay.rectTransform.DOScale(1f, 0.2f).SetEase(Ease.OutBack));
         seq.Join(leftCharacter.rectTransform.DOAnchorPosX(originalLeft, 0.2f));
         seq.Join(rightCharacter.rectTransform.DOAnchorPosX(originalRight, 0.2f));
+        seq.Append(glow.DOFade(1f, 0.2f));
+        seq.Append(glow.DOFade(0f, 0.2f));
+        seq.Join(glow.rectTransform.DOScale(1.2f, 0.2f));
 
         seq.OnComplete(() => InitializeFirstMenu());
-
-
-
     }
 
     private void InitializeFirstMenu()
     {
         activeSubMenu.gameObject.SetActive(true);
         activeSubMenu.Initialize();
+        
+        cylinder.DOFade(1f, 0.1f);
+        bigRing.DOFade(1f, 0.1f);
+        smallRing.DOFade(1f, 0.1f);
+        
+        cylinder.rectTransform.DORotate(new Vector3(0f, 0f, 360f), 4f, RotateMode.FastBeyond360)
+            .SetLoops(-1, LoopType.Restart)
+            .SetEase(Ease.Linear);
+        bigRing.rectTransform.DORotate(new Vector3(0f, 0f, 360f), 7f, RotateMode.FastBeyond360)
+            .SetLoops(-1, LoopType.Restart)
+            .SetEase(Ease.Linear);
+        smallRing.rectTransform.DORotate(new Vector3(0f, 0f, 360f), 3f, RotateMode.FastBeyond360)
+            .SetLoops(-1, LoopType.Restart)
+            .SetEase(Ease.Linear);
+
+        underlay.DOFade(0.5f, 1f).SetLoops(-1, LoopType.Yoyo);
+    }
+
+    public void KillAllTweens()
+    {
+        DOTween.KillAll();
     }
 
     public void QuitGame()

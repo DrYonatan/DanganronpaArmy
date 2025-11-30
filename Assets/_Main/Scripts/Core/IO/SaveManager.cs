@@ -25,6 +25,7 @@ public class SaveManager : MonoBehaviour
     public void StartNewGame()
     {
         currentSaveSlot = -1;
+        TitleScreenMainMenu.instance.KillAllTweens();
         SceneManager.LoadScene(firstScene);
     }
 
