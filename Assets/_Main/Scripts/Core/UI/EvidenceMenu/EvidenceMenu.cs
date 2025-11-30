@@ -92,7 +92,15 @@ public class EvidenceMenu : MenuScreen
 
     public IEnumerator SelectEvidence(string question, Func<Evidence, IEnumerator> onFinish)
     {
-        Open();
+        transform.localScale = Vector3.zero;
+        transform.DOScale(Vector3.one, 0.3f)
+            .SetEase(Ease.OutBack).SetUpdate(true);
+        content.SetActive(true);
+        logo.alpha = 0f;
+        gameObject.SetActive(true);
+        currentEvidenceIndex = 0;
+        UpdateUI();
+        
         bool isOpen = false;
 
         while (!Input.GetKeyDown(KeyCode.Space))
