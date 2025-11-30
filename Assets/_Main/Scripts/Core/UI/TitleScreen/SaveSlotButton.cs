@@ -27,6 +27,7 @@ public class SaveSlotButton : TitleScreenMenuButton
         if (data == null)
             return;
         image.DOKill();
+        SoundManager.instance.PlaySoundEffect(soundEffect);
         SaveManager.instance.SelectSaveSlot(slot);
         SceneManager.LoadScene(SaveManager.instance.LoadCurrentSave().scene);
     }

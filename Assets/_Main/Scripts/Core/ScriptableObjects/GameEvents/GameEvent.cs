@@ -50,15 +50,25 @@ public abstract class GameEvent : ScriptableObject
             .First(roomData => roomData.room.name.Equals(WorldManager.instance.currentRoom.name));
         
         WorldManager.instance.UpdateRoomData(currentRoomData);
-        
+
         if (WorldManager.instance.charactersObject == null)
+        {
             WorldManager.instance.CreateCharacters(currentRoomData.characters);
+            WorldManager.instance.charactersObject.AnimateCharacters();
+        }
         if (WorldManager.instance.objectsObject == null)
             WorldManager.instance.CreateObjects(currentRoomData.worldObjects);
     }
 
     protected virtual void OnFinish()
     {
+        if(WorldManager.instance.charactersObject != null)
+           Destroy(WorldManager.instance.charactersObject.gameObject);
+        if(WorldManager.instance.objectsObject != null)
+           Destroy(WorldManager.instance.objectsObject.gameObject);
+        WorldManager.instance.charactersObject = null;
+        WorldManager.instance.objectsObject = null;
+        
         if (finishText != null)
         {
             VNNodePlayer.instance.StartConversation(finishText);

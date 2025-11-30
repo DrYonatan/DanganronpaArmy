@@ -7,8 +7,12 @@ public abstract class TitleScreenMenuButton : MonoBehaviour
     public Image image;
     public Color selectedColor;
     public AudioClip soundEffect;
-
-    public abstract void Click();
+    
+    public virtual void Click()
+    {
+        SoundManager.instance.PlaySoundEffect(soundEffect);
+    }
+    
 
     public void HoverButtonAnimation()
     {

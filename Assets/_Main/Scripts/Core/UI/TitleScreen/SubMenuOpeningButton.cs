@@ -9,10 +9,11 @@ public class SubMenuOpeningButton : TitleScreenMenuButton
     
     public override void Click()
     {
-        StartCoroutine(ClickAnimation());
+        base.Click();
+        ClickAnimation();
     }
     
-    private IEnumerator ClickAnimation()
+    private void ClickAnimation()
     {
         image.DOKill();
         image.color = Color.black;
@@ -20,8 +21,6 @@ public class SubMenuOpeningButton : TitleScreenMenuButton
         image.DOColor(selectedColor, 0.05f)
             .SetLoops(6, LoopType.Yoyo)
             .SetEase(Ease.Linear);
-
-        yield return new WaitForSeconds(0.05f * 6f);
         
         TitleScreenMainMenu.instance.SwitchMenus(menuToOpen);
     }

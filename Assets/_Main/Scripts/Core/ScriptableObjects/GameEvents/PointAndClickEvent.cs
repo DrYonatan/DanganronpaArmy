@@ -31,10 +31,6 @@ public class PointAndClickEvent : GameEvent
 
     protected override void OnFinish()
     {
-        Destroy(WorldManager.instance.charactersObject);
-        Destroy(WorldManager.instance.objectsObject);
-        WorldManager.instance.charactersObject = null;
-        WorldManager.instance.objectsObject = null;
         CameraManager.instance.MoveCameraTo(GameObject.Find("World/CameraStartPos").transform);
         
         base.OnFinish();

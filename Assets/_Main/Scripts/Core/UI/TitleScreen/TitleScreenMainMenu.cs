@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -27,17 +28,25 @@ public class TitleScreenMainMenu : MonoBehaviour
     public void SwitchMenus(TitleScreenSubMenu menu)
     {
         subMenuStack.Push(menu);
-        activeSubMenu.gameObject.SetActive(false);
+        StartCoroutine(SwitchMenusAnimation(activeSubMenu, menu));
         activeSubMenu = menu;
-        activeSubMenu.gameObject.SetActive(true);
-        activeSubMenu.Initialize();
     }
 
     private void ReturnToPrevMenu()
     {
-        subMenuStack.Pop().gameObject.SetActive(false);
+        StartCoroutine(SwitchMenusAnimation(subMenuStack.Pop(), subMenuStack.Peek()));
         activeSubMenu = subMenuStack.Peek();
-        activeSubMenu.gameObject.SetActive(true);
-        activeSubMenu.Initialize();
+    }
+
+    private IEnumerator SwitchMenusAnimation(TitleScreenSubMenu prev, TitleScreenSubMenu next)
+    {
+        prev.OutroAnimation();
+        
+        yield return new WaitForSeconds(0.2f);
+        
+        prev.gameObject.SetActive(false);
+        next.gameObject.SetActive(true);
+        
+        next.Initialize();
     }
 }

@@ -66,6 +66,7 @@ public class ProgressManager : MonoBehaviour
 
     private void StartNewGame()
     {
+        currentGameEvent = Instantiate(gameEvents[0]);
         WorldManager.instance.StartLoadingRoom(WorldManager.instance.currentRoom, null);
     }
 }
