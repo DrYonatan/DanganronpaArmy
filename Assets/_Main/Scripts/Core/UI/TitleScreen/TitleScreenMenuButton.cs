@@ -19,7 +19,7 @@ public abstract class TitleScreenMenuButton : MonoBehaviour
         image.DOKill();
         image.color = Color.black;
         
-        image.DOColor(Color.red, 0.2f)
+        image.DOColor(selectedColor, 0.2f)
             .SetLoops(-1, LoopType.Yoyo)
             .SetEase(Ease.Linear);
     }

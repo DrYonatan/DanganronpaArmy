@@ -9,6 +9,8 @@ public class SaveManager : MonoBehaviour
     public string firstScene;
 
     public int currentSaveSlot;
+
+    public int saveSlotAmount;
     
     private void Awake()
     {

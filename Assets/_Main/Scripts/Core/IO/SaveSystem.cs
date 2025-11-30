@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -20,12 +18,10 @@ public class SaveSystem
         string path = SavePath(slot);
         if (!File.Exists(path))
         {
-            Debug.LogWarning($"No save file found at {path}");
             return null;
         }
 
         string json = File.ReadAllText(path);
-        Debug.Log(json);
         return JsonUtility.FromJson<SaveData>(json);
     }
 }
