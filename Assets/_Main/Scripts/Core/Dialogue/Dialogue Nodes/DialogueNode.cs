@@ -45,9 +45,9 @@ public class DialogueNode
         {
             CharacterPositionMapping info = VNNodePlayer.instance.currentConversation.settings.characterPositions.Find(characterInfo =>
                 characterInfo.character == character);
-            VNCharacterManager.instance.ShowOnlySpeaker(character);
+            VNCharacterManager.instance.ShowOnlySpeaker(character, DialogueSystem.instance.GetIsSkip() ? 0 : 0.25f);
             VNCharacterManager.instance.SwitchEmotion(character, character.emotions[expressionIndex]);
-            CameraManager.instance.MoveCamera((CameraLookDirection)info.position, 0.4f);
+            CameraManager.instance.MoveCamera((CameraLookDirection)info.position, DialogueSystem.instance.GetIsSkip() ? 0 : 0.4f);
         }
         
         yield return DialogueSystem.instance.Say(this);

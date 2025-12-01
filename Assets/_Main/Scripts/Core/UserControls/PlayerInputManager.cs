@@ -33,6 +33,15 @@ namespace DIALOGUE
                     {
                         PromptAdvance();
                     }
+
+                    if (Input.GetKey(KeyCode.LeftControl))
+                    {
+                        DialogueSystem.instance.SetSkip(true);
+                    }
+                    else
+                    {
+                        DialogueSystem.instance.SetSkip(false);
+                    }
                 }
             
                 if (Input.GetKeyDown(KeyCode.Alpha1) && !pauseMenu.isSubmenuOpen)

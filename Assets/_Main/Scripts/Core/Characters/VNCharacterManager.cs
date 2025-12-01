@@ -37,32 +37,32 @@ namespace CHARACTERS
             characterObjects.Add(characterInfo.character, characterObj);
         }
 
-        public void ShowOnlySpeaker(Character character)
+        public void ShowOnlySpeaker(Character character, float duration)
         {
             foreach (KeyValuePair<Character, GameObject> characterObj in characterObjects)
             {
                 if (characterObj.Key.Equals(character))
                 {
-                    ShowCharacter(characterObj.Value);
+                    ShowCharacter(characterObj.Value, duration);
                 }
                 else
                 {
-                    HideCharacter(characterObj.Value);
+                    HideCharacter(characterObj.Value, duration);
                 }
             }
         }
 
-        void ShowCharacter(GameObject characterObj)
+        void ShowCharacter(GameObject characterObj, float duration)
         {
             CanvasGroup canvasGroup = characterObj.GetComponent<CanvasGroup>();
             canvasGroup.DOKill();
-            canvasGroup.DOFade(1f,  0.25f);
+            canvasGroup.DOFade(1f,  duration);
         }
-        void HideCharacter(GameObject characterObj)
+        void HideCharacter(GameObject characterObj, float duration)
         {
             CanvasGroup canvasGroup = characterObj.GetComponent<CanvasGroup>();
             canvasGroup.DOKill();
-            canvasGroup.DOFade(0f,  0.25f);
+            canvasGroup.DOFade(0f,  duration);
         }
 
         public void DestroyCharacters()

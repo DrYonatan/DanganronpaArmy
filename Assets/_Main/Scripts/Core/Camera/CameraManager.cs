@@ -11,12 +11,14 @@ public class CameraManager : MonoBehaviour
     public Transform cameraTransform;
 
     public const string charactersLayerPath = "VN controller/Root/Canvas - Main/LAYERS/2 - Characters";
-    
+
 
     public Quaternion initialRotation;
 
     private bool isInFinalRotation = true;
-    
+
+    public bool conversationFinishedMoving = true;
+
     private List<IEnumerator> operations = new List<IEnumerator>();
 
     private void Awake()
@@ -26,10 +28,7 @@ public class CameraManager : MonoBehaviour
 
     public void MoveCamera(CameraLookDirection direction, float duration)
     {
-        if (isInFinalRotation)
-        {
-            StartCameraCoroutine(StartMovingCamera(direction, duration));
-        }
+        StartCameraCoroutine(StartMovingCamera(direction, duration));
     }
 
     public void MoveCameraTo(Transform location)
@@ -132,8 +131,9 @@ public class CameraManager : MonoBehaviour
     }
 
 
-    IEnumerator StartMovingCamera(CameraLookDirection direction,  float duration)
+    private IEnumerator StartMovingCamera(CameraLookDirection direction, float duration)
     {
+        conversationFinishedMoving = false;
         RectTransform charactersLayer = VNCharacterManager.instance.characterLayer;
         float elapsedTime = 0;
         float characterX = 0;
@@ -145,7 +145,7 @@ public class CameraManager : MonoBehaviour
                 characterX = -VNCharacterManager.instance.right.anchoredPosition.x;
                 rotation = Quaternion.Euler(0f, 20f, 0f);
                 break;
-            
+
             case CameraLookDirection.MidRight:
                 characterX = -VNCharacterManager.instance.midRight.anchoredPosition.x;
                 rotation = Quaternion.Euler(0f, 10f, 0f);
@@ -154,7 +154,7 @@ public class CameraManager : MonoBehaviour
             case CameraLookDirection.Middle:
                 characterX = -VNCharacterManager.instance.middle.anchoredPosition.x;
                 break;
-            
+
             case CameraLookDirection.MidLeft:
                 characterX = -VNCharacterManager.instance.midLeft.anchoredPosition.x;
                 rotation = Quaternion.Euler(0f, -10f, 0f);
@@ -181,14 +181,17 @@ public class CameraManager : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-
+        
+        cameraTransform.rotation = targetRotate;
         charactersLayer.anchoredPosition = charactersTargetPos;
+        conversationFinishedMoving = true;
     }
 
     public void ChangeCameraBackground(bool isInside)
     {
         Camera.main.clearFlags = isInside ? CameraClearFlags.SolidColor : CameraClearFlags.Skybox;
     }
+
     public Coroutine StartCameraCoroutine(IEnumerator operation)
     {
         Coroutine coroutine = StartCoroutine(operation);
