@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -70,7 +70,7 @@ public class EvidenceMenu : MenuScreen
 
     void UpdateUI()
     {
-        Evidence currentEvidence = EvidenceManager.instance.evidenceList[currentEvidenceIndex];
+        Evidence currentEvidence = EvidenceManager.instance.evidenceList.Count > 0 ? EvidenceManager.instance.evidenceList[currentEvidenceIndex] : null;
         if (currentEvidence != null)
         {
             evidenceIcon.sprite = currentEvidence.icon;
