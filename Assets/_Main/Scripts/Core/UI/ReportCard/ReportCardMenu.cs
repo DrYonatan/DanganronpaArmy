@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using DG.Tweening;
 using TMPro;
@@ -45,15 +46,52 @@ public class ReportCardMenu: MenuScreen
     public TextMeshProUGUI progressionLevel;
     public TextMeshProUGUI role;
     public TextMeshProUGUI roleDescription;
+    public TextMeshProUGUI socialStatus;
     public List<RectTransform> blocks;
     private List<float> originalPosYs = new List<float>();
-    
+    public GameObject normalContent;
+    public GameObject protagonistContent;
+    private const string PROTAGONIST_NAME = "אלון";
+    public List<string> statuses = new List<string>();
+    string GetSocialStatus(int totalProgress)
+    {
+        int index = 0;
+        
+        if (totalProgress < 2)
+        {
+            index = 0;
+        } 
+        else if (totalProgress < 4)
+        {
+            index = 1;
+        }
+        else if (totalProgress < 7)
+        {
+            index = 2;
+        }
+        else if (totalProgress < 10)
+        {
+            index = 3;
+        }
+        else if (totalProgress < 15)
+        {
+            index = 4;
+        }
+        else
+        {
+            index = 5;
+        }
+
+        return statuses[index];
+    }
     void Awake()
     {
         foreach (CharacterInfo characterInfo in characterInfoList)
         {
             AddCharacterToList(characterInfo);
         }
+        
+        socialStatus.text = GetSocialStatus(characterInfoList.Sum((characterInfo) => characterInfo.progressionLevel));
 
         foreach (RectTransform block in blocks)
         {
@@ -105,9 +143,20 @@ public class ReportCardMenu: MenuScreen
             dapar.text = currentCharacterInfo.dapar.ToString();
             height.text = $"{currentCharacterInfo.height} (cm)";
             weight.text = $"{currentCharacterInfo.weight} (kg)";
-            progressionLevel.text = currentCharacterInfo.progressionLevel.ToString();
             role.text = currentCharacterInfo.role;
             roleDescription.text = currentCharacterInfo.roleDescription;
+
+            if (currentCharacterInfo.name == PROTAGONIST_NAME)
+            {
+                normalContent.SetActive(false);
+                protagonistContent.SetActive(true);
+            }
+            else
+            {
+                progressionLevel.text = currentCharacterInfo.progressionLevel.ToString();
+                protagonistContent.SetActive(false);
+                normalContent.SetActive(true);
+            }
             
             foreach (CharacterIcon item in charactersListUI)
             {
