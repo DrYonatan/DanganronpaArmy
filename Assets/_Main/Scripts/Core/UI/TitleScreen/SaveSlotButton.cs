@@ -27,14 +27,7 @@ public class SaveSlotButton : TitleScreenMenuButton
             return;
         SoundManager.instance.PlaySoundEffect(soundEffect);
         SaveManager.instance.SelectSaveSlot(slot);
-        StartCoroutine(SaveSelected());
         TitleScreenMainMenu.instance.GoToGameAnimation(SaveManager.instance.LoadCurrentSave().scene);
     }
-
-    private IEnumerator SaveSelected()
-    {
-        TitleScreenMainMenu.instance.activeSubMenu.OutroAnimation();
-        yield return new WaitForSeconds(0.2f);
-        TitleScreenMainMenu.instance.activeSubMenu.gameObject.SetActive(false);
-    }
+    
 }

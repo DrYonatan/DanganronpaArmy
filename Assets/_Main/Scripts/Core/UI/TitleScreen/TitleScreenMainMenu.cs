@@ -137,6 +137,7 @@ public class TitleScreenMainMenu : MonoBehaviour
     public void GoToGameAnimation(string sceneToLoad)
     {
         cylinder.rectTransform.DOKill();
+        StartCoroutine(DisableCurrentMenu());
         Sequence seq = DOTween.Sequence();
         seq.Join(bigRing.rectTransform.DOScale(6f, 0.5f));
         seq.Join(smallRing.rectTransform.DOScale(6f, 0.5f));
@@ -144,6 +145,13 @@ public class TitleScreenMainMenu : MonoBehaviour
         seq.Append(blackOverlay.DOFade(1f, 0.2f));
         
         seq.OnComplete(() => GoToGame(sceneToLoad));
+    }
+    
+    private IEnumerator DisableCurrentMenu()
+    {
+        activeSubMenu.OutroAnimation();
+        yield return new WaitForSeconds(0.2f);
+        activeSubMenu.gameObject.SetActive(false);
     }
 
     private void GoToGame(string sceneToLoad)

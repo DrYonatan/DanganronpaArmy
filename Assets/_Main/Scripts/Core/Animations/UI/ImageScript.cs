@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,6 +21,8 @@ public class ImageScript : MonoBehaviour
         image = overlayImage.GetComponent<Image>();
         canvasGroup = overlayImage.GetComponent<CanvasGroup>();
         blackFadeCanvasGroup = blackFade.GetComponent<CanvasGroup>();
+        blackFadeCanvasGroup.alpha = 1f;
+        blackFadeCanvasGroup.DOFade(0f, 0.5f);
         instance = this;
     }
 
