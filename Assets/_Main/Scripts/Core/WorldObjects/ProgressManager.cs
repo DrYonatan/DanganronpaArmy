@@ -22,8 +22,8 @@ public class ProgressManager : MonoBehaviour
 
     void Start()
     {
-        if(SaveManager.instance != null && SaveManager.instance.currentSaveSlot != -1)
-           LoadValuesFromSave();
+        if (SaveManager.instance != null && SaveManager.instance.currentSaveSlot != -1)
+            LoadValuesFromSave();
         else
         {
             StartNewGame();
@@ -52,15 +52,16 @@ public class ProgressManager : MonoBehaviour
             new Vector3(data.playerPosition[0], data.playerPosition[1], data.playerPosition[2]);
         CameraManager.instance.cameraTransform.rotation =
             Quaternion.Euler(new Vector3(data.playerRotation[0], data.playerRotation[1], data.playerRotation[2]));
-        
+
         VNConversationSegment currentConversation = conversationDatabase.Get(data.currentConversation);
         if (currentConversation != null)
         {
             VNNodePlayer.instance.lineIndex = data.currentLineIndex;
             VNNodePlayer.instance.StartConversation(currentConversation);
-            CameraManager.instance.initialRotation = CameraManager.instance.cameraTransform.rotation;
+            CameraManager.instance.initialRotation = Quaternion.Euler(new Vector3(data.conversationInitialRotation[0],
+                data.conversationInitialRotation[1], data.conversationInitialRotation[2]));
         }
-        
+
         WorldManager.instance.Initialize();
     }
 

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -32,6 +32,7 @@ public class SaveData
     public List<CharacterRankEntry> characterRanks;
     public float[] playerPosition;
     public float[] playerRotation;
+    public float[] conversationInitialRotation;
 
     // Trial stuff
     public int trialSegmentIndex;
@@ -41,7 +42,8 @@ public class SaveData
         int currentLineIndex, string currentMusic, Dictionary<string, ObjectData> charactersData,
         Dictionary<string, ObjectData> objectsData,
         string scene,
-        Dictionary<string, int> characterRanks, Vector3 playerPosition, Vector3 playerRotation, int trialSegmentIndex,
+        Dictionary<string, int> characterRanks, Vector3 playerPosition, Vector3 playerRotation,
+        Vector3 conversationInitialRotation, int trialSegmentIndex,
         float hp)
     {
         this.gameEventIndex = gameEventIndex;
@@ -64,6 +66,7 @@ public class SaveData
 
         this.playerPosition = new float[3];
         this.playerRotation = new float[3];
+        this.conversationInitialRotation = new float[3];
 
         this.playerPosition[0] = playerPosition.x;
         this.playerPosition[1] = playerPosition.y;
@@ -73,6 +76,10 @@ public class SaveData
         this.playerRotation[1] = playerRotation.y;
         this.playerRotation[2] = playerRotation.z;
         
+        this.conversationInitialRotation[0] = conversationInitialRotation.x;
+        this.conversationInitialRotation[1] = conversationInitialRotation.y;
+        this.conversationInitialRotation[2] = conversationInitialRotation.z;
+
         this.trialSegmentIndex = trialSegmentIndex;
         this.hp = hp;
     }
