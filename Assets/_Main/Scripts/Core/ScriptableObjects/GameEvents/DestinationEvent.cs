@@ -1,26 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using DIALOGUE;
 
-[CreateAssetMenu(menuName = "Game Events/Free Roam Event/Destination Event")]
-public class DestinationEvent : FreeRoamEvent
+[CreateAssetMenu(menuName = "Game Events/Destination Event")]
+public class DestinationEvent : GameEvent
 {
-    public GameObject characterPrefab;
-    public string targetRoomName;
+    public Room targetRoom;
 
-    public override void UpdateEvent()
+    public override void CheckIfFinished()
     {
-        base.UpdateEvent();
-
-        if (WorldManager.instance.currentRoom.name.Equals(targetRoomName))
+        if (WorldManager.instance.currentRoom.name.Equals(targetRoom.name))
         {
             isFinished = true;
         }
-    }
-
-
-    public override void PlayEvent()
-    {
+        
+        if(isFinished)
+           OnFinish();
     }
 }

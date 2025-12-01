@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class FallEffect : MonoBehaviour
+public class FallEffect : RoomIntroEffect
 {
     public float height = 5f;
     public float fallSpeed = 5f;
@@ -10,15 +10,11 @@ public class FallEffect : MonoBehaviour
 
     private Vector3 targetPosition;
 
-    void Start()
+    public override IEnumerator PlayEffect()
     {
         targetPosition = transform.position;
         transform.position += new Vector3(0f, height, 0f);
-        StartCoroutine(PlayEffect());
-    }
 
-    private IEnumerator PlayEffect()
-    {
         yield return new WaitForSeconds(delay);
 
         float duration = height / fallSpeed; // simple approximation

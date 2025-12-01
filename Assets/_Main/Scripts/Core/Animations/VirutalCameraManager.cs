@@ -7,7 +7,7 @@ public class VirutalCameraManager : MonoBehaviour
 {
     public static VirutalCameraManager instance { get; private set; }
 
-    public Cinemachine.CinemachineVirtualCamera virtualCamera;
+    public CinemachineVirtualCamera virtualCamera;
     public DollyCameraPitchControl pitchControl;
 
     private void Awake()
@@ -24,8 +24,10 @@ public class VirutalCameraManager : MonoBehaviour
 
     public void AssignVirtualCamera()
     {
-        virtualCamera = GameObject.Find("World/Virtual Camera").GetComponent<Cinemachine.CinemachineVirtualCamera>();
+        virtualCamera = GameObject.Find("World/Virtual Camera").GetComponent<CinemachineVirtualCamera>();
         pitchControl = virtualCamera.GetComponent<DollyCameraPitchControl>();
+        if(VNNodePlayer.instance.currentConversation != null)
+            virtualCamera.gameObject.SetActive(false);
     }
 
     public void DisableVirtualCamera()
@@ -45,9 +47,9 @@ public class VirutalCameraManager : MonoBehaviour
         }
     }
 
-    public void MakeMainCameraFollowVirtualCamera()
+    private void MakeMainCameraFollowVirtualCamera()
     {
-        Camera.main.transform.position = virtualCamera.State.FinalPosition;
+        CameraManager.instance.cameraTransform.position = virtualCamera.State.FinalPosition;
     }
 
     public IEnumerator SlideAcrossRoom(float duration, Vector3 slidingTrackPoisition)

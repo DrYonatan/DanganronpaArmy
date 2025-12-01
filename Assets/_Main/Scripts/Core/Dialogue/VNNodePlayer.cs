@@ -7,6 +7,7 @@ using UnityEngine;
     {
         public static VNNodePlayer instance { get; private set; }
         public VNConversationSegment currentConversation;
+        public int lineIndex;
         private void Awake()
         {
             instance = this;
@@ -14,7 +15,8 @@ using UnityEngine;
         
         public void StartConversation(VNConversationSegment segment)
         {
-            this.currentConversation = segment;
+            currentConversation = segment;
+            VNCharacterManager.instance.characterLayer.anchoredPosition = Vector2.zero;
             foreach (CharacterPositionMapping characterInfo in segment.settings.characterPositions)
             {
                 VNCharacterManager.instance.CreateCharacter(characterInfo);
@@ -30,9 +32,10 @@ using UnityEngine;
 
         IEnumerator RunNodes(List<DialogueNode> nodes)
         {
-            foreach (DialogueNode node in nodes)
+            for (int i = lineIndex; i < nodes.Count; i++)
             {
-                yield return node.Play();
+                yield return nodes[i].Play();
+                lineIndex++;
             }
         }
 
@@ -40,6 +43,8 @@ using UnityEngine;
         {
             VNCharacterManager.instance.DestroyCharacters();
             WorldManager.instance.HandleConversationEnd();
+            currentConversation = null;
+            lineIndex = 0;
         }
 
     }

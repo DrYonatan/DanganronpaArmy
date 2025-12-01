@@ -12,8 +12,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac78edb917e5f4142b7f642498064325, type: 3}
   m_Name: New VN Conversation Segment
   m_EditorClassIdentifier: 
-  CharacterInfos: []
-  nodes: []
+  guid: 0f6774bf5bbe3c6488c2d4c48adf4d5b
+  settings:
+    characterPositions: []
+  nodes:
+  - rid: 6060276672645562368
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 6060276672645562368
+      type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
+        character: {fileID: 0}
+        expressionIndex: 0
+        textData:
+          rid: 6060276672645562369
+    - rid: 6060276672645562369
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: 
+        commands: []

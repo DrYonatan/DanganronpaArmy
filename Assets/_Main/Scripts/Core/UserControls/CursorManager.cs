@@ -83,7 +83,7 @@ public class CursorManager : MonoBehaviour
     {
         interactableNameText.text = name;
         if(fadeCoroutine != null)
-        StopCoroutine(fadeCoroutine);
+           StopCoroutine(fadeCoroutine);
         fadeCoroutine = StartCoroutine(ShowingOrHidingInteractableName(0.1f, show ? 1f : 0f));
     }
 

@@ -103,6 +103,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1903973833702103427}
+  - component: {fileID: 3337327857989841965}
   m_Layer: 0
   m_Name: Misdarim
   m_TagString: Untagged
@@ -155,6 +156,19 @@ Transform:
   - {fileID: 1942264542244671924}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3337327857989841965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 471640884149738624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efe960930e19ebc4598bff97ebb94013, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomIntroEffects: []
 --- !u!1 &977320810611520206
 GameObject:
   m_ObjectHideFlags: 0
@@ -938,7 +952,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9c95be4a451b2348a08bd98fa6e5deb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isAlreadyLooking: 0
   roomToLoad: {fileID: 11400000, guid: 40597d29d5789e9418c6dbb44a9a381c, type: 2}
+  entryPoint: 
 --- !u!1 &2899681128729509865
 GameObject:
   m_ObjectHideFlags: 0

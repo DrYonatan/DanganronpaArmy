@@ -1,86 +1,72 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using CHARACTERS;
-using DIALOGUE;
 
 public class ProgressManager : MonoBehaviour
 {
     public static ProgressManager instance { get; private set; }
-    public List<GameEvent> assetGameEvents;
-    public Dictionary<string, GameEvent> runtimeGameEvents = new ();
+    public List<GameEvent> gameEvents;
 
     public CharactersFreeTimeEventsSO characterEventsAsset;
-    public Dictionary<string, int> charactersRanks = new (); // Free time events ranks for each character
+    public Dictionary<string, int> charactersRanks = new(); // Free time events ranks for each character
+
+    public GameEvent currentGameEvent;
+    public int currentGameEventIndex;
+
+    public ConversationDatabase conversationDatabase;
 
     private void Awake()
     {
         instance = this;
-        // Creates the runtime events themselves without the condition events
-        foreach(GameEvent gameEvent in assetGameEvents) 
+    }
+
+    void Start()
+    {
+        if(SaveManager.instance != null && SaveManager.instance.currentSaveSlot != -1)
+           LoadValuesFromSave();
+        else
         {
-            GameEvent runTimeEvent = Instantiate(gameEvent);
-            runTimeEvent.conditionEvents = new List<GameEvent>();
-            runtimeGameEvents.Add(gameEvent.name, runTimeEvent);
+            StartNewGame();
+        }
+    }
+
+    public void OnEventFinished()
+    {
+        currentGameEventIndex++;
+        currentGameEvent = Instantiate(gameEvents[currentGameEventIndex]);
+        currentGameEvent.OnStart();
+    }
+
+    private void LoadValuesFromSave()
+    {
+        WorldManager.instance.isLoading = true;
+        SaveData data = SaveManager.instance != null ? SaveManager.instance.LoadCurrentSave() : SaveSystem.LoadGame(1);
+        currentGameEventIndex = data.gameEventIndex;
+        currentGameEvent = Instantiate(gameEvents[currentGameEventIndex]);
+        WorldManager.instance.currentRoom = Resources.Load<Room>($"Rooms/{data.currentRoom}");
+        MusicManager.instance.PlaySong(Resources.Load<AudioClip>($"Audio/Music/{data.currentMusic}"));
+        currentGameEvent.charactersData = data.charactersData.ToDictionary(c => c.key, c => c.value);
+        currentGameEvent.objectsData = data.objectsData.ToDictionary(c => c.key, c => c.value);
+
+        CameraManager.instance.cameraTransform.position =
+            new Vector3(data.playerPosition[0], data.playerPosition[1], data.playerPosition[2]);
+        CameraManager.instance.cameraTransform.rotation =
+            Quaternion.Euler(new Vector3(data.playerRotation[0], data.playerRotation[1], data.playerRotation[2]));
+        
+        VNConversationSegment currentConversation = conversationDatabase.Get(data.currentConversation);
+        if (currentConversation != null)
+        {
+            VNNodePlayer.instance.lineIndex = data.currentLineIndex;
+            VNNodePlayer.instance.StartConversation(currentConversation);
+            CameraManager.instance.initialRotation = CameraManager.instance.cameraTransform.rotation;
         }
         
-
-        foreach(var (key, value) in runtimeGameEvents)
-        {
-            foreach(GameEvent conditionEvent in GetAssetEventByName(key).conditionEvents)
-            {
-                value.conditionEvents.Add(runtimeGameEvents[conditionEvent.name]);
-            }
-        }
-
-        foreach(CharacterFreeTimeEvents characterEvents in characterEventsAsset.charactersEvents)
-        {
-            charactersRanks.Add(characterEvents.characterName, 0);
-        }
-
-
+        WorldManager.instance.Initialize();
     }
 
-    public void DecideWhichSceneToPlay()
+    private void StartNewGame()
     {
-        foreach(GameEvent gameEvent in runtimeGameEvents.Values)
-        {
-            if(!gameEvent.isFinished)
-            {
-                if(gameEvent.CheckIfToPlay())
-                {
-                    WorldManager.instance.currentGameEvent = gameEvent;
-                    gameEvent.PlayEvent();
-                }
-            }
-        }
-
-        
-    }
-
-    public GameEvent GetAssetEventByName(string name)
-    {
-        foreach(GameEvent gameEvent in assetGameEvents)
-        {
-            if(gameEvent.name.Equals(name))
-            {
-                return gameEvent;
-            }
-        }
-        return null;
-    }
-
-    public PointAndClickEvent GetEventByName(string name)
-    {
-        foreach(GameEvent gameEvent in runtimeGameEvents.Values)
-        {
-            if(gameEvent is PointAndClickEvent)
-            {
-                if (((PointAndClickEvent)gameEvent).name == name)
-                    return (PointAndClickEvent)gameEvent;
-            }
-            
-        }
-        return null;
+        currentGameEvent = Instantiate(gameEvents[0]);
+        WorldManager.instance.StartLoadingRoom(WorldManager.instance.currentRoom, null);
     }
 }

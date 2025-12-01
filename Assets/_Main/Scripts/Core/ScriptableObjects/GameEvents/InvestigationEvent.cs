@@ -1,10 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
 using DIALOGUE;
 
-[System.Serializable]
+[Serializable]
 public class NameAndEvent
 {
     public string name;
@@ -19,7 +18,7 @@ public class InvestigationEvent : FreeRoamEvent
     public Dictionary<string, GameEvent>
         gameEvents = new Dictionary<string, GameEvent>(); // The string represents the room the event takes place in
 
-    public override void UpdateEvent()
+    public override void CheckIfFinished()
     {
         isFinished = true;
 
@@ -32,13 +31,10 @@ public class InvestigationEvent : FreeRoamEvent
         if (gameEvents.ContainsKey(WorldManager.instance.currentRoom.name) && !isFinished)
         {
             GameEvent gameEvent = gameEvents[WorldManager.instance.currentRoom.name];
-            WorldManager.instance.currentGameEvent = gameEvent;
-            gameEvent.PlayEvent();
+            ProgressManager.instance.currentGameEvent = gameEvent;
+            gameEvent.OnStart();
         }
-    }
-
-    public override void CheckIfFinished()
-    {
+        
         if (isFinished)
             OnFinish();
         else
@@ -46,7 +42,7 @@ public class InvestigationEvent : FreeRoamEvent
     }
 
 
-    public override void PlayEvent()
+    public override void OnStart()
     {
     }
 

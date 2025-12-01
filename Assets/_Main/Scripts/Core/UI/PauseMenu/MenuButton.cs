@@ -12,7 +12,7 @@ public class MenuButton : MonoBehaviour
     {
         buttonTexture.color = isHovered ? Color.red : Color.clear;
     }
-    public void Click()
+    public virtual void Click()
     {
         menuScreenContainer.OpenMenu(menuToOpen);
     }

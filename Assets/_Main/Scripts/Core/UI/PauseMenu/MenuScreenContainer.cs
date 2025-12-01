@@ -6,9 +6,11 @@ public class MenuScreenContainer : MonoBehaviour
     public MenuScreen currentOpenMenu;
     public GeneralMenu generalMenu;
     public bool isSubmenuOpen;
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && isSubmenuOpen && !generalMenu.gameObject.activeSelf && PlayerInputManager.instance.isPaused)
+        if (Input.GetKeyDown(KeyCode.Escape) && isSubmenuOpen && !generalMenu.gameObject.activeSelf &&
+            PlayerInputManager.instance.isPaused)
         {
             CloseMenu();
         }

@@ -71,6 +71,7 @@ namespace CHARACTERS
             {
                 Destroy(characterObj.Value);
             }
+            characterObjects.Clear();
         }
 
         public void SwitchEmotion(Character character, CharacterState expression)

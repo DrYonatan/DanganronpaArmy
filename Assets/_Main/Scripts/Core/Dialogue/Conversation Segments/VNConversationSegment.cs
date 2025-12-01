@@ -15,6 +15,7 @@ public enum CameraLookDirection
 [CreateAssetMenu(menuName = "Data/VN Conversation Segment")]
 public class VNConversationSegment : ScriptableObject
 {
+    public string guid;
     public ConversationSettings settings = new ();
     [SerializeReference] public List<DialogueNode> nodes = new List<DialogueNode>();
 }

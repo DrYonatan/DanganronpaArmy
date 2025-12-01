@@ -1,20 +1,19 @@
 using System.Collections;
 using UnityEngine;
 
-public class BounceEffect : MonoBehaviour
+public class BounceEffect : RoomIntroEffect
 {
     public float delay = 0f;
     public float duration = 1f;
     public float bounceFrequency = 2f; // number of bounces
     public float damping = 5f;         // how quickly it settles
     private Renderer renderer;
-    void Start()
+    void Awake()
     {
         renderer = GetComponent<Renderer>();
-        StartCoroutine(PlayEffect());
     }
 
-    private IEnumerator PlayEffect()
+    public override IEnumerator PlayEffect()
     {
         Vector3 originalScale = transform.localScale;
         Vector3 startScale = new Vector3(originalScale.x, 0.1f, originalScale.z);

@@ -25,7 +25,12 @@ public class PointAndClickRoom : Room
     {
         base.OnLoad();
         VirutalCameraManager.instance.AssignVirtualCamera();
-        return VirutalCameraManager.instance.SlideAcrossRoom(3f, GameObject.Find("World/TrackSlidingPos").transform.position);
+        yield return null;
+    }
+
+    public override IEnumerator AppearAnimation()
+    {
+        yield return VirutalCameraManager.instance.SlideAcrossRoom(3f, GameObject.Find("World/TrackSlidingPos").transform.position);
     }
 
     public override void MovementControl()
@@ -46,10 +51,10 @@ public class PointAndClickRoom : Room
 
         if(Input.GetKey(KeyCode.R))
         {
-            GameEvent currentGameEvent = WorldManager.instance.currentGameEvent;
-            if(currentGameEvent is PointAndClickEvent && !((PointAndClickEvent)(currentGameEvent)).isExitable)
+            if(!WorldManager.instance.currentRoomData.isExitable)
             {
-                VNNodePlayer.instance.StartConversation(WorldManager.instance.currentGameEvent.unallowedText);
+                if(ProgressManager.instance.currentGameEvent.unallowedText != null)
+                   VNNodePlayer.instance.StartConversation(ProgressManager.instance.currentGameEvent.unallowedText);
             }
             
             else
@@ -66,5 +71,10 @@ public class PointAndClickRoom : Room
     {
         verticalRotation = 0f;
         horizontalRotation = 0f;
+    }
+
+    public override void OnConversationEnd()
+    {
+        CameraManager.instance.ReturnToDollyTrack();
     }
 }

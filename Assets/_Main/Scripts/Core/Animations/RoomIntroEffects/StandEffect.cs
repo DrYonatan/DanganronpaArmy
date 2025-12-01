@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StandEffect : MonoBehaviour
+public class StandEffect : RoomIntroEffect
 {
     public float delay = 0f;
     public float duration = 1f;
@@ -17,9 +17,6 @@ public class StandEffect : MonoBehaviour
     {   
         renderer = GetComponent<Renderer>();
         CreateParentGameObject();
-        targetRotation = parentObject.transform.rotation;
-        parentObject.transform.Rotate(degreesOffset);
-        StartCoroutine(PlayEffect());
     }
 
     private void CreateParentGameObject()
@@ -27,13 +24,16 @@ public class StandEffect : MonoBehaviour
         float positionY = transform.GetComponent<Renderer>().bounds.min.y;
         Vector3 parentPosition = new Vector3(transform.position.x, positionY, transform.position.z);
         parentObject = new GameObject(gameObject.name + " Parent");
-        parentObject.transform.SetParent(GameObject.Find("World").transform);
+        parentObject.transform.SetParent(transform.parent);
         parentObject.transform.position = parentPosition;
         transform.SetParent(parentObject.transform);
     }
 
-    private IEnumerator PlayEffect()
+    public override IEnumerator PlayEffect()
     {
+        targetRotation = parentObject.transform.rotation;
+        parentObject.transform.Rotate(degreesOffset);
+        
         renderer.enabled = false;
         yield return new WaitForSeconds(delay);
         renderer.enabled = true;

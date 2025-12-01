@@ -9,48 +9,40 @@ public class CharacterClickEffects : MonoBehaviour
     private Renderer[] renderers;
     private Color[] startColors;
     public static CharacterClickEffects instance { get; private set; }
-    
-    // Start is called before the first frame update
-    void Start()
+
+    void Awake()
     {
         if (instance == null)
         {
             instance = this;
         }
         else
-        DestroyImmediate(gameObject);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+            DestroyImmediate(gameObject);
     }
 
     public void Interact(Transform characterTransform)
     {
-        if(!isRunning && !DialogueSystem.instance.isActive)
+        if (!isRunning && !DialogueSystem.instance.isActive)
         {
-          StartCoroutine(HopCharacter(characterTransform));
-          MakeCharactersDisappear(characterTransform.parent.gameObject);
+            StartCoroutine(HopCharacter(characterTransform));
+            MakeCharactersDisappear(characterTransform.parent.GetComponent<WorldCharactersParent>(), 1f);
         }
     }
 
-    public void MakeCharactersDisappear(GameObject characters)
+    public void MakeCharactersDisappear(WorldCharactersParent characters, float duration)
     {
         if (characters != null)
         {
-        // Get all renderers in this object and its children
-        renderers = characters.GetComponentsInChildren<Renderer>();
+            renderers = characters.GetComponentsInChildren<Renderer>();
 
-        // Store original colors
-        startColors = new Color[renderers.Length];
-        for (int i = 0; i < renderers.Length; i++)
-        {
-            startColors[i] = renderers[i].material.color;
-        }
+            // Store original colors
+            startColors = new Color[renderers.Length];
+            for (int i = 0; i < renderers.Length; i++)
+            {
+                startColors[i] = renderers[i].material.color;
+            }
 
-        StartCoroutine(Fade(1f, 0f, 1f));
+            StartCoroutine(Fade(1f, 0f, duration));
         }
     }
 
@@ -58,17 +50,17 @@ public class CharacterClickEffects : MonoBehaviour
     {
         if (characters != null)
         {
-        // Get all renderers in this object and its children
-        renderers = characters.GetComponentsInChildren<Renderer>();
+            // Get all renderers in this object and its children
+            renderers = characters.GetComponentsInChildren<Renderer>();
 
-        // Store original colors
-        startColors = new Color[renderers.Length];
-        for (int i = 0; i < renderers.Length; i++)
-        {
-            startColors[i] = renderers[i].material.color;
-        }
+            // Store original colors
+            startColors = new Color[renderers.Length];
+            for (int i = 0; i < renderers.Length; i++)
+            {
+                startColors[i] = renderers[i].material.color;
+            }
 
-        StartCoroutine(Fade(renderers[0].material.color.a, 1f, 0.5f));
+            StartCoroutine(Fade(renderers[0].material.color.a, 1f, 0.5f));
         }
     }
 
@@ -90,7 +82,7 @@ public class CharacterClickEffects : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        
+
         elapsedTime = 0;
         while (elapsedTime < duration)
         {
@@ -125,5 +117,14 @@ public class CharacterClickEffects : MonoBehaviour
             yield return null;
         }
 
+        for (int i = 0; i < renderers.Length; i++)
+        {
+            if (renderers[i] != null)
+            {
+                Color newColor = startColors[i];
+                newColor.a = target;
+                renderers[i].material.color = newColor;
+            }
+        }
     }
 }
