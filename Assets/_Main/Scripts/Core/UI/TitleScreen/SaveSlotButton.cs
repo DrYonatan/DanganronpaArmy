@@ -1,6 +1,6 @@
-using DG.Tweening;
+using System.Collections;
 using TMPro;
-using UnityEngine.SceneManagement;
+using UnityEngine;
 
 public class SaveSlotButton : TitleScreenMenuButton
 {
@@ -25,10 +25,16 @@ public class SaveSlotButton : TitleScreenMenuButton
     {
         if (data == null)
             return;
-        image.DOKill();
-        TitleScreenMainMenu.instance.KillAllTweens();
         SoundManager.instance.PlaySoundEffect(soundEffect);
         SaveManager.instance.SelectSaveSlot(slot);
-        SceneManager.LoadScene(SaveManager.instance.LoadCurrentSave().scene);
+        StartCoroutine(SaveSelected());
+        TitleScreenMainMenu.instance.GoToGameAnimation(SaveManager.instance.LoadCurrentSave().scene);
+    }
+
+    private IEnumerator SaveSelected()
+    {
+        TitleScreenMainMenu.instance.activeSubMenu.OutroAnimation();
+        yield return new WaitForSeconds(0.2f);
+        TitleScreenMainMenu.instance.activeSubMenu.gameObject.SetActive(false);
     }
 }

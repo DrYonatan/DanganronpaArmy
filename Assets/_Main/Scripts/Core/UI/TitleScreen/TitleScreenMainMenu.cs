@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class TitleScreenMainMenu : MonoBehaviour
@@ -19,8 +20,10 @@ public class TitleScreenMainMenu : MonoBehaviour
     public Image rightCharacter;
     public Image glow;
     public Image cylinder;
+    public Image glowingCylinder;
     public Image bigRing;
     public Image smallRing;
+    public Image blackOverlay;
 
     public List<Sprite> availableFaceSprites;
 
@@ -89,6 +92,7 @@ public class TitleScreenMainMenu : MonoBehaviour
         rightCharacter.rectTransform.DOAnchorPosX(originalRight + 800f, 0);
         
         cylinder.DOFade(0f, 0f);
+        glowingCylinder.DOFade(0f, 0f);
         bigRing.DOFade(0f, 0f);
         smallRing.DOFade(0f, 0f);
         
@@ -130,9 +134,22 @@ public class TitleScreenMainMenu : MonoBehaviour
         underlay.DOFade(0.5f, 1f).SetLoops(-1, LoopType.Yoyo);
     }
 
-    public void KillAllTweens()
+    public void GoToGameAnimation(string sceneToLoad)
+    {
+        cylinder.rectTransform.DOKill();
+        Sequence seq = DOTween.Sequence();
+        seq.Join(bigRing.rectTransform.DOScale(6f, 0.5f));
+        seq.Join(smallRing.rectTransform.DOScale(6f, 0.5f));
+        seq.Join(glowingCylinder.DOFade(1f, 0.1f));
+        seq.Append(blackOverlay.DOFade(1f, 0.2f));
+        
+        seq.OnComplete(() => GoToGame(sceneToLoad));
+    }
+
+    private void GoToGame(string sceneToLoad)
     {
         DOTween.KillAll();
+        SceneManager.LoadScene(sceneToLoad);
     }
 
     public void QuitGame()
