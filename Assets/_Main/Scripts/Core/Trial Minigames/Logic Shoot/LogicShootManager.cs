@@ -8,7 +8,7 @@ public class LogicShootManager : MonoBehaviour
     public LogicShootUIAnimator animator;
 
     public LogicShootSegment segment;
-    public List<ShootTargetsContainer> activeTargetContainers;
+    public List<ShootTarget> activeTargetContainers;
 
     public float enemyHP;
 
@@ -29,6 +29,7 @@ public class LogicShootManager : MonoBehaviour
         segment = newSegment;
         animator.gameObject.SetActive(true);
         TrialCursorManager.instance.Show();
+        animator.GenerateTargets(segment.stages[0].targets);
         enemyHP = 10;
     }
 
