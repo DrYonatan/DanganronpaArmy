@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,8 +9,7 @@ public class LogicShootManager : MonoBehaviour
     public LogicShootUIAnimator animator;
 
     public LogicShootSegment segment;
-    public List<ShootTarget> activeTargetContainers;
-
+    
     public float enemyHP;
 
     void Awake()
@@ -29,8 +29,17 @@ public class LogicShootManager : MonoBehaviour
         segment = newSegment;
         animator.gameObject.SetActive(true);
         TrialCursorManager.instance.Show();
-        animator.GenerateTargets(segment.stages[0].targets);
         enemyHP = 10;
+        MusicManager.instance.PlaySong(animator.music);
+        StartCoroutine(PlayTargets(segment.stages));
+    }
+
+    private IEnumerator PlayTargets(List<ShootTargetsStage> stages)
+    {
+        foreach (ShootTargetsStage stage in stages)
+        {
+            yield return animator.GenerateTargets(stage.targets);
+        }
     }
 
     private void FinishGame()

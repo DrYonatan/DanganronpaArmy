@@ -15,6 +15,8 @@ public class ShootTargetData
     public string question;
     public List<TargetAreaAnswer> answers;
     public float timeOut;
+    public Vector2 spawnPosition;
+    public Vector2 targetPosition;
 }
 
 [Serializable]

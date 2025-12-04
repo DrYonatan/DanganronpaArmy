@@ -75,6 +75,6 @@ public class ShootTargetArea : MonoBehaviour, IPointerClickHandler
         LogicShootManager.instance.animator.ShowMikbazText((int)Mathf.Floor(avgDistance / 10));
 
         transform.parent.DOLocalRotate(new Vector3(0, 360, 0), 0.1f, RotateMode.FastBeyond360).SetLoops(4)
-            .OnComplete(() => Destroy(transform.parent.gameObject));
+            .OnComplete(() => transform.parent.GetComponent<ShootTarget>().DisappearAnimation());
     }
 }
