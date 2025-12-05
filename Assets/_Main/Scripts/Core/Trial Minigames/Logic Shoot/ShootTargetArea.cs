@@ -19,6 +19,9 @@ public class ShootTargetArea : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (LogicShootManager.instance.coolDown)
+            return;
+        
         RectTransform rt = GetComponent<RectTransform>();
 
         Vector2 localPoint;

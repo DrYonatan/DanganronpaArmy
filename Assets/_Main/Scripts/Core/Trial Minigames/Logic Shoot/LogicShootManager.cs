@@ -11,6 +11,9 @@ public class LogicShootManager : MonoBehaviour
     public LogicShootSegment segment;
     
     public float enemyHP;
+    public float ammo;
+
+    public bool coolDown;
 
     void Awake()
     {
@@ -22,15 +25,32 @@ public class LogicShootManager : MonoBehaviour
     void Update()
     {
         TrialCursorManager.instance.ReticleAsCursor();
+        if (Input.GetMouseButtonDown(0) && !coolDown)
+        {
+            ammo--;
+            StartCoroutine(CoolDown());
+        }
+    }
+
+    private IEnumerator CoolDown()
+    {
+        coolDown = true;
+        
+        yield return new WaitForSeconds(0.2f);
+        
+        coolDown = false;
     }
 
     public void Play(LogicShootSegment newSegment)
     {
         segment = newSegment;
         animator.gameObject.SetActive(true);
+        CharacterCutIn cutIn = Instantiate(segment.cutIn, animator.transform);
+        cutIn.Animate();
         TrialCursorManager.instance.Show();
         enemyHP = 10;
         MusicManager.instance.PlaySong(animator.music);
+        ammo = 30;
         StartCoroutine(PlayTargets(segment.stages));
     }
 

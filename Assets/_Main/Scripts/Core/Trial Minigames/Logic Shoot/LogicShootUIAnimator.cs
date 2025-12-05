@@ -15,7 +15,7 @@ public class LogicShootUIAnimator : MonoBehaviour
     public Image enemyHpBar;
     public List<ShootTarget> targets;
     public RectTransform targetsContainer;
-
+    
     public void ShowMikbazText(int number)
     {
         TextMeshProUGUI mikbazText = Instantiate(mikbazTextPrefab, transform);

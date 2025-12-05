@@ -44,6 +44,9 @@ public class ShootTarget : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (LogicShootManager.instance.coolDown)
+            return;
+        
         Vector2 localPoint;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             rectTransform,

@@ -29,6 +29,8 @@ public class ShootTargetsStage
 public class LogicShootSegment : TrialSegment
 {
     public List<ShootTargetsStage> stages;
+    public CharacterCutIn cutIn;
+
     public override void Play()
     {
         LogicShootManager.instance.Play(this);
