@@ -14,11 +14,18 @@ public class TrialDialogueManager : MonoBehaviour
 
     public GotItAnimator gotItAnimator;
 
+    public CourtTextBoxAnimator animator;
+
     public int currentLineIndex;
 
     private void Awake()
     {
         instance = this;
+    }
+
+    private void Start()
+    {
+        animator = (CourtTextBoxAnimator)DialogueSystem.instance.dialogueBoxAnimator;
     }
     
     public void PlayDiscussion(DiscussionSegment discussion)
@@ -26,7 +33,6 @@ public class TrialDialogueManager : MonoBehaviour
         DialogueSystem.instance.SetTextBox(dialogueContainer);
         DialogueSystem.instance.dialogueBoxAnimator.gameObject.SetActive(true);
         ImageScript.instance.UnFadeToBlack(0.5f);
-        CourtTextBoxAnimator animator = ((CourtTextBoxAnimator)(DialogueSystem.instance.dialogueBoxAnimator));
         animator.ChangeFace(null);
         animator.FaceAppear();
         

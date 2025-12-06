@@ -19,9 +19,6 @@ public class ShootTargetArea : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (LogicShootManager.instance.coolDown)
-            return;
-        
         RectTransform rt = GetComponent<RectTransform>();
 
         Vector2 localPoint;
@@ -75,7 +72,8 @@ public class ShootTargetArea : MonoBehaviour, IPointerClickHandler
         }
 
         float avgDistance = sum / count;
-        LogicShootManager.instance.animator.ShowMikbazText((int)Mathf.Floor(avgDistance / 10));
+        int mikbaz = (int)Mathf.Floor(avgDistance / 10);
+        LogicShootManager.instance.animator.ShowMikbazText(mikbaz);
 
         transform.parent.DOLocalRotate(new Vector3(0, 360, 0), 0.1f, RotateMode.FastBeyond360).SetLoops(4)
             .OnComplete(() => transform.parent.GetComponent<ShootTarget>().DisappearAnimation());

@@ -14,7 +14,7 @@ public class ShootTarget : MonoBehaviour, IPointerClickHandler
     public Vector2 targetPosition;
 
     private bool isDisappearing;
-    
+
     private RectTransform rectTransform;
 
     private void Awake()
@@ -23,16 +23,16 @@ public class ShootTarget : MonoBehaviour, IPointerClickHandler
     }
 
     public void LifeTime()
-    { 
-       StartCoroutine(LifeTimeRoutine());
+    {
+        StartCoroutine(LifeTimeRoutine());
     }
 
     private IEnumerator LifeTimeRoutine()
     {
-        rectTransform.DOAnchorPos(targetPosition, timeOut);
+        rectTransform.DOAnchorPos(targetPosition, timeOut).SetEase(Ease.Linear);
         yield return new WaitForSeconds(timeOut);
-        if(!isDisappearing)
-           Destroy(gameObject);
+        if (!isDisappearing)
+            Destroy(gameObject);
     }
 
     public void DisappearAnimation()
@@ -44,9 +44,6 @@ public class ShootTarget : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (LogicShootManager.instance.coolDown)
-            return;
-        
         Vector2 localPoint;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             rectTransform,

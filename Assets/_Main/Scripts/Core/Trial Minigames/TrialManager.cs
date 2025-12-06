@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using _Main.Scripts.Court;
+using DG.Tweening;
 using DIALOGUE;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -101,5 +102,17 @@ public class TrialManager : MonoBehaviour
         currentIndex = data.trialSegmentIndex;
         TrialDialogueManager.instance.currentLineIndex = data.currentLineIndex;
         playerStats.hp = data.hp;
+    }
+
+    public void FadeCharactersExcept(Character character, float opacity)
+    {
+        foreach (CharacterStand stand in characterStands)
+        {
+            if (stand.character != character)
+            {
+                stand.spriteRenderer.DOFade(opacity, 0.5f);
+                stand.silhouetteRenderer.DOFade(opacity, 0.5f);
+            }
+        }
     }
 }

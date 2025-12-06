@@ -27,5 +27,11 @@ public class CourtTextBoxAnimator : TextBoxAnimations
         base.Initialize();
         characterFace.discussionFaceContainer.DOScaleY(0f, 0f);
     }
+
+    public CharacterCutIn InstantiateCutIn(GameObject cutIn)
+    {
+        CharacterCutIn characterCutIn = Instantiate(cutIn, transform).GetComponent<CharacterCutIn>();
+        return characterCutIn;
+    }
     
 }
