@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ShootTargetArea : MonoBehaviour, IPointerClickHandler
+public class ShootTargetArea : MonoBehaviour
 {
     public List<RectTransform> holes = new List<RectTransform>();
     public bool isCorrect;
@@ -17,33 +17,20 @@ public class ShootTargetArea : MonoBehaviour, IPointerClickHandler
         image = GetComponent<Image>();
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public void CheckShoot()
     {
-        RectTransform rt = GetComponent<RectTransform>();
-
-        Vector2 localPoint;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            rt,
-            eventData.position,
-            eventData.pressEventCamera,
-            out localPoint
-        );
-
-        // Spawn the marker inside the object
-        RectTransform hole = Instantiate(LogicShootManager.instance.animator.holePrefab, rt);
-        hole.anchoredPosition = localPoint;
-
-        holes.Add(hole);
-
         if (isCorrect)
-            CheckShoot();
+        {
+            CorrectAnswer();
+        }
+
         else
         {
             WrongAnswer();
         }
     }
 
-    private void CheckShoot()
+    private void CorrectAnswer()
     {
         image.color = Color.green;
         if (holes.Count == 5)

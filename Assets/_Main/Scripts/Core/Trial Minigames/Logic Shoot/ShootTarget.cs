@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ShootTarget : MonoBehaviour, IPointerClickHandler
+public class ShootTarget : MonoBehaviour
 {
     public TextMeshProUGUI questionText;
     public List<ShootTargetArea> areas;
@@ -40,20 +40,5 @@ public class ShootTarget : MonoBehaviour, IPointerClickHandler
         rectTransform.DOKill();
         isDisappearing = true;
         rectTransform.DOAnchorPosY(-1000, 0.5f).OnComplete(() => Destroy(gameObject));
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        Vector2 localPoint;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            rectTransform,
-            eventData.position,
-            eventData.pressEventCamera,
-            out localPoint
-        );
-
-        // Spawn the marker inside the object
-        RectTransform hole = Instantiate(LogicShootManager.instance.animator.holePrefab, rectTransform);
-        hole.anchoredPosition = localPoint;
     }
 }

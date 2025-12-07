@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class LogicShootManager : MonoBehaviour
 {
@@ -9,6 +11,8 @@ public class LogicShootManager : MonoBehaviour
     public LogicShootUIAnimator animator;
 
     public LogicShootSegment segment;
+    
+    public GraphicRaycaster raycaster;
 
     public float enemyHP;
     public float ammo;
@@ -28,8 +32,50 @@ public class LogicShootManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && !coolDown)
         {
             ammo--;
+            ProcessShot();
             StartCoroutine(CoolDown());
         }
+    }
+    private void ProcessShot()
+    {
+        PointerEventData pointerData = new PointerEventData(EventSystem.current);
+        pointerData.position = Input.mousePosition;
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        raycaster.Raycast(pointerData, results);
+
+        foreach (RaycastResult r in results)
+        {
+            var go = r.gameObject;
+
+            RectTransform hole = CreateHole(go);
+            
+            ShootTargetArea area = go.GetComponent<ShootTargetArea>();
+            if (area != null)
+            {
+                area.holes.Add(hole);
+                area.CheckShoot();
+                return;
+            }
+        }
+    }
+
+    private RectTransform CreateHole(GameObject go)
+    {
+        RectTransform rt = go.GetComponent<RectTransform>();
+
+        Vector2 localPoint;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            rt,
+            Input.mousePosition,
+            CameraController.instance.camera,
+            out localPoint
+        );
+            
+        RectTransform hole = Instantiate(animator.holePrefab, go.transform);
+        hole.anchoredPosition = localPoint;
+        
+        return hole;
     }
 
     private IEnumerator CoolDown()
@@ -92,6 +138,7 @@ public class LogicShootManager : MonoBehaviour
     private void FinishGame()
     {
         segment.Finish();
+        TrialManager.instance.FadeCharactersExcept(segment.character, 1f);
     }
     
     public void DamageEnemy(float amount)
