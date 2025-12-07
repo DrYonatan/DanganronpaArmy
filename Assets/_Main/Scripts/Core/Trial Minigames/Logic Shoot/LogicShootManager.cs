@@ -131,6 +131,7 @@ public class LogicShootManager : MonoBehaviour
     {
         foreach (ShootTargetsStage stage in stages)
         {
+            MoveCameraToCenter(stage.cameraStartPosition);
             yield return animator.GenerateTargets(stage.targets);
         }
     }
@@ -150,5 +151,11 @@ public class LogicShootManager : MonoBehaviour
         {
             FinishGame();
         }
+    }
+
+    private void MoveCameraToCenter(Vector3 from)
+    {
+        CameraController.instance.cameraTransform.localPosition = from;
+        StartCoroutine(CameraController.instance.MoveAndRotate(Vector3.zero, Vector3.zero, 1f));
     }
 }

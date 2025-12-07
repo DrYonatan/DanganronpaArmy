@@ -22,6 +22,7 @@ public class ShootTargetData
 [Serializable]
 public class ShootTargetsStage
 {
+    public Vector3 cameraStartPosition;
     public List<ShootTargetData> targets;
 }
 
@@ -31,7 +32,7 @@ public class LogicShootSegment : TrialSegment
     public List<ShootTargetsStage> stages;
     public CharacterCutIn cutIn;
     public Character character;
-
+    
     public override void Play()
     {
         LogicShootManager.instance.Play(this);

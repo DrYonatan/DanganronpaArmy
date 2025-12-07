@@ -10,14 +10,17 @@ public class LogicShootUIAnimator : MonoBehaviour
     public TextMeshProUGUI mikbazTextPrefab;
     public RectTransform holePrefab;
     public ShootTarget targetPrefab;
+    public RectTransform bulletImagePrefab;
+
     public AudioClip music;
 
     public Image enemyHpBar;
+    public RectTransform flyingBulletSpawn;
     public List<ShootTarget> targets;
     public RectTransform targetsContainer;
-    
+
     public MinigameStartAnimation startAnimation;
-    
+
     public void ShowMikbazText(int number)
     {
         TextMeshProUGUI mikbazText = Instantiate(mikbazTextPrefab, transform);
@@ -36,7 +39,6 @@ public class LogicShootUIAnimator : MonoBehaviour
     {
         Destroy(mikbaz);
         LogicShootManager.instance.DamageEnemy(amountToDamage);
-
     }
 
     private float GetMaxDuration(List<ShootTargetData> shootTargets)
@@ -68,7 +70,7 @@ public class LogicShootUIAnimator : MonoBehaviour
                 newTarget.areas[i].answer.text = target.answers[i].answer;
                 newTarget.timeOut = target.timeOut;
                 newTarget.GetComponent<RectTransform>().anchoredPosition = target.spawnPosition;
-                newTarget.targetPosition =  target.targetPosition;
+                newTarget.targetPosition = target.targetPosition;
                 newTarget.LifeTime();
             }
         }
@@ -81,5 +83,5 @@ public class LogicShootUIAnimator : MonoBehaviour
         MinigameStartAnimation animation = Instantiate(startAnimation, TrialManager.instance.globalUI);
         animation.Animate(0f);
     }
-    
+
 }
