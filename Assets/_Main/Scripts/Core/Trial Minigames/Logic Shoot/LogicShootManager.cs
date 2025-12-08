@@ -102,10 +102,6 @@ public class LogicShootManager : MonoBehaviour
 
     private IEnumerator PlayGame()
     {
-        CharacterCutIn cutIn = Instantiate(segment.cutIn, TrialManager.instance.globalUI);
-        cutIn.Animate();
-        yield return new WaitForSeconds(3f);
-
         ImageScript.instance.FadeToBlack(0.2f);
         yield return CameraController.instance.DiscussionOutroMovement(2.5f);
         ImageScript.instance.UnFadeToBlack(0.2f);
