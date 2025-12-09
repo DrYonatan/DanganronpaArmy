@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,7 +27,6 @@ public class PlayerBarsAnimator : MonoBehaviour
 
     void Awake()
     {
-        SetBarsFillAmount(TrialManager.instance.playerStats.hp, TimeManipulationManager.instance.concentration);
     }
 
     public void IncreaseHealth(float amount, float duration)
@@ -54,22 +51,20 @@ public class PlayerBarsAnimator : MonoBehaviour
     {
         globalHealthMeter.DOKill();
         debateHealthMeter.DOKill();
-
-        float newFillAmount = globalHealthMeter.fillAmount - amount / fullHpImageDivideAmount;
-
+        
         BlinkMeter(globalHealthMeter, Color.red, 6);
         BlinkMeter(debateHealthMeter, Color.red, 6);
 
         SoundManager.instance.PlaySoundEffect(damageSound);
 
-        ChangeHealthFillAmount(newFillAmount, duration);
+        ChangeHealthFillAmount(amount / fullHpImageDivideAmount, duration);
     }
 
-    public void DecreaseHealthFromMeter(Image meter, float amount, float duration)
+    public void DecreaseHealthFromMeter(Image meter, float newAmount, float duration)
     {
         meter.DOKill();
         BlinkMeter(meter, Color.red, 6);
-        float newFillAmount = meter.fillAmount - amount / 10;
+        float newFillAmount = newAmount / 10;
 
         meter.DOFillAmount(newFillAmount, duration);
     }
@@ -109,7 +104,7 @@ public class PlayerBarsAnimator : MonoBehaviour
         BlinkMeter(debateConcentrationMeter, Color.blue, -1);
     }
 
-    private void SetBarsFillAmount(float healthFillAmount, float concentrationFillAmount)
+    public void SetBarsFillAmount(float healthFillAmount, float concentrationFillAmount)
     {
         float newHealthFillAmount = healthFillAmount / fullHpImageDivideAmount;
         float newConcentrationFillAmount = concentrationFillAmount / fullConcentrationImageDivideAmount;

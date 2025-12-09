@@ -10,14 +10,14 @@ public class LogicShootUIAnimator : MonoBehaviour
     public TextMeshProUGUI mikbazTextPrefab;
     public RectTransform holePrefab;
     public ShootTarget targetPrefab;
-    public RectTransform bulletImagePrefab;
 
     public AudioClip music;
 
+    public Image playerHpBar;
     public Image enemyHpBar;
-    public RectTransform flyingBulletSpawn;
-    public List<ShootTarget> targets;
+    
     public RectTransform targetsContainer;
+    public TextMeshProUGUI ammoNumberText;
 
     public MinigameStartAnimation startAnimation;
 
@@ -71,6 +71,7 @@ public class LogicShootUIAnimator : MonoBehaviour
                 newTarget.timeOut = target.timeOut;
                 newTarget.GetComponent<RectTransform>().anchoredPosition = target.spawnPosition;
                 newTarget.targetPosition = target.targetPosition;
+                newTarget.movementTime =  target.movementTime;
                 newTarget.LifeTime();
             }
         }
@@ -80,8 +81,19 @@ public class LogicShootUIAnimator : MonoBehaviour
 
     public void PlayStartAnimation()
     {
-        MinigameStartAnimation animation = Instantiate(startAnimation, TrialManager.instance.globalUI);
-        animation.Animate(0f);
+        MinigameStartAnimation anim = Instantiate(startAnimation, TrialManager.instance.globalUI);
+        anim.Animate(0f);
+    }
+
+    public void UpdateAmmo(int currentAmmo)
+    {
+        string pre = currentAmmo < 10 ? "0" : "";
+        ammoNumberText.text = pre + currentAmmo;
+    }
+
+    public void UpdatePlayerHp(float currentHp)
+    {
+        playerHpBar.fillAmount = currentHp / TrialManager.instance.barsAnimator.fullHpImageDivideAmount;
     }
 
 }

@@ -18,7 +18,7 @@ public class LogicShootManager : MonoBehaviour
     public AnimationCurve cameraCurve;
 
     public float enemyHP;
-    public float ammo;
+    public int ammo;
 
     public bool coolDown;
 
@@ -32,9 +32,10 @@ public class LogicShootManager : MonoBehaviour
     void Update()
     {
         TrialCursorManager.instance.ReticleAsCursor();
-        if (Input.GetMouseButtonDown(0) && !coolDown)
+        if (Input.GetMouseButtonDown(0) && !coolDown && ammo > 0)
         {
             ammo--;
+            animator.UpdateAmmo(ammo);
             ProcessShot();
             StartCoroutine(CoolDown());
         }
@@ -96,6 +97,10 @@ public class LogicShootManager : MonoBehaviour
         segment = newSegment;
         enemyHP = 10;
         ammo = 30;
+        
+        animator.UpdatePlayerHp(TrialManager.instance.playerStats.hp);
+        animator.UpdateAmmo(ammo);
+        
 
         StartCoroutine(PlayGame());
     }
@@ -146,12 +151,17 @@ public class LogicShootManager : MonoBehaviour
     public void DamageEnemy(float amount)
     {
         enemyHP -= amount;
-        TrialManager.instance.barsAnimator.DecreaseHealthFromMeter(animator.enemyHpBar, amount, 0.2f);
+        TrialManager.instance.barsAnimator.DecreaseHealthFromMeter(animator.enemyHpBar, enemyHP, 0.2f);
 
         if (enemyHP <= 0)
         {
             FinishGame();
         }
+    }
+
+    public void DamagePlayer(float amount)
+    {
+        TrialManager.instance.DecreaseHealthFromMeter(animator.playerHpBar, amount);
     }
 
     private void MoveCameraToCenter(Vector3 from)

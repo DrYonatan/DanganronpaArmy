@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace DIALOGUE
 {
@@ -39,20 +38,6 @@ namespace DIALOGUE
                 {
                     TogglePause();
                 }
-            }
-
-            if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                SaveManager.instance.SaveGameVn(1);
-            }
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                SaveManager.instance.SaveGameTrial(2);
-            }
-            
-            if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                SaveManager.instance.SaveGameVn(2);
             }
         }
 

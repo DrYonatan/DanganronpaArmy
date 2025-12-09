@@ -38,8 +38,6 @@ namespace DIALOGUE
 
         public Coroutine PlayNodeText(DialogueNode node)
         {
-            // StopPreviousText();
-
             process = dialogueSystem.StartCoroutine(RunNodeText(node));
 
             return process;

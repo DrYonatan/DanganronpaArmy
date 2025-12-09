@@ -41,6 +41,7 @@ public class ShootTargetArea : MonoBehaviour
 
     private void WrongAnswer()
     {
+        LogicShootManager.instance.DamagePlayer(0.5f);
         image.DOColor(Color.red, 0.05f).SetLoops(5, LoopType.Yoyo).OnComplete(() => image.color = Color.red);
     }
 

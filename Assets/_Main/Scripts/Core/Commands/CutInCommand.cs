@@ -19,6 +19,8 @@ public class CutInCommand : Command
         yield return screenShatter.ScreenShatter();
         
         ImageScript.instance.UnFadeToBlack(0.2f);
+        
+        
     }
 
 #if UNITY_EDITOR

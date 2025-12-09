@@ -42,7 +42,7 @@ public class PromptEvidenceSelection : Command
 
     IEnumerator OnWrong()
     {
-        TrialManager.instance.DecreaseHealth(1f);
+        TrialManager.instance.DecreaseHealthDefault(1f);
         yield return TrialDialogueManager.instance.RunNodes(UtilityNodesRuntimeBank.instance.nodesCollection.wrongAnswer);
         yield return Execute();
     }

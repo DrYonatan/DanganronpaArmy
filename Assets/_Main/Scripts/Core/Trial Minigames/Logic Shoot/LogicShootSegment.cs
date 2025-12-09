@@ -17,6 +17,7 @@ public class ShootTargetData
     public float timeOut;
     public Vector2 spawnPosition;
     public Vector2 targetPosition;
+    public float movementTime = 3f;
 }
 
 [Serializable]
