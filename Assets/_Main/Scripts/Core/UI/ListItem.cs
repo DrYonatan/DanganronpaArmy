@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EvidenceItem : MonoBehaviour
+public class ListItem : MonoBehaviour
 {
     public TextMeshProUGUI text;
     public Image background;
