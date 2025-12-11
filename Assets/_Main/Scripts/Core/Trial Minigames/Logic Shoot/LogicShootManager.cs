@@ -16,9 +16,10 @@ public class LogicShootManager : MonoBehaviour
     public GraphicRaycaster raycaster;
     
     public AnimationCurve cameraCurve;
+    
+    public RifleManager rifleManager;
 
     public float enemyHP;
-    public int ammo;
 
     public bool coolDown;
 
@@ -32,10 +33,10 @@ public class LogicShootManager : MonoBehaviour
     void Update()
     {
         TrialCursorManager.instance.ReticleAsCursor();
-        if (Input.GetMouseButtonDown(0) && !coolDown && ammo > 0)
+        if (Input.GetMouseButtonDown(0) && !coolDown && rifleManager.ammo > 0)
         {
-            ammo--;
-            animator.UpdateAmmo(ammo);
+            rifleManager.ammo--;
+            animator.UpdateAmmo(rifleManager.ammo);
             ProcessShot();
             StartCoroutine(CoolDown());
         }
@@ -96,10 +97,10 @@ public class LogicShootManager : MonoBehaviour
     {
         segment = newSegment;
         enemyHP = 10;
-        ammo = 30;
+        rifleManager.ammo = 30;
         
         animator.UpdatePlayerHp(TrialManager.instance.playerStats.hp);
-        animator.UpdateAmmo(ammo);
+        animator.UpdateAmmo(rifleManager.ammo);
         
 
         StartCoroutine(PlayGame());

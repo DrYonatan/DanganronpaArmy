@@ -64,6 +64,7 @@ public class PlayerBarsAnimator : MonoBehaviour
     {
         meter.DOKill();
         BlinkMeter(meter, Color.red, 6);
+        meter.color = Color.white;
         float newFillAmount = newAmount / 10;
 
         meter.DOFillAmount(newFillAmount, duration);
