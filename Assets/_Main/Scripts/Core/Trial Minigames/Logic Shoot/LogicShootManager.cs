@@ -14,14 +14,16 @@ public class LogicShootManager : MonoBehaviour
     public LogicShootSegment segment;
 
     public GraphicRaycaster raycaster;
-    
+
     public AnimationCurve cameraCurve;
-    
+
     public RifleManager rifleManager;
 
     public float enemyHP;
 
     public bool coolDown;
+
+    private bool isRifleUp;
 
     void Awake()
     {
@@ -33,12 +35,50 @@ public class LogicShootManager : MonoBehaviour
     void Update()
     {
         TrialCursorManager.instance.ReticleAsCursor();
-        if (Input.GetMouseButtonDown(0) && !coolDown && rifleManager.ammo > 0)
+        if (Input.GetMouseButtonDown(0) && !isRifleUp && rifleManager.IsRifleIntact())
         {
-            rifleManager.ammo--;
-            animator.UpdateAmmo(rifleManager.ammo);
-            ProcessShot();
-            StartCoroutine(CoolDown());
+            Shoot();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            if (!isRifleUp)
+            {
+                isRifleUp = true;
+                Time.timeScale = 0f;
+                rifleManager.RaiseRifle();
+            }
+            else
+            {
+                isRifleUp = false;
+                Time.timeScale = 1f;
+                rifleManager.PutRifleDown();
+            }
+        }
+    }
+
+    private void Shoot()
+    {
+        rifleManager.ammo--;
+        animator.UpdateAmmo(rifleManager.ammo);
+        ProcessShot();
+        StartCoroutine(CoolDown());
+        
+        RandomizeRifleStuck();
+    }
+
+    private void RandomizeRifleStuck()
+    {
+        int number = Random.Range(1, 5);
+
+        switch (number)
+        {
+            case 1:
+                rifleManager.RifleStuckTypeOne();
+                break;
+            case 2:
+                rifleManager.RifleStuckTypeTwo();
+                break;
         }
     }
 
@@ -54,14 +94,19 @@ public class LogicShootManager : MonoBehaviour
         {
             var go = r.gameObject;
 
-            RectTransform hole = CreateHole(go);
-
+            ShootTarget target = go.GetComponent<ShootTarget>();
             ShootTargetArea area = go.GetComponent<ShootTargetArea>();
-            if (area != null)
+
+            if (target != null || area != null)
             {
-                area.holes.Add(hole);
-                area.CheckShoot();
-                return;
+                RectTransform hole = CreateHole(go);
+
+                if (area != null)
+                {
+                    area.holes.Add(hole);
+                    area.CheckShoot();
+                    return;
+                }
             }
         }
     }
@@ -97,11 +142,12 @@ public class LogicShootManager : MonoBehaviour
     {
         segment = newSegment;
         enemyHP = 10;
-        rifleManager.ammo = 30;
         
+        rifleManager.InitializeRifle();
+
         animator.UpdatePlayerHp(TrialManager.instance.playerStats.hp);
         animator.UpdateAmmo(rifleManager.ammo);
-        
+        rifleManager.PutRifleDown();
 
         StartCoroutine(PlayGame());
     }
