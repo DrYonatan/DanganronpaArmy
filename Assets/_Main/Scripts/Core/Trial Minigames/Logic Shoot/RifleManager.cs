@@ -17,6 +17,7 @@ public class RifleManager : MonoBehaviour
     public int ammo;
     public bool isStackIn;
     public int bulletsInChamber;
+    public int stacksLeft = 5;
 
     public bool isAlreadyPullingHandle;
 
@@ -67,7 +68,7 @@ public class RifleManager : MonoBehaviour
             bulletsInChamber = 0;
         }
 
-        else if (bulletsInChamber == 0)
+        else if (bulletsInChamber == 0 && isStackIn)
         {
             bulletsInChamber = 1;
         }
@@ -78,7 +79,9 @@ public class RifleManager : MonoBehaviour
     public void PushStackIn()
     {
         isStackIn = true;
+        LogicShootManager.instance.animator.switchStacksButton.interactable = false;
         stack.DOAnchorPos(stackInPosition, 0.2f).SetUpdate(true);
+        rifle.localRotation = Quaternion.Euler(Vector3.zero);
         rifle.DOLocalRotate(new Vector3(0, 0, 15), 0.2f).SetUpdate(true).SetLoops(2, LoopType.Yoyo);
         rifle.DOAnchorPosY(50, 0.2f).SetUpdate(true).SetLoops(2, LoopType.Yoyo);
     }
@@ -86,6 +89,7 @@ public class RifleManager : MonoBehaviour
     public void PullStackOut()
     {
         isStackIn = false;
+        LogicShootManager.instance.animator.switchStacksButton.interactable = true;
         stack.DOAnchorPos(stackOutPosition, 0.2f).SetUpdate(true);
     }
 
@@ -111,12 +115,18 @@ public class RifleManager : MonoBehaviour
     public void RifleStuckTypeOne()
     {
         isStackIn = false;
-        stack.DOAnchorPos(stackInPosition + new Vector2(2, 30), 0).SetUpdate(true);
+        stack.DOAnchorPos(stackInPosition + new Vector2(2, -10), 0).SetUpdate(true);
     }
 
     public void RifleStuckTypeTwo()
     {
         bulletsInChamber = 2;
+        UpdateBulletChamber();
+    }
+
+    public void OutOfAmmo()
+    {
+        bulletsInChamber = 0;
         UpdateBulletChamber();
     }
 
@@ -131,5 +141,27 @@ public class RifleManager : MonoBehaviour
         flyingBullet.DOAnchorPos(flyingBulletOriginalPosition + new Vector2(-30, -1000), 1f).SetUpdate(true);
         flyingBullet.DOLocalRotate(new Vector3(0, 0, 360), 0.2f, RotateMode.FastBeyond360).SetLoops(3, LoopType.Restart)
             .SetUpdate(true);
+    }
+
+    public void TakeNewStack()
+    {
+        if (stacksLeft <= 0 || isStackIn)
+            return;
+
+        stacksLeft--;
+        ammo = 30;
+
+        Vector2 stackOriginalPosition = stack.anchoredPosition;
+
+        Sequence seq = DOTween.Sequence();
+        seq.Append(stack.DOAnchorPos(stackOriginalPosition + new Vector2(20, -1000), 0.5f).SetUpdate(true));
+        seq.Join(stack.DOLocalRotate(new Vector3(0, 0, 360), 0.2f, RotateMode.FastBeyond360)
+            .SetLoops(3, LoopType.Restart).SetUpdate(true));
+        seq.AppendCallback(() => stack.anchoredPosition = stackOriginalPosition - new Vector2(0, 1000)).SetUpdate(true);
+        seq.AppendCallback(() => LogicShootManager.instance.animator.RemoveStack(stacksLeft));
+        seq.AppendCallback(() => LogicShootManager.instance.animator.UpdateAmmo(ammo));
+        seq.Join(LogicShootManager.instance.animator.ammoNumberText.DOColor(Color.green, 0.1f)
+            .SetLoops(2, LoopType.Yoyo).SetUpdate(true));
+        seq.Append(stack.DOAnchorPosY(stackOriginalPosition.y, 0.3f)).SetUpdate(true);
     }
 }

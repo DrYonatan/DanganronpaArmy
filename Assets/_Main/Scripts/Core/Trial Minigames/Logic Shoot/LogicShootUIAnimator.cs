@@ -10,16 +10,33 @@ public class LogicShootUIAnimator : MonoBehaviour
     public TextMeshProUGUI mikbazTextPrefab;
     public RectTransform holePrefab;
     public ShootTarget targetPrefab;
+    public ShootTarget finalTargetPrefab;
 
     public AudioClip music;
 
     public Image playerHpBar;
     public Image enemyHpBar;
-    
+    public TextMeshProUGUI finalQuestionText;
+
     public RectTransform targetsContainer;
     public TextMeshProUGUI ammoNumberText;
+    public Button switchStacksButton;
 
     public MinigameStartAnimation startAnimation;
+
+    public List<Image> stacks;
+
+    public RawImage blackAndWhiteScreenOverlay;
+
+    public List<ShootTarget> activeTargets;
+
+    public void Initialize()
+    {
+        foreach (Image stack in stacks)
+        {
+            stack.color = Color.white;
+        }
+    }
 
     public void ShowMikbazText(int number)
     {
@@ -32,7 +49,7 @@ public class LogicShootUIAnimator : MonoBehaviour
             .SetEase(Ease.InCubic));
         seq.Join(mikbazText.rectTransform.DOScale(0.1f, 1f).SetEase(Ease.InCubic));
 
-        seq.OnComplete(() => OnMikbazFinish(mikbazText.gameObject, (10f - number) / 10f));
+        seq.OnComplete(() => OnMikbazFinish(mikbazText.gameObject, (10f - number) / 5f));
     }
 
     private void OnMikbazFinish(GameObject mikbaz, float amountToDamage)
@@ -71,12 +88,16 @@ public class LogicShootUIAnimator : MonoBehaviour
                 newTarget.timeOut = target.timeOut;
                 newTarget.GetComponent<RectTransform>().anchoredPosition = target.spawnPosition;
                 newTarget.targetPosition = target.targetPosition;
-                newTarget.movementTime =  target.movementTime;
+                newTarget.movementTime = target.movementTime;
                 newTarget.LifeTime();
             }
+
+            activeTargets.Add(newTarget);
         }
 
         yield return new WaitForSeconds(duration);
+
+        activeTargets.Clear();
     }
 
     public void PlayStartAnimation()
@@ -96,4 +117,62 @@ public class LogicShootUIAnimator : MonoBehaviour
         playerHpBar.fillAmount = currentHp / TrialManager.instance.barsAnimator.fullHpImageDivideAmount;
     }
 
+    public void RemoveStack(int index)
+    {
+        stacks[index].DOColor(Color.black, 0.1f).SetUpdate(true);
+    }
+
+    public IEnumerator ShowBlackAndWhite()
+    {
+        yield return new WaitForEndOfFrame();
+        Texture2D screenShot = ScreenCapture.CaptureScreenshotAsTexture();
+        Texture2D newScreenShot = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
+        newScreenShot.SetPixels(screenShot.GetPixels());
+        newScreenShot.Apply();
+
+        blackAndWhiteScreenOverlay.texture = newScreenShot;
+        blackAndWhiteScreenOverlay.DOFade(1f, 0f).SetUpdate(true);
+    }
+
+    public IEnumerator ShowFinalQuestion(ShootTargetData data)
+    {
+        foreach (ShootTarget target in activeTargets)
+        {
+            if (target != null)
+            {
+                target.transform.DOKill();
+                target.canvasGroup.DOFade(0f, 0.1f).OnComplete(() => Destroy(target));
+            }
+            
+        }
+
+        activeTargets.Clear();
+
+        yield return new WaitForSeconds(0.5f);
+
+        finalQuestionText.text = data.question;
+        finalQuestionText.DOFade(1f, 0.2f);
+
+        ShootTarget finalTarget = Instantiate(finalTargetPrefab, targetsContainer);
+        for (int i = 0; i < finalTarget.areas.Count; i++)
+        {
+            finalTarget.areas[i].isCorrect = data.answers[i].isCorrect;
+            finalTarget.areas[i].answer.text = data.answers[i].answer;
+        }
+
+        finalTarget.timeOut = data.timeOut;
+        finalTarget.GetComponent<RectTransform>().anchoredPosition = data.spawnPosition;
+        finalTarget.targetPosition = data.targetPosition;
+        finalTarget.movementTime = data.movementTime;
+        finalTarget.LifeTime();
+
+        yield return new WaitForSeconds(data.timeOut);
+
+        LogicShootManager.instance.ReturnToGame();
+    }
+
+    public void StopShowingFinalQuestion()
+    {
+        finalQuestionText.DOFade(0f, 0.2f);
+    }
 }

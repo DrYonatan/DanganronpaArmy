@@ -1,10 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using _Main.Scripts.Court;
 using DG.Tweening;
 using DIALOGUE;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 

@@ -2,14 +2,13 @@ using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class ShootTargetArea : MonoBehaviour
 {
     public List<RectTransform> holes = new List<RectTransform>();
     public bool isCorrect;
-    private Image image;
+    protected Image image;
     public TextMeshProUGUI answer;
 
     private void Awake()
@@ -30,16 +29,18 @@ public class ShootTargetArea : MonoBehaviour
         }
     }
 
-    private void CorrectAnswer()
+    protected virtual void CorrectAnswer()
     {
         image.color = Color.green;
         if (holes.Count == 5)
         {
+            transform.parent.DOLocalRotate(new Vector3(0, 360, 0), 0.1f, RotateMode.FastBeyond360).SetLoops(4)
+                .OnComplete(() => transform.parent.GetComponent<ShootTarget>().DisappearAnimation());
             CalculateGrouping();
         }
     }
 
-    private void WrongAnswer()
+    protected virtual void WrongAnswer()
     {
         LogicShootManager.instance.DamagePlayer(0.5f);
         image.DOColor(Color.red, 0.05f).SetLoops(5, LoopType.Yoyo).OnComplete(() => image.color = Color.red);
@@ -62,8 +63,5 @@ public class ShootTargetArea : MonoBehaviour
         float avgDistance = sum / count;
         int mikbaz = (int)Mathf.Floor(avgDistance / 10);
         LogicShootManager.instance.animator.ShowMikbazText(mikbaz);
-
-        transform.parent.DOLocalRotate(new Vector3(0, 360, 0), 0.1f, RotateMode.FastBeyond360).SetLoops(4)
-            .OnComplete(() => transform.parent.GetComponent<ShootTarget>().DisappearAnimation());
     }
 }

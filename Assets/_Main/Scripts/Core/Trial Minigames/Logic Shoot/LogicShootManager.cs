@@ -25,6 +25,8 @@ public class LogicShootManager : MonoBehaviour
 
     private bool isRifleUp;
 
+    public bool isActive;
+    
     void Awake()
     {
         if (instance != null)
@@ -35,7 +37,7 @@ public class LogicShootManager : MonoBehaviour
     void Update()
     {
         TrialCursorManager.instance.ReticleAsCursor();
-        if (Input.GetMouseButtonDown(0) && !isRifleUp && rifleManager.IsRifleIntact())
+        if (Input.GetMouseButtonDown(0) && !isRifleUp && !coolDown && rifleManager.IsRifleIntact())
         {
             Shoot();
         }
@@ -47,12 +49,14 @@ public class LogicShootManager : MonoBehaviour
                 isRifleUp = true;
                 Time.timeScale = 0f;
                 rifleManager.RaiseRifle();
+                StartCoroutine(animator.ShowBlackAndWhite());
             }
             else
             {
                 isRifleUp = false;
                 Time.timeScale = 1f;
                 rifleManager.PutRifleDown();
+                animator.blackAndWhiteScreenOverlay.DOFade(0f, 0f).SetUpdate(true);
             }
         }
     }
@@ -61,15 +65,17 @@ public class LogicShootManager : MonoBehaviour
     {
         rifleManager.ammo--;
         animator.UpdateAmmo(rifleManager.ammo);
+        if (rifleManager.ammo == 0)
+            rifleManager.OutOfAmmo();
         ProcessShot();
         StartCoroutine(CoolDown());
-        
+
         RandomizeRifleStuck();
     }
 
     private void RandomizeRifleStuck()
     {
-        int number = Random.Range(1, 5);
+        int number = Random.Range(1, 60);
 
         switch (number)
         {
@@ -142,7 +148,7 @@ public class LogicShootManager : MonoBehaviour
     {
         segment = newSegment;
         enemyHP = 10;
-        
+
         rifleManager.InitializeRifle();
 
         animator.UpdatePlayerHp(TrialManager.instance.playerStats.hp);
@@ -166,6 +172,7 @@ public class LogicShootManager : MonoBehaviour
             Vector3.zero,
             Vector3.zero, 0f);
 
+        animator.Initialize();
         animator.PlayStartAnimation();
         yield return CameraController.instance.MoveAndRotate(new Vector3(0, 0, 1f), Vector3.zero, 2.5f);
 
@@ -177,22 +184,40 @@ public class LogicShootManager : MonoBehaviour
         TrialCursorManager.instance.Show();
         MusicManager.instance.PlaySong(animator.music);
 
+        isActive = true;
+
         StartCoroutine(PlayTargets(segment.stages));
     }
 
     private IEnumerator PlayTargets(List<ShootTargetsStage> stages)
     {
-        foreach (ShootTargetsStage stage in stages)
+        while (isActive)
         {
-            MoveCameraToCenter(stage.cameraStartPosition);
-            yield return animator.GenerateTargets(stage.targets);
+            foreach (ShootTargetsStage stage in stages)
+            {
+                if (!isActive)
+                    break;
+                MoveCameraToCenter(stage.cameraStartPosition);
+                yield return animator.GenerateTargets(stage.targets);
+            }
         }
     }
 
-    private void FinishGame()
+    public IEnumerator FinishGame()
     {
-        segment.Finish();
+        animator.finalQuestionText.DOFade(0f, 0.1f);
+        yield return new WaitForSeconds(2f);
+
+        StartCoroutine(FinishPipeLine());
+    }
+
+    private IEnumerator FinishPipeLine()
+    {
+        yield return null;
         TrialManager.instance.FadeCharactersExcept(segment.character, 1f);
+        animator.gameObject.SetActive(false);
+        TrialCursorManager.instance.Hide();
+        segment.Finish();
     }
 
     public void DamageEnemy(float amount)
@@ -202,7 +227,7 @@ public class LogicShootManager : MonoBehaviour
 
         if (enemyHP <= 0)
         {
-            FinishGame();
+            FinalQuestion();
         }
     }
 
@@ -219,5 +244,19 @@ public class LogicShootManager : MonoBehaviour
 
         CameraController.instance.cameraTransform
             .DOLocalMove(originalPosition, 3f).SetEase(cameraCurve);
+    }
+
+    private void FinalQuestion()
+    {
+        isActive = false;
+        StartCoroutine(animator.ShowFinalQuestion(segment.finalTarget));
+    }
+
+    public void ReturnToGame()
+    {
+        animator.StopShowingFinalQuestion();
+        isActive = true;
+        enemyHP = 1f;
+        animator.enemyHpBar.fillAmount = 1f / 10f;
     }
 }

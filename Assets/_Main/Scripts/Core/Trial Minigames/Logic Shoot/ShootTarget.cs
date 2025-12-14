@@ -10,6 +10,7 @@ public class ShootTarget : MonoBehaviour
     public List<ShootTargetArea> areas;
     public float timeOut;
     public float movementTime;
+    public CanvasGroup canvasGroup;
 
     public Vector2 targetPosition;
 

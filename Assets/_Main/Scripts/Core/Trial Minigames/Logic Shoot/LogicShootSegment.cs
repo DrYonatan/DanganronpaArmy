@@ -31,6 +31,7 @@ public class ShootTargetsStage
 public class LogicShootSegment : TrialSegment
 {
     public List<ShootTargetsStage> stages;
+    public ShootTargetData finalTarget;
     public Character character;
     
     public override void Play()
