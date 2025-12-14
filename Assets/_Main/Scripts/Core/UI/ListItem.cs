@@ -10,6 +10,7 @@ public class ListItem : MonoBehaviour
     public bool isHovered;
     public Color hoverColor;
     private Tween blinkTween;
+    public Color originalColor;
 
     public void SetText(string text)
     {
@@ -46,6 +47,6 @@ public class ListItem : MonoBehaviour
     private void StopBlink()
     {
         blinkTween?.Kill();
-        background.color = new Color(0, 0, 0, 0);
+        background.color = originalColor;
     }
 }

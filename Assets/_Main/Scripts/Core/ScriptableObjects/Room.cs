@@ -5,6 +5,8 @@ public abstract class Room : ScriptableObject
 {
     public RoomModel prefab;
 
+    public string name;
+
     public Interactable currentInteractable;
 
     public bool isInside = false;
