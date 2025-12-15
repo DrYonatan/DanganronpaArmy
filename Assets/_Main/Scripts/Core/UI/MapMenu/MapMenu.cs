@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
-using DIALOGUE;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -54,6 +52,7 @@ public class MapMenu : MenuScreen
     public AudioClip failSound;
     public RectTransform dialogueContainer;
     public GameObject noPeopleMessage;
+
     public void SetRooms(List<MapRoom> rooms)
     {
         this.rooms = rooms;
@@ -125,6 +124,7 @@ public class MapMenu : MenuScreen
             {
                 GenerateCharacterFace(character.character.faceSprite);
             }
+
             noPeopleMessage.SetActive(false);
         }
         else
@@ -160,7 +160,8 @@ public class MapMenu : MenuScreen
                                  regions.Count;
             currentRoomIndex = 0;
             UpdateRegion();
-        } else if (Input.GetKeyDown(KeyCode.Space))
+        }
+        else if (Input.GetKeyDown(KeyCode.Space))
         {
             Room roomToLoad = ProgressManager.instance.currentGameEvent.roomDatas.Find((roomData) =>
                 roomData.room.name.Equals(rooms[currentRoomIndex].name))?.room;
@@ -209,6 +210,7 @@ public class MapMenu : MenuScreen
             self.gameObject.SetActive(false);
             currentRoomIndex = 0;
         }
+
         UpdateUI();
     }
 
@@ -233,17 +235,12 @@ public class MapMenu : MenuScreen
     public override void Open()
     {
         base.Open();
-        UpdateRegion();
         Room currentRoom = WorldManager.instance.currentRoom;
+        currentRegionIndex = regions.FindIndex((region) =>
+            region.rooms.Any((room) => room.name.Equals(currentRoom.name)));
+        UpdateRegion();
         currentRoomIndex = rooms.FindIndex((room) => room.name.Equals(currentRoom.name));
-        if (currentRoomIndex != -1)
-        {
-            MapRoom currentMapRoom = rooms[currentRoomIndex];
-            self.anchoredPosition = new Vector2(currentMapRoom.xCoordinate, currentMapRoom.yCoordinate);
-        }
-        else
-        {
-            currentRoomIndex = 0;
-        }
+        MapRoom currentMapRoom = rooms[currentRoomIndex];
+        self.anchoredPosition = new Vector2(currentMapRoom.xCoordinate, currentMapRoom.yCoordinate);
     }
 }
