@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class EvidenceMenu : MenuScreen
@@ -12,8 +13,8 @@ public class EvidenceMenu : MenuScreen
     public Image evidenceIcon;
     public TextMeshProUGUI evidenceIndexText;
     public VerticalLayoutGroup evidenceContainer;
-    public EvidenceItem evidenceItem;
-    public List<EvidenceItem> evidenceListUI = new List<EvidenceItem>();
+    [FormerlySerializedAs("evidenceItem")] public ListItem listItem;
+    public List<ListItem> evidenceListUI = new List<ListItem>();
     public TextMeshProUGUI evidenceDescription;
     public RectTransform evidenceListTransform;
     public AudioClip moveSelectionSound;
@@ -27,7 +28,7 @@ public class EvidenceMenu : MenuScreen
 
     void AddEvidenceToList(Evidence evidence)
     {
-        EvidenceItem instantiated = Instantiate(evidenceItem);
+        ListItem instantiated = Instantiate(listItem);
         instantiated.SetText(evidence.Name);
         instantiated.transform.SetParent(evidenceContainer.transform, false);
         evidenceListUI.Add(instantiated);
@@ -77,7 +78,7 @@ public class EvidenceMenu : MenuScreen
                 $"{(currentEvidenceIndex + 1).ToString("00")}/{EvidenceManager.instance.evidenceList.Count.ToString("00")}";
             evidenceDescription.text = currentEvidence.description;
 
-            foreach (EvidenceItem item in evidenceListUI)
+            foreach (ListItem item in evidenceListUI)
             {
                 item.SetHovered(false);
             }

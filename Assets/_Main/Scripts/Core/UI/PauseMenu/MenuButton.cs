@@ -5,16 +5,20 @@ public class MenuButton : MonoBehaviour
 {
     public MenuScreen menuToOpen;
     private bool isHovered = false;
+    public bool disabled;
     public Image buttonTexture;
     public MenuScreenContainer menuScreenContainer;
 
     void Update()
     {
-        buttonTexture.color = isHovered ? Color.red : Color.clear;
+        buttonTexture.color = isHovered && !disabled ? Color.red : Color.clear;
     }
     public virtual void Click()
     {
-        menuScreenContainer.OpenMenu(menuToOpen);
+        if (!disabled)
+        {
+            menuScreenContainer.OpenMenu(menuToOpen);
+        }
     }
 
     public void SetIsHovered(bool isHovered)

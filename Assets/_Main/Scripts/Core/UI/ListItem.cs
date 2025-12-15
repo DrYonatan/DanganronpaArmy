@@ -3,13 +3,14 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EvidenceItem : MonoBehaviour
+public class ListItem : MonoBehaviour
 {
     public TextMeshProUGUI text;
     public Image background;
     public bool isHovered;
     public Color hoverColor;
     private Tween blinkTween;
+    public Color originalColor;
 
     public void SetText(string text)
     {
@@ -46,6 +47,6 @@ public class EvidenceItem : MonoBehaviour
     private void StopBlink()
     {
         blinkTween?.Kill();
-        background.color = new Color(0, 0, 0, 0);
+        background.color = originalColor;
     }
 }

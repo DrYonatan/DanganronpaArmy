@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class WorldCharacter : ConversationInteractable
 {
-    public string characterName;
     public RoomIntroEffect appearEffect;
     public RoomIntroEffect appearEffectSilhouette;
+    public Character character;
 
     protected override void FinishInteraction()
     {
@@ -26,7 +26,7 @@ public class WorldCharacter : ConversationInteractable
         {
             isAlreadyLooking = true;
             CursorManager.instance.ShowOrHideConversationIcon(true);
-            CursorManager.instance.ShowOrHideInteractableName(true, characterName);
+            CursorManager.instance.ShowOrHideInteractableName(true, character.displayName);
         }
     }
 

@@ -320,6 +320,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuToOpen: {fileID: 775050980}
+  disabled: 0
   buttonTexture: {fileID: 39310846}
   menuScreenContainer: {fileID: 1496751679}
 --- !u!114 &39310846
@@ -3439,6 +3440,7 @@ MonoBehaviour:
       nameText: {fileID: 1659526338}
     dialogueText: {fileID: 403369036}
   gotItAnimator: {fileID: 37134974}
+  currentLineIndex: 0
 --- !u!114 &228458422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7728,41 +7730,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519549074}
   m_CullTransparentMesh: 1
---- !u!1 &532124799
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 532124800}
-  m_Layer: 5
-  m_Name: Map
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &532124800
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 532124799}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1496751678}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &537497168
 GameObject:
   m_ObjectHideFlags: 0
@@ -11378,7 +11345,7 @@ MonoBehaviour:
   evidenceIcon: {fileID: 320190072}
   evidenceIndexText: {fileID: 1850883865}
   evidenceContainer: {fileID: 1016646943}
-  evidenceItem: {fileID: 8491389665968416165, guid: 4fa6734c3c11bd0439291cf642b6ad78, type: 3}
+  listItem: {fileID: 8491389665968416165, guid: 4fa6734c3c11bd0439291cf642b6ad78, type: 3}
   evidenceListUI: []
   evidenceDescription: {fileID: 677893908}
   evidenceListTransform: {fileID: 1016646941}
@@ -20450,6 +20417,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuToOpen: {fileID: 400032690}
+  disabled: 0
   buttonTexture: {fileID: 1476702878}
   menuScreenContainer: {fileID: 1496751679}
 --- !u!114 &1476702878
@@ -20698,7 +20666,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1552701737}
-  - {fileID: 532124800}
   - {fileID: 775050978}
   - {fileID: 960523807}
   - {fileID: 57490186}
@@ -23671,7 +23638,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3566b4004d901b642be21f9a19a35eeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuToOpen: {fileID: 532124799}
+  menuToOpen: {fileID: 0}
+  disabled: 1
   buttonTexture: {fileID: 1737358257}
   menuScreenContainer: {fileID: 1496751679}
 --- !u!114 &1737358257
@@ -25544,6 +25512,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuToOpen: {fileID: 57490187}
+  disabled: 0
   buttonTexture: {fileID: 1889882914}
   menuScreenContainer: {fileID: 1496751679}
 --- !u!114 &1889882914
@@ -27856,6 +27825,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuToOpen: {fileID: 1388798819}
+  disabled: 0
   buttonTexture: {fileID: 2066993546}
   menuScreenContainer: {fileID: 1496751679}
 --- !u!114 &2066993546
@@ -28160,6 +28130,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 03110a6c3b052c84489dfd897a46394b, type: 2}
   - {fileID: 11400000, guid: d64974b17e93f864e876fd0ff95ca708, type: 2}
   - {fileID: 11400000, guid: c8f905213147a1a4aa52c099d842872c, type: 2}
+  currentIndex: 0
   characterStands:
   - {fileID: 333186945}
   - {fileID: 747270071}
@@ -28493,6 +28464,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuToOpen: {fileID: 960523806}
+  disabled: 0
   buttonTexture: {fileID: 2134520044}
   menuScreenContainer: {fileID: 1496751679}
 --- !u!114 &2134520044

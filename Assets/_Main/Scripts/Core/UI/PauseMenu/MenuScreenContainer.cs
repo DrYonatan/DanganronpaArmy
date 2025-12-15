@@ -12,8 +12,20 @@ public class MenuScreenContainer : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape) && isSubmenuOpen && !generalMenu.gameObject.activeSelf &&
             PlayerInputManager.instance.isPaused)
         {
-            CloseMenu();
+            GoBackToGeneral();
         }
+    }
+
+    public void CloseCurrentMenu()
+    {
+        currentOpenMenu?.Close();
+        isSubmenuOpen = false;
+    }
+
+    public void ClosePauseScreen()
+    {
+        CloseCurrentMenu();
+        PlayerInputManager.instance.TogglePause();
     }
 
     public void OpenGeneralMenu()
@@ -26,10 +38,9 @@ public class MenuScreenContainer : MonoBehaviour
         generalMenu.CloseMenu();
     }
 
-    public void CloseMenu()
+    public void GoBackToGeneral()
     {
-        currentOpenMenu?.Close();
-        isSubmenuOpen = false;
+        CloseCurrentMenu();
         generalMenu.gameObject.SetActive(true);
     }
 
