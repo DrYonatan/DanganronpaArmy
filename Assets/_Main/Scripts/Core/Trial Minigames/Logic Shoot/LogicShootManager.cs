@@ -63,6 +63,8 @@ public class LogicShootManager : MonoBehaviour
         isRifleUp = true;
         Time.timeScale = 0f;
         rifleManager.RaiseRifle();
+        animator.RotateTimersContainer(90);
+        animator.StopGameTimer();
         StartCoroutine(animator.ShowBlackAndWhite());
         StartCoroutine(RifleCountDown());
     }
@@ -78,6 +80,7 @@ public class LogicShootManager : MonoBehaviour
         isRifleUp = false;
         Time.timeScale = 1f;
         rifleManager.PutRifleDown();
+        animator.RotateTimersContainer(0);
         StartCoroutine(StopGameCooldown());
         animator.blackAndWhiteScreenOverlay.DOFade(0f, 0f).SetUpdate(true);
     }
@@ -99,7 +102,7 @@ public class LogicShootManager : MonoBehaviour
         if (rifleManager.rifleErrorCooldown)
             return;
 
-        int number = Random.Range(1, 20);
+        int number = Random.Range(1, 30);
 
         switch (number)
         {
@@ -242,14 +245,8 @@ public class LogicShootManager : MonoBehaviour
     public IEnumerator FinishGame()
     {
         animator.finalQuestionText.DOFade(0f, 0.1f);
-        yield return new WaitForSeconds(2f);
-
-        StartCoroutine(FinishPipeLine());
-    }
-
-    private IEnumerator FinishPipeLine()
-    {
-        yield return null;
+        isActive = false;
+        yield return animator.FinishAnimation();
         TrialManager.instance.FadeCharactersExcept(segment.character, 1f);
         animator.gameObject.SetActive(false);
         TrialCursorManager.instance.Hide();

@@ -18,9 +18,11 @@ public class LogicShootUIAnimator : MonoBehaviour
     public Image enemyHpBar;
     public TextMeshProUGUI finalQuestionText;
 
+    public RectTransform timersContainer;
     public RectTransform targetsContainer;
     public TextMeshProUGUI ammoNumberText;
     public Button switchStacksButton;
+    public Image stopGameTimer;
 
     public MinigameStartAnimation startAnimation;
 
@@ -29,6 +31,9 @@ public class LogicShootUIAnimator : MonoBehaviour
     public RawImage blackAndWhiteScreenOverlay;
 
     public List<ShootTarget> activeTargets;
+
+    public NowIUnderstandAnimator faceCloseup;
+    public ScreenShatterManager screenShatter;
 
     public void Initialize()
     {
@@ -143,7 +148,6 @@ public class LogicShootUIAnimator : MonoBehaviour
                 target.transform.DOKill();
                 target.canvasGroup.DOFade(0f, 0.1f).OnComplete(() => Destroy(target));
             }
-            
         }
 
         activeTargets.Clear();
@@ -168,11 +172,56 @@ public class LogicShootUIAnimator : MonoBehaviour
 
         yield return new WaitForSeconds(data.timeOut);
 
-        LogicShootManager.instance.ReturnToGame();
+        if(LogicShootManager.instance.isActive)
+           LogicShootManager.instance.ReturnToGame();
     }
 
     public void StopShowingFinalQuestion()
     {
         finalQuestionText.DOFade(0f, 0.2f);
+    }
+
+    public void RotateTimersContainer(float angle)
+    {
+        timersContainer.DOLocalRotate(new Vector3(0, angle, 0), 0.2f).SetUpdate(true);
+    }
+
+    public void StopGameTimer()
+    {
+        stopGameTimer.color = Color.green;
+        stopGameTimer.fillAmount = 1f;
+        stopGameTimer.DOFillAmount(0f, 7f).SetUpdate(true);
+        stopGameTimer.DOColor(Color.yellow, 3.5f).SetEase(Ease.Linear).SetUpdate(true).OnComplete(() =>
+            stopGameTimer.DOColor(Color.red, 3.5f).SetEase(Ease.Linear).SetUpdate(true));
+    }
+
+    public IEnumerator FinishAnimation()
+    {
+        faceCloseup.gameObject.SetActive(true);
+        yield return faceCloseup.Show();
+        faceCloseup.gameObject.SetActive(false);
+
+        yield return FinishCameraMovement();
+
+        ScreenShatterManager shatter = Instantiate(screenShatter);
+        yield return shatter.ScreenShatter();
+
+        MusicManager.instance.StopSong();
+    }
+
+    private IEnumerator FinishCameraMovement()
+    {
+        CameraController.instance.cameraTransform.localPosition = new Vector3(0, 4.3f, -5.4f);
+        CameraController.instance.cameraTransform.localRotation = Quaternion.Euler(0, 0, 20);
+
+        yield return new WaitForSeconds(0.5f);
+
+        CameraController.instance.cameraTransform.localPosition = new Vector3(0, 4.3f, -7f);
+        CameraController.instance.cameraTransform.localRotation = Quaternion.Euler(0, 0, -20);
+
+        yield return new WaitForSeconds(0.5f);
+
+        CameraController.instance.cameraTransform.localPosition = new Vector3(0, 4.3f, -9f);
+        CameraController.instance.cameraTransform.localRotation = Quaternion.Euler(0, 0, 10);
     }
 }
