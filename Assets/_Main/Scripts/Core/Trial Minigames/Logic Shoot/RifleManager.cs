@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
@@ -20,6 +21,7 @@ public class RifleManager : MonoBehaviour
     public int stacksLeft = 5;
 
     public bool isAlreadyPullingHandle;
+    public bool rifleErrorCooldown;
 
     private Vector2 stackInPosition;
     private Vector2 stackOutPosition;
@@ -128,6 +130,7 @@ public class RifleManager : MonoBehaviour
     {
         bulletsInChamber = 0;
         UpdateBulletChamber();
+        rifleErrorCooldown = true;
     }
 
     public bool IsRifleIntact()

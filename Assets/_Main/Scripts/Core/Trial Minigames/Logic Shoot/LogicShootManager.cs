@@ -21,12 +21,15 @@ public class LogicShootManager : MonoBehaviour
 
     public float enemyHP;
 
-    public bool coolDown;
+    public bool shootCooldown;
+
+    public float stopGameCooldownTime = 10f;
+    public bool stopGameCooldown;
 
     private bool isRifleUp;
 
     public bool isActive;
-    
+
     void Awake()
     {
         if (instance != null)
@@ -37,28 +40,46 @@ public class LogicShootManager : MonoBehaviour
     void Update()
     {
         TrialCursorManager.instance.ReticleAsCursor();
-        if (Input.GetMouseButtonDown(0) && !isRifleUp && !coolDown && rifleManager.IsRifleIntact())
+        if (Input.GetMouseButtonDown(0) && !isRifleUp && !shootCooldown && rifleManager.IsRifleIntact())
         {
             Shoot();
         }
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            if (!isRifleUp)
+            if (!isRifleUp && !stopGameCooldown)
             {
-                isRifleUp = true;
-                Time.timeScale = 0f;
-                rifleManager.RaiseRifle();
-                StartCoroutine(animator.ShowBlackAndWhite());
+                RaiseRifle();
             }
-            else
+            else if (isRifleUp)
             {
-                isRifleUp = false;
-                Time.timeScale = 1f;
-                rifleManager.PutRifleDown();
-                animator.blackAndWhiteScreenOverlay.DOFade(0f, 0f).SetUpdate(true);
+                PutDownRifle();
             }
         }
+    }
+
+    private void RaiseRifle()
+    {
+        isRifleUp = true;
+        Time.timeScale = 0f;
+        rifleManager.RaiseRifle();
+        StartCoroutine(animator.ShowBlackAndWhite());
+        StartCoroutine(RifleCountDown());
+    }
+
+    private IEnumerator RifleCountDown()
+    {
+        yield return new WaitForSecondsRealtime(5f);
+        PutDownRifle();
+    }
+
+    private void PutDownRifle()
+    {
+        isRifleUp = false;
+        Time.timeScale = 1f;
+        rifleManager.PutRifleDown();
+        StartCoroutine(StopGameCooldown());
+        animator.blackAndWhiteScreenOverlay.DOFade(0f, 0f).SetUpdate(true);
     }
 
     private void Shoot()
@@ -75,15 +96,20 @@ public class LogicShootManager : MonoBehaviour
 
     private void RandomizeRifleStuck()
     {
-        int number = Random.Range(1, 60);
+        if (rifleManager.rifleErrorCooldown)
+            return;
+
+        int number = Random.Range(1, 20);
 
         switch (number)
         {
             case 1:
                 rifleManager.RifleStuckTypeOne();
+                rifleManager.rifleErrorCooldown = true;
                 break;
             case 2:
                 rifleManager.RifleStuckTypeTwo();
+                rifleManager.rifleErrorCooldown = true;
                 break;
         }
     }
@@ -137,11 +163,21 @@ public class LogicShootManager : MonoBehaviour
 
     private IEnumerator CoolDown()
     {
-        coolDown = true;
+        shootCooldown = true;
 
         yield return new WaitForSeconds(0.2f);
 
-        coolDown = false;
+        shootCooldown = false;
+    }
+
+    private IEnumerator StopGameCooldown()
+    {
+        stopGameCooldown = true;
+
+        yield return new WaitForSeconds(stopGameCooldownTime);
+
+        rifleManager.rifleErrorCooldown = false;
+        stopGameCooldown = false;
     }
 
     public void Play(LogicShootSegment newSegment)

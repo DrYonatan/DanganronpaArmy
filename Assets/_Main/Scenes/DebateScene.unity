@@ -5238,6 +5238,7 @@ MonoBehaviour:
   bulletsInChamber: 1
   stacksLeft: 5
   isAlreadyPullingHandle: 0
+  rifleErrorCooldown: 0
 --- !u!1 &434837747
 GameObject:
   m_ObjectHideFlags: 0
@@ -6991,7 +6992,9 @@ MonoBehaviour:
     m_RotationOrder: 4
   rifleManager: {fileID: 434172482}
   enemyHP: 0
-  coolDown: 0
+  shootCooldown: 0
+  stopGameCooldownTime: 6
+  stopGameCooldown: 0
   isActive: 0
 --- !u!1 &557753300
 GameObject:
@@ -12121,6 +12124,7 @@ MonoBehaviour:
   - {fileID: 1876466271}
   - {fileID: 1251464537}
   blackAndWhiteScreenOverlay: {fileID: 1606320506}
+  activeTargets: []
 --- !u!1 &926069189
 GameObject:
   m_ObjectHideFlags: 0
