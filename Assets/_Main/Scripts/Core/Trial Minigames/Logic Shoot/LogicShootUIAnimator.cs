@@ -23,17 +23,20 @@ public class LogicShootUIAnimator : MonoBehaviour
     public TextMeshProUGUI ammoNumberText;
     public Button switchStacksButton;
     public Image stopGameTimer;
+    public Image stopGameCooldownTimer;
+    public Image stopGameCooldownGlow;
 
     public MinigameStartAnimation startAnimation;
 
     public List<Image> stacks;
-
-    public RawImage blackAndWhiteScreenOverlay;
-
+    
     public List<ShootTarget> activeTargets;
 
     public NowIUnderstandAnimator faceCloseup;
     public ScreenShatterManager screenShatter;
+    
+    public GameObject stopGamePostProcessing;
+
 
     public void Initialize()
     {
@@ -45,12 +48,13 @@ public class LogicShootUIAnimator : MonoBehaviour
 
     public void ShowMikbazText(int number)
     {
-        TextMeshProUGUI mikbazText = Instantiate(mikbazTextPrefab, transform);
+        TextMeshProUGUI mikbazText = Instantiate(mikbazTextPrefab, enemyHpBar.transform);
+        mikbazText.rectTransform.anchoredPosition = new Vector2(-535, -100);
         mikbazText.text = "מקבץ " + number + " !!";
 
         Sequence seq = DOTween.Sequence();
         seq.Append(mikbazText.DOFade(0f, 0.05f).SetLoops(6, LoopType.Yoyo));
-        seq.Append(mikbazText.rectTransform.DOMove(enemyHpBar.rectTransform.position, 1f)
+        seq.Append(mikbazText.rectTransform.DOAnchorPos(enemyHpBar.rectTransform.anchoredPosition, 1f)
             .SetEase(Ease.InCubic));
         seq.Join(mikbazText.rectTransform.DOScale(0.1f, 1f).SetEase(Ease.InCubic));
 
@@ -63,25 +67,9 @@ public class LogicShootUIAnimator : MonoBehaviour
         LogicShootManager.instance.DamageEnemy(amountToDamage);
     }
 
-    private float GetMaxDuration(List<ShootTargetData> shootTargets)
-    {
-        if (shootTargets == null || shootTargets.Count == 0)
-            return 0f; // or throw an exception, depending on your design
-
-        float max = float.MinValue;
-
-        foreach (ShootTargetData target in shootTargets)
-        {
-            if (target.timeOut > max)
-                max = target.timeOut;
-        }
-
-        return max;
-    }
-
     public IEnumerator GenerateTargets(List<ShootTargetData> shootTargets)
     {
-        float duration = GetMaxDuration(shootTargets);
+        float duration = LogicShootManager.instance.GetMaxDuration(shootTargets);
         foreach (ShootTargetData target in shootTargets)
         {
             ShootTarget newTarget = Instantiate(targetPrefab, targetsContainer);
@@ -127,18 +115,6 @@ public class LogicShootUIAnimator : MonoBehaviour
         stacks[index].DOColor(Color.black, 0.1f).SetUpdate(true);
     }
 
-    public IEnumerator ShowBlackAndWhite()
-    {
-        yield return new WaitForEndOfFrame();
-        Texture2D screenShot = ScreenCapture.CaptureScreenshotAsTexture();
-        Texture2D newScreenShot = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
-        newScreenShot.SetPixels(screenShot.GetPixels());
-        newScreenShot.Apply();
-
-        blackAndWhiteScreenOverlay.texture = newScreenShot;
-        blackAndWhiteScreenOverlay.DOFade(1f, 0f).SetUpdate(true);
-    }
-
     public IEnumerator ShowFinalQuestion(ShootTargetData data)
     {
         foreach (ShootTarget target in activeTargets)
@@ -172,8 +148,8 @@ public class LogicShootUIAnimator : MonoBehaviour
 
         yield return new WaitForSeconds(data.timeOut);
 
-        if(LogicShootManager.instance.isActive)
-           LogicShootManager.instance.ReturnToGame();
+        if (LogicShootManager.instance.isActive)
+            LogicShootManager.instance.ReturnToGame();
     }
 
     public void StopShowingFinalQuestion()
@@ -183,7 +159,7 @@ public class LogicShootUIAnimator : MonoBehaviour
 
     public void RotateTimersContainer(float angle)
     {
-        timersContainer.DOLocalRotate(new Vector3(0, angle, 0), 0.2f).SetUpdate(true);
+        timersContainer.DOLocalRotate(new Vector3(0, angle, 0), 0.4f).SetUpdate(true);
     }
 
     public void StopGameTimer()
@@ -193,6 +169,16 @@ public class LogicShootUIAnimator : MonoBehaviour
         stopGameTimer.DOFillAmount(0f, 7f).SetUpdate(true);
         stopGameTimer.DOColor(Color.yellow, 3.5f).SetEase(Ease.Linear).SetUpdate(true).OnComplete(() =>
             stopGameTimer.DOColor(Color.red, 3.5f).SetEase(Ease.Linear).SetUpdate(true));
+    }
+
+    public void StopGameCooldown()
+    {
+        stopGameCooldownTimer.fillAmount = 0f;
+
+        Sequence seq = DOTween.Sequence();
+        seq.Append(stopGameCooldownTimer.DOFillAmount(1f, LogicShootManager.instance.stopGameCooldownTime)
+            .SetEase(Ease.Linear));
+        seq.Append(stopGameCooldownGlow.DOFade(1f, 0.2f).SetLoops(2, LoopType.Yoyo));
     }
 
     public IEnumerator FinishAnimation()
@@ -207,6 +193,7 @@ public class LogicShootUIAnimator : MonoBehaviour
         yield return shatter.ScreenShatter();
 
         MusicManager.instance.StopSong();
+        TrialManager.instance.FadeCharactersExcept(LogicShootManager.instance.segment.character, 1f, 0f);
     }
 
     private IEnumerator FinishCameraMovement()

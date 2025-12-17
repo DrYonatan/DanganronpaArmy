@@ -14,15 +14,16 @@ public class FinalShootArea : ShootTargetArea
     {
         base.WrongAnswer();
         LogicShootManager.instance.ReturnToGame();
+        Destroy(transform.parent.gameObject);
     }
 
     private IEnumerator CorrectPipeline()
     {
-        StartCoroutine(LogicShootManager.instance.FinishGame());
+        LogicShootManager.instance.FinishGame();
 
         yield return new WaitForSeconds(0.5f);
 
         transform.parent.DOLocalRotate(new Vector3(0, 360, 0), 0.1f, RotateMode.FastBeyond360).SetLoops(4)
-            .OnComplete(() => transform.parent.GetComponent<RectTransform>().DOAnchorPosY(-1000, 0.5f));
+            .OnComplete(() => transform.parent.GetComponent<ShootTarget>().DisappearAnimation());
     }
 }

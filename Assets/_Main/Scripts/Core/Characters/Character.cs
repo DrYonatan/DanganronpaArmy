@@ -18,6 +18,7 @@ public class Character : ScriptableObject
     public GameObject vnObjectPrefab;
     public List<CharacterState> emotions;
     public Sprite faceSprite;
+    public bool isProtagonist;
     
     public CharacterState FindStateByName(string stateName)
     {

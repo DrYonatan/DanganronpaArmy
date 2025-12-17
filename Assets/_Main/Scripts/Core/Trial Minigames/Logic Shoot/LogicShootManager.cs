@@ -18,7 +18,7 @@ public class LogicShootManager : MonoBehaviour
     public AnimationCurve cameraCurve;
 
     public RifleManager rifleManager;
-
+    
     public float enemyHP;
 
     public bool shootCooldown;
@@ -65,7 +65,7 @@ public class LogicShootManager : MonoBehaviour
         rifleManager.RaiseRifle();
         animator.RotateTimersContainer(90);
         animator.StopGameTimer();
-        StartCoroutine(animator.ShowBlackAndWhite());
+        animator.stopGamePostProcessing.SetActive(true);
         StartCoroutine(RifleCountDown());
     }
 
@@ -81,8 +81,9 @@ public class LogicShootManager : MonoBehaviour
         Time.timeScale = 1f;
         rifleManager.PutRifleDown();
         animator.RotateTimersContainer(0);
+        animator.StopGameCooldown();
+        animator.stopGamePostProcessing.SetActive(false);
         StartCoroutine(StopGameCooldown());
-        animator.blackAndWhiteScreenOverlay.DOFade(0f, 0f).SetUpdate(true);
     }
 
     private void Shoot()
@@ -215,7 +216,7 @@ public class LogicShootManager : MonoBehaviour
         animator.PlayStartAnimation();
         yield return CameraController.instance.MoveAndRotate(new Vector3(0, 0, 1f), Vector3.zero, 2.5f);
 
-        TrialManager.instance.FadeCharactersExcept(segment.character, 0f);
+        TrialManager.instance.FadeCharactersExcept(segment.character, 0f, 0.5f);
         animator.gameObject.SetActive(true);
 
         yield return new WaitForSeconds(0.5f);
@@ -236,19 +237,30 @@ public class LogicShootManager : MonoBehaviour
             {
                 if (!isActive)
                     break;
-                MoveCameraToCenter(stage.cameraStartPosition);
+                MoveCameraToCenter(stage.cameraStartPosition, GetMaxDuration(stage.targets));
+                CameraController.instance.cameraTransform.localRotation = Quaternion.Euler(stage.rotation);
                 yield return animator.GenerateTargets(stage.targets);
             }
         }
     }
 
-    public IEnumerator FinishGame()
+    public void FinishGame()
+    {
+        StartCoroutine(FinishPipeline());
+    }
+
+    private IEnumerator FinishPipeline()
     {
         animator.finalQuestionText.DOFade(0f, 0.1f);
         isActive = false;
         yield return animator.FinishAnimation();
-        TrialManager.instance.FadeCharactersExcept(segment.character, 1f);
+
+        ImageScript.instance.UnFadeToBlack(0.2f);
         animator.gameObject.SetActive(false);
+        CharacterStand stand = TrialManager.instance.characterStands.Find(stand => stand.character.isProtagonist);
+        CameraController.instance.TeleportToTarget(stand.transform,
+            stand.heightPivot, Vector3.zero, Vector3.zero, 0f);
+        yield return CameraController.instance.FovOutro();
         TrialCursorManager.instance.Hide();
         segment.Finish();
     }
@@ -269,14 +281,14 @@ public class LogicShootManager : MonoBehaviour
         TrialManager.instance.DecreaseHealthFromMeter(animator.playerHpBar, amount);
     }
 
-    private void MoveCameraToCenter(Vector3 from)
+    private void MoveCameraToCenter(Vector3 from, float duration)
     {
         Vector3 originalPosition = CameraController.instance.cameraTransform.localPosition;
 
         CameraController.instance.cameraTransform.localPosition += from;
 
         CameraController.instance.cameraTransform
-            .DOLocalMove(originalPosition, 3f).SetEase(cameraCurve);
+            .DOLocalMove(originalPosition, duration).SetEase(cameraCurve);
     }
 
     private void FinalQuestion()
@@ -291,5 +303,21 @@ public class LogicShootManager : MonoBehaviour
         isActive = true;
         enemyHP = 1f;
         animator.enemyHpBar.fillAmount = 1f / 10f;
+    }
+    
+    public float GetMaxDuration(List<ShootTargetData> shootTargets)
+    {
+        if (shootTargets == null || shootTargets.Count == 0)
+            return 0f; // or throw an exception, depending on your design
+
+        float max = float.MinValue;
+
+        foreach (ShootTargetData target in shootTargets)
+        {
+            if (target.timeOut > max)
+                max = target.timeOut;
+        }
+
+        return max;
     }
 }

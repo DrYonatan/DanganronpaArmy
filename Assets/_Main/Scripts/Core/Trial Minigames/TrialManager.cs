@@ -118,14 +118,14 @@ public class TrialManager : MonoBehaviour
         playerStats.hp = data.hp;
     }
 
-    public void FadeCharactersExcept(Character character, float opacity)
+    public void FadeCharactersExcept(Character character, float opacity, float duration)
     {
         foreach (CharacterStand stand in characterStands)
         {
             if (stand.character != character)
             {
-                stand.spriteRenderer.DOFade(opacity, 0.5f);
-                stand.silhouetteRenderer.DOFade(opacity, 0.5f);
+                stand.spriteRenderer.DOFade(opacity, duration);
+                stand.silhouetteRenderer.DOFade(opacity, duration);
             }
         }
     }

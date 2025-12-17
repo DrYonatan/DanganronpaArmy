@@ -24,6 +24,7 @@ public class ShootTargetData
 public class ShootTargetsStage
 {
     public Vector3 cameraStartPosition;
+    public Vector3 rotation;
     public List<ShootTargetData> targets;
 }
 
