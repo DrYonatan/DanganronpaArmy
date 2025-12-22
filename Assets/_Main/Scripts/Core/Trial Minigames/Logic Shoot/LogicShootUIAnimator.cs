@@ -37,6 +37,9 @@ public class LogicShootUIAnimator : MonoBehaviour
     
     public GameObject stopGamePostProcessing;
 
+    public TextShatterExplosion explosion;
+
+    public Image smoke;
 
     public void Initialize()
     {
@@ -70,20 +73,24 @@ public class LogicShootUIAnimator : MonoBehaviour
     public IEnumerator GenerateTargets(List<ShootTargetData> shootTargets)
     {
         float duration = LogicShootManager.instance.GetMaxDuration(shootTargets);
+        
         foreach (ShootTargetData target in shootTargets)
         {
             ShootTarget newTarget = Instantiate(targetPrefab, targetsContainer);
+            
+            newTarget.questionText.text = target.question;
+            newTarget.timeOut = target.timeOut;
+            newTarget.GetComponent<RectTransform>().anchoredPosition = target.spawnPosition;
+            newTarget.targetPosition = target.targetPosition;
+            newTarget.movementTime = target.movementTime;
+            
             for (int i = 0; i < newTarget.areas.Count; i++)
             {
-                newTarget.questionText.text = target.question;
                 newTarget.areas[i].isCorrect = target.answers[i].isCorrect;
                 newTarget.areas[i].answer.text = target.answers[i].answer;
-                newTarget.timeOut = target.timeOut;
-                newTarget.GetComponent<RectTransform>().anchoredPosition = target.spawnPosition;
-                newTarget.targetPosition = target.targetPosition;
-                newTarget.movementTime = target.movementTime;
-                newTarget.LifeTime();
             }
+            
+            newTarget.LifeTime();
 
             activeTargets.Add(newTarget);
         }
@@ -127,6 +134,12 @@ public class LogicShootUIAnimator : MonoBehaviour
         }
 
         activeTargets.Clear();
+        CameraController.instance.cameraTransform.DOKill();
+        CameraController.instance.cameraTransform.localRotation = Quaternion.identity;
+        CameraController.instance.cameraTransform.localPosition = new Vector3(0,
+            LogicShootManager.instance.characterStand.heightPivot.position.y, -3);
+        CameraController.instance.cameraTransform.DOLocalMove(
+            CameraController.instance.cameraTransform.localPosition + new Vector3(0, 0, 2), 2f);
 
         yield return new WaitForSeconds(0.5f);
 
@@ -187,6 +200,8 @@ public class LogicShootUIAnimator : MonoBehaviour
         yield return faceCloseup.Show();
         faceCloseup.gameObject.SetActive(false);
 
+        CharacterStand characterStand = LogicShootManager.instance.characterStand;
+        characterStand.SetSprite(characterStand.character.FindStateByName("scared"));
         yield return FinishCameraMovement();
 
         ScreenShatterManager shatter = Instantiate(screenShatter);

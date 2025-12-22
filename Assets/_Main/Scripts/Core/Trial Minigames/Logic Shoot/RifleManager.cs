@@ -11,7 +11,10 @@ public class RifleManager : MonoBehaviour
     public RectTransform bulletChamber;
     public Image bulletInChamber;
     public RectTransform flyingBullet;
-
+    
+    public AudioClip shotSound;
+    public AudioClip errorSound;
+    
     public List<Button> buttons;
 
     public int ammo;

@@ -24,26 +24,26 @@ MonoBehaviour:
     value: {fileID: 0}
     defaultState: 1
   tonemapper:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 3
   toneCurveToeStrength:
     overrideState: 0
-    value: 0
+    value: 1
   toneCurveToeLength:
     overrideState: 0
-    value: 0.5
+    value: 0
   toneCurveShoulderStrength:
     overrideState: 0
-    value: 0
+    value: 0.719
   toneCurveShoulderLength:
     overrideState: 0
-    value: 0.5
+    value: 0
   toneCurveShoulderAngle:
     overrideState: 0
-    value: 0
+    value: 1
   toneCurveGamma:
     overrideState: 0
-    value: 1
+    value: 2.16
   ldrLut:
     overrideState: 0
     value: {fileID: 0}
@@ -53,31 +53,31 @@ MonoBehaviour:
     value: 1
   temperature:
     overrideState: 0
-    value: -12.99
+    value: -17
   tint:
     overrideState: 0
-    value: 0
+    value: 26
   colorFilter:
     overrideState: 0
     value: {r: 1, g: 1, b: 1, a: 1}
   hueShift:
     overrideState: 0
-    value: 180
+    value: 0
   saturation:
-    overrideState: 1
-    value: 100
+    overrideState: 0
+    value: -31
   brightness:
     overrideState: 0
     value: 0
   postExposure:
-    overrideState: 1
-    value: 0
+    overrideState: 0
+    value: 0.74
   contrast:
     overrideState: 0
     value: 0
   mixerRedOutRedIn:
     overrideState: 0
-    value: 100
+    value: -36
   mixerRedOutGreenIn:
     overrideState: 0
     value: 0
@@ -86,13 +86,13 @@ MonoBehaviour:
     value: 0
   mixerGreenOutRedIn:
     overrideState: 0
-    value: -63
+    value: 65
   mixerGreenOutGreenIn:
     overrideState: 0
-    value: 77
+    value: 41
   mixerGreenOutBlueIn:
     overrideState: 0
-    value: -17
+    value: 52
   mixerBlueOutRedIn:
     overrideState: 0
     value: 0
@@ -104,13 +104,13 @@ MonoBehaviour:
     value: 100
   lift:
     overrideState: 0
-    value: {x: 0, y: 0.18079329, z: 1, w: 0}
+    value: {x: 0.2685299, y: 0, z: 1, w: 0}
   gamma:
     overrideState: 0
-    value: {x: 0.13356572, y: 1, z: 0.77292556, w: 0}
+    value: {x: 0, y: 0.5978682, z: 1, w: 0}
   gain:
     overrideState: 0
-    value: {x: 0, y: 1, z: 0.9470029, w: 0}
+    value: {x: 0.92799634, y: 1, z: 0.9859696, w: 0}
   masterCurve:
     overrideState: 0
     value:
@@ -1324,27 +1324,4 @@ MonoBehaviour:
   m_Name: LogicShoot
   m_EditorClassIdentifier: 
   settings:
-  - {fileID: 3585993916713941283}
   - {fileID: -601054635733449680}
---- !u!114 &3585993916713941283
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b94fcd11afffcb142908bfcb1e261fba, type: 3}
-  m_Name: MotionBlur
-  m_EditorClassIdentifier: 
-  active: 1
-  enabled:
-    overrideState: 1
-    value: 1
-  shutterAngle:
-    overrideState: 1
-    value: 245
-  sampleCount:
-    overrideState: 1
-    value: 18

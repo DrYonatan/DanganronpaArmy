@@ -23,6 +23,10 @@ public class FinalShootArea : ShootTargetArea
 
         yield return new WaitForSeconds(0.5f);
 
+        TextShatterExplosion explosion = Instantiate(LogicShootManager.instance.animator.explosion, LogicShootManager.instance.animator.targetsContainer);
+        explosion.transform.GetChild(0).localScale = Vector3.one * 2f;
+        explosion.transform.localPosition = transform.parent.localPosition;
+        
         transform.parent.DOLocalRotate(new Vector3(0, 360, 0), 0.1f, RotateMode.FastBeyond360).SetLoops(4)
             .OnComplete(() => transform.parent.GetComponent<ShootTarget>().DisappearAnimation());
     }

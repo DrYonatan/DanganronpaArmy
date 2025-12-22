@@ -18,7 +18,9 @@ public class LogicShootManager : MonoBehaviour
     public AnimationCurve cameraCurve;
 
     public RifleManager rifleManager;
-    
+
+    public CharacterStand characterStand;
+
     public float enemyHP;
 
     public bool shootCooldown;
@@ -29,6 +31,7 @@ public class LogicShootManager : MonoBehaviour
     private bool isRifleUp;
 
     public bool isActive;
+    public bool isInFinish;
 
     void Awake()
     {
@@ -39,10 +42,18 @@ public class LogicShootManager : MonoBehaviour
 
     void Update()
     {
+        if(!isActive)
+            return;
+        
         TrialCursorManager.instance.ReticleAsCursor();
-        if (Input.GetMouseButtonDown(0) && !isRifleUp && !shootCooldown && rifleManager.IsRifleIntact())
+        if (Input.GetMouseButtonDown(0) && !isRifleUp && !shootCooldown)
         {
-            Shoot();
+            if(rifleManager.IsRifleIntact())
+               Shoot();
+            else
+            {
+                SoundManager.instance.PlaySoundEffect(rifleManager.errorSound);
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Q))
@@ -72,7 +83,8 @@ public class LogicShootManager : MonoBehaviour
     private IEnumerator RifleCountDown()
     {
         yield return new WaitForSecondsRealtime(5f);
-        PutDownRifle();
+        if (isRifleUp)
+            PutDownRifle();
     }
 
     private void PutDownRifle()
@@ -88,6 +100,7 @@ public class LogicShootManager : MonoBehaviour
 
     private void Shoot()
     {
+        SoundManager.instance.PlaySoundEffect(rifleManager.shotSound);
         rifleManager.ammo--;
         animator.UpdateAmmo(rifleManager.ammo);
         if (rifleManager.ammo == 0)
@@ -162,6 +175,12 @@ public class LogicShootManager : MonoBehaviour
         RectTransform hole = Instantiate(animator.holePrefab, go.transform);
         hole.anchoredPosition = localPoint;
 
+        Image smoke = Instantiate(animator.smoke, go.transform);
+        smoke.rectTransform.anchoredPosition = localPoint;
+        smoke.rectTransform.DOAnchorPosY(smoke.rectTransform.anchoredPosition.y + 50f, 0.5f);
+        smoke.DOFade(0f, 0.5f);
+        smoke.rectTransform.DOScaleY(1.5f, 0.5f).OnComplete(() => Destroy(smoke.gameObject));
+
         return hole;
     }
 
@@ -205,7 +224,7 @@ public class LogicShootManager : MonoBehaviour
         ImageScript.instance.UnFadeToBlack(0.2f);
         yield return CameraController.instance.DescendingCircling(2f);
 
-        CharacterStand characterStand =
+        characterStand =
             TrialManager.instance.characterStands.Find(stand => stand.character == segment.character);
 
         yield return CameraController.instance.SpinToTarget(characterStand.transform, characterStand.heightPivot,
@@ -231,14 +250,16 @@ public class LogicShootManager : MonoBehaviour
 
     private IEnumerator PlayTargets(List<ShootTargetsStage> stages)
     {
-        while (isActive)
+        while (isActive && !isInFinish)
         {
             foreach (ShootTargetsStage stage in stages)
             {
-                if (!isActive)
+                if (!isActive || isInFinish)
                     break;
                 MoveCameraToCenter(stage.cameraStartPosition, GetMaxDuration(stage.targets));
                 CameraController.instance.cameraTransform.localRotation = Quaternion.Euler(stage.rotation);
+                characterStand.SetSprite(characterStand.character.FindStateByName(stage.emotion));
+
                 yield return animator.GenerateTargets(stage.targets);
             }
         }
@@ -253,6 +274,7 @@ public class LogicShootManager : MonoBehaviour
     {
         animator.finalQuestionText.DOFade(0f, 0.1f);
         isActive = false;
+        TrialCursorManager.instance.Hide();
         yield return animator.FinishAnimation();
 
         ImageScript.instance.UnFadeToBlack(0.2f);
@@ -261,7 +283,6 @@ public class LogicShootManager : MonoBehaviour
         CameraController.instance.TeleportToTarget(stand.transform,
             stand.heightPivot, Vector3.zero, Vector3.zero, 0f);
         yield return CameraController.instance.FovOutro();
-        TrialCursorManager.instance.Hide();
         segment.Finish();
     }
 
@@ -293,18 +314,18 @@ public class LogicShootManager : MonoBehaviour
 
     private void FinalQuestion()
     {
-        isActive = false;
+        isInFinish = true;
         StartCoroutine(animator.ShowFinalQuestion(segment.finalTarget));
     }
 
     public void ReturnToGame()
     {
         animator.StopShowingFinalQuestion();
-        isActive = true;
+        isInFinish = false;
         enemyHP = 1f;
         animator.enemyHpBar.fillAmount = 1f / 10f;
     }
-    
+
     public float GetMaxDuration(List<ShootTargetData> shootTargets)
     {
         if (shootTargets == null || shootTargets.Count == 0)

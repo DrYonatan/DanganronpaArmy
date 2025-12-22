@@ -34,6 +34,11 @@ public class ShootTargetArea : MonoBehaviour
         image.color = Color.green;
         if (holes.Count == 5)
         {
+            transform.parent.DOKill();
+            TextShatterExplosion explosion = Instantiate(LogicShootManager.instance.animator.explosion, LogicShootManager.instance.animator.targetsContainer);
+            explosion.transform.GetChild(0).localScale = Vector3.one * 2f;
+            explosion.transform.localPosition = transform.parent.localPosition;
+            
             transform.parent.DOLocalRotate(new Vector3(0, 360, 0), 0.1f, RotateMode.FastBeyond360).SetLoops(4)
                 .OnComplete(() => transform.parent.GetComponent<ShootTarget>().DisappearAnimation());
             CalculateGrouping();
