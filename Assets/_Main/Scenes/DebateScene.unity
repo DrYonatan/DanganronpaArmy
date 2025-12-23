@@ -1326,9 +1326,11 @@ RectTransform:
   m_Children:
   - {fileID: 1778211038}
   - {fileID: 872665091}
+  - {fileID: 1518064895}
   - {fileID: 1932192827}
   - {fileID: 434172481}
   - {fileID: 194490212}
+  - {fileID: 1681701149}
   m_Father: {fileID: 744169218}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3386,6 +3388,7 @@ MonoBehaviour:
   pivot: {fileID: 2013947725}
   cameraTransform: {fileID: 284596571}
   camera: {fileID: 284596570}
+  uiCamera: {fileID: 467716897}
   newAngle: 0
   rotationTime: 0.3
   radius: 5
@@ -5998,7 +6001,7 @@ GameObject:
   - component: {fileID: 467716897}
   - component: {fileID: 467716899}
   m_Layer: 0
-  m_Name: Debate UI Camera
+  m_Name: UI Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6085,7 +6088,7 @@ MonoBehaviour:
   volumeTrigger: {fileID: 467716898}
   volumeLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 160
   stopNaNPropagation: 1
   finalBlitToCameraTarget: 0
   antialiasingMode: 0
@@ -9316,7 +9319,7 @@ Transform:
   m_GameObject: {fileID: 744169217}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.24425118, y: 2.992635, z: -2.554223}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9341,6 +9344,9 @@ MonoBehaviour:
   targetPrefab: {fileID: 3697956877991314031, guid: 338df9944a2ec5349a51baad58d797aa, type: 3}
   finalTargetPrefab: {fileID: 3697956877991314031, guid: 580181ad02fd0e94ebb6be9e997bcc75, type: 3}
   music: {fileID: 8300000, guid: f4ccadbe7565a0b46a76a8e8db988088, type: 3}
+  finalTargetSound: {fileID: 8300000, guid: 51fa52834f6aecc4d952cb965c3a5b5a, type: 3}
+  finalTargetMusic: {fileID: 8300000, guid: e5c9836c3030c41478733178b081f139, type: 3}
+  stopGameSound: {fileID: 8300000, guid: 7fe1e3f26b6d5b04c85a0f97e3b152a3, type: 3}
   playerHpBar: {fileID: 1729788908}
   enemyHpBar: {fileID: 1805313218}
   finalQuestionText: {fileID: 51725003}
@@ -9351,6 +9357,8 @@ MonoBehaviour:
   stopGameTimer: {fileID: 895284934}
   stopGameCooldownTimer: {fileID: 1234577520}
   stopGameCooldownGlow: {fileID: 2096502734}
+  stopGameHalo: {fileID: 1681701150}
+  colorGrading: {fileID: 872665092}
   startAnimation: {fileID: -1107792925712374254, guid: 91790b520d1ae1441b4d4380a4f7bed7, type: 3}
   stacks:
   - {fileID: 479050726}
@@ -11957,7 +11965,7 @@ GameObject:
   - component: {fileID: 872665091}
   - component: {fileID: 872665092}
   m_Layer: 6
-  m_Name: Post Processing
+  m_Name: Color Grading
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11993,7 +12001,7 @@ MonoBehaviour:
   sharedProfile: {fileID: 11400000, guid: c2979410127d3674099f7a772441c0fe, type: 2}
   isGlobal: 1
   blendDistance: 0
-  weight: 1
+  weight: 0
   priority: 0
 --- !u!1 &875651027
 GameObject:
@@ -12660,7 +12668,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 1
-  m_Camera: {fileID: 284596570}
+  m_Camera: {fileID: 467716897}
   m_PlaneDistance: 1
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -19596,6 +19604,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1517360009}
   m_CullTransparentMesh: 1
+--- !u!1 &1518064894
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1518064895}
+  - component: {fileID: 1518064896}
+  m_Layer: 6
+  m_Name: Post Processing
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1518064895
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1518064894}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 123561875}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1518064896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1518064894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sharedProfile: {fileID: 11400000, guid: 3edf603c917f8144e991dbd2d5cf0d80, type: 2}
+  isGlobal: 1
+  blendDistance: 0
+  weight: 1
+  priority: 0
 --- !u!1 &1533349508
 GameObject:
   m_ObjectHideFlags: 0
@@ -20999,6 +21056,81 @@ MonoBehaviour:
   isInPuzzle: 0
   currentPresentedPage: {fileID: 0}
   currentPageIndex: 0
+--- !u!1 &1681701148
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1681701149}
+  - component: {fileID: 1681701151}
+  - component: {fileID: 1681701150}
+  m_Layer: 0
+  m_Name: Halo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1681701149
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1681701148}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 123561875}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 472}
+  m_SizeDelta: {x: 267.8859, y: 267.8859}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1681701150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1681701148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 35bce201e94b4434a803a673f5e5f41a, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1681701151
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1681701148}
+  m_CullTransparentMesh: 1
 --- !u!1 &1681745315
 GameObject:
   m_ObjectHideFlags: 0
@@ -21933,7 +22065,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1778211038}
   - component: {fileID: 1778211039}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: Stop Game Post Processing
   m_TagString: Untagged
   m_Icon: {fileID: 0}

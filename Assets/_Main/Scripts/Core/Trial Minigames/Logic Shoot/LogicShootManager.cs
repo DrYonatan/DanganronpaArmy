@@ -74,9 +74,8 @@ public class LogicShootManager : MonoBehaviour
         isRifleUp = true;
         Time.timeScale = 0f;
         rifleManager.RaiseRifle();
-        animator.RotateTimersContainer(90);
-        animator.StopGameTimer();
-        animator.stopGamePostProcessing.SetActive(true);
+        MusicManager.instance.LowerVolume();
+        animator.RaiseRifleAnimation();
         StartCoroutine(RifleCountDown());
     }
 
@@ -92,6 +91,7 @@ public class LogicShootManager : MonoBehaviour
         isRifleUp = false;
         Time.timeScale = 1f;
         rifleManager.PutRifleDown();
+        MusicManager.instance.RaiseVolume();
         animator.RotateTimersContainer(0);
         animator.StopGameCooldown();
         animator.stopGamePostProcessing.SetActive(false);
@@ -168,7 +168,7 @@ public class LogicShootManager : MonoBehaviour
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             rt,
             Input.mousePosition,
-            CameraController.instance.camera,
+            CameraController.instance.uiCamera,
             out localPoint
         );
 
@@ -177,9 +177,9 @@ public class LogicShootManager : MonoBehaviour
 
         Image smoke = Instantiate(animator.smoke, go.transform);
         smoke.rectTransform.anchoredPosition = localPoint;
-        smoke.rectTransform.DOAnchorPosY(smoke.rectTransform.anchoredPosition.y + 50f, 0.5f);
-        smoke.DOFade(0f, 0.5f);
-        smoke.rectTransform.DOScaleY(1.5f, 0.5f).OnComplete(() => Destroy(smoke.gameObject));
+        smoke.rectTransform.DOAnchorPosY(smoke.rectTransform.anchoredPosition.y + 50f, 0.5f).SetLink(smoke.gameObject);
+        smoke.DOFade(0f, 0.5f).SetLink(smoke.gameObject);
+        smoke.rectTransform.DOScaleY(1.5f, 0.5f).SetLink(smoke.gameObject).OnComplete(() => Destroy(smoke.gameObject));
 
         return hole;
     }
@@ -195,8 +195,6 @@ public class LogicShootManager : MonoBehaviour
 
     private IEnumerator StopGameCooldown()
     {
-        stopGameCooldown = true;
-
         yield return new WaitForSeconds(stopGameCooldownTime);
 
         rifleManager.rifleErrorCooldown = false;
@@ -321,6 +319,7 @@ public class LogicShootManager : MonoBehaviour
     public void ReturnToGame()
     {
         animator.StopShowingFinalQuestion();
+        MusicManager.instance.PlaySong(animator.music);
         isInFinish = false;
         enemyHP = 1f;
         animator.enemyHpBar.fillAmount = 1f / 10f;

@@ -34,6 +34,7 @@ public class ShootTargetArea : MonoBehaviour
         image.color = Color.green;
         if (holes.Count == 5)
         {
+            SoundManager.instance.PlaySoundEffect(transform.parent.GetComponent<ShootTarget>().completeSound);
             transform.parent.DOKill();
             TextShatterExplosion explosion = Instantiate(LogicShootManager.instance.animator.explosion, LogicShootManager.instance.animator.targetsContainer);
             explosion.transform.GetChild(0).localScale = Vector3.one * 2f;
@@ -48,7 +49,7 @@ public class ShootTargetArea : MonoBehaviour
     protected virtual void WrongAnswer()
     {
         LogicShootManager.instance.DamagePlayer(0.5f);
-        image.DOColor(Color.red, 0.05f).SetLoops(5, LoopType.Yoyo).OnComplete(() => image.color = Color.red);
+        image.DOColor(Color.red, 0.05f).SetLoops(5, LoopType.Yoyo).SetTarget(transform.parent).OnComplete(() => image.color = Color.red);
     }
 
     private void CalculateGrouping()

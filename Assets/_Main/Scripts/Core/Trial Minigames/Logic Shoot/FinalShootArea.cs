@@ -22,6 +22,7 @@ public class FinalShootArea : ShootTargetArea
         LogicShootManager.instance.FinishGame();
 
         yield return new WaitForSeconds(0.5f);
+        MusicManager.instance.PlaySong(LogicShootManager.instance.animator.finalTargetMusic);
 
         TextShatterExplosion explosion = Instantiate(LogicShootManager.instance.animator.explosion, LogicShootManager.instance.animator.targetsContainer);
         explosion.transform.GetChild(0).localScale = Vector3.one * 2f;

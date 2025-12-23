@@ -14,6 +14,7 @@ public class ShootTarget : MonoBehaviour
     public CanvasGroup canvasGroup;
     public Image lines;
     public Image bubble;
+    public AudioClip completeSound;
 
     public Vector2 targetPosition;
 
@@ -42,7 +43,6 @@ public class ShootTarget : MonoBehaviour
             Mathf.SmoothStep(0f, 1f, normalizedTime)
         );
 
-        // Advance phase smoothly
         phase += Time.deltaTime * frequency;
 
         float pingPong = Mathf.PingPong(phase, 1f);
@@ -74,7 +74,7 @@ public class ShootTarget : MonoBehaviour
         {
             rectTransform.DOKill();
             LogicShootManager.instance.DamagePlayer(1f);
-            Destroy(gameObject);
+            canvasGroup.DOFade(0f, 0.5f).OnComplete(() => Destroy(gameObject));
         }
     }
 
@@ -89,6 +89,7 @@ public class ShootTarget : MonoBehaviour
 
     public void DisappearAnimation()
     {
+        bubble.DOFade(0f, 0.1f);
         rectTransform.DOKill();
         isDisappearing = true;
         rectTransform.DOAnchorPosY(-1000, 0.5f).OnComplete(() => Destroy(gameObject));

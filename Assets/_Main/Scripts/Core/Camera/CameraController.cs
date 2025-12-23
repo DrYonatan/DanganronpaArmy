@@ -13,6 +13,7 @@ public class CameraController : MonoBehaviour
 
     public Transform cameraTransform;
     public Camera camera;
+    public Camera uiCamera;
 
     [SerializeField] float newAngle, rotationTime, radius;
     [SerializeField] float speed = 50f;
