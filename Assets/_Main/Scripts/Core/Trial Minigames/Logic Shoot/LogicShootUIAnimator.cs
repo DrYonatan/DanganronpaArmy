@@ -55,6 +55,8 @@ public class LogicShootUIAnimator : MonoBehaviour
 
     public Image smoke;
 
+    private Coroutine colorGradingRoutine;
+
     public void Initialize()
     {
         foreach (Image stack in stacks)
@@ -208,7 +210,7 @@ public class LogicShootUIAnimator : MonoBehaviour
         finalTarget.canvasGroup.DOFade(1f, 0.2f);
         finalTarget.transform.DOScale(1.5f, finalTarget.timeOut).SetLink(finalTarget.gameObject);
 
-        StartCoroutine(ColorGrading(2f, 1f));
+        colorGradingRoutine = StartCoroutine(ColorGrading(3f, 1f));
 
         yield return new WaitForSeconds(data.timeOut);
 
@@ -218,6 +220,7 @@ public class LogicShootUIAnimator : MonoBehaviour
 
     public void StopShowingFinalQuestion()
     {
+        StopCoroutine(colorGradingRoutine);
         finalQuestionText.DOFade(0f, 0.2f);
     }
 
@@ -251,6 +254,7 @@ public class LogicShootUIAnimator : MonoBehaviour
         yield return faceCloseup.Show();
         faceCloseup.gameObject.SetActive(false);
 
+        StopCoroutine(colorGradingRoutine);
         colorGrading.weight = 0f;
 
         CharacterStand characterStand = LogicShootManager.instance.characterStand;

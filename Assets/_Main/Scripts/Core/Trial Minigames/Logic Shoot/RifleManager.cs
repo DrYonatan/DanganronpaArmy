@@ -11,12 +11,12 @@ public class RifleManager : MonoBehaviour
     public RectTransform bulletChamber;
     public Image bulletInChamber;
     public RectTransform flyingBullet;
-    
+
     public AudioClip shotSound;
     public AudioClip errorSound;
     public AudioClip handleSound;
     public AudioClip stackSound;
-    
+
     public List<Button> buttons;
 
     public int ammo;
@@ -26,6 +26,7 @@ public class RifleManager : MonoBehaviour
 
     public bool isAlreadyPullingHandle;
     public bool rifleErrorCooldown;
+    private bool isSwitchingStacks;
 
     private Vector2 stackInPosition;
     private Vector2 stackOutPosition;
@@ -85,6 +86,9 @@ public class RifleManager : MonoBehaviour
 
     public void PushStackIn()
     {
+        if (isSwitchingStacks)
+            return;
+
         isStackIn = true;
         SoundManager.instance.PlaySoundEffect(stackSound);
         LogicShootManager.instance.animator.switchStacksButton.interactable = false;
@@ -96,6 +100,9 @@ public class RifleManager : MonoBehaviour
 
     public void PullStackOut()
     {
+        if (isSwitchingStacks)
+            return;
+
         isStackIn = false;
         SoundManager.instance.PlaySoundEffect(stackSound);
         LogicShootManager.instance.animator.switchStacksButton.interactable = true;
@@ -155,9 +162,10 @@ public class RifleManager : MonoBehaviour
 
     public void TakeNewStack()
     {
-        if (stacksLeft <= 0 || isStackIn)
+        if (stacksLeft <= 0 || isStackIn || isSwitchingStacks)
             return;
 
+        isSwitchingStacks = true;
         stacksLeft--;
         ammo = 30;
 
@@ -173,5 +181,6 @@ public class RifleManager : MonoBehaviour
         seq.Join(LogicShootManager.instance.animator.ammoNumberText.DOColor(Color.green, 0.1f)
             .SetLoops(2, LoopType.Yoyo).SetUpdate(true));
         seq.Append(stack.DOAnchorPosY(stackOriginalPosition.y, 0.3f)).SetUpdate(true);
+        seq.OnComplete(() => isSwitchingStacks = false).SetUpdate(true);
     }
 }
