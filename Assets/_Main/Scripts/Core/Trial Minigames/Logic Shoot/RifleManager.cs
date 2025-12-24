@@ -14,6 +14,8 @@ public class RifleManager : MonoBehaviour
     
     public AudioClip shotSound;
     public AudioClip errorSound;
+    public AudioClip handleSound;
+    public AudioClip stackSound;
     
     public List<Button> buttons;
 
@@ -62,6 +64,7 @@ public class RifleManager : MonoBehaviour
         if (isAlreadyPullingHandle)
             return;
 
+        SoundManager.instance.PlaySoundEffect(handleSound);
         isAlreadyPullingHandle = true;
         handle.DOAnchorPosX(handle.anchoredPosition.x - 160, 0.2f).SetUpdate(true).SetLoops(2, LoopType.Yoyo)
             .OnComplete(() => isAlreadyPullingHandle = false);
@@ -83,6 +86,7 @@ public class RifleManager : MonoBehaviour
     public void PushStackIn()
     {
         isStackIn = true;
+        SoundManager.instance.PlaySoundEffect(stackSound);
         LogicShootManager.instance.animator.switchStacksButton.interactable = false;
         stack.DOAnchorPos(stackInPosition, 0.2f).SetUpdate(true);
         rifle.localRotation = Quaternion.Euler(Vector3.zero);
@@ -93,6 +97,7 @@ public class RifleManager : MonoBehaviour
     public void PullStackOut()
     {
         isStackIn = false;
+        SoundManager.instance.PlaySoundEffect(stackSound);
         LogicShootManager.instance.animator.switchStacksButton.interactable = true;
         stack.DOAnchorPos(stackOutPosition, 0.2f).SetUpdate(true);
     }

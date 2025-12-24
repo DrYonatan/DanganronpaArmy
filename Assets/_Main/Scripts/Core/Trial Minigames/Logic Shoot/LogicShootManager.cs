@@ -33,6 +33,9 @@ public class LogicShootManager : MonoBehaviour
     public bool isActive;
     public bool isInFinish;
 
+    private Coroutine finalTargetRoutine;
+    private bool isFinishedTargets;
+
     void Awake()
     {
         if (instance != null)
@@ -195,6 +198,8 @@ public class LogicShootManager : MonoBehaviour
 
     private IEnumerator StopGameCooldown()
     {
+        stopGameCooldown = true;
+        
         yield return new WaitForSeconds(stopGameCooldownTime);
 
         rifleManager.rifleErrorCooldown = false;
@@ -219,6 +224,9 @@ public class LogicShootManager : MonoBehaviour
     {
         ImageScript.instance.FadeToBlack(0.2f);
         yield return CameraController.instance.DiscussionOutroMovement(2.5f);
+        animator.gameObject.SetActive(true);
+        animator.Initialize();
+
         ImageScript.instance.UnFadeToBlack(0.2f);
         yield return CameraController.instance.DescendingCircling(2f);
 
@@ -229,12 +237,11 @@ public class LogicShootManager : MonoBehaviour
             Vector3.zero,
             Vector3.zero, 0f);
 
-        animator.Initialize();
         animator.PlayStartAnimation();
         yield return CameraController.instance.MoveAndRotate(new Vector3(0, 0, 1f), Vector3.zero, 2.5f);
-
+        animator.ShowUI();
+        
         TrialManager.instance.FadeCharactersExcept(segment.character, 0f, 0.5f);
-        animator.gameObject.SetActive(true);
 
         yield return new WaitForSeconds(0.5f);
 
@@ -243,11 +250,12 @@ public class LogicShootManager : MonoBehaviour
 
         isActive = true;
 
-        StartCoroutine(PlayTargets(segment.stages));
+        StartCoroutine(PlayStages(segment.stages));
     }
 
-    private IEnumerator PlayTargets(List<ShootTargetsStage> stages)
+    private IEnumerator PlayStages(List<ShootTargetsStage> stages)
     {
+        isFinishedTargets = false;
         while (isActive && !isInFinish)
         {
             foreach (ShootTargetsStage stage in stages)
@@ -261,6 +269,8 @@ public class LogicShootManager : MonoBehaviour
                 yield return animator.GenerateTargets(stage.targets);
             }
         }
+
+        isFinishedTargets = true;
     }
 
     public void FinishGame()
@@ -287,7 +297,7 @@ public class LogicShootManager : MonoBehaviour
     public void DamageEnemy(float amount)
     {
         enemyHP -= amount;
-        TrialManager.instance.barsAnimator.DecreaseHealthFromMeter(animator.enemyHpBar, enemyHP, 0.2f);
+        TrialManager.instance.barsAnimator.DecreaseHealthFromMeter(animator.enemyHp, enemyHP, 0.2f);
 
         if (enemyHP <= 0)
         {
@@ -297,7 +307,7 @@ public class LogicShootManager : MonoBehaviour
 
     public void DamagePlayer(float amount)
     {
-        TrialManager.instance.DecreaseHealthFromMeter(animator.playerHpBar, amount);
+        TrialManager.instance.DecreaseHealthFromMeter(animator.playerHp, amount);
     }
 
     private void MoveCameraToCenter(Vector3 from, float duration)
@@ -313,16 +323,20 @@ public class LogicShootManager : MonoBehaviour
     private void FinalQuestion()
     {
         isInFinish = true;
-        StartCoroutine(animator.ShowFinalQuestion(segment.finalTarget));
+        finalTargetRoutine = StartCoroutine(animator.ShowFinalQuestion(segment.finalTarget));
     }
 
     public void ReturnToGame()
     {
+        StopCoroutine(finalTargetRoutine);
+        animator.colorGrading.weight = 0f;
         animator.StopShowingFinalQuestion();
         MusicManager.instance.PlaySong(animator.music);
         isInFinish = false;
         enemyHP = 1f;
-        animator.enemyHpBar.fillAmount = 1f / 10f;
+        animator.enemyHp.fillAmount = 1f / 10f;
+        if(isFinishedTargets)
+            StartCoroutine(PlayStages(segment.stages));
     }
 
     public float GetMaxDuration(List<ShootTargetData> shootTargets)

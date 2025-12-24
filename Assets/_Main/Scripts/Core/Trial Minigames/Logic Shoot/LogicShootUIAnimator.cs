@@ -21,8 +21,12 @@ public class LogicShootUIAnimator : MonoBehaviour
     public AudioClip finalTargetMusic;
     public AudioClip stopGameSound;
 
-    public Image playerHpBar;
-    public Image enemyHpBar;
+    public RectTransform playerBar;
+    public Image playerHp;
+
+    public RectTransform enemyBar;
+    public Image enemyHp;
+
     public TextMeshProUGUI finalQuestionText;
 
     public RectTransform timersContainer;
@@ -37,6 +41,7 @@ public class LogicShootUIAnimator : MonoBehaviour
 
     public MinigameStartAnimation startAnimation;
 
+    public RectTransform stacksContainer;
     public List<Image> stacks;
 
     public List<ShootTarget> activeTargets;
@@ -57,18 +62,24 @@ public class LogicShootUIAnimator : MonoBehaviour
             stack.color = Color.white;
         }
 
-        stopGameHalo.DOFade(0f, 0f);
+        Color color = stopGameHalo.color;
+        color.a = 0f;
+        stopGameHalo.color = color;
+        playerBar.anchoredPosition -= new Vector2(1000, 0);
+        enemyBar.anchoredPosition += new Vector2(1000, 0);
+        stacksContainer.anchoredPosition -= new Vector2(0, 500);
+        timersContainer.localRotation = Quaternion.Euler(90, 0, 0);
     }
 
     public void ShowMikbazText(int number)
     {
-        TextMeshProUGUI mikbazText = Instantiate(mikbazTextPrefab, enemyHpBar.transform);
+        TextMeshProUGUI mikbazText = Instantiate(mikbazTextPrefab, enemyHp.transform);
         mikbazText.rectTransform.anchoredPosition = new Vector2(-535, -100);
         mikbazText.text = "מקבץ " + number + " !!";
 
         Sequence seq = DOTween.Sequence();
         seq.Append(mikbazText.DOFade(0f, 0.05f).SetLoops(6, LoopType.Yoyo));
-        seq.Append(mikbazText.rectTransform.DOAnchorPos(enemyHpBar.rectTransform.anchoredPosition, 1f)
+        seq.Append(mikbazText.rectTransform.DOAnchorPos(enemyHp.rectTransform.anchoredPosition, 1f)
             .SetEase(Ease.InCubic));
         seq.Join(mikbazText.rectTransform.DOScale(0.1f, 1f).SetEase(Ease.InCubic));
 
@@ -111,6 +122,15 @@ public class LogicShootUIAnimator : MonoBehaviour
         activeTargets.Clear();
     }
 
+    public void ShowUI()
+    {
+        Sequence seq = DOTween.Sequence();
+        seq.Append(playerBar.DOAnchorPosX(playerBar.anchoredPosition.x + 1000, 0.2f));
+        seq.Join(enemyBar.DOAnchorPosX(enemyBar.anchoredPosition.x - 1000, 0.2f));
+        seq.Join(stacksContainer.DOAnchorPosY(stacksContainer.anchoredPosition.y + 500, 0.2f));
+        seq.Append(timersContainer.DOLocalRotate(Vector3.zero, 0.2f));
+    }
+
     public void PlayStartAnimation()
     {
         MinigameStartAnimation anim = Instantiate(startAnimation, TrialManager.instance.globalUI);
@@ -125,7 +145,7 @@ public class LogicShootUIAnimator : MonoBehaviour
 
     public void UpdatePlayerHp(float currentHp)
     {
-        playerHpBar.fillAmount = currentHp / TrialManager.instance.barsAnimator.fullHpImageDivideAmount;
+        playerHp.fillAmount = currentHp / TrialManager.instance.barsAnimator.fullHpImageDivideAmount;
     }
 
     public void RemoveStack(int index)
@@ -146,6 +166,7 @@ public class LogicShootUIAnimator : MonoBehaviour
 
         activeTargets.Clear();
         MusicManager.instance.StopSong();
+        SoundManager.instance.PlaySoundEffect(finalTargetSound);
         CameraController.instance.cameraTransform.DOKill();
         CameraController.instance.cameraTransform.localRotation = Quaternion.Euler(0f, 0f, 20f);
         CameraController.instance.cameraTransform.localPosition = new Vector3(0,
@@ -172,7 +193,22 @@ public class LogicShootUIAnimator : MonoBehaviour
         finalTarget.GetComponent<RectTransform>().anchoredPosition = data.spawnPosition;
         finalTarget.targetPosition = data.targetPosition;
         finalTarget.movementTime = data.movementTime;
+        finalTarget.canvasGroup.alpha = 0f;
         finalTarget.LifeTime();
+
+        finalTarget.transform.DOShakePosition(
+            duration: 1f,
+            strength: 10f,
+            vibrato: 30,
+            randomness: 90f,
+            snapping: false,
+            fadeOut: false
+        ).SetEase(Ease.Linear).SetLoops(-1).SetRelative().SetLink(finalTarget.gameObject);
+
+        finalTarget.canvasGroup.DOFade(1f, 0.2f);
+        finalTarget.transform.DOScale(1.5f, finalTarget.timeOut).SetLink(finalTarget.gameObject);
+
+        StartCoroutine(ColorGrading(2f, 1f));
 
         yield return new WaitForSeconds(data.timeOut);
 
@@ -214,6 +250,8 @@ public class LogicShootUIAnimator : MonoBehaviour
         faceCloseup.gameObject.SetActive(true);
         yield return faceCloseup.Show();
         faceCloseup.gameObject.SetActive(false);
+
+        colorGrading.weight = 0f;
 
         CharacterStand characterStand = LogicShootManager.instance.characterStand;
         characterStand.SetSprite(characterStand.character.FindStateByName("scared"));
@@ -257,31 +295,29 @@ public class LogicShootUIAnimator : MonoBehaviour
     {
         SoundManager.instance.PlaySoundEffect(stopGameSound);
         HaloAnimation();
-        StartCoroutine(ColorGrading(0.5f));
+        StartCoroutine(StopGameColorGrading(0.5f));
         RotateTimersContainer(90);
         StopGameTimer();
         stopGamePostProcessing.SetActive(true);
     }
 
-    private IEnumerator ColorGrading(float duration)
+    private IEnumerator ColorGrading(float duration, float to)
     {
         float elapsedTime = 0f;
+        float from = colorGrading.weight;
+
+        while (elapsedTime < duration)
+        {
+            colorGrading.weight = Mathf.Lerp(from, to, elapsedTime / duration);
+            elapsedTime += Time.unscaledDeltaTime;
+            yield return null;
+        }
+    }
+
+    private IEnumerator StopGameColorGrading(float duration)
+    {
         float actualDuration = duration / 2;
-        while (elapsedTime < actualDuration)
-        {
-            colorGrading.weight = Mathf.Lerp(0f, 1f, elapsedTime / actualDuration);
-            elapsedTime += Time.unscaledDeltaTime;
-            yield return null;
-        }
-
-        elapsedTime = 0f;
-        
-        while (elapsedTime < actualDuration)
-        {
-            colorGrading.weight = Mathf.Lerp(1f, 0f, elapsedTime / actualDuration);
-            elapsedTime += Time.unscaledDeltaTime;
-            yield return null;
-        }
-
+        yield return ColorGrading(actualDuration, 1f);
+        yield return ColorGrading(actualDuration, 0f);
     }
 }

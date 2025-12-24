@@ -2261,7 +2261,7 @@ GameObject:
   - component: {fileID: 194490214}
   - component: {fileID: 194490213}
   m_Layer: 5
-  m_Name: Bullet Container
+  m_Name: Stacks Container
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5525,6 +5525,8 @@ MonoBehaviour:
   flyingBullet: {fileID: 1379172208}
   shotSound: {fileID: 8300000, guid: cc41fa053f7f1cc478796c39ede3d911, type: 3}
   errorSound: {fileID: 8300000, guid: 9d64fc0587b218949a0714b57b84c91b, type: 3}
+  handleSound: {fileID: 8300000, guid: 8f828fa34e40c9648a97da68d1c19836, type: 3}
+  stackSound: {fileID: 8300000, guid: d7432c5cff825754e8c635b8ce77175d, type: 3}
   buttons:
   - {fileID: 540192803}
   - {fileID: 823802264}
@@ -9347,8 +9349,10 @@ MonoBehaviour:
   finalTargetSound: {fileID: 8300000, guid: 51fa52834f6aecc4d952cb965c3a5b5a, type: 3}
   finalTargetMusic: {fileID: 8300000, guid: e5c9836c3030c41478733178b081f139, type: 3}
   stopGameSound: {fileID: 8300000, guid: 7fe1e3f26b6d5b04c85a0f97e3b152a3, type: 3}
-  playerHpBar: {fileID: 1729788908}
-  enemyHpBar: {fileID: 1805313218}
+  playerBar: {fileID: 1090660581}
+  playerHp: {fileID: 1729788908}
+  enemyBar: {fileID: 385446357}
+  enemyHp: {fileID: 1805313218}
   finalQuestionText: {fileID: 51725003}
   timersContainer: {fileID: 1932192827}
   targetsContainer: {fileID: 854846089}
@@ -9360,6 +9364,7 @@ MonoBehaviour:
   stopGameHalo: {fileID: 1681701150}
   colorGrading: {fileID: 872665092}
   startAnimation: {fileID: -1107792925712374254, guid: 91790b520d1ae1441b4d4380a4f7bed7, type: 3}
+  stacksContainer: {fileID: 194490212}
   stacks:
   - {fileID: 479050726}
   - {fileID: 888000978}
@@ -9740,7 +9745,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3.7, y: 484.8}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 253.5083, y: 128.4252}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &755340788
@@ -9904,7 +9909,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 470.51}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &774144844
@@ -11964,7 +11969,7 @@ GameObject:
   m_Component:
   - component: {fileID: 872665091}
   - component: {fileID: 872665092}
-  m_Layer: 6
+  m_Layer: 5
   m_Name: Color Grading
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14489,7 +14494,7 @@ GameObject:
   - component: {fileID: 1090660583}
   - component: {fileID: 1090660582}
   m_Layer: 5
-  m_Name: Protagonist Bar
+  m_Name: Player Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16106,7 +16111,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3.6999283, y: 484.80005}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 253.5083, y: 128.4252}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1234577520
@@ -18876,7 +18881,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3.1, y: 471.1}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 427.2, y: 157}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1464214835
@@ -25498,7 +25503,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3.6999283, y: 484.80005}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 253.5083, y: 128.4252}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2096502734

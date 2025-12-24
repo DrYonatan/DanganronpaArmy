@@ -91,7 +91,11 @@ public class ShootTarget : MonoBehaviour
     {
         bubble.DOFade(0f, 0.1f);
         rectTransform.DOKill();
-        isDisappearing = true;
         rectTransform.DOAnchorPosY(-1000, 0.5f).OnComplete(() => Destroy(gameObject));
+    }
+
+    public void SetIsDisappearing()
+    {
+        isDisappearing = true;
     }
 }

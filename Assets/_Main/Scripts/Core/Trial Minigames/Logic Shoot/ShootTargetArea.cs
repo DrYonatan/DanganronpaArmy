@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -34,14 +35,16 @@ public class ShootTargetArea : MonoBehaviour
         image.color = Color.green;
         if (holes.Count == 5)
         {
-            SoundManager.instance.PlaySoundEffect(transform.parent.GetComponent<ShootTarget>().completeSound);
+            ShootTarget parentTarget = transform.parent.GetComponent<ShootTarget>();
+            parentTarget.SetIsDisappearing();
+            SoundManager.instance.PlaySoundEffect(parentTarget.completeSound);
             transform.parent.DOKill();
             TextShatterExplosion explosion = Instantiate(LogicShootManager.instance.animator.explosion, LogicShootManager.instance.animator.targetsContainer);
             explosion.transform.GetChild(0).localScale = Vector3.one * 2f;
             explosion.transform.localPosition = transform.parent.localPosition;
             
             transform.parent.DOLocalRotate(new Vector3(0, 360, 0), 0.1f, RotateMode.FastBeyond360).SetLoops(4)
-                .OnComplete(() => transform.parent.GetComponent<ShootTarget>().DisappearAnimation());
+                .OnComplete(() => parentTarget.DisappearAnimation());
             CalculateGrouping();
         }
     }
