@@ -115,7 +115,7 @@ public class HangmanManager : MonoBehaviour
         }
         else
         {
-            TrialManager.instance.DecreaseHealth(1f);
+            TrialManager.instance.DecreaseHealthDefault(1f);
         }
     }
 

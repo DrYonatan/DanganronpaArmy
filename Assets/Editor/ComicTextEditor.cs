@@ -12,15 +12,14 @@ public class ComicTextEditor : EditorWindow
     private Vector2 scrollPos;
     
     static EditorWindow window;
-
-
+    
     static void ShowEditor()
     {
         window = GetWindow(typeof(ComicTextEditor));
         window.minSize = new Vector2(600, 800);
     }
     
-    public static void Open(ComicSegment segment)
+    private static void Open(ComicSegment segment)
     {
         var window = CreateInstance<ComicTextEditor>();
         window.segment = segment;

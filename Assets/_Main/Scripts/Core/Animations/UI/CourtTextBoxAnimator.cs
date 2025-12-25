@@ -27,5 +27,15 @@ public class CourtTextBoxAnimator : TextBoxAnimations
         base.Initialize();
         characterFace.discussionFaceContainer.DOScaleY(0f, 0f);
     }
+
+    public CharacterCutIn InstantiateCutIn(CharacterCutIn cutIn)
+    {
+        return Instantiate(cutIn, TrialManager.instance.globalUI);
+    }
+
+    public ScreenShatterManager InstantiateScreenShatter(ScreenShatterManager screenShatter)
+    {
+        return Instantiate(screenShatter);
+    }
     
 }

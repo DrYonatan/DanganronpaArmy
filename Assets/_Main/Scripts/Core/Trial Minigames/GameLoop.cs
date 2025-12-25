@@ -77,6 +77,8 @@ public class GameLoop : MonoBehaviour
     public ScreenShatterManager screenShatter;
     public MinigameStartAnimation startAnimation;
 
+    private float bulletMenuHoldTime;
+
     public void PlayDebate(DebateSegment debate)
     {
         this.debateSegment = debate;
@@ -236,7 +238,7 @@ public class GameLoop : MonoBehaviour
 
     void HandleMouseScroll()
     {
-        if (Input.GetAxis("Mouse ScrollWheel") < 0)
+        if (Input.GetAxis("Mouse ScrollWheel") < 0 || Input.GetKeyDown(KeyCode.Q))
         {
             bulletManager.SelectNextEvidence();
             bulletManager.SelectNextEvidence();
@@ -252,10 +254,13 @@ public class GameLoop : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Q))
         {
-            debateUIAnimator.OpenBulletSelectionMenu();
+            bulletMenuHoldTime += Time.deltaTime;
+            if(bulletMenuHoldTime >= 1f)
+               debateUIAnimator.OpenBulletSelectionMenu();
         }
         else
         {
+            bulletMenuHoldTime = 0f;
             debateUIAnimator.CloseBulletSelectionMenu();
         }
     }
@@ -360,7 +365,7 @@ public class GameLoop : MonoBehaviour
         yield return TrialDialogueManager.instance.RunNodes(wrongNodes);
         yield return new WaitForEndOfFrame();
         debateUIAnimator.FadeFromAngleToAngle();
-        TrialManager.instance.DecreaseHealth(1f);
+        TrialManager.instance.DecreaseHealthDefault(1f);
         yield return TrialDialogueManager.instance.RunNodes(UtilityNodesRuntimeBank.instance.nodesCollection
             .debateWrongEvidence);
         CharacterStand characterStand =

@@ -42,6 +42,7 @@ public class ScreenShatterManager : MonoBehaviour
         screenImage.color = new Color(255, 255, 255, 1);
         canvasGroup.alpha = 1f;
         GameLoop.instance.debateUIAnimator.gameObject.SetActive(false);
+        LogicShootManager.instance.animator.gameObject.SetActive(false);
         yield return FlashPieces();
         ChangePiecesTransparency(1f);
         

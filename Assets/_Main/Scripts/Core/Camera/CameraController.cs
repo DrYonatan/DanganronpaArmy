@@ -13,6 +13,7 @@ public class CameraController : MonoBehaviour
 
     public Transform cameraTransform;
     public Camera camera;
+    public Camera uiCamera;
 
     [SerializeField] float newAngle, rotationTime, radius;
     [SerializeField] float speed = 50f;
@@ -76,6 +77,35 @@ public class CameraController : MonoBehaviour
     public IEnumerator DebateStartCameraMovement(float duration)
     {
         TrialManager.instance.barsAnimator.HideDebateBars(0f);
+
+        yield return DescendingCircling(duration);
+        
+        cameraTransform.localPosition = cameraDefaultLocalPosition + Vector3.up * 4f;
+        GameLoop.instance.debateUIAnimator.OpenBulletSelectionMenu();
+        GameLoop.instance.LoadBullets();
+        cameraTransform.localRotation = Quaternion.Euler(0f, 0f, -5f);
+        camera.fieldOfView = 15f;
+        float elapsedTime = 0f;
+        bool triggeredUI = false;
+        while (elapsedTime < duration * 2.5f)
+        {
+            pivot.Rotate(Vector3.up, Time.deltaTime * -20f);
+            elapsedTime += Time.deltaTime;
+            if (!triggeredUI && elapsedTime >= (duration * 2.5f - 1f))
+            {
+                Sequence sequence = DOTween.Sequence();
+                sequence.AppendCallback(() => GameLoop.instance.debateUIAnimator.CloseBulletSelectionMenu());
+                sequence.AppendInterval(0.5f); // optional short delay between them
+                sequence.AppendCallback(() => GameLoop.instance.debateUIAnimator.DebateUIAppear());
+                triggeredUI = true;
+            }
+            yield return null;
+        }
+        
+    }
+
+    public IEnumerator DescendingCircling(float duration)
+    {
         camera.fieldOfView = 30f;
         
         cameraTransform.localRotation *= Quaternion.Euler(new Vector3(10f, 0f, 10f));
@@ -97,29 +127,6 @@ public class CameraController : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        
-        cameraTransform.localPosition = cameraDefaultLocalPosition + Vector3.up * 4f;
-        GameLoop.instance.debateUIAnimator.OpenBulletSelectionMenu();
-        GameLoop.instance.LoadBullets();
-        cameraTransform.localRotation = Quaternion.Euler(0f, 0f, -5f);
-        camera.fieldOfView = 15f;
-        elapsedTime = 0f;
-        bool triggeredUI = false;
-        while (elapsedTime < duration * 2.5f)
-        {
-            pivot.Rotate(Vector3.up, Time.deltaTime * -20f);
-            elapsedTime += Time.deltaTime;
-            if (!triggeredUI && elapsedTime >= (duration * 2.5f - 1f))
-            {
-                Sequence sequence = DOTween.Sequence();
-                sequence.AppendCallback(() => GameLoop.instance.debateUIAnimator.CloseBulletSelectionMenu());
-                sequence.AppendInterval(0.5f); // optional short delay between them
-                sequence.AppendCallback(() => GameLoop.instance.debateUIAnimator.DebateUIAppear());
-                triggeredUI = true;
-            }
-            yield return null;
-        }
-        
     }
 
     public void TeleportToTarget(Transform target, Transform heightPivot, Vector3 positionOffset, Vector3 rotationOffset, float fovOffset)

@@ -1,10 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using _Main.Scripts.Court;
+using DG.Tweening;
 using DIALOGUE;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 [Serializable]
 public class PlayerStats
@@ -15,6 +15,7 @@ public class PlayerStats
     public void InitializeMeters()
     {
         hp = maxHP;
+        TrialManager.instance.barsAnimator.SetBarsFillAmount(TrialManager.instance.playerStats.hp, TimeManipulationManager.instance.concentration);
     }
 }
 
@@ -32,8 +33,10 @@ public class TrialManager : MonoBehaviour
     void Awake()
     {
         instance = this;
-        LoadValuesFromSave(1);
+        if (SaveManager.instance != null)
+            LoadValuesFromSave(SaveManager.instance.currentSaveSlot);
     }
+
     void Start()
     {
         if (currentIndex == 0)
@@ -71,21 +74,31 @@ public class TrialManager : MonoBehaviour
     {
         if (playerStats.hp < playerStats.maxHP)
         {
-            barsAnimator.IncreaseHealth(Math.Min(amount, playerStats.maxHP - playerStats.hp), 0.5f); // Fill either the amount, or what remains to fill before the meter if already full
+            barsAnimator.IncreaseHealth(Math.Min(amount, playerStats.maxHP - playerStats.hp),
+                0.5f); // Fill either the amount, or what remains to fill before the meter if already full
         }
+
         playerStats.hp = Math.Min(playerStats.hp + amount, playerStats.maxHP);
-       
     }
 
-    public void DecreaseHealth(float amount)
+    public void DecreaseHealthDefault(float amount)
     {
         playerStats.hp -= amount;
-        barsAnimator.DecreaseHealth(amount, 0.5f);
+        barsAnimator.DecreaseHealth(playerStats.hp, 0.5f);
         if (playerStats.hp <= 0)
             StartCoroutine(GameOver());
     }
 
-    IEnumerator GameOver()
+    public void DecreaseHealthFromMeter(Image meter, float amount)
+    {
+        playerStats.hp -= amount;
+        barsAnimator.DecreaseHealthFromMeter(meter, playerStats.hp, 0.5f);
+        if (playerStats.hp <= 0)
+            StartCoroutine(GameOver());
+    }
+
+
+    private IEnumerator GameOver()
     {
         yield return TrialDialogueManager.instance.RunNodes(UtilityNodesRuntimeBank.instance.nodesCollection
             .gameOverNodes);
@@ -96,10 +109,24 @@ public class TrialManager : MonoBehaviour
 
     private void LoadValuesFromSave(int slot)
     {
-        SaveData data = SaveManager.instance != null ? SaveManager.instance.LoadCurrentSave() : SaveSystem.LoadGame(slot);
-        
+        SaveData data = SaveManager.instance != null
+            ? SaveManager.instance.LoadCurrentSave()
+            : SaveSystem.LoadGame(slot);
+
         currentIndex = data.trialSegmentIndex;
         TrialDialogueManager.instance.currentLineIndex = data.currentLineIndex;
         playerStats.hp = data.hp;
+    }
+
+    public void FadeCharactersExcept(Character character, float opacity, float duration)
+    {
+        foreach (CharacterStand stand in characterStands)
+        {
+            if (stand.character != character)
+            {
+                stand.spriteRenderer.DOFade(opacity, duration);
+                stand.silhouetteRenderer.DOFade(opacity, duration);
+            }
+        }
     }
 }

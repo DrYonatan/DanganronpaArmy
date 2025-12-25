@@ -239,7 +239,7 @@ public class ComicManager : MonoBehaviour
         OverlayTextBoxManager.instance.Show();
         TrialManager.instance.barsAnimator.ShowGlobalBars(0.2f);
         
-        TrialManager.instance.DecreaseHealth(1f);
+        TrialManager.instance.DecreaseHealthDefault(1f);
         foreach (DialogueNode node in UtilityNodesRuntimeBank.instance.nodesCollection.wrongComicNodes)
         {
             yield return DialogueSystem.instance.Say(node);

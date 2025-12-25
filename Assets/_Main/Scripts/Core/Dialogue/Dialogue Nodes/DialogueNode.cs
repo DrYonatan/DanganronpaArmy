@@ -41,6 +41,13 @@ public class DialogueNode
 
     public virtual IEnumerator Play()
     {
+        VNTextData data = textData as VNTextData;
+        
+        if(data == null)
+            yield break;
+
+        yield return DialogueSystem.instance.RunBeforeCommands(data.commands);
+            
         if (VNNodePlayer.instance.currentConversation.settings != null)
         {
             CharacterPositionMapping info = VNNodePlayer.instance.currentConversation.settings.characterPositions.Find(characterInfo =>

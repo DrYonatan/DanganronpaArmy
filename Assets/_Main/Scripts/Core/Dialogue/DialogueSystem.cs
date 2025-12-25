@@ -24,7 +24,7 @@ namespace DIALOGUE
         public TextBoxAnimations dialogueBoxAnimator;
         public OptionSelectionManager optionSelectionManager;
         public Button inputButton;
-
+        
         private void Awake()
         {
             isActive = false;
@@ -138,6 +138,11 @@ namespace DIALOGUE
         public void TurnOnSingleTimeAuto()
         {
             conversationManager.isSingleTimeAuto = true;
+        }
+
+        public IEnumerator RunBeforeCommands(List<Command> commands)
+        {
+            yield return conversationManager.Line_RunCommands(conversationManager.GetBeforeCommands(commands));
         }
         
     }
