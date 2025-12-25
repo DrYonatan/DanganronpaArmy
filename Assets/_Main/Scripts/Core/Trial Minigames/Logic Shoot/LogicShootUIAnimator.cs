@@ -28,6 +28,7 @@ public class LogicShootUIAnimator : MonoBehaviour
 
     public RectTransform enemyBar;
     public Image enemyHp;
+    public Image enemyFace;
 
     public TextMeshProUGUI finalQuestionText;
 
@@ -36,6 +37,8 @@ public class LogicShootUIAnimator : MonoBehaviour
     public TextMeshProUGUI ammoNumberText;
     public Button switchStacksButton;
     public Image stopGameTimer;
+    
+    public Image stopGameCooldownBubble;
     public Image stopGameCooldownTimer;
     public Image stopGameCooldownGlow;
     public Image stopGameHalo;
@@ -63,7 +66,7 @@ public class LogicShootUIAnimator : MonoBehaviour
         {
             stack.color = Color.white;
         }
-
+        
         Color color = stopGameHalo.color;
         color.a = 0f;
         stopGameHalo.color = color;
@@ -71,13 +74,21 @@ public class LogicShootUIAnimator : MonoBehaviour
         enemyBar.anchoredPosition += new Vector2(1000, 0);
         stacksContainer.anchoredPosition -= new Vector2(0, 500);
         timersContainer.localRotation = Quaternion.Euler(90, 0, 0);
+        enemyFace.sprite = LogicShootManager.instance.segment.character.faceSprite;
+        stopGameCooldownBubble.rectTransform.DOScale(1.2f, 0.4f).SetLoops(-1, LoopType.Yoyo);
     }
 
     public void ShowMikbazText(int number)
     {
         TextMeshProUGUI mikbazText = Instantiate(mikbazTextPrefab, enemyHp.transform);
         mikbazText.rectTransform.anchoredPosition = new Vector2(-535, -100);
-        mikbazText.text = "מקבץ " + number + " !!";
+        if(number <= 6)
+           mikbazText.text = "מקבץ " + number + " !!";
+        else
+        {
+            mikbazText.text = "פיזור !!";
+            number = 8;
+        }
 
         Sequence seq = DOTween.Sequence();
         seq.Append(mikbazText.DOFade(0f, 0.05f).SetLoops(6, LoopType.Yoyo));
@@ -241,11 +252,14 @@ public class LogicShootUIAnimator : MonoBehaviour
     public void StopGameCooldown()
     {
         stopGameCooldownTimer.fillAmount = 0f;
+        stopGameCooldownBubble.rectTransform.DOKill();
+        stopGameCooldownBubble.rectTransform.localScale = Vector3.one;
 
         Sequence seq = DOTween.Sequence();
         seq.Append(stopGameCooldownTimer.DOFillAmount(1f, LogicShootManager.instance.stopGameCooldownTime)
             .SetEase(Ease.Linear));
         seq.Append(stopGameCooldownGlow.DOFade(1f, 0.2f).SetLoops(2, LoopType.Yoyo));
+        seq.OnComplete(() => stopGameCooldownBubble.rectTransform.DOScale(1.2f, 0.4f).SetLoops(-1, LoopType.Yoyo));
     }
 
     public IEnumerator FinishAnimation()

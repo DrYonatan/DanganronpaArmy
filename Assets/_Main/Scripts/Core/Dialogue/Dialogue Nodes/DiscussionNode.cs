@@ -23,30 +23,16 @@ public class DiscussionNode : DialogueNode
     public DiscussionNode(DrawNode _drawNode) : base(_drawNode)
     {
     }
-    
-    IEnumerator PlayConversationNode(DiscussionNode node)
-    {
-        CharacterStand characterStand = TrialManager.instance.characterStands.Find(stand => stand.character == node.character);
-        if (!node.usePrevCamera)
-        {
-            TrialDialogueManager.instance.cameraController.TeleportToTarget(characterStand.transform, characterStand.heightPivot, node.positionOffset, node.rotationOffset, node.fovOffset);
-            TrialDialogueManager.instance.effectController.Reset();
-        }
-
-        ((CourtTextBoxAnimator)(DialogueSystem.instance.dialogueBoxAnimator)).ChangeFace(node.character.faceSprite);
-        
-        foreach (CameraEffect cameraEffect in node.cameraEffects)
-        {
-            TrialDialogueManager.instance.effectController.StartEffect(cameraEffect);
-        }
-        characterStand.SetSprite(node.character.emotions[node.expressionIndex]);
-
-        yield return DialogueSystem.instance.Say(node);
-
-    }
 
     public override IEnumerator Play()
     {
+        VNTextData data = textData as VNTextData;
+        
+        if(data == null)
+            yield break;
+
+        yield return DialogueSystem.instance.RunBeforeCommands(data.commands);
+        
         CharacterStand characterStand = TrialManager.instance.characterStands.Find(stand => stand.character == character);
         if (!usePrevCamera)
         {

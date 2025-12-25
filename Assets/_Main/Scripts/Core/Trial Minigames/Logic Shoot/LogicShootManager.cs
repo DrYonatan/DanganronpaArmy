@@ -307,6 +307,7 @@ public class LogicShootManager : MonoBehaviour
 
     public void DamagePlayer(float amount)
     {
+        SoundManager.instance.PlaySoundEffect(TrialManager.instance.barsAnimator.damageSound);
         TrialManager.instance.DecreaseHealthFromMeter(animator.playerHp, amount);
     }
 

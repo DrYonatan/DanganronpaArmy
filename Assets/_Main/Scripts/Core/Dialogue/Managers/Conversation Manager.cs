@@ -15,11 +15,11 @@ namespace DIALOGUE
         private TextArchitect architect = null;
 
         private bool userPrompt = false;
-        
+
         public bool isAuto = false;
 
         public bool isSingleTimeAuto = false;
-        
+
         public ConversationManager(TextArchitect architect)
         {
             this.architect = architect;
@@ -55,14 +55,14 @@ namespace DIALOGUE
         {
             VNTextData textData = node.textData as VNTextData;
 
-            List<Command> beforeCommands = GetBeforeCommands(textData.commands);
+            if (textData == null)
+                yield break;
+
             List<Command> parallelCommands = GetParallelCommands(textData.commands);
             List<Command> afterCommands = GetAfterCommands(textData.commands);
             
-            yield return Line_RunCommands(beforeCommands);
-            
             Line_RunCommandsAsync(parallelCommands);
-            
+
             DialogueSystem.instance.ShowSpeakerName(node.character.displayName);
             yield return BuildDialogue(textData.text);
 
@@ -79,23 +79,23 @@ namespace DIALOGUE
             }
         }
 
-        List<Command> GetBeforeCommands(List<Command> commands)
+        public List<Command> GetBeforeCommands(List<Command> commands)
         {
             return commands.FindAll((Command command) => command.executeTime == Command.ExecuteTime.Before);
         }
-        
+
         List<Command> GetParallelCommands(List<Command> commands)
         {
             return commands.FindAll((Command command) => command.executeTime == Command.ExecuteTime.Parallel);
         }
-        
+
         List<Command> GetAfterCommands(List<Command> commands)
         {
             return commands.FindAll((Command command) => command.executeTime == Command.ExecuteTime.After);
         }
-        
 
-        IEnumerator Line_RunCommands(List<Command> commands)
+
+        public IEnumerator Line_RunCommands(List<Command> commands)
         {
             foreach (Command command in commands)
             {
@@ -110,7 +110,7 @@ namespace DIALOGUE
                 DialogueSystem.instance.StartCoroutineHelper(command.Execute());
             }
         }
-        
+
 
         IEnumerator BuildDialogue(string dialogue, bool append = false)
         {
@@ -129,11 +129,9 @@ namespace DIALOGUE
 
                     userPrompt = false;
                 }
+
                 yield return null;
             }
-
-            
-
         }
 
         public IEnumerator WaitForUserInput()
@@ -147,6 +145,5 @@ namespace DIALOGUE
         {
             architect.Clear();
         }
-        
     }
 }
