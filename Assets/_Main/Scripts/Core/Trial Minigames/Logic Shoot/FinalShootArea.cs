@@ -20,8 +20,7 @@ public class FinalShootArea : ShootTargetArea
     {
         LogicShootManager.instance.FinishGame();
 
-        yield return new WaitForSeconds(0.5f);
-        MusicManager.instance.PlaySong(LogicShootManager.instance.animator.finalTargetMusic);
+        yield return new WaitForSeconds(0.8f);
 
         TextShatterExplosion explosion = Instantiate(LogicShootManager.instance.animator.successExplosion,
             LogicShootManager.instance.animator.targetsContainer);

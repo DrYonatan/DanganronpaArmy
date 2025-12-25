@@ -27,6 +27,7 @@ public class ShootTargetsStage
     public Vector3 rotation;
     public string emotion;
     public List<ShootTargetData> targets;
+    public AudioClip voiceLine;
 }
 
 [CreateAssetMenu(menuName = "Data/Logic Shoot")]
@@ -34,6 +35,7 @@ public class LogicShootSegment : TrialSegment
 {
     public List<ShootTargetsStage> stages;
     public ShootTargetData finalTarget;
+    public AudioClip finalVoiceLine;
     public Character character;
     
     public override void Play()

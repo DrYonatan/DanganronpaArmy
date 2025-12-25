@@ -262,6 +262,7 @@ public class LogicShootManager : MonoBehaviour
             {
                 if (!isActive || isInFinish)
                     break;
+                SoundManager.instance.PlaySoundEffect(stage.voiceLine);
                 MoveCameraToCenter(stage.cameraStartPosition, GetMaxDuration(stage.targets));
                 CameraController.instance.cameraTransform.localRotation = Quaternion.Euler(stage.rotation);
                 characterStand.SetSprite(characterStand.character.FindStateByName(stage.emotion));

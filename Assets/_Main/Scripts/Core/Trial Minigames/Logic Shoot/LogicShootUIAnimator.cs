@@ -192,6 +192,7 @@ public class LogicShootUIAnimator : MonoBehaviour
 
         finalQuestionText.text = data.question;
         finalQuestionText.DOFade(1f, 0.2f);
+        SoundManager.instance.PlaySoundEffect(LogicShootManager.instance.segment.finalVoiceLine);
 
         yield return new WaitForSeconds(1f);
 
@@ -273,6 +274,7 @@ public class LogicShootUIAnimator : MonoBehaviour
 
         CharacterStand characterStand = LogicShootManager.instance.characterStand;
         characterStand.SetSprite(characterStand.character.FindStateByName("scared"));
+        MusicManager.instance.PlaySong(LogicShootManager.instance.animator.finalTargetMusic);
         yield return FinishCameraMovement();
 
         ScreenShatterManager shatter = Instantiate(screenShatter);
