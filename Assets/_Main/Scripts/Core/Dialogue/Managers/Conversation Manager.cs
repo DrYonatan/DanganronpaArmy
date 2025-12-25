@@ -17,6 +17,7 @@ namespace DIALOGUE
         private bool userPrompt = false;
 
         public bool isAuto = false;
+        public bool isSkip = false;
 
         public bool isSingleTimeAuto = false;
 
@@ -72,9 +73,14 @@ namespace DIALOGUE
             {
                 isSingleTimeAuto = false;
             }
-            else if (!isAuto)
+            else if (!isAuto && !isSkip)
             {
                 yield return WaitForUserInput();
+                SoundManager.instance.PlayTextBoxSound();
+            }
+            else if (isSkip)
+            {
+                yield return new WaitForSeconds(0.2f);
                 SoundManager.instance.PlayTextBoxSound();
             }
         }
@@ -123,7 +129,7 @@ namespace DIALOGUE
             //Wait for the dialogue to complete
             while (architect.isBuilding)
             {
-                if (userPrompt)
+                if (userPrompt || isSkip)
                 {
                     architect.ForceComplete();
 
@@ -132,6 +138,7 @@ namespace DIALOGUE
 
                 yield return null;
             }
+
         }
 
         public IEnumerator WaitForUserInput()

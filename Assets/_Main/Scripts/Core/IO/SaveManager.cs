@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,7 +11,7 @@ public class SaveManager : MonoBehaviour
     public int currentSaveSlot;
 
     public int saveSlotAmount;
-    
+
     private void Awake()
     {
         if (instance == null)
@@ -47,7 +47,8 @@ public class SaveManager : MonoBehaviour
             ProgressManager.instance.currentGameEvent.charactersData,
             ProgressManager.instance.currentGameEvent.objectsData, SceneManager.GetActiveScene().name,
             ProgressManager.instance.charactersRanks, CameraManager.instance.cameraTransform.position,
-            CameraManager.instance.cameraTransform.rotation.eulerAngles, 0, 0);
+            CameraManager.instance.cameraTransform.rotation.eulerAngles,
+            CameraManager.instance.initialRotation.eulerAngles, 0, 0);
         SaveSystem.SaveGame(data, slot);
     }
 
@@ -58,7 +59,7 @@ public class SaveManager : MonoBehaviour
             TrialDialogueManager.instance.currentLineIndex,
             MusicManager.instance.audio ? MusicManager.instance.audio.name : "", null, null,
             SceneManager.GetActiveScene().name, prevData.characterRanks.ToDictionary(c => c.key, c => c.value),
-            new Vector3(0f, 0f, 0f), new Vector3(0f, 0f, 0f), TrialManager.instance.currentIndex,
+            new Vector3(0f, 0f, 0f), new Vector3(0f, 0f, 0f), Vector3.zero, TrialManager.instance.currentIndex,
             TrialManager.instance.playerStats.hp);
 
         SaveSystem.SaveGame(data, slot);

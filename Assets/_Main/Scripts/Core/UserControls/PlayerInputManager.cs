@@ -4,7 +4,7 @@ namespace DIALOGUE
 {
     public class PlayerInputManager : MonoBehaviour
     {
-        public static PlayerInputManager instance {get; private set;}
+        public static PlayerInputManager instance { get; private set; }
 
         public QuestionMarkShooter shooter;
 
@@ -20,6 +20,7 @@ namespace DIALOGUE
             instance = this;
             isInputActive = true;
         }
+
         void Update()
         {
             if (isInputActive)
@@ -28,12 +29,22 @@ namespace DIALOGUE
                 Cursor.lockState = CursorLockMode.Confined;
                 if (!isPaused)
                 {
-                    if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+                    if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return) ||
+                        Input.GetKeyDown(KeyCode.LeftControl))
                     {
                         PromptAdvance();
                     }
+
+                    if (Input.GetKey(KeyCode.LeftControl))
+                    {
+                        DialogueSystem.instance.SetSkip(true);
+                    }
+                    else
+                    {
+                        DialogueSystem.instance.SetSkip(false);
+                    }
                 }
-            
+
                 if (Input.GetKeyDown(KeyCode.Alpha1) && !pauseMenu.isSubmenuOpen)
                 {
                     TogglePause();
@@ -67,7 +78,5 @@ namespace DIALOGUE
                 pauseMenu.CloseGeneralMenu();
             }
         }
-
-       
     }
 }

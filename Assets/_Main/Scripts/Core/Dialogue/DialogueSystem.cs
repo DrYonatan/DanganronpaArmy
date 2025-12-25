@@ -124,6 +124,17 @@ namespace DIALOGUE
             conversationManager.isAuto = isAuto;
         }
 
+        public void SetSkip(bool isSkip)
+        {
+            conversationManager.isSkip = isSkip;
+        }
+
+        public bool GetIsSkip()
+        {
+            return conversationManager.isSkip;
+        }
+        
+
         public void TurnOnSingleTimeAuto()
         {
             conversationManager.isSingleTimeAuto = true;

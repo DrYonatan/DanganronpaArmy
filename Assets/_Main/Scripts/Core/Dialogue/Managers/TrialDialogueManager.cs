@@ -47,6 +47,7 @@ public class TrialDialogueManager : MonoBehaviour
 
     public IEnumerator RunNodes(List<DiscussionNode> nodes)
     {
+        currentLineIndex = 0;
         for (int i = currentLineIndex; i < nodes.Count; i++)
         {
             yield return nodes[i].Play();

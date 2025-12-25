@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using CHARACTERS;
-using DIALOGUE;
 using UnityEngine;
     public class VNNodePlayer : MonoBehaviour
     {
@@ -35,6 +34,7 @@ using UnityEngine;
             for (int i = lineIndex; i < nodes.Count; i++)
             {
                 yield return nodes[i].Play();
+                yield return new WaitUntil(() => CameraManager.instance.conversationFinishedMoving);
                 lineIndex++;
             }
         }
