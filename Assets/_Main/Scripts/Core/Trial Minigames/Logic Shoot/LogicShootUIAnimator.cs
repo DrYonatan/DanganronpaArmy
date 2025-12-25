@@ -15,6 +15,8 @@ public class LogicShootUIAnimator : MonoBehaviour
     public RectTransform holePrefab;
     public ShootTarget targetPrefab;
     public ShootTarget finalTargetPrefab;
+    public TextShatterExplosion successExplosion;
+    public Explosion failExplosion;
 
     public AudioClip music;
     public AudioClip finalTargetSound;
@@ -50,9 +52,7 @@ public class LogicShootUIAnimator : MonoBehaviour
     public ScreenShatterManager screenShatter;
 
     public GameObject stopGamePostProcessing;
-
-    public TextShatterExplosion explosion;
-
+    
     public Image smoke;
 
     private Coroutine colorGradingRoutine;
@@ -323,5 +323,12 @@ public class LogicShootUIAnimator : MonoBehaviour
         float actualDuration = duration / 2;
         yield return ColorGrading(actualDuration, 1f);
         yield return ColorGrading(actualDuration, 0f);
+    }
+
+    public void TargetFailExplosion(Vector2 position)
+    {
+        Explosion explosion = Instantiate(failExplosion, targetsContainer);
+        explosion.rectTransform.anchoredPosition = position;
+        explosion.Explode();
     }
 }

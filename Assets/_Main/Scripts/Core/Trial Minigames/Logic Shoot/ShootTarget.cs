@@ -74,6 +74,7 @@ public class ShootTarget : MonoBehaviour
         {
             rectTransform.DOKill();
             LogicShootManager.instance.DamagePlayer(1f);
+            LogicShootManager.instance.animator.TargetFailExplosion(rectTransform.anchoredPosition);
             canvasGroup.DOFade(0f, 0.5f).OnComplete(() => Destroy(gameObject));
         }
     }

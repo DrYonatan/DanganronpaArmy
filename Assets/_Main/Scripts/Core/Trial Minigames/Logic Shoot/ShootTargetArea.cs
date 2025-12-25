@@ -39,7 +39,7 @@ public class ShootTargetArea : MonoBehaviour
             parentTarget.SetIsDisappearing();
             SoundManager.instance.PlaySoundEffect(parentTarget.completeSound);
             transform.parent.DOKill();
-            TextShatterExplosion explosion = Instantiate(LogicShootManager.instance.animator.explosion, LogicShootManager.instance.animator.targetsContainer);
+            TextShatterExplosion explosion = Instantiate(LogicShootManager.instance.animator.successExplosion, LogicShootManager.instance.animator.targetsContainer);
             explosion.transform.GetChild(0).localScale = Vector3.one * 2f;
             explosion.transform.localPosition = transform.parent.localPosition;
             
