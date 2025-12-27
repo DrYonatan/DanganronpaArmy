@@ -25,6 +25,8 @@ public class TrialManager : MonoBehaviour
     public List<TrialSegment> segments = new List<TrialSegment>();
     public int currentIndex = 0;
     public List<CharacterStand> characterStands;
+    public CharacterStand protagonistStand;
+
     public PlayerStats playerStats = new PlayerStats();
     public PlayerBarsAnimator barsAnimator;
     public RectTransform globalUI;

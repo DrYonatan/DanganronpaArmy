@@ -288,7 +288,7 @@ public class LogicShootManager : MonoBehaviour
 
         ImageScript.instance.UnFadeToBlack(0.2f);
         animator.gameObject.SetActive(false);
-        CharacterStand stand = TrialManager.instance.characterStands.Find(stand => stand.character.isProtagonist);
+        CharacterStand stand = TrialManager.instance.protagonistStand;
         CameraController.instance.TeleportToTarget(stand.transform,
             stand.heightPivot, Vector3.zero, Vector3.zero, 0f);
         yield return CameraController.instance.FovOutro();

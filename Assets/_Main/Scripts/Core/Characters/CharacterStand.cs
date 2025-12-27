@@ -6,7 +6,6 @@ using System;
 
 public class CharacterStand : MonoBehaviour
 {
-
     public Character character;
     public SpriteRenderer spriteRenderer;
     public SpriteRenderer silhouetteRenderer;

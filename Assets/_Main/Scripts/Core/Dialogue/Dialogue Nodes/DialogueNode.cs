@@ -48,7 +48,7 @@ public class DialogueNode
 
         yield return DialogueSystem.instance.RunBeforeCommands(data.commands);
             
-        if (VNNodePlayer.instance.currentConversation.settings != null)
+        if (VNNodePlayer.instance.currentConversation.settings != null && !character.notVisible)
         {
             CharacterPositionMapping info = VNNodePlayer.instance.currentConversation.settings.characterPositions.Find(characterInfo =>
                 characterInfo.character == character);

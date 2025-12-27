@@ -52,6 +52,14 @@ namespace CHARACTERS
             }
         }
 
+        public void HideAllCharacters()
+        {
+            foreach (KeyValuePair<Character, GameObject> characterObj in characterObjects)
+            {
+                HideCharacter(characterObj.Value, 0);
+            }
+        }
+
         void ShowCharacter(GameObject characterObj, float duration)
         {
             CanvasGroup canvasGroup = characterObj.GetComponent<CanvasGroup>();
