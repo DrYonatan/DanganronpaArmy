@@ -5,7 +5,7 @@ public class PointAndClickObject : MonoBehaviour
 {
     private void OnMouseDown()
     {
-        if (!DialogueSystem.instance.isActive)
+        if (!DialogueSystem.instance.isActive && CursorManager.instance.cursor.gameObject.activeInHierarchy)
         {
             gameObject.GetComponent<Interactable>().Interact();
             VirutalCameraManager.instance.virtualCamera.gameObject.SetActive(false);

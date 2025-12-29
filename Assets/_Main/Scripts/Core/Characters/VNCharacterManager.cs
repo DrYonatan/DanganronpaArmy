@@ -109,7 +109,7 @@ namespace CHARACTERS
             newSprite.sprite = sprite;
             // Fade out + destroy old
             oldSprite.DOKill();
-            oldSprite.DOFade(0f, 0.25f).OnComplete(() =>
+            oldSprite.DOFade(0f, 0.25f).SetLink(oldSprite.gameObject).OnComplete(() =>
             {
                 if (oldSpriteObj != null)
                     Destroy(oldSpriteObj);
@@ -117,7 +117,7 @@ namespace CHARACTERS
 
             // Fade in new
             newSprite.color = Color.black;
-            newSprite.DOColor(Color.white, 0.25f);
+            newSprite.DOColor(Color.white, 0.25f).SetLink(newSprite.gameObject);
         }
 
 

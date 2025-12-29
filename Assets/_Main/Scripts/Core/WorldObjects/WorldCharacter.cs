@@ -22,7 +22,7 @@ public class WorldCharacter : ConversationInteractable
 
     public override void OnLook()
     {
-        if (!isAlreadyLooking)
+        if (!isAlreadyLooking && CursorManager.instance.cursor.gameObject.activeInHierarchy)
         {
             isAlreadyLooking = true;
             CursorManager.instance.ShowOrHideConversationIcon(true);

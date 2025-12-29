@@ -31,9 +31,9 @@ using UnityEngine;
 
         IEnumerator RunNodes(List<DialogueNode> nodes)
         {
+            VNCharacterManager.instance.HideAllCharacters();
             for (int i = lineIndex; i < nodes.Count; i++)
             {
-                VNCharacterManager.instance.HideAllCharacters();
                 yield return nodes[i].Play();
                 yield return new WaitUntil(() => CameraManager.instance.conversationFinishedMoving);
                 lineIndex++;

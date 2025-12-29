@@ -138,6 +138,9 @@ public class WorldManager : MonoBehaviour
     }
     private IEnumerator MoveToRoom(Room room, [CanBeNull] string entryPoint)
     {
+        CursorManager.instance.ShowOrHideConversationIcon(false);
+        CursorManager.instance.ShowOrHideInteractableName(false, "");
+        
         CameraManager.instance?.StopAllPreviousOperations();
 
         isLoading = true;
