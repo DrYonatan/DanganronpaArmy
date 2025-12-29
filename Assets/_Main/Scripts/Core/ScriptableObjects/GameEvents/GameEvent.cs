@@ -28,10 +28,6 @@ public abstract class GameEvent : ScriptableObject
 {
     public bool isFinished;
 
-    public bool
-        startEventImmediately =
-            false; // used to know if to start the event as soon as the previous one ends or only after finish text
-
     public VNConversationSegment finishText;
 
     public VNConversationSegment unallowedText;
@@ -41,11 +37,15 @@ public abstract class GameEvent : ScriptableObject
     public Dictionary<string, ObjectData> charactersData = new Dictionary<string, ObjectData>();
 
     public Dictionary<string, ObjectData> objectsData = new Dictionary<string, ObjectData>();
+    
+    public TimeOfDay timeOfDay;
 
     public abstract void CheckIfFinished();
 
     public virtual void OnStart()
     {
+        TimeOfDayManager.instance.SwitchTimeOfDay(timeOfDay);
+        
         RoomData currentRoomData = ProgressManager.instance.currentGameEvent.roomDatas
             .First(roomData => roomData.room.name.Equals(WorldManager.instance.currentRoom.name));
         

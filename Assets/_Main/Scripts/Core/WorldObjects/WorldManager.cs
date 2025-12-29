@@ -109,7 +109,7 @@ public class WorldManager : MonoBehaviour
 
     private IEnumerator LoadRoom(Room room)
     {
-        RoomModel ob = Instantiate(room.prefab);
+        RoomModel ob = Instantiate(room.GetTimeOfDayVersion(ProgressManager.instance.currentGameEvent.timeOfDay));
         ob.name = "World";
         ob.gameObject.SetActive(true);
 
@@ -177,7 +177,7 @@ public class WorldManager : MonoBehaviour
         }
 
 
-        RoomModel ob = Instantiate(room.prefab);
+        RoomModel ob = Instantiate(room.GetTimeOfDayVersion(ProgressManager.instance.currentGameEvent.timeOfDay));
         ob.name = "World";
         ob.gameObject.SetActive(true);
 
@@ -201,10 +201,7 @@ public class WorldManager : MonoBehaviour
         ImageScript.instance.UnFadeToBlack(0.1f);
         if (room.OnLoad() != null)
             yield return StartCoroutine(room.OnLoad());
-        foreach (RoomIntroEffect effect in ob.roomIntroEffects)
-        {
-            StartCoroutine(effect.PlayEffect());
-        }
+        ob.PlayRoomIntroEffects();
         yield return room.AppearAnimation();
         isLoading = false;
 

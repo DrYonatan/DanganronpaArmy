@@ -4154,6 +4154,7 @@ MonoBehaviour:
   optionSelectionMenu: {fileID: 417735094}
   clickSound: {fileID: 8300000, guid: 114f394be7ae9c34a8b4d2634b4d0589, type: 3}
   moveSelectionSound: {fileID: 8300000, guid: 9ea6ec063fde8524d8adad660d374b40, type: 3}
+  isActive: 0
 --- !u!1 &419077834
 GameObject:
   m_ObjectHideFlags: 0
@@ -5154,6 +5155,7 @@ Transform:
   - {fileID: 148780431}
   - {fileID: 1087552700}
   - {fileID: 1755219071}
+  - {fileID: 1663971280}
   m_Father: {fileID: 2090243131}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &475160531
@@ -17214,6 +17216,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1653381921}
   m_CullTransparentMesh: 1
+--- !u!1 &1663971279
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1663971280}
+  - component: {fileID: 1663971281}
+  m_Layer: 0
+  m_Name: TimeOfDayManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1663971280
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1663971279}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 472655885}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1663971281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1663971279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 926ee64ebdae7b340a20810a9d15fb35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeScenes:
+  - scene: VisualNovelDay
+    timeOfDay: 1
+  - scene: VisualNovelNight
+    timeOfDay: 2
 --- !u!1 &1678128566
 GameObject:
   m_ObjectHideFlags: 0
