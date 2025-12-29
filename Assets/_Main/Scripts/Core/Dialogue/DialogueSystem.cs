@@ -110,8 +110,7 @@ namespace DIALOGUE
 
         public IEnumerator HandleSelection<T>(List<Option<T>> options, Action<Option<T>> onSelect) where T : DialogueNode
         {
-            optionSelectionManager.gameObject.SetActive(true);
-            optionSelectionManager.GenerateUIOptions(options);
+            optionSelectionManager.OpenMenu(options);
             yield return conversationManager.WaitForUserInput();
             optionSelectionManager.ClickSelectedOption();
             yield return new WaitForSeconds(0.2f);

@@ -13,8 +13,11 @@ public abstract class Interactable : MonoBehaviour
 
     private IEnumerator DoInteraction()
     {
+        if (!CursorManager.instance.cursor.gameObject.activeInHierarchy)
+            yield break;
         StartCoroutine(MoveAndRotateCameraTo());
         CursorManager.instance.Hide();
+        CursorManager.instance.ShowOrHideInteractableName(false, "");
         yield return StartCoroutine(PlayerInputManager.instance.shooter.ShootQuestionMark(this.transform.position));
         FinishInteraction();
         SoundManager.instance.PlaySoundEffect(Resources.Load<AudioClip>("Audio/Sound Effects/click"));

@@ -46,6 +46,9 @@ public class DialogueNode
         if(data == null)
             yield break;
 
+        if (character == null)
+            yield break;
+
         yield return DialogueSystem.instance.RunBeforeCommands(data.commands);
             
         if (VNNodePlayer.instance.currentConversation.settings != null && !character.notVisible)

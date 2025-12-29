@@ -12,6 +12,7 @@ namespace DIALOGUE
         public RectTransform optionSelectionMenu;
         public AudioClip clickSound;
         public AudioClip moveSelectionSound;
+        public bool isActive;
 
         void SelectionMenuControl()
         {
@@ -33,7 +34,7 @@ namespace DIALOGUE
         
         void Update()
         {
-            if (!PlayerInputManager.instance.isPaused)
+            if (isActive && !PlayerInputManager.instance.isPaused)
                SelectionMenuControl();
         }
 
@@ -51,8 +52,16 @@ namespace DIALOGUE
             optionSelectionMenu.DOAnchorPosX(0, 0.2f);
         }
 
+        public void OpenMenu<T>(List<Option<T>> options) where T : DialogueNode
+        {
+            isActive = true;
+            gameObject.SetActive(true);
+            GenerateUIOptions(options);
+        }
+
         public void CloseMenu()
         {
+            isActive = false;
             DestroyUIOptions();
             optionSelectionMenu.DOAnchorPosX(100, 0.3f).OnComplete(() => gameObject.SetActive(false));
         }
