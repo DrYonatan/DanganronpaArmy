@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [Serializable]
 public class ObjectData
@@ -44,7 +45,13 @@ public abstract class GameEvent : ScriptableObject
 
     public virtual void OnStart()
     {
-        TimeOfDayManager.instance.SwitchTimeOfDay(timeOfDay);
+        string sceneName = TimeOfDayManager.instance.GetTimeScene(timeOfDay);
+        if (true)
+        {
+            WorldManager.instance.currentTime = timeOfDay;
+            SceneManager.LoadScene(sceneName);
+            WorldManager.instance.StartLoadingRoom(WorldManager.instance.currentRoom, null);
+        }
         
         RoomData currentRoomData = ProgressManager.instance.currentGameEvent.roomDatas
             .First(roomData => roomData.room.name.Equals(WorldManager.instance.currentRoom.name));

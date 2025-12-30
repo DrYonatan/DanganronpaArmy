@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using DIALOGUE;
 using JetBrains.Annotations;
+using UnityEngine.SceneManagement;
 
 public class WorldManager : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class WorldManager : MonoBehaviour
 
     public WorldCharactersParent charactersObject;
     public GameObject objectsObject;
+
+    public TimeOfDay currentTime;
 
     public static WorldManager instance { get; private set; }
 

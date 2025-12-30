@@ -31,10 +31,9 @@ public class TimeOfDayManager : MonoBehaviour
             instance = this;
     }
 
-    public void SwitchTimeOfDay(TimeOfDay timeOfDay)
+    public string GetTimeScene(TimeOfDay timeOfDay)
     {
         string sceneName = timeScenes.Find(x => x.timeOfDay == timeOfDay).scene;
-        if(SceneManager.GetActiveScene().name != sceneName)
-            SceneManager.LoadScene(sceneName);
+        return sceneName;
     }
 }

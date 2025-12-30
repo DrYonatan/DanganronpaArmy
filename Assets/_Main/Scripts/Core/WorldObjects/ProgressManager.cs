@@ -15,9 +15,12 @@ public class ProgressManager : MonoBehaviour
 
     public ConversationDatabase conversationDatabase;
 
+    public GameObject persistentObject;
+
     private void Awake()
     {
         instance = this;
+        DontDestroyOnLoad(persistentObject);
     }
 
     void Start()
