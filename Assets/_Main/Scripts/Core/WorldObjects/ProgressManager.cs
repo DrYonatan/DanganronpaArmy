@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -31,6 +32,17 @@ public class ProgressManager : MonoBehaviour
         {
             StartNewGame();
         }
+    }
+
+    public void EventFinish()
+    {
+        StartCoroutine(WaitForEventToFinish());
+    }
+
+    private IEnumerator WaitForEventToFinish()
+    {
+        yield return new WaitUntil(() => VNNodePlayer.instance.currentConversation == null);
+        OnEventFinished();
     }
 
     public void OnEventFinished()

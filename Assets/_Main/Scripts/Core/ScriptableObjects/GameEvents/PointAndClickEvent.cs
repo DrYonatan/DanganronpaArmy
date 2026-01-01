@@ -24,7 +24,7 @@ public class PointAndClickEvent : GameEvent
         bool allObjectsClicked = AreAllClicked(objectsData.Values);
 
         isFinished = allCharactersClicked && allObjectsClicked;
-
+        
         if (isFinished)
             OnFinish();
     }
