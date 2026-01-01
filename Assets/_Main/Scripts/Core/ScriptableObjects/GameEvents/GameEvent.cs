@@ -48,11 +48,9 @@ public abstract class GameEvent : ScriptableObject
 
     public virtual void OnStart()
     {
-        string sceneName = TimeOfDayManager.instance.GetTimeScene(timeOfDay);
         if (timeOfDay != WorldManager.instance.currentTime)
         {
-            WorldManager.instance.currentTime = timeOfDay;
-            SceneManager.LoadScene(sceneName);
+            TimeOfDayManager.instance.ChangeTimeOfDay(timeOfDay);
             WorldManager.instance.StartLoadingRoom(WorldManager.instance.currentRoom, null);
         }
 

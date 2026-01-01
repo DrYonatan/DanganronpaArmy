@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ProgressManager : MonoBehaviour
 {
@@ -27,7 +28,7 @@ public class ProgressManager : MonoBehaviour
     void Start()
     {
         if (SaveManager.instance != null && SaveManager.instance.currentSaveSlot != -1)
-            LoadValuesFromSave();
+            StartCoroutine(LoadValuesFromSave());
         else
         {
             StartNewGame();
@@ -52,10 +53,14 @@ public class ProgressManager : MonoBehaviour
         currentGameEvent.OnStart();
     }
 
-    private void LoadValuesFromSave()
+    private IEnumerator LoadValuesFromSave()
     {
         WorldManager.instance.isLoading = true;
         SaveData data = SaveManager.instance != null ? SaveManager.instance.LoadCurrentSave() : SaveSystem.LoadGame(1);
+
+        TimeOfDayManager.instance.ChangeTimeOfDay(data.timeOfDay);
+        yield return null;
+        
         currentGameEventIndex = data.gameEventIndex;
         currentGameEvent = Instantiate(gameEvents[currentGameEventIndex]);
         WorldManager.instance.currentRoom = Resources.Load<Room>($"Rooms/{data.currentRoom}");
@@ -82,6 +87,7 @@ public class ProgressManager : MonoBehaviour
 
     private void StartNewGame()
     {
+        TimeOfDayManager.instance.ChangeTimeOfDay(gameEvents[0].timeOfDay);
         currentGameEvent = Instantiate(gameEvents[0]);
         WorldManager.instance.StartLoadingRoom(WorldManager.instance.currentRoom, null);
     }

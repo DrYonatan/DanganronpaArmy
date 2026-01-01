@@ -4,7 +4,6 @@ using System.Linq;
 using UnityEngine;
 using DIALOGUE;
 using JetBrains.Annotations;
-using UnityEngine.SceneManagement;
 
 public class WorldManager : MonoBehaviour
 {
@@ -134,7 +133,9 @@ public class WorldManager : MonoBehaviour
             ProgressManager.instance.currentGameEvent.roomDatas.First(roomData => roomData.room.name == room.name));
 
         if (VNNodePlayer.instance.currentConversation == null)
+        {
             ReturningToWorld();
+        }
         else
         {
             CharacterClickEffects.instance.MakeCharactersDisappear(charactersObject, 0f);
