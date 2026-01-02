@@ -15,7 +15,6 @@ public class ImageScript : MonoBehaviour
     
     private void Awake()
     {
-        canvasGroup = overlayImage.GetComponent<CanvasGroup>();
         blackFade.alpha = 1f;
         instance = this;
     }
