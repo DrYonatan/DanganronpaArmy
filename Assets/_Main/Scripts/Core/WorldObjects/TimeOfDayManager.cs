@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using DIALOGUE;
 using UnityEngine;
@@ -36,13 +37,26 @@ public class TimeOfDayManager : MonoBehaviour
 
     public void ChangeTimeOfDay(TimeOfDay timeOfDay)
     {
+        StartCoroutine(ChangingTime(timeOfDay));
+    }
+
+    public IEnumerator ChangingTime(TimeOfDay timeOfDay)
+    {
+        ImageScript.instance.FadeToBlack(0.2f);
+        
+        yield return new WaitForSeconds(0.5f);
+        
         DialogueSystem.instance.dialogueBoxAnimator.namePlate.GetComponent<Image>().color =
             timeScenes.Find(x => x.timeOfDay == timeOfDay).mainColor;
         WorldManager.instance.currentTime = timeOfDay;
         SceneManager.LoadScene(GetTimeScene(timeOfDay));
+        
+        yield return new WaitForSeconds(0.1f);
+        
+        ImageScript.instance.UnFadeToBlack(0.2f);
     }
 
-    public string GetTimeScene(TimeOfDay timeOfDay)
+    private string GetTimeScene(TimeOfDay timeOfDay)
     {
         string sceneName = timeScenes.Find(x => x.timeOfDay == timeOfDay).scene;
         return sceneName;

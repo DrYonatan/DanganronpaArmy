@@ -31,35 +31,36 @@ public class ProgressManager : MonoBehaviour
             StartCoroutine(LoadValuesFromSave());
         else
         {
-            StartNewGame();
+            StartCoroutine(StartNewGame());
         }
-    }
-
-    public void EventFinish()
-    {
-        StartCoroutine(WaitForEventToFinish());
-    }
-
-    private IEnumerator WaitForEventToFinish()
-    {
-        yield return new WaitUntil(() => VNNodePlayer.instance.currentConversation == null);
-        OnEventFinished();
     }
 
     public void OnEventFinished()
     {
+        StartCoroutine(MoveToNextEvent());
+    }
+
+    private IEnumerator MoveToNextEvent()
+    {
         currentGameEventIndex++;
         currentGameEvent = Instantiate(gameEvents[currentGameEventIndex]);
-        currentGameEvent.OnStart();
+
+        if (WorldManager.instance.currentTime != currentGameEvent.timeOfDay)
+        {
+            yield return TimeOfDayManager.instance.ChangingTime(currentGameEvent.timeOfDay);
+            WorldManager.instance.StartLoadingRoom(WorldManager.instance.currentRoom, null);
+        }
+        
+        else
+           currentGameEvent.OnStart();
     }
 
     private IEnumerator LoadValuesFromSave()
     {
         WorldManager.instance.isLoading = true;
         SaveData data = SaveManager.instance != null ? SaveManager.instance.LoadCurrentSave() : SaveSystem.LoadGame(1);
-
-        TimeOfDayManager.instance.ChangeTimeOfDay(data.timeOfDay);
-        yield return null;
+        
+        yield return TimeOfDayManager.instance.ChangingTime(data.timeOfDay);;
         
         currentGameEventIndex = data.gameEventIndex;
         currentGameEvent = Instantiate(gameEvents[currentGameEventIndex]);
@@ -85,9 +86,9 @@ public class ProgressManager : MonoBehaviour
         WorldManager.instance.Initialize();
     }
 
-    private void StartNewGame()
+    private IEnumerator StartNewGame()
     {
-        TimeOfDayManager.instance.ChangeTimeOfDay(gameEvents[0].timeOfDay);
+        yield return TimeOfDayManager.instance.ChangingTime(gameEvents[0].timeOfDay);
         currentGameEvent = Instantiate(gameEvents[0]);
         WorldManager.instance.StartLoadingRoom(WorldManager.instance.currentRoom, null);
     }

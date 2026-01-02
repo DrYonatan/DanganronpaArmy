@@ -48,12 +48,6 @@ public abstract class GameEvent : ScriptableObject
 
     public virtual void OnStart()
     {
-        if (timeOfDay != WorldManager.instance.currentTime)
-        {
-            TimeOfDayManager.instance.ChangeTimeOfDay(timeOfDay);
-            WorldManager.instance.StartLoadingRoom(WorldManager.instance.currentRoom, null);
-        }
-
         RoomData currentRoomData = ProgressManager.instance.currentGameEvent.roomDatas
             .First(roomData => roomData.room.name.Equals(WorldManager.instance.currentRoom.name));
 

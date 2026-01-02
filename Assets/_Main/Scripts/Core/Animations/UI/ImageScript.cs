@@ -8,27 +8,21 @@ public class ImageScript : MonoBehaviour
 {
     public static ImageScript instance { get; private set; }
 
-    public GameObject overlayImage;
-    public GameObject blackFade;
+    public Image overlayImage;
+    public CanvasGroup blackFade;
 
-    Image image;
     CanvasGroup canvasGroup;
-
-    CanvasGroup blackFadeCanvasGroup;
-
+    
     private void Awake()
     {
-        image = overlayImage.GetComponent<Image>();
         canvasGroup = overlayImage.GetComponent<CanvasGroup>();
-        blackFadeCanvasGroup = blackFade.GetComponent<CanvasGroup>();
-        blackFadeCanvasGroup.alpha = 1f;
-        blackFadeCanvasGroup.DOFade(0f, 0.5f);
+        blackFade.alpha = 1f;
         instance = this;
     }
 
     public void Show(string imageName, float duration)
     {
-        image.sprite = Resources.Load<Sprite>($"Images/{imageName}");
+        overlayImage.sprite = Resources.Load<Sprite>($"Images/{imageName}");
         StartCoroutine(ShowingOrHiding(canvasGroup, duration, 1f));
     }
 
@@ -39,12 +33,12 @@ public class ImageScript : MonoBehaviour
 
     public void FadeToBlack(float duration)
     {
-        StartCoroutine(ShowingOrHiding(blackFadeCanvasGroup, duration, 1f));
+        StartCoroutine(ShowingOrHiding(blackFade, duration, 1f));
     }
 
     public void UnFadeToBlack(float duration)
     {
-        StartCoroutine(ShowingOrHiding(blackFadeCanvasGroup, duration, 0f));
+        StartCoroutine(ShowingOrHiding(blackFade, duration, 0f));
     }
 
     public IEnumerator ShowingOrHiding(CanvasGroup canvasGroupToShowOrHide, float duration, float targetAlpha)
