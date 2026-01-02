@@ -47,7 +47,7 @@ public class ProgressManager : MonoBehaviour
 
         if (WorldManager.instance.currentTime != currentGameEvent.timeOfDay)
         {
-            yield return TimeOfDayManager.instance.ChangingTime(currentGameEvent.timeOfDay);
+            yield return TimeOfDayManager.instance.ChangeTimeOfDay(currentGameEvent.timeOfDay);
             WorldManager.instance.StartLoadingRoom(WorldManager.instance.currentRoom, null);
         }
         
@@ -60,7 +60,7 @@ public class ProgressManager : MonoBehaviour
         WorldManager.instance.isLoading = true;
         SaveData data = SaveManager.instance != null ? SaveManager.instance.LoadCurrentSave() : SaveSystem.LoadGame(1);
         
-        yield return TimeOfDayManager.instance.ChangingTime(data.timeOfDay);;
+        yield return TimeOfDayManager.instance.ChangeTimeOfDay(data.timeOfDay);;
         
         currentGameEventIndex = data.gameEventIndex;
         currentGameEvent = Instantiate(gameEvents[currentGameEventIndex]);
@@ -88,7 +88,7 @@ public class ProgressManager : MonoBehaviour
 
     private IEnumerator StartNewGame()
     {
-        yield return TimeOfDayManager.instance.ChangingTime(gameEvents[0].timeOfDay);
+        yield return TimeOfDayManager.instance.ChangeTimeOfDay(gameEvents[0].timeOfDay);
         currentGameEvent = Instantiate(gameEvents[0]);
         WorldManager.instance.StartLoadingRoom(WorldManager.instance.currentRoom, null);
     }

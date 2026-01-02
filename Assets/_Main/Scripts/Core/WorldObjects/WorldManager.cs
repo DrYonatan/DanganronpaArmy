@@ -115,6 +115,8 @@ public class WorldManager : MonoBehaviour
         RoomModel ob = Instantiate(room.GetTimeOfDayVersion(ProgressManager.instance.currentGameEvent.timeOfDay));
         ob.name = "World";
         ob.gameObject.SetActive(true);
+        
+        ImageScript.instance.UnFadeToBlack(0.2f);
 
         GameObject objectsParent = GameObject.Find("World Objects");
         if (objectsParent != null)

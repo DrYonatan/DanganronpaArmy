@@ -35,13 +35,9 @@ public class TimeOfDayManager : MonoBehaviour
             instance = this;
     }
 
-    public void ChangeTimeOfDay(TimeOfDay timeOfDay)
+    public IEnumerator ChangeTimeOfDay(TimeOfDay timeOfDay)
     {
-        StartCoroutine(ChangingTime(timeOfDay));
-    }
-
-    public IEnumerator ChangingTime(TimeOfDay timeOfDay)
-    {
+        CursorManager.instance.Hide();
         ImageScript.instance.FadeToBlack(0.2f);
         
         yield return new WaitForSeconds(0.5f);
@@ -52,8 +48,6 @@ public class TimeOfDayManager : MonoBehaviour
         SceneManager.LoadScene(GetTimeScene(timeOfDay));
         
         yield return new WaitForSeconds(0.1f);
-        
-        ImageScript.instance.UnFadeToBlack(0.2f);
     }
 
     private string GetTimeScene(TimeOfDay timeOfDay)
