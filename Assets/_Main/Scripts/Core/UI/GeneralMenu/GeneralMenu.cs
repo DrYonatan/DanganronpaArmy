@@ -54,7 +54,7 @@ public class GeneralMenu : MonoBehaviour
                     currentItemIndex -= columns;
                 UpdateCurrentItem();
             }
-            else if (Input.GetKeyDown(KeyCode.Space))
+            else if (PlayerInputManager.instance.DefaultInput())
             {
                 if (menuItems[currentItemIndex].disabled)
                 {

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using DIALOGUE;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -103,7 +104,7 @@ public class EvidenceMenu : MenuScreen
         
         bool isOpen = false;
 
-        while (!Input.GetKeyDown(KeyCode.Space))
+        while (PlayerInputManager.instance.DefaultInput())
         {
             if (Input.GetKey(KeyCode.Tab))
             {

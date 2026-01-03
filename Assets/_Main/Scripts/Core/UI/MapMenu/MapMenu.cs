@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
+using DIALOGUE;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -161,7 +162,7 @@ public class MapMenu : MenuScreen
             currentRoomIndex = 0;
             UpdateRegion();
         }
-        else if (Input.GetKeyDown(KeyCode.Space))
+        else if (PlayerInputManager.instance.DefaultInput())
         {
             Room roomToLoad = ProgressManager.instance.currentGameEvent.roomDatas.Find((roomData) =>
                 roomData.room.name.Equals(rooms[currentRoomIndex].name))?.room;

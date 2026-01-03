@@ -52,6 +52,11 @@ namespace DIALOGUE
             }
         }
 
+        public bool DefaultInput()
+        {
+            return Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space);
+        }
+
         public void PromptAdvance()
         {
             if (!CutSceneManager.instance.isPlaying && !isPaused)
