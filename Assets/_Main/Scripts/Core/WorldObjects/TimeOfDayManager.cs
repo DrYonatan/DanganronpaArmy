@@ -31,9 +31,9 @@ public class TimeOfDayManager : MonoBehaviour
     public List<TimeScene> timeScenes = new();
 
     public List<Image> timeColorCodedImages = new();
-    public Image timeIcon;
-    public TextMeshProUGUI timeOfDayText;
     public TimeScene currentTimeScene;
+
+    private Sequence iconSeq;
     
     void Awake()
     {
@@ -41,15 +41,15 @@ public class TimeOfDayManager : MonoBehaviour
             Destroy(gameObject);
         else
             instance = this;
-        AnimateIcon();
     }
 
     public IEnumerator ChangeTimeOfDay(TimeOfDay timeOfDay)
     {
         CursorManager.instance.Hide();
-        ImageScript.instance.FadeToBlack(0.2f);
+        ImageScript.instance.FadeToBlack(0.5f);
+        VNUIAnimator.instance.Disappear();
         
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         
         currentTimeScene = timeScenes.Find(x => x.timeOfDay == timeOfDay);
         
@@ -59,6 +59,9 @@ public class TimeOfDayManager : MonoBehaviour
         SceneManager.LoadScene(GetTimeScene(timeOfDay));
         
         yield return new WaitForSeconds(0.1f);
+        
+        VNUIAnimator.instance.Appear();
+        AnimateIcon();
     }
 
     private void UpdateUIAccordingToTime(TimeScene timeScene)
@@ -68,7 +71,7 @@ public class TimeOfDayManager : MonoBehaviour
             image.color = timeScene.mainColor;
         }
 
-        timeOfDayText.text = timeScene.timeOfDayName;
+        VNUIAnimator.instance.timeText.text = timeScene.timeOfDayName;
     }
 
     private string GetTimeScene(TimeOfDay timeOfDay)
@@ -79,7 +82,10 @@ public class TimeOfDayManager : MonoBehaviour
 
     private void AnimateIcon()
     {
-        Sequence iconSeq = DOTween.Sequence();
+        Image timeIcon = VNUIAnimator.instance.timeIcon;
+        iconSeq.Kill();
+        
+        iconSeq = DOTween.Sequence();
         iconSeq.AppendCallback(() => timeIcon.sprite = currentTimeScene.iconSprites[0]);
         iconSeq.AppendInterval(0.4f);
         iconSeq.AppendCallback(() => timeIcon.sprite = currentTimeScene.iconSprites[1]);
