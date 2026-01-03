@@ -44,6 +44,7 @@ public abstract class GameEvent : ScriptableObject
 
     public TimeOfDay timeOfDay;
 
+    public Room startRoom;
     public abstract void CheckIfFinished();
 
     public virtual void OnStart()

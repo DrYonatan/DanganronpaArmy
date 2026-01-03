@@ -45,23 +45,35 @@ public class ProgressManager : MonoBehaviour
         currentGameEventIndex++;
         currentGameEvent = Instantiate(gameEvents[currentGameEventIndex]);
 
-        if (WorldManager.instance.currentTime != currentGameEvent.timeOfDay)
+        Room roomToLoad;
+
+        if (currentGameEvent.startRoom != null && WorldManager.instance.currentRoom.name != currentGameEvent.startRoom.name)
+            roomToLoad = currentGameEvent.startRoom;
+        else
         {
+            roomToLoad = WorldManager.instance.currentRoom;
+        }
+
+        if (WorldManager.instance.currentTime != currentGameEvent.timeOfDay ||
+            roomToLoad != WorldManager.instance.currentRoom)
+        {
+            WorldManager.instance.currentRoom = roomToLoad;
             yield return TimeOfDayManager.instance.ChangeTimeOfDay(currentGameEvent.timeOfDay);
             WorldManager.instance.StartLoadingRoom(WorldManager.instance.currentRoom, null);
         }
-        
+
         else
-           currentGameEvent.OnStart();
+            currentGameEvent.OnStart();
     }
 
     private IEnumerator LoadValuesFromSave()
     {
         WorldManager.instance.isLoading = true;
         SaveData data = SaveManager.instance != null ? SaveManager.instance.LoadCurrentSave() : SaveSystem.LoadGame(1);
-        
-        yield return TimeOfDayManager.instance.ChangeTimeOfDay(data.timeOfDay);;
-        
+
+        yield return TimeOfDayManager.instance.ChangeTimeOfDay(data.timeOfDay);
+        ;
+
         currentGameEventIndex = data.gameEventIndex;
         currentGameEvent = Instantiate(gameEvents[currentGameEventIndex]);
         WorldManager.instance.currentRoom = Resources.Load<Room>($"Rooms/{data.currentRoom}");
