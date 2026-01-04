@@ -32,12 +32,11 @@ public class FreeRoamRoom : Room
             speed *= 2;
         }
 
-        GameObject gameObject = Camera.main.transform.gameObject;
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
-        Vector3 move = gameObject.transform.right * horizontal + gameObject.transform.forward * vertical;
+        Vector3 move = CameraManager.instance.cameraTransform.right * horizontal + CameraManager.instance.cameraTransform.forward * vertical;
         move.y = 0; // Ensure no vertical movement
-        CharacterController controller = gameObject.GetComponent<CharacterController>();
+        CharacterController controller = CameraManager.instance.player;
         controller.Move(move * Time.deltaTime * speed);
     }
 
@@ -52,7 +51,7 @@ public class FreeRoamRoom : Room
         horizontalRotation += mouseX;
 
         verticalRotation = Mathf.Clamp(verticalRotation, -maxLookAngle, maxLookAngle);
-        Camera.main.transform.localRotation = Quaternion.Euler(verticalRotation, horizontalRotation, 0f);
+        CameraManager.instance.cameraTransform.localRotation = Quaternion.Euler(verticalRotation, horizontalRotation, 0f);
     }
 
     void Interact()
@@ -123,6 +122,7 @@ public class FreeRoamRoom : Room
     public override IEnumerator OnLoad()
     {
         base.OnLoad();
+        CameraManager.instance.cameraTransform.localPosition = Vector3.zero;
         MapContainer.instance.SetMap(map);
         yield return null;
     }
@@ -131,4 +131,6 @@ public class FreeRoamRoom : Room
     {
         
     }
+    
+    
 }

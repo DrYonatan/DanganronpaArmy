@@ -198,14 +198,10 @@ public class WorldManager : MonoBehaviour
             CameraManager.instance.initialRotation =
                 cameraStartPos
                     .rotation; // Sets only the Camera Manager's initial position value for later, not actually changing position of camera
-
-        CharacterController controller =
-            CameraManager.instance.cameraTransform.gameObject.GetComponent<CharacterController>();
-        controller.enabled = false;
-        CameraManager.instance.cameraTransform.position =
+        
+        CameraManager.instance.player.transform.position =
             cameraStartPos.position; // Actually changing position of camera
         CameraManager.instance.cameraTransform.rotation = cameraStartPos.rotation;
-        controller.enabled = true;
 
         ImageScript.instance.UnFadeToBlack(0.1f);
         if (room.OnLoad() != null)

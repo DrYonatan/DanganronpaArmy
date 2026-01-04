@@ -8,11 +8,11 @@ public class CameraManager : MonoBehaviour
 {
     public static CameraManager instance { get; private set; }
 
+    public CharacterController player;
     public Transform cameraTransform;
 
     public const string charactersLayerPath = "VN controller/Root/Canvas - Main/LAYERS/2 - Characters";
-
-
+    
     public Quaternion initialRotation;
 
     private bool isInFinalRotation = true;
