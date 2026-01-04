@@ -18,6 +18,8 @@ public class FreeRoamRoom : Room
     public Sprite map;
 
     private float bobTimer;
+    private bool wasMoving;
+    private bool isRunning;
 
     public override void MovementControl()
     {
@@ -29,11 +31,16 @@ public class FreeRoamRoom : Room
 
     void Move()
     {
-        float speed = moveSpeed;
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            speed *= 2;
+            isRunning = true;
         }
+        else
+        {
+            isRunning = false;
+        }
+        
+        float speed = moveSpeed * (isRunning ? 2f : 1f);
 
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
@@ -42,6 +49,7 @@ public class FreeRoamRoom : Room
         CharacterController controller = CameraManager.instance.player;
         controller.Move(move * Time.deltaTime * speed);
         CameraHeadBobbing();
+        HandleFootsteps();
     }
 
     void Look()
@@ -142,7 +150,7 @@ public class FreeRoamRoom : Room
         float vertical = Input.GetAxis("Vertical");
         
         float speed = 1f;
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (isRunning)
         {
             speed = 1.5f;
         }
@@ -168,5 +176,46 @@ public class FreeRoamRoom : Room
             targetLocalPos,
             Time.deltaTime * 10f
         );
+    }
+    
+    private void HandleFootsteps()
+    {
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+
+        bool isMoving = new Vector2(horizontal, vertical).magnitude > 0.1f;
+
+        if (isRunning && isMoving)
+        {
+            AudioSource source = CameraManager.instance.footStepsSource;
+            if (source.clip != CameraManager.instance.fastFootStepsSound)
+            {
+                source.clip = CameraManager.instance.fastFootStepsSound;
+                source.Play();
+            }
+        }
+        
+        else if (!isRunning && isMoving)
+        {
+            AudioSource source = CameraManager.instance.footStepsSource;
+            if (source.clip != CameraManager.instance.footStepsSound)
+            {
+                source.clip = CameraManager.instance.footStepsSound;
+                source.Play();
+            }
+        }
+
+        if (isMoving && !wasMoving)
+        {
+            // Just started moving
+            CameraManager.instance.footStepsSource.Play();
+        }
+        else if (!isMoving && wasMoving)
+        {
+            // Just stopped moving
+            CameraManager.instance.footStepsSource.Stop(); // immediate stop
+        }
+
+        wasMoving = isMoving;
     }
 }

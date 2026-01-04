@@ -18,6 +18,11 @@ public class CameraManager : MonoBehaviour
     private bool isInFinalRotation = true;
 
     public bool conversationFinishedMoving = true;
+    
+    public AudioClip footStepsSound;
+    public AudioClip fastFootStepsSound;
+
+    public AudioSource footStepsSource;
 
     private List<IEnumerator> operations = new List<IEnumerator>();
 
