@@ -43,6 +43,7 @@ public class PointAndClickRoom : Room
 
       float position = VirutalCameraManager.instance.virtualCamera.GetCinemachineComponent<CinemachineTrackedDolly>().m_PathPosition;
       position += (horizontalInput * cameraDollySpeed * Time.deltaTime);
+      position = Mathf.Clamp(position, 0, VirutalCameraManager.instance.virtualCamera.GetCinemachineComponent<CinemachineTrackedDolly>().m_Path.PathLength - 1);
       VirutalCameraManager.instance.virtualCamera.GetCinemachineComponent<CinemachineTrackedDolly>().m_PathPosition = position;
 
       pitch -= verticalInput * rotationSpeed * Time.deltaTime;

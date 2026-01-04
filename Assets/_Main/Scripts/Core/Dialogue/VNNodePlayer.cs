@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using CHARACTERS;
-using DIALOGUE;
 using UnityEngine;
 
 public class VNNodePlayer : MonoBehaviour

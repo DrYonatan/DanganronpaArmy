@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class MusicManager : MonoBehaviour
@@ -17,11 +18,15 @@ public class MusicManager : MonoBehaviour
         audio.Stop();
         audio.clip = song;
         audio.Play();
+        VNUIAnimator.instance.musicBoxContainer.StartBars();
+        VNUIAnimator.instance.musicName.text = $"Now Playing: {song?.name}";
     }
 
     public void StopSong()
     {
         audio.Stop();
+        VNUIAnimator.instance.musicBoxContainer.StopBars();
+        VNUIAnimator.instance.musicName.text = "";
     }
 
     internal void Pause()
