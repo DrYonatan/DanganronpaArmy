@@ -1,4 +1,5 @@
 using System.Collections;
+using DG.Tweening;
 using DIALOGUE;
 using UnityEngine;
 
@@ -15,6 +16,8 @@ public class FreeRoamRoom : Room
     float playerReach = 14f;
 
     public Sprite map;
+
+    private float bobTimer;
 
     public override void MovementControl()
     {
@@ -38,6 +41,7 @@ public class FreeRoamRoom : Room
         move.y = 0; // Ensure no vertical movement
         CharacterController controller = CameraManager.instance.player;
         controller.Move(move * Time.deltaTime * speed);
+        CameraHeadBobbing();
     }
 
     void Look()
@@ -129,8 +133,40 @@ public class FreeRoamRoom : Room
 
     public override void OnConversationEnd()
     {
-        
+        CameraManager.instance.cameraTransform.DOLocalMove(Vector3.zero, 0.5f);
     }
-    
-    
+
+    private void CameraHeadBobbing()
+    {
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+        
+        float speed = 1f;
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            speed = 1.5f;
+        }
+
+        bool isMoving = new Vector2(horizontal, vertical).magnitude > 0.1f;
+
+        Vector3 targetLocalPos = Vector3.zero;
+
+        if (isMoving)
+        {
+            bobTimer += Time.deltaTime * 15f * speed;
+            float bobOffset = Mathf.Sin(bobTimer) * 0.2f;
+            targetLocalPos = new Vector3(0f, bobOffset, 0f);
+        }
+        else
+        {
+            bobTimer = 0f;
+        }
+
+        // Smooth transition (prevents snapping)
+        CameraManager.instance.cameraTransform.localPosition = Vector3.Lerp(
+            CameraManager.instance.cameraTransform.localPosition,
+            targetLocalPos,
+            Time.deltaTime * 10f
+        );
+    }
 }
