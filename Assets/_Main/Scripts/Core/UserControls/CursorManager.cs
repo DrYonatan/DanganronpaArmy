@@ -23,6 +23,7 @@ public class CursorManager : MonoBehaviour
     void Awake()
     {
         instance = this;
+        Hide();
     }
 
     // Update is called once per frame

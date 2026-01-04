@@ -15,12 +15,15 @@ public class WorldManager : MonoBehaviour
     public WorldCharactersParent charactersObject;
     public GameObject objectsObject;
 
+    public TimeOfDay currentTime;
+
     public static WorldManager instance { get; private set; }
 
     void Awake()
     {
         instance = this;
     }
+
     public void Initialize()
     {
         StartCoroutine(LoadRoom(currentRoom));
@@ -109,38 +112,43 @@ public class WorldManager : MonoBehaviour
 
     private IEnumerator LoadRoom(Room room)
     {
-        RoomModel ob = Instantiate(room.prefab);
+        RoomModel ob = Instantiate(room.GetTimeOfDayVersion(ProgressManager.instance.currentGameEvent.timeOfDay));
         ob.name = "World";
         ob.gameObject.SetActive(true);
+        
+        ImageScript.instance.UnFadeToBlack(0.2f);
 
         GameObject objectsParent = GameObject.Find("World Objects");
         if (objectsParent != null)
-            characterPanel = objectsParent;   
-        
+            characterPanel = objectsParent;
+
         if (room.OnLoad() != null)
             yield return StartCoroutine(room.OnLoad());
         isLoading = false;
-        
+
         CreateCharacters(ProgressManager.instance.currentGameEvent.roomDatas
             .First(roomData => roomData.room.name.Equals(currentRoom.name)).characters);
         CreateObjects(ProgressManager.instance.currentGameEvent.roomDatas
             .First(roomData => roomData.room.name.Equals(currentRoom.name)).worldObjects);
-        
+
         UpdateRoomData(
             ProgressManager.instance.currentGameEvent.roomDatas.First(roomData => roomData.room.name == room.name));
-        
-        if(VNNodePlayer.instance.currentConversation == null)
-           ReturningToWorld();
+
+        if (VNNodePlayer.instance.currentConversation == null)
+        {
+            ReturningToWorld();
+        }
         else
         {
             CharacterClickEffects.instance.MakeCharactersDisappear(charactersObject, 0f);
         }
     }
+
     private IEnumerator MoveToRoom(Room room, [CanBeNull] string entryPoint)
     {
         CursorManager.instance.ShowOrHideConversationIcon(false);
         CursorManager.instance.ShowOrHideInteractableName(false, "");
-        
+
         CameraManager.instance?.StopAllPreviousOperations();
 
         isLoading = true;
@@ -177,7 +185,7 @@ public class WorldManager : MonoBehaviour
         }
 
 
-        RoomModel ob = Instantiate(room.prefab);
+        RoomModel ob = Instantiate(room.GetTimeOfDayVersion(ProgressManager.instance.currentGameEvent.timeOfDay));
         ob.name = "World";
         ob.gameObject.SetActive(true);
 
@@ -191,7 +199,8 @@ public class WorldManager : MonoBehaviour
                 cameraStartPos
                     .rotation; // Sets only the Camera Manager's initial position value for later, not actually changing position of camera
 
-        CharacterController controller = CameraManager.instance.cameraTransform.gameObject.GetComponent<CharacterController>();
+        CharacterController controller =
+            CameraManager.instance.cameraTransform.gameObject.GetComponent<CharacterController>();
         controller.enabled = false;
         CameraManager.instance.cameraTransform.position =
             cameraStartPos.position; // Actually changing position of camera
@@ -201,10 +210,7 @@ public class WorldManager : MonoBehaviour
         ImageScript.instance.UnFadeToBlack(0.1f);
         if (room.OnLoad() != null)
             yield return StartCoroutine(room.OnLoad());
-        foreach (RoomIntroEffect effect in ob.roomIntroEffects)
-        {
-            StartCoroutine(effect.PlayEffect());
-        }
+        ob.PlayRoomIntroEffects();
         yield return room.AppearAnimation();
         isLoading = false;
 
@@ -212,9 +218,11 @@ public class WorldManager : MonoBehaviour
             .First(roomData => roomData.room.name.Equals(currentRoom.name)).characters);
         CreateObjects(ProgressManager.instance.currentGameEvent.roomDatas
             .First(roomData => roomData.room.name.Equals(currentRoom.name)).worldObjects);
-        
-        if(charactersObject != null)
-           charactersObject.AnimateCharacters();
+
+        if (charactersObject != null)
+            charactersObject.AnimateCharacters();
+
+        CursorManager.instance.Show();
 
         ReturningToWorld();
     }
@@ -223,12 +231,11 @@ public class WorldManager : MonoBehaviour
     {
         DialogueSystem.instance.SetIsActive(false);
         DialogueSystem.instance.ClearTextBox();
-        if(charactersObject != null)
-           CharacterClickEffects.instance.MakeCharactersReappear(charactersObject.gameObject);
+        if (charactersObject != null)
+            CharacterClickEffects.instance.MakeCharactersReappear(charactersObject.gameObject);
         currentRoom.OnConversationEnd();
         ReturningToWorld();
     }
-
 
     // Update is called once per frame
     void Update()

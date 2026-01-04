@@ -41,6 +41,7 @@ public class TrialManager : MonoBehaviour
 
     void Start()
     {
+        ImageScript.instance.UnFadeToBlack(0.1f);
         if (currentIndex == 0)
         {
             playerStats.InitializeMeters();

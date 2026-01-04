@@ -1,8 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using DIALOGUE;
 using UnityEngine;
-using UnityEngine.UI;
 
 [CreateAssetMenu(menuName = "Rooms/Free Roam Room")]
 public class FreeRoamRoom : Room

@@ -37,6 +37,9 @@ public class PointAndClickRoom : Room
     {
       float horizontalInput = Input.GetAxis("Horizontal");
       float verticalInput = Input.GetAxis("Vertical");
+      
+      if (VirutalCameraManager.instance.virtualCamera == null)
+          return;
 
       float position = VirutalCameraManager.instance.virtualCamera.GetCinemachineComponent<CinemachineTrackedDolly>().m_PathPosition;
       position += (horizontalInput * cameraDollySpeed * Time.deltaTime);

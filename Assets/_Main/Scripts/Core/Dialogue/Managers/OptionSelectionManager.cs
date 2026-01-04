@@ -38,7 +38,7 @@ namespace DIALOGUE
                SelectionMenuControl();
         }
 
-        public void GenerateUIOptions<T>(List<Option<T>> options) where T : DialogueNode
+        private void GenerateUIOptions<T>(List<Option<T>> options) where T : DialogueNode
         {
             for (int i = 0; i < options.Count; i++)
             {
@@ -46,6 +46,8 @@ namespace DIALOGUE
                 newOption.optionLabel.text = options[i].text;
                 newOption.rectTransform.anchoredPosition = new Vector2(650f + i * 50f, i * -95f);
                 newOption.originalX = newOption.rectTransform.anchoredPosition.x;
+                if(TimeOfDayManager.instance != null)
+                   newOption.selectedColor = TimeOfDayManager.instance.currentTimeScene.mainColor;
                 uiOptions.Add(newOption);
             }
             optionSelectionMenu.anchoredPosition = new Vector2(100, 210);

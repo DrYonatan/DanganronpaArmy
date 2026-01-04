@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [Serializable]
 public class ObjectData
@@ -28,11 +29,10 @@ public abstract class GameEvent : ScriptableObject
 {
     public bool isFinished;
 
-    public bool
-        startEventImmediately =
-            false; // used to know if to start the event as soon as the previous one ends or only after finish text
-
+    public VNConversationSegment startText;
     public VNConversationSegment finishText;
+
+    public bool isAfterFinishText;
 
     public VNConversationSegment unallowedText;
 
@@ -42,13 +42,16 @@ public abstract class GameEvent : ScriptableObject
 
     public Dictionary<string, ObjectData> objectsData = new Dictionary<string, ObjectData>();
 
+    public TimeOfDay timeOfDay;
+
+    public Room startRoom;
     public abstract void CheckIfFinished();
 
     public virtual void OnStart()
     {
         RoomData currentRoomData = ProgressManager.instance.currentGameEvent.roomDatas
             .First(roomData => roomData.room.name.Equals(WorldManager.instance.currentRoom.name));
-        
+
         WorldManager.instance.UpdateRoomData(currentRoomData);
 
         if (WorldManager.instance.charactersObject == null)
@@ -56,25 +59,28 @@ public abstract class GameEvent : ScriptableObject
             WorldManager.instance.CreateCharacters(currentRoomData.characters);
             WorldManager.instance.charactersObject.AnimateCharacters();
         }
+
         if (WorldManager.instance.objectsObject == null)
             WorldManager.instance.CreateObjects(currentRoomData.worldObjects);
     }
 
     protected virtual void OnFinish()
     {
-        if(WorldManager.instance.charactersObject != null)
-           Destroy(WorldManager.instance.charactersObject.gameObject);
-        if(WorldManager.instance.objectsObject != null)
-           Destroy(WorldManager.instance.objectsObject.gameObject);
+        if (WorldManager.instance.charactersObject != null)
+            Destroy(WorldManager.instance.charactersObject.gameObject);
+        if (WorldManager.instance.objectsObject != null)
+            Destroy(WorldManager.instance.objectsObject.gameObject);
         WorldManager.instance.charactersObject = null;
         WorldManager.instance.objectsObject = null;
         
-        if (finishText != null)
+        if (finishText != null && !isAfterFinishText)
         {
             VNNodePlayer.instance.StartConversation(finishText);
-            finishText = null;
+            isAfterFinishText = true;
         }
-
-        ProgressManager.instance.OnEventFinished();
+        else
+        {
+            ProgressManager.instance.OnEventFinished();
+        }
     }
 }
