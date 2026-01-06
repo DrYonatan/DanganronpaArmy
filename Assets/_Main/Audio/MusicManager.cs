@@ -18,25 +18,24 @@ public class MusicManager : MonoBehaviour
         audio.Stop();
         audio.clip = song;
         audio.Play();
-        VNUIAnimator.instance.musicBoxContainer.StartBars();
-        VNUIAnimator.instance.musicName.text = $"Now Playing: {song?.name}";
+
+        if (VNUIAnimator.instance != null)
+        {
+            VNUIAnimator.instance.musicBoxContainer.StartBars();
+            VNUIAnimator.instance.musicName.text = $"עכשיו מתנגן: {song?.name}";
+        }
     }
 
     public void StopSong()
     {
         audio.Stop();
-        VNUIAnimator.instance.musicBoxContainer.StopBars();
-        VNUIAnimator.instance.musicName.text = "";
+        if (VNUIAnimator.instance != null)
+        {
+            VNUIAnimator.instance.musicBoxContainer.StopBars();
+            VNUIAnimator.instance.musicName.text = "";
+        }
     }
-
-    internal void Pause()
-    {
-        audio.Pause();
-    }
-    internal void UnPause()
-    {
-        audio.UnPause();
-    }
+    
     internal void LowerVolume()
     {
         audio.volume /= 4;

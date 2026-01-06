@@ -15,8 +15,12 @@ public class TrialDialogueManager : MonoBehaviour
     public GotItAnimator gotItAnimator;
 
     public CourtTextBoxAnimator animator;
-
+    
     public int currentLineIndex;
+
+    private Coroutine runningNodesRoutine;
+
+    public bool isFinishedRunningNodes;
 
     private void Awake()
     {
@@ -30,13 +34,20 @@ public class TrialDialogueManager : MonoBehaviour
     
     public void PlayDiscussion(DiscussionSegment discussion)
     {
-        DialogueSystem.instance.SetTextBox(dialogueContainer);
+        SetTextBox();
         DialogueSystem.instance.dialogueBoxAnimator.gameObject.SetActive(true);
         ImageScript.instance.UnFadeToBlack(0.5f);
         animator.ChangeFace(null);
         animator.FaceAppear();
+        animator.AnimateBackgroundText();
         
         StartCoroutine(RunDiscussion(discussion));
+    }
+
+    public void SetTextBox()
+    {
+        DialogueSystem.instance.SetTextBox(dialogueContainer);
+
     }
 
     IEnumerator RunDiscussion(DiscussionSegment discussion)
@@ -47,21 +58,40 @@ public class TrialDialogueManager : MonoBehaviour
 
     public IEnumerator RunNodes(List<DiscussionNode> nodes)
     {
+        runningNodesRoutine = StartCoroutine(StartNodes(nodes));
+        yield return new WaitUntil(() => isFinishedRunningNodes);
+    }
+
+    private IEnumerator StartNodes(List<DiscussionNode> nodes)
+    {
         currentLineIndex = 0;
+        isFinishedRunningNodes = false;
         for (int i = currentLineIndex; i < nodes.Count; i++)
         {
             yield return nodes[i].Play();
             currentLineIndex++;
         }
+
+        isFinishedRunningNodes = true;
     }
 
     private void HandleConversationEnd(DiscussionSegment discussion)
     {
+        ConversationEnd();
+        
+        discussion.Finish();
+    }
+
+    public void ConversationEnd()
+    {
         DialogueSystem.instance.dialogueBoxAnimator.TextBoxDisappear();
         effectController.Reset();
         currentLineIndex = 0;
-        
-        discussion.Finish();
+    }
+
+    public void StopConversation()
+    {
+        StopCoroutine(runningNodesRoutine);
     }
     
 }

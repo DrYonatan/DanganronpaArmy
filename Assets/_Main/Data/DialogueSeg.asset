@@ -18,12 +18,38 @@ MonoBehaviour:
   - rid: 7771312572155035648
   - rid: 6826935256281776128
   - rid: 7771312091879440402
-  - rid: 4827846191764471810
   settings:
     characterPositions: []
   references:
     version: 2
     RefIds:
+    - rid: 2414737671499022336
+      type: {class: DiscussionNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: 6344f4092040cbd4183fc5d6dc877647, type: 2}
+        character: {fileID: 11400000, guid: e556e59756b89ea4ab97f97255a16dac, type: 2}
+        expressionIndex: 0
+        textData:
+          rid: 2414737671499022337
+        usePrevCamera: 0
+        characterStand: {fileID: 0}
+        cameraEffects: []
+        fovOffset: 0
+        positionOffset: {x: 0, y: 0, z: 0}
+        rotationOffset: {x: 0, y: 0, z: 0}
+    - rid: 2414737671499022337
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "\u05DE\u05D4"
+        commands: []
     - rid: 4827846089663315980
       type: {class: DiscussionNode, ns: , asm: Assembly-CSharp}
       data:
@@ -52,35 +78,6 @@ MonoBehaviour:
       data:
         text: We
         commands: []
-    - rid: 4827846191764471810
-      type: {class: DiscussionNode, ns: , asm: Assembly-CSharp}
-      data:
-        nodeRect:
-          serializedVersion: 2
-          x: 0
-          y: 0
-          width: 0
-          height: 220880
-        commandsScrollPosition: {x: 0, y: 0}
-        title: 
-        drawNode: {fileID: 11400000, guid: 6344f4092040cbd4183fc5d6dc877647, type: 2}
-        character: {fileID: 11400000, guid: 95d3e48687d854942aea31b2cf9a8ff1, type: 2}
-        expressionIndex: 1
-        textData:
-          rid: 4827846191764471811
-        usePrevCamera: 0
-        characterStand: {fileID: 0}
-        cameraEffects:
-        - {fileID: 11400000, guid: 15c3d9ba7f6bf0f40b84738c271f9d35, type: 2}
-        fovOffset: 0
-        positionOffset: {x: 0.09, y: 0.02, z: -1.13}
-        rotationOffset: {x: 0, y: 0, z: 0}
-    - rid: 4827846191764471811
-      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
-      data:
-        text: "\u05D1\u05D5\u05E0\u05D0"
-        commands:
-        - rid: 7771312091879440384
     - rid: 6826935146225074176
       type: {class: DiscussionNode, ns: , asm: Assembly-CSharp}
       data:
@@ -135,11 +132,6 @@ MonoBehaviour:
       data:
         text: sasassasaass
         commands: []
-    - rid: 7771312091879440384
-      type: {class: CutInCommand, ns: , asm: Assembly-CSharp}
-      data:
-        executeTime: 0
-        cutInWrapper: {fileID: 11400000, guid: f03526c1f1642184ebf27644ec2462e3, type: 2}
     - rid: 7771312091879440402
       type: {class: DiscussionNode, ns: , asm: Assembly-CSharp}
       data:
@@ -183,7 +175,7 @@ MonoBehaviour:
         expressionIndex: 0
         textData:
           rid: 7771312572155035649
-        usePrevCamera: 1
+        usePrevCamera: 0
         characterStand: {fileID: 0}
         cameraEffects: []
         fovOffset: 0
@@ -192,12 +184,13 @@ MonoBehaviour:
         choiceLogic:
           options:
           - text: "\u05DC\u05D0"
-            dialogue: []
+            dialogue:
+            - rid: 2414737671499022336
             isCorrect: 0
           - text: "\u05DB\u05DF"
             dialogue: []
             isCorrect: 1
-          loopIfWrong: 0
+          loopIfWrong: 1
     - rid: 7771312572155035649
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:

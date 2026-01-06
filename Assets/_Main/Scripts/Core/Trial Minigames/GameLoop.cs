@@ -6,7 +6,6 @@ using System;
 using _Main.Scripts.Court;
 using DG.Tweening;
 using DIALOGUE;
-using UnityEngine.Serialization;
 using Text = TMPro.TextMeshProUGUI;
 
 
@@ -63,7 +62,7 @@ public class GameLoop : MonoBehaviour
     List<FloatingText> debateTexts;
     CharacterStand characterStand;
 
-    bool isActive = false;
+    public bool isActive;
     float stageTimer;
     float defaultStageTime = 600f;
 
@@ -78,10 +77,11 @@ public class GameLoop : MonoBehaviour
     public MinigameStartAnimation startAnimation;
 
     private float bulletMenuHoldTime;
+    private Coroutine wrongEvidenceRoutine;
 
     public void PlayDebate(DebateSegment debate)
     {
-        this.debateSegment = debate;
+        debateSegment = debate;
         debateTexts = new List<FloatingText>();
         ResetValues();
         bulletManager.ShowEvidence(debateSegment.settings.evidences);
@@ -137,7 +137,7 @@ public class GameLoop : MonoBehaviour
 
             if (stageTimer < 0f)
             {
-                GameOver();
+                StartCoroutine(TrialManager.instance.GameOver());
             }
 
             if (debateTexts.Count == 0)
@@ -178,7 +178,7 @@ public class GameLoop : MonoBehaviour
         }
     }
 
-    void DeactivateDebate()
+    public void DeactivateDebate()
     {
         Time.timeScale = 1f;
         isActive = false;
@@ -350,10 +350,10 @@ public class GameLoop : MonoBehaviour
 
         debateTexts.Clear();
         DeactivateDebate();
-        StartCoroutine(PlayWrongHitNodes());
+        wrongEvidenceRoutine = StartCoroutine(PlayWrongHitNodes());
     }
 
-    IEnumerator PlayWrongHitNodes()
+    private IEnumerator PlayWrongHitNodes()
     {
         List<DiscussionNode> wrongNodes = UtilityNodesRuntimeBank.instance.nodesCollection.characterDefaultWrongNodes
             .Find(item => item.character == debateSegment
@@ -373,6 +373,11 @@ public class GameLoop : MonoBehaviour
         characterStand.SetSprite(characterStand.character.emotions[1]);
         textIndex = 0;
         yield return SwitchToDebateMode();
+    }
+
+    private void StopWrongHitNodes()
+    {
+        StopCoroutine(wrongEvidenceRoutine);
     }
 
 
@@ -412,8 +417,27 @@ public class GameLoop : MonoBehaviour
         noThatsWrong.gameObject.SetActive(false);
     }
 
+    private IEnumerator GameOverPipeline()
+    {
+        DeactivateDebate();
+        TrialDialogueManager.instance.StopConversation();
+        yield return TrialManager.instance.ShowFailedScreen();
+        StopWrongHitNodes();
+        MusicManager.instance.StopSong();
+        TrialDialogueManager.instance.SetTextBox();
+        debateUIAnimator.gameObject.SetActive(false);
+        ImageScript.instance.UnFadeToBlack(0.2f);
+        yield return CameraController.instance.FovOutro();
+        StartCoroutine(TrialManager.instance.GameOver());
+    }
+
     IEnumerator StartNewNode(int dialogueNodeIndex)
     {
+        if (TrialManager.instance.playerStats.hp <= 0)
+        {
+            StartCoroutine(GameOverPipeline());
+            yield break;
+        }
         Character prevCharacter = ScriptableObject.CreateInstance<Character>();
         if (dialogueNodeIndex > 0)
         {

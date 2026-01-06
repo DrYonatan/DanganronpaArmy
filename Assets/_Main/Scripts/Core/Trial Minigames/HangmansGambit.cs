@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using _Main.Scripts.Court;
-using DG.Tweening;
 using UnityEngine;
 
 [Serializable]
@@ -16,7 +14,6 @@ public class Letter
 public class HangmansGambit : TrialSegment
 {
     public Character character;
-    public bool isActive = true;
     public char[] possibleLetters;
     public List<Letter> correctLetters = new List<Letter>();
 

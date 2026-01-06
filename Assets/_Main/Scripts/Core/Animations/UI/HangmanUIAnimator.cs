@@ -193,6 +193,9 @@ public class HangmanUIAnimator : MonoBehaviour
 
     IEnumerator StarsGrow()
     {
+        stars.rectTransform.localScale = Vector3.one;
+        stars2.rectTransform.localScale = Vector3.one;
+        
         Sequence seq1 = DOTween.Sequence();
         // Scale and fade happen together
         seq1.Append(stars.transform.DOScale(growFactor, growDuration).SetEase(Ease.OutQuad));
@@ -263,7 +266,7 @@ public class HangmanUIAnimator : MonoBehaviour
         blockObjects[index].TurnIntoCurrentLetter();
     }
 
-    public void BlocksStartAnimation()
+    private void BlocksStartAnimation()
     {
         foreach (HangmanLetterBlock block in blockObjects)
         {

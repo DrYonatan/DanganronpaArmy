@@ -32,6 +32,9 @@ public class TrialManager : MonoBehaviour
     public RectTransform globalUI;
     public TrialIntro introAnimation;
 
+    public RectTransform failedScreen;
+    public Image failedTextImage;
+    
     void Awake()
     {
         instance = this;
@@ -88,8 +91,6 @@ public class TrialManager : MonoBehaviour
     {
         playerStats.hp -= amount;
         barsAnimator.DecreaseHealth(playerStats.hp, 0.5f);
-        if (playerStats.hp <= 0)
-            StartCoroutine(GameOver());
     }
 
     public void DecreaseHealthFromMeter(Image meter, float amount)
@@ -101,11 +102,13 @@ public class TrialManager : MonoBehaviour
     }
 
 
-    private IEnumerator GameOver()
+    public IEnumerator GameOver()
     {
+        TrialDialogueManager.instance.animator.FaceAppear();
         yield return TrialDialogueManager.instance.RunNodes(UtilityNodesRuntimeBank.instance.nodesCollection
             .gameOverNodes);
         playerStats.hp = 5f;
+        TrialDialogueManager.instance.ConversationEnd();
         TrialSegment segment = Instantiate(segments[currentIndex]);
         segment.Play();
     }
@@ -131,5 +134,27 @@ public class TrialManager : MonoBehaviour
                 stand.silhouetteRenderer.DOFade(opacity, duration);
             }
         }
+    }
+
+    public IEnumerator ShowFailedScreen()
+    {
+        yield return new WaitForSeconds(0.5f);
+        failedScreen.anchoredPosition = new Vector2(0, 1200);
+        Color color = failedTextImage.color;
+        color.a = 0f;
+        failedTextImage.color = color;
+        failedTextImage.rectTransform.localScale = Vector3.one;
+        
+        Sequence sequence = DOTween.Sequence();
+        sequence.Append(failedScreen.DOAnchorPosY(0, 0.2f));
+        sequence.Append(failedTextImage.DOFade(1f, 0.1f));
+        sequence.AppendInterval(1f);
+        sequence.Append(failedTextImage.rectTransform.DOScale(2f, 0.2f));
+        sequence.Join(failedTextImage.DOFade(0, 0.2f));
+        sequence.AppendCallback(() => ImageScript.instance.FadeToBlack(0.2f));
+        
+        yield return new WaitForSeconds(2.5f);
+
+        failedScreen.anchoredPosition = new Vector2(0, 1200);
     }
 }

@@ -18,6 +18,7 @@ public class HangmanManager : MonoBehaviour
     public HangmanLetter letterPrefab;
     public AudioClip music;
     public int letterIndex = 0;
+    public bool isActive = true;
 
     public float timeLeft = 600f;
 
@@ -30,10 +31,9 @@ public class HangmanManager : MonoBehaviour
     public void Play(HangmansGambit game)
     {
         this.game = game;
-        game.isActive = false;
+        isActive = false;
         MusicManager.instance.PlaySong(music);
         StartCoroutine(StartGame());
-        DialogueSystem.instance.dialogueBoxAnimator.gameObject.SetActive(false);
     }
 
 
@@ -56,7 +56,7 @@ public class HangmanManager : MonoBehaviour
         animator.canvasGroup.alpha = 0f;
         letterIndex = 0;
         animator.ShowHangmanUI();
-        game.isActive = true;
+        isActive = true;
         TimeManipulationManager.instance.isInputActive = true;
         CursorManager.instance.Show();
     }
@@ -83,7 +83,7 @@ public class HangmanManager : MonoBehaviour
 
     void Update()
     {
-        if (game != null && game.isActive)
+        if (game != null && isActive)
         {
             CursorManager.instance.ReticleAsCursor();
             timeLeft -= Time.deltaTime;
@@ -94,7 +94,7 @@ public class HangmanManager : MonoBehaviour
     
     IEnumerator SpawnLetters(char[] chars)
     {
-        while (game.isActive)
+        while (isActive)
         {
             // Spawn a letter
             int randomInt = Random.Range(0, chars.Length);
@@ -116,10 +116,29 @@ public class HangmanManager : MonoBehaviour
         else
         {
             TrialManager.instance.DecreaseHealthDefault(1f);
+            if (TrialManager.instance.playerStats.hp <= 0)
+            {
+                StartCoroutine(GameOverPipeline());
+            }
         }
     }
 
-    void ProceedToNextLetter()
+    private IEnumerator GameOverPipeline()
+    {
+        StopGame();
+        TrialManager.instance.barsAnimator.HideGlobalBars(0f);
+        TrialCursorManager.instance.Hide();
+        yield return new WaitForSeconds(0.5f);
+        yield return TrialManager.instance.ShowFailedScreen();
+        animator.transform.DOKill();
+        MusicManager.instance.StopSong();
+        animator.gameObject.SetActive(false);
+        ImageScript.instance.UnFadeToBlack(0.2f);
+        yield return CameraController.instance.FovOutro();
+        StartCoroutine(TrialManager.instance.GameOver());
+    }
+
+    private void ProceedToNextLetter()
     {
         for (int i = letterIndex; i < game.correctLetters.Count; i++)
         {
@@ -154,11 +173,15 @@ public class HangmanManager : MonoBehaviour
     void FinishGame()
     {
         CameraController.instance.cameraTransform.position = originalCameraPosition;
-        TimeManipulationManager.instance.DeActivateInput();
-        game.isActive = false;
-        animator.HideLetterObjects();
+        StopGame();
         StartCoroutine(FinishPipeline());
-        DialogueSystem.instance.dialogueBoxAnimator.gameObject.SetActive(true);
+    }
+
+    private void StopGame()
+    {
+        TimeManipulationManager.instance.DeActivateInput();
+        isActive = false;
+        animator.HideLetterObjects();
     }
     
 
@@ -166,8 +189,7 @@ public class HangmanManager : MonoBehaviour
     {
         yield return animator.FinishAnimation();
         animator.canvasGroup.DOFade(0f, 0f);
-        ImageScript.instance.FadeToBlack(0.01f);
-        yield return new WaitForSeconds(0.01f);
+        yield return new WaitForSeconds(0.1f);
         ImageScript.instance.UnFadeToBlack(0.5f);
         yield return CameraController.instance.FovOutro();
         MusicManager.instance.StopSong();
