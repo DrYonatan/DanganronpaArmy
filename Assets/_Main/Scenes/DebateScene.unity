@@ -1343,6 +1343,7 @@ Transform:
   - {fileID: 1620906353}
   - {fileID: 1681586900}
   - {fileID: 1824387263}
+  - {fileID: 2105188946}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &97729336
@@ -13762,7 +13763,6 @@ MonoBehaviour:
   music: {fileID: 8300000, guid: 011b8082d9ead584784f988a61b71bdf, type: 3}
   letterIndex: 0
   isActive: 1
-  timeLeft: 600
 --- !u!1 &696801891
 GameObject:
   m_ObjectHideFlags: 0
@@ -34499,6 +34499,7 @@ MonoBehaviour:
   puzzlePagesContainer: {fileID: 1271662560}
   pinsContainer: {fileID: 304501720}
   timerRect: {fileID: 1947652570}
+  timerText: {fileID: 1025213175}
   pagesRect: {fileID: 2108030941}
   mouseL: {fileID: 1383627988}
   mouseR: {fileID: 468171314}
@@ -34511,7 +34512,6 @@ MonoBehaviour:
   frontMist: {fileID: 1885736461}
   nowIUnderstand: {fileID: 817199031}
   reEnactIcon: {fileID: 1195224600}
-  pagesContainerStartPos: -900
   pageWidth: 1380
   pageNumber: 0
   firstPinNumber: 0
@@ -39033,6 +39033,52 @@ Transform:
   - {fileID: 1374848093}
   m_Father: {fileID: 1869341972}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2105188945
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2105188946}
+  - component: {fileID: 2105188947}
+  m_Layer: 0
+  m_Name: Timer Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2105188946
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2105188945}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 94256287}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2105188947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2105188945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35562de84b2da0d4f842798676e46c59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timer: 0
+  countTime: 0
 --- !u!1 &2105477577
 GameObject:
   m_ObjectHideFlags: 0
@@ -39080,8 +39126,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   segments:
   - {fileID: 11400000, guid: 03110a6c3b052c84489dfd897a46394b, type: 2}
-  - {fileID: 11400000, guid: c8f905213147a1a4aa52c099d842872c, type: 2}
   - {fileID: 11400000, guid: cbf13f5ddfc24354c86038115c120537, type: 2}
+  - {fileID: 11400000, guid: c8f905213147a1a4aa52c099d842872c, type: 2}
   - {fileID: 11400000, guid: 7ffb73df55c6dbd4ca70de46a2538186, type: 2}
   - {fileID: 11400000, guid: 03110a6c3b052c84489dfd897a46394b, type: 2}
   - {fileID: 11400000, guid: d64974b17e93f864e876fd0ff95ca708, type: 2}

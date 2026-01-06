@@ -69,6 +69,7 @@ public class ComicManager : MonoBehaviour
         ImageScript.instance.UnFadeToBlack(0.1f);
         animator.gameObject.SetActive(true);
         yield return animator.Intro();
+        TimerManager.instance.SetTimer(600);
         StartComicPuzzle();
     }
 
@@ -148,10 +149,12 @@ public class ComicManager : MonoBehaviour
         isInPuzzle = true;
         animator.ShowPuzzleUI();
         DialogueSystem.instance.inputButton.gameObject.SetActive(false);
+        TimerManager.instance.ResumeTimer();
     }
 
     IEnumerator PresentComic()
     {
+        TimerManager.instance.StopTimer();
         MusicManager.instance.StopSong();
         TrialCursorManager.instance.Hide();
         isInPuzzle = false;

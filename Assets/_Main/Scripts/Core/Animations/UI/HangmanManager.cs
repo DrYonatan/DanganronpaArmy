@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using DG.Tweening;
 using DIALOGUE;
 using UnityEngine;
@@ -19,9 +20,7 @@ public class HangmanManager : MonoBehaviour
     public AudioClip music;
     public int letterIndex = 0;
     public bool isActive = true;
-
-    public float timeLeft = 600f;
-
+    
     private Vector3 originalCameraPosition;
 
     void Awake()
@@ -58,6 +57,7 @@ public class HangmanManager : MonoBehaviour
         animator.ShowHangmanUI();
         isActive = true;
         TimeManipulationManager.instance.isInputActive = true;
+        TimerManager.instance.SetTimer(600);
         CursorManager.instance.Show();
     }
     IEnumerator StartGame()
@@ -86,9 +86,7 @@ public class HangmanManager : MonoBehaviour
         if (game != null && isActive)
         {
             CursorManager.instance.ReticleAsCursor();
-            timeLeft -= Time.deltaTime;
-            TimeSpan timeSpan = TimeSpan.FromSeconds(timeLeft);
-            animator.UpdateTimerText(timeSpan);
+            animator.UpdateTimerText();
         }
     }
     

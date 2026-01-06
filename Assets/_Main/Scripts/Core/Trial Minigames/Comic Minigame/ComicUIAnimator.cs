@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -20,6 +21,7 @@ public class ComicUIAnimator : MonoBehaviour
     public GridLayoutGroup pinsContainer;
 
     public RectTransform timerRect;
+    public TextMeshProUGUI timerText;
     public RectTransform pagesRect;
 
     public Image mouseL;
@@ -45,7 +47,6 @@ public class ComicUIAnimator : MonoBehaviour
 
     public Image reEnactIcon;
 
-    public float pagesContainerStartPos = -900;
     public float pageWidth = 440;
 
     public int pageNumber;
@@ -62,6 +63,11 @@ public class ComicUIAnimator : MonoBehaviour
 
     private float timerOriginalX;
     private float pagesOriginalX;
+
+    private void Update()
+    {
+        timerText.text = TimerManager.instance.GetTimeFormat();
+    }
 
     public IEnumerator Intro()
     {

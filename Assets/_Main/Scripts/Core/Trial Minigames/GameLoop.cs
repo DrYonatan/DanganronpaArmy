@@ -63,8 +63,6 @@ public class GameLoop : MonoBehaviour
     CharacterStand characterStand;
 
     public bool isActive;
-    float stageTimer;
-    float defaultStageTime = 600f;
 
     public GameObject textBulletPrefab;
     public float shootForce = 10f;
@@ -86,7 +84,6 @@ public class GameLoop : MonoBehaviour
         ResetValues();
         bulletManager.ShowEvidence(debateSegment.settings.evidences);
         MusicManager.instance.PlaySong(debateSegment.settings.audioClip);
-        stageTimer = defaultStageTime;
         StartCoroutine(StartDebate());
     }
 
@@ -103,7 +100,7 @@ public class GameLoop : MonoBehaviour
         yield return cameraController.DiscussionOutroMovement(2.5f);
         debateUIAnimator.gameObject.SetActive(true);
         debateUIAnimator.DebateUIDisappear();
-        ((CourtTextBoxAnimator)(DialogueSystem.instance.dialogueBoxAnimator)).ChangeFace(null);
+        ((CourtTextBoxAnimator)DialogueSystem.instance.dialogueBoxAnimator).ChangeFace(null);
         yield return 0;
         ImageScript.instance.UnFadeToBlack(1f);
         MinigameStartAnimation anim = Instantiate(startAnimation, TrialManager.instance.globalUI);
@@ -111,6 +108,7 @@ public class GameLoop : MonoBehaviour
         yield return StartCoroutine(cameraController.DebateStartCameraMovement(3f));
         isActive = true;
         TimeManipulationManager.instance.isInputActive = true;
+        TimerManager.instance.SetTimer(300);
     }
 
     // Update is called once per frame
@@ -129,15 +127,12 @@ public class GameLoop : MonoBehaviour
                 reachedEnd = true;
             }
 
-
             timer += Time.deltaTime;
-            stageTimer -= Time.deltaTime;
-            TimeSpan timeSpan = TimeSpan.FromSeconds(stageTimer);
-            timerText.text = timeSpan.ToString(@"mm\:ss\:ffff");
+            timerText.text = TimerManager.instance.GetTimeFormat();
 
-            if (stageTimer < 0f)
+            if (TimerManager.instance.timer < 0f)
             {
-                StartCoroutine(TrialManager.instance.GameOver());
+                StartCoroutine(GameOverPipeline());
             }
 
             if (debateTexts.Count == 0)
@@ -178,7 +173,7 @@ public class GameLoop : MonoBehaviour
         }
     }
 
-    public void DeactivateDebate()
+    private void DeactivateDebate()
     {
         Time.timeScale = 1f;
         isActive = false;
@@ -195,6 +190,7 @@ public class GameLoop : MonoBehaviour
 
     IEnumerator SwitchToTextBoxMode()
     {
+        TimerManager.instance.StopTimer();
         debateUIAnimator.HideCylinderAndCircles(0.5f);
         CursorManager.instance.Hide();
         debateUIAnimator.ChangeFace(null);
@@ -216,6 +212,7 @@ public class GameLoop : MonoBehaviour
         TimeManipulationManager.instance.isInputActive = true;
         debateUIAnimator.ShowCylinderAndCircles();
         CursorManager.instance.Show();
+        TimerManager.instance.ResumeTimer();
     }
 
 

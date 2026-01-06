@@ -326,9 +326,9 @@ public class HangmanUIAnimator : MonoBehaviour
         }
     }
 
-    public void UpdateTimerText(TimeSpan time)
+    public void UpdateTimerText()
     {
-        timerText.text = time.ToString(@"mm\:ss\:ffff");
+        timerText.text = TimerManager.instance.GetTimeFormat();
     }
     
     

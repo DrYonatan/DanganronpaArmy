@@ -50,7 +50,7 @@ MonoBehaviour:
   gameOverNodes:
   - rid: 4653702815168069638
   - rid: 2414737671499022338
-  - rid: 7771312114020384768
+  - rid: 2414737692967305216
   wrongComicNodes:
   - nodeRect:
       serializedVersion: 2
@@ -94,6 +94,98 @@ MonoBehaviour:
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
         text: "\u05D8\u05D5\u05D1 \u05E0\u05D2\u05DE\u05E8 \u05D4\u05D6\u05DE\u05DF!"
+        commands: []
+    - rid: 2414737692967305216
+      type: {class: DiscussionChoiceNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: 76846e25f3c59c8469f240cc5205a8fd, type: 2}
+        character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
+        expressionIndex: 0
+        textData:
+          rid: 2414737692967305217
+        usePrevCamera: 0
+        characterStand: {fileID: 0}
+        cameraEffects: []
+        fovOffset: 0
+        positionOffset: {x: 0, y: 0, z: 0}
+        rotationOffset: {x: 0, y: 0, z: 0}
+        choiceLogic:
+          options:
+          - text: "\u05DC\u05D5\u05D5\u05EA\u05E8"
+            dialogue:
+            - rid: 2414737692967305220
+            isCorrect: 0
+          - text: "\u05DC\u05D4\u05DE\u05E9\u05D9\u05DA"
+            dialogue:
+            - rid: 2414737692967305218
+            isCorrect: 1
+          loopIfWrong: 0
+    - rid: 2414737692967305217
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "\u05DE\u05D4 \u05EA\u05E8\u05E6\u05D4 \u05DC\u05E2\u05E9\u05D5\u05EA?"
+        commands: []
+    - rid: 2414737692967305218
+      type: {class: DiscussionNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: 6344f4092040cbd4183fc5d6dc877647, type: 2}
+        character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
+        expressionIndex: 1
+        textData:
+          rid: 2414737692967305219
+        usePrevCamera: 0
+        characterStand: {fileID: 0}
+        cameraEffects: []
+        fovOffset: 0
+        positionOffset: {x: 0, y: 0, z: 0}
+        rotationOffset: {x: 0, y: 0, z: 0}
+    - rid: 2414737692967305219
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "\u05D0\u05E0\u05D9 \u05DE\u05E1\u05E8\u05D1 \u05DC\u05D5\u05D5\u05EA\u05E8!"
+        commands: []
+    - rid: 2414737692967305220
+      type: {class: DiscussionNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: 6344f4092040cbd4183fc5d6dc877647, type: 2}
+        character: {fileID: 0}
+        expressionIndex: 0
+        textData:
+          rid: 2414737692967305221
+        usePrevCamera: 0
+        characterStand: {fileID: 0}
+        cameraEffects: []
+        fovOffset: 0
+        positionOffset: {x: 0, y: 0, z: 0}
+        rotationOffset: {x: 0, y: 0, z: 0}
+    - rid: 2414737692967305221
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: 
         commands: []
     - rid: 4653702815168069632
       type: {class: DiscussionNode, ns: , asm: Assembly-CSharp}
@@ -371,31 +463,4 @@ MonoBehaviour:
         text: "\u05D0\u05D5\u05DC\u05D9 \u05DB\u05D3\u05D0\u05D9 \u05E9\u05D0\u05E0\u05E1\u05D4
           \u05DC\u05D7\u05E9\u05D5\u05D1 \u05E2\u05DC \u05D6\u05D4 \u05E2\u05D5\u05D3
           \u05E4\u05E2\u05DD..."
-        commands: []
-    - rid: 7771312114020384768
-      type: {class: DiscussionNode, ns: , asm: Assembly-CSharp}
-      data:
-        nodeRect:
-          serializedVersion: 2
-          x: 0
-          y: 0
-          width: 0
-          height: 0
-        commandsScrollPosition: {x: 0, y: 0}
-        title: 
-        drawNode: {fileID: 11400000, guid: 6344f4092040cbd4183fc5d6dc877647, type: 2}
-        character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
-        expressionIndex: 0
-        textData:
-          rid: 7771312114020384769
-        usePrevCamera: 0
-        characterStand: {fileID: 0}
-        cameraEffects: []
-        fovOffset: 0
-        positionOffset: {x: 0, y: 0, z: 0}
-        rotationOffset: {x: 0, y: 0, z: 0}
-    - rid: 7771312114020384769
-      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
-      data:
-        text: "\u05D0\u05D5\u05D9"
         commands: []
