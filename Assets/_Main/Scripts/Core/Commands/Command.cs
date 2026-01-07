@@ -8,8 +8,8 @@ public abstract class Command
 {
     public enum ExecuteTime
     {
-        Before,
         Parallel,
+        Before,
         After
     }
 
