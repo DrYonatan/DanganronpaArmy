@@ -85,6 +85,7 @@ public class VNNodeDraw : DrawNode
             menu.AddItem(new GUIContent("Play Ultimate Animation"), false, () => AddCommand(node, new PlayUltimateAnimation()));
             menu.AddItem(new GUIContent("Select Evidence"), false, () => AddCommand(node, new PromptEvidenceSelection()));
             menu.AddItem(new GUIContent("Cut In"), false, () => AddCommand(node, new CutInCommand()));
+            menu.AddItem(new GUIContent("Fill to Full HP"), false, () => AddCommand(node, new FillFullHPCommand()));
             
             // Add more as needed
             menu.ShowAsContext();

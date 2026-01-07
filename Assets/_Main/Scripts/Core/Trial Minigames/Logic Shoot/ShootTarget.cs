@@ -71,10 +71,11 @@ public class ShootTarget : MonoBehaviour
         StartCoroutine(CountTime());
         yield return new WaitForSeconds(timeOut);
 
-        if (!isDisappearing && LogicShootManager.instance.isActive)
+        if (!isDisappearing && gameObject != null)
         {
             rectTransform.DOKill();
-            LogicShootManager.instance.DamagePlayer(1f);
+            if(LogicShootManager.instance.isActive)
+               LogicShootManager.instance.DamagePlayer(1f);
             LogicShootManager.instance.animator.TargetFailExplosion(rectTransform.anchoredPosition);
             canvasGroup.DOFade(0f, 0.5f).OnComplete(() => Destroy(gameObject)).SetLink(gameObject);
         }
