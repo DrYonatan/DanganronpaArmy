@@ -38,6 +38,7 @@ public class RifleManager : MonoBehaviour
         stackOutPosition = stackInPosition + new Vector2(14, -56);
         flyingBulletOriginalPosition = flyingBullet.anchoredPosition;
         flyingBullet.anchoredPosition -= new Vector2(0, 1000);
+        stacksLeft = 5;
         ammo = 30;
     }
 

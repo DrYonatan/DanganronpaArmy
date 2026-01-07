@@ -44,15 +44,16 @@ public class ShootTargetArea : MonoBehaviour
             explosion.transform.localPosition = transform.parent.localPosition;
             
             transform.parent.DOLocalRotate(new Vector3(0, 360, 0), 0.1f, RotateMode.FastBeyond360).SetLoops(4)
-                .OnComplete(() => parentTarget.DisappearAnimation());
+                .OnComplete(() => parentTarget.DisappearAnimation()).SetLink(parentTarget.gameObject);
             CalculateGrouping();
         }
     }
 
     protected virtual void WrongAnswer()
     {
-        LogicShootManager.instance.DamagePlayer(0.5f);
-        image.DOColor(Color.red, 0.05f).SetLoops(5, LoopType.Yoyo).SetTarget(transform.parent).OnComplete(() => image.color = Color.red);
+        if(LogicShootManager.instance.isActive)
+           LogicShootManager.instance.DamagePlayer(0.5f);
+        image.DOColor(Color.red, 0.05f).SetLoops(5, LoopType.Yoyo).SetLink(transform.parent.gameObject).OnComplete(() => image.color = Color.red);
     }
 
     private void CalculateGrouping()

@@ -213,6 +213,7 @@ public class LogicShootManager : MonoBehaviour
 
         rifleManager.InitializeRifle();
 
+        animator.enemyHp.fillAmount = enemyHP / 10;
         animator.UpdatePlayerHp(TrialManager.instance.playerStats.hp);
         animator.UpdateAmmo(rifleManager.ammo);
         rifleManager.PutRifleDown();
@@ -249,6 +250,7 @@ public class LogicShootManager : MonoBehaviour
         MusicManager.instance.PlaySong(animator.music);
 
         isActive = true;
+        isInFinish = false;
 
         StartCoroutine(PlayStages(segment.stages));
     }
@@ -286,13 +288,24 @@ public class LogicShootManager : MonoBehaviour
         TrialCursorManager.instance.Hide();
         yield return animator.FinishAnimation();
 
+        yield return StopGame();
+        
+        segment.Finish();
+    }
+
+    private IEnumerator StopGame()
+    {
+        TrialManager.instance.FadeCharactersExcept(LogicShootManager.instance.segment.character, 1f, 0f);
         ImageScript.instance.UnFadeToBlack(0.2f);
         animator.gameObject.SetActive(false);
         CharacterStand stand = TrialManager.instance.protagonistStand;
         CameraController.instance.TeleportToTarget(stand.transform,
             stand.heightPivot, Vector3.zero, Vector3.zero, 0f);
+        foreach (ShootTarget target in animator.activeTargets)
+        {
+            Destroy(target.gameObject);
+        }
         yield return CameraController.instance.FovOutro();
-        segment.Finish();
     }
 
     public void DamageEnemy(float amount)
@@ -310,6 +323,20 @@ public class LogicShootManager : MonoBehaviour
     {
         SoundManager.instance.PlaySoundEffect(TrialManager.instance.barsAnimator.damageSound);
         TrialManager.instance.DecreaseHealthFromMeter(animator.playerHp, amount);
+        if (TrialManager.instance.playerStats.hp <= 0f)
+        {
+            StartCoroutine(GameOverPipeline());
+        }
+    }
+
+    private IEnumerator GameOverPipeline()
+    {
+        isActive = false;
+        TrialCursorManager.instance.Hide();
+        yield return TrialManager.instance.ShowFailedScreen();
+        MusicManager.instance.StopSong();
+        yield return StopGame();
+        StartCoroutine(TrialManager.instance.GameOver());
     }
 
     private void MoveCameraToCenter(Vector3 from, float duration)

@@ -58,24 +58,25 @@ public class ShootTarget : MonoBehaviour
 
     private IEnumerator LifeTimeRoutine()
     {
-        rectTransform.DOAnchorPos(targetPosition, movementTime).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.Linear);
+        rectTransform.DOAnchorPos(targetPosition, movementTime).SetLoops(-1, LoopType.Yoyo).SetLink(gameObject)
+            .SetEase(Ease.Linear);
         bubble.color = Color.green;
-        bubble.DOColor(Color.yellow, timeOut / 2).SetEase(Ease.Linear).SetTarget(rectTransform).OnComplete(() =>
-            bubble.DOColor(Color.red, timeOut / 2).SetEase(Ease.Linear).SetTarget(rectTransform));
+        bubble.DOColor(Color.yellow, timeOut / 2).SetEase(Ease.Linear).SetLink(gameObject).OnComplete(() =>
+            bubble.DOColor(Color.red, timeOut / 2).SetEase(Ease.Linear).SetLink(gameObject));
 
         lines.color = Color.green;
-        lines.DOColor(Color.yellow, timeOut / 2).SetEase(Ease.Linear).SetTarget(rectTransform).OnComplete(() =>
-            lines.DOColor(Color.red, timeOut / 2).SetEase(Ease.Linear).SetTarget(rectTransform));
+        lines.DOColor(Color.yellow, timeOut / 2).SetEase(Ease.Linear).SetLink(gameObject).OnComplete(() =>
+            lines.DOColor(Color.red, timeOut / 2).SetEase(Ease.Linear).SetLink(gameObject));
 
         StartCoroutine(CountTime());
         yield return new WaitForSeconds(timeOut);
 
-        if (!isDisappearing)
+        if (!isDisappearing && LogicShootManager.instance.isActive)
         {
             rectTransform.DOKill();
             LogicShootManager.instance.DamagePlayer(1f);
             LogicShootManager.instance.animator.TargetFailExplosion(rectTransform.anchoredPosition);
-            canvasGroup.DOFade(0f, 0.5f).OnComplete(() => Destroy(gameObject));
+            canvasGroup.DOFade(0f, 0.5f).OnComplete(() => Destroy(gameObject)).SetLink(gameObject);
         }
     }
 
@@ -90,9 +91,10 @@ public class ShootTarget : MonoBehaviour
 
     public void DisappearAnimation()
     {
-        bubble.DOFade(0f, 0.1f);
-        rectTransform.DOKill();
-        rectTransform.DOAnchorPosY(-1000, 0.5f).OnComplete(() => Destroy(gameObject));
+        bubble.DOFade(0f, 0.1f).SetLink(gameObject);
+        if(rectTransform != null)
+           rectTransform.DOKill();
+        rectTransform.DOAnchorPosY(-1000, 0.5f).OnComplete(() => Destroy(gameObject)).SetLink(gameObject);
     }
 
     public void SetIsDisappearing()

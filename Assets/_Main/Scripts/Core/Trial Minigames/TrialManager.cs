@@ -97,8 +97,6 @@ public class TrialManager : MonoBehaviour
     {
         playerStats.hp -= amount;
         barsAnimator.DecreaseHealthFromMeter(meter, playerStats.hp, 0.5f);
-        if (playerStats.hp <= 0)
-            StartCoroutine(GameOver());
     }
 
 

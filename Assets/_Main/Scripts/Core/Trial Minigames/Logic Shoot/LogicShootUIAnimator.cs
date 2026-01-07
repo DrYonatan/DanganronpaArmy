@@ -75,6 +75,7 @@ public class LogicShootUIAnimator : MonoBehaviour
         stacksContainer.anchoredPosition -= new Vector2(0, 500);
         timersContainer.localRotation = Quaternion.Euler(90, 0, 0);
         enemyFace.sprite = LogicShootManager.instance.segment.character.faceSprite;
+        stopGameCooldownBubble.rectTransform.localScale = Vector3.one;
         stopGameCooldownBubble.rectTransform.DOScale(1.2f, 0.4f).SetLoops(-1, LoopType.Yoyo);
     }
 
@@ -279,8 +280,6 @@ public class LogicShootUIAnimator : MonoBehaviour
 
         ScreenShatterManager shatter = Instantiate(screenShatter);
         yield return shatter.ScreenShatter();
-
-        TrialManager.instance.FadeCharactersExcept(LogicShootManager.instance.segment.character, 1f, 0f);
     }
 
     private IEnumerator FinishCameraMovement()
