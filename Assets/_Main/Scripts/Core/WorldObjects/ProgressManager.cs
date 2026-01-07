@@ -1,6 +1,8 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ProgressManager : MonoBehaviour
 {
@@ -15,32 +17,63 @@ public class ProgressManager : MonoBehaviour
 
     public ConversationDatabase conversationDatabase;
 
+    public GameObject persistentObject;
+
     private void Awake()
     {
         instance = this;
+        DontDestroyOnLoad(persistentObject);
     }
 
     void Start()
     {
         if (SaveManager.instance != null && SaveManager.instance.currentSaveSlot != -1)
-            LoadValuesFromSave();
+            StartCoroutine(LoadValuesFromSave());
         else
         {
-            StartNewGame();
+            StartCoroutine(StartNewGame());
         }
     }
 
     public void OnEventFinished()
     {
-        currentGameEventIndex++;
-        currentGameEvent = Instantiate(gameEvents[currentGameEventIndex]);
-        currentGameEvent.OnStart();
+        StartCoroutine(MoveToNextEvent());
     }
 
-    private void LoadValuesFromSave()
+    private IEnumerator MoveToNextEvent()
+    {
+        currentGameEventIndex++;
+        currentGameEvent = Instantiate(gameEvents[currentGameEventIndex]);
+
+        Room roomToLoad;
+
+        if (currentGameEvent.startRoom != null && WorldManager.instance.currentRoom.name != currentGameEvent.startRoom.name)
+            roomToLoad = currentGameEvent.startRoom;
+        else
+        {
+            roomToLoad = WorldManager.instance.currentRoom;
+        }
+
+        if (WorldManager.instance.currentTime != currentGameEvent.timeOfDay ||
+            roomToLoad != WorldManager.instance.currentRoom)
+        {
+            WorldManager.instance.currentRoom = roomToLoad;
+            yield return TimeOfDayManager.instance.ChangeTimeOfDay(currentGameEvent.timeOfDay);
+            WorldManager.instance.StartLoadingRoom(WorldManager.instance.currentRoom, null);
+        }
+
+        else
+            currentGameEvent.OnStart();
+    }
+
+    private IEnumerator LoadValuesFromSave()
     {
         WorldManager.instance.isLoading = true;
         SaveData data = SaveManager.instance != null ? SaveManager.instance.LoadCurrentSave() : SaveSystem.LoadGame(1);
+
+        yield return TimeOfDayManager.instance.ChangeTimeOfDay(data.timeOfDay);
+        ;
+
         currentGameEventIndex = data.gameEventIndex;
         currentGameEvent = Instantiate(gameEvents[currentGameEventIndex]);
         WorldManager.instance.currentRoom = Resources.Load<Room>($"Rooms/{data.currentRoom}");
@@ -65,8 +98,9 @@ public class ProgressManager : MonoBehaviour
         WorldManager.instance.Initialize();
     }
 
-    private void StartNewGame()
+    private IEnumerator StartNewGame()
     {
+        yield return TimeOfDayManager.instance.ChangeTimeOfDay(gameEvents[0].timeOfDay);
         currentGameEvent = Instantiate(gameEvents[0]);
         WorldManager.instance.StartLoadingRoom(WorldManager.instance.currentRoom, null);
     }

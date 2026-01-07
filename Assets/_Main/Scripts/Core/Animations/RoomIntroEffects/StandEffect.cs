@@ -41,11 +41,15 @@ public class StandEffect : RoomIntroEffect
 
         while(elapsedTime < duration)
         {
+            if (parentObject == null)
+                yield break;
+            
             elapsedTime += Time.deltaTime;
             parentObject.transform.rotation = Quaternion.Slerp(parentObject.transform.rotation, targetRotation, elapsedTime / duration);
             yield return null;
         }
         
-        parentObject.transform.rotation = targetRotation;
+        if(parentObject != null)
+           parentObject.transform.rotation = targetRotation;
     }
 }

@@ -6,7 +6,6 @@ using System;
 using _Main.Scripts.Court;
 using DG.Tweening;
 using DIALOGUE;
-using UnityEngine.Serialization;
 using Text = TMPro.TextMeshProUGUI;
 
 
@@ -63,9 +62,7 @@ public class GameLoop : MonoBehaviour
     List<FloatingText> debateTexts;
     CharacterStand characterStand;
 
-    bool isActive = false;
-    float stageTimer;
-    float defaultStageTime = 600f;
+    public bool isActive;
 
     public GameObject textBulletPrefab;
     public float shootForce = 10f;
@@ -77,14 +74,16 @@ public class GameLoop : MonoBehaviour
     public ScreenShatterManager screenShatter;
     public MinigameStartAnimation startAnimation;
 
+    private float bulletMenuHoldTime;
+    private Coroutine wrongEvidenceRoutine;
+
     public void PlayDebate(DebateSegment debate)
     {
-        this.debateSegment = debate;
+        debateSegment = debate;
         debateTexts = new List<FloatingText>();
         ResetValues();
         bulletManager.ShowEvidence(debateSegment.settings.evidences);
         MusicManager.instance.PlaySong(debateSegment.settings.audioClip);
-        stageTimer = defaultStageTime;
         StartCoroutine(StartDebate());
     }
 
@@ -101,7 +100,7 @@ public class GameLoop : MonoBehaviour
         yield return cameraController.DiscussionOutroMovement(2.5f);
         debateUIAnimator.gameObject.SetActive(true);
         debateUIAnimator.DebateUIDisappear();
-        ((CourtTextBoxAnimator)(DialogueSystem.instance.dialogueBoxAnimator)).ChangeFace(null);
+        ((CourtTextBoxAnimator)DialogueSystem.instance.dialogueBoxAnimator).ChangeFace(null);
         yield return 0;
         ImageScript.instance.UnFadeToBlack(1f);
         MinigameStartAnimation anim = Instantiate(startAnimation, TrialManager.instance.globalUI);
@@ -109,6 +108,7 @@ public class GameLoop : MonoBehaviour
         yield return StartCoroutine(cameraController.DebateStartCameraMovement(3f));
         isActive = true;
         TimeManipulationManager.instance.isInputActive = true;
+        TimerManager.instance.SetTimer(300);
     }
 
     // Update is called once per frame
@@ -127,15 +127,12 @@ public class GameLoop : MonoBehaviour
                 reachedEnd = true;
             }
 
-
             timer += Time.deltaTime;
-            stageTimer -= Time.deltaTime;
-            TimeSpan timeSpan = TimeSpan.FromSeconds(stageTimer);
-            timerText.text = timeSpan.ToString(@"mm\:ss\:ffff");
+            timerText.text = TimerManager.instance.GetTimeFormat();
 
-            if (stageTimer < 0f)
+            if (TimerManager.instance.timer < 0f)
             {
-                GameOver();
+                StartCoroutine(GameOverPipeline());
             }
 
             if (debateTexts.Count == 0)
@@ -176,7 +173,7 @@ public class GameLoop : MonoBehaviour
         }
     }
 
-    void DeactivateDebate()
+    private void DeactivateDebate()
     {
         Time.timeScale = 1f;
         isActive = false;
@@ -193,6 +190,7 @@ public class GameLoop : MonoBehaviour
 
     IEnumerator SwitchToTextBoxMode()
     {
+        TimerManager.instance.StopTimer();
         debateUIAnimator.HideCylinderAndCircles(0.5f);
         CursorManager.instance.Hide();
         debateUIAnimator.ChangeFace(null);
@@ -214,6 +212,7 @@ public class GameLoop : MonoBehaviour
         TimeManipulationManager.instance.isInputActive = true;
         debateUIAnimator.ShowCylinderAndCircles();
         CursorManager.instance.Show();
+        TimerManager.instance.ResumeTimer();
     }
 
 
@@ -236,7 +235,7 @@ public class GameLoop : MonoBehaviour
 
     void HandleMouseScroll()
     {
-        if (Input.GetAxis("Mouse ScrollWheel") < 0)
+        if (Input.GetAxis("Mouse ScrollWheel") < 0 || Input.GetKeyDown(KeyCode.Q))
         {
             bulletManager.SelectNextEvidence();
             bulletManager.SelectNextEvidence();
@@ -252,10 +251,13 @@ public class GameLoop : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Q))
         {
-            debateUIAnimator.OpenBulletSelectionMenu();
+            bulletMenuHoldTime += Time.deltaTime;
+            if(bulletMenuHoldTime >= 1f)
+               debateUIAnimator.OpenBulletSelectionMenu();
         }
         else
         {
+            bulletMenuHoldTime = 0f;
             debateUIAnimator.CloseBulletSelectionMenu();
         }
     }
@@ -345,10 +347,10 @@ public class GameLoop : MonoBehaviour
 
         debateTexts.Clear();
         DeactivateDebate();
-        StartCoroutine(PlayWrongHitNodes());
+        wrongEvidenceRoutine = StartCoroutine(PlayWrongHitNodes());
     }
 
-    IEnumerator PlayWrongHitNodes()
+    private IEnumerator PlayWrongHitNodes()
     {
         List<DiscussionNode> wrongNodes = UtilityNodesRuntimeBank.instance.nodesCollection.characterDefaultWrongNodes
             .Find(item => item.character == debateSegment
@@ -360,7 +362,7 @@ public class GameLoop : MonoBehaviour
         yield return TrialDialogueManager.instance.RunNodes(wrongNodes);
         yield return new WaitForEndOfFrame();
         debateUIAnimator.FadeFromAngleToAngle();
-        TrialManager.instance.DecreaseHealth(1f);
+        TrialManager.instance.DecreaseHealthDefault(1f);
         yield return TrialDialogueManager.instance.RunNodes(UtilityNodesRuntimeBank.instance.nodesCollection
             .debateWrongEvidence);
         CharacterStand characterStand =
@@ -368,6 +370,11 @@ public class GameLoop : MonoBehaviour
         characterStand.SetSprite(characterStand.character.emotions[1]);
         textIndex = 0;
         yield return SwitchToDebateMode();
+    }
+
+    private void StopWrongHitNodes()
+    {
+        StopCoroutine(wrongEvidenceRoutine);
     }
 
 
@@ -407,8 +414,27 @@ public class GameLoop : MonoBehaviour
         noThatsWrong.gameObject.SetActive(false);
     }
 
+    private IEnumerator GameOverPipeline()
+    {
+        DeactivateDebate();
+        TrialDialogueManager.instance.StopConversation();
+        yield return TrialManager.instance.ShowFailedScreen();
+        StopWrongHitNodes();
+        MusicManager.instance.StopSong();
+        TrialDialogueManager.instance.SetTextBox();
+        debateUIAnimator.gameObject.SetActive(false);
+        ImageScript.instance.UnFadeToBlack(0.2f);
+        yield return CameraController.instance.FovOutro();
+        StartCoroutine(TrialManager.instance.GameOver());
+    }
+
     IEnumerator StartNewNode(int dialogueNodeIndex)
     {
+        if (TrialManager.instance.playerStats.hp <= 0)
+        {
+            StartCoroutine(GameOverPipeline());
+            yield break;
+        }
         Character prevCharacter = ScriptableObject.CreateInstance<Character>();
         if (dialogueNodeIndex > 0)
         {

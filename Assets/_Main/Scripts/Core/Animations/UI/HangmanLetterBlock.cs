@@ -21,7 +21,7 @@ public class HangmanLetterBlock : MonoBehaviour
     
     void Start()
     {
-        questionMark.DOFade(0.5f, 0.5f).SetLoops(-1, LoopType.Yoyo);
+        questionMark.DOFade(0.5f, 0.5f).SetLink(gameObject).SetLoops(-1, LoopType.Yoyo);
     }
     public void TurnIntoCurrentLetter()
     {
@@ -73,7 +73,7 @@ public class HangmanLetterBlock : MonoBehaviour
 
         seq.OnStepComplete(() =>
         {
-            if (isAquired)
+            if (isAquired || !HangmanManager.instance.isActive)
                 seq.Kill();
         });
         

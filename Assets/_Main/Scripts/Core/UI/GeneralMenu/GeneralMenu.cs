@@ -14,7 +14,7 @@ public class GeneralMenu : MonoBehaviour
     public LogoAnimation logoAnimator;
     public GameObject content;
     public GameObject logo;
-    public Tween showContentTween;
+    private Tween showContentTween;
     public RectTransform mainPart;
     public CanvasGroup mainPartCanvasGroup;
     private float originalPosY;
@@ -54,7 +54,7 @@ public class GeneralMenu : MonoBehaviour
                     currentItemIndex -= columns;
                 UpdateCurrentItem();
             }
-            else if (Input.GetKeyDown(KeyCode.Space))
+            else if (PlayerInputManager.instance.DefaultInput())
             {
                 if (menuItems[currentItemIndex].disabled)
                 {
@@ -74,7 +74,7 @@ public class GeneralMenu : MonoBehaviour
         }
     }
 
-    public void UpdateCurrentItem()
+    private void UpdateCurrentItem()
     {
         foreach (MenuButton menuButton in menuItems)
         {

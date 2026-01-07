@@ -60,6 +60,7 @@ public class HangmanLetter : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         effect.DOFade(0f, 0.5f);
         
         Destroy(explosion.gameObject, 1f);
+        Destroy(effect.gameObject, 1f);
     }
 
     public void OnPointerClick(PointerEventData eventData)

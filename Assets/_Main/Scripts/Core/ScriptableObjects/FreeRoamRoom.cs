@@ -1,8 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
+using DG.Tweening;
 using DIALOGUE;
 using UnityEngine;
-using UnityEngine.UI;
 
 [CreateAssetMenu(menuName = "Rooms/Free Roam Room")]
 public class FreeRoamRoom : Room
@@ -18,6 +17,10 @@ public class FreeRoamRoom : Room
 
     public Sprite map;
 
+    private float bobTimer;
+    private bool wasMoving;
+    private bool isRunning;
+
     public override void MovementControl()
     {
         MapContainer.instance.HandleMapVisibility();
@@ -28,19 +31,25 @@ public class FreeRoamRoom : Room
 
     void Move()
     {
-        float speed = moveSpeed;
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            speed *= 2;
+            isRunning = true;
         }
+        else
+        {
+            isRunning = false;
+        }
+        
+        float speed = moveSpeed * (isRunning ? 2f : 1f);
 
-        GameObject gameObject = Camera.main.transform.gameObject;
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
-        Vector3 move = gameObject.transform.right * horizontal + gameObject.transform.forward * vertical;
+        Vector3 move = CameraManager.instance.cameraTransform.right * horizontal + CameraManager.instance.cameraTransform.forward * vertical;
         move.y = 0; // Ensure no vertical movement
-        CharacterController controller = gameObject.GetComponent<CharacterController>();
+        CharacterController controller = CameraManager.instance.player;
         controller.Move(move * Time.deltaTime * speed);
+        CameraHeadBobbing();
+        HandleFootsteps();
     }
 
     void Look()
@@ -54,7 +63,7 @@ public class FreeRoamRoom : Room
         horizontalRotation += mouseX;
 
         verticalRotation = Mathf.Clamp(verticalRotation, -maxLookAngle, maxLookAngle);
-        Camera.main.transform.localRotation = Quaternion.Euler(verticalRotation, horizontalRotation, 0f);
+        CameraManager.instance.cameraTransform.localRotation = Quaternion.Euler(verticalRotation, horizontalRotation, 0f);
     }
 
     void Interact()
@@ -125,12 +134,88 @@ public class FreeRoamRoom : Room
     public override IEnumerator OnLoad()
     {
         base.OnLoad();
+        CameraManager.instance.cameraTransform.localPosition = Vector3.zero;
         MapContainer.instance.SetMap(map);
         yield return null;
     }
 
     public override void OnConversationEnd()
     {
+        CameraManager.instance.cameraTransform.DOLocalMove(Vector3.zero, 0.5f);
+    }
+
+    private void CameraHeadBobbing()
+    {
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
         
+        float speed = 1f;
+        if (isRunning)
+        {
+            speed = 1.5f;
+        }
+
+        bool isMoving = new Vector2(horizontal, vertical).magnitude > 0.1f;
+
+        Vector3 targetLocalPos = Vector3.zero;
+
+        if (isMoving)
+        {
+            bobTimer += Time.deltaTime * 15f * speed;
+            float bobOffset = Mathf.Sin(bobTimer) * 0.2f;
+            targetLocalPos = new Vector3(0f, bobOffset, 0f);
+        }
+        else
+        {
+            bobTimer = 0f;
+        }
+
+        // Smooth transition (prevents snapping)
+        CameraManager.instance.cameraTransform.localPosition = Vector3.Lerp(
+            CameraManager.instance.cameraTransform.localPosition,
+            targetLocalPos,
+            Time.deltaTime * 10f
+        );
+    }
+    
+    private void HandleFootsteps()
+    {
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+
+        bool isMoving = new Vector2(horizontal, vertical).magnitude > 0.1f;
+
+        if (isRunning && isMoving)
+        {
+            AudioSource source = CameraManager.instance.footStepsSource;
+            if (source.clip != CameraManager.instance.fastFootStepsSound)
+            {
+                source.clip = CameraManager.instance.fastFootStepsSound;
+                source.Play();
+            }
+        }
+        
+        else if (!isRunning && isMoving)
+        {
+            AudioSource source = CameraManager.instance.footStepsSource;
+            if (source.clip != CameraManager.instance.footStepsSound)
+            {
+                source.clip = CameraManager.instance.footStepsSound;
+                source.Play();
+            }
+        }
+
+        if (isMoving && !wasMoving)
+        {
+            // Just started moving
+            CameraManager.instance.footStepsSource.Play();
+        }
+        else if (!isMoving && wasMoving)
+        {
+            // Just stopped moving
+            CameraManager.instance.footStepsSource.Stop(); // immediate stop
+        }
+
+        wasMoving = isMoving;
     }
 }

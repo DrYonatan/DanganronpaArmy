@@ -69,6 +69,7 @@ public class ComicManager : MonoBehaviour
         ImageScript.instance.UnFadeToBlack(0.1f);
         animator.gameObject.SetActive(true);
         yield return animator.Intro();
+        TimerManager.instance.SetTimer(600);
         StartComicPuzzle();
     }
 
@@ -148,10 +149,12 @@ public class ComicManager : MonoBehaviour
         isInPuzzle = true;
         animator.ShowPuzzleUI();
         DialogueSystem.instance.inputButton.gameObject.SetActive(false);
+        TimerManager.instance.ResumeTimer();
     }
 
     IEnumerator PresentComic()
     {
+        TimerManager.instance.StopTimer();
         MusicManager.instance.StopSong();
         TrialCursorManager.instance.Hide();
         isInPuzzle = false;
@@ -239,7 +242,7 @@ public class ComicManager : MonoBehaviour
         OverlayTextBoxManager.instance.Show();
         TrialManager.instance.barsAnimator.ShowGlobalBars(0.2f);
         
-        TrialManager.instance.DecreaseHealth(1f);
+        TrialManager.instance.DecreaseHealthDefault(1f);
         foreach (DialogueNode node in UtilityNodesRuntimeBank.instance.nodesCollection.wrongComicNodes)
         {
             yield return DialogueSystem.instance.Say(node);

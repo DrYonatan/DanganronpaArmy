@@ -8,16 +8,21 @@ public class CameraManager : MonoBehaviour
 {
     public static CameraManager instance { get; private set; }
 
+    public CharacterController player;
     public Transform cameraTransform;
 
     public const string charactersLayerPath = "VN controller/Root/Canvas - Main/LAYERS/2 - Characters";
-
-
+    
     public Quaternion initialRotation;
 
     private bool isInFinalRotation = true;
 
     public bool conversationFinishedMoving = true;
+    
+    public AudioClip footStepsSound;
+    public AudioClip fastFootStepsSound;
+
+    public AudioSource footStepsSource;
 
     private List<IEnumerator> operations = new List<IEnumerator>();
 

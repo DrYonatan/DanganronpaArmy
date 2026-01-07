@@ -1,5 +1,6 @@
 using System;
 using DG.Tweening;
+using DIALOGUE;
 using UnityEngine;
 
 public class SaveSelectMenu : TitleScreenSubMenu

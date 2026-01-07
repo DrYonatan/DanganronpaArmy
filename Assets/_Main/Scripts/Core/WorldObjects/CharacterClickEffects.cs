@@ -10,6 +10,8 @@ public class CharacterClickEffects : MonoBehaviour
     private Color[] startColors;
     public static CharacterClickEffects instance { get; private set; }
 
+    private Coroutine fadeRoutine;
+
     void Awake()
     {
         if (instance == null)
@@ -60,7 +62,9 @@ public class CharacterClickEffects : MonoBehaviour
                 startColors[i] = renderers[i].material.color;
             }
 
-            StartCoroutine(Fade(renderers[0].material.color.a, 1f, 0.5f));
+            if(fadeRoutine != null)
+                StopCoroutine(fadeRoutine);
+            fadeRoutine = StartCoroutine(Fade(renderers[0].material.color.a, 1f, 0.5f));
         }
     }
 

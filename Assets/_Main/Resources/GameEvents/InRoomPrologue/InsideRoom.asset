@@ -13,11 +13,18 @@ MonoBehaviour:
   m_Name: InsideRoom
   m_EditorClassIdentifier: 
   isFinished: 0
-  startEventImmediately: 0
+  startText: {fileID: 0}
   finishText: {fileID: 0}
+  isAfterFinishText: 0
   unallowedText: {fileID: 11400000, guid: aa66b5a091084c34d9cb082f829dab65, type: 2}
   roomDatas:
   - room: {fileID: 11400000, guid: 55447bfc884cd4340b110e2928249c70, type: 2}
     characters: {fileID: 0}
     worldObjects: {fileID: 5988960395997236678, guid: 13ca12085869ede4e904252b10f8b545, type: 3}
+    isExitable: 1
+  - room: {fileID: 11400000, guid: dc4e3f530df2ac24091189b6de8cde23, type: 2}
+    characters: {fileID: 0}
+    worldObjects: {fileID: 5988960395997236678, guid: 13ca12085869ede4e904252b10f8b545, type: 3}
     isExitable: 0
+  timeOfDay: 0
+  startRoom: {fileID: 0}

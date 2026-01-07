@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace DIALOGUE
 {
@@ -51,6 +50,11 @@ namespace DIALOGUE
                     TogglePause();
                 }
             }
+        }
+
+        public bool DefaultInput()
+        {
+            return Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space);
         }
 
         public void PromptAdvance()

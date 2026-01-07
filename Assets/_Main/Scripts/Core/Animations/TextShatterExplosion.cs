@@ -53,6 +53,8 @@ public class TextShatterExplosion : MonoBehaviour
         master.Join(orangeLines.DOFade(0f, 0.3f / speed));
         master.Join(blueRing.DOFade(0f, 0.3f / speed));
         master.Append(shards.DOFade(0f, 0.3f / speed));
+
+        master.OnComplete(() => Destroy(gameObject));
     }
 
 }

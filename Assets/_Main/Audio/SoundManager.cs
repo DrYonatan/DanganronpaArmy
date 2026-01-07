@@ -17,6 +17,8 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySoundEffect(AudioClip clip)
     {
+        if (clip == null)
+            return;
         // Create a temporary GameObject with an AudioSource
         GameObject tempAudio = new GameObject($"TempAudio_{clip.name}");
         AudioSource audioSource = tempAudio.AddComponent<AudioSource>();

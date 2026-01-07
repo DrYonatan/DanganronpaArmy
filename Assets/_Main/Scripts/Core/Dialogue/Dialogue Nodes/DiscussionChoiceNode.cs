@@ -27,7 +27,7 @@ public class DiscussionChoiceNode: DiscussionNode
 
     public IEnumerator OnWrong()
     {
-        TrialManager.instance.DecreaseHealth(1f);
+        TrialManager.instance.DecreaseHealthDefault(1f);
         foreach (DiscussionNode node in UtilityNodesRuntimeBank.instance.nodesCollection.wrongAnswer)
         {
             yield return node.Play();
