@@ -37,6 +37,15 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: 262644914709856284
+      type: {class: ShowPopup, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        image: {fileID: 21300000, guid: 449c77aab4b421a4aa929b2c24396958, type: 3}
+    - rid: 262644914709856285
+      type: {class: RemovePopup, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
     - rid: 4653703062813933580
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -61,7 +70,7 @@ MonoBehaviour:
     - rid: 4653703079291256833
       type: {class: PlaySoundEffectCommand, ns: , asm: Assembly-CSharp}
       data:
-        executeTime: 1
+        executeTime: 0
         clip: {fileID: 8300000, guid: 671ad944bf2cc6e4c8c6a6b7d3de530b, type: 3}
         volume: 1
     - rid: 4827846191764471820
@@ -86,6 +95,7 @@ MonoBehaviour:
         text: "\u05D4\u05D9\u05D9 \u05DE\u05D4 \u05E7\u05D5\u05E8\u05D4"
         commands:
         - rid: 4653703079291256833
+        - rid: 262644914709856284
     - rid: 4827846191764471822
       type: {class: VNChoiceNode, ns: , asm: Assembly-CSharp}
       data:
@@ -221,7 +231,8 @@ MonoBehaviour:
       data:
         text: "\u05EA\u05D1\u05D7\u05E8 \u05D0\u05E4\u05E9\u05E8\u05D5\u05EA \u05EA\u05D1\u05D7\u05E8
           \u05D0\u05E4\u05E9\u05E8\u05D5\u05EA \u05EA\u05D1\u05D7\u05E8 \u05D0\u05E4\u05E9\u05E8\u05D5\u05EA"
-        commands: []
+        commands:
+        - rid: 262644914709856285
     - rid: 7771311940312236037
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
