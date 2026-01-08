@@ -16884,14 +16884,13 @@ GameObject:
   - component: {fileID: 1472122831}
   - component: {fileID: 1472122830}
   - component: {fileID: 1472122829}
-  - component: {fileID: 1472122834}
   m_Layer: 5
   m_Name: General Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1472122829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16916,7 +16915,7 @@ MonoBehaviour:
   menuMove: {fileID: 8300000, guid: 9ea6ec063fde8524d8adad660d374b40, type: 3}
   menuSelect: {fileID: 8300000, guid: 114f394be7ae9c34a8b4d2634b4d0589, type: 3}
   menuFail: {fileID: 8300000, guid: 58d7298605c56254eb0f9d643a382301, type: 3}
-  logoAnimator: {fileID: 1472122834}
+  logoAnimator: {fileID: 1757740091}
   content: {fileID: 441022995}
   logo: {fileID: 1757740089}
   mainPart: {fileID: 2132239929}
@@ -16979,29 +16978,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1472122834
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1472122828}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 572195f014494436a335e80821ced61c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  blueTsadik: {fileID: 369539373}
-  blueTsadikTransform: {fileID: 369539372}
-  logo: {fileID: 1464413594}
-  dots:
-  - {fileID: 1017538106}
-  - {fileID: 1480914526}
-  - {fileID: 1377169025}
-  - {fileID: 1161598581}
-  - {fileID: 1941659009}
-  - {fileID: 749278706}
-  - {fileID: 2124065244}
 --- !u!1 &1474397604
 GameObject:
   m_ObjectHideFlags: 0
@@ -20228,6 +20204,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1757740090}
+  - component: {fileID: 1757740091}
   m_Layer: 5
   m_Name: Logo Container
   m_TagString: Untagged
@@ -20257,6 +20234,29 @@ RectTransform:
   m_AnchoredPosition: {x: -44.406876, y: -26}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1757740091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1757740089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 572195f014494436a335e80821ced61c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blueTsadik: {fileID: 369539373}
+  blueTsadikTransform: {fileID: 369539372}
+  logo: {fileID: 1464413594}
+  dots:
+  - {fileID: 1017538106}
+  - {fileID: 1480914526}
+  - {fileID: 1377169025}
+  - {fileID: 1161598581}
+  - {fileID: 1941659009}
+  - {fileID: 749278706}
+  - {fileID: 2124065244}
 --- !u!1 &1770170937
 GameObject:
   m_ObjectHideFlags: 0

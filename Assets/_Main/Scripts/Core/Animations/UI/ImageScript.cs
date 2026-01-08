@@ -22,7 +22,7 @@ public class ImageScript : MonoBehaviour
         instance = this;
     }
 
-    public void Show(Sprite image, bool flash, float duration = 0.2f)
+    public void Show(Sprite image, bool flash, float duration = 0.4f)
     {
         overlayImage.sprite = image;
         OverlayTextBoxManager.instance.SetAsTextBox();
@@ -35,7 +35,7 @@ public class ImageScript : MonoBehaviour
         }
     }
 
-    public void Hide(bool flash, float duration=0.2f)
+    public void Hide(bool flash, float duration=0.4f)
     {
         OverlayTextBoxManager.instance.Hide();
         DialogueSystem.instance.UseInitialDialogueContainer();
@@ -50,7 +50,7 @@ public class ImageScript : MonoBehaviour
     private void Flash(float duration)
     {
         SoundManager.instance.PlaySoundEffect(flashSound);
-        whiteFlash.DOFade(1f, duration).SetLoops(2, LoopType.Yoyo);
+        whiteFlash.DOFade(1f, duration / 2).SetLoops(2, LoopType.Yoyo);
     }
     
     public void FadeToBlack(float duration)

@@ -13910,6 +13910,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 696801892}
+  - component: {fileID: 696801893}
   m_Layer: 5
   m_Name: Logo Container
   m_TagString: Untagged
@@ -13939,6 +13940,29 @@ RectTransform:
   m_AnchoredPosition: {x: -44.406876, y: -26}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &696801893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 696801891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 572195f014494436a335e80821ced61c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blueTsadik: {fileID: 1019340878}
+  blueTsadikTransform: {fileID: 1019340877}
+  logo: {fileID: 1102988705}
+  dots:
+  - {fileID: 1749257953}
+  - {fileID: 419213268}
+  - {fileID: 1605958253}
+  - {fileID: 506563217}
+  - {fileID: 1297063426}
+  - {fileID: 1533371714}
+  - {fileID: 1784145462}
 --- !u!1 &699117017
 GameObject:
   m_ObjectHideFlags: 0
@@ -15371,14 +15395,13 @@ GameObject:
   - component: {fileID: 765779918}
   - component: {fileID: 765779917}
   - component: {fileID: 765779915}
-  - component: {fileID: 765779916}
   m_Layer: 5
   m_Name: General Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &765779915
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15403,34 +15426,11 @@ MonoBehaviour:
   menuMove: {fileID: 8300000, guid: 9ea6ec063fde8524d8adad660d374b40, type: 3}
   menuSelect: {fileID: 8300000, guid: 114f394be7ae9c34a8b4d2634b4d0589, type: 3}
   menuFail: {fileID: 8300000, guid: 58d7298605c56254eb0f9d643a382301, type: 3}
-  logoAnimator: {fileID: 765779916}
+  logoAnimator: {fileID: 696801893}
   content: {fileID: 379625455}
   logo: {fileID: 696801891}
   mainPart: {fileID: 766852513}
   mainPartCanvasGroup: {fileID: 766852509}
---- !u!114 &765779916
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 765779914}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 572195f014494436a335e80821ced61c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  blueTsadik: {fileID: 1019340878}
-  blueTsadikTransform: {fileID: 1019340877}
-  logo: {fileID: 1102988705}
-  dots:
-  - {fileID: 1749257953}
-  - {fileID: 419213268}
-  - {fileID: 1605958253}
-  - {fileID: 506563217}
-  - {fileID: 1297063426}
-  - {fileID: 1533371714}
-  - {fileID: 1784145462}
 --- !u!114 &765779917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36811,13 +36811,13 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 779547476}
   - {fileID: 919002889}
   - {fileID: 1107472955}
   - {fileID: 1658638610}
   - {fileID: 240310181}
   - {fileID: 571642238}
   - {fileID: 1650963359}
+  - {fileID: 779547476}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
