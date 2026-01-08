@@ -81,7 +81,7 @@ public class TrialManager : MonoBehaviour
         if (playerStats.hp < playerStats.maxHP)
         {
             barsAnimator.IncreaseHealth(Math.Min(amount, playerStats.maxHP - playerStats.hp),
-                0.5f); // Fill either the amount, or what remains to fill before the meter if already full
+                 amount / 2); // Fill either the amount, or what remains to fill before the meter if already full
         }
 
         playerStats.hp = Math.Min(playerStats.hp + amount, playerStats.maxHP);
@@ -103,9 +103,10 @@ public class TrialManager : MonoBehaviour
     public IEnumerator GameOver()
     {
         TrialDialogueManager.instance.animator.FaceAppear();
+        barsAnimator.globalHealthMeter.fillAmount = 0f;
         yield return TrialDialogueManager.instance.RunNodes(UtilityNodesRuntimeBank.instance.nodesCollection
             .gameOverNodes);
-        playerStats.hp = 5f;
+        barsAnimator.HideGlobalBars(0.2f);
         TrialDialogueManager.instance.ConversationEnd();
         TrialSegment segment = Instantiate(segments[currentIndex]);
         segment.Play();
