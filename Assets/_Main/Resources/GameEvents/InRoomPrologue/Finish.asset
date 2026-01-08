@@ -21,6 +21,7 @@ MonoBehaviour:
       position: 4
   nodes:
   - rid: 262644915478724626
+  - rid: 262644915478724646
   - rid: 262644915478724629
   - rid: 262644915478724631
   references:
@@ -46,13 +47,7 @@ MonoBehaviour:
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
         text: 'assaasas '
-        commands:
-        - rid: 262644915478724628
-    - rid: 262644915478724628
-      type: {class: ShowPopup, ns: , asm: Assembly-CSharp}
-      data:
-        executeTime: 0
-        image: {fileID: 21300000, guid: af39f7c20e7a7a14e9613b3e500ffdf0, type: 3}
+        commands: []
     - rid: 262644915478724629
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -95,8 +90,37 @@ MonoBehaviour:
       data:
         text: sasasasa assa
         commands:
-        - rid: 262644915478724633
-    - rid: 262644915478724633
-      type: {class: RemovePopup, ns: , asm: Assembly-CSharp}
+        - rid: 262644915478724639
+    - rid: 262644915478724639
+      type: {class: RemoveImage, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 1
+        flash: 1
+    - rid: 262644915478724646
+      type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
+        character: {fileID: 11400000, guid: e518102ea47577a499c54e7bb8334338, type: 2}
+        expressionIndex: 0
+        textData:
+          rid: 262644915478724647
+    - rid: 262644915478724647
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: assa aas aasas asas asas a sasasas
+        commands:
+        - rid: 262644915478724648
+    - rid: 262644915478724648
+      type: {class: ShowImage, ns: , asm: Assembly-CSharp}
       data:
         executeTime: 0
+        image: {fileID: 21300000, guid: 2a98d7e7fd7d2bc4eb4d4b677c2bd8aa, type: 3}
+        flash: 1

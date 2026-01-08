@@ -11,10 +11,10 @@ namespace DIALOGUE
     {
         public bool isActive;
 
-        public DialogueContainer dialogueContainer = new DialogueContainer();
+        private DialogueContainer dialogueContainer = new DialogueContainer();
         private ConversationManager conversationManager;
         private TextArchitect architect;
-        
+        public DialogueContainer defaultDialogueContainer;
         public static DialogueSystem instance { get; private set; }
 
         public delegate void DialogueSystemEvent();
@@ -44,9 +44,15 @@ namespace DIALOGUE
         {
             if (_initialized)
                 return;
-
+            
+            dialogueContainer = defaultDialogueContainer;
             architect = new TextArchitect(dialogueContainer.dialogueText);
             conversationManager = new ConversationManager(architect);
+        }
+
+        public void UseInitialDialogueContainer()
+        {
+            SetTextBox(defaultDialogueContainer);
         }
 
         public void OnUserPrompt_Next()

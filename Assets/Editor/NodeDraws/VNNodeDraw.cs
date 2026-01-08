@@ -87,6 +87,8 @@ public class VNNodeDraw : DrawNode
             menu.AddItem(new GUIContent("Cut In"), false, () => AddCommand(node, new CutInCommand()));
             menu.AddItem(new GUIContent("Show Popup"), false, () => AddCommand(node, new ShowPopup()));
             menu.AddItem(new GUIContent("Remove Popup"), false, () => AddCommand(node, new RemovePopup()));
+            menu.AddItem(new GUIContent("Show Image"), false, () => AddCommand(node, new ShowImage()));
+            menu.AddItem(new GUIContent("Remove Image"), false, () => AddCommand(node, new RemoveImage()));
             // Add more as needed
             menu.ShowAsContext();
         }

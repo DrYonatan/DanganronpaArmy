@@ -2,22 +2,19 @@
 using UnityEditor;
 using UnityEngine;
 
-public class ShowPopup : Command
+public class RemoveImage : Command
 {
-    public Sprite image;
+    public bool flash;
     public override IEnumerator Execute()
     {
-        PopupAnimator.instance?.MakeImageAppear(image);
+        ImageScript.instance.Hide(flash);
         yield return null;
     }
-    
 #if UNITY_EDITOR
     public override void DrawGUI()
     {
         base.DrawGUI();
-        image =
-            (Sprite)EditorGUILayout.ObjectField("Image", image, typeof(Sprite), false);
+        flash = EditorGUILayout.Toggle("Flash", flash);
     }
 #endif
 }
-
