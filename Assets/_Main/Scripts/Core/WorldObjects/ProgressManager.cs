@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class ProgressManager : MonoBehaviour
 {
     public static ProgressManager instance { get; private set; }
+    public int chapterIndex;
     public List<GameEvent> gameEvents;
 
     public CharactersFreeTimeEventsSO characterEventsAsset;
@@ -43,6 +44,13 @@ public class ProgressManager : MonoBehaviour
     private IEnumerator MoveToNextEvent()
     {
         currentGameEventIndex++;
+
+        if (currentGameEventIndex >= gameEvents.Count)
+        {
+            MoveToTrial();
+            yield break;
+        }
+        
         currentGameEvent = Instantiate(gameEvents[currentGameEventIndex]);
 
         Room roomToLoad;
@@ -100,8 +108,22 @@ public class ProgressManager : MonoBehaviour
 
     private IEnumerator StartNewGame()
     {
+        chapterIndex = 0;
+        LoadGameEvents(chapterIndex);
+        VNUIAnimator.instance.chapterNameText.text = ChapterBank.instance.chapters[0].chapterName;
         yield return TimeOfDayManager.instance.ChangeTimeOfDay(gameEvents[0].timeOfDay);
         currentGameEvent = Instantiate(gameEvents[0]);
         WorldManager.instance.StartLoadingRoom(WorldManager.instance.currentRoom, null);
+    }
+
+    private void LoadGameEvents(int chapter)
+    {
+        gameEvents = ChapterBank.instance.chapters[chapter].vnSegment.gameEvents;
+    }
+
+    private void MoveToTrial()
+    {
+        Destroy(persistentObject);
+        SceneManager.LoadScene("DebateScene");
     }
 }
