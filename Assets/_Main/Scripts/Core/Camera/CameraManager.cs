@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using CHARACTERS;
@@ -26,9 +27,14 @@ public class CameraManager : MonoBehaviour
 
     private List<IEnumerator> operations = new List<IEnumerator>();
 
-    private void Awake()
+    void Awake()
     {
         instance = this;
+    }
+
+    void Start()
+    {
+        GameStateManager.instance.sceneTransitionCamera.gameObject.SetActive(false);
     }
 
     public void MoveCamera(CameraLookDirection direction, float duration)

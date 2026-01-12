@@ -2,38 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class ProgressManager : MonoBehaviour
 {
     public static ProgressManager instance { get; private set; }
-    public int chapterIndex;
     public List<GameEvent> gameEvents;
 
     public CharactersFreeTimeEventsSO characterEventsAsset;
-    public Dictionary<string, int> charactersRanks = new(); // Free time events ranks for each character
 
     public GameEvent currentGameEvent;
     public int currentGameEventIndex;
 
     public ConversationDatabase conversationDatabase;
 
-    public GameObject persistentObject;
-
     private void Awake()
     {
         instance = this;
-        DontDestroyOnLoad(persistentObject);
     }
 
-    void Start()
+    public void StartNewGame()
     {
-        if (SaveManager.instance != null && SaveManager.instance.currentSaveSlot != -1)
-            StartCoroutine(LoadValuesFromSave());
-        else
-        {
-            StartCoroutine(StartNewGame());
-        }
+        GameStateManager.instance.ResetChapters();
+        StartCoroutine(StartNewVnSegment());
+    }
+
+
+    private void LoadGameEvents(ChapterSegment segment)
+    {
+        segment.Load();
     }
 
     public void OnEventFinished()
@@ -47,15 +43,16 @@ public class ProgressManager : MonoBehaviour
 
         if (currentGameEventIndex >= gameEvents.Count)
         {
-            MoveToTrial();
+            GameStateManager.instance.MoveToNextChapterSegment();
             yield break;
         }
-        
+
         currentGameEvent = Instantiate(gameEvents[currentGameEventIndex]);
 
         Room roomToLoad;
 
-        if (currentGameEvent.startRoom != null && WorldManager.instance.currentRoom.name != currentGameEvent.startRoom.name)
+        if (currentGameEvent.startRoom != null &&
+            WorldManager.instance.currentRoom.name != currentGameEvent.startRoom.name)
             roomToLoad = currentGameEvent.startRoom;
         else
         {
@@ -74,13 +71,15 @@ public class ProgressManager : MonoBehaviour
             currentGameEvent.OnStart();
     }
 
-    private IEnumerator LoadValuesFromSave()
+    public IEnumerator LoadValuesFromSave()
     {
         WorldManager.instance.isLoading = true;
         SaveData data = SaveManager.instance != null ? SaveManager.instance.LoadCurrentSave() : SaveSystem.LoadGame(1);
 
         yield return TimeOfDayManager.instance.ChangeTimeOfDay(data.timeOfDay);
-        ;
+
+        LoadGameEvents(GameStateManager.instance.chapters[GameStateManager.instance.chapterIndex]
+            .chapterSegments[GameStateManager.instance.chapterSegmentIndex]);
 
         currentGameEventIndex = data.gameEventIndex;
         currentGameEvent = Instantiate(gameEvents[currentGameEventIndex]);
@@ -106,24 +105,16 @@ public class ProgressManager : MonoBehaviour
         WorldManager.instance.Initialize();
     }
 
-    private IEnumerator StartNewGame()
+    public IEnumerator StartNewVnSegment()
     {
-        chapterIndex = 0;
-        LoadGameEvents(chapterIndex);
-        VNUIAnimator.instance.chapterNameText.text = ChapterBank.instance.chapters[0].chapterName;
+        LoadGameEvents(GameStateManager.instance.chapters[GameStateManager.instance.chapterIndex]
+            .chapterSegments[GameStateManager.instance.chapterSegmentIndex]);
+        VNUIAnimator.instance.chapterNameText.text =
+            GameStateManager.instance.chapters[GameStateManager.instance.chapterIndex].chapterName;
         yield return TimeOfDayManager.instance.ChangeTimeOfDay(gameEvents[0].timeOfDay);
         currentGameEvent = Instantiate(gameEvents[0]);
+        if(currentGameEvent.startRoom != null)
+           WorldManager.instance.currentRoom = currentGameEvent.startRoom;
         WorldManager.instance.StartLoadingRoom(WorldManager.instance.currentRoom, null);
-    }
-
-    private void LoadGameEvents(int chapter)
-    {
-        gameEvents = ChapterBank.instance.chapters[chapter].vnSegment.gameEvents;
-    }
-
-    private void MoveToTrial()
-    {
-        Destroy(persistentObject);
-        SceneManager.LoadScene("DebateScene");
     }
 }

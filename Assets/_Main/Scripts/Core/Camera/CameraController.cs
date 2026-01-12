@@ -27,11 +27,11 @@ public class CameraController : MonoBehaviour
         instance = this;
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         pivot = cameraTransform.parent;
         cameraDefaultLocalPosition = new Vector3(0f, 0f, -3f);
+        GameStateManager.instance.sceneTransitionCamera.gameObject.SetActive(false);
     }
 
     public IEnumerator DiscussionOutroMovement(float duration)
