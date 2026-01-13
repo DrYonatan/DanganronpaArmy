@@ -86,7 +86,17 @@ public class GameStateManager : MonoBehaviour
 
     public void MoveToNextChapterSegment()
     {
-        StartCoroutine(MoveToNextChapterSegmentPipeline());
+        chapterSegmentIndex++;
+
+        if (chapterSegmentIndex < chapters[chapterIndex].chapterSegments.Count)
+        {
+            StartCoroutine(MoveToNextChapterSegmentPipeline());
+        }
+
+        else
+        {
+            MoveToNextChapter();
+        }
     }
 
     private IEnumerator MoveToNextChapterSegmentPipeline()
@@ -94,12 +104,28 @@ public class GameStateManager : MonoBehaviour
         ImageScript.instance.FadeToBlack(0.2f);
         yield return new WaitForSeconds(1f);
         sceneTransitionCamera.gameObject.SetActive(true);
-        chapterSegmentIndex++;
         chapters[chapterIndex].chapterSegments[chapterSegmentIndex].LoadScene();
         if(persistentObject != null) 
             Destroy(persistentObject);
         yield return new WaitForSeconds(0.5f);
         StartNewSegment();
+    }
+
+    private void MoveToNextChapter()
+    {
+        chapterIndex++;
+        chapterSegmentIndex = 0;
+
+        if (chapterIndex < chapters.Count)
+        {
+            StartCoroutine(MoveToNextChapterPipeline());
+        }
+    }
+
+    private IEnumerator MoveToNextChapterPipeline()
+    {
+        yield return MoveToNextChapterSegmentPipeline();
+        VNUIAnimator.instance.chapterNameText.text = chapters[chapterIndex].chapterName;
     }
 
     public void ResetChapters()

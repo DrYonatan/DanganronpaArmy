@@ -59,7 +59,7 @@ public class RadioBoxAnimator : MonoBehaviour
         beatPulse = Mathf.MoveTowards(beatPulse, 0f, Time.deltaTime * beatDecay);
     }
 
-    public void AnimateBars()
+    private void AnimateBars()
     {
         for (int i = 0; i < musicBars.Count; i++)
         {

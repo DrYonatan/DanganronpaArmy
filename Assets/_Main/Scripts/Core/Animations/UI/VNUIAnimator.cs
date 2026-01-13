@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -18,7 +17,7 @@ public class VNUIAnimator : MonoBehaviour
 
     private Vector2 mainContainerOriginalPos;
     private Vector2 timeContainerOriginalPos;
-    
+
 
     void Awake()
     {
@@ -31,7 +30,7 @@ public class VNUIAnimator : MonoBehaviour
             timeContainerOriginalPos = timeContainer.rectTransform.anchoredPosition;
         }
     }
-    
+
     public void Appear()
     {
         Sequence seq = DOTween.Sequence();
@@ -42,9 +41,9 @@ public class VNUIAnimator : MonoBehaviour
         seq.Append(mainContainer.DOAnchorPosX(mainContainerOriginalPos.x, 0.5f));
         seq.Append(timeContainer.rectTransform.DOAnchorPosY(timeContainerOriginalPos.y, 0.4f));
         seq.Append(musicBoxContainer.rectTransform.DOAnchorPosX(0, 0.2f));
-        
+
         musicName.rectTransform.anchoredPosition = new Vector2(-400, 0);
-        musicName.rectTransform.DOAnchorPosX(450, 5f).SetEase(Ease.Linear).SetLoops(-1);
+        musicName.rectTransform.DOAnchorPosX(450, 5f).SetEase(Ease.Linear).SetLoops(-1).SetLink(musicName.gameObject);
     }
 
     public void Disappear()
@@ -58,5 +57,5 @@ public class VNUIAnimator : MonoBehaviour
         seq.Append(mainContainer.DOAnchorPosX(mainContainerOriginalPos.x - 500, 0.5f));
         seq.Append(musicBoxContainer.rectTransform.DOAnchorPosX(500, 0.2f));
         seq.AppendCallback(() => musicName.rectTransform.DOKill());
-    }   
+    }
 }
