@@ -14,6 +14,6 @@ public class VNChapterSegment: ChapterSegment
 
     public override void LoadScene()
     {
-        SceneManager.LoadScene("VIsualNovelCore");
+        SceneManager.LoadScene("VisualNovelCore");
     }
 }

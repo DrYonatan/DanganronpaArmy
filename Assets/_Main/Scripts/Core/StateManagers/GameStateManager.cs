@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class GameStateManager : MonoBehaviour
@@ -103,6 +104,7 @@ public class GameStateManager : MonoBehaviour
     {
         ImageScript.instance.FadeToBlack(0.2f);
         yield return new WaitForSeconds(1f);
+        DOTween.KillAll();
         sceneTransitionCamera.gameObject.SetActive(true);
         chapters[chapterIndex].chapterSegments[chapterSegmentIndex].LoadScene();
         if(persistentObject != null) 
