@@ -30,7 +30,7 @@ public class MovingPictureScript : MonoBehaviour
         float elapsedTime2 = 0;
         
 
-        GameObject image = GameObject.Find($"VN controller/Root/Canvas - Main/LAYERS/3 - Cinematic/MovingImage");
+        GameObject image = GameObject.Find($"VN controller/Root/Canvas - Main/LAYERS/4 - Cinematic/MovingImage");
    
         Vector3 left = new Vector3(-0.1f, 0, 0);
         Vector3 startPos = image.transform.position;

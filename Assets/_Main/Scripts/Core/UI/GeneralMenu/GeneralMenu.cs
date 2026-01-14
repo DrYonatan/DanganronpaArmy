@@ -23,6 +23,7 @@ public class GeneralMenu : MonoBehaviour
     void Start()
     {
         originalPosY = mainPart.anchoredPosition.y;
+        gameObject.SetActive(false);
     }
 
     void Update()

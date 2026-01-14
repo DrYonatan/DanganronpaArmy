@@ -1,4 +1,6 @@
 using DG.Tweening;
+using DIALOGUE;
+using UnityEditorInternal.VersionControl;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,26 +10,47 @@ public class ImageScript : MonoBehaviour
 
     public Image overlayImage;
     public CanvasGroup blackFade;
+    public Image whiteFlash;
+    public CanvasGroup canvasGroup;
+    public AudioClip flashSound;
 
-    CanvasGroup canvasGroup;
-    
     private void Awake()
     {
         blackFade.alpha = 1f;
         instance = this;
     }
 
-    public void Show(string imageName, float duration)
+    public void Show(Sprite image, bool flash, float duration = 0.4f)
     {
-        overlayImage.sprite = Resources.Load<Sprite>($"Images/{imageName}");
+        overlayImage.sprite = image;
+        OverlayTextBoxManager.instance.SetAsTextBox();
+        OverlayTextBoxManager.instance.Show();
         ShowingOrHiding(canvasGroup, duration, 1f);
+        
+        if (flash)
+        {
+            Flash(duration);
+        }
     }
 
-    public void Hide(float duration)
+    public void Hide(bool flash, float duration=0.4f)
     {
+        OverlayTextBoxManager.instance.Hide();
+        DialogueSystem.instance.UseInitialDialogueContainer();
         ShowingOrHiding(canvasGroup, duration, 0f);
+             
+        if (flash)
+        {
+            Flash(duration);
+        }
     }
 
+    private void Flash(float duration)
+    {
+        SoundManager.instance.PlaySoundEffect(flashSound);
+        whiteFlash.DOFade(1f, duration / 2).SetLoops(2, LoopType.Yoyo);
+    }
+    
     public void FadeToBlack(float duration)
     {
         ShowingOrHiding(blackFade, duration, 1f);
@@ -42,5 +65,4 @@ public class ImageScript : MonoBehaviour
     {
         canvasGroupToShowOrHide.DOFade(targetAlpha, duration);
     }
-
 }
