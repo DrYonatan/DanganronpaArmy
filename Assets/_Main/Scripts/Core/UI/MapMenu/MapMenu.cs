@@ -80,7 +80,7 @@ public class MapMenu : MenuScreen
         UpdateUI();
     }
 
-    public void OnRoomHovered(MapRoom room)
+    private void OnRoomHovered(MapRoom room)
     {
         RoomData data = ProgressManager.instance.currentGameEvent.roomDatas.Find(x => x.room.name.Equals(room.name));
         hoveredRoomData = data;

@@ -66,7 +66,7 @@ public class GameStateManager : MonoBehaviour
             TrialManager.instance.LoadValuesFromSave(SaveManager.instance.currentSaveSlot);
         else
         {
-            TrialManager.instance.StartNewTrial();
+            TrialManager.instance.preTrialPrepMenu.Appear();
         }
     }
 
@@ -74,7 +74,7 @@ public class GameStateManager : MonoBehaviour
     {
         if (TrialManager.instance != null)
         {
-            TrialManager.instance.StartNewTrial();
+            TrialManager.instance.preTrialPrepMenu.Appear();
         }
 
         else if(ProgressManager.instance != null)

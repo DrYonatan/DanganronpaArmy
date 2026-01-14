@@ -31,6 +31,7 @@ public class TrialManager : MonoBehaviour
     public PlayerBarsAnimator barsAnimator;
     public RectTransform globalUI;
     public TrialIntro introAnimation;
+    public PreTrialPrepMenu preTrialPrepMenu;
 
     public RectTransform failedScreen;
     public Image failedTextImage;
@@ -57,16 +58,23 @@ public class TrialManager : MonoBehaviour
 
     public void StartNewTrial()
     {
-        int chapter = GameStateManager.instance.chapterIndex;
-        int segment = GameStateManager.instance.chapterSegmentIndex;
-        GameStateManager.instance.chapters[chapter].chapterSegments[segment].Load();
-        ImageScript.instance.UnFadeToBlack(0.1f);
-        playerStats.InitializeMeters();
         StartCoroutine(StartPipeline());
     }
 
     private IEnumerator StartPipeline()
     {
+        ImageScript.instance.FadeToBlack(0.2f);
+        preTrialPrepMenu.Disappear();
+        
+        yield return new WaitForSeconds(0.4f);
+        
+        preTrialPrepMenu.gameObject.SetActive(false);
+        int chapterIndex = GameStateManager.instance.chapterIndex;
+        int segmentIndex = GameStateManager.instance.chapterSegmentIndex;
+        GameStateManager.instance.chapters[chapterIndex].chapterSegments[segmentIndex].Load();
+        ImageScript.instance.UnFadeToBlack(0.1f);
+        playerStats.InitializeMeters();
+        
         TrialIntro intro = Instantiate(introAnimation, globalUI);
         intro.transform.SetAsFirstSibling();
         yield return intro.Animate();
