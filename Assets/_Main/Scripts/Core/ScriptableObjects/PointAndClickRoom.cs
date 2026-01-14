@@ -21,6 +21,8 @@ public class PointAndClickRoom : Room
 
     private float pitch;
 
+    public bool hasStartAnimation = true;
+
     public override IEnumerator OnLoad()
     {
         base.OnLoad();
@@ -30,7 +32,8 @@ public class PointAndClickRoom : Room
 
     public override IEnumerator AppearAnimation()
     {
-        yield return VirutalCameraManager.instance.SlideAcrossRoom(3f, GameObject.Find("World/TrackSlidingPos").transform.position);
+        if(hasStartAnimation)
+           yield return VirutalCameraManager.instance.SlideAcrossRoom(3f, GameObject.Find("World/TrackSlidingPos").transform.position);
     }
 
     public override void MovementControl()

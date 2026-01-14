@@ -38,23 +38,31 @@ public class TrialManager : MonoBehaviour
     void Awake()
     {
         instance = this;
-        if (SaveManager.instance != null)
-            LoadValuesFromSave(SaveManager.instance.currentSaveSlot);
     }
 
-    void Start()
+    // void Start()
+    // {
+    //     ImageScript.instance.UnFadeToBlack(0.1f);
+    //     if (currentIndex == 0)
+    //     {
+    //         playerStats.InitializeMeters();
+    //         StartCoroutine(StartPipeline());
+    //     }
+    //     else
+    //     {
+    //         TrialSegment segment = Instantiate(segments[currentIndex]);
+    //         segment.Play();
+    //     }
+    // }
+
+    public void StartNewTrial()
     {
+        int chapter = GameStateManager.instance.chapterIndex;
+        int segment = GameStateManager.instance.chapterSegmentIndex;
+        GameStateManager.instance.chapters[chapter].chapterSegments[segment].Load();
         ImageScript.instance.UnFadeToBlack(0.1f);
-        if (currentIndex == 0)
-        {
-            playerStats.InitializeMeters();
-            StartCoroutine(StartPipeline());
-        }
-        else
-        {
-            TrialSegment segment = Instantiate(segments[currentIndex]);
-            segment.Play();
-        }
+        playerStats.InitializeMeters();
+        StartCoroutine(StartPipeline());
     }
 
     private IEnumerator StartPipeline()
@@ -72,8 +80,18 @@ public class TrialManager : MonoBehaviour
     public void OnSegmentFinished()
     {
         currentIndex++;
-        TrialSegment segment = Instantiate(segments[currentIndex]);
-        segment.Play();
+
+        if (currentIndex < segments.Count)
+        {
+            TrialSegment segment = Instantiate(segments[currentIndex]);
+            segment.Play(); 
+        }
+
+        else
+        {
+            GameStateManager.instance.MoveToNextChapterSegment();
+        }
+        
     }
 
     public void IncreaseHealth(float amount)
@@ -112,7 +130,7 @@ public class TrialManager : MonoBehaviour
         segment.Play();
     }
 
-    private void LoadValuesFromSave(int slot)
+    public void LoadValuesFromSave(int slot)
     {
         SaveData data = SaveManager.instance != null
             ? SaveManager.instance.LoadCurrentSave()
@@ -156,4 +174,5 @@ public class TrialManager : MonoBehaviour
 
         failedScreen.anchoredPosition = new Vector2(0, 1200);
     }
+    
 }
