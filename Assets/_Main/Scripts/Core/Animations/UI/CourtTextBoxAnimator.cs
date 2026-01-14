@@ -1,10 +1,12 @@
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 
 public class CourtTextBoxAnimator : TextBoxAnimations
 {
     public CharacterFaceController characterFace;
     public RectTransform backgroundTextContainer;
+    public TextMeshProUGUI chapterNumber;
 
     public void FaceAppear()
     {
@@ -28,6 +30,7 @@ public class CourtTextBoxAnimator : TextBoxAnimations
     public override void Initialize()
     {
         base.Initialize();
+        chapterNumber.text = "0" + (GameStateManager.instance.chapterIndex + 1);
         characterFace.discussionFaceContainer.DOScaleY(0f, 0f);
     }
 

@@ -10,6 +10,7 @@ public class PreTrialPrepMenu : MonoBehaviour
     public Image cylinder;
     public RectTransform itemsContainer;
     public TextMeshProUGUI scrollingText;
+    public TextMeshProUGUI chapterName;
     public List<TitleScreenMenuButton> items;
 
     public AudioClip menuMoveSound;
@@ -20,6 +21,7 @@ public class PreTrialPrepMenu : MonoBehaviour
 
     public void Appear()
     {
+        chapterName.text = GameStateManager.instance.chapters[GameStateManager.instance.chapterIndex].chapterName;
         MusicManager.instance.PlaySong(music);
         ImageScript.instance.UnFadeToBlack(0.1f);
         scrollingText.text =

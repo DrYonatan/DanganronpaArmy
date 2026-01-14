@@ -41,21 +41,6 @@ public class TrialManager : MonoBehaviour
         instance = this;
     }
 
-    // void Start()
-    // {
-    //     ImageScript.instance.UnFadeToBlack(0.1f);
-    //     if (currentIndex == 0)
-    //     {
-    //         playerStats.InitializeMeters();
-    //         StartCoroutine(StartPipeline());
-    //     }
-    //     else
-    //     {
-    //         TrialSegment segment = Instantiate(segments[currentIndex]);
-    //         segment.Play();
-    //     }
-    // }
-
     public void StartNewTrial()
     {
         StartCoroutine(StartPipeline());

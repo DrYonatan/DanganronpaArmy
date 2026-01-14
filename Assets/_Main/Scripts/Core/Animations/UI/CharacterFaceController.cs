@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
@@ -67,13 +65,13 @@ public class CharacterFaceController : MonoBehaviour
     public void DiscussionFaceContainerAppear(float duration)
     {
         faceWhiteOverlay.color = Color.white;
-        discussionFaceContainer.localScale = new Vector2(1f, 0f);
+        discussionFaceContainer.localScale = new Vector3(1f, 0f, 1f);
         discussionFaceContainer.transform.DOScaleY(1f, duration);
     }
 
     public void DiscussionFaceContainerDisappear(float duration)
     {
-        discussionFaceContainer.localScale = new Vector2(1f, 1f);
+        discussionFaceContainer.localScale = new Vector3(1f, 1f, 1f);
         discussionFaceContainer.DOScaleY(0f, duration);
     }
 }
