@@ -24,14 +24,29 @@ public class PreTrialPrepMenu : MonoBehaviour
         chapterName.text = GameStateManager.instance.chapters[GameStateManager.instance.chapterIndex].chapterName;
         MusicManager.instance.PlaySong(music);
         ImageScript.instance.UnFadeToBlack(0.1f);
-        scrollingText.text =
-            GameStateManager.instance.chapters[GameStateManager.instance.chapterIndex].preTrialPrepText;
-        scrollingText.rectTransform.DOAnchorPosX(scrollingText.rectTransform.anchoredPosition.x + 4000, 30f)
-            .SetEase(Ease.Linear).SetLoops(-1);
+        
+        UpdateScrollingText();
+        
         cylinder.rectTransform.DOLocalRotate(new Vector3(0, 0, 360), 8f, RotateMode.FastBeyond360).SetEase(Ease.Linear)
             .SetLoops(-1);
         itemsContainer.anchoredPosition += new Vector2(500, 0);
         itemsContainer.DOAnchorPosX(itemsContainer.anchoredPosition.x - 500, 0.4f);
+    }
+
+    private void UpdateScrollingText()
+    {
+        RectTransform textRect = scrollingText.rectTransform;
+              
+        scrollingText.text =
+            GameStateManager.instance.chapters[GameStateManager.instance.chapterIndex].preTrialPrepText;
+        
+        scrollingText.ForceMeshUpdate();
+
+        float textWidth = scrollingText.preferredWidth;
+        
+        textRect.DOAnchorPosX(textWidth, textWidth / 50)
+            .SetEase(Ease.Linear)
+            .SetLoops(-1, LoopType.Restart);
     }
 
     public void Disappear()
