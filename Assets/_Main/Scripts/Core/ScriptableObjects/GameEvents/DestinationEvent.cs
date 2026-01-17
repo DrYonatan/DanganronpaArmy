@@ -7,7 +7,7 @@ public class DestinationEvent : GameEvent
 
     public override void CheckIfFinished()
     {
-        if (WorldManager.instance.currentRoom.name.Equals(targetRoom.name))
+        if (WorldManager.instance.currentRoom.roomName.Equals(targetRoom.roomName))
         {
             isFinished = true;
         }

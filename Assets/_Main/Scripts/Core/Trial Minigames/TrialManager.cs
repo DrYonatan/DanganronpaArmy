@@ -15,7 +15,8 @@ public class PlayerStats
     public void InitializeMeters()
     {
         hp = maxHP;
-        TrialManager.instance.barsAnimator.SetBarsFillAmount(TrialManager.instance.playerStats.hp, TimeManipulationManager.instance.concentration);
+        TrialManager.instance.barsAnimator.SetBarsFillAmount(TrialManager.instance.playerStats.hp,
+            TimeManipulationManager.instance.concentration);
     }
 }
 
@@ -35,7 +36,7 @@ public class TrialManager : MonoBehaviour
 
     public RectTransform failedScreen;
     public Image failedTextImage;
-    
+
     void Awake()
     {
         instance = this;
@@ -50,22 +51,26 @@ public class TrialManager : MonoBehaviour
     {
         ImageScript.instance.FadeToBlack(0.2f);
         preTrialPrepMenu.Disappear();
-        
+
         yield return new WaitForSeconds(0.4f);
-        
+
         preTrialPrepMenu.gameObject.SetActive(false);
-        int chapterIndex = GameStateManager.instance.chapterIndex;
-        int segmentIndex = GameStateManager.instance.chapterSegmentIndex;
-        GameStateManager.instance.chapters[chapterIndex].chapterSegments[segmentIndex].Load();
+        GameStateManager.instance.GetCurrentChapterSegment().Load();
         ImageScript.instance.UnFadeToBlack(0.1f);
         playerStats.InitializeMeters();
-        
+
         TrialIntro intro = Instantiate(introAnimation, globalUI);
         intro.transform.SetAsFirstSibling();
         yield return intro.Animate();
         ImageScript.instance.UnFadeToBlack(0.2f);
         DialogueSystem.instance.dialogueBoxAnimator.Initialize();
         yield return CameraController.instance.FovOutro();
+        ContinueTrial();
+    }
+
+    private void ContinueTrial()
+    {
+        preTrialPrepMenu.gameObject.SetActive(false);
         TrialSegment segment = Instantiate(segments[currentIndex]);
         segment.Play();
     }
@@ -77,14 +82,13 @@ public class TrialManager : MonoBehaviour
         if (currentIndex < segments.Count)
         {
             TrialSegment segment = Instantiate(segments[currentIndex]);
-            segment.Play(); 
+            segment.Play();
         }
 
         else
         {
             GameStateManager.instance.MoveToNextChapterSegment();
         }
-        
     }
 
     public void IncreaseHealth(float amount)
@@ -92,7 +96,7 @@ public class TrialManager : MonoBehaviour
         if (playerStats.hp < playerStats.maxHP)
         {
             barsAnimator.IncreaseHealth(Math.Min(amount, playerStats.maxHP - playerStats.hp),
-                 amount / 2); // Fill either the amount, or what remains to fill before the meter if already full
+                amount / 2); // Fill either the amount, or what remains to fill before the meter if already full
         }
 
         playerStats.hp = Math.Min(playerStats.hp + amount, playerStats.maxHP);
@@ -129,9 +133,13 @@ public class TrialManager : MonoBehaviour
             ? SaveManager.instance.LoadCurrentSave()
             : SaveSystem.LoadGame(slot);
 
+        GameStateManager.instance.UpdateChapterIndexes(data.chapterIndex, data.chapterSegmentIndex);
         currentIndex = data.trialSegmentIndex;
         TrialDialogueManager.instance.currentLineIndex = data.currentLineIndex;
         playerStats.hp = data.hp;
+        MusicManager.instance.PlaySong(Resources.Load<AudioClip>($"Audio/Music/{data.currentMusic}"));
+
+        ContinueTrial();
     }
 
     public void FadeCharactersExcept(Character character, float opacity, float duration)
@@ -154,7 +162,7 @@ public class TrialManager : MonoBehaviour
         color.a = 0f;
         failedTextImage.color = color;
         failedTextImage.rectTransform.localScale = Vector3.one;
-        
+
         Sequence sequence = DOTween.Sequence();
         sequence.Append(failedScreen.DOAnchorPosY(0, 0.2f));
         sequence.Append(failedTextImage.DOFade(1f, 0.1f));
@@ -162,10 +170,9 @@ public class TrialManager : MonoBehaviour
         sequence.Append(failedTextImage.rectTransform.DOScale(2f, 0.2f));
         sequence.Join(failedTextImage.DOFade(0, 0.2f));
         sequence.AppendCallback(() => ImageScript.instance.FadeToBlack(0.2f));
-        
+
         yield return new WaitForSeconds(2.5f);
 
         failedScreen.anchoredPosition = new Vector2(0, 1200);
     }
-    
 }

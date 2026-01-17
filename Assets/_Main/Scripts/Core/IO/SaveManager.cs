@@ -40,12 +40,15 @@ public class SaveManager : MonoBehaviour
 
     public void SaveGameVn(int slot)
     {
-        SaveData data = new SaveData(ProgressManager.instance.currentGameEventIndex,
+        SaveData data = new SaveData(GameStateManager.instance.chapterIndex,
+            GameStateManager.instance.chapterSegmentIndex,
+            ProgressManager.instance.currentGameEventIndex,
             WorldManager.instance.currentRoom.name,
             VNNodePlayer.instance.currentConversation?.guid, VNNodePlayer.instance.lineIndex,
-            MusicManager.instance.audio.name,
+            MusicManager.instance.audioSource.clip ? MusicManager.instance.audioSource.clip.name : "",
             ProgressManager.instance.currentGameEvent.charactersData,
-            ProgressManager.instance.currentGameEvent.objectsData, SceneManager.GetActiveScene().name,
+            ProgressManager.instance.currentGameEvent.objectsData,
+            GameStateManager.instance.GetCurrentChapterSegment().GetSceneName(),
             GameStateManager.instance.charactersRanks, CameraManager.instance.cameraTransform.position,
             CameraManager.instance.cameraTransform.rotation.eulerAngles,
             CameraManager.instance.initialRotation.eulerAngles, WorldManager.instance.currentTime, 0, 0);
@@ -54,9 +57,10 @@ public class SaveManager : MonoBehaviour
 
     public void SaveGameTrial(int slot)
     {
-        SaveData data = new SaveData(TrialManager.instance.currentIndex, "", "",
+        SaveData data = new SaveData(GameStateManager.instance.chapterIndex,
+            GameStateManager.instance.chapterSegmentIndex, TrialManager.instance.currentIndex, "", "",
             TrialDialogueManager.instance.currentLineIndex,
-            MusicManager.instance.audio ? MusicManager.instance.audio.name : "", null, null,
+            MusicManager.instance.audioSource.clip ? MusicManager.instance.audioSource.clip.name : "", null, null,
             SceneManager.GetActiveScene().name, GameStateManager.instance.charactersRanks,
             new Vector3(0f, 0f, 0f), new Vector3(0f, 0f, 0f), Vector3.zero, TimeOfDay.Day,
             TrialManager.instance.currentIndex,

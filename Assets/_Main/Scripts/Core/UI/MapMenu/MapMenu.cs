@@ -82,11 +82,11 @@ public class MapMenu : MenuScreen
 
     private void OnRoomHovered(MapRoom room)
     {
-        RoomData data = ProgressManager.instance.currentGameEvent.roomDatas.Find(x => x.room.name.Equals(room.name));
+        RoomData data = ProgressManager.instance.currentGameEvent.roomDatas.Find(x => x.room.roomName.Equals(room.name));
         hoveredRoomData = data;
         UpdateCharacters();
         locationPin.rectTransform.anchoredPosition = new Vector2(room.xCoordinate, room.yCoordinate);
-        if (room.name.Equals(WorldManager.instance.currentRoom.name))
+        if (room.name.Equals(WorldManager.instance.currentRoom.roomName))
         {
             locationPin.DOFade(0f, 0f).SetUpdate(true);
             line.gameObject.SetActive(false);
@@ -95,7 +95,7 @@ public class MapMenu : MenuScreen
         {
             locationPin.DOFade(1f, 0f).SetUpdate(true);
             if (regions[currentRegionIndex].rooms
-                .Any((room) => room.name.Equals(WorldManager.instance.currentRoom.name)))
+                .Any((room) => room.name.Equals(WorldManager.instance.currentRoom.roomName)))
             {
                 line.gameObject.SetActive(true);
                 line.SetPositions(self.anchoredPosition, locationPinTransform.anchoredPosition);
@@ -165,8 +165,8 @@ public class MapMenu : MenuScreen
         else if (PlayerInputManager.instance.DefaultInput())
         {
             Room roomToLoad = ProgressManager.instance.currentGameEvent.roomDatas.Find((roomData) =>
-                roomData.room.name.Equals(rooms[currentRoomIndex].name))?.room;
-            if (roomToLoad != null && roomToLoad.name != WorldManager.instance.currentRoom.name)
+                roomData.room.roomName.Equals(rooms[currentRoomIndex].name))?.room;
+            if (roomToLoad != null && roomToLoad.roomName != WorldManager.instance.currentRoom.roomName)
             {
                 SelectRoom(roomToLoad);
             }
@@ -199,7 +199,7 @@ public class MapMenu : MenuScreen
         regionText.text = regions[currentRegionIndex].name;
         SetRooms(regions[currentRegionIndex].rooms);
         int index = regions[currentRegionIndex].rooms
-            .FindIndex((curr) => curr.name.Equals(WorldManager.instance.currentRoom.name));
+            .FindIndex((curr) => curr.name.Equals(WorldManager.instance.currentRoom.roomName));
         if (index != -1)
         {
             self.gameObject.SetActive(true);
@@ -238,9 +238,9 @@ public class MapMenu : MenuScreen
         base.Open();
         Room currentRoom = WorldManager.instance.currentRoom;
         currentRegionIndex = regions.FindIndex((region) =>
-            region.rooms.Any((room) => room.name.Equals(currentRoom.name)));
+            region.rooms.Any((room) => room.name.Equals(currentRoom.roomName)));
         UpdateRegion();
-        currentRoomIndex = rooms.FindIndex((room) => room.name.Equals(currentRoom.name));
+        currentRoomIndex = rooms.FindIndex((room) => room.name.Equals(currentRoom.roomName));
         MapRoom currentMapRoom = rooms[currentRoomIndex];
         self.anchoredPosition = new Vector2(currentMapRoom.xCoordinate, currentMapRoom.yCoordinate);
     }

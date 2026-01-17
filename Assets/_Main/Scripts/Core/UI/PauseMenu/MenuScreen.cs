@@ -27,7 +27,7 @@ public abstract class MenuScreen : MonoBehaviour
         logo.DOKill();
     }
 
-    public virtual void LoadContent()
+    protected virtual void LoadContent()
     {
         content.SetActive(true);
     }

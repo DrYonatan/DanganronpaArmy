@@ -169,7 +169,7 @@ public class ReportCardMenu: MenuScreen
         }
     }
 
-    public override void LoadContent()
+    protected override void LoadContent()
     {
         base.LoadContent();
         UpdateUI();

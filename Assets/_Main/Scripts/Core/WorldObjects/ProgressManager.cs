@@ -52,7 +52,7 @@ public class ProgressManager : MonoBehaviour
         Room roomToLoad;
 
         if (currentGameEvent.startRoom != null &&
-            WorldManager.instance.currentRoom.name != currentGameEvent.startRoom.name)
+            WorldManager.instance.currentRoom.roomName != currentGameEvent.startRoom.roomName)
             roomToLoad = currentGameEvent.startRoom;
         else
         {
@@ -76,10 +76,11 @@ public class ProgressManager : MonoBehaviour
         WorldManager.instance.isLoading = true;
         SaveData data = SaveManager.instance != null ? SaveManager.instance.LoadCurrentSave() : SaveSystem.LoadGame(1);
 
+        GameStateManager.instance.UpdateChapterIndexes(data.chapterIndex, data.chapterSegmentIndex);
+        
         yield return TimeOfDayManager.instance.ChangeTimeOfDay(data.timeOfDay);
 
-        LoadGameEvents(GameStateManager.instance.chapters[GameStateManager.instance.chapterIndex]
-            .chapterSegments[GameStateManager.instance.chapterSegmentIndex]);
+        LoadGameEvents(GameStateManager.instance.GetCurrentChapterSegment());
 
         currentGameEventIndex = data.gameEventIndex;
         currentGameEvent = Instantiate(gameEvents[currentGameEventIndex]);
@@ -100,6 +101,10 @@ public class ProgressManager : MonoBehaviour
             VNNodePlayer.instance.StartConversation(currentConversation);
             CameraManager.instance.initialRotation = Quaternion.Euler(new Vector3(data.conversationInitialRotation[0],
                 data.conversationInitialRotation[1], data.conversationInitialRotation[2]));
+        }
+        else
+        {
+            CursorManager.instance.Show();
         }
 
         WorldManager.instance.Initialize();

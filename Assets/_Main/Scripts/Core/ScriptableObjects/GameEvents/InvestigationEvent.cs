@@ -28,9 +28,9 @@ public class InvestigationEvent : FreeRoamEvent
                 isFinished = false;
         }
 
-        if (gameEvents.ContainsKey(WorldManager.instance.currentRoom.name) && !isFinished)
+        if (gameEvents.ContainsKey(WorldManager.instance.currentRoom.roomName) && !isFinished)
         {
-            GameEvent gameEvent = gameEvents[WorldManager.instance.currentRoom.name];
+            GameEvent gameEvent = gameEvents[WorldManager.instance.currentRoom.roomName];
             ProgressManager.instance.currentGameEvent = gameEvent;
             gameEvent.OnStart();
         }

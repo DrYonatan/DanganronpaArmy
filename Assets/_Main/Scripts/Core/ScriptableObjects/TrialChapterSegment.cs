@@ -16,4 +16,9 @@ public class TrialChapterSegment : ChapterSegment
     {
         SceneManager.LoadScene("DebateScene");
     }
+
+    public override string GetSceneName()
+    {
+        return "DebateScene";
+    }
 }

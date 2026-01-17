@@ -53,7 +53,9 @@ public class GameStateManager : MonoBehaviour
     private void InitializeVn()
     {
         if (SaveManager.instance != null && SaveManager.instance.currentSaveSlot != -1)
+        {
             StartCoroutine(ProgressManager.instance.LoadValuesFromSave());
+        }
         else
         {
             ProgressManager.instance.StartNewGame();
@@ -83,6 +85,12 @@ public class GameStateManager : MonoBehaviour
             DontDestroyOnLoad(persistentObject);
             StartCoroutine(ProgressManager.instance.StartNewVnSegment());
         }
+    }
+
+    public void UpdateChapterIndexes(int newChapterIndex, int newChapterSegmentIndex)
+    {
+        chapterIndex = newChapterIndex;
+        chapterSegmentIndex = newChapterSegmentIndex;
     }
 
     public void MoveToNextChapterSegment()
@@ -128,6 +136,16 @@ public class GameStateManager : MonoBehaviour
     {
         yield return MoveToNextChapterSegmentPipeline();
         VNUIAnimator.instance.chapterNameText.text = chapters[chapterIndex].chapterName;
+    }
+
+    private Chapter GetCurrentChapter()
+    {
+        return chapters[chapterIndex];
+    }
+
+    public ChapterSegment GetCurrentChapterSegment()
+    {
+        return GetCurrentChapter().chapterSegments[chapterSegmentIndex];
     }
 
     public void ResetChapters()

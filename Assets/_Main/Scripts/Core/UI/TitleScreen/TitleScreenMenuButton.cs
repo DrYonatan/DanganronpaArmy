@@ -21,7 +21,7 @@ public abstract class TitleScreenMenuButton : MonoBehaviour
         
         image.DOColor(selectedColor, 0.2f)
             .SetLoops(-1, LoopType.Yoyo)
-            .SetEase(Ease.Linear);
+            .SetEase(Ease.Linear).SetUpdate(true);
     }
 
     public void DisableHover()

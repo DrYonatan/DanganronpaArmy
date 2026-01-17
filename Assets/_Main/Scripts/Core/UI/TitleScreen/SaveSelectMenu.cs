@@ -1,6 +1,4 @@
-using System;
 using DG.Tweening;
-using DIALOGUE;
 using UnityEngine;
 
 public class SaveSelectMenu : TitleScreenSubMenu
@@ -10,6 +8,8 @@ public class SaveSelectMenu : TitleScreenSubMenu
 
     public float buttonHeight = 100f;
     public int visibleCount = 7;
+
+    public SaveSlotButton.Mode mode;
 
     void Awake()
     {
@@ -50,12 +50,13 @@ public class SaveSelectMenu : TitleScreenSubMenu
     private void GenerateSaveSlot(int index)
     {
         SaveSlotButton button = Instantiate(buttonPrefab, savesContainer);
+        button.mode =  mode;
         button.slot = index;
         buttons.Add(button);
     }
 
     private void UpdateScroll()
     {
-        savesContainer.DOAnchorPosY(Mathf.Max((currentItemIndex - (visibleCount - 1)) * (buttonHeight + 50), 0), 0.2f);
+        savesContainer.DOAnchorPosY(Mathf.Max((currentItemIndex - (visibleCount - 1)) * (buttonHeight + 50), 0), 0.2f).SetUpdate(true);
     }
 }

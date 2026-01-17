@@ -20,6 +20,9 @@ public class CharacterRankEntry
 [Serializable]
 public class SaveData
 {
+    public int chapterIndex;
+    public int chapterSegmentIndex;
+    
     // VN stuff
     public int gameEventIndex;
     public string currentRoom;
@@ -39,7 +42,7 @@ public class SaveData
     public int trialSegmentIndex;
     public float hp;
 
-    public SaveData(int gameEventIndex, string currentRoom, string currentConversation,
+    public SaveData(int chapterIndex, int chapterSegmentIndex, int gameEventIndex, string currentRoom, string currentConversation,
         int currentLineIndex, string currentMusic, Dictionary<string, ObjectData> charactersData,
         Dictionary<string, ObjectData> objectsData,
         string scene,
@@ -47,6 +50,8 @@ public class SaveData
         Vector3 conversationInitialRotation, TimeOfDay timeOfDay, int trialSegmentIndex,
         float hp)
     {
+        this.chapterIndex = chapterIndex;
+        this.chapterSegmentIndex = chapterSegmentIndex;
         this.gameEventIndex = gameEventIndex;
         this.currentRoom = currentRoom;
         this.currentConversation = currentConversation;

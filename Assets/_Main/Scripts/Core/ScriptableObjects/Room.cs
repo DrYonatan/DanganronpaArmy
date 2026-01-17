@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public abstract class Room : ScriptableObject
 {
@@ -13,7 +14,7 @@ public abstract class Room : ScriptableObject
     }
     
     public List<RoomEnvironment> roomVersions = new ();
-    public string name;
+    public string roomName;
 
     public Interactable currentInteractable;
 

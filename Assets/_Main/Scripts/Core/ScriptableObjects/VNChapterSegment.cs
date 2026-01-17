@@ -16,4 +16,10 @@ public class VNChapterSegment: ChapterSegment
     {
         SceneManager.LoadScene("VisualNovelCore");
     }
+    
+    public override string GetSceneName()
+    {
+        return "VisualNovelCore";
+    }
+    
 }

@@ -127,12 +127,12 @@ public class WorldManager : MonoBehaviour
         isLoading = false;
 
         CreateCharacters(ProgressManager.instance.currentGameEvent.roomDatas
-            .First(roomData => roomData.room.name.Equals(currentRoom.name)).characters);
+            .First(roomData => roomData.room.roomName.Equals(currentRoom.roomName)).characters);
         CreateObjects(ProgressManager.instance.currentGameEvent.roomDatas
-            .First(roomData => roomData.room.name.Equals(currentRoom.name)).worldObjects);
+            .First(roomData => roomData.room.roomName.Equals(currentRoom.roomName)).worldObjects);
 
         UpdateRoomData(
-            ProgressManager.instance.currentGameEvent.roomDatas.First(roomData => roomData.room.name == room.name));
+            ProgressManager.instance.currentGameEvent.roomDatas.First(roomData => roomData.room.roomName == room.roomName));
 
         if (VNNodePlayer.instance.currentConversation == null)
         {
@@ -162,9 +162,10 @@ public class WorldManager : MonoBehaviour
 
         currentRoom = Instantiate(room);
         currentRoom.name = room.name;
+        currentRoom.roomName = room.roomName;
 
         UpdateRoomData(
-            ProgressManager.instance.currentGameEvent.roomDatas.First(roomData => roomData.room.name == room.name));
+            ProgressManager.instance.currentGameEvent.roomDatas.First(roomData => roomData.room.roomName == room.roomName));
 
         if (charactersObject != null)
         {
@@ -214,9 +215,9 @@ public class WorldManager : MonoBehaviour
         isLoading = false;
 
         CreateCharacters(ProgressManager.instance.currentGameEvent.roomDatas
-            .First(roomData => roomData.room.name.Equals(currentRoom.name)).characters);
+            .First(roomData => roomData.room.roomName.Equals(currentRoom.roomName)).characters);
         CreateObjects(ProgressManager.instance.currentGameEvent.roomDatas
-            .First(roomData => roomData.room.name.Equals(currentRoom.name)).worldObjects);
+            .First(roomData => roomData.room.roomName.Equals(currentRoom.roomName)).worldObjects);
 
         if (charactersObject != null)
             charactersObject.AnimateCharacters();

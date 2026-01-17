@@ -1,11 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using DG.Tweening;
 using UnityEngine;
 
 public class MusicManager : MonoBehaviour
 {
-    public AudioSource audio;
+    public AudioSource audioSource;
     public static MusicManager instance { get; private set; }
 
     private void Awake()
@@ -15,9 +12,12 @@ public class MusicManager : MonoBehaviour
 
     public void PlaySong(AudioClip song)
     {
-        audio.Stop();
-        audio.clip = song;
-        audio.Play();
+        if (song == null)
+            return;
+        
+        audioSource.Stop();
+        audioSource.clip = song;
+        audioSource.Play();
 
         if (VNUIAnimator.instance != null)
         {
@@ -28,7 +28,7 @@ public class MusicManager : MonoBehaviour
 
     public void StopSong()
     {
-        audio.Stop();
+        audioSource.Stop();
         if (VNUIAnimator.instance != null)
         {
             VNUIAnimator.instance.musicBoxContainer.StopBars();
@@ -38,10 +38,10 @@ public class MusicManager : MonoBehaviour
     
     internal void LowerVolume()
     {
-        audio.volume /= 4;
+        audioSource.volume /= 4;
     }
     internal void RaiseVolume()
     {
-        audio.volume *= 4;
+        audioSource.volume *= 4;
     }
 }

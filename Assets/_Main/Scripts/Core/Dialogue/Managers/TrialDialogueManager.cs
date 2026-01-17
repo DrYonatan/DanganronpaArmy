@@ -26,11 +26,6 @@ public class TrialDialogueManager : MonoBehaviour
     {
         instance = this;
     }
-
-    private void Start()
-    {
-        animator = (CourtTextBoxAnimator)DialogueSystem.instance.dialogueBoxAnimator;
-    }
     
     public void PlayDiscussion(DiscussionSegment discussion)
     {
@@ -47,7 +42,6 @@ public class TrialDialogueManager : MonoBehaviour
     public void SetTextBox()
     {
         DialogueSystem.instance.SetTextBox(dialogueContainer);
-
     }
 
     IEnumerator RunDiscussion(DiscussionSegment discussion)
@@ -64,7 +58,6 @@ public class TrialDialogueManager : MonoBehaviour
 
     private IEnumerator StartNodes(List<DiscussionNode> nodes)
     {
-        currentLineIndex = 0;
         isFinishedRunningNodes = false;
         for (int i = currentLineIndex; i < nodes.Count; i++)
         {
@@ -73,6 +66,7 @@ public class TrialDialogueManager : MonoBehaviour
         }
 
         isFinishedRunningNodes = true;
+        currentLineIndex = 0;
     }
 
     private void HandleConversationEnd(DiscussionSegment discussion)

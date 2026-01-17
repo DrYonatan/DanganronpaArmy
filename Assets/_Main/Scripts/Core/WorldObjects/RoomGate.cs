@@ -13,7 +13,7 @@ public class RoomGate : Interactable
     protected override void FinishInteraction()
     {
         if (ProgressManager.instance.currentGameEvent.roomDatas.Any(item =>
-                item.room.name == roomToLoad.name) ||
+                item.room.roomName == roomToLoad.roomName) ||
             ProgressManager.instance.currentGameEvent.roomDatas.Count == 0)
         {
             StartCoroutine(RoomTransition());

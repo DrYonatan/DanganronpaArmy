@@ -50,7 +50,7 @@ public abstract class GameEvent : ScriptableObject
     public virtual void OnStart()
     {
         RoomData currentRoomData = ProgressManager.instance.currentGameEvent.roomDatas
-            .First(roomData => roomData.room.name.Equals(WorldManager.instance.currentRoom.name));
+            .First(roomData => roomData.room.roomName.Equals(WorldManager.instance.currentRoom.roomName));
 
         WorldManager.instance.UpdateRoomData(currentRoomData);
 
