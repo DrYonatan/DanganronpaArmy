@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SaveManager : MonoBehaviour
@@ -49,8 +48,9 @@ public class SaveManager : MonoBehaviour
             ProgressManager.instance.currentGameEvent.charactersData,
             ProgressManager.instance.currentGameEvent.objectsData,
             GameStateManager.instance.GetCurrentChapterSegment().GetSceneName(),
-            GameStateManager.instance.charactersRanks, CameraManager.instance.cameraTransform.position,
-            CameraManager.instance.cameraTransform.rotation.eulerAngles,
+            GameStateManager.instance.charactersRanks, CameraManager.instance.player.transform.position,
+            CameraManager.instance.cameraTransform.localPosition,
+            CameraManager.instance.cameraTransform.localRotation.eulerAngles,
             CameraManager.instance.initialRotation.eulerAngles, WorldManager.instance.currentTime, 0, 0);
         SaveSystem.SaveGame(data, slot);
     }
@@ -62,7 +62,7 @@ public class SaveManager : MonoBehaviour
             TrialDialogueManager.instance.currentLineIndex,
             MusicManager.instance.audioSource.clip ? MusicManager.instance.audioSource.clip.name : "", null, null,
             SceneManager.GetActiveScene().name, GameStateManager.instance.charactersRanks,
-            new Vector3(0f, 0f, 0f), new Vector3(0f, 0f, 0f), Vector3.zero, TimeOfDay.Day,
+            Vector3.zero, Vector3.zero, Vector3.zero, Vector3.zero, TimeOfDay.Day,
             TrialManager.instance.currentIndex,
             TrialManager.instance.playerStats.hp);
 

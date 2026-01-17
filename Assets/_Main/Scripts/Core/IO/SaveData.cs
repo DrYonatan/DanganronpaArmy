@@ -34,7 +34,8 @@ public class SaveData
     public string scene;
     public List<CharacterRankEntry> characterRanks;
     public float[] playerPosition;
-    public float[] playerRotation;
+    public float[] cameraPosition;
+    public float[] cameraRotation;
     public float[] conversationInitialRotation;
     public TimeOfDay timeOfDay;
 
@@ -46,7 +47,7 @@ public class SaveData
         int currentLineIndex, string currentMusic, Dictionary<string, ObjectData> charactersData,
         Dictionary<string, ObjectData> objectsData,
         string scene,
-        Dictionary<string, int> characterRanks, Vector3 playerPosition, Vector3 playerRotation,
+        Dictionary<string, int> characterRanks, Vector3 playerPosition, Vector3 cameraPosition, Vector3 cameraRotation,
         Vector3 conversationInitialRotation, TimeOfDay timeOfDay, int trialSegmentIndex,
         float hp)
     {
@@ -71,16 +72,21 @@ public class SaveData
             .ToList();
 
         this.playerPosition = new float[3];
-        this.playerRotation = new float[3];
+        this.cameraPosition = new float[3];
+        this.cameraRotation = new float[3];
         this.conversationInitialRotation = new float[3];
-
+        
         this.playerPosition[0] = playerPosition.x;
         this.playerPosition[1] = playerPosition.y;
         this.playerPosition[2] = playerPosition.z;
 
-        this.playerRotation[0] = playerRotation.x;
-        this.playerRotation[1] = playerRotation.y;
-        this.playerRotation[2] = playerRotation.z;
+        this.cameraPosition[0] = cameraPosition.x;
+        this.cameraPosition[1] = cameraPosition.y;
+        this.cameraPosition[2] = cameraPosition.z;
+
+        this.cameraRotation[0] = cameraRotation.x;
+        this.cameraRotation[1] = cameraRotation.y;
+        this.cameraRotation[2] = cameraRotation.z;
         
         this.conversationInitialRotation[0] = conversationInitialRotation.x;
         this.conversationInitialRotation[1] = conversationInitialRotation.y;

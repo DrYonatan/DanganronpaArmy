@@ -77,7 +77,7 @@ public class ProgressManager : MonoBehaviour
         SaveData data = SaveManager.instance != null ? SaveManager.instance.LoadCurrentSave() : SaveSystem.LoadGame(1);
 
         GameStateManager.instance.UpdateChapterIndexes(data.chapterIndex, data.chapterSegmentIndex);
-        
+
         yield return TimeOfDayManager.instance.ChangeTimeOfDay(data.timeOfDay);
 
         LoadGameEvents(GameStateManager.instance.GetCurrentChapterSegment());
@@ -89,10 +89,13 @@ public class ProgressManager : MonoBehaviour
         currentGameEvent.charactersData = data.charactersData.ToDictionary(c => c.key, c => c.value);
         currentGameEvent.objectsData = data.objectsData.ToDictionary(c => c.key, c => c.value);
 
-        CameraManager.instance.cameraTransform.position =
+        CameraManager.instance.player.transform.position =
             new Vector3(data.playerPosition[0], data.playerPosition[1], data.playerPosition[2]);
-        CameraManager.instance.cameraTransform.rotation =
-            Quaternion.Euler(new Vector3(data.playerRotation[0], data.playerRotation[1], data.playerRotation[2]));
+        ;
+        CameraManager.instance.cameraTransform.localPosition =
+            new Vector3(data.cameraPosition[0], data.cameraPosition[1], data.cameraPosition[2]);
+        CameraManager.instance.cameraTransform.localRotation =
+            Quaternion.Euler(new Vector3(data.cameraRotation[0], data.cameraRotation[1], data.cameraRotation[2]));
 
         VNConversationSegment currentConversation = conversationDatabase.Get(data.currentConversation);
         if (currentConversation != null)
@@ -118,8 +121,8 @@ public class ProgressManager : MonoBehaviour
             GameStateManager.instance.chapters[GameStateManager.instance.chapterIndex].chapterName;
         yield return TimeOfDayManager.instance.ChangeTimeOfDay(gameEvents[0].timeOfDay);
         currentGameEvent = Instantiate(gameEvents[0]);
-        if(currentGameEvent.startRoom != null)
-           WorldManager.instance.currentRoom = currentGameEvent.startRoom;
+        if (currentGameEvent.startRoom != null)
+            WorldManager.instance.currentRoom = currentGameEvent.startRoom;
         WorldManager.instance.StartLoadingRoom(WorldManager.instance.currentRoom, null);
     }
 }

@@ -138,6 +138,7 @@ public class TrialManager : MonoBehaviour
         TrialDialogueManager.instance.currentLineIndex = data.currentLineIndex;
         playerStats.hp = data.hp;
         MusicManager.instance.PlaySong(Resources.Load<AudioClip>($"Audio/Music/{data.currentMusic}"));
+        GameStateManager.instance.GetCurrentChapterSegment().Load();
 
         ContinueTrial();
     }
