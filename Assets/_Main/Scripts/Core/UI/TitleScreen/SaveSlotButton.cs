@@ -1,5 +1,8 @@
+using System.Collections;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SaveSlotButton : TitleScreenMenuButton
 {
@@ -51,7 +54,7 @@ public class SaveSlotButton : TitleScreenMenuButton
             SaveManager.instance.SaveGameVn(slot);
         else if (TrialManager.instance != null)
             SaveManager.instance.SaveGameTrial(slot);
-        
+
         UpdateFileText();
     }
 
@@ -65,7 +68,31 @@ public class SaveSlotButton : TitleScreenMenuButton
 
         SoundManager.instance.PlaySoundEffect(soundEffect);
         SaveManager.instance.SelectSaveSlot(slot);
+
+        if (TitleScreenMainMenu.instance != null)
+            TitleScreenMainMenu.instance.GoToGameAnimation(SaveManager.instance.LoadCurrentSave().scene);
+        else
+        {
+            StartCoroutine(LoadFile());
+        }
+    }
+
+    private IEnumerator LoadFile()
+    {
+        Time.timeScale = 1f;
+        ImageScript.instance.FadeToBlack(0.2f);
+        yield return new WaitForSeconds(1f);
+        DOTween.KillAll();
+        string sceneToLoad = SaveManager.instance.LoadCurrentSave().scene;
+        SceneManager.LoadScene(sceneToLoad);
+
+        Camera sceneTransitionCam = GameStateManager.instance.sceneTransitionCamera;
+        sceneTransitionCam.gameObject.SetActive(true);
         
-        TitleScreenMainMenu.instance.GoToGameAnimation(SaveManager.instance.LoadCurrentSave().scene);
+        sceneTransitionCam.transform.SetParent(GameStateManager.instance.transform.parent);
+        if (GameStateManager.instance.persistentObject != null)
+            Destroy(GameStateManager.instance.persistentObject);
+        Destroy(GameStateManager.instance.gameObject);
+        yield return new WaitForSeconds(0.5f);
     }
 }

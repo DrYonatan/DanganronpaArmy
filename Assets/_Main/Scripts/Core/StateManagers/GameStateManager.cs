@@ -25,6 +25,10 @@ public class GameStateManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
             if (persistentObject != null)
                 DontDestroyOnLoad(persistentObject);
+
+            GameObject prevTransitionCam = GameObject.Find("/Scene Transition Camera");
+            if(prevTransitionCam != null)
+                Destroy(prevTransitionCam);
         }
         else
         {
