@@ -54,7 +54,7 @@ public class MapMenu : MenuScreen
     public RectTransform dialogueContainer;
     public GameObject noPeopleMessage;
 
-    public void SetRooms(List<MapRoom> rooms)
+    private void SetRooms(List<MapRoom> rooms)
     {
         this.rooms = rooms;
         UpdateRoomList();
@@ -174,6 +174,11 @@ public class MapMenu : MenuScreen
             {
                 FailSelect();
             }
+        }
+        
+        else if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PlayerInputManager.instance.pauseMenu.GoBackToGeneral();
         }
     }
 

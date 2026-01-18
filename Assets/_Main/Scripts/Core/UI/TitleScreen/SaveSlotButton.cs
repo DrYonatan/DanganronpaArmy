@@ -65,6 +65,7 @@ public class SaveSlotButton : TitleScreenMenuButton
 
         SoundManager.instance.PlaySoundEffect(soundEffect);
         SaveManager.instance.SelectSaveSlot(slot);
+        
         TitleScreenMainMenu.instance.GoToGameAnimation(SaveManager.instance.LoadCurrentSave().scene);
     }
 }

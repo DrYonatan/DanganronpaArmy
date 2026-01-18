@@ -91,7 +91,6 @@ public class GameStateManager : MonoBehaviour
     {
         chapterIndex = newChapterIndex;
         chapterSegmentIndex = newChapterSegmentIndex;
-        VNUIAnimator.instance.chapterNameText.text = chapters[chapterIndex].chapterName;
     }
 
     public void MoveToNextChapterSegment()
@@ -139,7 +138,7 @@ public class GameStateManager : MonoBehaviour
         VNUIAnimator.instance.chapterNameText.text = chapters[chapterIndex].chapterName;
     }
 
-    private Chapter GetCurrentChapter()
+    public Chapter GetCurrentChapter()
     {
         return chapters[chapterIndex];
     }

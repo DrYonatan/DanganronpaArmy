@@ -7,16 +7,7 @@ public class MenuScreenContainer : MonoBehaviour
     public GeneralMenu generalMenu;
     public bool isSubmenuOpen;
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape) && isSubmenuOpen && !generalMenu.gameObject.activeSelf &&
-            PlayerInputManager.instance.isPaused)
-        {
-            GoBackToGeneral();
-        }
-    }
-
-    public void CloseCurrentMenu()
+    private void CloseCurrentMenu()
     {
         currentOpenMenu?.Close();
         isSubmenuOpen = false;

@@ -77,6 +77,8 @@ public class ProgressManager : MonoBehaviour
         SaveData data = SaveManager.instance != null ? SaveManager.instance.LoadCurrentSave() : SaveSystem.LoadGame(1);
 
         GameStateManager.instance.UpdateChapterIndexes(data.chapterIndex, data.chapterSegmentIndex);
+        VNUIAnimator.instance.chapterNameText.text = GameStateManager.instance.GetCurrentChapter().chapterName;
+
 
         yield return TimeOfDayManager.instance.ChangeTimeOfDay(data.timeOfDay);
 

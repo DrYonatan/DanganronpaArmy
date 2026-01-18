@@ -67,6 +67,11 @@ public class EvidenceMenu : MenuScreen
             UpdateUI();
             SoundManager.instance.PlaySoundEffect(moveSelectionSound);
         }
+        
+        else if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PlayerInputManager.instance.pauseMenu.GoBackToGeneral();
+        }
     }
 
     void UpdateUI()

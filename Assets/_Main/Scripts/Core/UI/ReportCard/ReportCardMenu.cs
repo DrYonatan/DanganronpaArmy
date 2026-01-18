@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
+using DIALOGUE;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -124,6 +125,10 @@ public class ReportCardMenu: MenuScreen
                                     characterInfoList.Count;
             UpdateUI();
             SoundManager.instance.PlaySoundEffect(moveSelectionSound);
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PlayerInputManager.instance.pauseMenu.GoBackToGeneral();
         }
     }
 
