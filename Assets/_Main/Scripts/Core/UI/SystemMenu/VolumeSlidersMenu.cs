@@ -1,4 +1,6 @@
+using DIALOGUE;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UI;
 
 public class VolumeSlidersMenu : MonoBehaviour
@@ -8,14 +10,18 @@ public class VolumeSlidersMenu : MonoBehaviour
     [Header("UI")]
     public Slider musicSlider;
     public Slider sfxSlider;
-    public Button applyButton;
+    public TitleScreenActionButton applyButton;
 
     [Header("Navigation")]
-    public float changeSpeed = 0.5f; 
+    public float changeSpeed = 0.5f;
+
+    public AudioMixer mixer;
 
     private int currentIndex = 0; 
 
     private Slider[] sliders;
+
+    public bool isConcentrating;
 
     void Awake()
     {
@@ -24,7 +30,7 @@ public class VolumeSlidersMenu : MonoBehaviour
         musicSlider.value = PlayerPrefs.GetFloat("MusicVolume", 0.75f);
         sfxSlider.value = PlayerPrefs.GetFloat("SFXVolume", 0.75f);
 
-        applyButton.onClick.AddListener(ApplySettings);
+        applyButton.button.onClick.AddListener(ApplySettings);
 
         UpdateSelectionVisual();
     }
@@ -34,8 +40,8 @@ public class VolumeSlidersMenu : MonoBehaviour
         if (isActive)
         {
             HandleNavigation();
-            HandleSliderChange();
-            HandleApply();
+            if(isConcentrating)
+               HandleSliderChange();
         }
     }
 
@@ -48,8 +54,26 @@ public class VolumeSlidersMenu : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.S))
         {
-            currentIndex = Mathf.Min(sliders.Length - 1, currentIndex + 1);
+            currentIndex = Mathf.Min(sliders.Length, currentIndex + 1);
             UpdateSelectionVisual();
+        }
+
+        if (PlayerInputManager.instance.DefaultInput())
+        {
+            if (currentIndex == sliders.Length)
+            {
+                applyButton.Click();
+            }
+            
+            else if (!isConcentrating)
+            {
+                isConcentrating = true;
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            isConcentrating = false;
         }
     }
 
@@ -69,14 +93,6 @@ public class VolumeSlidersMenu : MonoBehaviour
         }
     }
 
-    private void HandleApply()
-    {
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            ApplySettings();
-        }
-    }
-
     private void UpdateSelectionVisual()
     {
         for (int i = 0; i < sliders.Length; i++)
@@ -85,12 +101,21 @@ public class VolumeSlidersMenu : MonoBehaviour
             colors.normalColor = (i == currentIndex) ? Color.yellow : Color.white;
             sliders[i].colors = colors;
         }
+
+        if (currentIndex == sliders.Length)
+        {
+            applyButton.HoverButtonAnimation();
+        }
+        else
+        {
+            applyButton.DisableHover();
+        }
     }
 
     private void ApplySettings()
     {
         SetMusicVolume(musicSlider.value);
-        SetSFXVolume(sfxSlider.value);
+        SetSfxVolume(sfxSlider.value);
 
         PlayerPrefs.SetFloat("MusicVolume", musicSlider.value);
         PlayerPrefs.SetFloat("SFXVolume", sfxSlider.value);
@@ -99,11 +124,12 @@ public class VolumeSlidersMenu : MonoBehaviour
 
     private void SetMusicVolume(float value)
     {
-        MusicManager.instance.audioSource.volume = value;
+        mixer.SetFloat("MusicVolume", Mathf.Log10(value) * 20f);
     }
 
-    private void SetSFXVolume(float value)
+    private void SetSfxVolume(float value)
     {
-        
+        mixer.SetFloat("SFXVolume", Mathf.Log10(value) * 20f);
+
     }
 }

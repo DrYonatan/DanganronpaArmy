@@ -153,6 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textBoxAudio: {fileID: 0}
+  mixer: {fileID: 24100000, guid: 8d3a4c233a2778b478da55be992a464e, type: 2}
 --- !u!4 &8698445
 Transform:
   m_ObjectHideFlags: 0
@@ -1394,21 +1395,21 @@ MonoBehaviour:
   smallRing: {fileID: 872304176}
   blackOverlay: {fileID: 972854415}
   availableFaceSprites:
-  - {fileID: 21300000, guid: 1a927e1b9e538424598ede89a5ee0591, type: 3}
-  - {fileID: 21300000, guid: 2c2d0f9fc7f0b4c4eb28ef88a0f26fa2, type: 3}
-  - {fileID: 21300000, guid: 35d6e0f6541621740a5377157e881aa4, type: 3}
-  - {fileID: 21300000, guid: d71e64cef033e63439cbf0d9b77f853b, type: 3}
-  - {fileID: 21300000, guid: 19a4587f855adc341874439e79b7aca4, type: 3}
-  - {fileID: 21300000, guid: 0a0bcf04dda93cd4894e60e40aed62f5, type: 3}
-  - {fileID: 21300000, guid: 124bae19d912add418a6291320595a69, type: 3}
-  - {fileID: 21300000, guid: 0523ebe82a047fb448dc5d341b770dff, type: 3}
-  - {fileID: 21300000, guid: 19a4587f855adc341874439e79b7aca4, type: 3}
-  - {fileID: 21300000, guid: 9a311d21787f4b34f99bc6b4a1fb5a6d, type: 3}
-  - {fileID: 21300000, guid: 847bf5c0ec3bd1143831e70e9b91c035, type: 3}
-  - {fileID: 21300000, guid: 52decf419710b7141810ab9ce122a3bb, type: 3}
-  - {fileID: 21300000, guid: b3a4d0de1d1caf94281ea1e100a7b147, type: 3}
-  - {fileID: 21300000, guid: e11869ebb3f93f14db42cb1bd23e7627, type: 3}
-  - {fileID: 21300000, guid: e12ef2312e00582429dfcce1c78682de, type: 3}
+  - {fileID: 21300000, guid: e472f37a1f26671449e341896eac0fd8, type: 3}
+  - {fileID: 21300000, guid: 96ad4fed447e57b4f97bc97a7b390da2, type: 3}
+  - {fileID: 21300000, guid: b1250344dd63b534ebfa87ce88d4d619, type: 3}
+  - {fileID: 21300000, guid: e4eddf89d116b504b9e43e043943f177, type: 3}
+  - {fileID: 21300000, guid: a11d5b14166bcd74e90bc6a722b97633, type: 3}
+  - {fileID: 21300000, guid: faaaaa631cf50474fa25d4293659bd6e, type: 3}
+  - {fileID: 21300000, guid: 99a86101744663045b010a237d705ca7, type: 3}
+  - {fileID: 21300000, guid: 99682ff457c907d41b132ca1e66feb4a, type: 3}
+  - {fileID: 21300000, guid: 75695287c84c0524da716a1d9ca3a9e0, type: 3}
+  - {fileID: 21300000, guid: 67562e8fa550f4147b80bea1ebe105ec, type: 3}
+  - {fileID: 21300000, guid: 32b083c31fa862545af4a1d46b2238da, type: 3}
+  - {fileID: 21300000, guid: a63bcb7a85999d846959b37aae6f38b3, type: 3}
+  - {fileID: 21300000, guid: ca125011b4fa7b54f84076a165732a0d, type: 3}
+  - {fileID: 21300000, guid: b97680ff75768ca4a9da958af0d27ae5, type: 3}
+  - {fileID: 21300000, guid: bacfb60b89508404b857df8d707200c6, type: 3}
 --- !u!1 &1135321817
 GameObject:
   m_ObjectHideFlags: 0
@@ -1675,8 +1676,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 780.9, y: -39.5}
-  m_SizeDelta: {x: 1158.973, y: 1159}
+  m_AnchoredPosition: {x: 808.5, y: -138.4}
+  m_SizeDelta: {x: 1466.4999, y: 1833.1248}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1287320472
 MonoBehaviour:
@@ -1698,7 +1699,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 9a311d21787f4b34f99bc6b4a1fb5a6d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: faaaaa631cf50474fa25d4293659bd6e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2226,6 +2227,7 @@ MonoBehaviour:
   image: {fileID: 1452864581}
   selectedColor: {r: 1, g: 0, b: 0, a: 1}
   soundEffect: {fileID: 8300000, guid: 114f394be7ae9c34a8b4d2634b4d0589, type: 3}
+  button: {fileID: 0}
 --- !u!1 &1493736998
 GameObject:
   m_ObjectHideFlags: 0
@@ -3111,6 +3113,7 @@ MonoBehaviour:
   image: {fileID: 2141439137}
   selectedColor: {r: 1, g: 0, b: 0, a: 1}
   soundEffect: {fileID: 8300000, guid: 114f394be7ae9c34a8b4d2634b4d0589, type: 3}
+  button: {fileID: 0}
 --- !u!114 &2141439137
 MonoBehaviour:
   m_ObjectHideFlags: 0

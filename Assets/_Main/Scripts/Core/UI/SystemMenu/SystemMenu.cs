@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using DIALOGUE;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -19,9 +20,10 @@ public class SystemMenu : MenuScreen
 
     void Update()
     {
-        MenuControl();
+        if(!volumeSlidersMenu.isConcentrating)
+           MenuControl();
         
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !volumeSlidersMenu.isConcentrating)
         {
             if (saveMenu.gameObject.activeSelf)
                 CloseSaveMenu();
@@ -108,6 +110,7 @@ public class SystemMenu : MenuScreen
     {
         yield return new WaitForSecondsRealtime(0.5f);
         Time.timeScale = 1f;
+        DOTween.KillAll();
         SceneManager.LoadScene("TitleScreen");
         yield return new WaitForSecondsRealtime(0.1f);
         Destroy(GameStateManager.instance.persistentObject);

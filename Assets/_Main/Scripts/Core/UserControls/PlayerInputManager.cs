@@ -72,14 +72,12 @@ namespace DIALOGUE
             {
                 MusicManager.instance.LowerVolume();
                 Time.timeScale = 0f;
-                CursorManager.instance.Hide();
                 pauseMenu.OpenGeneralMenu();
             }
             else
             {
                 MusicManager.instance.RaiseVolume();
                 Time.timeScale = 1f;
-                CursorManager.instance.Show();
                 pauseMenu.CloseGeneralMenu();
             }
         }

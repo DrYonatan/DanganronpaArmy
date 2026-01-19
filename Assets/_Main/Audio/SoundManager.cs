@@ -1,9 +1,11 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance { get; private set; }
     public AudioSource textBoxAudio;
+    public AudioMixer mixer;
 
     private void Awake()
     {
@@ -22,6 +24,7 @@ public class SoundManager : MonoBehaviour
         // Create a temporary GameObject with an AudioSource
         GameObject tempAudio = new GameObject($"TempAudio_{clip.name}");
         AudioSource audioSource = tempAudio.AddComponent<AudioSource>();
+        audioSource.outputAudioMixerGroup = mixer.FindMatchingGroups("SFX")[0];
         audioSource.clip = clip;
         audioSource.Play();
 

@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class TitleScreenActionButton : TitleScreenMenuButton
 {
-    private Button button;
+    public Button button;
 
     private void Awake()
     {
@@ -12,7 +12,7 @@ public class TitleScreenActionButton : TitleScreenMenuButton
 
     public override void Click()
     {
-        image.DOKill();
+        base.Click();
         button.onClick.Invoke();
     }
 }
