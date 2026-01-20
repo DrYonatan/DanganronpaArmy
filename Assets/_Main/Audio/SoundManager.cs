@@ -14,7 +14,18 @@ public class SoundManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+        
         instance = this;
+        ApplySettings();
+    }
+
+    private void ApplySettings()
+    {
+        float music = PlayerPrefs.GetFloat("MusicVolume", 0.75f);
+        float sfx = PlayerPrefs.GetFloat("SFXVolume", 0.75f);
+        
+        mixer.SetFloat("MusicVolume", Mathf.Log10(music) * 20f);
+        mixer.SetFloat("SFXVolume", Mathf.Log10(sfx) * 20f);
     }
 
     public void PlaySoundEffect(AudioClip clip)

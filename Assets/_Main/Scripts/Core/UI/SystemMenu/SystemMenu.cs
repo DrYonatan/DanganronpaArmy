@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 public class SystemMenu : MenuScreen
 {
     public List<TitleScreenActionButton> buttons;
+    public RectTransform saveLoadMenu;
     public VolumeSlidersMenu volumeSlidersMenu;
 
     public SaveSelectMenu saveMenu;
@@ -18,11 +19,20 @@ public class SystemMenu : MenuScreen
 
     private int buttonIndex;
 
+    private Vector2 originalSaveMenuPos;
+    private Vector2 originalVolumeMenuPos;
+
+    void Awake()
+    {
+        originalSaveMenuPos = saveLoadMenu.anchoredPosition;
+        originalVolumeMenuPos = volumeSlidersMenu.GetComponent<RectTransform>().localPosition;
+    }
+
     void Update()
     {
-        if(!volumeSlidersMenu.isConcentrating)
-           MenuControl();
-        
+        if (!volumeSlidersMenu.isConcentrating)
+            MenuControl();
+
         if (Input.GetKeyDown(KeyCode.Escape) && !volumeSlidersMenu.isConcentrating)
         {
             if (saveMenu.gameObject.activeSelf)
@@ -90,7 +100,7 @@ public class SystemMenu : MenuScreen
     {
         saveMenu.gameObject.SetActive(false);
     }
-    
+
     public void OpenLoadMenu()
     {
         loadMenu.gameObject.SetActive(true);
@@ -115,5 +125,20 @@ public class SystemMenu : MenuScreen
         yield return new WaitForSecondsRealtime(0.1f);
         Destroy(GameStateManager.instance.persistentObject);
         Destroy(GameStateManager.instance.gameObject);
+    }
+
+    protected override void LoadContent()
+    {
+        base.LoadContent();
+        OnAppear();
+    }
+
+    private void OnAppear()
+    {
+        saveLoadMenu.anchoredPosition = originalSaveMenuPos + new Vector2(300, 0);
+        volumeSlidersMenu.GetComponent<RectTransform>().anchoredPosition = originalVolumeMenuPos - new Vector2(0, 300);
+
+        saveLoadMenu.DOAnchorPosX(originalSaveMenuPos.x, 0.5f).SetUpdate(true);
+        volumeSlidersMenu.transform.DOLocalMoveY(originalVolumeMenuPos.y, 0.5f).SetDelay(0.2f).SetUpdate(true);
     }
 }

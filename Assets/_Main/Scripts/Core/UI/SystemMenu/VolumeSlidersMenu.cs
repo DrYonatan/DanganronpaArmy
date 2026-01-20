@@ -39,9 +39,12 @@ public class VolumeSlidersMenu : MonoBehaviour
     {
         if (isActive)
         {
-            HandleNavigation();
             if(isConcentrating)
                HandleSliderChange();
+            else
+            {
+                HandleNavigation();
+            }
         }
     }
 
@@ -70,11 +73,6 @@ public class VolumeSlidersMenu : MonoBehaviour
                 isConcentrating = true;
             }
         }
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            isConcentrating = false;
-        }
     }
 
     private void HandleSliderChange()
@@ -90,6 +88,11 @@ public class VolumeSlidersMenu : MonoBehaviour
             current.value = Mathf.Clamp01(
                 current.value + input * changeSpeed * Time.unscaledDeltaTime
             );
+        }
+        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            isConcentrating = false;
         }
     }
 
@@ -130,6 +133,5 @@ public class VolumeSlidersMenu : MonoBehaviour
     private void SetSfxVolume(float value)
     {
         mixer.SetFloat("SFXVolume", Mathf.Log10(value) * 20f);
-
     }
 }

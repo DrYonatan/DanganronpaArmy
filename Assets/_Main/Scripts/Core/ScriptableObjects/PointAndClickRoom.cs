@@ -74,12 +74,6 @@ public class PointAndClickRoom : Room
       
     }
 
-    public void ResetRotations()
-    {
-        verticalRotation = 0f;
-        horizontalRotation = 0f;
-    }
-
     public override void OnConversationEnd()
     {
         CameraManager.instance.ReturnToDollyTrack();

@@ -6,6 +6,7 @@ public abstract class TitleScreenMenuButton : MonoBehaviour
 {
     public Image image;
     public Color selectedColor;
+    public Color defaultColor = Color.black;
     public AudioClip soundEffect;
 
     public virtual void Click()
@@ -17,7 +18,7 @@ public abstract class TitleScreenMenuButton : MonoBehaviour
     private void ClickAnimation()
     {
         image.DOKill();
-        image.color = Color.black;
+        image.color = defaultColor;
         image.DOColor(selectedColor, 0.05f).SetLoops(4, LoopType.Yoyo).SetEase(Ease.Linear).SetUpdate(true);
     }
 
@@ -34,6 +35,6 @@ public abstract class TitleScreenMenuButton : MonoBehaviour
     public void DisableHover()
     {
         image.DOKill();
-        image.color = Color.black;
+        image.color = defaultColor;
     }
 }
