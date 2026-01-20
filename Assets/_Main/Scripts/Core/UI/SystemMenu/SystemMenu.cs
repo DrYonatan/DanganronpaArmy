@@ -59,11 +59,13 @@ public class SystemMenu : MenuScreen
         {
             buttons[buttonIndex].DisableHover();
             volumeSlidersMenu.isActive = true;
+            volumeSlidersMenu.UpdateSelectionVisual();
         }
         else if (Input.GetKeyDown(KeyCode.D))
         {
             buttons[buttonIndex].HoverButtonAnimation();
             volumeSlidersMenu.isActive = false;
+            volumeSlidersMenu.UpdateSelectionVisual();
         }
     }
 

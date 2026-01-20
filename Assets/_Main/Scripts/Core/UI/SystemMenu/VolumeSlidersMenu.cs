@@ -1,3 +1,4 @@
+using DG.Tweening;
 using DIALOGUE;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -12,6 +13,9 @@ public class VolumeSlidersMenu : MonoBehaviour
     public Slider sfxSlider;
     public TitleScreenActionButton applyButton;
 
+    public Image musicFrame;
+    public Image sfxFrame;
+
     [Header("Navigation")]
     public float changeSpeed = 0.5f;
 
@@ -20,14 +24,19 @@ public class VolumeSlidersMenu : MonoBehaviour
     private int currentIndex = 0; 
 
     private Slider[] sliders;
+    private Image[] frames;
 
     public bool isConcentrating;
+
+    public AudioClip chooseSound;
+    public AudioClip moveSound;
 
     void Awake()
     {
         sliders = new Slider[] { musicSlider, sfxSlider };
+        frames = new Image[] { musicFrame, sfxFrame };
 
-        musicSlider.value = PlayerPrefs.GetFloat("MusicVolume", 0.75f);
+    musicSlider.value = PlayerPrefs.GetFloat("MusicVolume", 0.75f);
         sfxSlider.value = PlayerPrefs.GetFloat("SFXVolume", 0.75f);
 
         applyButton.button.onClick.AddListener(ApplySettings);
@@ -54,11 +63,13 @@ public class VolumeSlidersMenu : MonoBehaviour
         {
             currentIndex = Mathf.Max(0, currentIndex - 1);
             UpdateSelectionVisual();
+            SoundManager.instance.PlaySoundEffect(moveSound);
         }
         else if (Input.GetKeyDown(KeyCode.S))
         {
             currentIndex = Mathf.Min(sliders.Length, currentIndex + 1);
             UpdateSelectionVisual();
+            SoundManager.instance.PlaySoundEffect(moveSound);
         }
 
         if (PlayerInputManager.instance.DefaultInput())
@@ -70,6 +81,10 @@ public class VolumeSlidersMenu : MonoBehaviour
             
             else if (!isConcentrating)
             {
+                SoundManager.instance.PlaySoundEffect(chooseSound);
+                var colors = sliders[currentIndex].colors;
+                colors.normalColor = Color.blue;
+                sliders[currentIndex].colors = colors;
                 isConcentrating = true;
             }
         }
@@ -92,17 +107,27 @@ public class VolumeSlidersMenu : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            var colors = sliders[currentIndex].colors;
+            colors.normalColor = Color.gray;
+            sliders[currentIndex].colors = colors;
             isConcentrating = false;
         }
     }
 
-    private void UpdateSelectionVisual()
+    public void UpdateSelectionVisual()
     {
         for (int i = 0; i < sliders.Length; i++)
         {
-            var colors = sliders[i].colors;
-            colors.normalColor = (i == currentIndex) ? Color.yellow : Color.white;
-            sliders[i].colors = colors;
+            if (i == currentIndex && isActive)
+            {
+                frames[i].DOKill();
+                frames[i].DOFade(1f, 0.2f).SetUpdate(true);
+            }
+            else
+            {
+                frames[i].DOKill();
+                frames[i].DOFade(0f, 0.2f).SetUpdate(true);
+            }
         }
 
         if (currentIndex == sliders.Length)
