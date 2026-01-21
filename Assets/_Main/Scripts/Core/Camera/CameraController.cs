@@ -91,6 +91,9 @@ public class CameraController : MonoBehaviour
         {
             pivot.Rotate(Vector3.up, Time.deltaTime * -20f);
             elapsedTime += Time.deltaTime;
+            if (Input.GetKeyDown(KeyCode.LeftControl) && !triggeredUI)
+                elapsedTime = duration * 2.5f - 1f;
+            
             if (!triggeredUI && elapsedTime >= (duration * 2.5f - 1f))
             {
                 Sequence sequence = DOTween.Sequence();
