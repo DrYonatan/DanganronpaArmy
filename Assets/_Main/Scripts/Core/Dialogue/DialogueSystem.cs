@@ -60,10 +60,14 @@ namespace DIALOGUE
             onUserPrompt_Next?.Invoke();
         }
 
-        public void ShowSpeakerName(string speakerName = "")
+        public void ShowSpeakerName(DialogueNode node)
         {
-            if (speakerName.ToLower() != "narrator")
-                dialogueContainer.nameContainer.Show(speakerName);
+            if (node.displayName.ToLower() != "")
+                dialogueContainer.nameContainer.Show(node.displayName);
+            else if (node.character.displayName.ToLower() != "narrator")
+            {
+                dialogueContainer.nameContainer.Show(node.character.displayName);
+            }
             else
                 ClearSpeakerName();
         }

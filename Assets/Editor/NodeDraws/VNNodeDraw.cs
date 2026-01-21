@@ -12,6 +12,7 @@ public class VNNodeDraw : DrawNode
         
         GUILayout.BeginVertical(GUILayout.Width(300));
 
+        b.displayName = EditorGUILayout.TextField("Display Name", b.displayName);
         b.character = (Character)EditorGUILayout.ObjectField(b.character, typeof(Character), false);
         if (b.character != null && b.character.emotions != null && b.character.emotions.Count > 0)
         {

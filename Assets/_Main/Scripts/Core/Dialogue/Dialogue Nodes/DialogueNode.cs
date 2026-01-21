@@ -15,6 +15,7 @@ public class DialogueNode
     public DrawNode drawNode;
 
     public Character character;
+    public string displayName;
 
     public int expressionIndex;
 

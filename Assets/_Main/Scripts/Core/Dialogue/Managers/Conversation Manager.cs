@@ -64,7 +64,7 @@ namespace DIALOGUE
             
             Line_RunCommandsAsync(parallelCommands);
 
-            DialogueSystem.instance.ShowSpeakerName(node.character.displayName);
+            DialogueSystem.instance.ShowSpeakerName(node);
             yield return BuildDialogue(textData.text);
 
             yield return Line_RunCommands(afterCommands);
