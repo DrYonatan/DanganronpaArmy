@@ -451,7 +451,10 @@ public class GameLoop : MonoBehaviour
         }
 
 
-        debateUIAnimator.UpdateName(nextNode.character.displayName);
+        if(nextNode.displayName != "")
+            debateUIAnimator.UpdateName(nextNode.displayName);
+        else
+           debateUIAnimator.UpdateName(nextNode.character.displayName);
         debateUIAnimator.HighlightNode(textIndex);
         yield return cameraController.SpinToTarget(characterStand.transform, characterStand.heightPivot,
             nextNode.positionOffset, nextNode.rotationOffset, nextNode.fovOffset);
