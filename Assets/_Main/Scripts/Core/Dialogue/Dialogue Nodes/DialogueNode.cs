@@ -27,6 +27,15 @@ public class DialogueNode
         this.InitializeTextData();
     }
 
+    public DialogueNode(DrawNode drawNode, DialogueNode copy)
+    {
+        this.drawNode = drawNode;
+        this.InitializeTextData();
+        character = copy.character;
+        displayName = copy.displayName;
+        expressionIndex = copy.expressionIndex;
+    }
+
     public void DrawNode(ConversationSettings settings, float windowWidth, float windowHeight)
     {
         if (drawNode != null)

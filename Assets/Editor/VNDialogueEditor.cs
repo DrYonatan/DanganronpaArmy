@@ -220,7 +220,7 @@ public class VNDialogueEditor : EditorWindow
             
             if (GUILayout.Button("ADD NODE", GUILayout.Height(buttonsHeight)))
             {
-               AddNode(i+1);
+               AddNodeCopy(i+1, nodes[i]);
             }
             
             if (GUILayout.Button("ADD CHOICE NODE", GUILayout.Height(buttonsHeight)))
@@ -248,6 +248,11 @@ public class VNDialogueEditor : EditorWindow
    void AddNode(int index)
    {
       nodes.Insert(index, new DialogueNode(textNode));
+   }
+
+   void AddNodeCopy(int index, DialogueNode copy)
+   {
+      nodes.Insert(index, new DialogueNode(textNode, copy));
    }
 
    void AddChoiceNode(int index)
