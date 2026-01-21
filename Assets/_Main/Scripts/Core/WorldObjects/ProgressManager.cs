@@ -64,7 +64,8 @@ public class ProgressManager : MonoBehaviour
         {
             WorldManager.instance.currentRoom = roomToLoad;
             yield return TimeOfDayManager.instance.ChangeTimeOfDay(currentGameEvent.timeOfDay);
-            WorldManager.instance.StartLoadingRoom(WorldManager.instance.currentRoom, null);
+            yield return WorldManager.instance.MoveToRoom(WorldManager.instance.currentRoom, null);
+            VNNodePlayer.instance.StartConversation(gameEvents[currentGameEventIndex].startText);
         }
 
         else

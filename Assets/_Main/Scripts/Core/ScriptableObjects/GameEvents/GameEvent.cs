@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 [Serializable]
 public class ObjectData
@@ -62,6 +60,11 @@ public abstract class GameEvent : ScriptableObject
 
         if (WorldManager.instance.objectsObject == null)
             WorldManager.instance.CreateObjects(currentRoomData.worldObjects);
+
+        if (startText != null)
+        {
+            VNNodePlayer.instance.StartConversation(startText);
+        }
     }
 
     protected virtual void OnFinish()

@@ -205,7 +205,7 @@ public class DebateUIAnimator : MonoBehaviour
     public void ShowTextBox()
     {
         namePart.DOAnchorPosY(0, 0.3f);
-        facePart.DOAnchorPos(new Vector2(26.57f, 125), 0.3f);
+        facePart.DOAnchorPos(new Vector2(30f, 125), 0.3f);
     }
 
     public void HideTextBox()

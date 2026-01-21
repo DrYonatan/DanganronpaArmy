@@ -144,7 +144,7 @@ public class WorldManager : MonoBehaviour
         }
     }
 
-    private IEnumerator MoveToRoom(Room room, [CanBeNull] string entryPoint)
+    public IEnumerator MoveToRoom(Room room, [CanBeNull] string entryPoint)
     {
         CameraManager.instance.footStepsSource.Stop();
         CursorManager.instance.ShowOrHideConversationIcon(false);
