@@ -70,7 +70,7 @@ public class ComicAnimatedSprite : MonoBehaviour
                 rectTransform.anchoredPosition = startKeyFrame.attribute;
 
                 rectTransform.DOAnchorPos(endKeyFrame.attribute, endKeyFrame.duration)
-                    .SetTarget(ComicManager.instance.currentPresentedPage);
+                    .SetLink(rectTransform.gameObject);
 
                 yield return new WaitForSeconds(endKeyFrame.duration);
             }
@@ -88,7 +88,7 @@ public class ComicAnimatedSprite : MonoBehaviour
             onFinish?.Invoke();
 
         yield return new WaitForSeconds(spriteAnimation.delay);
-        
+
         int repeat = 0;
         while (repeat < spriteAnimation.repeatTimes || spriteAnimation.repeatTimes == -1)
         {
@@ -100,7 +100,7 @@ public class ComicAnimatedSprite : MonoBehaviour
                 rectTransform.localRotation = Quaternion.Euler(new Vector3(0, 0, startKeyFrame.attribute));
 
                 rectTransform.DOLocalRotate(new Vector3(0, 0, endKeyFrame.attribute), endKeyFrame.duration)
-                    .SetTarget(ComicManager.instance.currentPresentedPage);
+                    .SetLink(rectTransform.gameObject);
                 ;
 
                 yield return new WaitForSeconds(endKeyFrame.duration);
@@ -131,8 +131,7 @@ public class ComicAnimatedSprite : MonoBehaviour
                 rectTransform.localScale = startKeyFrame.attribute;
 
                 rectTransform.DOScale(endKeyFrame.attribute, endKeyFrame.duration)
-                    .SetTarget(ComicManager.instance.currentPresentedPage);
-                ;
+                    .SetLink(rectTransform.gameObject);
 
                 yield return new WaitForSeconds(endKeyFrame.duration);
             }
@@ -163,8 +162,7 @@ public class ComicAnimatedSprite : MonoBehaviour
                 image.color = startKeyFrame.attribute;
 
                 image.DOColor(endKeyFrame.attribute, endKeyFrame.duration)
-                    .SetTarget(ComicManager.instance.currentPresentedPage);
-                ;
+                    .SetLink(image.gameObject);
 
                 yield return new WaitForSeconds(endKeyFrame.duration);
             }

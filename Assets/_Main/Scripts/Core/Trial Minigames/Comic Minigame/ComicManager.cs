@@ -247,7 +247,8 @@ public class ComicManager : MonoBehaviour
         {
             yield return DialogueSystem.instance.Say(node);
         }
-        
+
+        isReadyToPresent = false;
         SwitchToPuzzleMode();
         currentPresentedPage.KillPanelTweens();
         Destroy(currentPresentedPage.gameObject);

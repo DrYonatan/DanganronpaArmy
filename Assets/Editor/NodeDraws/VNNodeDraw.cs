@@ -91,6 +91,9 @@ public class VNNodeDraw : DrawNode
             menu.AddItem(new GUIContent("Remove Popup"), false, () => AddCommand(node, new RemovePopup()));
             menu.AddItem(new GUIContent("Show Image"), false, () => AddCommand(node, new ShowImage()));
             menu.AddItem(new GUIContent("Remove Image"), false, () => AddCommand(node, new RemoveImage()));
+            menu.AddItem(new GUIContent("Show Animated Image"), false, () => AddCommand(node, new ShowAnimatedImage()));
+            menu.AddItem(new GUIContent("Forward Animated Image"), false, () => AddCommand(node, new ForwardAnimatedImage()));
+            menu.AddItem(new GUIContent("Remove Animated Image"), false, () => AddCommand(node, new RemoveAnimatedImage()));
             // Add more as needed
             menu.ShowAsContext();
         }

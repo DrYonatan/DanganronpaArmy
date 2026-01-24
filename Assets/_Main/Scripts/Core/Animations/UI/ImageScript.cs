@@ -1,3 +1,4 @@
+using System.Collections;
 using DG.Tweening;
 using DIALOGUE;
 using UnityEditorInternal.VersionControl;
@@ -14,6 +15,9 @@ public class ImageScript : MonoBehaviour
     public CanvasGroup canvasGroup;
     public AudioClip flashSound;
 
+    public CanvasGroup animatedImageContainer;
+    public VNAnimatedImage animatedImage;
+
     private void Awake()
     {
         blackFade.alpha = 1f;
@@ -26,19 +30,19 @@ public class ImageScript : MonoBehaviour
         OverlayTextBoxManager.instance.SetAsTextBox();
         OverlayTextBoxManager.instance.Show();
         ShowingOrHiding(canvasGroup, duration, 1f);
-        
+
         if (flash)
         {
             Flash(duration);
         }
     }
 
-    public void Hide(bool flash, float duration=0.4f)
+    public void Hide(bool flash, float duration = 0.4f)
     {
         OverlayTextBoxManager.instance.Hide();
         DialogueSystem.instance.UseInitialDialogueContainer();
         ShowingOrHiding(canvasGroup, duration, 0f);
-             
+
         if (flash)
         {
             Flash(duration);
@@ -50,7 +54,7 @@ public class ImageScript : MonoBehaviour
         SoundManager.instance.PlaySoundEffect(flashSound);
         whiteFlash.DOFade(1f, duration / 2).SetLoops(2, LoopType.Yoyo);
     }
-    
+
     public void FadeToBlack(float duration)
     {
         ShowingOrHiding(blackFade, duration, 1f);
@@ -64,5 +68,28 @@ public class ImageScript : MonoBehaviour
     private void ShowingOrHiding(CanvasGroup canvasGroupToShowOrHide, float duration, float targetAlpha)
     {
         canvasGroupToShowOrHide.DOFade(targetAlpha, duration);
+    }
+
+    public void CreateAnimatedImage(VNAnimatedImage image)
+    {
+        animatedImage = Instantiate(image, animatedImageContainer.transform);
+        animatedImageContainer.DOFade(1f, 0.2f).SetEase(Ease.Linear);
+    }
+
+    public IEnumerator ForwardAnimatedImage()
+    {
+        if (animatedImage == null)
+            yield break;
+
+        yield return animatedImage.ForwardSegment();
+    }
+
+    public void RemoveAnimatedImage()
+    {
+        if (animatedImage == null)
+            return;
+
+        animatedImageContainer.DOFade(0f, 0.2f).SetEase(Ease.Linear)
+            .OnComplete(() => Destroy(animatedImage.gameObject));
     }
 }
