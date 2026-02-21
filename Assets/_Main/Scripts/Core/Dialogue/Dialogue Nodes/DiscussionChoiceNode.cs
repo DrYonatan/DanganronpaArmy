@@ -15,9 +15,9 @@ public class DiscussionChoiceNode: DiscussionNode
 
     public override IEnumerator Play()
     {
-        TrialManager.instance.barsAnimator.ShowGlobalBars(0.2f);
         if (isHp)
         {
+            TrialManager.instance.barsAnimator.ShowGlobalBars(0.2f);
             yield return choiceLogic.Play(base.Play, OnCorrect, OnWrong);
         }
 

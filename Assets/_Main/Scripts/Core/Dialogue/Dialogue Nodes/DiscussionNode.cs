@@ -31,24 +31,57 @@ public class DiscussionNode : DialogueNode
         if(data == null)
             yield break;
 
+        if (character == null)
+            yield break;
+
         yield return DialogueSystem.instance.RunBeforeCommands(data.commands);
         
         CharacterStand characterStand = TrialManager.instance.characterStands.Find(stand => stand.character == character);
-        if (!usePrevCamera)
+
+        if (characterStand != null)
         {
-            TrialDialogueManager.instance.cameraController.TeleportToTarget(characterStand.transform, characterStand.heightPivot, positionOffset, rotationOffset, fovOffset);
-            TrialDialogueManager.instance.effectController.Reset();
+            RunNodePhysical(characterStand);
         }
 
-        ((CourtTextBoxAnimator)(DialogueSystem.instance.dialogueBoxAnimator)).ChangeFace(character.faceSprite);
+        else
+        {
+            RunNodeNonPhysical();
+        }
+
         
         foreach (CameraEffect cameraEffect in cameraEffects)
         {
             TrialDialogueManager.instance.effectController.StartEffect(cameraEffect);
         }
-        characterStand.SetSprite(character.emotions[expressionIndex]);
 
         yield return DialogueSystem.instance.Say(this);
+    }
+
+    private void RunNodePhysical(CharacterStand stand)
+    {
+        if (!usePrevCamera)
+        {
+            TrialDialogueManager.instance.cameraController.TeleportToTarget(stand.transform, stand.heightPivot, positionOffset, rotationOffset, fovOffset);
+            TrialDialogueManager.instance.effectController.Reset();
+        }
+        
+        stand.SetSprite(character.emotions[expressionIndex]);
+            
+        CourtTextBoxAnimator animator = (CourtTextBoxAnimator)(DialogueSystem.instance.dialogueBoxAnimator);
+
+        if (!animator.characterFace.isVisible)
+        {
+            animator.FaceAppear();
+        }
+        animator.ChangeFace(character.faceSprite);
+    }
+
+    private void RunNodeNonPhysical()
+    {
+        CourtTextBoxAnimator animator = (CourtTextBoxAnimator)(DialogueSystem.instance.dialogueBoxAnimator);
+        
+        if(animator.characterFace.isVisible)
+           animator.characterFace.DiscussionFaceContainerDisappear(animator.duration);
     }
     
 }

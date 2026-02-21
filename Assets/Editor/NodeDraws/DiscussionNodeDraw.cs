@@ -154,7 +154,7 @@ public class DiscussionNodeDraw : VNNodeDraw
     
     private void UpdatePreview(DiscussionNode b)
     {
-        if (b.previewCamera == null || b.character == null)
+        if (b.previewCamera == null || b.characterStand == null)
             return;
         b.previewPivot.transform.rotation = Quaternion.LookRotation(new Vector3(b.characterStand.transform.position.x, 0f, b.characterStand.transform.position.z));
         

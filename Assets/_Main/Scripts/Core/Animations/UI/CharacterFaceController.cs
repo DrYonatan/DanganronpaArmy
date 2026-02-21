@@ -12,6 +12,8 @@ public class CharacterFaceController : MonoBehaviour
     [SerializeField] private Image debateFaceImage;
     public Image debateFaceYellowOverlay;
 
+    public bool isVisible;
+
     // Offsets for aligning each character's face inside the cropped box
     public void SetFace(Sprite sprite)
     {
@@ -64,6 +66,7 @@ public class CharacterFaceController : MonoBehaviour
 
     public void DiscussionFaceContainerAppear(float duration)
     {
+        isVisible = true;
         faceWhiteOverlay.color = Color.white;
         discussionFaceContainer.localScale = new Vector3(1f, 0f, 1f);
         discussionFaceContainer.transform.DOScaleY(1f, duration);
@@ -71,6 +74,7 @@ public class CharacterFaceController : MonoBehaviour
 
     public void DiscussionFaceContainerDisappear(float duration)
     {
+        isVisible = false;
         discussionFaceContainer.localScale = new Vector3(1f, 1f, 1f);
         discussionFaceContainer.DOScaleY(0f, duration);
     }
