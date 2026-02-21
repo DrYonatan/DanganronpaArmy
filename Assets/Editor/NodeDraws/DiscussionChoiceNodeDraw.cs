@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Behaviour Editor/Draw/Discussion Choice Node Draw")]
@@ -22,7 +23,9 @@ public class DiscussionChoiceNodeDraw : DiscussionNodeDraw
             style.fontSize = 20;
             style.padding = new RectOffset(10, 10, 0, 0);
             GUILayout.Label("#Choice", style, GUILayout.ExpandWidth(false));
+            
             base.DrawWindow(b, settings, windowWidth, windowHeight);
+            node.isHp = GUILayout.Toggle(node.isHp, "Is Hp");
             choiceLogicDraw.DrawLogic(node.choiceLogic, (nodes) =>
             {
                 ConversationEditor.Open(nodes, settings, null);
