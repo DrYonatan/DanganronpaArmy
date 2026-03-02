@@ -61,11 +61,13 @@ namespace DIALOGUE
 
             List<Command> parallelCommands = GetParallelCommands(textData.commands);
             List<Command> afterCommands = GetAfterCommands(textData.commands);
-            
+
             Line_RunCommandsAsync(parallelCommands);
 
             DialogueSystem.instance.ShowSpeakerName(node);
-            yield return BuildDialogue(textData.text);
+
+            string text = TranslateColorTags(textData.text);
+            yield return BuildDialogue(text);
 
             yield return Line_RunCommands(afterCommands);
 
@@ -83,6 +85,16 @@ namespace DIALOGUE
                 yield return new WaitForSeconds(0.2f);
                 SoundManager.instance.PlayTextBoxSound();
             }
+        }
+
+        private string TranslateColorTags(string originalText)
+        {
+            if (string.IsNullOrEmpty(originalText))
+                return "";
+
+            return originalText.ToLower().Replace(">", "</color>").Replace("<g", "<color=green>")
+                .Replace("<o", "<color=orange>")
+                .Replace("<b", "<color=blue>");
         }
 
         public List<Command> GetBeforeCommands(List<Command> commands)
@@ -138,7 +150,6 @@ namespace DIALOGUE
 
                 yield return null;
             }
-
         }
 
         public IEnumerator WaitForUserInput()
