@@ -69,7 +69,7 @@ public class DiscussionNode : DialogueNode
             
         CourtTextBoxAnimator animator = (CourtTextBoxAnimator)(DialogueSystem.instance.dialogueBoxAnimator);
 
-        if (!animator.characterFace.isVisible)
+        if (!animator.characterFace.isVisible && !GameLoop.instance.isActive)
         {
             animator.FaceAppear();
         }

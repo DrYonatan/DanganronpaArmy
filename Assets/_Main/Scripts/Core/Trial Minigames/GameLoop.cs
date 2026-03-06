@@ -63,6 +63,7 @@ public class GameLoop : MonoBehaviour
     CharacterStand characterStand;
 
     public bool isActive;
+    public bool isDebateActive;
 
     public GameObject textBulletPrefab;
     public float shootForce = 10f;
@@ -79,6 +80,7 @@ public class GameLoop : MonoBehaviour
 
     public void PlayDebate(DebateSegment debate)
     {
+        isActive = true;
         debateSegment = debate;
         debateTexts = new List<FloatingText>();
         ResetValues();
@@ -106,7 +108,7 @@ public class GameLoop : MonoBehaviour
         MinigameStartAnimation anim = Instantiate(startAnimation, TrialManager.instance.globalUI);
         anim.Animate(1f);
         yield return StartCoroutine(cameraController.DebateStartCameraMovement(3f));
-        isActive = true;
+        isDebateActive = true;
         TimeManipulationManager.instance.isInputActive = true;
         TimerManager.instance.SetTimer(300);
     }
@@ -114,9 +116,9 @@ public class GameLoop : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isActive)
+        if (isDebateActive)
         {
-            if (PlayerInputManager.instance.isPaused || !isActive)
+            if (PlayerInputManager.instance.isPaused || !isDebateActive)
             {
                 return;
             }
@@ -176,7 +178,7 @@ public class GameLoop : MonoBehaviour
     private void DeactivateDebate()
     {
         Time.timeScale = 1f;
-        isActive = false;
+        isDebateActive = false;
         TimeManipulationManager.instance.DeActivateInput();
     }
 
@@ -208,7 +210,7 @@ public class GameLoop : MonoBehaviour
         debateUIAnimator.HideTextBox();
         yield return new WaitForSeconds(1f);
         reachedEnd = false;
-        isActive = true;
+        isDebateActive = true;
         TimeManipulationManager.instance.isInputActive = true;
         debateUIAnimator.ShowCylinderAndCircles();
         CursorManager.instance.Show();
@@ -302,7 +304,7 @@ public class GameLoop : MonoBehaviour
 
         Destroy(bullet);
         isShooting = false;
-        if (isActive)
+        if (isDebateActive)
             debateUIAnimator.LoadBullet();
     }
 
@@ -315,6 +317,7 @@ public class GameLoop : MonoBehaviour
     {
         CorrectChoice();
         TrialCursorManager.instance.isHovering = false;
+        isActive = false;
         gameObject.GetComponent<TextShatterEffect>().Explosion(point);
     }
 
@@ -417,6 +420,7 @@ public class GameLoop : MonoBehaviour
     private IEnumerator GameOverPipeline()
     {
         DeactivateDebate();
+        isActive = false;
         TrialDialogueManager.instance.StopConversation();
         yield return TrialManager.instance.ShowFailedScreen();
         StopWrongHitNodes();
