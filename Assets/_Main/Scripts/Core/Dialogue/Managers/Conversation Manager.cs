@@ -92,9 +92,9 @@ namespace DIALOGUE
             if (string.IsNullOrEmpty(originalText))
                 return "";
 
-            return originalText.ToLower().Replace(">", "</color>").Replace("<g", "<color=green>")
-                .Replace("<o", "<color=orange>")
-                .Replace("<b", "<color=blue>");
+            return originalText.ToLower().Replace(">", "</color>").Replace("<g", "<color=#2EF03B>")
+                .Replace("<o", "<color=#F0BC2E>")
+                .Replace("<b", "<color=#2EB3F0>");
         }
 
         public List<Command> GetBeforeCommands(List<Command> commands)
