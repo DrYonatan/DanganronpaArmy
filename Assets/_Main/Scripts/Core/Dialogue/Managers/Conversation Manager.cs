@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using COMMANDS;
 using UnityEngine;
 
@@ -92,9 +93,15 @@ namespace DIALOGUE
             if (string.IsNullOrEmpty(originalText))
                 return "";
 
-            return originalText.ToLower().Replace(">", "</color>").Replace("<g", "<color=#2EF03B>")
+            string replaced = originalText.ToLower().Replace(">", "</color>").Replace("<g", "<color=#2EF03B>")
                 .Replace("<o", "<color=#F0BC2E>")
                 .Replace("<b", "<color=#2EB3F0>");
+            int count = 0;
+            return string.Concat(replaced.Select(c =>
+                c == '*'
+                    ? (++count % 2 == 1 ? "<material=BoldFont><color=#F0BC2E>" : "</color></material>")
+                    : c.ToString()
+            ));
         }
 
         public List<Command> GetBeforeCommands(List<Command> commands)
