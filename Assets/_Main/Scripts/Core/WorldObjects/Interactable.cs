@@ -15,6 +15,8 @@ public abstract class Interactable : MonoBehaviour
     {
         if (!CursorManager.instance.cursor.gameObject.activeInHierarchy)
             yield break;
+        
+        PlayerInputManager.instance.DisableInput();
         StartCoroutine(MoveAndRotateCameraTo());
         CursorManager.instance.Hide();
         CursorManager.instance.ShowOrHideInteractableName(false, "");

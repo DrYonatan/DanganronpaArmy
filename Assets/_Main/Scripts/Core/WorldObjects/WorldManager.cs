@@ -213,6 +213,7 @@ public class WorldManager : MonoBehaviour
         ob.PlayRoomIntroEffects();
         yield return room.AppearAnimation();
         isLoading = false;
+        PlayerInputManager.instance.EnableInput();
 
         CreateCharacters(ProgressManager.instance.currentGameEvent.roomDatas
             .First(roomData => roomData.room.roomName.Equals(currentRoom.roomName)).characters);

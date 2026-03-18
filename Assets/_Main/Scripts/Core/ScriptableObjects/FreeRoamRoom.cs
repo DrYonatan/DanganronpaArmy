@@ -23,6 +23,9 @@ public class FreeRoamRoom : Room
 
     public override void MovementControl()
     {
+        if (!PlayerInputManager.instance.isInputActive)
+            return;
+        
         MapContainer.instance.HandleMapVisibility();
         Move();
         Look();

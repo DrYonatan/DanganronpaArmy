@@ -45,14 +45,6 @@ namespace DIALOGUE
             return process;
         }
 
-        private void StopPreviousText()
-        {
-            if (!isRunning)
-                return;
-            dialogueSystem.StopCoroutine(process);
-            process = null;
-        }
-
         IEnumerator RunNodeText(DialogueNode node)
         {
             VNTextData textData = node.textData as VNTextData;
@@ -83,7 +75,7 @@ namespace DIALOGUE
             }
             else if (isSkip)
             {
-                yield return new WaitForSeconds(0.2f);
+                yield return new WaitForSeconds(0.1f);
                 SoundManager.instance.PlayTextBoxSound();
             }
         }

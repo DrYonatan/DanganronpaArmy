@@ -14,16 +14,18 @@ namespace DIALOGUE
 
         public bool isInputActive;
 
+        public bool isDialogueInputActive;
+
         void Start()
         {
             isPaused = false;
             instance = this;
-            isInputActive = true;
+            isDialogueInputActive = true;
         }
 
         void Update()
         {
-            if (isInputActive)
+            if (isDialogueInputActive)
             {
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Confined;
@@ -50,6 +52,16 @@ namespace DIALOGUE
                     TogglePause();
                 }
             }
+        }
+
+        public void EnableInput()
+        {
+            isInputActive = true;
+        }
+
+        public void DisableInput()
+        {
+            isInputActive = false;
         }
 
         public bool DefaultInput()

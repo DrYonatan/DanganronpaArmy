@@ -6,10 +6,11 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Behaviour Editor/Draw/Dialogue Node Draw")]
 public class VNNodeDraw : DrawNode
 {
-    public override void DrawWindow(DialogueNode b, ConversationSettings settings, float windowWidth, float windowHeight)
+    public override void DrawWindow(DialogueNode b, ConversationSettings settings, float windowWidth,
+        float windowHeight)
     {
         GUILayout.BeginHorizontal();
-        
+
         GUILayout.BeginVertical(GUILayout.Width(300));
 
         b.displayName = EditorGUILayout.TextField("Display Name", b.displayName);
@@ -31,28 +32,30 @@ public class VNNodeDraw : DrawNode
         else
         {
             EditorGUILayout.LabelField("No emotions defined for this character.");
-        }        ShowPreviewImage(b);
+        }
+
+        ShowPreviewImage(b);
         GUILayout.EndVertical();
-        
+
         ShowTextData(b, windowWidth * 0.5f);
-        
+
         GUILayout.EndHorizontal();
     }
 
     protected virtual void ShowTextData(DialogueNode b, float width)
     {
         VNTextData vnTextData = (VNTextData)b.textData;
-        vnTextData.text = GUILayout.TextArea(vnTextData.text, GUILayout.Height(180),  GUILayout.Width(width));
+        vnTextData.text = GUILayout.TextArea(vnTextData.text, GUILayout.Height(180), GUILayout.Width(width));
         GUILayout.BeginVertical();
         ShowCommands(b);
         GUILayout.EndVertical();
     }
-    
+
     private void ShowCommands(DialogueNode node)
     {
         List<Command> commands = ((VNTextData)node.textData).commands;
         GUILayout.Label("Commands", EditorStyles.boldLabel);
-        
+
         node.commandsScrollPosition = GUILayout.BeginScrollView(node.commandsScrollPosition, GUILayout.Height(150));
         for (int i = 0; i < commands?.Count; i++)
         {
@@ -74,17 +77,19 @@ public class VNNodeDraw : DrawNode
 
             GUILayout.EndVertical();
         }
-        
+
         GUILayout.EndScrollView();
 
         if (GUILayout.Button("Add Command"))
         {
-            
             GenericMenu menu = new GenericMenu();
-            menu.AddItem(new GUIContent("Play Sound Effect"), false, () => AddCommand(node, new PlaySoundEffectCommand()));
+            menu.AddItem(new GUIContent("Play Sound Effect"), false,
+                () => AddCommand(node, new PlaySoundEffectCommand()));
             menu.AddItem(new GUIContent("Play Music"), false, () => AddCommand(node, new PlayMusicCommand()));
-            menu.AddItem(new GUIContent("Play Ultimate Animation"), false, () => AddCommand(node, new PlayUltimateAnimation()));
-            menu.AddItem(new GUIContent("Select Evidence"), false, () => AddCommand(node, new PromptEvidenceSelection()));
+            menu.AddItem(new GUIContent("Play Ultimate Animation"), false,
+                () => AddCommand(node, new PlayUltimateAnimation()));
+            menu.AddItem(new GUIContent("Select Evidence"), false,
+                () => AddCommand(node, new PromptEvidenceSelection()));
             menu.AddItem(new GUIContent("Cut In"), false, () => AddCommand(node, new CutInCommand()));
             menu.AddItem(new GUIContent("Fill to Full HP"), false, () => AddCommand(node, new FillFullHPCommand()));
             menu.AddItem(new GUIContent("Show Popup"), false, () => AddCommand(node, new ShowPopup()));
@@ -92,14 +97,17 @@ public class VNNodeDraw : DrawNode
             menu.AddItem(new GUIContent("Show Image"), false, () => AddCommand(node, new ShowImage()));
             menu.AddItem(new GUIContent("Remove Image"), false, () => AddCommand(node, new RemoveImage()));
             menu.AddItem(new GUIContent("Show Animated Image"), false, () => AddCommand(node, new ShowAnimatedImage()));
-            menu.AddItem(new GUIContent("Forward Animated Image"), false, () => AddCommand(node, new ForwardAnimatedImage()));
-            menu.AddItem(new GUIContent("Remove Animated Image"), false, () => AddCommand(node, new RemoveAnimatedImage()));
-            // Add more as needed
+            menu.AddItem(new GUIContent("Forward Animated Image"), false,
+                () => AddCommand(node, new ForwardAnimatedImage()));
+            menu.AddItem(new GUIContent("Remove Animated Image"), false,
+                () => AddCommand(node, new RemoveAnimatedImage()));
+            menu.AddItem(new GUIContent("Shake Screen"), false, () => AddCommand(node, new ShakeScreen()));
+            menu.AddItem(new GUIContent("Hide Speaker"), false, () => AddCommand(node, new HideCharacter()));
+            
             menu.ShowAsContext();
         }
-        
     }
-    
+
     private void AddCommand(DialogueNode node, Command command)
     {
         VNTextData vnTextData = (VNTextData)node.textData;
@@ -108,8 +116,8 @@ public class VNNodeDraw : DrawNode
         {
             vnTextData.commands = new List<Command>();
         }
+
         vnTextData.commands.Add(command);
-        
     }
 
     protected virtual void ShowPreviewImage(DialogueNode node)
