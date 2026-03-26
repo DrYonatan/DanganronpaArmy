@@ -33,7 +33,7 @@ public class ImageScript : MonoBehaviour
 
         if (flash)
         {
-            Flash(duration);
+            Flash(duration, flashSound);
         }
     }
 
@@ -45,13 +45,13 @@ public class ImageScript : MonoBehaviour
 
         if (flash)
         {
-            Flash(duration);
+            Flash(duration, flashSound);
         }
     }
 
-    private void Flash(float duration)
+    public void Flash(float duration, AudioClip sound)
     {
-        SoundManager.instance.PlaySoundEffect(flashSound);
+        SoundManager.instance.PlaySoundEffect(sound);
         whiteFlash.DOFade(1f, duration / 2).SetLoops(2, LoopType.Yoyo);
     }
 
