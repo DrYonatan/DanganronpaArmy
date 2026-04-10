@@ -14,44 +14,54 @@ public class AddEvidenceAnimator : MonoBehaviour
     public Image image;
     private float bulletOriginalPosX;
     private float imageOriginalPosX;
+    private float glowOriginalPosY;
     public GameObject container;
     public Image bulletDuplicate;
     public RectTransform bulletDuplicateTransform;
     public AudioClip evidenceAddedSound;
+    public RectTransform blueGlowTransform;
+    public Image blueGlow;
+    public RectTransform blueGlowDuplicateTransform;
+    public Image blueGlowDuplicate;
 
     void Start()
     {
         bulletOriginalPosX = bullet.anchoredPosition.x;
         imageOriginalPosX = imageTransform.anchoredPosition.x;
+        glowOriginalPosY = imageTransform.anchoredPosition.y;
     }
 
     public IEnumerator PlayAnimation(Evidence evidence)
     {
         container.SetActive(true);
-        bool bulletAnimationCompleted = false;
         image.sprite = evidence.icon;
-        imageContainer.DOFade(0, 0);
-        imageTransform.DOAnchorPosX(imageOriginalPosX - 200f, 0f).OnComplete(() =>
-        {
-            imageContainer.DOFade(1, 0.3f);
-            imageTransform.DOAnchorPosX(imageOriginalPosX, 0.3f);
-        });
+
         MusicManager.instance.PauseSong();
         SoundManager.instance.PlaySoundEffect(evidenceAddedSound);
-        bullet.DOAnchorPosX(bulletOriginalPosX - 1200f, 0f).OnComplete(() =>
-        {
-            bullet.DOAnchorPosX(bulletOriginalPosX, 0.3f).OnComplete(() =>
-            {
-                BulletDuplicateAnimation();
-                bullet.DOAnchorPosX(bulletOriginalPosX + 1200f, 0.2f).SetDelay(0.8f).OnComplete(() =>
-                {
-                    bulletAnimationCompleted = true;
-                });
-            });
-            ;
-        });
-        yield return new WaitUntil(() => bulletAnimationCompleted);
-        yield return SayText(evidence.name);
+        Sequence imageSeq = DOTween.Sequence();
+        imageSeq.Append(imageContainer.DOFade(0, 0));
+        imageSeq.Join(imageTransform.DOAnchorPosX(imageOriginalPosX - 200f, 0));
+        imageSeq.Append(imageContainer.DOFade(1, 0.3f));
+        imageSeq.Join(imageTransform.DOAnchorPosX(imageOriginalPosX, 0.3f));
+
+        Sequence bulletSeq = DOTween.Sequence();
+        bulletSeq.Append(bullet.DOAnchorPosX(bulletOriginalPosX - 1200f, 0));
+        bulletSeq.Append(bullet.DOAnchorPosX(bulletOriginalPosX, 0.3f));
+        bulletSeq.Join(blueGlow.DOFade(0.5f, 0.3f));
+        bulletSeq.AppendCallback(() => BulletDuplicateAnimation());
+        bulletSeq.Append(blueGlowDuplicate.DOFade(0.5f, 0.5f));
+        bulletSeq.Append(bullet.DOAnchorPosX(bulletOriginalPosX + 1200f, 0.2f));
+        bulletSeq.Join(blueGlowTransform.DOAnchorPosY(glowOriginalPosY - 100f, 0.2f));
+        bulletSeq.Join(blueGlowDuplicateTransform.DOAnchorPosY(glowOriginalPosY + 100f, 0.2f));
+        bulletSeq.Join(blueGlow.DOFade(0, 0.2f));
+        bulletSeq.Join(blueGlowDuplicate.DOFade(0, 0.2f));
+        Sequence masterSeq = DOTween.Sequence();
+        masterSeq.Join(imageSeq);
+        masterSeq.Join(bulletSeq);
+
+        yield return masterSeq.WaitForCompletion();
+
+        yield return SayText(evidence.Name);
     }
 
     void BulletDuplicateAnimation()
@@ -65,6 +75,10 @@ public class AddEvidenceAnimator : MonoBehaviour
     {
         bulletDuplicateTransform.DOScale(1f, 0);
         bulletDuplicate.DOFade(1, 0);
+        blueGlowDuplicate.DOFade(0, 0);
+        blueGlow.DOFade(0, 0);
+        blueGlowTransform.DOAnchorPosY(glowOriginalPosY, 0);
+        blueGlowDuplicateTransform.DOAnchorPosY(glowOriginalPosY, 0);
         bulletDuplicate.gameObject.SetActive(false);
         container.SetActive(false);
         MusicManager.instance.ResumeSong();
