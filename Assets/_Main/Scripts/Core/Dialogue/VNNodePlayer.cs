@@ -32,15 +32,20 @@ public class VNNodePlayer : MonoBehaviour
         HandleConversationEnd();
     }
 
-    IEnumerator RunNodes(List<DialogueNode> nodes)
+    public IEnumerator RunNodes(List<DialogueNode> nodes)
     {
         VNCharacterManager.instance.HideAllCharacters();
         for (int i = lineIndex; i < nodes.Count; i++)
         {
-            yield return nodes[i].Play();
-            yield return new WaitUntil(() => CameraManager.instance.conversationFinishedMoving);
+            yield return RunNode(nodes[i]);
             lineIndex++;
         }
+    }
+
+    public IEnumerator RunNode(DialogueNode node)
+    {
+        yield return node.Play();
+        yield return new WaitUntil(() => CameraManager.instance.conversationFinishedMoving);
     }
 
     private void HandleConversationEnd()

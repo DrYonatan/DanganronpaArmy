@@ -21,10 +21,16 @@ public class EvidenceMenu : MenuScreen
     public AudioClip moveSelectionSound;
     public QuestionBubble questionBubble;
     public TextMeshProUGUI questionBubbleText;
-
-    public void OnEvidenceAdded(Evidence evidence)
+    public AddEvidenceAnimator animator;
+    public IEnumerator OnEvidenceAdded(Evidence evidence)
     {
+        yield return animator.PlayAnimation(evidence);
         AddEvidenceToList(evidence);
+    }
+
+    void Start()
+    {
+        animator = new ();
     }
 
     void AddEvidenceToList(Evidence evidence)
