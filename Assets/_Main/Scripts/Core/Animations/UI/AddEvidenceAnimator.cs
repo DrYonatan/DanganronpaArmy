@@ -40,17 +40,18 @@ public class AddEvidenceAnimator : MonoBehaviour
         SoundManager.instance.PlaySoundEffect(evidenceAddedSound);
         Sequence imageSeq = DOTween.Sequence();
         imageSeq.Append(imageContainer.DOFade(0, 0));
-        imageSeq.Join(imageTransform.DOAnchorPosX(imageOriginalPosX - 200f, 0));
+        imageSeq.Join(imageTransform.DOAnchorPosX(imageOriginalPosX + 200f, 0));
         imageSeq.Append(imageContainer.DOFade(1, 0.3f));
         imageSeq.Join(imageTransform.DOAnchorPosX(imageOriginalPosX, 0.3f));
 
         Sequence bulletSeq = DOTween.Sequence();
-        bulletSeq.Append(bullet.DOAnchorPosX(bulletOriginalPosX - 1200f, 0));
+        bulletSeq.Append(bullet.DOAnchorPosX(bulletOriginalPosX + 1400f, 0));
         bulletSeq.Append(bullet.DOAnchorPosX(bulletOriginalPosX, 0.3f));
-        bulletSeq.Join(blueGlow.DOFade(0.5f, 0.3f));
+        bulletSeq.Join(blueGlow.DOFade(0.3f, 0.3f));
         bulletSeq.AppendCallback(() => BulletDuplicateAnimation());
-        bulletSeq.Append(blueGlowDuplicate.DOFade(0.5f, 0.5f));
-        bulletSeq.Append(bullet.DOAnchorPosX(bulletOriginalPosX + 1200f, 0.2f));
+        bulletSeq.Append(blueGlowDuplicate.DOFade(0.6f, 0.5f));
+        bulletSeq.Join(blueGlow.DOFade(0.6f, 0.5f));
+        bulletSeq.Append(bullet.DOAnchorPosX(bulletOriginalPosX - 1400f, 0.2f));
         bulletSeq.Join(blueGlowTransform.DOAnchorPosY(glowOriginalPosY - 100f, 0.2f));
         bulletSeq.Join(blueGlowDuplicateTransform.DOAnchorPosY(glowOriginalPosY + 100f, 0.2f));
         bulletSeq.Join(blueGlow.DOFade(0, 0.2f));
@@ -91,6 +92,6 @@ public class AddEvidenceAnimator : MonoBehaviour
         yield return VNNodePlayer.instance.RunNode(nodes[0]);
         DialogueSystem.instance.TurnOnSingleTimeAuto();
         imageContainer.DOFade(0, 0.3f);
-        imageTransform.DOAnchorPosX(imageOriginalPosX + 200f, 0.3f).OnComplete(ResetValues);
+        imageTransform.DOAnchorPosX(imageOriginalPosX - 200f, 0.3f).OnComplete(ResetValues);
     }
 }   
