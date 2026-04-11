@@ -22,6 +22,8 @@ public class EvidenceMenu : MenuScreen
     public QuestionBubble questionBubble;
     public TextMeshProUGUI questionBubbleText;
     public AddEvidenceAnimator animator;
+    public GameObject mainContainer;
+    public GameObject noEvidenceContainer;
     public IEnumerator OnEvidenceAdded(Evidence evidence)
     {
         yield return animator.PlayAnimation(evidence);
@@ -53,46 +55,59 @@ public class EvidenceMenu : MenuScreen
     }
 
     void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            currentEvidenceIndex = (currentEvidenceIndex + 1) % EvidenceManager.instance.evidenceList.Count;
-            UpdateUI();
-            SoundManager.instance.PlaySoundEffect(moveSelectionSound);
-        }
-        else if (Input.GetKeyDown(KeyCode.W))
-        {
-            currentEvidenceIndex = (currentEvidenceIndex - 1 + EvidenceManager.instance.evidenceList.Count) %
-                                   EvidenceManager.instance.evidenceList.Count;
-            UpdateUI();
-            SoundManager.instance.PlaySoundEffect(moveSelectionSound);
-        }
-        
-        else if (Input.GetKeyDown(KeyCode.Escape))
+    { 
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             PlayerInputManager.instance.pauseMenu.GoBackToGeneral();
+        }
+
+        if (evidenceListUI.Count > 0)
+        {
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                currentEvidenceIndex = (currentEvidenceIndex + 1) % evidenceListUI.Count;
+                UpdateUI();
+                SoundManager.instance.PlaySoundEffect(moveSelectionSound);
+            }
+            else if (Input.GetKeyDown(KeyCode.W))
+            {
+                currentEvidenceIndex = (currentEvidenceIndex - 1 + evidenceListUI.Count) %
+                                       evidenceListUI.Count;
+                UpdateUI();
+                SoundManager.instance.PlaySoundEffect(moveSelectionSound);
+            }
         }
     }
 
     void UpdateUI()
     {
-        Evidence currentEvidence = evidenceListUI.Count > 0 ? EvidenceManager.instance.evidenceList[currentEvidenceIndex] : null;
-        if (currentEvidence != null)
+        if (evidenceListUI.Count == 0)
         {
-            evidenceIcon.sprite = currentEvidence.icon;
-            evidenceIndexText.text =
-                $"{(currentEvidenceIndex + 1).ToString("00")}/{evidenceListUI.Count.ToString("00")}";
-            evidenceDescription.text = currentEvidence.description;
-
-            foreach (ListItem item in evidenceListUI)
+            mainContainer.SetActive(false);
+            noEvidenceContainer.SetActive(true);
+        }
+        else
+        {
+            mainContainer.SetActive(true);
+            noEvidenceContainer.SetActive(false);
+            Evidence currentEvidence = EvidenceManager.instance.evidenceList[currentEvidenceIndex];
+            if (currentEvidence != null)
             {
-                item.SetHovered(false);
+                evidenceIcon.sprite = currentEvidence.icon;
+                evidenceIndexText.text =
+                    $"{(currentEvidenceIndex + 1).ToString("00")}/{evidenceListUI.Count.ToString("00")}";
+                evidenceDescription.text = currentEvidence.description;
+
+                foreach (ListItem item in evidenceListUI)
+                {
+                    item.SetHovered(false);
+                }
+
+                if (evidenceListUI.Count > 0)
+                    evidenceListUI[currentEvidenceIndex].SetHovered(true);
+
+                evidenceListTransform.anchoredPosition = new Vector2(0, Mathf.Max((currentEvidenceIndex - 4) * 150, 0));
             }
-
-            if (evidenceListUI.Count > 0)
-                evidenceListUI[currentEvidenceIndex].SetHovered(true);
-
-            evidenceListTransform.anchoredPosition = new Vector2(0, Mathf.Max((currentEvidenceIndex - 5) * 91, 0));
         }
     }
 
