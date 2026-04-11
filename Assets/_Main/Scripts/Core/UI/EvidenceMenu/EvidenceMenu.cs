@@ -27,12 +27,6 @@ public class EvidenceMenu : MenuScreen
         yield return animator.PlayAnimation(evidence);
         AddEvidenceToList(evidence);
     }
-
-    void Start()
-    {
-        animator = new ();
-    }
-
     void AddEvidenceToList(Evidence evidence)
     {
         ListItem instantiated = Instantiate(listItem);
@@ -82,12 +76,12 @@ public class EvidenceMenu : MenuScreen
 
     void UpdateUI()
     {
-        Evidence currentEvidence = EvidenceManager.instance.evidenceList.Count > 0 ? EvidenceManager.instance.evidenceList[currentEvidenceIndex] : null;
+        Evidence currentEvidence = evidenceListUI.Count > 0 ? EvidenceManager.instance.evidenceList[currentEvidenceIndex] : null;
         if (currentEvidence != null)
         {
             evidenceIcon.sprite = currentEvidence.icon;
             evidenceIndexText.text =
-                $"{(currentEvidenceIndex + 1).ToString("00")}/{EvidenceManager.instance.evidenceList.Count.ToString("00")}";
+                $"{(currentEvidenceIndex + 1).ToString("00")}/{evidenceListUI.Count.ToString("00")}";
             evidenceDescription.text = currentEvidence.description;
 
             foreach (ListItem item in evidenceListUI)
