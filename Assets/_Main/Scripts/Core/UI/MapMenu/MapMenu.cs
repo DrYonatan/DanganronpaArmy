@@ -34,13 +34,19 @@ public class MapMenu : MenuScreen
     public RoomData hoveredRoomData;
     public RoomCharacterDisplay characterFacePrefab;
     public GameObject charactersContainer;
+    public RectTransform roomListTransform;
+    public RectTransform roomsContainerTransform;
+    public RectTransform mapContainerTransform;
+    public RectTransform charactersContainerTransform;
+    private float roomListOriginalPosX;
+    private float mapOriginalPosX;
+    private float charactersOriginalPosX;
     public List<RoomCharacterDisplay> characterFaces;
     private int currentRoomIndex;
     private int currentRegionIndex;
     List<MapRoom> rooms;
     public List<Region> regions;
     public AudioClip moveSelectionSound;
-    public RectTransform roomListTransform;
     public List<ListItem> roomListUI;
     public Image locationPin;
     public ListItem listItem;
@@ -53,11 +59,37 @@ public class MapMenu : MenuScreen
     public AudioClip failSound;
     public RectTransform dialogueContainer;
     public GameObject noPeopleMessage;
+    public CanvasGroup mainContainerCanvasGroup;
 
+
+    void Start()
+    {
+        roomListOriginalPosX = roomsContainerTransform.anchoredPosition.x;
+        charactersOriginalPosX = charactersContainerTransform.anchoredPosition.x;
+        mapOriginalPosX = mapContainerTransform.anchoredPosition.x;
+    }
     private void SetRooms(List<MapRoom> rooms)
     {
         this.rooms = rooms;
         UpdateRoomList();
+    }
+
+    void IntroAnimation()
+    {
+        mainContainerCanvasGroup.alpha = 0;
+        mapContainerTransform.DOAnchorPosX(mapOriginalPosX + 300f, 0).SetUpdate(true);
+        charactersContainerTransform.DOAnchorPosX(charactersOriginalPosX - 300f, 0).SetUpdate(true);
+        roomsContainerTransform.DOAnchorPosX(roomListOriginalPosX - 300f, 0).SetUpdate(true);
+        mainContainerCanvasGroup.DOFade(1f, 0.6f).SetUpdate(true);
+        mapContainerTransform.DOAnchorPosX(mapOriginalPosX, 0.6f).SetUpdate(true);
+        charactersContainerTransform.DOAnchorPosX(charactersOriginalPosX, 0.6f).SetUpdate(true);
+        roomsContainerTransform.DOAnchorPosX(roomListOriginalPosX, 0.6f).SetUpdate(true);
+    }
+
+    protected override void LoadContent()
+    {
+        base.LoadContent();
+        IntroAnimation();
     }
 
     void UpdateRoomList()
@@ -234,7 +266,7 @@ public class MapMenu : MenuScreen
             roomListUI[currentRoomIndex].SetHovered(true);
             OnRoomHovered(currentRoom);
 
-            roomListTransform.anchoredPosition = new Vector2(0, Mathf.Max((currentRoomIndex - 5) * 91, 0));
+            roomListTransform.DOAnchorPosY(Mathf.Max((currentRoomIndex - 5) * 91, 0), 0f);
         }
     }
 

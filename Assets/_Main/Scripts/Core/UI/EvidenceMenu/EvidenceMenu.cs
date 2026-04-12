@@ -24,11 +24,18 @@ public class EvidenceMenu : MenuScreen
     public AddEvidenceAnimator animator;
     public GameObject mainContainer;
     public GameObject noEvidenceContainer;
+    public CanvasGroup mainContainerCanvasGroup;
+    public RectTransform infoContainerTransform;
+    public RectTransform evidenceContainerTransform;
+    private int infoContainerStartPosX;
+    private int evidenceContainerStartPosY;
+
     public IEnumerator OnEvidenceAdded(Evidence evidence)
     {
         yield return animator.PlayAnimation(evidence);
         AddEvidenceToList(evidence);
     }
+
     void AddEvidenceToList(Evidence evidence)
     {
         ListItem instantiated = Instantiate(listItem);
@@ -54,8 +61,24 @@ public class EvidenceMenu : MenuScreen
         UpdateUI();
     }
 
+    protected override void LoadContent()
+    {
+        base.LoadContent();
+        StartAnimation();
+    }
+
+    void StartAnimation()
+    {
+        mainContainerCanvasGroup.alpha = 0;
+        infoContainerTransform.DOAnchorPosX(infoContainerStartPosX + 300f, 0).SetUpdate(true);
+        evidenceContainerTransform.DOAnchorPosY(evidenceContainerStartPosY - 300f, 0).SetUpdate(true);
+        mainContainerCanvasGroup.DOFade(1f, 0.6f).SetUpdate(true);
+        infoContainerTransform.DOAnchorPosX(infoContainerStartPosX, 0.6f).SetUpdate(true);
+        evidenceContainerTransform.DOAnchorPosY(evidenceContainerStartPosY, 0.6f).SetUpdate(true);
+    }
+
     void Update()
-    { 
+    {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             PlayerInputManager.instance.pauseMenu.GoBackToGeneral();
@@ -106,7 +129,7 @@ public class EvidenceMenu : MenuScreen
                 if (evidenceListUI.Count > 0)
                     evidenceListUI[currentEvidenceIndex].SetHovered(true);
 
-                evidenceListTransform.anchoredPosition = new Vector2(0, Mathf.Max((currentEvidenceIndex - 4) * 150, 0));
+                evidenceListTransform.anchoredPosition = new Vector2(0, Mathf.Max((currentEvidenceIndex - 4) * 152, 0)) ;
             }
         }
     }
@@ -121,7 +144,7 @@ public class EvidenceMenu : MenuScreen
         gameObject.SetActive(true);
         currentEvidenceIndex = 0;
         UpdateUI();
-        
+
         bool isOpen = false;
 
         while (PlayerInputManager.instance.DefaultInput())
@@ -138,12 +161,13 @@ public class EvidenceMenu : MenuScreen
                 {
                     questionBubble.Close();
                 }
-                
+
                 isOpen = false;
             }
+
             yield return null;
         }
-        
+
         questionBubble.gameObject.SetActive(false);
 
         Close();

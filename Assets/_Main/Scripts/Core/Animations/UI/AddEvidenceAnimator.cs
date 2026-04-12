@@ -87,11 +87,19 @@ public class AddEvidenceAnimator : MonoBehaviour
 
     IEnumerator SayText(string evidenceName)
     {
+        bool finishedAnimation = false;
         List<DialogueNode> nodes = UtilityNodesRuntimeBank.instance.nodesCollection.evidenceAdded;
         (nodes[0].textData as VNTextData).text = (nodes[0].textData as VNTextData).text.Replace("<>", evidenceName);
         yield return VNNodePlayer.instance.RunNode(nodes[0]);
         DialogueSystem.instance.TurnOnSingleTimeAuto();
         imageContainer.DOFade(0, 0.3f);
-        imageTransform.DOAnchorPosX(imageOriginalPosX - 200f, 0.3f).OnComplete(ResetValues);
+        imageTransform.DOAnchorPosX(imageOriginalPosX - 200f, 0.3f).OnComplete(() =>
+        {
+            ResetValues();
+            finishedAnimation = true;
+        });
+        
+        yield return new WaitUntil(() => finishedAnimation);
+        
     }
 }   
