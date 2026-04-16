@@ -75,7 +75,6 @@ public class CharacterFaceController : MonoBehaviour
     public void DiscussionFaceContainerDisappear(float duration)
     {
         isVisible = false;
-        discussionFaceContainer.localScale = new Vector3(1f, 1f, 1f);
         discussionFaceContainer.DOScaleY(0f, duration);
     }
 }

@@ -1,8 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DIALOGUE;
-using System.Linq;
 using DG.Tweening;
 using UnityEngine.UI;
 
@@ -19,12 +16,16 @@ namespace CHARACTERS
         public RectTransform middle;
         public RectTransform midRight;
         public RectTransform right;
-        
-        Dictionary<Character, GameObject> characterObjects = new ();
+
+        Dictionary<Character, GameObject> characterObjects = new();
+
+        private Character currentSpeaker;
+
         private void Awake()
         {
             instance = this;
         }
+
         public void CreateCharacter(CharacterPositionMapping characterInfo)
         {
             GameObject characterObj = Instantiate(characterInfo.character.vnObjectPrefab, characterLayer);
@@ -33,7 +34,9 @@ namespace CHARACTERS
             canvasGroup.alpha = 0f;
             canvasGroup.DOFade(1f, 0.25f);
             characterObj.name = characterInfo.character.name;
-            characterObj.transform.localPosition = new Vector3(GetCharacterPosition((CameraLookDirection)characterInfo.position).x, characterInfo.character.vnObjectPrefab.transform.localPosition.y, 0);
+            characterObj.transform.localPosition = new Vector3(
+                GetCharacterPosition((CameraLookDirection)characterInfo.position).x,
+                characterInfo.character.vnObjectPrefab.transform.localPosition.y, 0);
             characterObjects.Add(characterInfo.character, characterObj);
         }
 
@@ -52,6 +55,16 @@ namespace CHARACTERS
             }
         }
 
+        public void SetSpeaker(Character character)
+        {
+            currentSpeaker = character;
+        }
+
+        public GameObject GetSpeakerObject()
+        {
+            return characterObjects[currentSpeaker];
+        }
+
         public void HideAllCharacters()
         {
             foreach (KeyValuePair<Character, GameObject> characterObj in characterObjects)
@@ -64,13 +77,14 @@ namespace CHARACTERS
         {
             CanvasGroup canvasGroup = characterObj.GetComponent<CanvasGroup>();
             canvasGroup.DOKill();
-            canvasGroup.DOFade(1f,  duration);
+            canvasGroup.DOFade(1f, duration);
         }
-        void HideCharacter(GameObject characterObj, float duration)
+
+        public void HideCharacter(GameObject characterObj, float duration)
         {
             CanvasGroup canvasGroup = characterObj.GetComponent<CanvasGroup>();
             canvasGroup.DOKill();
-            canvasGroup.DOFade(0f,  duration);
+            canvasGroup.DOFade(0f, duration).SetLink(characterObj.gameObject);
         }
 
         public void DestroyCharacters()
@@ -79,6 +93,7 @@ namespace CHARACTERS
             {
                 Destroy(characterObj.Value);
             }
+
             characterObjects.Clear();
         }
 
@@ -105,7 +120,7 @@ namespace CHARACTERS
             Sprite sprite = expression.sprite;
             if (sprite.Equals(oldSprite.sprite))
                 return;
-            
+
             newSprite.sprite = sprite;
             // Fade out + destroy old
             oldSprite.DOKill();
@@ -142,9 +157,8 @@ namespace CHARACTERS
                     res = right.localPosition;
                     break;
             }
-            
+
             return res;
         }
-
     }
 }

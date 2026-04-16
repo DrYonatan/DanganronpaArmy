@@ -87,6 +87,12 @@ public class PlayerBarsAnimator : MonoBehaviour
         debateConcentrationMeter.fillAmount = newConcentration / fullConcentrationImageDivideAmount;
     }
 
+    public void UpdateHp(float hp)
+    {
+        globalHealthMeter.fillAmount = hp / fullConcentrationImageDivideAmount;
+        debateHealthMeter.fillAmount = hp / fullConcentrationImageDivideAmount;
+    }
+
     public void FillConcentrationEffect(float duration)
     {
         StopCurrentConcentrationBarsAnimation();

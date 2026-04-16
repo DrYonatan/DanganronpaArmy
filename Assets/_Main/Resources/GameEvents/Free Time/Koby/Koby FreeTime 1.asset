@@ -41,6 +41,7 @@ MonoBehaviour:
   - rid: 3605996993695711272
   - rid: 3605996993695711274
   - rid: 3605996993695711276
+  - rid: 3605997239307599874
   - rid: 3605996993695711278
   references:
     version: 2
@@ -115,7 +116,8 @@ MonoBehaviour:
           \u05D4\u05D4\u05D5\u05D0 \u05D0\u05DE\u05E8! \u05DE\u05D9 \u05E9\u05DC\u05D0
           \u05D9\u05D4\u05D9\u05D4 \u05DE\u05D3\u05D5\u05D2\u05DD \u05D9\u05E7\u05D1\u05DC
           \u05DE\u05E2\u05E0\u05D4!"
-        commands: []
+        commands:
+        - rid: 3605997239307599873
     - rid: 3605996993695711238
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -345,7 +347,7 @@ MonoBehaviour:
         drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
         character: {fileID: 11400000, guid: e39824928f924f546bb4ef60c8c4f16c, type: 2}
         displayName: 
-        expressionIndex: 0
+        expressionIndex: 3
         textData:
           rid: 3605996993695711257
     - rid: 3605996993695711257
@@ -536,7 +538,7 @@ MonoBehaviour:
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
         text: "<B\u05EA\u05DE\u05D9\u05D3 \u05DE\u05D9\u05E9\u05D4\u05D5 \u05D7\u05D9\u05D9\u05D1
-          \u05D7\u05D4\u05E8\u05D5\u05E1, \u05D4\u05D0...>"
+          \u05DC\u05D4\u05E8\u05D5\u05E1, \u05D4\u05D0...>"
         commands: []
     - rid: 3605996993695711272
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
@@ -636,5 +638,37 @@ MonoBehaviour:
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
         text: "<B\u05E0\u05E4\u05E8\u05D3\u05EA\u05D9 \u05DE\u05E7\u05D5\u05D1\u05D9
-          \u05DC\u05D1\u05D9\u05E0\u05EA\u05D9\u05D9\u05DD>"
+          \u05DC\u05D1\u05D9\u05E0\u05EA\u05D9\u05D9\u05DD.>"
         commands: []
+    - rid: 3605997239307599873
+      type: {class: ShakeScreen, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        isDramatic: 0
+    - rid: 3605997239307599874
+      type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
+        character: {fileID: 11400000, guid: e39824928f924f546bb4ef60c8c4f16c, type: 2}
+        displayName: 
+        expressionIndex: 0
+        textData:
+          rid: 3605997239307599875
+    - rid: 3605997239307599875
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "\u05DC\u05D4\u05EA\u05E8\u05D0\u05D5\u05EA."
+        commands:
+        - rid: 3605997239307599876
+    - rid: 3605997239307599876
+      type: {class: HideCharacter, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 2
