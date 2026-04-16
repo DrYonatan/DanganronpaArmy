@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EvidenceManager : MonoBehaviour
@@ -15,10 +16,10 @@ public class EvidenceManager : MonoBehaviour
         evidenceMenu.Initialize();
     }
     
-    public void AddEvidence(Evidence evidence)
+    public IEnumerator AddEvidence(Evidence evidence)
     {
         evidenceList.Add(evidence);
-        evidenceMenu.OnEvidenceAdded(evidence);
+        yield return evidenceMenu.OnEvidenceAdded(evidence);
     }
 
     public void RemoveEvidence(Evidence evidence)

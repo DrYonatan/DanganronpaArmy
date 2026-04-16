@@ -35,6 +35,16 @@ public class MusicManager : MonoBehaviour
             VNUIAnimator.instance.musicName.text = "";
         }
     }
+
+    public void PauseSong()
+    {
+        audioSource.Pause();
+    }
+
+    public void ResumeSong()
+    {
+        audioSource.UnPause();
+    }
     
     internal void LowerVolume()
     {
