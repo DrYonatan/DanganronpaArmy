@@ -1,5 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using TMPro;
 
@@ -7,6 +7,7 @@ public class CursorManager : MonoBehaviour
 {
     public int speed = 30;
     public RectTransform cursor;
+    private CanvasGroup canvasGroup;
     public Canvas canvas;
     public Transform reticle;
     public GameObject magnifyingGlass;
@@ -15,7 +16,7 @@ public class CursorManager : MonoBehaviour
     public CanvasGroup interactableNameCanvasGroup;
     private Coroutine fadeCoroutine;
     public bool isHovering = false;
-    
+
 
     public static CursorManager instance { get; private set; }
 
@@ -23,6 +24,7 @@ public class CursorManager : MonoBehaviour
     void Awake()
     {
         instance = this;
+        canvasGroup = cursor.GetComponent<CanvasGroup>();
         Hide();
     }
 
@@ -46,7 +48,7 @@ public class CursorManager : MonoBehaviour
                 ShowOrHideMagnifyingGlass(false);
                 ShowOrHideConversationIcon(false);
             }
-       
+
         reticle.Rotate(0, 0, actualSpeed * Time.unscaledDeltaTime);
     }
 
@@ -64,17 +66,21 @@ public class CursorManager : MonoBehaviour
 
     public void Hide()
     {
-        cursor.gameObject.SetActive(false);
+        if(cursor.gameObject.activeSelf)
+           canvasGroup.DOFade(0f, 0.1f).OnComplete(() => cursor.gameObject.SetActive(false));
     }
+
     public void Show()
     {
         cursor.gameObject.SetActive(true);
+        canvasGroup.DOFade(1f, 0.1f);
     }
 
     public void ShowOrHideMagnifyingGlass(bool show)
     {
         magnifyingGlass.SetActive(show);
     }
+
     public void ShowOrHideConversationIcon(bool show)
     {
         conversationIcon.SetActive(show);
@@ -83,8 +89,8 @@ public class CursorManager : MonoBehaviour
     public void ShowOrHideInteractableName(bool show, string name)
     {
         interactableNameText.text = name;
-        if(fadeCoroutine != null)
-           StopCoroutine(fadeCoroutine);
+        if (fadeCoroutine != null)
+            StopCoroutine(fadeCoroutine);
         fadeCoroutine = StartCoroutine(ShowingOrHidingInteractableName(0.1f, show ? 1f : 0f));
     }
 
@@ -93,12 +99,13 @@ public class CursorManager : MonoBehaviour
         float elapsedTime = 0f;
 
         float start = interactableNameCanvasGroup.alpha;
-        while(elapsedTime < duration)
+        while (elapsedTime < duration)
         {
             interactableNameCanvasGroup.alpha = Mathf.Lerp(start, target, elapsedTime / duration);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+
         interactableNameCanvasGroup.alpha = target;
     }
 }

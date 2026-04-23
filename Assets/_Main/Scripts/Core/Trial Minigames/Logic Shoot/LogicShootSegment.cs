@@ -43,4 +43,9 @@ public class LogicShootSegment : TrialSegment
     {
         LogicShootManager.instance.Play(this);
     }
+
+    public override void HandleGameOver()
+    {
+        LogicShootManager.instance.GameOver();
+    }
 }

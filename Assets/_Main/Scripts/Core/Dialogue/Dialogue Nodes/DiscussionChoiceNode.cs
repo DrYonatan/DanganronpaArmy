@@ -3,14 +3,13 @@ using System.Collections;
 using UnityEngine;
 
 [Serializable]
-public class DiscussionChoiceNode: DiscussionNode
+public class DiscussionChoiceNode : DiscussionNode
 {
     public bool isHp;
     public ChoiceLogic<DiscussionNode> choiceLogic = new ChoiceLogic<DiscussionNode>();
 
     public DiscussionChoiceNode(DrawNode drawNode) : base(drawNode)
     {
-        
     }
 
     public override IEnumerator Play()
@@ -18,7 +17,8 @@ public class DiscussionChoiceNode: DiscussionNode
         if (isHp)
         {
             TrialManager.instance.barsAnimator.ShowGlobalBars(0.2f);
-            yield return choiceLogic.Play(base.Play, OnCorrect, OnWrong);
+            yield return choiceLogic.Play(base.Play, OnCorrect, OnWrong,
+                () => !TrialDialogueManager.instance.isGameOvering);
         }
 
         else
@@ -38,10 +38,6 @@ public class DiscussionChoiceNode: DiscussionNode
     public IEnumerator OnWrong()
     {
         TrialManager.instance.DecreaseHealthDefault(1f);
-        foreach (DiscussionNode node in UtilityNodesRuntimeBank.instance.nodesCollection.wrongAnswer)
-        {
-            yield return node.Play();
-        }
+        yield return TrialDialogueManager.instance.PlayNodeList(UtilityNodesRuntimeBank.instance.nodesCollection.wrongAnswer);
     }
-    
 }

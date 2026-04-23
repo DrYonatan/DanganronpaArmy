@@ -2959,6 +2959,7 @@ MonoBehaviour:
   animator: {fileID: 494249721}
   currentLineIndex: 0
   isFinishedRunningNodes: 0
+  isGameOvering: 0
 --- !u!114 &228458422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3028,7 +3029,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.39884096, b: 0, a: 1}
+  m_Color: {r: 0.15727304, g: 0.7509433, b: 0.47764647, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -6570,6 +6571,7 @@ MonoBehaviour:
   namePlateMoveAmount: 50
   duration: 0.25
   namePlateOriginalPos: {fileID: 470435267}
+  textBoxVisible: 0
   characterFace: {fileID: 1930649393}
   backgroundTextContainer: {fileID: 536567089}
   chapterNumber: {fileID: 130640682}
@@ -10308,7 +10310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.49411768, b: 0, a: 1}
+  m_Color: {r: 0, g: 1, b: 0.28937006, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -12665,6 +12667,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 919002889}
+  - component: {fileID: 919002890}
   m_Layer: 5
   m_Name: Cursor
   m_TagString: Untagged
@@ -12692,6 +12695,18 @@ RectTransform:
   m_AnchoredPosition: {x: 17, y: 20}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &919002890
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919002888}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &925020852
 GameObject:
   m_ObjectHideFlags: 0
@@ -17890,6 +17905,8 @@ MonoBehaviour:
   whiteFlash: {fileID: 1650963360}
   canvasGroup: {fileID: 263735710}
   flashSound: {fileID: 8300000, guid: c94d88d9b87f8ac4282dbae8fbc7c1aa, type: 3}
+  animatedImageContainer: {fileID: 0}
+  animatedImage: {fileID: 0}
 --- !u!1 &1340645610
 GameObject:
   m_ObjectHideFlags: 0
@@ -24198,6 +24215,7 @@ MonoBehaviour:
   cylinder: {fileID: 616477725}
   bulletSelectionMenu: {fileID: 1212473588}
   selectedIndex: 0
+  shootSound: {fileID: 8300000, guid: d5a9f47c4ca11994383e558c82dce108, type: 3}
 --- !u!114 &1882886019
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24214,6 +24232,7 @@ MonoBehaviour:
   letterLifetime: 1
   spinAmount: 20
   shatterSound: {fileID: 8300000, guid: 1a7d97cddc9b2b54e93af219619ae255, type: 3}
+  deflectSound: {fileID: 8300000, guid: 1b752693888e47148a7da44a80aeecad, type: 3}
   hitEffectPrefab: {fileID: 6124828895464132426, guid: 653160b5152f2574f926192d6b139849, type: 3}
 --- !u!4 &1882886021 stripped
 Transform:
@@ -24270,7 +24289,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.52817607, b: 0.3150943, a: 1}
+  m_Color: {r: 0, g: 0.89433956, b: 0.50778043, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -24449,6 +24468,7 @@ MonoBehaviour:
   pauseMenu: {fileID: 1442559742}
   isPaused: 0
   isInputActive: 0
+  isDialogueInputActive: 0
 --- !u!4 &1891043990
 Transform:
   m_ObjectHideFlags: 0
@@ -25000,6 +25020,7 @@ MonoBehaviour:
   faceFlashDuration: 0.2
   debateFaceImage: {fileID: 1175033164}
   debateFaceYellowOverlay: {fileID: 1373766092}
+  isVisible: 0
 --- !u!1 &1932192826
 GameObject:
   m_ObjectHideFlags: 0
@@ -25197,7 +25218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.39130437, b: 0, a: 1}
+  m_Color: {r: 0, g: 0.7056604, b: 0.05834349, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -26472,7 +26493,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.38590717, b: 0, a: 1}
+  m_Color: {r: 0, g: 0.7056604, b: 0.05834349, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

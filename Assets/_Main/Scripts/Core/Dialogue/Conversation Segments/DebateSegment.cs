@@ -23,4 +23,9 @@ public class DebateSegment : TrialSegment
     {
         GameLoop.instance.PlayDebate(this);
     }
+
+    public override void HandleGameOver()
+    {
+        GameLoop.instance.isGameOvering = true;
+    }
 }

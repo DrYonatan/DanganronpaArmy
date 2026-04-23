@@ -22,6 +22,8 @@ public class TrialDialogueManager : MonoBehaviour
 
     public bool isFinishedRunningNodes;
 
+    public bool isGameOvering;
+
     private void Awake()
     {
         instance = this;
@@ -30,13 +32,15 @@ public class TrialDialogueManager : MonoBehaviour
     public void PlayDiscussion(DiscussionSegment discussion)
     {
         SetTextBox();
+        isGameOvering = false;
         DialogueSystem.instance.dialogueBoxAnimator.gameObject.SetActive(true);
         ImageScript.instance.UnFadeToBlack(0.5f);
+        animator.TextBoxAppear();
         animator.ChangeFace(null);
         animator.FaceAppear();
         animator.AnimateBackgroundText();
         
-        StartCoroutine(RunDiscussion(discussion));
+        runningNodesRoutine = StartCoroutine(RunDiscussion(discussion));
     }
 
     public void SetTextBox()
@@ -52,7 +56,7 @@ public class TrialDialogueManager : MonoBehaviour
 
     public IEnumerator RunNodes(List<DiscussionNode> nodes)
     {
-        runningNodesRoutine = StartCoroutine(StartNodes(nodes));
+        StartCoroutine(StartNodes(nodes));
         yield return new WaitUntil(() => isFinishedRunningNodes);
     }
 
@@ -61,12 +65,27 @@ public class TrialDialogueManager : MonoBehaviour
         isFinishedRunningNodes = false;
         for (int i = currentLineIndex; i < nodes.Count; i++)
         {
+            if (isGameOvering)
+            {
+                StopConversation();
+                yield return TrialManager.instance.GameOver();
+                yield break;
+            }
+            
             yield return nodes[i].Play();
             currentLineIndex++;
         }
 
         isFinishedRunningNodes = true;
         currentLineIndex = 0;
+    }
+
+    public IEnumerator PlayNodeList(List<DiscussionNode> nodes)
+    {
+        foreach (DiscussionNode node in nodes)
+        {
+            yield return node.Play();
+        }
     }
 
     private void HandleConversationEnd(DiscussionSegment discussion)

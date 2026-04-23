@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,5 +10,10 @@ public class ComicSegment : TrialSegment
     public override void Play()
     {
         ComicManager.instance.StartMiniGame(this);
+    }
+
+    public override void HandleGameOver()
+    {
+        
     }
 }

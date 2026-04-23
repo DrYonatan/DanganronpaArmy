@@ -1190,6 +1190,7 @@ MonoBehaviour:
   namePlateMoveAmount: 85
   duration: 0.3
   namePlateOriginalPos: {fileID: 629967867}
+  textBoxVisible: 0
 --- !u!1 &313972392
 GameObject:
   m_ObjectHideFlags: 0
@@ -4866,6 +4867,7 @@ MonoBehaviour:
   pauseMenu: {fileID: 64712567}
   isPaused: 0
   isInputActive: 0
+  isDialogueInputActive: 0
 --- !u!114 &1237158329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5362,6 +5364,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1421514484}
+  - component: {fileID: 1421514485}
   m_Layer: 5
   m_Name: Cursor
   m_TagString: Untagged
@@ -5391,6 +5394,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &1421514485
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1421514483}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1479258850
 GameObject:
   m_ObjectHideFlags: 0

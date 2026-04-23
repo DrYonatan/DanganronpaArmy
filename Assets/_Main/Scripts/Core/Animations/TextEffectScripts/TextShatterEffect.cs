@@ -12,6 +12,7 @@ public class TextShatterEffect : MonoBehaviour
     public float spinAmount = 10f;
 
     public AudioClip shatterSound;
+    public AudioClip deflectSound;
     public GameObject hitEffectPrefab;
 
     public void Shatter(TextMeshPro textToSeperate)
@@ -79,6 +80,8 @@ public class TextShatterEffect : MonoBehaviour
 
     public IEnumerator Deflect(TextMeshPro textToDeflect, Vector3 hitPosition)
     {
+        SoundManager.instance.PlaySoundEffect(deflectSound);
+        
         string text = textToDeflect.text;
         for (int i = text.Length - 1; i >= 0; i--)
         {
@@ -117,7 +120,7 @@ public class TextShatterEffect : MonoBehaviour
 
             yield return new WaitForSeconds(0.05f);
         }
-
+        
         textToDeflect.gameObject.SetActive(false);
     }
 

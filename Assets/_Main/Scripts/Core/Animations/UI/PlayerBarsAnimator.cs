@@ -24,7 +24,7 @@ public class PlayerBarsAnimator : MonoBehaviour
     public CanvasGroup debateBarsContainer;
 
     public AudioClip damageSound;
-    
+
 
     public void IncreaseHealth(float amount, float duration)
     {
@@ -35,7 +35,7 @@ public class PlayerBarsAnimator : MonoBehaviour
 
         GlowMeter(globalHealthMeter, Color.green, duration);
         GlowMeter(debateHealthMeter, Color.green, duration);
-        
+
         ChangeHealthFillAmount(newFillAmount, duration);
     }
 
@@ -48,7 +48,7 @@ public class PlayerBarsAnimator : MonoBehaviour
     {
         globalHealthMeter.DOKill();
         debateHealthMeter.DOKill();
-        
+
         BlinkMeter(globalHealthMeter, Color.red, 6);
         BlinkMeter(debateHealthMeter, Color.red, 6);
 
@@ -128,8 +128,8 @@ public class PlayerBarsAnimator : MonoBehaviour
 
         Sequence seq = DOTween.Sequence();
 
-        seq.Append(globalHealthMeter.DOFillAmount(fillAmount, duration));
-        seq.Join(debateHealthMeter.DOFillAmount(fillAmount, duration));
+        seq.Append(globalHealthMeter.DOFillAmount(fillAmount, duration).SetEase(Ease.Linear));
+        seq.Join(debateHealthMeter.DOFillAmount(fillAmount, duration).SetEase(Ease.Linear));
 
         seq.Join(globalHealthContainer.DOScale(1.5f, 0.5f));
         seq.Join(debateHealthContainer.DOScale(1.5f, 0.5f));

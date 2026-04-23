@@ -1,26 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
-using _Main.Scripts.Court;
+
 using UnityEngine;
 using TMPro;
 
 public class BulletCollision : MonoBehaviour
 {
     bool didHit = false;
-    
+
     private void OnCollisionEnter(Collision collision)
     {
-        if(!didHit)
+        if (!didHit)
         {
             if (CheckHitLocation(collision))
             {
-                if(GameLoop.instance.CheckEvidence(collision.collider.GetComponentInParent<FloatingText>().correctEvidence))
+                if (GameLoop.instance.CheckEvidence(collision.collider.GetComponentInParent<FloatingText>()
+                        .correctEvidence))
                     GameLoop.instance.Hit(collision.contacts[0].point);
                 else
                 {
                     StartCoroutine(
-                        GameLoop.instance.gameObject.GetComponent<TextShatterEffect>().Deflect(
-                            gameObject.GetComponent<TextMeshPro>(),
+                        GameLoop.instance.GetComponent<TextShatterEffect>().Deflect(
+                            GetComponent<TextMeshPro>(),
                             collision.contacts[0].point));
                     GameLoop.instance.WrongHit();
                 }
@@ -33,9 +32,7 @@ public class BulletCollision : MonoBehaviour
                         gameObject.GetComponent<TextMeshPro>(),
                         collision.contacts[0].point));
             }
-
         }
-        
     }
 
     private bool CheckHitLocation(Collision collision)
@@ -45,13 +42,14 @@ public class BulletCollision : MonoBehaviour
         if (other.CompareTag("OrangeHitBox"))
         {
             didHit = true;
-           return true;
+            return true;
         }
+
         if (other.CompareTag("WhiteHitBox"))
         {
-           didHit = true;
+            didHit = true;
         }
+
         return false;
     }
-    
 }

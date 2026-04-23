@@ -43,8 +43,11 @@ public class PromptEvidenceSelection : Command
     IEnumerator OnWrong()
     {
         TrialManager.instance.DecreaseHealthDefault(1f);
-        yield return TrialDialogueManager.instance.RunNodes(UtilityNodesRuntimeBank.instance.nodesCollection.wrongAnswer);
-        yield return Execute();
+        yield return TrialDialogueManager.instance.PlayNodeList(UtilityNodesRuntimeBank.instance.nodesCollection
+            .wrongAnswer);
+
+        if (!TrialDialogueManager.instance.isGameOvering)
+            yield return Execute();
     }
 
 #if UNITY_EDITOR

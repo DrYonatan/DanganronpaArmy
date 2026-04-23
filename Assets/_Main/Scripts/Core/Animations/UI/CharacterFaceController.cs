@@ -67,6 +67,7 @@ public class CharacterFaceController : MonoBehaviour
     public void DiscussionFaceContainerAppear(float duration)
     {
         isVisible = true;
+        discussionFaceContainer.DOKill();
         faceWhiteOverlay.color = Color.white;
         discussionFaceContainer.localScale = new Vector3(1f, 0f, 1f);
         discussionFaceContainer.transform.DOScaleY(1f, duration);

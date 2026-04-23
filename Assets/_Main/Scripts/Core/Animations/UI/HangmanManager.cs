@@ -114,11 +114,12 @@ public class HangmanManager : MonoBehaviour
         else
         {
             TrialManager.instance.DecreaseHealthDefault(1f);
-            if (TrialManager.instance.playerStats.hp <= 0)
-            {
-                StartCoroutine(GameOverPipeline());
-            }
         }
+    }
+
+    public void GameOver()
+    {
+        StartCoroutine(GameOverPipeline());
     }
 
     private IEnumerator GameOverPipeline()

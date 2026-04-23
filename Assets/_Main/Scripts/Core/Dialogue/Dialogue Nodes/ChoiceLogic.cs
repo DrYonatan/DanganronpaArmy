@@ -19,15 +19,16 @@ public class ChoiceLogic<T> where T : DialogueNode
     public List<Option<T>> options;
     public bool loopIfWrong = false;
     
+    
     public ChoiceLogic()
     {
         options = new List<Option<T>>();
     }
 
-    public IEnumerator Play(Func<IEnumerator> playOriginalNode, Func<IEnumerator> onCorrect, Func<IEnumerator> onWrong)
+    public IEnumerator Play(Func<IEnumerator> playOriginalNode, Func<IEnumerator> onCorrect, Func<IEnumerator> onWrong, Func<bool> loopExtraConditions=null)
     {
         Option<T> pickedOption = new Option<T>();
-
+        loopExtraConditions ??= () => true;
         do
         {
             DialogueSystem.instance.TurnOnSingleTimeAuto();
@@ -48,6 +49,6 @@ public class ChoiceLogic<T> where T : DialogueNode
             if (onWrong != null && !pickedOption.isCorrect)
                 yield return onWrong();
 
-        } while (!pickedOption.isCorrect && loopIfWrong);
+        } while (!pickedOption.isCorrect && loopIfWrong && loopExtraConditions.Invoke());
     }
 }

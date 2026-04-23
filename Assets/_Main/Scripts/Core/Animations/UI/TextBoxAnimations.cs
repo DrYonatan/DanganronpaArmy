@@ -16,6 +16,8 @@ public class TextBoxAnimations : MonoBehaviour
 
     public RectTransform namePlateOriginalPos;
 
+    public bool textBoxVisible;
+
     void Awake()
     {
         dialogueBoxCanvasGroup = dialoguePart.GetComponent<CanvasGroup>();
@@ -24,8 +26,17 @@ public class TextBoxAnimations : MonoBehaviour
 
     public void TextBoxAppear()
     {
+        if (textBoxVisible)
+            return;
+        
+        textBoxVisible = true;
+        dialogueBoxCanvasGroup.DOKill();
+        namePlateCanvasGroup.DOKill();
+        namePlate.DOKill();
+        
         dialogueBoxCanvasGroup.alpha = 0f;
         namePlateCanvasGroup.alpha = 0f;
+        
         dialogueBoxCanvasGroup.DOFade(1f, duration).SetEase(Ease.InOutQuad);
         namePlateCanvasGroup.DOFade(1f, duration).SetEase(Ease.InOutQuad);
         namePlate.anchoredPosition -= new Vector2(0, namePlateMoveAmount);
@@ -34,6 +45,7 @@ public class TextBoxAnimations : MonoBehaviour
 
     public virtual void TextBoxDisappear()
     {
+        textBoxVisible = false;
         DialogueSystem.instance.ClearTextBox();
         dialogueBoxCanvasGroup.alpha = 1f;
         namePlateCanvasGroup.alpha = 1f;

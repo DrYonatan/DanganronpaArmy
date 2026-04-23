@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using System;
 using _Main.Scripts.Court;
 using DG.Tweening;
 using DIALOGUE;
@@ -11,12 +10,12 @@ using Text = TMPro.TextMeshProUGUI;
 
 public class FloatingText : MonoBehaviour
 {
-    public List<GameObject> linesGameObjects = new ();
+    public List<GameObject> linesGameObjects = new();
     public TextEffect introEffect;
     public TextEffect outroEffect;
     public List<TextEffect> textEffects;
     public float ttl;
-    public List<TextMeshPro> linesTextMeshPros = new ();
+    public List<TextMeshPro> linesTextMeshPros = new();
     public Evidence correctEvidence;
     public int correctCharacterIndexBegin, correctCharacterIndexEnd;
 
@@ -55,6 +54,7 @@ public class GameLoop : MonoBehaviour
     public bool isShooting;
     public NoThatsWrongAnimator noThatsWrong;
     private bool reachedEnd = false;
+    public bool isGameOvering;
 
     float timer;
     int textIndex;
@@ -81,6 +81,7 @@ public class GameLoop : MonoBehaviour
     public void PlayDebate(DebateSegment debate)
     {
         isActive = true;
+        isGameOvering = false;
         debateSegment = debate;
         debateTexts = new List<FloatingText>();
         ResetValues();
@@ -166,17 +167,16 @@ public class GameLoop : MonoBehaviour
                 index++;
             }
 
-            if (!isShooting)
-            {
-                HandleBulletMenuOpening();
-                HandleMouseScroll();
-                HandleMouseControl();
-            }
+
+            HandleBulletMenuOpening();
+            HandleMouseScroll();
+            HandleMouseControl();
         }
     }
 
     private void DeactivateDebate()
     {
+        TrialCursorManager.instance.Hide();
         Time.timeScale = 1f;
         isDebateActive = false;
         TimeManipulationManager.instance.DeActivateInput();
@@ -193,6 +193,12 @@ public class GameLoop : MonoBehaviour
     IEnumerator SwitchToTextBoxMode()
     {
         TimerManager.instance.StopTimer();
+        if (debateUIAnimator.bulletSelectionMenu.isOpen)
+        {
+            debateUIAnimator.CloseBulletSelectionMenu();
+            yield return new WaitForSeconds(1f);
+        }
+
         debateUIAnimator.HideCylinderAndCircles(0.5f);
         CursorManager.instance.Hide();
         debateUIAnimator.ChangeFace(null);
@@ -215,12 +221,6 @@ public class GameLoop : MonoBehaviour
         debateUIAnimator.ShowCylinderAndCircles();
         CursorManager.instance.Show();
         TimerManager.instance.ResumeTimer();
-    }
-
-
-    private void GameOver()
-    {
-        DeactivateDebate();
     }
 
     void HandleMouseControl()
@@ -251,11 +251,11 @@ public class GameLoop : MonoBehaviour
 
     void HandleBulletMenuOpening()
     {
-        if (Input.GetKey(KeyCode.Q))
+        if (Input.GetKey(KeyCode.Q) && !isShooting)
         {
             bulletMenuHoldTime += Time.deltaTime;
-            if(bulletMenuHoldTime >= 1f)
-               debateUIAnimator.OpenBulletSelectionMenu();
+            if (bulletMenuHoldTime >= 1f)
+                debateUIAnimator.OpenBulletSelectionMenu();
         }
         else
         {
@@ -284,7 +284,9 @@ public class GameLoop : MonoBehaviour
                                       Quaternion.Euler(0, 90f, 0);
                 bulletManager.ShootBullet();
                 GameObject bullet = Instantiate(textBulletPrefab, shootOrigin.position, rotation);
-                bullet.GetComponent<TextMeshPro>().text = bulletManager.GetSelectedEvidence();
+                TextMeshPro bulletText = bullet.GetComponent<TextMeshPro>();
+                bulletText.text = bulletManager.GetSelectedEvidence();
+                CreateColliderAroundTextRange(bullet, 0, bulletText.text.Length-1, false);
                 StartCoroutine(MoveBullet(bullet, direction, 1f));
                 debateUIAnimator.MoveCylinder();
                 debateUIAnimator.GrowAndShrinkCircles();
@@ -305,7 +307,10 @@ public class GameLoop : MonoBehaviour
         Destroy(bullet);
         isShooting = false;
         if (isDebateActive)
+        {
+            TrialCursorManager.instance.Show();
             debateUIAnimator.LoadBullet();
+        }
     }
 
     public void LoadBullets()
@@ -343,13 +348,30 @@ public class GameLoop : MonoBehaviour
 
     public void WrongHit()
     {
+        StartCoroutine(WrongHitEffect());
+    }
+
+    private IEnumerator WrongHitEffect()
+    {
+        DeactivateDebate();
+
+        foreach (FloatingText text in debateTexts)
+        {
+            foreach (TextMeshPro line in text.linesTextMeshPros)
+            {
+                line.text = line.text.Replace("<color=orange>", "<color=red>");
+                line.ForceMeshUpdate();
+            }
+        }
+
+        yield return new WaitForSeconds(1f);
+        
         foreach (FloatingText text in debateTexts)
         {
             StartCoroutine(DestroyText(text));
         }
 
         debateTexts.Clear();
-        DeactivateDebate();
         wrongEvidenceRoutine = StartCoroutine(PlayWrongHitNodes());
     }
 
@@ -421,7 +443,6 @@ public class GameLoop : MonoBehaviour
     {
         DeactivateDebate();
         isActive = false;
-        TrialDialogueManager.instance.StopConversation();
         yield return TrialManager.instance.ShowFailedScreen();
         StopWrongHitNodes();
         MusicManager.instance.StopSong();
@@ -434,11 +455,12 @@ public class GameLoop : MonoBehaviour
 
     IEnumerator StartNewNode(int dialogueNodeIndex)
     {
-        if (TrialManager.instance.playerStats.hp <= 0)
+        if (isGameOvering)
         {
             StartCoroutine(GameOverPipeline());
             yield break;
         }
+
         Character prevCharacter = ScriptableObject.CreateInstance<Character>();
         if (dialogueNodeIndex > 0)
         {
@@ -455,10 +477,10 @@ public class GameLoop : MonoBehaviour
         }
 
 
-        if(nextNode.displayName != "")
+        if (nextNode.displayName != "")
             debateUIAnimator.UpdateName(nextNode.displayName);
         else
-           debateUIAnimator.UpdateName(nextNode.character.displayName);
+            debateUIAnimator.UpdateName(nextNode.character.displayName);
         debateUIAnimator.HighlightNode(textIndex);
         yield return cameraController.SpinToTarget(characterStand.transform, characterStand.heightPivot,
             nextNode.positionOffset, nextNode.rotationOffset, nextNode.fovOffset);
@@ -624,7 +646,7 @@ public class GameLoop : MonoBehaviour
 
         if (text.outroEffect != null)
         {
-            yield return text.outroEffect.Apply(text.transform); 
+            yield return text.outroEffect.Apply(text.transform);
         }
         else
         {
@@ -632,17 +654,15 @@ public class GameLoop : MonoBehaviour
             {
                 FadeText(line, 0f, duration);
             }
-        
+
             yield return new WaitForSeconds(duration);
 
             text.transform.DOKill();
             Destroy(text.gameObject);
         }
-        
+
         text.transform.DOKill();
         Destroy(text.gameObject);
-        
-        
     }
 
     // Gets the textLine to create for, the range and whether or not to make a child (AKA the orange part)

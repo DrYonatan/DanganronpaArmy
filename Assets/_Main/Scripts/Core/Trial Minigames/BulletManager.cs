@@ -2,9 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using DG.Tweening;
-
-
-
 public class BulletManager : MonoBehaviour
 {
     [SerializeField] UIBullet selectedBullet;
@@ -12,6 +9,7 @@ public class BulletManager : MonoBehaviour
     [SerializeField] private RectTransform cylinder;
     [SerializeField] private BulletSelectionMenu bulletSelectionMenu;
     public int selectedIndex;
+    public AudioClip shootSound;
 
     public void LoadBullets()
     {
@@ -38,6 +36,8 @@ public class BulletManager : MonoBehaviour
 
     public void ShootBullet()
     {
+        TrialCursorManager.instance.Hide();
+        SoundManager.instance.PlaySoundEffect(shootSound);
         selectedBullet.Shoot();
     }
 

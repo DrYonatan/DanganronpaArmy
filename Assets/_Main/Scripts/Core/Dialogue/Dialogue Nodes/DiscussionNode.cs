@@ -38,14 +38,19 @@ public class DiscussionNode : DialogueNode
         
         CharacterStand characterStand = TrialManager.instance.characterStands.Find(stand => stand.character == character);
 
+        if (!usePrevCamera)
+        {
+            TrialDialogueManager.instance.effectController.Reset();
+        }
+        
         if (characterStand != null)
         {
-            RunNodePhysical(characterStand);
+            HandleVisibleCharacter(characterStand);
         }
 
         else
         {
-            RunNodeNonPhysical();
+            HandleNonVisibleCharacter();
         }
 
         
@@ -57,12 +62,11 @@ public class DiscussionNode : DialogueNode
         yield return DialogueSystem.instance.Say(this);
     }
 
-    private void RunNodePhysical(CharacterStand stand)
+    private void HandleVisibleCharacter(CharacterStand stand)
     {
         if (!usePrevCamera)
         {
             TrialDialogueManager.instance.cameraController.TeleportToTarget(stand.transform, stand.heightPivot, positionOffset, rotationOffset, fovOffset);
-            TrialDialogueManager.instance.effectController.Reset();
         }
         
         stand.SetSprite(character.emotions[expressionIndex]);
@@ -76,10 +80,10 @@ public class DiscussionNode : DialogueNode
         animator.ChangeFace(character.faceSprite);
     }
 
-    private void RunNodeNonPhysical()
+    private void HandleNonVisibleCharacter()
     {
         CourtTextBoxAnimator animator = (CourtTextBoxAnimator)(DialogueSystem.instance.dialogueBoxAnimator);
-        
+
         if(animator.characterFace.isVisible)
            animator.characterFace.DiscussionFaceContainerDisappear(animator.duration);
     }

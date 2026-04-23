@@ -23,7 +23,7 @@ MonoBehaviour:
     title: 
     drawNode: {fileID: 11400000, guid: 81b17a11177a0f4449f7df8eebe49b4b, type: 2}
     character: {fileID: 11400000, guid: 86ac77b9ffadf3643938e479c302689d, type: 2}
-    displayName: ???
+    displayName: 
     expressionIndex: 0
     textData:
       rid: 3042479711257624576
@@ -73,7 +73,7 @@ MonoBehaviour:
     drawNode: {fileID: 11400000, guid: 81b17a11177a0f4449f7df8eebe49b4b, type: 2}
     character: {fileID: 11400000, guid: e518102ea47577a499c54e7bb8334338, type: 2}
     displayName: 
-    expressionIndex: 0
+    expressionIndex: 1
     textData:
       rid: 4653702784916127750
     usePrevCamera: 0
@@ -85,6 +85,30 @@ MonoBehaviour:
     rotationOffset: {x: 5.64, y: 0, z: 0}
     statement: "\u05E9\u05DC\u05D5\u05E1"
     voiceLine: {fileID: 8300000, guid: 6a2ea7a0725693f44af30c231aa73d9b, type: 3}
+    textLinesPage: 0
+  - nodeRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 59840
+    commandsScrollPosition: {x: 0, y: 0}
+    title: 
+    drawNode: {fileID: 11400000, guid: 81b17a11177a0f4449f7df8eebe49b4b, type: 2}
+    character: {fileID: 11400000, guid: e518102ea47577a499c54e7bb8334338, type: 2}
+    displayName: 
+    expressionIndex: 2
+    textData:
+      rid: 6274741549947158528
+    usePrevCamera: 0
+    characterStand: {fileID: 0}
+    cameraEffects:
+    - {fileID: 11400000, guid: 8087dd134ffdb1e48ad5c829514baaf6, type: 2}
+    fovOffset: 11
+    positionOffset: {x: 0.44, y: 0, z: 3.19}
+    rotationOffset: {x: 0, y: 0, z: 0}
+    statement: 
+    voiceLine: {fileID: 0}
     textLinesPage: 0
   - nodeRect:
       serializedVersion: 2
@@ -168,9 +192,8 @@ MonoBehaviour:
       type: {class: DebateTextData, ns: , asm: Assembly-CSharp}
       data:
         textLines:
-        - text: "\u05D1\u05D5\u05D0 \u05D0\u05DC\u05D9\u05D9 \u05DC\u05E2\u05D5\u05DC\u05DD
-            \u05E7\u05E8\u05E7\u05E1\n\u05D1\u05D5\u05D0 \u05E2\u05DB\u05E9\u05D9\u05D5
-            \u05D5\u05DE\u05D9\u05D3"
+        - text: "\u05D0\u05D6 \u05D4\u05E8\u05E6\u05D7 \u05E7\u05E8\u05D4 \u05D1\u05E9\u05D9\u05E8\u05D5\u05EA\u05D9\u05DD,
+            \u05D1\u05D6\u05DE\u05DF \u05D4\u05E0\u05E7\u05D9\u05D5\u05E0\u05D5\u05EA..."
           textEffects:
           - {fileID: 11400000, guid: e5ad80d2a8ee1f042bf34c66a49d1aef, type: 2}
           introEffect: {fileID: 11400000, guid: 6c738300247b4e044bea12b9fa18f612, type: 2}
@@ -185,8 +208,7 @@ MonoBehaviour:
       type: {class: DebateTextData, ns: , asm: Assembly-CSharp}
       data:
         textLines:
-        - text: "\u05DB\u05D5\u05DC\u05DD \u05D8\u05D5\u05E8\u05E7\u05E1\u05D9\u05DD
-            \u05E4\u05D4"
+        - text: "\u05D4\u05D5\u05D0 \u05E6\u05D5\u05D3\u05E7."
           textEffects:
           - {fileID: 11400000, guid: 1783f855e5ca44a46918165450f0b808, type: 2}
           introEffect: {fileID: 0}
@@ -201,11 +223,11 @@ MonoBehaviour:
       type: {class: DebateTextData, ns: , asm: Assembly-CSharp}
       data:
         textLines:
-        - text: "\u05D1\u05D5\u05D0 \u05D9\u05E9 {\u05D7\u05D2\u05D9\u05D2\u05D4
-            \u05D8\u05D5\u05E8\u05E7\u05D9\u05EA \u05E4\u05D4\n\u05D1\u05D0\u05D4\u05D9\u05DC}"
+        - text: "\u05D6\u05D4 \u05DC\u05D0 \u05D0\u05D5\u05DE\u05E8 \u05E9\u05D4\u05E8\u05D5\u05E6\u05D7\n\u05D4\u05D5\u05D0
+            \u05D0\u05D7\u05D3 {\u05DE\u05D0\u05DC\u05D4 \u05E9\u05D4\u05D9\u05D5
+            \u05D1\u05E9\u05D9\u05E8\u05D5\u05EA\u05D9\u05DD?}"
           textEffects:
           - {fileID: 11400000, guid: 78cef4dbf176f274ba273d043b6ea500, type: 2}
-          - {fileID: 11400000, guid: 776df99a68a7fa04d9cebde19eafed87, type: 2}
           introEffect: {fileID: 11400000, guid: 79d05a79f475ef643a1ecc36ad08d221, type: 2}
           outroEffect: {fileID: 0}
           spawnOffset: {x: 0, y: 0, z: 0}
@@ -223,11 +245,11 @@ MonoBehaviour:
       type: {class: DebateTextData, ns: , asm: Assembly-CSharp}
       data:
         textLines:
-        - text: "\u05DC\u05D0 \u05D0\u05E0\u05D7\u05E0\u05D5 \u05DC\u05D0 {\u05D8\u05D5\u05E8\u05E7\u05D9\u05DD}
-            \u05E4\u05D4\n\u05D1\u05DB\u05DC\u05DC"
+        - text: "\u05D0\u05EA \u05D1\u05D0\u05DE\u05EA \u05D7\u05D5\u05E9\u05D1\u05EA
+            \u05E9\u05D6\u05D4 \u05DB\u05D6\u05D4 \u05E4\u05E9\u05D5\u05D8?"
           textEffects:
-          - {fileID: 11400000, guid: 776df99a68a7fa04d9cebde19eafed87, type: 2}
-          introEffect: {fileID: 0}
+          - {fileID: 11400000, guid: e5ad80d2a8ee1f042bf34c66a49d1aef, type: 2}
+          introEffect: {fileID: 11400000, guid: 6c738300247b4e044bea12b9fa18f612, type: 2}
           outroEffect: {fileID: 0}
           spawnOffset: {x: 0, y: 0, z: 0}
           rotationOffset: {x: 0, y: 0, z: 0}
@@ -235,3 +257,22 @@ MonoBehaviour:
           ttl: 3
           textLineScrollPosition: {x: 0, y: 0}
           correctEvidence: {fileID: 0}
+    - rid: 6274741549947158528
+      type: {class: DebateTextData, ns: , asm: Assembly-CSharp}
+      data:
+        textLines:
+        - text: "\u05DB\u05D3\u05D0\u05D9 \u05E9\u05EA\u05D7\u05E9\u05D1\u05EA\u05D9
+            \u05E9\u05D5\u05D1. \n{\u05D4\u05E8\u05D5\u05E6\u05D7 \u05D4\u05D9\u05D4
+            \u05D9\u05DB\u05D5\u05DC \u05DC\u05D4\u05D9\u05D5\u05EA \u05D2\u05DD\n\u05D0\u05D7\u05D3
+            \u05DE\u05D0\u05DC\u05D4 \u05E9\u05D4\u05D9\u05D5 \u05D1\u05D7\u05D5\u05E5}"
+          textEffects:
+          - {fileID: 11400000, guid: 776df99a68a7fa04d9cebde19eafed87, type: 2}
+          - {fileID: 11400000, guid: 79d05a79f475ef643a1ecc36ad08d221, type: 2}
+          introEffect: {fileID: 0}
+          outroEffect: {fileID: 0}
+          spawnOffset: {x: 0, y: 0, z: 0}
+          rotationOffset: {x: 0, y: 0, z: 0}
+          scale: {x: 1, y: 1, z: 1}
+          ttl: 3
+          textLineScrollPosition: {x: 0, y: 0}
+          correctEvidence: {fileID: 11400000, guid: 61f792b87e669574793f5e93b1753771, type: 2}

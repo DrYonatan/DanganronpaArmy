@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using _Main.Scripts.Court;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName ="Data/Conversation Segment")]
@@ -12,5 +10,10 @@ public class DiscussionSegment : TrialSegment
     public override void Play()
     {
         TrialDialogueManager.instance.PlayDiscussion(this);
+    }
+
+    public override void HandleGameOver()
+    {
+        TrialDialogueManager.instance.isGameOvering = true;
     }
 }

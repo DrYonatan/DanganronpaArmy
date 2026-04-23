@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public abstract class TrialSegment : ScriptableObject
 {
@@ -9,5 +8,7 @@ public abstract class TrialSegment : ScriptableObject
     {
         TrialManager.instance.OnSegmentFinished();
     }
+
+    public abstract void HandleGameOver();
 
 }

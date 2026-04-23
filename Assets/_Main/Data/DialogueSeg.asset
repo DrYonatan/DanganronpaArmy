@@ -15,6 +15,7 @@ MonoBehaviour:
   discussionNodes:
   - rid: 4827846089663315980
   - rid: 6826935146225074176
+  - rid: 6274741694284955648
   - rid: 7771312572155035648
   settings:
     characterPositions: []
@@ -134,6 +135,102 @@ MonoBehaviour:
       data:
         text: "\u05E9\u05DC\u05D5\u05E1"
         commands: []
+    - rid: 6274741694284955648
+      type: {class: DiscussionChoiceNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: 76846e25f3c59c8469f240cc5205a8fd, type: 2}
+        character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
+        displayName: 
+        expressionIndex: 0
+        textData:
+          rid: 6274741694284955649
+        usePrevCamera: 0
+        characterStand: {fileID: 0}
+        cameraEffects: []
+        fovOffset: 0
+        positionOffset: {x: 0, y: 0, z: 0}
+        rotationOffset: {x: 0, y: 0, z: 0}
+        isHp: 1
+        choiceLogic:
+          options:
+          - text: "\u05DC\u05D0 \u05E0\u05DB\u05D5\u05DF"
+            dialogue:
+            - rid: 6274741694284955650
+            isCorrect: 0
+          - text: "\u05E0\u05DB\u05D5\u05DF"
+            dialogue:
+            - rid: 6274741753662930944
+            isCorrect: 1
+          loopIfWrong: 1
+    - rid: 6274741694284955649
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "\u05E9\u05D0\u05DC\u05D4"
+        commands: []
+    - rid: 6274741694284955650
+      type: {class: DiscussionNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: 6344f4092040cbd4183fc5d6dc877647, type: 2}
+        character: {fileID: 11400000, guid: e556e59756b89ea4ab97f97255a16dac, type: 2}
+        displayName: 
+        expressionIndex: 0
+        textData:
+          rid: 6274741694284955651
+        usePrevCamera: 0
+        characterStand: {fileID: 0}
+        cameraEffects: []
+        fovOffset: 0
+        positionOffset: {x: 0, y: 0, z: 0}
+        rotationOffset: {x: 0, y: 0, z: 0}
+    - rid: 6274741694284955651
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "\u05D0\u05EA\u05D4 \u05D8\u05D5\u05E2\u05D4"
+        commands: []
+    - rid: 6274741753662930944
+      type: {class: DiscussionNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: 6344f4092040cbd4183fc5d6dc877647, type: 2}
+        character: {fileID: 0}
+        displayName: 
+        expressionIndex: 0
+        textData:
+          rid: 6274741753662930945
+        usePrevCamera: 0
+        characterStand: {fileID: 0}
+        cameraEffects: []
+        fovOffset: 0
+        positionOffset: {x: 0, y: 0, z: 0}
+        rotationOffset: {x: 0, y: 0, z: 0}
+    - rid: 6274741753662930945
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: 
+        commands: []
     - rid: 6826935146225074176
       type: {class: DiscussionNode, ns: , asm: Assembly-CSharp}
       data:
@@ -170,7 +267,7 @@ MonoBehaviour:
           x: 0
           y: 0
           width: 0
-          height: 35200
+          height: 97220
         commandsScrollPosition: {x: 0, y: 0}
         title: 
         drawNode: {fileID: 11400000, guid: 76846e25f3c59c8469f240cc5205a8fd, type: 2}

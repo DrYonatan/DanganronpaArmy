@@ -104,14 +104,18 @@ public class TrialManager : MonoBehaviour
 
     public void DecreaseHealthDefault(float amount)
     {
-        playerStats.hp -= amount;
+        playerStats.hp = Math.Max(playerStats.hp - amount, 0);
         barsAnimator.DecreaseHealth(playerStats.hp, 0.5f);
+        if(playerStats.hp == 0)
+            segments[currentIndex].HandleGameOver();
     }
 
     public void DecreaseHealthFromMeter(Image meter, float amount)
     {
-        playerStats.hp -= amount;
+        playerStats.hp = Math.Max(playerStats.hp - amount, 0);
         barsAnimator.DecreaseHealthFromMeter(meter, playerStats.hp, 0.5f);
+        if(playerStats.hp == 0)
+            segments[currentIndex].HandleGameOver();
     }
 
 
@@ -119,7 +123,7 @@ public class TrialManager : MonoBehaviour
     {
         TrialDialogueManager.instance.animator.FaceAppear();
         barsAnimator.globalHealthMeter.fillAmount = 0f;
-        yield return TrialDialogueManager.instance.RunNodes(UtilityNodesRuntimeBank.instance.nodesCollection
+        yield return TrialDialogueManager.instance.PlayNodeList(UtilityNodesRuntimeBank.instance.nodesCollection
             .gameOverNodes);
         barsAnimator.HideGlobalBars(0.2f);
         TrialDialogueManager.instance.ConversationEnd();

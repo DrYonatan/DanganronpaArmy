@@ -295,7 +295,7 @@ public class LogicShootManager : MonoBehaviour
 
     private IEnumerator StopGame()
     {
-        TrialManager.instance.FadeCharactersExcept(LogicShootManager.instance.segment.character, 1f, 0f);
+        TrialManager.instance.FadeCharactersExcept(segment.character, 1f, 0f);
         ImageScript.instance.UnFadeToBlack(0.2f);
         animator.gameObject.SetActive(false);
         CharacterStand stand = TrialManager.instance.protagonistStand;
@@ -303,7 +303,8 @@ public class LogicShootManager : MonoBehaviour
             stand.heightPivot, Vector3.zero, Vector3.zero, 0f);
         foreach (ShootTarget target in animator.activeTargets)
         {
-            Destroy(target.gameObject);
+            if(target != null)
+              Destroy(target.gameObject);
         }
         yield return CameraController.instance.FovOutro();
     }
@@ -323,10 +324,11 @@ public class LogicShootManager : MonoBehaviour
     {
         SoundManager.instance.PlaySoundEffect(TrialManager.instance.barsAnimator.damageSound);
         TrialManager.instance.DecreaseHealthFromMeter(animator.playerHp, amount);
-        if (TrialManager.instance.playerStats.hp <= 0f)
-        {
-            StartCoroutine(GameOverPipeline());
-        }
+    }
+
+    public void GameOver()
+    {
+        StartCoroutine(GameOverPipeline());
     }
 
     private IEnumerator GameOverPipeline()

@@ -28,4 +28,8 @@ public class HangmansGambit : TrialSegment
         HangmanManager.instance.Play(this);
     }
 
+    public override void HandleGameOver()
+    {
+        HangmanManager.instance.GameOver();
+    }
 }
