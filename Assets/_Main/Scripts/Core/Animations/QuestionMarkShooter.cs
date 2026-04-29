@@ -8,13 +8,16 @@ public class QuestionMarkShooter : MonoBehaviour
     public float travelTime = 1.2f;
     public float curveAmount = 1.0f; // How far it veers side-to-side
     public GameObject hitEffectPrefab;
-    public float hitEffectOffset = 0.2f; 
+    public float hitEffectOffset = 0.2f;
+    public AudioClip shootSound;
 
     public IEnumerator ShootQuestionMark(Vector3 target)
     {
+        SoundManager.instance.PlaySoundEffect(shootSound);
+
         // Start point is slightly in front of the camera
         Vector3 start = mainCamera.transform.position + mainCamera.transform.forward * 0.5f;
-
+        
         // Choose control points for a wavy arc
         Vector3 mid = Vector3.Lerp(start, target, 0.5f);
         Vector3 right = Vector3.Cross((target - start).normalized, Vector3.up);

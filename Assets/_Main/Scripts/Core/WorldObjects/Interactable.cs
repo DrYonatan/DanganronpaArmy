@@ -36,6 +36,7 @@ public abstract class Interactable : MonoBehaviour
 
     public virtual void OnLook()
     {
+        isAlreadyLooking = true;
         CursorManager.instance.ShowOrHideMagnifyingGlass(true);
     }
     

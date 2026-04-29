@@ -14,6 +14,7 @@ public class CursorManager : MonoBehaviour
     public GameObject conversationIcon;
     public TextMeshProUGUI interactableNameText;
     public CanvasGroup interactableNameCanvasGroup;
+    public AudioClip hoverSound;
     private Coroutine fadeCoroutine;
     public bool isHovering = false;
 
@@ -38,16 +39,23 @@ public class CursorManager : MonoBehaviour
     {
         int actualSpeed = speed;
         if (WorldManager.instance != null)
-            if (WorldManager.instance.currentRoom.currentInteractable != null)
+        {
+            Interactable currentInteractable = WorldManager.instance.currentRoom.currentInteractable;
+            if (currentInteractable != null)
             {
                 actualSpeed *= 4;
-                WorldManager.instance.currentRoom.currentInteractable.OnLook();
+                if (!currentInteractable.isAlreadyLooking)
+                {
+                    SoundManager.instance.PlaySoundEffect(hoverSound);
+                }
+                currentInteractable.OnLook();
             }
             else
             {
                 ShowOrHideMagnifyingGlass(false);
                 ShowOrHideConversationIcon(false);
             }
+        }
 
         reticle.Rotate(0, 0, actualSpeed * Time.unscaledDeltaTime);
     }

@@ -286,7 +286,7 @@ public class GameLoop : MonoBehaviour
                 GameObject bullet = Instantiate(textBulletPrefab, shootOrigin.position, rotation);
                 TextMeshPro bulletText = bullet.GetComponent<TextMeshPro>();
                 bulletText.text = bulletManager.GetSelectedEvidence();
-                CreateColliderAroundTextRange(bullet, 0, bulletText.text.Length-1, false);
+                CreateColliderAroundTextRange(bullet, 0, bulletText.text.Length-1);
                 StartCoroutine(MoveBullet(bullet, direction, 1f));
                 debateUIAnimator.MoveCylinder();
                 debateUIAnimator.GrowAndShrinkCircles();
@@ -603,15 +603,15 @@ public class GameLoop : MonoBehaviour
         if (orangeStartIndex !=
             -1) // if there's a statement, build box colliders for the segment before, in and after the statement
         {
-            CreateColliderAroundTextRange(textLine.gameObject, 0, orangeStartIndex - 1, false);
+            CreateColliderAroundTextRange(textLine.gameObject, 0, orangeStartIndex - 1);
             CreateColliderAroundTextRange(textLine.gameObject, orangeStartIndex,
                 orangeEndIndex - "<color=orange>".Length, true);
             CreateColliderAroundTextRange(textLine.gameObject, orangeEndIndex - "<color=orange>".Length,
-                textLine.textInfo.characterCount - 1, false);
+                textLine.textInfo.characterCount - 1);
         }
         else // if there's no statement, just build one box collider
         {
-            CreateColliderAroundTextRange(textLine.gameObject, 0, textLine.textInfo.characterCount - 1, false);
+            CreateColliderAroundTextRange(textLine.gameObject, 0, textLine.textInfo.characterCount - 1);
         }
     }
 
@@ -666,7 +666,7 @@ public class GameLoop : MonoBehaviour
     }
 
     // Gets the textLine to create for, the range and whether or not to make a child (AKA the orange part)
-    void CreateColliderAroundTextRange(GameObject textGameObject, int startIndex, int endIndex, bool createChildObject)
+    void CreateColliderAroundTextRange(GameObject textGameObject, int startIndex, int endIndex, bool createChildObject = false)
     {
         TextMeshPro tmp = textGameObject.GetComponent<TextMeshPro>();
         tmp.ForceMeshUpdate();
