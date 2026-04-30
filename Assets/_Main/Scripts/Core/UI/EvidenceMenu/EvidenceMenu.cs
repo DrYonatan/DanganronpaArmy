@@ -21,9 +21,18 @@ public class EvidenceMenu : MenuScreen
     public AudioClip moveSelectionSound;
     public QuestionBubble questionBubble;
     public TextMeshProUGUI questionBubbleText;
+    public AddEvidenceAnimator animator;
+    public GameObject mainContainer;
+    public GameObject noEvidenceContainer;
+    public CanvasGroup mainContainerCanvasGroup;
+    public RectTransform infoContainerTransform;
+    public RectTransform evidenceContainerTransform;
+    private int infoContainerStartPosX;
+    private int evidenceContainerStartPosY;
 
-    public void OnEvidenceAdded(Evidence evidence)
+    public IEnumerator OnEvidenceAdded(Evidence evidence)
     {
+        yield return animator.PlayAnimation(evidence);
         AddEvidenceToList(evidence);
     }
 
@@ -52,47 +61,76 @@ public class EvidenceMenu : MenuScreen
         UpdateUI();
     }
 
+    protected override void LoadContent()
+    {
+        base.LoadContent();
+        StartAnimation();
+    }
+
+    void StartAnimation()
+    {
+        mainContainerCanvasGroup.alpha = 0;
+        infoContainerTransform.DOAnchorPosX(infoContainerStartPosX + 300f, 0).SetUpdate(true);
+        evidenceContainerTransform.DOAnchorPosY(evidenceContainerStartPosY - 300f, 0).SetUpdate(true);
+        mainContainerCanvasGroup.DOFade(1f, 0.6f).SetUpdate(true);
+        infoContainerTransform.DOAnchorPosX(infoContainerStartPosX, 0.6f).SetUpdate(true);
+        evidenceContainerTransform.DOAnchorPosY(evidenceContainerStartPosY, 0.6f).SetUpdate(true);
+    }
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            currentEvidenceIndex = (currentEvidenceIndex + 1) % EvidenceManager.instance.evidenceList.Count;
-            UpdateUI();
-            SoundManager.instance.PlaySoundEffect(moveSelectionSound);
-        }
-        else if (Input.GetKeyDown(KeyCode.W))
-        {
-            currentEvidenceIndex = (currentEvidenceIndex - 1 + EvidenceManager.instance.evidenceList.Count) %
-                                   EvidenceManager.instance.evidenceList.Count;
-            UpdateUI();
-            SoundManager.instance.PlaySoundEffect(moveSelectionSound);
-        }
-        
-        else if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             PlayerInputManager.instance.pauseMenu.GoBackToGeneral();
+        }
+
+        if (evidenceListUI.Count > 0)
+        {
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                currentEvidenceIndex = (currentEvidenceIndex + 1) % evidenceListUI.Count;
+                UpdateUI();
+                SoundManager.instance.PlaySoundEffect(moveSelectionSound);
+            }
+            else if (Input.GetKeyDown(KeyCode.W))
+            {
+                currentEvidenceIndex = (currentEvidenceIndex - 1 + evidenceListUI.Count) %
+                                       evidenceListUI.Count;
+                UpdateUI();
+                SoundManager.instance.PlaySoundEffect(moveSelectionSound);
+            }
         }
     }
 
     void UpdateUI()
     {
-        Evidence currentEvidence = EvidenceManager.instance.evidenceList.Count > 0 ? EvidenceManager.instance.evidenceList[currentEvidenceIndex] : null;
-        if (currentEvidence != null)
+        if (evidenceListUI.Count == 0)
         {
-            evidenceIcon.sprite = currentEvidence.icon;
-            evidenceIndexText.text =
-                $"{(currentEvidenceIndex + 1).ToString("00")}/{EvidenceManager.instance.evidenceList.Count.ToString("00")}";
-            evidenceDescription.text = currentEvidence.description;
-
-            foreach (ListItem item in evidenceListUI)
+            mainContainer.SetActive(false);
+            noEvidenceContainer.SetActive(true);
+        }
+        else
+        {
+            mainContainer.SetActive(true);
+            noEvidenceContainer.SetActive(false);
+            Evidence currentEvidence = EvidenceManager.instance.evidenceList[currentEvidenceIndex];
+            if (currentEvidence != null)
             {
-                item.SetHovered(false);
+                evidenceIcon.sprite = currentEvidence.icon;
+                evidenceIndexText.text =
+                    $"{(currentEvidenceIndex + 1).ToString("00")}/{evidenceListUI.Count.ToString("00")}";
+                evidenceDescription.text = currentEvidence.description;
+
+                foreach (ListItem item in evidenceListUI)
+                {
+                    item.SetHovered(false);
+                }
+
+                if (evidenceListUI.Count > 0)
+                    evidenceListUI[currentEvidenceIndex].SetHovered(true);
+
+                evidenceListTransform.anchoredPosition = new Vector2(0, Mathf.Max((currentEvidenceIndex - 4) * 152, 0)) ;
             }
-
-            if (evidenceListUI.Count > 0)
-                evidenceListUI[currentEvidenceIndex].SetHovered(true);
-
-            evidenceListTransform.anchoredPosition = new Vector2(0, Mathf.Max((currentEvidenceIndex - 5) * 91, 0));
         }
     }
 
@@ -106,7 +144,7 @@ public class EvidenceMenu : MenuScreen
         gameObject.SetActive(true);
         currentEvidenceIndex = 0;
         UpdateUI();
-        
+
         bool isOpen = false;
 
         while (PlayerInputManager.instance.DefaultInput())
@@ -123,12 +161,13 @@ public class EvidenceMenu : MenuScreen
                 {
                     questionBubble.Close();
                 }
-                
+
                 isOpen = false;
             }
+
             yield return null;
         }
-        
+
         questionBubble.gameObject.SetActive(false);
 
         Close();

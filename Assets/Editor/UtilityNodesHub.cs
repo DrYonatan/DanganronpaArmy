@@ -58,6 +58,8 @@ public class UtilityNodesHub : EditorWindow
             () => ConversationEditor.Open(utilityNodesCollection.gameOverNodes, null, null));
         DrawGenericNodesOpen("Wrong Comic Nodes",
             () => VNDialogueEditor.Open(utilityNodesCollection.wrongComicNodes, null, null, false));
+        DrawGenericNodesOpen("Evidence Added Nodes",
+            () => VNDialogueEditor.Open(utilityNodesCollection.evidenceAdded, null, null, false));
         EditorGUILayout.EndVertical();
 
         EditorGUILayout.EndHorizontal();

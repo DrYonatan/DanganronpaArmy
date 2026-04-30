@@ -104,6 +104,8 @@ public class VNNodeDraw : DrawNode
             menu.AddItem(new GUIContent("Shake Screen"), false, () => AddCommand(node, new ShakeScreen()));
             menu.AddItem(new GUIContent("Hide Speaker"), false, () => AddCommand(node, new HideCharacter()));
             
+            menu.AddItem(new GUIContent("Add Evidence"), false, () => AddCommand(node, new AddEvidence()));
+
             menu.ShowAsContext();
         }
     }

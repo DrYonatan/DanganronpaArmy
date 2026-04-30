@@ -23,4 +23,6 @@ public class UtilityNodesCollection : ScriptableObject
     [SerializeReference] public List<DiscussionNode> gameOverNodes = new List<DiscussionNode>();
     
     public List<DialogueNode> wrongComicNodes = new List<DialogueNode>();
+    
+    public List<DialogueNode> evidenceAdded = new List<DialogueNode>();
 }
