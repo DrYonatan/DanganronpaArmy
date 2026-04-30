@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class ProgressManager : MonoBehaviour
@@ -23,7 +22,7 @@ public class ProgressManager : MonoBehaviour
     public void StartNewGame()
     {
         GameStateManager.instance.ResetChapters();
-        StartNewVnSegment();
+        StartCoroutine(StartNewVnSegment());
     }
 
 
@@ -59,8 +58,7 @@ public class ProgressManager : MonoBehaviour
 
         GameStateManager.instance.UpdateChapterIndexes(data.chapterIndex, data.chapterSegmentIndex);
         VNUIAnimator.instance.chapterNameText.text = GameStateManager.instance.GetCurrentChapter().chapterName;
-
-
+        
         yield return TimeOfDayManager.instance.ChangeTimeOfDay(data.timeOfDay);
 
         LoadGameEvents(GameStateManager.instance.GetCurrentChapterSegment());
@@ -79,23 +77,11 @@ public class ProgressManager : MonoBehaviour
         CameraManager.instance.cameraTransform.localRotation =
             Quaternion.Euler(new Vector3(data.cameraRotation[0], data.cameraRotation[1], data.cameraRotation[2]));
 
-        VNConversationSegment currentConversation = conversationDatabase.Get(data.currentConversation);
-        if (currentConversation != null)
-        {
-            VNNodePlayer.instance.lineIndex = data.currentLineIndex;
-            VNNodePlayer.instance.StartConversation(currentConversation);
-            CameraManager.instance.initialRotation = Quaternion.Euler(new Vector3(data.conversationInitialRotation[0],
-                data.conversationInitialRotation[1], data.conversationInitialRotation[2]));
-        }
-        else
-        {
-            CursorManager.instance.Show();
-        }
-
-        WorldManager.instance.Initialize();
+        if(WorldManager.instance.currentRoom != null)
+           WorldManager.instance.Initialize();
     }
 
-    public void StartNewVnSegment()
+    public IEnumerator StartNewVnSegment()
     {
         LoadGameEvents(GameStateManager.instance.chapters[GameStateManager.instance.chapterIndex]
             .chapterSegments[GameStateManager.instance.chapterSegmentIndex]);
@@ -103,6 +89,7 @@ public class ProgressManager : MonoBehaviour
             GameStateManager.instance.chapters[GameStateManager.instance.chapterIndex].chapterName;
         currentGameEvent = Instantiate(gameEvents[0]);
         WorldManager.instance.currentRoom = null;
+        yield return TimeOfDayManager.instance.ChangeTimeOfDay(currentGameEvent.timeOfDay);
         currentGameEvent.OnStart();
     }
 }

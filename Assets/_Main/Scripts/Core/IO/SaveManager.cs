@@ -49,7 +49,7 @@ public class SaveManager : MonoBehaviour
         SaveData data = new SaveData(GameStateManager.instance.chapterIndex,
             GameStateManager.instance.chapterSegmentIndex,
             ProgressManager.instance.currentGameEventIndex,
-            WorldManager.instance.currentRoom.name,
+            WorldManager.instance.currentRoom?.name,
             VNNodePlayer.instance.currentConversation?.guid, VNNodePlayer.instance.lineIndex,
             MusicManager.instance.audioSource.clip ? MusicManager.instance.audioSource.clip.name : "",
             charactersData,
