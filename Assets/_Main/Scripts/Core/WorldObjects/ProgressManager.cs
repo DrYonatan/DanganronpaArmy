@@ -49,27 +49,7 @@ public class ProgressManager : MonoBehaviour
 
         currentGameEvent = Instantiate(gameEvents[currentGameEventIndex]);
 
-        Room roomToLoad;
-
-        if (currentGameEvent.startRoom != null &&
-            WorldManager.instance.currentRoom.roomName != currentGameEvent.startRoom.roomName)
-            roomToLoad = currentGameEvent.startRoom;
-        else
-        {
-            roomToLoad = WorldManager.instance.currentRoom;
-        }
-
-        if (WorldManager.instance.currentTime != currentGameEvent.timeOfDay ||
-            roomToLoad != WorldManager.instance.currentRoom)
-        {
-            WorldManager.instance.currentRoom = roomToLoad;
-            yield return TimeOfDayManager.instance.ChangeTimeOfDay(currentGameEvent.timeOfDay);
-            yield return WorldManager.instance.MoveToRoom(WorldManager.instance.currentRoom, null);
-            VNNodePlayer.instance.StartConversation(gameEvents[currentGameEventIndex].startText);
-        }
-
-        else
-            currentGameEvent.OnStart();
+        currentGameEvent.OnStart();
     }
 
     public IEnumerator LoadValuesFromSave()

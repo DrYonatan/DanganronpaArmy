@@ -26,7 +26,7 @@ public class WorldManager : MonoBehaviour
 
     public void Initialize()
     {
-        StartCoroutine(LoadRoom(currentRoom));
+        StartCoroutine(LoadRoomWithoutAnimation(currentRoom));
     }
 
     private void ReturningToWorld()
@@ -110,7 +110,40 @@ public class WorldManager : MonoBehaviour
         currentRoomData = roomData;
     }
 
-    private IEnumerator LoadRoom(Room room)
+    public IEnumerator LoadRoom(Room room, [CanBeNull] string entryPoint)
+    {
+        isLoading = true;
+
+        RoomModel ob = Instantiate(room.GetTimeOfDayVersion(ProgressManager.instance.currentGameEvent.timeOfDay));
+        ob.name = "World";
+        ob.gameObject.SetActive(true);
+
+        GameObject objectsParent = GameObject.Find("World Objects");
+        if (objectsParent != null)
+            characterPanel = objectsParent;
+        string cameraStartPosName = !String.IsNullOrEmpty(entryPoint) ? $":{entryPoint}" : "";
+        Transform cameraStartPos = GameObject.Find($"World/CameraStartPos{cameraStartPosName}").transform;
+        if (CameraManager.instance)
+            CameraManager.instance.initialRotation =
+                cameraStartPos
+                    .rotation; // Sets only the Camera Manager's initial position value for later, not actually changing position of camera
+
+        CameraManager.instance.player.enabled = false;
+        CameraManager.instance.player.transform.position =
+            cameraStartPos.position; // Actually changing position of camera
+        CameraManager.instance.cameraTransform.rotation = cameraStartPos.rotation;
+        CameraManager.instance.player.enabled = true;
+
+        ImageScript.instance.UnFadeToBlack(0.1f);
+        if (room.OnLoad() != null)
+            yield return StartCoroutine(room.OnLoad());
+        ob.PlayRoomIntroEffects();
+        yield return room.AppearAnimation();
+        isLoading = false;
+        PlayerInputManager.instance.EnableInput();
+    }
+    
+    private IEnumerator LoadRoomWithoutAnimation(Room room)
     {
         RoomModel ob = Instantiate(room.GetTimeOfDayVersion(ProgressManager.instance.currentGameEvent.timeOfDay));
         ob.name = "World";
@@ -144,7 +177,7 @@ public class WorldManager : MonoBehaviour
         }
     }
 
-    public IEnumerator MoveToRoom(Room room, [CanBeNull] string entryPoint)
+    private IEnumerator MoveToRoom(Room room, [CanBeNull] string entryPoint)
     {
         CameraManager.instance.footStepsSource.Stop();
         CursorManager.instance.ShowOrHideConversationIcon(false);
@@ -186,34 +219,7 @@ public class WorldManager : MonoBehaviour
             yield return null;
         }
 
-
-        RoomModel ob = Instantiate(room.GetTimeOfDayVersion(ProgressManager.instance.currentGameEvent.timeOfDay));
-        ob.name = "World";
-        ob.gameObject.SetActive(true);
-
-        GameObject objectsParent = GameObject.Find("World Objects");
-        if (objectsParent != null)
-            characterPanel = objectsParent;
-        string cameraStartPosName = !String.IsNullOrEmpty(entryPoint) ? $":{entryPoint}" : "";
-        Transform cameraStartPos = GameObject.Find($"World/CameraStartPos{cameraStartPosName}").transform;
-        if (CameraManager.instance)
-            CameraManager.instance.initialRotation =
-                cameraStartPos
-                    .rotation; // Sets only the Camera Manager's initial position value for later, not actually changing position of camera
-
-        CameraManager.instance.player.enabled = false;
-        CameraManager.instance.player.transform.position =
-            cameraStartPos.position; // Actually changing position of camera
-        CameraManager.instance.cameraTransform.rotation = cameraStartPos.rotation;
-        CameraManager.instance.player.enabled = true;
-
-        ImageScript.instance.UnFadeToBlack(0.1f);
-        if (room.OnLoad() != null)
-            yield return StartCoroutine(room.OnLoad());
-        ob.PlayRoomIntroEffects();
-        yield return room.AppearAnimation();
-        isLoading = false;
-        PlayerInputManager.instance.EnableInput();
+        yield return LoadRoom(room, entryPoint);
 
         CreateCharacters(ProgressManager.instance.currentGameEvent.roomDatas
             .First(roomData => roomData.room.roomName.Equals(currentRoom.roomName)).characters);

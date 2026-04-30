@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -47,23 +48,51 @@ public abstract class GameEvent : ScriptableObject
 
     public virtual void OnStart()
     {
-        RoomData currentRoomData = ProgressManager.instance.currentGameEvent.roomDatas
+        WorldManager.instance.StartCoroutine(OnStartRoutine());
+    }
+
+    private IEnumerator OnStartRoutine()
+    {
+        yield return StartWithRoomLoad();
+        
+        RoomData currentRoomData = roomDatas
             .First(roomData => roomData.room.roomName.Equals(WorldManager.instance.currentRoom.roomName));
-
+         
         WorldManager.instance.UpdateRoomData(currentRoomData);
-
+         
         if (WorldManager.instance.charactersObject == null)
         {
             WorldManager.instance.CreateCharacters(currentRoomData.characters);
             WorldManager.instance.charactersObject.AnimateCharacters();
         }
-
+         
         if (WorldManager.instance.objectsObject == null)
             WorldManager.instance.CreateObjects(currentRoomData.worldObjects);
-
+         
         if (startText != null)
         {
             VNNodePlayer.instance.StartConversation(startText);
+        }
+    }
+
+    private IEnumerator StartWithRoomLoad()
+    {
+        Room roomToLoad;
+
+        if (startRoom != null &&
+            WorldManager.instance.currentRoom.roomName != startRoom.roomName)
+            roomToLoad = startRoom;
+        else
+        {
+            roomToLoad = WorldManager.instance.currentRoom;
+        }
+
+        if (WorldManager.instance.currentTime != timeOfDay ||
+            roomToLoad != WorldManager.instance.currentRoom)
+        {
+            WorldManager.instance.currentRoom = roomToLoad;
+            yield return TimeOfDayManager.instance.ChangeTimeOfDay(timeOfDay);
+            yield return WorldManager.instance.LoadRoom(WorldManager.instance.currentRoom, null);
         }
     }
 
