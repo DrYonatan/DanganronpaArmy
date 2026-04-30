@@ -60,8 +60,12 @@ public class PointAndClickRoom : Room
         {
             if(!WorldManager.instance.currentRoomData.isExitable)
             {
-                if(ProgressManager.instance.currentGameEvent.unallowedText != null)
-                   VNNodePlayer.instance.StartConversation(ProgressManager.instance.currentGameEvent.unallowedText);
+                WorldEvent currentEvent = ProgressManager.instance.currentGameEvent as WorldEvent;
+                if (currentEvent == null)
+                    return;
+                
+                if(currentEvent.unallowedText != null)
+                   VNNodePlayer.instance.StartConversation(currentEvent.unallowedText);
             }
             
             else

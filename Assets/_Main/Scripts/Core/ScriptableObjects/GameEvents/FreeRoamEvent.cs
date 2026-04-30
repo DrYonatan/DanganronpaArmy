@@ -4,7 +4,7 @@ using UnityEngine;
 using DIALOGUE;
 
 [CreateAssetMenu(menuName = "Game Events/Free Roam Event")]
-public class FreeRoamEvent : GameEvent
+public class FreeRoamEvent : WorldEvent
 {
     protected void OnFinish()
     {

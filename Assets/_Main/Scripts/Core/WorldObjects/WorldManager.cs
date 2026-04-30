@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Linq;
 using UnityEngine;
 using DIALOGUE;
 using JetBrains.Annotations;
@@ -47,56 +46,6 @@ public class WorldManager : MonoBehaviour
         {
             elapsedTime += Time.deltaTime;
             yield return null;
-        }
-    }
-
-    public void CreateCharacters(WorldCharactersParent prefab)
-    {
-        if (prefab == null || characterPanel == null)
-            return;
-
-        WorldCharactersParent ob = Instantiate(prefab, characterPanel.transform);
-        ob.name = "Characters";
-        ob.gameObject.SetActive(true);
-        foreach (string characterName in ProgressManager.instance.currentGameEvent.charactersData.Keys)
-        {
-            Transform character = ob.transform.Find(characterName);
-            if (character != null)
-                character.gameObject
-                        .GetComponent<WorldCharacter>().isClicked =
-                    ProgressManager.instance.currentGameEvent.charactersData[characterName].isClicked;
-        }
-
-        charactersObject = ob;
-
-        foreach (Transform character in charactersObject.transform)
-        {
-            ProgressManager.instance.currentGameEvent.charactersData[character.name] =
-                new ObjectData(character.gameObject.GetComponent<WorldCharacter>().isClicked);
-        }
-    }
-
-    public void CreateObjects(GameObject prefab)
-    {
-        if (prefab == null || characterPanel == null)
-            return;
-
-        GameObject ob = Instantiate(prefab, characterPanel.transform);
-        ob.name = "Objects";
-        ob.SetActive(true);
-        foreach (string objectName in ProgressManager.instance.currentGameEvent.objectsData.Keys)
-        {
-            ob.transform.Find(objectName).gameObject
-                    .GetComponent<WorldObject>().isClicked =
-                ProgressManager.instance.currentGameEvent.objectsData[objectName].isClicked;
-        }
-
-        objectsObject = ob;
-
-        foreach (Transform obj in objectsObject.transform)
-        {
-            ProgressManager.instance.currentGameEvent.objectsData[obj.name] =
-                new ObjectData(obj.gameObject.GetComponent<WorldObject>().isClicked);
         }
     }
 
@@ -159,14 +108,8 @@ public class WorldManager : MonoBehaviour
             yield return StartCoroutine(room.OnLoad());
         isLoading = false;
 
-        CreateCharacters(ProgressManager.instance.currentGameEvent.roomDatas
-            .First(roomData => roomData.room.roomName.Equals(currentRoom.roomName)).characters);
-        CreateObjects(ProgressManager.instance.currentGameEvent.roomDatas
-            .First(roomData => roomData.room.roomName.Equals(currentRoom.roomName)).worldObjects);
-
-        UpdateRoomData(
-            ProgressManager.instance.currentGameEvent.roomDatas.First(roomData => roomData.room.roomName == room.roomName));
-
+        ProgressManager.instance.currentGameEvent.OnRoomLoad();
+        
         if (VNNodePlayer.instance.currentConversation == null)
         {
             ReturningToWorld();
@@ -196,19 +139,7 @@ public class WorldManager : MonoBehaviour
         currentRoom = Instantiate(room);
         currentRoom.name = room.name;
         currentRoom.roomName = room.roomName;
-
-        UpdateRoomData(
-            ProgressManager.instance.currentGameEvent.roomDatas.First(roomData => roomData.room.roomName == room.roomName));
-
-        if (charactersObject != null)
-        {
-            foreach (Transform character in charactersObject.transform)
-            {
-                ProgressManager.instance.currentGameEvent.charactersData[character.name] =
-                    new ObjectData(character.gameObject.GetComponent<WorldCharacter>().isClicked);
-            }
-        }
-
+        
         GameObject world = GameObject.Find("World");
         Destroy(world);
 
@@ -221,10 +152,7 @@ public class WorldManager : MonoBehaviour
 
         yield return LoadRoom(room, entryPoint);
 
-        CreateCharacters(ProgressManager.instance.currentGameEvent.roomDatas
-            .First(roomData => roomData.room.roomName.Equals(currentRoom.roomName)).characters);
-        CreateObjects(ProgressManager.instance.currentGameEvent.roomDatas
-            .First(roomData => roomData.room.roomName.Equals(currentRoom.roomName)).worldObjects);
+        ProgressManager.instance.currentGameEvent.OnRoomLoad();
 
         if (charactersObject != null)
             charactersObject.AnimateCharacters();
@@ -240,7 +168,8 @@ public class WorldManager : MonoBehaviour
         DialogueSystem.instance.ClearTextBox();
         if (charactersObject != null)
             CharacterClickEffects.instance.MakeCharactersReappear(charactersObject.gameObject);
-        currentRoom.OnConversationEnd();
+        if(currentRoom != null)
+           currentRoom.OnConversationEnd();
         ReturningToWorld();
     }
 
@@ -248,7 +177,7 @@ public class WorldManager : MonoBehaviour
     void Update()
     {
         if (!DialogueSystem.instance.isActive && !PlayerInputManager.instance.isPaused && !isLoading)
-            currentRoom.MovementControl();
+            currentRoom?.MovementControl();
         else
         {
             MapContainer.instance.HideMap();

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Game Events/Destination Event")]
-public class DestinationEvent : GameEvent
+public class DestinationEvent : WorldEvent
 {
     public Room targetRoom;
 

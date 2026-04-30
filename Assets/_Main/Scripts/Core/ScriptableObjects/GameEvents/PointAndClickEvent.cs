@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Game Events/Point And Click Event")]
-public class PointAndClickEvent : GameEvent
+public class PointAndClickEvent : WorldEvent
 {
     private bool AreAllClicked(Dictionary<string, ObjectData>.ValueCollection datas)
     {

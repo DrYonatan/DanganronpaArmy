@@ -13,11 +13,13 @@ public class WorldCharacter : ConversationInteractable
         Quaternion targetRotation = Quaternion.LookRotation(transform.forward);
         CameraManager.instance.StartCameraCoroutine(CameraManager.instance.RotateCameraTo(targetRotation, 0.5f));
         CameraManager.instance.initialRotation = transform.rotation;
+        
+        base.FinishInteraction();
+        
         if (ProgressManager.instance.currentGameEvent != null)
         {
-            ProgressManager.instance.currentGameEvent.charactersData[name] = new ObjectData(true);
+            ((WorldEvent)ProgressManager.instance.currentGameEvent).charactersData[name] = new ObjectData(isClicked);
         }
-        base.FinishInteraction();
     }
 
     public override void OnLook()

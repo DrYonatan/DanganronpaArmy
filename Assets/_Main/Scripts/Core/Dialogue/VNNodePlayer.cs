@@ -32,7 +32,7 @@ public class VNNodePlayer : MonoBehaviour
         HandleConversationEnd();
     }
 
-    public IEnumerator RunNodes(List<DialogueNode> nodes)
+    private IEnumerator RunNodes(List<DialogueNode> nodes)
     {
         VNCharacterManager.instance.HideAllCharacters();
         for (int i = lineIndex; i < nodes.Count; i++)

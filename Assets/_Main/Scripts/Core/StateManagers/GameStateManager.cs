@@ -87,7 +87,7 @@ public class GameStateManager : MonoBehaviour
         {
             persistentObject = GameObject.Find("Persistent");
             DontDestroyOnLoad(persistentObject);
-            StartCoroutine(ProgressManager.instance.StartNewVnSegment());
+            ProgressManager.instance.StartNewVnSegment();
         }
     }
 

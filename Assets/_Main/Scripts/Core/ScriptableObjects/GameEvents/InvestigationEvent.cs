@@ -2,12 +2,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using DIALOGUE;
+using UnityEngine.Serialization;
 
 [Serializable]
 public class NameAndEvent
 {
     public string name;
-    public GameEvent gameEvent;
+    public WorldEvent gameEvent;
 }
 
 [CreateAssetMenu(menuName = "Game Events/Free Roam Event/Investigation Event")]
@@ -15,14 +16,14 @@ public class InvestigationEvent : FreeRoamEvent
 {
     [SerializeField] public List<NameAndEvent> assetEvents;
 
-    public Dictionary<string, GameEvent>
-        gameEvents = new Dictionary<string, GameEvent>(); // The string represents the room the event takes place in
+    public Dictionary<string, WorldEvent>
+        gameEvents = new Dictionary<string, WorldEvent>(); // The string represents the room the event takes place in
 
     public override void CheckIfFinished()
     {
         isFinished = true;
 
-        foreach (GameEvent gameEvent in gameEvents.Values)
+        foreach (WorldEvent gameEvent in gameEvents.Values)
         {
             if (!gameEvent.isFinished)
                 isFinished = false;
@@ -30,9 +31,9 @@ public class InvestigationEvent : FreeRoamEvent
 
         if (gameEvents.ContainsKey(WorldManager.instance.currentRoom.roomName) && !isFinished)
         {
-            GameEvent gameEvent = gameEvents[WorldManager.instance.currentRoom.roomName];
-            ProgressManager.instance.currentGameEvent = gameEvent;
-            gameEvent.OnStart();
+            WorldEvent worldEvent = gameEvents[WorldManager.instance.currentRoom.roomName];
+            ProgressManager.instance.currentGameEvent = worldEvent;
+            worldEvent.OnStart();
         }
         
         if (isFinished)

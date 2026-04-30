@@ -40,7 +40,7 @@ public class CursorManager : MonoBehaviour
         int actualSpeed = speed;
         if (WorldManager.instance != null)
         {
-            Interactable currentInteractable = WorldManager.instance.currentRoom.currentInteractable;
+            Interactable currentInteractable = WorldManager.instance.currentRoom?.currentInteractable;
             if (currentInteractable != null)
             {
                 actualSpeed *= 4;

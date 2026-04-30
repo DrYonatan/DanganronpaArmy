@@ -23,7 +23,7 @@ public class ProgressManager : MonoBehaviour
     public void StartNewGame()
     {
         GameStateManager.instance.ResetChapters();
-        StartCoroutine(StartNewVnSegment());
+        StartNewVnSegment();
     }
 
 
@@ -69,8 +69,7 @@ public class ProgressManager : MonoBehaviour
         currentGameEvent = Instantiate(gameEvents[currentGameEventIndex]);
         WorldManager.instance.currentRoom = Resources.Load<Room>($"Rooms/{data.currentRoom}");
         MusicManager.instance.PlaySong(Resources.Load<AudioClip>($"Audio/Music/{data.currentMusic}"));
-        currentGameEvent.charactersData = data.charactersData.ToDictionary(c => c.key, c => c.value);
-        currentGameEvent.objectsData = data.objectsData.ToDictionary(c => c.key, c => c.value);
+        currentGameEvent.LoadSave(data);
 
         CameraManager.instance.player.transform.position =
             new Vector3(data.playerPosition[0], data.playerPosition[1], data.playerPosition[2]);
@@ -96,16 +95,14 @@ public class ProgressManager : MonoBehaviour
         WorldManager.instance.Initialize();
     }
 
-    public IEnumerator StartNewVnSegment()
+    public void StartNewVnSegment()
     {
         LoadGameEvents(GameStateManager.instance.chapters[GameStateManager.instance.chapterIndex]
             .chapterSegments[GameStateManager.instance.chapterSegmentIndex]);
         VNUIAnimator.instance.chapterNameText.text =
             GameStateManager.instance.chapters[GameStateManager.instance.chapterIndex].chapterName;
-        yield return TimeOfDayManager.instance.ChangeTimeOfDay(gameEvents[0].timeOfDay);
         currentGameEvent = Instantiate(gameEvents[0]);
-        if (currentGameEvent.startRoom != null)
-            WorldManager.instance.currentRoom = currentGameEvent.startRoom;
-        WorldManager.instance.StartLoadingRoom(WorldManager.instance.currentRoom, null);
+        WorldManager.instance.currentRoom = null;
+        currentGameEvent.OnStart();
     }
 }
