@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using DIALOGUE;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -42,10 +43,10 @@ public class SaveManager : MonoBehaviour
     {
         WorldEvent currentEvent = ProgressManager.instance.currentGameEvent as WorldEvent;
         Dictionary<string, ObjectData> charactersData =
-            currentEvent?.charactersData; 
+            currentEvent?.charactersData;
         Dictionary<string, ObjectData> objectsData =
             currentEvent?.objectsData;
-        
+
         SaveData data = new SaveData(GameStateManager.instance.chapterIndex,
             GameStateManager.instance.chapterSegmentIndex,
             ProgressManager.instance.currentGameEventIndex,
@@ -58,7 +59,8 @@ public class SaveManager : MonoBehaviour
             GameStateManager.instance.charactersRanks, CameraManager.instance.player.transform.position,
             CameraManager.instance.cameraTransform.localPosition,
             CameraManager.instance.cameraTransform.localRotation.eulerAngles,
-            CameraManager.instance.initialRotation.eulerAngles, WorldManager.instance.currentTime, 0, 0);
+            CameraManager.instance.initialRotation.eulerAngles, WorldManager.instance.currentTime,
+            GameStateManager.instance.uiState, 0, 0);
         SaveSystem.SaveGame(data, slot);
     }
 
@@ -69,7 +71,7 @@ public class SaveManager : MonoBehaviour
             TrialDialogueManager.instance.currentLineIndex,
             MusicManager.instance.audioSource.clip ? MusicManager.instance.audioSource.clip.name : "", null, null,
             SceneManager.GetActiveScene().name, GameStateManager.instance.charactersRanks,
-            Vector3.zero, Vector3.zero, Vector3.zero, Vector3.zero, TimeOfDay.Day,
+            Vector3.zero, Vector3.zero, Vector3.zero, Vector3.zero, TimeOfDay.Day, GameStateManager.instance.uiState,
             TrialManager.instance.currentIndex,
             TrialManager.instance.playerStats.hp);
 

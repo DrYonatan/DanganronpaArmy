@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using DIALOGUE;
 using UnityEngine;
 
 public class GameStateManager : MonoBehaviour
@@ -16,6 +17,8 @@ public class GameStateManager : MonoBehaviour
     public List<Chapter> chapters;
 
     public Camera sceneTransitionCamera;
+    
+    public UIState uiState = new UIState();
 
     void Awake()
     {
@@ -156,5 +159,32 @@ public class GameStateManager : MonoBehaviour
     {
         chapterIndex = 0;
         chapterSegmentIndex = 0;
+    }
+    
+    public void SetUIState(UIState state)
+    {
+        uiState = state;
+    }
+
+    public void InitiateUIState()
+    {
+             
+        ImageScript.instance.overlayImage.sprite = Resources.Load<Sprite>($"Images/{uiState.overlayImage.spriteId}");
+        ImageScript.instance.canvasGroup.DOFade(uiState.overlayImage.visible ? 1f : 0f, 0f);
+        if (uiState.overlayImage.visible)
+        {
+            OverlayTextBoxManager.instance.SetAsTextBox();
+            OverlayTextBoxManager.instance.Show();
+        }
+            
+        ImageScript.instance.background.sprite = Resources.Load<Sprite>($"Images/{uiState.backgroundImage.spriteId}");
+        ImageScript.instance.background.DOFade(uiState.backgroundImage.visible ? 1f : 0f, 0f);
+
+        VNAnimatedImage animatedImage = Resources.Load<VNAnimatedImage>($"Images/Animated/{uiState.animatedImage.prefabId}");
+        if (animatedImage != null && uiState.animatedImage.visible)
+        {
+            ImageScript.instance.animatedImage = Instantiate(animatedImage);
+            ImageScript.instance.animatedImageContainer.DOFade(1f, 0f).SetEase(Ease.Linear);
+        }
     }
 }

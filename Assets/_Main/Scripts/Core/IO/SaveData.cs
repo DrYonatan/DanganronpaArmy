@@ -38,7 +38,8 @@ public class SaveData
     public float[] cameraRotation;
     public float[] conversationInitialRotation;
     public TimeOfDay timeOfDay;
-
+    public UIState uiState;
+    
     // Trial stuff
     public int trialSegmentIndex;
     public float hp;
@@ -48,7 +49,7 @@ public class SaveData
         Dictionary<string, ObjectData> objectsData,
         string scene,
         Dictionary<string, int> characterRanks, Vector3 playerPosition, Vector3 cameraPosition, Vector3 cameraRotation,
-        Vector3 conversationInitialRotation, TimeOfDay timeOfDay, int trialSegmentIndex,
+        Vector3 conversationInitialRotation, TimeOfDay timeOfDay, UIState uiState, int trialSegmentIndex,
         float hp)
     {
         this.chapterIndex = chapterIndex;
@@ -93,6 +94,7 @@ public class SaveData
         this.conversationInitialRotation[2] = conversationInitialRotation.z;
         
         this.timeOfDay = timeOfDay;
+        this.uiState = uiState;
 
         this.trialSegmentIndex = trialSegmentIndex;
         this.hp = hp;

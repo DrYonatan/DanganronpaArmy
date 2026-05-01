@@ -44,6 +44,7 @@ public class TrialManager : MonoBehaviour
 
     public void StartNewTrial()
     {
+        GameStateManager.instance.InitiateUIState();
         StartCoroutine(StartPipeline());
     }
 
@@ -144,7 +145,9 @@ public class TrialManager : MonoBehaviour
         barsAnimator.UpdateHp(playerStats.hp);
         MusicManager.instance.PlaySong(Resources.Load<AudioClip>($"Audio/Music/{data.currentMusic}"));
         GameStateManager.instance.GetCurrentChapterSegment().Load();
-
+        GameStateManager.instance.SetUIState(data.uiState);
+        GameStateManager.instance.InitiateUIState();
+        
         ContinueTrial();
     }
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DIALOGUE;
 using UnityEngine;
 
 public class ProgressManager : MonoBehaviour
@@ -68,6 +69,9 @@ public class ProgressManager : MonoBehaviour
         WorldManager.instance.currentRoom = Resources.Load<Room>($"Rooms/{data.currentRoom}");
         MusicManager.instance.PlaySong(Resources.Load<AudioClip>($"Audio/Music/{data.currentMusic}"));
         currentGameEvent.LoadSave(data);
+        
+        GameStateManager.instance.SetUIState(data.uiState);
+        GameStateManager.instance.InitiateUIState();
 
         CameraManager.instance.player.transform.position =
             new Vector3(data.playerPosition[0], data.playerPosition[1], data.playerPosition[2]);
@@ -83,6 +87,7 @@ public class ProgressManager : MonoBehaviour
 
     public IEnumerator StartNewVnSegment()
     {
+        GameStateManager.instance.InitiateUIState();
         LoadGameEvents(GameStateManager.instance.chapters[GameStateManager.instance.chapterIndex]
             .chapterSegments[GameStateManager.instance.chapterSegmentIndex]);
         VNUIAnimator.instance.chapterNameText.text =

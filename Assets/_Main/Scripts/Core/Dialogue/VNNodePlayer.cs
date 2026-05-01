@@ -53,6 +53,7 @@ public class VNNodePlayer : MonoBehaviour
         VNCharacterManager.instance.DestroyCharacters();
         currentConversation = null;
         lineIndex = 0;
+        ImageScript.instance.HideBackground();
         WorldManager.instance.HandleConversationEnd();
     }
 }

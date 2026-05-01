@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,7 +15,7 @@ namespace DIALOGUE
         private TextArchitect architect;
         public DialogueContainer defaultDialogueContainer;
         public static DialogueSystem instance { get; private set; }
-
+        
         public delegate void DialogueSystemEvent();
 
         public event DialogueSystemEvent onUserPrompt_Next;
@@ -24,7 +23,7 @@ namespace DIALOGUE
         public TextBoxAnimations dialogueBoxAnimator;
         public OptionSelectionManager optionSelectionManager;
         public Button inputButton;
-        
+
         private void Awake()
         {
             isActive = false;
@@ -44,7 +43,7 @@ namespace DIALOGUE
         {
             if (_initialized)
                 return;
-            
+
             dialogueContainer = defaultDialogueContainer;
             architect = new TextArchitect(dialogueContainer.dialogueText);
             conversationManager = new ConversationManager(architect);
@@ -73,11 +72,11 @@ namespace DIALOGUE
         }
 
         void ClearSpeakerName() => dialogueContainer.nameContainer.Clear();
-        
+
         public Coroutine Say(DialogueNode node)
         {
-            if(!isActive)
-               SetIsActive(true);
+            if (!isActive)
+                SetIsActive(true);
             return conversationManager.PlayNodeText(node);
         }
 
@@ -118,7 +117,8 @@ namespace DIALOGUE
             conversationManager.SetArchitect(architect);
         }
 
-        public IEnumerator HandleSelection<T>(List<Option<T>> options, Action<Option<T>> onSelect) where T : DialogueNode
+        public IEnumerator HandleSelection<T>(List<Option<T>> options, Action<Option<T>> onSelect)
+            where T : DialogueNode
         {
             optionSelectionManager.OpenMenu(options);
             yield return conversationManager.WaitForUserInput();
@@ -142,7 +142,7 @@ namespace DIALOGUE
         {
             return conversationManager.isSkip;
         }
-        
+
 
         public void TurnOnSingleTimeAuto()
         {
@@ -153,6 +153,5 @@ namespace DIALOGUE
         {
             yield return conversationManager.Line_RunCommands(conversationManager.GetBeforeCommands(commands));
         }
-        
     }
 }

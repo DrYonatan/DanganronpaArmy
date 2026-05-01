@@ -14,7 +14,7 @@ public class ImageScript : MonoBehaviour
     public Image whiteFlash;
     public CanvasGroup canvasGroup;
     public AudioClip flashSound;
-    
+
     public Image background;
 
     public CanvasGroup animatedImageContainer;
@@ -28,6 +28,7 @@ public class ImageScript : MonoBehaviour
 
     public void Show(Sprite image, bool flash, float duration = 0.4f)
     {
+        GameStateManager.instance.uiState.overlayImage = new ImageState { spriteId = image.name, visible = true };
         overlayImage.sprite = image;
         OverlayTextBoxManager.instance.SetAsTextBox();
         OverlayTextBoxManager.instance.Show();
@@ -41,6 +42,7 @@ public class ImageScript : MonoBehaviour
 
     public void Hide(bool flash, float duration = 0.4f)
     {
+        GameStateManager.instance.uiState.overlayImage = new ImageState { spriteId = "", visible = false };
         OverlayTextBoxManager.instance.Hide();
         DialogueSystem.instance.UseInitialDialogueContainer();
         ShowingOrHiding(canvasGroup, duration, 0f);
@@ -53,16 +55,23 @@ public class ImageScript : MonoBehaviour
 
     public void ShowBackground(Sprite sprite)
     {
+        GameStateManager.instance.uiState.backgroundImage = new ImageState { spriteId = sprite.name, visible = true };
         Image oldBackground = background;
         Image newBackground = Instantiate(background, background.transform.parent);
         newBackground.sprite = sprite;
 
         Sequence seq = DOTween.Sequence();
-        
+
         seq.Append(newBackground.DOFade(0f, 0f));
         seq.Append(newBackground.DOFade(1f, 0.2f).SetEase(Ease.Linear));
         seq.AppendCallback(() => Destroy(oldBackground.gameObject));
         seq.AppendCallback(() => background = newBackground);
+    }
+
+    public void HideBackground()
+    {
+        GameStateManager.instance.uiState.backgroundImage = new ImageState { spriteId = "", visible = false };
+        background.DOFade(0f, 0.2f).SetEase(Ease.Linear).OnComplete(() => background.sprite = null);
     }
 
     public void Flash(float duration, AudioClip sound)
@@ -90,12 +99,16 @@ public class ImageScript : MonoBehaviour
     {
         animatedImage = Instantiate(image, animatedImageContainer.transform);
         animatedImageContainer.DOFade(1f, 0.2f).SetEase(Ease.Linear);
+        GameStateManager.instance.uiState.animatedImage = new AnimatedImageState
+            { prefabId = image.name, currentStateIndex = 0, visible = true };
     }
 
     public IEnumerator ForwardAnimatedImage()
     {
         if (animatedImage == null)
             yield break;
+
+        GameStateManager.instance.uiState.animatedImage.currentStateIndex++;
 
         yield return animatedImage.ForwardSegment();
     }
@@ -105,6 +118,9 @@ public class ImageScript : MonoBehaviour
         if (animatedImage == null)
             return;
 
+        GameStateManager.instance.uiState.animatedImage = new AnimatedImageState
+            { prefabId = "", currentStateIndex = 0, visible = false };
+        
         animatedImageContainer.DOFade(0f, 0.2f).SetEase(Ease.Linear)
             .OnComplete(() => Destroy(animatedImage.gameObject));
     }
