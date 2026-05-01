@@ -75,6 +75,11 @@ public class PointAndClickRoom : Room
         }
         
         CursorManager.instance.ReticleAsCursor();
+        if (Input.GetMouseButtonDown(0) && !DialogueSystem.instance.isActive && WorldManager.instance.currentRoom.currentInteractable)
+        {
+            WorldManager.instance.currentRoom.currentInteractable.Interact();
+            VirutalCameraManager.instance.virtualCamera.gameObject.SetActive(false);
+        }
       
     }
 

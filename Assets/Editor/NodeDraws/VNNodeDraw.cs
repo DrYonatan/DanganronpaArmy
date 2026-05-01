@@ -105,7 +105,9 @@ public class VNNodeDraw : DrawNode
             menu.AddItem(new GUIContent("Hide Speaker"), false, () => AddCommand(node, new HideCharacter()));
             
             menu.AddItem(new GUIContent("Add Evidence"), false, () => AddCommand(node, new AddEvidence()));
-
+            
+            menu.AddItem(new GUIContent("Show Background"), false, () => AddCommand(node, new ChangeBackground()));
+            
             menu.ShowAsContext();
         }
     }

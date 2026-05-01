@@ -21,7 +21,7 @@ public class QuestionMarkShooter : MonoBehaviour
         // Choose control points for a wavy arc
         Vector3 mid = Vector3.Lerp(start, target, 0.5f);
         Vector3 right = Vector3.Cross((target - start).normalized, Vector3.up);
-        mid += right * Random.Range(-curveAmount, curveAmount); // Add side offset to curve
+        mid += right * curveAmount; // Add side offset to curve
 
         GameObject qm = Instantiate(questionMarkPrefab, start, mainCamera.transform.rotation);
         float elapsed = 0;

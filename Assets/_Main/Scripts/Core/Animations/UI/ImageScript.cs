@@ -14,6 +14,8 @@ public class ImageScript : MonoBehaviour
     public Image whiteFlash;
     public CanvasGroup canvasGroup;
     public AudioClip flashSound;
+    
+    public Image background;
 
     public CanvasGroup animatedImageContainer;
     public VNAnimatedImage animatedImage;
@@ -47,6 +49,20 @@ public class ImageScript : MonoBehaviour
         {
             Flash(duration, flashSound);
         }
+    }
+
+    public void ShowBackground(Sprite sprite)
+    {
+        Image oldBackground = background;
+        Image newBackground = Instantiate(background, background.transform.parent);
+        newBackground.sprite = sprite;
+
+        Sequence seq = DOTween.Sequence();
+        
+        seq.Append(newBackground.DOFade(0f, 0f));
+        seq.Append(newBackground.DOFade(1f, 0.2f).SetEase(Ease.Linear));
+        seq.AppendCallback(() => Destroy(oldBackground.gameObject));
+        seq.AppendCallback(() => background = newBackground);
     }
 
     public void Flash(float duration, AudioClip sound)
