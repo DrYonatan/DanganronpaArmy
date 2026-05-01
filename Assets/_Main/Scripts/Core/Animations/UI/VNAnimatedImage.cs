@@ -16,11 +16,23 @@ public class VNAnimatedImage : MonoBehaviour
 
     public IEnumerator ForwardSegment()
     {
+        int animationsRunning = animationSegments[currentAnimationIndex].sprites.Count;
         foreach (ComicAnimatedSprite spriteAnimation in animationSegments[currentAnimationIndex].sprites)
         {
-            yield return spriteAnimation.PlayFrames();
+            StartCoroutine(PlaySpriteAnimation(spriteAnimation,() => animationsRunning--));
+        }
+
+        while (animationsRunning > 0)
+        {
+            yield return null;
         }
 
         currentAnimationIndex++;
+    }
+    
+    IEnumerator PlaySpriteAnimation(ComicAnimatedSprite animatedSprite, Action onFinish)
+    {
+        yield return animatedSprite.PlayFrames();
+        onFinish?.Invoke();
     }
 }
