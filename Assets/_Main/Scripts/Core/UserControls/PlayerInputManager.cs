@@ -47,7 +47,7 @@ namespace DIALOGUE
                     }
                 }
 
-                if (Input.GetKeyDown(KeyCode.Alpha1) && !pauseMenu.isSubmenuOpen)
+                if (Input.GetKeyDown(KeyCode.Alpha1) && !pauseMenu.isSubmenuOpen && isInputActive)
                 {
                     TogglePause();
                 }

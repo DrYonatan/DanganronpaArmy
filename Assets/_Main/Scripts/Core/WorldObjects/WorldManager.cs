@@ -61,7 +61,8 @@ public class WorldManager : MonoBehaviour
 
     public IEnumerator LoadRoom(Room room, [CanBeNull] string entryPoint)
     {
-        ImageScript.instance.HideBackground();
+        ImageScript.instance.HideBackground(0);
+        ImageScript.instance.RemoveAnimatedImage(0);
 
         isLoading = true;
 

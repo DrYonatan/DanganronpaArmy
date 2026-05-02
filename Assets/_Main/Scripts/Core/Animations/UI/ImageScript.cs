@@ -68,10 +68,10 @@ public class ImageScript : MonoBehaviour
         seq.AppendCallback(() => background = newBackground);
     }
 
-    public void HideBackground()
+    public void HideBackground(float duration)
     {
         GameStateManager.instance.uiState.backgroundImage = new ImageState { spriteId = "", visible = false };
-        background.DOFade(0f, 0.2f).SetEase(Ease.Linear).OnComplete(() => background.sprite = null);
+        background.DOFade(0f, duration).SetEase(Ease.Linear).OnComplete(() => background.sprite = null);
     }
 
     public void Flash(float duration, AudioClip sound)
@@ -113,7 +113,7 @@ public class ImageScript : MonoBehaviour
         yield return animatedImage.ForwardSegment();
     }
 
-    public void RemoveAnimatedImage()
+    public void RemoveAnimatedImage(float duration)
     {
         if (animatedImage == null)
             return;
@@ -121,7 +121,7 @@ public class ImageScript : MonoBehaviour
         GameStateManager.instance.uiState.animatedImage = new AnimatedImageState
             { prefabId = "", currentStateIndex = 0, visible = false };
         
-        animatedImageContainer.DOFade(0f, 0.2f).SetEase(Ease.Linear)
+        animatedImageContainer.DOFade(0f, duration).SetEase(Ease.Linear)
             .OnComplete(() => Destroy(animatedImage.gameObject));
     }
 }

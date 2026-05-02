@@ -1251,7 +1251,7 @@ MonoBehaviour:
           \u05E9\u05DC \u05D4\u05D9\u05D7\u05D9\u05D3\u05D4, \u05D5\u05D6\u05D4 \u05DE\u05D4
           \u05E9\u05D1\u05E9\u05D1\u05D9\u05DC\u05D5 \u05D1\u05D0\u05EA\u05D9 \u05D4\u05D9\u05D5\u05DD.\r
           \u05D6\u05D0\u05EA \u05D4\u05E1\u05D9\u05D1\u05D4 \u05E9\u05D0\u05E0\u05D9
-          \u05DB\u05D0\u05DF \u05D1\u05EA\u05DC \u05D4\u05E9\u05D5\u05DE\u05E8 \u05E9\u05D5\u05D1.\n"
+          \u05DB\u05D0\u05DF \u05D1\u05EA\u05DC \u05D4\u05E9\u05D5\u05DE\u05E8 \u05E9\u05D5\u05D1."
         commands: []
     - rid: 6274742032584409177
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
@@ -1413,7 +1413,8 @@ MonoBehaviour:
           \u05D4\u05D9\u05D7\u05D9\u05D3\u05D4\u2026 \u05E4\u05EA\u05D0\u05D5\u05DD
           \u05DE\u05EA\u05D7\u05D9\u05DC\u05D5\u05EA \u05DC\u05E2\u05DC\u05D5\u05EA
           \u05E1\u05E4\u05D9\u05E7\u05D5\u05EA.\r\n\r\n"
-        commands: []
+        commands:
+        - rid: 7091799478135947264
     - rid: 6274742032584409189
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -1515,7 +1516,8 @@ MonoBehaviour:
       data:
         text: "(\u05E2\u05DD \u05DE\u05D1\u05D8 \u05D0\u05D7\u05E8\u05D5\u05DF \u05D0\u05D7\u05D5\u05E8\u05D4,
           \u05E0\u05DB\u05E0\u05E1\u05EA\u05D9 \u05DC\u05DC\u05E9\u05DB\u05EA \u05D4\u05D2\u05D9\u05D5\u05E1.)\r\n"
-        commands: []
+        commands:
+        - rid: 7091799478135947265
     - rid: 6274742032584409197
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -1754,7 +1756,7 @@ MonoBehaviour:
     - rid: 7091799463131873296
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
-        text: "(\u05E2\u05EA\u05D5\u05E8\u05E8\u05EA\u05D9 \u05E2\u05DC \u05D0\u05D9\u05D6\u05D5
+        text: "(\u05D4\u05EA\u05E2\u05D5\u05E8\u05E8\u05EA\u05D9 \u05E2\u05DC \u05D0\u05D9\u05D6\u05D5
           \u05DE\u05D9\u05D8\u05D4 \u05D1\u05D7\u05D3\u05E8 \u05DE\u05D5\u05D6\u05E8.
           \u05D0\u05D9\u05DA \u05D4\u05D2\u05E2\u05EA\u05D9 \u05DC\u05E4\u05D4?)"
         commands: []
@@ -1778,7 +1780,7 @@ MonoBehaviour:
     - rid: 7091799463131873298
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
-        text: "\u05EA\u05DC \u05D4\u05E9\u05D5\u05DE\u05E8... \u05E9\u05DD \u05D4\u05D9\u05D9\u05EA\u05D9"
+        text: "\u05EA\u05DC \u05D4\u05E9\u05D5\u05DE\u05E8... \u05E9\u05DD \u05D4\u05D9\u05D9\u05EA\u05D9."
         commands: []
     - rid: 7091799463131873299
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
@@ -1801,7 +1803,7 @@ MonoBehaviour:
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
         text: "\u05D0\u05D1\u05DC \u05D0\u05D9\u05DA \u05D4\u05D2\u05E2\u05EA\u05D9
-          *\u05DC\u05DB\u05D0\u05DF?*"
+          \u05DC\u05DB\u05D0\u05DF?"
         commands: []
     - rid: 7091799463131873301
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
@@ -1826,9 +1828,14 @@ MonoBehaviour:
         text: "\u05D0\u05D5\u05DC\u05D9 \u05DB\u05D3\u05D0\u05D9 \u05E9\u05D0\u05E0\u05D9
           \u05D0\u05E1\u05EA\u05DB\u05DC \u05E7\u05E6\u05EA \u05E2\u05DC \u05D4\u05DE\u05E7\u05D5\u05DD
           \u05D4\u05D6\u05D4..."
-        commands:
-        - rid: 7091799463131873319
-    - rid: 7091799463131873319
-      type: {class: RemoveAnimatedImage, ns: , asm: Assembly-CSharp}
+        commands: []
+    - rid: 7091799478135947264
+      type: {class: ChangeBackground, ns: , asm: Assembly-CSharp}
       data:
-        executeTime: 1
+        executeTime: 0
+        image: {fileID: 21300000, guid: 6e4d6f25592bd1640867db09c13976bf, type: 3}
+    - rid: 7091799478135947265
+      type: {class: ChangeBackground, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        image: {fileID: 21300000, guid: 75540ff0cbe4b404eaa5e0afb3df4b74, type: 3}

@@ -102,12 +102,13 @@ public class VNNodeDraw : DrawNode
             menu.AddItem(new GUIContent("Remove Animated Image"), false,
                 () => AddCommand(node, new RemoveAnimatedImage()));
             menu.AddItem(new GUIContent("Shake Screen"), false, () => AddCommand(node, new ShakeScreen()));
-            menu.AddItem(new GUIContent("Hide Speaker"), false, () => AddCommand(node, new HideCharacter()));
+            menu.AddItem(new GUIContent("Hide Speaker"), false, () => AddCommand(node, new HideSpeaker()));
             
             menu.AddItem(new GUIContent("Add Evidence"), false, () => AddCommand(node, new AddEvidence()));
             
             menu.AddItem(new GUIContent("Show Background"), false, () => AddCommand(node, new ChangeBackground()));
-            
+            menu.AddItem(new GUIContent("Hide Background"), false, () => AddCommand(node, new HideBackground()));
+
             menu.ShowAsContext();
         }
     }

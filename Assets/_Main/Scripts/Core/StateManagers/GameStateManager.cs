@@ -186,5 +186,10 @@ public class GameStateManager : MonoBehaviour
             ImageScript.instance.animatedImage = Instantiate(animatedImage);
             ImageScript.instance.animatedImageContainer.DOFade(1f, 0f).SetEase(Ease.Linear);
         }
+
+        if (!uiState.namePlateVisible)
+        {
+            DialogueSystem.instance.HideNamePlate();
+        }
     }
 }

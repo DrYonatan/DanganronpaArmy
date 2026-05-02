@@ -1,12 +1,18 @@
 using System.Collections;
-using CHARACTERS;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class HideCharacter : Command
+public class HideCharacter : MonoBehaviour
 {
-    public override IEnumerator Execute()
+    // Start is called before the first frame update
+    void Start()
     {
-        VNCharacterManager.instance.HideCharacter(VNCharacterManager.instance.GetSpeakerObject(),0.5f);
-        yield return new WaitForSeconds(0.5f);
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
     }
 }
