@@ -17,6 +17,7 @@ public class TextBoxAnimations : MonoBehaviour
     public RectTransform namePlateOriginalPos;
 
     public bool textBoxVisible;
+    public bool namePlateVisible;
 
     void Awake()
     {
@@ -38,9 +39,7 @@ public class TextBoxAnimations : MonoBehaviour
         namePlateCanvasGroup.alpha = 0f;
         
         dialogueBoxCanvasGroup.DOFade(1f, duration).SetEase(Ease.InOutQuad);
-        namePlateCanvasGroup.DOFade(1f, duration).SetEase(Ease.InOutQuad);
-        namePlate.anchoredPosition -= new Vector2(0, namePlateMoveAmount);
-        namePlate.DOAnchorPos(namePlateOriginalPos.anchoredPosition, duration).SetEase(Ease.OutQuad);
+        ShowNamePlate();
     }
 
     public virtual void TextBoxDisappear()
@@ -48,11 +47,26 @@ public class TextBoxAnimations : MonoBehaviour
         textBoxVisible = false;
         DialogueSystem.instance.ClearTextBox();
         dialogueBoxCanvasGroup.alpha = 1f;
-        namePlateCanvasGroup.alpha = 1f;
         dialogueBoxCanvasGroup.DOFade(0f, duration).SetEase(Ease.InOutQuad);
+        if(namePlateVisible)
+           HideNamePlate();
+        namePlateVisible = true; // Reset the name plate visibility to the default true so it won't pop in during the debate's finish nodes
+    }
+
+    public void ShowNamePlate()
+    {
+        namePlateVisible = true;
+        namePlateCanvasGroup.DOFade(1f, duration).SetEase(Ease.InOutQuad);
+        namePlate.anchoredPosition -= new Vector2(0, namePlateMoveAmount);
+        namePlate.DOAnchorPos(namePlateOriginalPos.anchoredPosition, duration).SetEase(Ease.OutQuad);
+    }
+    public void HideNamePlate()
+    {
+        namePlateVisible = false;
+        namePlateCanvasGroup.alpha = 1f;
         namePlateCanvasGroup.DOFade(0f, duration).SetEase(Ease.InOutQuad);
         namePlate.anchoredPosition = namePlateOriginalPos.anchoredPosition;
-        namePlate.DOAnchorPos(namePlateOriginalPos.anchoredPosition - new Vector2(0, namePlateMoveAmount), duration).SetEase(Ease.OutQuad);        
+        namePlate.DOAnchorPos(namePlateOriginalPos.anchoredPosition - new Vector2(0, namePlateMoveAmount), duration).SetEase(Ease.OutQuad); 
     }
 
     public virtual void Initialize()

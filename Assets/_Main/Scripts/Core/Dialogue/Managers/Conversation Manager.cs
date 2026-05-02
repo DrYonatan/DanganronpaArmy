@@ -57,7 +57,12 @@ namespace DIALOGUE
 
             Line_RunCommandsAsync(parallelCommands);
 
-            DialogueSystem.instance.ShowSpeakerName(node);
+            if (node.character.noNameTag)
+            {
+                DialogueSystem.instance.HideNamePlate();
+            }
+            else
+               DialogueSystem.instance.ShowSpeakerName(node);
 
             string text = TranslateColorTags(textData.text);
             yield return BuildDialogue(text);

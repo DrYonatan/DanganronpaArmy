@@ -63,13 +63,31 @@ namespace DIALOGUE
         {
             if (node.displayName.ToLower() != "")
                 dialogueContainer.nameContainer.Show(node.displayName);
-            else if (node.character.displayName.ToLower() != "narrator")
+            else if (!node.character.noNameTag)
             {
+                if(!dialogueBoxAnimator.namePlateVisible)
+                    ShowNamePlate();
                 dialogueContainer.nameContainer.Show(node.character.displayName);
             }
             else
+            {
                 ClearSpeakerName();
+                HideNamePlate();
+            }
         }
+
+        public void HideNamePlate()
+        {
+            GameStateManager.instance.uiState.namePlateVisible = false;
+            dialogueBoxAnimator.HideNamePlate();
+        }
+
+        public void ShowNamePlate()
+        {
+            GameStateManager.instance.uiState.namePlateVisible = true;
+            dialogueBoxAnimator.ShowNamePlate();
+        }
+        
 
         void ClearSpeakerName() => dialogueContainer.nameContainer.Clear();
 

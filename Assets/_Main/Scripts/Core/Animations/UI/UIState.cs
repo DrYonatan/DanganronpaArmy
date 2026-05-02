@@ -3,6 +3,7 @@ using System;
 [Serializable]
 public class UIState
 {
+    public bool namePlateVisible = true;
     public ImageState overlayImage;
     public ImageState backgroundImage;
     public AnimatedImageState animatedImage;

@@ -61,6 +61,8 @@ public class WorldManager : MonoBehaviour
 
     public IEnumerator LoadRoom(Room room, [CanBeNull] string entryPoint)
     {
+        ImageScript.instance.HideBackground();
+
         isLoading = true;
 
         RoomModel ob = Instantiate(room.GetTimeOfDayVersion(ProgressManager.instance.currentGameEvent.timeOfDay));

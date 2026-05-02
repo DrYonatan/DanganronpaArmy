@@ -18,6 +18,7 @@ public class Character : ScriptableObject
     public List<CharacterState> emotions;
     public Sprite faceSprite;
     public bool notVisible;
+    public bool noNameTag;
     
     public CharacterState FindStateByName(string stateName)
     {
