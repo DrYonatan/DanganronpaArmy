@@ -59,7 +59,7 @@ MonoBehaviour:
   - rid: 6274742032584409169
   - rid: 6274742032584409171
   - rid: 6274742032584409173
-  - rid: 6274742032584409175
+  - rid: 7091799553704460288
   - rid: 6274742032584409177
   - rid: 6274742032584409179
   - rid: 6274742032584409181
@@ -209,7 +209,10 @@ MonoBehaviour:
           \u05DB\u05D9 \u05D4\u05D9\u05D0 \u05D0\u05DE\u05D5\u05E8\u05D4 \u05DC\u05D4\u05D1\u05D9\u05D0
           \u05EA\u05E7\u05D5\u05D5\u05D4 \u05DC\u05DE\u05D3\u05D9\u05E0\u05EA \u05D9\u05E9\u05E8\u05D0\u05DC,
           \u05DC\u05D4\u05D9\u05D5\u05EA \u05E1\u05DE\u05DC \u05E9\u05DC \u05D7\u05D5\u05D6\u05E7\u05EA
-          \u05D4\u05E6\u05D1\u05D0 \u05E9\u05DC\u05E0\u05D5."
+          \u05D4\u05E6\u05D1\u05D0 \u05E9\u05DC\u05E0\u05D5. \u05D5\u05D1\u05D9\u05D7\u05D3
+          \u05E2\u05DD \u05D4\u05E9\u05DD \u05E9\u05DC \u05D4\u05D4\u05DE\u05E0\u05D5\u05DF,
+          \u05D4\u05D9\u05D4 \u05D3\u05D9 \u05DE\u05EA\u05D1\u05E7\u05E9 \u05DC\u05E7\u05E8\u05D5\u05D0
+          \u05DC\u05D4 \"\u05D9\u05D7\u05D9\u05D3\u05EA \u05EA\u05E7\u05D5\u05D5\u05D4\"."
         commands: []
     - rid: 6274742032584409098
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
@@ -285,15 +288,12 @@ MonoBehaviour:
     - rid: 6274742032584409103
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
-        text: "\u05DE\u05D4 \u05E9\u05E2\u05D5\u05D3 \u05D9\u05D5\u05EA\u05E8 \u05DE\u05D9\u05D5\u05D7\u05D3
-          \u05D1\u05D4, \u05D6\u05D4 \u05E9\u05D1\u05E0\u05D9\u05D2\u05D5\u05D3 \u05DC\u05D9\u05D7\u05D9\u05D3\u05D5\u05EA
-          \u05E8\u05D2\u05D9\u05DC\u05D5\u05EA, \u05DB\u05D0\u05DC\u05D4 \u05E9\u05D1\u05D4\u05DF
-          \u05D9\u05E9 \u05E8\u05E7 \u05E1\u05D5\u05D2 \u05D0\u05D7\u05D3 \u05E9\u05DC
-          \u05D7\u05D9\u05D9\u05DC\u05D9\u05DD, \u05DE\u05D7\u05D9\u05DC \u05D0\u05D7\u05D3,
-          \u05D0\u05D5 \u05D1\u05EA\u05D7\u05D5\u05DD \u05E1\u05E4\u05E6\u05D9\u05E4\u05D9,
-          \u05D1\u05D9\u05D7\u05D9\u05D3\u05D4 \u05D4\u05D6\u05D0\u05EA \u05DE\u05D1\u05D9\u05D0\u05D9\u05DD
-          \u05D7\u05D9\u05D9\u05DC\u05D9\u05DD \u05DE\u05DB\u05DC \u05D4\u05D7\u05D9\u05DC\u05D5\u05EA,
-          \u05D5\u05DE\u05DB\u05DC \u05D4\u05EA\u05D7\u05D5\u05DE\u05D9\u05DD.\r\n"
+        text: "\u05DE\u05D1\u05D9\u05D0\u05D9\u05DD \u05D0\u05DC\u05D9\u05D4 \u05D7\u05D9\u05D9\u05DC\u05D9\u05DD
+          \u05DE\u05DB\u05DC \u05D4\u05EA\u05D7\u05D5\u05DE\u05D9\u05DD, \u05DE\u05DB\u05DC
+          \u05D4\u05D7\u05D9\u05DC\u05D5\u05EA. \u05DE\u05D5\u05D3\u05D9\u05E2\u05D9\u05DF,
+          \u05EA\u05E7\u05E9\u05D5\u05D1, \u05E7\u05E8\u05D1\u05D9, \u05D9\u05E9
+          \u05DC\u05D4\u05DD \u05D4\u05DB\u05DC \u05D1\u05D9\u05D7\u05D9\u05D3\u05D4
+          \u05D4\u05D6\u05D0\u05EA."
         commands: []
     - rid: 6274742032584409104
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
@@ -829,7 +829,7 @@ MonoBehaviour:
           y: 0
           width: 0
           height: 0
-        commandsScrollPosition: {x: 0, y: 0}
+        commandsScrollPosition: {x: 0, y: 14}
         title: 
         drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
         character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
@@ -844,6 +844,7 @@ MonoBehaviour:
           \u05D0\u05E0\u05D9 \u05D1\u05DF \u05D0\u05D3\u05DD \u05D3\u05D9 \u05E0\u05D5\u05E8\u05DE\u05D8\u05D9\u05D1\u05D9\u2026\r\n"
         commands:
         - rid: 6274742032584409146
+        - rid: 7091799571838271488
     - rid: 6274742032584409146
       type: {class: PlaySoundEffectCommand, ns: , asm: Assembly-CSharp}
       data:
@@ -1008,7 +1009,8 @@ MonoBehaviour:
           \u05DC\u05D0\u05D7\u05E8 \u05E9\u05D4\u05E1\u05EA\u05DB\u05DC\u05EA\u05D9
           \u05E2\u05DC \u05D4\u05DE\u05DB\u05EA\u05D1 \u05E9\u05D4\u05DD \u05E9\u05DC\u05D7\u05D5
           \u05DC\u05D9 \u05D1-\u05E6063, \u05D4\u05DB\u05DC \u05D4\u05EA\u05D1\u05D4\u05E8\u2026\r\n"
-        commands: []
+        commands:
+        - rid: 7091799571838271489
     - rid: 6274742032584409159
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -1224,34 +1226,6 @@ MonoBehaviour:
           \u05D0\u05E0\u05D9 \u05DE\u05EA\u05D2\u05D9\u05D9\u05E1 \u05DC\u05D9\u05D7\u05D9\u05D3\u05D4\u2026
           \u05D1\u05D9\u05D7\u05D3 \u05E2\u05DD \u05DB\u05DC \u05D4\u05E8\u05E2\"\u05E6\u05D9\u05DD
           \u05D4\u05D0\u05DE\u05D9\u05EA\u05D9\u05D9\u05DD.\r\n"
-        commands: []
-    - rid: 6274742032584409175
-      type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
-      data:
-        nodeRect:
-          serializedVersion: 2
-          x: 0
-          y: 0
-          width: 0
-          height: 0
-        commandsScrollPosition: {x: 0, y: 0}
-        title: 
-        drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
-        character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
-        displayName: 
-        expressionIndex: 0
-        textData:
-          rid: 6274742032584409176
-    - rid: 6274742032584409176
-      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
-      data:
-        text: "\u05D4\u05DE\u05EA\u05D2\u05D9\u05D9\u05E1\u05D9\u05DD \u05DC\u05D9\u05D7\u05D9\u05D3\u05EA
-          \u05EA\u05E7\u05D5\u05D5\u05D4 \u05E6\u05E8\u05D9\u05DB\u05D9\u05DD \u05DC\u05E2\u05D1\u05D5\u05E8
-          \u05D8\u05D9\u05E8\u05D5\u05E0\u05D5\u05EA \u05DE\u05D9\u05D5\u05D7\u05D3\u05EA
-          \u05E9\u05DC \u05D4\u05D9\u05D7\u05D9\u05D3\u05D4, \u05D5\u05D6\u05D4 \u05DE\u05D4
-          \u05E9\u05D1\u05E9\u05D1\u05D9\u05DC\u05D5 \u05D1\u05D0\u05EA\u05D9 \u05D4\u05D9\u05D5\u05DD.\r
-          \u05D6\u05D0\u05EA \u05D4\u05E1\u05D9\u05D1\u05D4 \u05E9\u05D0\u05E0\u05D9
-          \u05DB\u05D0\u05DF \u05D1\u05EA\u05DC \u05D4\u05E9\u05D5\u05DE\u05E8 \u05E9\u05D5\u05D1."
         commands: []
     - rid: 6274742032584409177
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
@@ -1839,3 +1813,43 @@ MonoBehaviour:
       data:
         executeTime: 0
         image: {fileID: 21300000, guid: 75540ff0cbe4b404eaa5e0afb3df4b74, type: 3}
+    - rid: 7091799553704460288
+      type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
+        character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
+        displayName: 
+        expressionIndex: 0
+        textData:
+          rid: 7091799553704460289
+    - rid: 7091799553704460289
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "\u05D4\u05DE\u05EA\u05D2\u05D9\u05D9\u05E1\u05D9\u05DD \u05DC\u05D9\u05D7\u05D9\u05D3\u05EA
+          \u05EA\u05E7\u05D5\u05D5\u05D4 \u05E6\u05E8\u05D9\u05DB\u05D9\u05DD \u05DC\u05E2\u05D1\u05D5\u05E8
+          \u05D8\u05D9\u05E8\u05D5\u05E0\u05D5\u05EA \u05DE\u05D9\u05D5\u05D7\u05D3\u05EA
+          \u05E9\u05DC \u05D4\u05D9\u05D7\u05D9\u05D3\u05D4, \u05D5\u05D6\u05D4 \u05DE\u05D4
+          \u05E9\u05D1\u05E9\u05D1\u05D9\u05DC\u05D5 \u05D1\u05D0\u05EA\u05D9 \u05D4\u05D9\u05D5\u05DD.
+          \u05D6\u05D0\u05EA \u05D4\u05E1\u05D9\u05D1\u05D4 \u05E9\u05D0\u05E0\u05D9
+          \u05DB\u05D0\u05DF \u05D1\u05EA\u05DC \u05D4\u05E9\u05D5\u05DE\u05E8 \u05E9\u05D5\u05D1."
+        commands: []
+    - rid: 7091799571838271488
+      type: {class: ToggleBackgroundCharacter, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
+        visibility: 0
+    - rid: 7091799571838271489
+      type: {class: ToggleBackgroundCharacter, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
+        visibility: 2

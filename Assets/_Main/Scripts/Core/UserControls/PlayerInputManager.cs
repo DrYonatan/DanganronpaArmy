@@ -21,6 +21,7 @@ namespace DIALOGUE
             isPaused = false;
             instance = this;
             isDialogueInputActive = true;
+            isInputActive = true;
         }
 
         void Update()

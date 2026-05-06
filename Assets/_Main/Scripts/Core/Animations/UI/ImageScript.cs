@@ -1,7 +1,7 @@
 using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using DIALOGUE;
-using UnityEditorInternal.VersionControl;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,6 +16,7 @@ public class ImageScript : MonoBehaviour
     public AudioClip flashSound;
 
     public Image background;
+    public Dictionary<Character, GameObject> backgroundCharacters = new();
 
     public CanvasGroup animatedImageContainer;
     public VNAnimatedImage animatedImage;
@@ -120,8 +121,73 @@ public class ImageScript : MonoBehaviour
 
         GameStateManager.instance.uiState.animatedImage = new AnimatedImageState
             { prefabId = "", currentStateIndex = 0, visible = false };
-        
+
         animatedImageContainer.DOFade(0f, duration).SetEase(Ease.Linear)
             .OnComplete(() => Destroy(animatedImage.gameObject));
+    }
+
+    public void ShowCharacterOnBackground(Character character)
+    {
+        if (backgroundCharacters.ContainsKey(character)) // If that character already exists, just show it
+        {
+            CanvasGroup canvas = backgroundCharacters[character].GetComponent<CanvasGroup>();
+            canvas.alpha = 0f;
+            canvas.DOFade(1f, 0.25f);
+            GameStateManager.instance.uiState.characterStates
+                .Find(characterState => characterState.character == character).visible = true;
+            return;
+        }
+
+        GameStateManager.instance.uiState.characterStates.Add(new BackgroundCharacterState
+            { character = character, visible = false });
+        CreateCharacterOnBackground(character);
+
+        GameObject characterObj = backgroundCharacters[character].gameObject;
+
+        CanvasGroup canvasGroup = characterObj.GetComponent<CanvasGroup>();
+        canvasGroup.DOFade(1f, 0.25f);
+        GameStateManager.instance.uiState.characterStates
+            .Find(characterState => characterState.character == character).visible = true;
+    }
+
+    public void CreateCharacterOnBackground(Character character)
+    {
+        GameObject characterObj = Instantiate(character.vnObjectPrefab, background.transform.parent);
+        characterObj.transform.localPosition = Vector3.zero;
+
+        characterObj.name = character.name;
+        characterObj.transform.localPosition = new Vector3(
+            0,
+            character.vnObjectPrefab.transform.localPosition.y, 0);
+        CanvasGroup canvas = characterObj.GetComponent<CanvasGroup>();
+        canvas.alpha = 0f;
+        
+        backgroundCharacters.Add(character, characterObj);
+    }
+
+    public void HideCharacterOnBackground(Character character)
+    {
+        if (!backgroundCharacters.ContainsKey(character))
+            return;
+
+        CanvasGroup canvasGroup = backgroundCharacters[character].GetComponent<CanvasGroup>();
+        canvasGroup.DOFade(0f, 0.25f);
+        GameStateManager.instance.uiState.characterStates
+            .Find(characterState => characterState.character == character).visible = false;
+    }
+
+    public void DeleteCharacterOnBackground(Character character)
+    {
+        if (!backgroundCharacters.ContainsKey(character))
+            return;
+
+        Sequence seq = DOTween.Sequence();
+        CanvasGroup canvasGroup = backgroundCharacters[character].GetComponent<CanvasGroup>();
+        seq.Append(canvasGroup.DOFade(0f, 0.25f));
+        seq.AppendCallback(() => Destroy(backgroundCharacters[character].gameObject));
+        seq.AppendCallback(() => backgroundCharacters.Remove(character));
+        BackgroundCharacterState state = GameStateManager.instance.uiState.characterStates
+            .Find(characterState => characterState.character == character);
+        GameStateManager.instance.uiState.characterStates.Remove(state);
     }
 }

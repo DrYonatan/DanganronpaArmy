@@ -168,7 +168,6 @@ public class GameStateManager : MonoBehaviour
 
     public void InitiateUIState()
     {
-             
         ImageScript.instance.overlayImage.sprite = Resources.Load<Sprite>($"Images/{uiState.overlayImage.spriteId}");
         ImageScript.instance.canvasGroup.DOFade(uiState.overlayImage.visible ? 1f : 0f, 0f);
         if (uiState.overlayImage.visible)
@@ -185,6 +184,13 @@ public class GameStateManager : MonoBehaviour
         {
             ImageScript.instance.animatedImage = Instantiate(animatedImage);
             ImageScript.instance.animatedImageContainer.DOFade(1f, 0f).SetEase(Ease.Linear);
+        }
+        
+        foreach (BackgroundCharacterState state in uiState.characterStates)
+        {
+            ImageScript.instance.CreateCharacterOnBackground(state.character);
+            if(state.visible)
+                ImageScript.instance.ShowCharacterOnBackground(state.character);
         }
 
         if (!uiState.namePlateVisible)
