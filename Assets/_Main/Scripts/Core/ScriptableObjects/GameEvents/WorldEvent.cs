@@ -49,7 +49,9 @@ public abstract class WorldEvent : GameEvent
     private IEnumerator OnStartRoutine()
     {
         yield return StartWithRoomLoad();
-
+        
+        WorldManager.instance.currentRoomData = roomDatas.Find(data => data.room.name.Equals(WorldManager.instance.currentRoom.name));
+        
         if (startText != null)
         {
             VNNodePlayer.instance.StartConversation(startText);
@@ -76,10 +78,11 @@ public abstract class WorldEvent : GameEvent
             WorldManager.instance.currentRoom = roomToLoad;
             yield return TimeOfDayManager.instance.ChangeTimeOfDay(timeOfDay);
             yield return WorldManager.instance.LoadRoom(WorldManager.instance.currentRoom, null);
-            OnRoomLoad();
-            WorldManager.instance.charactersObject?
-                .AnimateCharacters();
+            
         }
+        OnRoomLoad();
+        WorldManager.instance.charactersObject?
+            .AnimateCharacters();
     }
 
     protected virtual void OnFinish()

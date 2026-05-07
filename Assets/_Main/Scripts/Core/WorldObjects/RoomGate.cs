@@ -16,6 +16,7 @@ public class RoomGate : Interactable
                 item.room.roomName == roomToLoad.roomName) ||
             ProgressManager.instance.currentGameEvent.roomDatas.Count == 0)
         {
+            PlayerInputManager.instance.DisableInput();
             StartCoroutine(RoomTransition());
         }
         else

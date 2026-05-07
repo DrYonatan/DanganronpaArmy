@@ -21,6 +21,7 @@ public abstract class Interactable : MonoBehaviour
         CursorManager.instance.Hide();
         CursorManager.instance.ShowOrHideInteractableName(false, "");
         yield return StartCoroutine(PlayerInputManager.instance.shooter.ShootQuestionMark(this.transform.position));
+        PlayerInputManager.instance.EnableInput();
         FinishInteraction();
         SoundManager.instance.PlaySoundEffect(Resources.Load<AudioClip>("Audio/Sound Effects/click"));
     }

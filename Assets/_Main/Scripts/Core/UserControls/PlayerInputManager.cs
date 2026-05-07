@@ -47,11 +47,11 @@ namespace DIALOGUE
                         DialogueSystem.instance.SetSkip(false);
                     }
                 }
-
-                if (Input.GetKeyDown(KeyCode.Alpha1) && !pauseMenu.isSubmenuOpen && isInputActive)
-                {
-                    TogglePause();
-                }
+                
+            }
+            if (Input.GetKeyDown(KeyCode.Alpha1) && !pauseMenu.isSubmenuOpen && isInputActive)
+            {
+                TogglePause();
             }
         }
 

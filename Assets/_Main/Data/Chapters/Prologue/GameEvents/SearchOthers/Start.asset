@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac78edb917e5f4142b7f642498064325, type: 3}
-  m_Name: Door
+  m_Name: Start
   m_EditorClassIdentifier: 
-  guid: ab9fe24ecda5906419efffd343526036
+  guid: 1ac5803f40031db4aa5ddf4f23bc3040
   settings:
     characterPositions: []
   nodes:
-  - rid: 7771312526000914432
-  - rid: 262644915478724640
-  - rid: 262644915478724643
-  - rid: 7771312572155035650
+  - rid: 7091799571838271492
+  - rid: 7091799571838271494
+  - rid: 7091799571838271496
+  - rid: 7091799571838271498
   references:
     version: 2
     RefIds:
-    - rid: 262644915478724640
+    - rid: 7091799571838271492
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
         nodeRect:
@@ -39,14 +39,16 @@ MonoBehaviour:
         displayName: 
         expressionIndex: 0
         textData:
-          rid: 262644915478724641
-    - rid: 262644915478724641
+          rid: 7091799571838271493
+    - rid: 7091799571838271493
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
-        text: "\u05E9\u05DC\u05D5\u05DD <o\u05D0\u05E0\u05D9> \u05E9\u05DC\u05D5\u05E1
-          <G\u05E1\u05D1\u05D1\u05D4> \u05DE\u05D4 <B\u05E7\u05D5\u05E8\u05D4>"
+        text: "(\u05D6\u05D4 \u05D0\u05DB\u05DF \u05E0\u05E8\u05D0\u05D4 \u05DB\u05DE\u05D5
+          \u05D1\u05E1\u05D9\u05E1 \u05D8\u05D9\u05E8\u05D5\u05E0\u05D5\u05EA. \u05D0\u05D1\u05DC
+          \u05D0\u05E0\u05D9 \u05E2\u05D3\u05D9\u05D9\u05DF \u05DC\u05D0 \u05DE\u05D1\u05D9\u05DF
+          \u05D0\u05D9\u05DA \u05D4\u05D2\u05E2\u05EA\u05D9 \u05DC\u05DB\u05D0\u05DF.)"
         commands: []
-    - rid: 262644915478724643
+    - rid: 7091799571838271494
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
         nodeRect:
@@ -62,28 +64,14 @@ MonoBehaviour:
         displayName: 
         expressionIndex: 0
         textData:
-          rid: 262644915478724644
-    - rid: 262644915478724644
+          rid: 7091799571838271495
+    - rid: 7091799571838271495
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
-        text: sjasjasb j jasjsa
-        commands:
-        - rid: 5465484780082298881
-    - rid: 2414737648138321921
-      type: {class: PlayMusicCommand, ns: , asm: Assembly-CSharp}
-      data:
-        executeTime: 0
-        music: {fileID: 8300000, guid: b25a0a0ccad58d647969fd90137d2b3c, type: 3}
-        volume: 1
-    - rid: 5465484780082298881
-      type: {class: ForwardAnimatedImage, ns: , asm: Assembly-CSharp}
-      data:
-        executeTime: 1
-    - rid: 5465484780082298882
-      type: {class: RemoveAnimatedImage, ns: , asm: Assembly-CSharp}
-      data:
-        executeTime: 0
-    - rid: 7771312526000914432
+        text: "\u05D0\u05E0\u05D9 \u05DC\u05D0 \u05E8\u05D5\u05D0\u05D4 \u05E4\u05D4
+          \u05D0\u05E3 \u05D0\u05D7\u05D3..."
+        commands: []
+    - rid: 7091799571838271496
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
         nodeRect:
@@ -96,47 +84,19 @@ MonoBehaviour:
         title: 
         drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
         character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
-        displayName: ???
-        expressionIndex: 0
-        textData:
-          rid: 7771312526000914433
-    - rid: 7771312526000914433
-      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
-      data:
-        text: "\u05DE\u05D4 \u05D6\u05D0\u05EA \u05D4\u05D3\u05DC\u05EA \u05D4\u05D6\u05D0\u05EA?"
-        commands:
-        - rid: 2414737648138321921
-    - rid: 7771312572155035650
-      type: {class: VNChoiceNode, ns: , asm: Assembly-CSharp}
-      data:
-        nodeRect:
-          serializedVersion: 2
-          x: 0
-          y: 0
-          width: 0
-          height: 0
-        commandsScrollPosition: {x: 0, y: 0}
-        title: 
-        drawNode: {fileID: 11400000, guid: 43e4e6c8d47167a40a1e714ec75c32f3, type: 2}
-        character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
         displayName: 
         expressionIndex: 0
         textData:
-          rid: 7771312572155035651
-        choiceLogic:
-          options:
-          - text: "\u05E9\u05DC\u05D5\u05DD"
-            dialogue:
-            - rid: 7771312572155035652
-            isCorrect: 0
-          loopIfWrong: 0
-    - rid: 7771312572155035651
+          rid: 7091799571838271497
+    - rid: 7091799571838271497
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
-        text: "\u05E9\u05DC\u05D5\u05DD"
-        commands:
-        - rid: 5465484780082298882
-    - rid: 7771312572155035652
+        text: "(\u05E0\u05E8\u05D0\u05D4 \u05DC\u05D9 \u05E9\u05DB\u05D3\u05D0\u05D9
+          \u05E9\u05D0\u05E0\u05D9 \u05D0\u05E1\u05EA\u05D5\u05D1\u05D1 \u05E7\u05E6\u05EA,
+          \u05D0\u05D5\u05DC\u05D9 \u05D0\u05E0\u05D9 \u05D0\u05DE\u05E6\u05D0 \u05DE\u05D9\u05E9\u05D4\u05D5
+          \u05E4\u05D4.)"
+        commands: []
+    - rid: 7091799571838271498
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
         nodeRect:
@@ -148,13 +108,15 @@ MonoBehaviour:
         commandsScrollPosition: {x: 0, y: 0}
         title: 
         drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
-        character: {fileID: 0}
+        character: {fileID: 11400000, guid: 7f6de77c1138bc04ebd203d76d1545a7, type: 2}
         displayName: 
         expressionIndex: 0
         textData:
-          rid: 7771312572155035653
-    - rid: 7771312572155035653
+          rid: 7091799571838271499
+    - rid: 7091799571838271499
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
-        text: 
+        text: "<G\u05D4\u05E9\u05EA\u05DE\u05E9\u05D5 \u05D1\u05DE\u05E7\u05E9\u05D9\u05DD
+          DSWA \u05DB\u05D3\u05D9 \u05DC\u05D6\u05D5\u05D6, \u05D5\u05D1\u05E2\u05DB\u05D1\u05E8
+          \u05DB\u05D3\u05D9 \u05DC\u05E4\u05E0\u05D5\u05EA.>"
         commands: []

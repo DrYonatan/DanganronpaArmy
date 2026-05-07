@@ -13,13 +13,13 @@ public class CameraManager : MonoBehaviour
     public Transform cameraTransform;
 
     public const string charactersLayerPath = "VN controller/Root/Canvas - Main/LAYERS/2 - Characters";
-    
+
     public Quaternion initialRotation;
 
     private bool isInFinalRotation = true;
 
     public bool conversationFinishedMoving = true;
-    
+
     public AudioClip footStepsSound;
     public AudioClip fastFootStepsSound;
 
@@ -39,7 +39,8 @@ public class CameraManager : MonoBehaviour
 
     public void MoveCamera(CameraLookDirection direction, float duration)
     {
-        StartCameraCoroutine(StartMovingCamera(direction, duration));
+        if(isInFinalRotation)
+           StartCameraCoroutine(StartMovingCamera(direction, duration));
     }
 
     public void MoveCameraTo(Transform location)
@@ -82,19 +83,13 @@ public class CameraManager : MonoBehaviour
 
         while (elapsedTime < duration)
         {
-            if (rotation != null)
-            {
-                cameraTransform.rotation = Quaternion.Slerp(startRotate, rotation, elapsedTime / duration);
-            }
+            cameraTransform.rotation = Quaternion.Slerp(startRotate, rotation, elapsedTime / duration);
 
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        if (rotation != null)
-        {
-            cameraTransform.rotation = rotation;
-        }
+        cameraTransform.rotation = rotation;
 
         isInFinalRotation = true;
     }
@@ -107,19 +102,14 @@ public class CameraManager : MonoBehaviour
 
         while (elapsedTime < duration)
         {
-            if (location != null)
-            {
-                cameraTransform.position = Vector3.Lerp(startPos, location, elapsedTime / duration);
-            }
+            cameraTransform.position = Vector3.Lerp(startPos, location, elapsedTime / duration);
+
 
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        if (location != null)
-        {
-            cameraTransform.position = location; // Ensure the camera reaches the exact target position
-        }
+        cameraTransform.position = location; // Ensure the camera reaches the exact target position
     }
 
 
@@ -192,7 +182,7 @@ public class CameraManager : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        
+
         cameraTransform.rotation = targetRotate;
         charactersLayer.anchoredPosition = charactersTargetPos;
         conversationFinishedMoving = true;
