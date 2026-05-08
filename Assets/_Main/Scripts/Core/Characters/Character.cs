@@ -14,6 +14,7 @@ public class CharacterState
 public class Character : ScriptableObject
 {
     public string displayName;
+    public string alt;
     public GameObject vnObjectPrefab;
     public List<CharacterState> emotions;
     public Sprite faceSprite;

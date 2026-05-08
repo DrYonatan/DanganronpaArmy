@@ -31,31 +31,31 @@ public class VNUIAnimator : MonoBehaviour
         }
     }
 
-    public void Appear()
+    public void Appear(float duration = 0.5f)
     {
         Sequence seq = DOTween.Sequence();
 
-        mainContainer.anchoredPosition = mainContainerOriginalPos - new Vector2(500, 0);
+        mainContainer.anchoredPosition = mainContainerOriginalPos - new Vector2(600, 0);
         timeContainer.rectTransform.anchoredPosition = timeContainerOriginalPos + new Vector2(0, 80);
 
-        seq.Append(mainContainer.DOAnchorPosX(mainContainerOriginalPos.x, 0.5f));
-        seq.Append(timeContainer.rectTransform.DOAnchorPosY(timeContainerOriginalPos.y, 0.4f));
-        seq.Append(musicBoxContainer.rectTransform.DOAnchorPosX(0, 0.2f));
+        seq.Append(mainContainer.DOAnchorPosX(mainContainerOriginalPos.x, duration));
+        seq.Append(timeContainer.rectTransform.DOAnchorPosY(timeContainerOriginalPos.y, duration));
+        seq.Append(musicBoxContainer.rectTransform.DOAnchorPosX(0, duration / 2));
 
         musicName.rectTransform.anchoredPosition = new Vector2(-400, 0);
         musicName.rectTransform.DOAnchorPosX(450, 5f).SetEase(Ease.Linear).SetLoops(-1).SetLink(musicName.gameObject);
     }
 
-    public void Disappear()
+    public void Disappear(float duration = 0.5f)
     {
         Sequence seq = DOTween.Sequence();
 
         mainContainer.anchoredPosition = mainContainerOriginalPos;
         timeContainer.rectTransform.anchoredPosition = timeContainerOriginalPos;
 
-        seq.Append(timeContainer.rectTransform.DOAnchorPosY(timeContainerOriginalPos.y + 80, 0.4f));
-        seq.Append(mainContainer.DOAnchorPosX(mainContainerOriginalPos.x - 500, 0.5f));
-        seq.Append(musicBoxContainer.rectTransform.DOAnchorPosX(500, 0.2f));
+        seq.Append(timeContainer.rectTransform.DOAnchorPosY(timeContainerOriginalPos.y + 80, duration));
+        seq.Append(mainContainer.DOAnchorPosX(mainContainerOriginalPos.x - 600, duration));
+        seq.Append(musicBoxContainer.rectTransform.DOAnchorPosX(500, duration / 2));
         seq.AppendCallback(() => musicName.rectTransform.DOKill());
     }
 }

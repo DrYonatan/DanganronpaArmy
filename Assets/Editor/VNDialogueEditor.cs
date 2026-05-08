@@ -205,6 +205,16 @@ public class VNDialogueEditor : EditorWindow
             {
                 SetConversationSettings();
             }
+            
+            EditorGUILayout.Space(5);
+
+            if (GUILayout.Button("Import Conversation", GUILayout.Width(200), GUILayout.Height(30)))
+            {
+                PopupWindow.Show(
+                    new Rect(Event.current.mousePosition, Vector2.zero),
+                    new ConversationImportPopup(this)
+                );
+            }
 
             for (int i = 0; i < nodes.Count; i++)
             {

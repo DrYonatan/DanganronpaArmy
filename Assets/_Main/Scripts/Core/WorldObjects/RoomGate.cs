@@ -22,7 +22,8 @@ public class RoomGate : Interactable
         else
         {
             // if the room is unallowed, read the "you can't go into this room" text
-            VNNodePlayer.instance.StartConversation(((WorldEvent)ProgressManager.instance.currentGameEvent).unallowedText);
+            VNNodePlayer.instance.StartConversation(((WorldEvent)ProgressManager.instance.currentGameEvent)
+                .unallowedText);
         }
     }
 
@@ -36,6 +37,18 @@ public class RoomGate : Interactable
         yield return CameraManager.instance.MoveCameraTo(targetPosition, 0.5f);
         ImageScript.instance.FadeToBlack(1f);
         yield return CameraManager.instance.MoveCameraTo(targetPosition + -5 * transform.forward, 1.5f);
+
+        RoomData data =
+            ProgressManager.instance.currentGameEvent.roomDatas.Find(roomData =>
+                roomData.room.roomName.Equals(roomToLoad.roomName));
+
+        if (data.preLoadText != null)
+        {
+            ImageScript.instance.ShowBackground(Resources.Load<Sprite>("Images/black-bg"), 0f);
+            ImageScript.instance.UnFadeToBlack(0.5f);
+            yield return VNNodePlayer.instance.StartConversationPipeline(data.preLoadText);
+        }
+
         WorldManager.instance.StartLoadingRoom(roomToLoad, entryPoint);
     }
 }

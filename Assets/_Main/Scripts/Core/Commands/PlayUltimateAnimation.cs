@@ -21,6 +21,7 @@ public class PlayUltimateAnimation : Command
     public override IEnumerator Execute()
     {
         DialogueSystem.instance.dialogueBoxAnimator.TextBoxDisappear();
+        VNUIAnimator.instance.Disappear(0.2f);
 
         yield return new WaitForSeconds(0.2f);
 
@@ -34,6 +35,7 @@ public class PlayUltimateAnimation : Command
         
         Object.Destroy(ultimateAnimation.gameObject);
         DialogueSystem.instance.dialogueBoxAnimator.TextBoxAppear();
+        VNUIAnimator.instance.Appear();
 
     }
 

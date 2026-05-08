@@ -54,8 +54,11 @@ public class ImageScript : MonoBehaviour
         }
     }
 
-    public void ShowBackground(Sprite sprite)
+    public void ShowBackground(Sprite sprite, float duration = 0.2f)
     {
+        if (sprite == null)
+            return;
+        
         GameStateManager.instance.uiState.backgroundImage = new ImageState { spriteId = sprite.name, visible = true };
         Image oldBackground = background;
         Image newBackground = Instantiate(background, background.transform.parent);
@@ -63,8 +66,9 @@ public class ImageScript : MonoBehaviour
 
         Sequence seq = DOTween.Sequence();
 
-        seq.Append(newBackground.DOFade(0f, 0f));
-        seq.Append(newBackground.DOFade(1f, 0.2f).SetEase(Ease.Linear));
+        if(duration != 0)
+           seq.Append(newBackground.DOFade(0f, 0f)); // Avoid stutters if the background should appear immediately
+        seq.Append(newBackground.DOFade(1f, duration).SetEase(Ease.Linear));
         seq.AppendCallback(() => Destroy(oldBackground.gameObject));
         seq.AppendCallback(() => background = newBackground);
     }

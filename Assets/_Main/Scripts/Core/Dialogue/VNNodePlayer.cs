@@ -16,6 +16,11 @@ public class VNNodePlayer : MonoBehaviour
 
     public void StartConversation(VNConversationSegment segment)
     {
+        StartCoroutine(StartConversationPipeline(segment));
+    }
+
+    public IEnumerator StartConversationPipeline(VNConversationSegment segment)
+    {
         currentConversation = segment;
         VNCharacterManager.instance.characterLayer.anchoredPosition = Vector2.zero;
         foreach (CharacterPositionMapping characterInfo in segment.settings.characterPositions)
@@ -23,7 +28,7 @@ public class VNNodePlayer : MonoBehaviour
             VNCharacterManager.instance.CreateCharacter(characterInfo);
         }
 
-        StartCoroutine(RunConversation(segment));
+        yield return RunConversation(segment);
     }
 
     IEnumerator RunConversation(VNConversationSegment segment)

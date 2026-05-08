@@ -21,6 +21,7 @@ public class RoomData
     public Room room;
     public WorldCharactersParent characters;
     public GameObject worldObjects;
+    public VNConversationSegment preLoadText;
     public bool isExitable;
 }
 

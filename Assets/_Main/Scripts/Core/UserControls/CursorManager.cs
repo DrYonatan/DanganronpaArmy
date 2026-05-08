@@ -1,5 +1,6 @@
 using System.Collections;
 using DG.Tweening;
+using DIALOGUE;
 using UnityEngine;
 using TMPro;
 
@@ -44,9 +45,10 @@ public class CursorManager : MonoBehaviour
             if (currentInteractable != null)
             {
                 actualSpeed *= 4;
-                if (!currentInteractable.isAlreadyLooking)
+                if (!currentInteractable.isAlreadyLooking && PlayerInputManager.instance.isInputActive)
                 {
                     SoundManager.instance.PlaySoundEffect(hoverSound);
+                    
                 }
                 currentInteractable.OnLook();
             }
