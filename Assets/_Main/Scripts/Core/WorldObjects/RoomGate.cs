@@ -29,6 +29,7 @@ public class RoomGate : Interactable
 
     IEnumerator RoomTransition()
     {
+        CameraManager.instance.footStepsSource.Stop();
         WorldManager.instance.isLoading = true;
         Vector3 targetPosition = new Vector3(transform.position.x + transform.forward.x * 9f,
             Camera.main.transform.position.y, transform.position.z + transform.forward.z * 9f);

@@ -61,6 +61,7 @@ public class WorldManager : MonoBehaviour
 
     public IEnumerator LoadRoom(Room room, [CanBeNull] string entryPoint)
     {
+        PlayerInputManager.instance.DisableInput();
         ImageScript.instance.HideBackground(0);
         ImageScript.instance.RemoveAnimatedImage(0);
 
@@ -82,10 +83,10 @@ public class WorldManager : MonoBehaviour
 
         CameraManager.instance.player.enabled = false;
         CameraManager.instance.player.transform.position =
-            cameraStartPos.position; // Actually changing position of camera
-        CameraManager.instance.cameraTransform.rotation = cameraStartPos.rotation;
+            cameraStartPos.position; // Actually changing position of player
+        CameraManager.instance.cameraTransform.rotation = cameraStartPos.rotation; // Actually changing rotation of camera
         CameraManager.instance.player.enabled = true;
-
+        
         ImageScript.instance.UnFadeToBlack(0.1f);
         if (room.OnLoad() != null)
             yield return StartCoroutine(room.OnLoad());
@@ -153,7 +154,7 @@ public class WorldManager : MonoBehaviour
             yield return null;
         }
 
-        yield return LoadRoom(room, entryPoint);
+        yield return LoadRoom(currentRoom, entryPoint);
 
         ProgressManager.instance.currentGameEvent.OnRoomLoad();
 
@@ -179,7 +180,7 @@ public class WorldManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!DialogueSystem.instance.isActive && !PlayerInputManager.instance.isPaused && !isLoading)
+        if (!DialogueSystem.instance.isActive && !PlayerInputManager.instance.isPaused && PlayerInputManager.instance.isInputActive && !isLoading)
             currentRoom?.MovementControl();
         else
         {

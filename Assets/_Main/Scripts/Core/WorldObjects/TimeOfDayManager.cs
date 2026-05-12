@@ -49,10 +49,10 @@ public class TimeOfDayManager : MonoBehaviour
         ImageScript.instance.FadeToBlack(0.5f);
         VNUIAnimator.instance.Disappear();
         
-        yield return new WaitForSeconds(1f);
-        
         currentTimeScene = timeScenes.Find(x => x.timeOfDay == timeOfDay);
         
+        yield return new WaitForSeconds(1.2f);
+
         UpdateUIAccordingToTime(currentTimeScene);
         
         WorldManager.instance.currentTime = timeOfDay;

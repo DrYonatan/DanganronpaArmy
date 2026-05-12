@@ -46,7 +46,7 @@ public class VNUIAnimator : MonoBehaviour
         musicName.rectTransform.DOAnchorPosX(450, 5f).SetEase(Ease.Linear).SetLoops(-1).SetLink(musicName.gameObject);
     }
 
-    public void Disappear(float duration = 0.5f)
+    public void Disappear(float duration = 0.3f)
     {
         Sequence seq = DOTween.Sequence();
 

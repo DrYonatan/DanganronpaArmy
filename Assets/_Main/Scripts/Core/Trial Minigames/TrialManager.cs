@@ -148,7 +148,10 @@ public class TrialManager : MonoBehaviour
         GameStateManager.instance.SetUIState(data.uiState);
         GameStateManager.instance.InitiateUIState();
         
-        ContinueTrial();
+        if(data.trialSegmentIndex == 0 && data.currentLineIndex == 0)
+            preTrialPrepMenu.Appear();
+        else
+           ContinueTrial();
     }
 
     public void FadeCharactersExcept(Character character, float opacity, float duration)

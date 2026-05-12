@@ -6,6 +6,7 @@ using UnityEngine;
 public class GeneralMenu : MonoBehaviour
 {
     public List<MenuButton> menuItems;
+    public SavePopup savePopUp;
     public int currentItemIndex;
     public int columns = 3;
     public AudioClip menuMove;

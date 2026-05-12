@@ -13,11 +13,11 @@ public class GameStateManager : MonoBehaviour
     public Dictionary<string, int> charactersRanks = new(); // Free time events ranks for each character
 
     public GameObject persistentObject;
-    
+
     public List<Chapter> chapters;
 
     public Camera sceneTransitionCamera;
-    
+
     public UIState uiState = new UIState();
 
     void Awake()
@@ -30,7 +30,7 @@ public class GameStateManager : MonoBehaviour
                 DontDestroyOnLoad(persistentObject);
 
             GameObject prevTransitionCam = GameObject.Find("/Scene Transition Camera");
-            if(prevTransitionCam != null)
+            if (prevTransitionCam != null)
                 Destroy(prevTransitionCam);
         }
         else
@@ -86,7 +86,7 @@ public class GameStateManager : MonoBehaviour
             TrialManager.instance.preTrialPrepMenu.Appear();
         }
 
-        else if(ProgressManager.instance != null)
+        else if (ProgressManager.instance != null)
         {
             persistentObject = GameObject.Find("Persistent");
             DontDestroyOnLoad(persistentObject);
@@ -120,12 +120,26 @@ public class GameStateManager : MonoBehaviour
         ImageScript.instance.FadeToBlack(0.2f);
         yield return new WaitForSeconds(1f);
         DOTween.KillAll();
+
+        yield return HandlePopup();
+
         sceneTransitionCamera.gameObject.SetActive(true);
         chapters[chapterIndex].chapterSegments[chapterSegmentIndex].LoadScene();
-        if(persistentObject != null) 
+        if (persistentObject != null)
             Destroy(persistentObject);
         yield return new WaitForSeconds(0.5f);
         StartNewSegment();
+    }
+
+    private IEnumerator HandlePopup()
+    {
+        ImageScript.instance.UnFadeToBlack(0f);
+        SavePopup popup = PlayerInputManager.instance.pauseMenu.generalMenu.savePopUp;
+        popup.gameObject.SetActive(true);
+        popup.finished = false;
+        yield return popup.WaitForCompletion();
+        ImageScript.instance.FadeToBlack(0.2f);
+        yield return new WaitForSeconds(0.5f);
     }
 
     private void MoveToNextChapter()
@@ -160,7 +174,7 @@ public class GameStateManager : MonoBehaviour
         chapterIndex = 0;
         chapterSegmentIndex = 0;
     }
-    
+
     public void SetUIState(UIState state)
     {
         uiState = state;
@@ -175,21 +189,22 @@ public class GameStateManager : MonoBehaviour
             OverlayTextBoxManager.instance.SetAsTextBox();
             OverlayTextBoxManager.instance.Show();
         }
-            
+
         ImageScript.instance.background.sprite = Resources.Load<Sprite>($"Images/{uiState.backgroundImage.spriteId}");
         ImageScript.instance.background.DOFade(uiState.backgroundImage.visible ? 1f : 0f, 0f);
 
-        VNAnimatedImage animatedImage = Resources.Load<VNAnimatedImage>($"Images/Animated/{uiState.animatedImage.prefabId}");
+        VNAnimatedImage animatedImage =
+            Resources.Load<VNAnimatedImage>($"Images/Animated/{uiState.animatedImage.prefabId}");
         if (animatedImage != null && uiState.animatedImage.visible)
         {
             ImageScript.instance.animatedImage = Instantiate(animatedImage);
             ImageScript.instance.animatedImageContainer.DOFade(1f, 0f).SetEase(Ease.Linear);
         }
-        
+
         foreach (BackgroundCharacterState state in uiState.characterStates)
         {
             ImageScript.instance.CreateCharacterOnBackground(state.character);
-            if(state.visible)
+            if (state.visible)
                 ImageScript.instance.ShowCharacterOnBackground(state.character);
         }
 

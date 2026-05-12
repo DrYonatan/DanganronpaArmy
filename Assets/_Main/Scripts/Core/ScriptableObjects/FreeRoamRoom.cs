@@ -25,7 +25,6 @@ public class FreeRoamRoom : Room
     {
         if (!PlayerInputManager.instance.isInputActive)
             return;
-        
         MapContainer.instance.HandleMapVisibility();
         Move();
         Look();
@@ -50,7 +49,7 @@ public class FreeRoamRoom : Room
         Vector3 move = CameraManager.instance.cameraTransform.right * horizontal + CameraManager.instance.cameraTransform.forward * vertical;
         move.y = 0; // Ensure no vertical movement
         CharacterController controller = CameraManager.instance.player;
-        controller.Move(move * Time.deltaTime * speed);
+        controller.Move(  speed * Time.deltaTime * move);
         CameraHeadBobbing();
         HandleFootsteps();
     }
@@ -82,7 +81,7 @@ public class FreeRoamRoom : Room
     void CheckInteraction()
     {
         RaycastHit hit;
-        Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+        Ray ray = new Ray(CameraManager.instance.cameraTransform.position, CameraManager.instance.cameraTransform.forward);
 
         if (Physics.Raycast(ray, out hit, playerReach))
         {
@@ -137,6 +136,7 @@ public class FreeRoamRoom : Room
     public override IEnumerator OnLoad()
     {
         base.OnLoad();
+        horizontalRotation = CameraManager.instance.initialRotation.eulerAngles.y;
         CameraManager.instance.cameraTransform.localPosition = Vector3.zero;
         MapContainer.instance.SetMap(map);
         yield return null;

@@ -19,7 +19,7 @@ public abstract class TitleScreenMenuButton : MonoBehaviour
     {
         image.DOKill();
         image.color = defaultColor;
-        image.DOColor(selectedColor, 0.05f).SetLoops(4, LoopType.Yoyo).SetEase(Ease.Linear).SetUpdate(true);
+        image.DOColor(selectedColor, 0.05f).SetLoops(4, LoopType.Yoyo).SetEase(Ease.Linear).SetUpdate(true).SetLink(gameObject);
     }
 
     public void HoverButtonAnimation()
@@ -29,7 +29,7 @@ public abstract class TitleScreenMenuButton : MonoBehaviour
 
         image.DOColor(selectedColor, 0.2f)
             .SetLoops(-1, LoopType.Yoyo)
-            .SetEase(Ease.Linear).SetUpdate(true);
+            .SetEase(Ease.Linear).SetUpdate(true).SetLink(gameObject);
     }
 
     public void DisableHover()
