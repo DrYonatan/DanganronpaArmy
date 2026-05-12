@@ -30,11 +30,15 @@ public class SystemMenu : MenuScreen
 
     void Update()
     {
-        if (!volumeSlidersMenu.isConcentrating)
+        if (!volumeSlidersMenu.isConcentrating && !saveMenu.gameObject.activeSelf && !loadMenu.gameObject.activeSelf)
+        {
             MenuControl();
-
+        }
+        
         if (Input.GetKeyDown(KeyCode.Escape) && !volumeSlidersMenu.isConcentrating)
         {
+            if (saveMenu.confirmPopupActive || loadMenu.confirmPopupActive)
+                return;
             if (saveMenu.gameObject.activeSelf)
                 CloseSaveMenu();
             else if (loadMenu.gameObject.activeSelf)

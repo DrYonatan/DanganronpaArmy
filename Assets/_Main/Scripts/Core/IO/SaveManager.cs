@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using DIALOGUE;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -60,7 +60,7 @@ public class SaveManager : MonoBehaviour
             CameraManager.instance.cameraTransform.localPosition,
             CameraManager.instance.cameraTransform.localRotation.eulerAngles,
             CameraManager.instance.initialRotation.eulerAngles, WorldManager.instance.currentTime,
-            GameStateManager.instance.uiState, 0, 0);
+            GameStateManager.instance.uiState, 0, 0, DateTime.Now.ToString("o"));
         SaveSystem.SaveGame(data, slot);
     }
 
@@ -73,7 +73,7 @@ public class SaveManager : MonoBehaviour
             SceneManager.GetActiveScene().name, GameStateManager.instance.charactersRanks,
             Vector3.zero, Vector3.zero, Vector3.zero, Vector3.zero, TimeOfDay.Day, GameStateManager.instance.uiState,
             TrialManager.instance.currentIndex,
-            TrialManager.instance.playerStats.hp);
+            TrialManager.instance.playerStats.hp, DateTime.Now.ToString("o"));
 
         SaveSystem.SaveGame(data, slot);
     }

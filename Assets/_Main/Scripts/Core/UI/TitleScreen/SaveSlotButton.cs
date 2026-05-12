@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SaveSlotButton : TitleScreenMenuButton
 {
@@ -14,6 +17,7 @@ public class SaveSlotButton : TitleScreenMenuButton
 
     public int slot;
     public TextMeshProUGUI slotText;
+    public TextMeshProUGUI dateText;
     private SaveData data;
     public Mode mode;
     public AudioClip errorSound;
@@ -28,27 +32,23 @@ public class SaveSlotButton : TitleScreenMenuButton
         data = SaveSystem.LoadGame(slot);
         if (data != null)
         {
-            slotText.text = $"שמירה  {slot}";
+            List<Chapter> chapters = Resources.Load<ChaptersBank>("ChaptersBank").chapters;
+            slotText.text = $"{slot} - {chapters[data.chapterIndex].chapterName}";
+            if (data.saveTime != null)
+            {
+                DateTime time = DateTime.Parse(data.saveTime);
+                string date = time.ToString("dd/MM/yyyy HH:mm");
+                dateText.text = date; 
+            }
         }
         else
         {
             slotText.text = "שמירה ריקה";
+            dateText.text = "";
         }
     }
-
-    public override void Click()
-    {
-        if (mode == Mode.Load)
-        {
-            Load();
-        }
-        else if (mode == Mode.Save)
-        {
-            Save();
-        }
-    }
-
-    private void Save()
+    
+    public void Save()
     {
         if (ProgressManager.instance != null)
             SaveManager.instance.SaveGameVn(slot);
@@ -58,14 +58,22 @@ public class SaveSlotButton : TitleScreenMenuButton
         UpdateFileText();
     }
 
-    private void Load()
+    public bool CheckValidity()
     {
-        if (data == null)
+        if (mode == Mode.Load)
         {
-            SoundManager.instance.PlaySoundEffect(errorSound);
-            return;
+            if (data == null)
+            {
+                SoundManager.instance.PlaySoundEffect(errorSound);
+                return false;
+            }  
         }
 
+        return true;
+    }
+
+    public void Load()
+    {
         SoundManager.instance.PlaySoundEffect(soundEffect);
         SaveManager.instance.SelectSaveSlot(slot);
 

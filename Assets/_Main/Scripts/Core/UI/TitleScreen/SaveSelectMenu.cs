@@ -11,6 +11,12 @@ public class SaveSelectMenu : TitleScreenSubMenu
 
     public SaveSlotButton.Mode mode;
 
+    public GameObject confirmPopup;
+    public TitleScreenActionButton confirmButton;
+    public TitleScreenActionButton cancelButton;
+    public bool onConfirm;
+    public bool confirmPopupActive;
+
     void Awake()
     {
         for (int i = 1; i < SaveManager.instance.saveSlotAmount; i++)
@@ -21,6 +27,12 @@ public class SaveSelectMenu : TitleScreenSubMenu
 
     private void Update()
     {
+        if (confirmPopupActive)
+        {
+            HandleConfirmPopup();
+            return;
+        }
+        
         if (Input.GetKeyDown(KeyCode.S))
         {
             buttons[currentItemIndex].DisableHover();
@@ -40,23 +52,89 @@ public class SaveSelectMenu : TitleScreenSubMenu
             SoundManager.instance.PlaySoundEffect(selectionSound);
             UpdateScroll();
         }
+        
+        
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) && !confirmPopupActive)
+        {
+            bool isSlotValid = ((SaveSlotButton)buttons[currentItemIndex]).CheckValidity();
+
+            if (isSlotValid)
+            {
+                buttons[currentItemIndex].Click();
+                OpenConfirmationPopup(); 
+            }
+        }
+    }
+
+    private void OpenConfirmationPopup()
+    {
+        confirmPopupActive = true;
+        confirmPopup.SetActive(true);
+        onConfirm = false;
+        cancelButton.HoverButtonAnimation();
+    }
+
+    private void CloseConfirmationPopup()
+    {
+        confirmPopupActive = false;
+        confirmPopup.SetActive(false);
+        cancelButton.DisableHover();
+        confirmButton.DisableHover();
+        buttons[currentItemIndex].HoverButtonAnimation();
+    }
+
+    private void HandleConfirmPopup()
+    {
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            cancelButton.DisableHover();
+            confirmButton.HoverButtonAnimation();
+            SoundManager.instance.PlaySoundEffect(selectionSound);
+            onConfirm = true;
+        }
+
+        else if (Input.GetKeyDown(KeyCode.A))
+        {
+            confirmButton.DisableHover();
+            cancelButton.HoverButtonAnimation();
+            SoundManager.instance.PlaySoundEffect(selectionSound);
+            onConfirm = false;
+        }
 
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {
-            buttons[currentItemIndex].Click();
+            if (onConfirm)
+            {
+                LoadOrSave();
+            }
+            CloseConfirmationPopup();
+        }
+    }
+    
+    private void LoadOrSave()
+    {
+        SaveSlotButton button = (SaveSlotButton)buttons[currentItemIndex];
+        if (mode == SaveSlotButton.Mode.Load)
+        {
+            button.Load();
+        }
+        else if (mode == SaveSlotButton.Mode.Save)
+        {
+            button.Save();
         }
     }
 
     private void GenerateSaveSlot(int index)
     {
         SaveSlotButton button = Instantiate(buttonPrefab, savesContainer);
-        button.mode =  mode;
+        button.mode = mode;
         button.slot = index;
         buttons.Add(button);
     }
 
     private void UpdateScroll()
     {
-        savesContainer.DOAnchorPosY(Mathf.Max((currentItemIndex - (visibleCount - 1)) * (buttonHeight + 50), 0), 0.2f).SetUpdate(true);
+        savesContainer.DOAnchorPosY(Mathf.Max((currentItemIndex - (visibleCount - 1)) * (buttonHeight + 50), 0), 0.2f)
+            .SetUpdate(true);
     }
 }

@@ -89,10 +89,10 @@ public class ProgressManager : MonoBehaviour
     public IEnumerator StartNewVnSegment()
     {
         GameStateManager.instance.InitiateUIState();
-        LoadGameEvents(GameStateManager.instance.chapters[GameStateManager.instance.chapterIndex]
+        LoadGameEvents(GameStateManager.instance.chaptersBank.chapters[GameStateManager.instance.chapterIndex]
             .chapterSegments[GameStateManager.instance.chapterSegmentIndex]);
         VNUIAnimator.instance.chapterNameText.text =
-            GameStateManager.instance.chapters[GameStateManager.instance.chapterIndex].chapterName;
+            GameStateManager.instance.chaptersBank.chapters[GameStateManager.instance.chapterIndex].chapterName;
         currentGameEvent = Instantiate(gameEvents[0]);
         WorldManager.instance.currentRoom = null;
         yield return TimeOfDayManager.instance.ChangeTimeOfDay(currentGameEvent.timeOfDay);

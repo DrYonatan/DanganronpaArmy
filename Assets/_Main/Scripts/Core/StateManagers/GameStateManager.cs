@@ -14,7 +14,7 @@ public class GameStateManager : MonoBehaviour
 
     public GameObject persistentObject;
 
-    public List<Chapter> chapters;
+    public ChaptersBank chaptersBank;
 
     public Camera sceneTransitionCamera;
 
@@ -104,7 +104,7 @@ public class GameStateManager : MonoBehaviour
     {
         chapterSegmentIndex++;
 
-        if (chapterSegmentIndex < chapters[chapterIndex].chapterSegments.Count)
+        if (chapterSegmentIndex < chaptersBank.chapters[chapterIndex].chapterSegments.Count)
         {
             StartCoroutine(MoveToNextChapterSegmentPipeline());
         }
@@ -124,7 +124,7 @@ public class GameStateManager : MonoBehaviour
         yield return HandlePopup();
 
         sceneTransitionCamera.gameObject.SetActive(true);
-        chapters[chapterIndex].chapterSegments[chapterSegmentIndex].LoadScene();
+        chaptersBank.chapters[chapterIndex].chapterSegments[chapterSegmentIndex].LoadScene();
         if (persistentObject != null)
             Destroy(persistentObject);
         yield return new WaitForSeconds(0.5f);
@@ -147,7 +147,7 @@ public class GameStateManager : MonoBehaviour
         chapterIndex++;
         chapterSegmentIndex = 0;
 
-        if (chapterIndex < chapters.Count)
+        if (chapterIndex < chaptersBank.chapters.Count)
         {
             StartCoroutine(MoveToNextChapterPipeline());
         }
@@ -156,12 +156,12 @@ public class GameStateManager : MonoBehaviour
     private IEnumerator MoveToNextChapterPipeline()
     {
         yield return MoveToNextChapterSegmentPipeline();
-        VNUIAnimator.instance.chapterNameText.text = chapters[chapterIndex].chapterName;
+        VNUIAnimator.instance.chapterNameText.text = chaptersBank.chapters[chapterIndex].chapterName;
     }
 
     public Chapter GetCurrentChapter()
     {
-        return chapters[chapterIndex];
+        return chaptersBank.chapters[chapterIndex];
     }
 
     public ChapterSegment GetCurrentChapterSegment()

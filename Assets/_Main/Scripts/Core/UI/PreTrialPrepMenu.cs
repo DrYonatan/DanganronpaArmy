@@ -21,7 +21,7 @@ public class PreTrialPrepMenu : MonoBehaviour
 
     public void Appear()
     {
-        chapterName.text = GameStateManager.instance.chapters[GameStateManager.instance.chapterIndex].chapterName;
+        chapterName.text = GameStateManager.instance.chaptersBank.chapters[GameStateManager.instance.chapterIndex].chapterName;
         MusicManager.instance.PlaySong(music);
         ImageScript.instance.UnFadeToBlack(0.1f);
         
@@ -38,7 +38,7 @@ public class PreTrialPrepMenu : MonoBehaviour
         RectTransform textRect = scrollingText.rectTransform;
               
         scrollingText.text =
-            GameStateManager.instance.chapters[GameStateManager.instance.chapterIndex].preTrialPrepText;
+            GameStateManager.instance.chaptersBank.chapters[GameStateManager.instance.chapterIndex].preTrialPrepText;
         
         scrollingText.ForceMeshUpdate();
 
