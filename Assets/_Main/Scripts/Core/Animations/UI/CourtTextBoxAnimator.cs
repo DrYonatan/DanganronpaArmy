@@ -30,7 +30,7 @@ public class CourtTextBoxAnimator : TextBoxAnimations
     public override void Initialize()
     {
         base.Initialize();
-        chapterNumber.text = "0" + (GameStateManager.instance.chapterIndex + 1);
+        chapterNumber.text = "0" + (GameStateManager.instance.chapterIndex);
         characterFace.discussionFaceContainer.DOScaleY(0f, 0f);
     }
 

@@ -12,6 +12,7 @@ public class SavePopup : MonoBehaviour
     public AudioClip menuMoveSound;
     public bool finished;
     public bool saveMenuOpen;
+    public GameObject foregroundElement;
     
     public IEnumerator WaitForCompletion()
     {
@@ -28,7 +29,7 @@ public class SavePopup : MonoBehaviour
     {
         finished = true;
         saveMenuOpen = false;
-        gameObject.SetActive(false);
+        foregroundElement.SetActive(false);
     }
 
     void Update()

@@ -1,5 +1,7 @@
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class SaveSelectMenu : TitleScreenSubMenu
 {
@@ -16,6 +18,7 @@ public class SaveSelectMenu : TitleScreenSubMenu
     public TitleScreenActionButton cancelButton;
     public bool onConfirm;
     public bool confirmPopupActive;
+    public TextMeshProUGUI confirmText;
 
     void Awake()
     {
@@ -23,6 +26,8 @@ public class SaveSelectMenu : TitleScreenSubMenu
         {
             GenerateSaveSlot(i);
         }
+
+        confirmText.text = mode == SaveSlotButton.Mode.Save ? "האם תרצה לשמור על גבי שמירה זו?" : "האם תרצה לטעון שמירה זו?";
     }
 
     private void Update()

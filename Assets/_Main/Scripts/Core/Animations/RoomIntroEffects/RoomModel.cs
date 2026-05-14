@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class RoomModel : MonoBehaviour
 {
+    public Transform talkPosition;
     public List<RoomIntroEffect> roomIntroEffects = new List<RoomIntroEffect>();
 
     public void PlayRoomIntroEffects()

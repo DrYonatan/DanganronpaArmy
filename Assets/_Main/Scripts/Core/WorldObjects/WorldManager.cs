@@ -18,6 +18,8 @@ public class WorldManager : MonoBehaviour
 
     public static WorldManager instance { get; private set; }
 
+    public Transform talkPosition;
+
     void Awake()
     {
         instance = this;
@@ -70,6 +72,7 @@ public class WorldManager : MonoBehaviour
         RoomModel ob = Instantiate(room.GetTimeOfDayVersion(ProgressManager.instance.currentGameEvent.timeOfDay));
         ob.name = "World";
         ob.gameObject.SetActive(true);
+        talkPosition = ob.talkPosition;
 
         GameObject objectsParent = GameObject.Find("World Objects");
         if (objectsParent != null)

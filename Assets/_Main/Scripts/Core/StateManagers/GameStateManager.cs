@@ -140,6 +140,7 @@ public class GameStateManager : MonoBehaviour
         yield return popup.WaitForCompletion();
         ImageScript.instance.FadeToBlack(0.2f);
         yield return new WaitForSeconds(0.5f);
+        popup.gameObject.SetActive(false);
     }
 
     private void MoveToNextChapter()

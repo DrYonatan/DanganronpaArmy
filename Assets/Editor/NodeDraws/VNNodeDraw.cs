@@ -110,7 +110,8 @@ public class VNNodeDraw : DrawNode
             menu.AddItem(new GUIContent("Hide Background"), false, () => AddCommand(node, new HideBackground()));
             menu.AddItem(new GUIContent("Background Character Toggle"), false, () => AddCommand(node, new ToggleBackgroundCharacter()));
             menu.AddItem(new GUIContent("Ding"), false, () => AddCommand(node, new Ding()));
-            
+            menu.AddItem(new GUIContent("Move To Talk Position"), false, () => AddCommand(node, new MoveToTalkPos()));
+
             menu.ShowAsContext();
         }
     }

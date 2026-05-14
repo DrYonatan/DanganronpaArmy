@@ -51,6 +51,11 @@ public class CameraManager : MonoBehaviour
         StartCameraCoroutine(RotateCameraTo(location.rotation, duration));
     }
 
+    public void MoveToTalkPosition()
+    {
+        
+    }
+
     public void ReturnToDollyTrack()
     {
         StartCameraCoroutine(MoveCameraToDollyTrack());

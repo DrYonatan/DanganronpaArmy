@@ -13,9 +13,22 @@ namespace DIALOGUE
         public AudioClip clickSound;
         public AudioClip moveSelectionSound;
         public bool isActive;
+        
+        public bool hasStartedSelection;
 
         void SelectionMenuControl()
         {
+            if (!hasStartedSelection)
+            {
+                if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S))
+                {
+                    hasStartedSelection = true;
+                    selectedIndex = 0;
+                    uiOptions[selectedIndex].OnSelect();
+                    SoundManager.instance.PlaySoundEffect(moveSelectionSound);
+                }
+                return;
+            }
             if (Input.GetKeyDown(KeyCode.W))
             {
                 uiOptions[selectedIndex].OnDeselect();
@@ -57,6 +70,7 @@ namespace DIALOGUE
         public void OpenMenu<T>(List<Option<T>> options) where T : DialogueNode
         {
             isActive = true;
+            hasStartedSelection = false;
             gameObject.SetActive(true);
             GenerateUIOptions(options);
         }
