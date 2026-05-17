@@ -32,7 +32,7 @@ public abstract class WorldEvent : GameEvent
     public VNConversationSegment startText;
     public VNConversationSegment finishText;
 
-    private bool isAfterFinishText;
+    public bool isAfterFinishText;
 
     public VNConversationSegment unallowedText;
 
@@ -175,6 +175,7 @@ public abstract class WorldEvent : GameEvent
     public override void LoadSave(SaveData data)
     {
         base.LoadSave(data);
+        isAfterFinishText = data.isAfterFinishText;
         charactersData = data.charactersData.ToDictionary(c => c.key, c => c.value);
         objectsData = data.objectsData.ToDictionary(c => c.key, c => c.value);
     }

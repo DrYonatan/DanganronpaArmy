@@ -149,12 +149,12 @@ public class CameraManager : MonoBehaviour
         {
             case CameraLookDirection.Right:
                 characterX = -VNCharacterManager.instance.right.anchoredPosition.x;
-                rotation = Quaternion.Euler(0f, 20f, 0f);
+                rotation = Quaternion.Euler(0f, 30f, 0f);
                 break;
 
             case CameraLookDirection.MidRight:
                 characterX = -VNCharacterManager.instance.midRight.anchoredPosition.x;
-                rotation = Quaternion.Euler(0f, 10f, 0f);
+                rotation = Quaternion.Euler(0f, 15f, 0f);
                 break;
 
             case CameraLookDirection.Middle:
@@ -163,12 +163,12 @@ public class CameraManager : MonoBehaviour
 
             case CameraLookDirection.MidLeft:
                 characterX = -VNCharacterManager.instance.midLeft.anchoredPosition.x;
-                rotation = Quaternion.Euler(0f, -10f, 0f);
+                rotation = Quaternion.Euler(0f, -15f, 0f);
                 break;
 
             case CameraLookDirection.Left:
                 characterX = -VNCharacterManager.instance.left.anchoredPosition.x;
-                rotation = Quaternion.Euler(0f, -20f, 0f);
+                rotation = Quaternion.Euler(0f, -30f, 0f);
                 break;
         }
 

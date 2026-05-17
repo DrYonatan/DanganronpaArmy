@@ -69,7 +69,7 @@ public class ComicAnimatedSprite : MonoBehaviour
 
                 rectTransform.anchoredPosition = startKeyFrame.attribute;
 
-                rectTransform.DOAnchorPos(endKeyFrame.attribute, endKeyFrame.duration)
+                rectTransform.DOAnchorPos(endKeyFrame.attribute, endKeyFrame.duration).SetEase(Ease.Linear)
                     .SetLink(rectTransform.gameObject);
 
                 yield return new WaitForSeconds(endKeyFrame.duration);

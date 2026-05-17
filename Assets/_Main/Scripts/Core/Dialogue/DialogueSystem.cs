@@ -63,7 +63,8 @@ namespace DIALOGUE
         {
             if (node.displayName.ToLower() != "")
                 dialogueContainer.nameContainer.Show(node.displayName);
-            else if (!node.character.noNameTag)
+            
+            else if (node.character != null && !node.character.noNameTag)
             {
                 if(!dialogueBoxAnimator.namePlateVisible)
                     ShowNamePlate();
@@ -126,6 +127,16 @@ namespace DIALOGUE
         public void StartCoroutineHelper(IEnumerator enumerator)
         {
             StartCoroutine(enumerator);
+        }
+
+        public void TextBoxAppear()
+        {
+            dialogueBoxAnimator.TextBoxAppear();
+        }
+
+        public void TextBoxDisappear()
+        {
+            dialogueBoxAnimator.TextBoxDisappear();
         }
 
         public void SetTextBox(DialogueContainer container)

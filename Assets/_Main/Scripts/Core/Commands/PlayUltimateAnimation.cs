@@ -20,7 +20,7 @@ public class PlayUltimateAnimation : Command
 
     public override IEnumerator Execute()
     {
-        DialogueSystem.instance.dialogueBoxAnimator.TextBoxDisappear();
+        DialogueSystem.instance.TextBoxDisappear();
         VNUIAnimator.instance.Disappear(0.2f);
 
         yield return new WaitForSeconds(0.2f);
@@ -34,7 +34,7 @@ public class PlayUltimateAnimation : Command
             descriptionColor);
         
         Object.Destroy(ultimateAnimation.gameObject);
-        DialogueSystem.instance.dialogueBoxAnimator.TextBoxAppear();
+        DialogueSystem.instance.TextBoxAppear();
         VNUIAnimator.instance.Appear();
 
     }

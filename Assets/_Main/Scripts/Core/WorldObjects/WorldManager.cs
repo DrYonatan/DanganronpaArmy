@@ -104,6 +104,7 @@ public class WorldManager : MonoBehaviour
         RoomModel ob = Instantiate(room.GetTimeOfDayVersion(ProgressManager.instance.currentGameEvent.timeOfDay));
         ob.name = "World";
         ob.gameObject.SetActive(true);
+        talkPosition = ob.talkPosition;
         
         ImageScript.instance.UnFadeToBlack(0.2f);
 
