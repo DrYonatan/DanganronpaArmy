@@ -2,7 +2,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
-public class CourtTextBoxAnimator : TextBoxAnimations
+public class CourtTextBoxAnimator : TextBoxAnimator, IFaceable
 {
     public CharacterFaceController characterFace;
     public RectTransform backgroundTextContainer;
@@ -11,6 +11,11 @@ public class CourtTextBoxAnimator : TextBoxAnimations
     public void FaceAppear()
     {
         characterFace.DiscussionFaceContainerAppear(duration);
+    }
+
+    public bool IsVisible()
+    {
+        return characterFace.isVisible;
     }
 
     public override void TextBoxDisappear()

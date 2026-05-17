@@ -10,8 +10,6 @@ public class TrialDialogueManager : MonoBehaviour
     [SerializeField] public CameraEffectController effectController;
     [SerializeField] public CameraController cameraController;
     
-    public DialogueContainer dialogueContainer;
-
     public GotItAnimator gotItAnimator;
 
     public CourtTextBoxAnimator animator;
@@ -35,7 +33,7 @@ public class TrialDialogueManager : MonoBehaviour
         isGameOvering = false;
         DialogueSystem.instance.dialogueBoxAnimator.gameObject.SetActive(true);
         ImageScript.instance.UnFadeToBlack(0.5f);
-        animator.TextBoxAppear();
+        DialogueSystem.instance.TextBoxAppear();
         animator.ChangeFace(null);
         animator.FaceAppear();
         animator.AnimateBackgroundText();
@@ -45,7 +43,7 @@ public class TrialDialogueManager : MonoBehaviour
 
     public void SetTextBox()
     {
-        DialogueSystem.instance.SetTextBox(dialogueContainer);
+        DialogueSystem.instance.SetTextBox(animator);
     }
 
     IEnumerator RunDiscussion(DiscussionSegment discussion)

@@ -20,6 +20,8 @@ public class ImageScript : MonoBehaviour
 
     public CanvasGroup animatedImageContainer;
     public VNAnimatedImage animatedImage;
+    
+    public OverlayTextBoxAnimator overlayTextBoxAnimator;
 
     private void Awake()
     {
@@ -31,8 +33,9 @@ public class ImageScript : MonoBehaviour
     {
         GameStateManager.instance.uiState.overlayImage = new ImageState { spriteId = image.name, visible = true };
         overlayImage.sprite = image;
-        OverlayTextBoxManager.instance.SetAsTextBox();
-        OverlayTextBoxManager.instance.Show();
+        DialogueSystem.instance.SetTextBox(overlayTextBoxAnimator); 
+        DialogueSystem.instance.TextBoxAppear();
+        
         ShowingOrHiding(canvasGroup, duration, 1f);
 
         if (flash)
@@ -44,8 +47,9 @@ public class ImageScript : MonoBehaviour
     public void Hide(bool flash, float duration = 0.4f)
     {
         GameStateManager.instance.uiState.overlayImage = new ImageState { spriteId = "", visible = false };
-        OverlayTextBoxManager.instance.Hide();
+        DialogueSystem.instance.TextBoxDisappear();
         DialogueSystem.instance.UseInitialDialogueContainer();
+        DialogueSystem.instance.TextBoxAppear();
         ShowingOrHiding(canvasGroup, duration, 0f);
 
         if (flash)

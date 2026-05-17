@@ -2,20 +2,13 @@ using UnityEngine;
 using DG.Tweening;
 using DIALOGUE;
 
-public class TextBoxAnimations : MonoBehaviour
+public class TextBoxAnimator : BasicTextBoxAnimator
 {
-    public RectTransform namePlate;
-    public RectTransform dialoguePart;
-    protected CanvasGroup dialogueBoxCanvasGroup;
-    protected CanvasGroup namePlateCanvasGroup;
     public float namePlateMoveAmount = 20f; // pixels to move up
 
     public float duration;
 
     public RectTransform namePlateOriginalPos;
-
-    public bool textBoxVisible;
-    public bool namePlateVisible;
 
     void Awake()
     {
@@ -23,7 +16,7 @@ public class TextBoxAnimations : MonoBehaviour
         namePlateCanvasGroup = namePlate.GetComponent<CanvasGroup>();
     }
 
-    public void TextBoxAppear()
+    public override void TextBoxAppear()
     {
         if (textBoxVisible)
             return;
@@ -40,7 +33,7 @@ public class TextBoxAnimations : MonoBehaviour
         ShowNamePlate();
     }
 
-    public virtual void TextBoxDisappear()
+    public override void TextBoxDisappear()
     {
         textBoxVisible = false;
         DialogueSystem.instance.ClearTextBox();
@@ -51,27 +44,20 @@ public class TextBoxAnimations : MonoBehaviour
         namePlateVisible = true; // Reset the name plate visibility to the default true so it won't pop in during the debate's finish nodes
     }
 
-    public void ShowNamePlate()
+    public override void ShowNamePlate()
     {
         namePlateVisible = true;
         namePlateCanvasGroup.DOFade(1f, duration).SetEase(Ease.InOutQuad);
         namePlate.anchoredPosition -= new Vector2(0, namePlateMoveAmount);
         namePlate.DOAnchorPos(namePlateOriginalPos.anchoredPosition, duration).SetEase(Ease.OutQuad);
     }
-    public void HideNamePlate()
+    public override void HideNamePlate()
     {
         namePlateVisible = false;
         namePlateCanvasGroup.alpha = 1f;
         namePlateCanvasGroup.DOFade(0f, duration).SetEase(Ease.InOutQuad);
         namePlate.anchoredPosition = namePlateOriginalPos.anchoredPosition;
         namePlate.DOAnchorPos(namePlateOriginalPos.anchoredPosition - new Vector2(0, namePlateMoveAmount), duration).SetEase(Ease.OutQuad); 
-    }
-
-    public virtual void Initialize()
-    {
-        DialogueSystem.instance.ClearTextBox();
-        dialogueBoxCanvasGroup.alpha = 0f;
-        namePlateCanvasGroup.alpha = 0f;
     }
 
 }

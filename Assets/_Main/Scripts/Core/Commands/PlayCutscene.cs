@@ -27,7 +27,7 @@ public class PlayCutscene : Command
         }
         else
         {
-            OverlayTextBoxManager.instance.SetAsTextBox();
+            DialogueSystem.instance.SetTextBox(ImageScript.instance.overlayTextBoxAnimator);
         }
         
         DialogueSystem.instance.TextBoxAppear();

@@ -1,10 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using DIALOGUE;
 using UnityEngine.UI;
-using TMPro;
 
 public class DebateUIAnimator : MonoBehaviour
 {
@@ -56,6 +54,7 @@ public class DebateUIAnimator : MonoBehaviour
 
         CursorManager.instance.Show();
         GenerateIndicators();
+        GameLoop.instance.textBoxAnimator.FadeIn();
     }
 
     public void LoadBullets(List<Evidence> evidences)
@@ -137,7 +136,6 @@ public class DebateUIAnimator : MonoBehaviour
                 .SetLoops(-1, LoopType.Yoyo)
                 .SetEase(Ease.InOutSine).SetUpdate(true);
         }
-        
     }
 
     public void UnHighlightAllNodes()

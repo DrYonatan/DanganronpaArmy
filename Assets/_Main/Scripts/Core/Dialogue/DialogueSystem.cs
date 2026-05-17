@@ -10,17 +10,17 @@ namespace DIALOGUE
     {
         public bool isActive;
 
-        private DialogueContainer dialogueContainer = new DialogueContainer();
         private ConversationManager conversationManager;
         private TextArchitect architect;
-        public DialogueContainer defaultDialogueContainer;
+
+        public TextBoxAnimator defaultDialogueBoxAnimator;
         public static DialogueSystem instance { get; private set; }
         
         public delegate void DialogueSystemEvent();
 
         public event DialogueSystemEvent onUserPrompt_Next;
 
-        public TextBoxAnimations dialogueBoxAnimator;
+        public BasicTextBoxAnimator dialogueBoxAnimator;
         public OptionSelectionManager optionSelectionManager;
         public Button inputButton;
 
@@ -44,14 +44,13 @@ namespace DIALOGUE
             if (_initialized)
                 return;
 
-            dialogueContainer = defaultDialogueContainer;
-            architect = new TextArchitect(dialogueContainer.dialogueText);
+            architect = new TextArchitect(dialogueBoxAnimator.dialogueContainer.dialogueText);
             conversationManager = new ConversationManager(architect);
         }
 
         public void UseInitialDialogueContainer()
         {
-            SetTextBox(defaultDialogueContainer);
+            SetTextBox(defaultDialogueBoxAnimator);
         }
 
         public void OnUserPrompt_Next()
@@ -62,13 +61,13 @@ namespace DIALOGUE
         public void ShowSpeakerName(DialogueNode node)
         {
             if (node.displayName.ToLower() != "")
-                dialogueContainer.nameContainer.Show(node.displayName);
+                dialogueBoxAnimator.dialogueContainer.nameContainer.Show(node.displayName);
             
             else if (node.character != null && !node.character.noNameTag)
             {
                 if(!dialogueBoxAnimator.namePlateVisible)
                     ShowNamePlate();
-                dialogueContainer.nameContainer.Show(node.character.displayName);
+                dialogueBoxAnimator.dialogueContainer.nameContainer.Show(node.character.displayName);
             }
             else
             {
@@ -90,7 +89,7 @@ namespace DIALOGUE
         }
         
 
-        void ClearSpeakerName() => dialogueContainer.nameContainer.Clear();
+        void ClearSpeakerName() => dialogueBoxAnimator.dialogueContainer.nameContainer.Clear();
 
         public Coroutine Say(DialogueNode node)
         {
@@ -139,11 +138,12 @@ namespace DIALOGUE
             dialogueBoxAnimator.TextBoxDisappear();
         }
 
-        public void SetTextBox(DialogueContainer container)
+        public void SetTextBox(BasicTextBoxAnimator textBox)
         {
-            dialogueContainer = container;
-            architect = new TextArchitect(dialogueContainer.dialogueText);
+            dialogueBoxAnimator = textBox;
+            architect = new TextArchitect(dialogueBoxAnimator.dialogueContainer.dialogueText);
             conversationManager.SetArchitect(architect);
+            dialogueBoxAnimator.Initialize();
         }
 
         public IEnumerator HandleSelection<T>(List<Option<T>> options, Action<Option<T>> onSelect)

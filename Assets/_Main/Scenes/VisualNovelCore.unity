@@ -675,57 +675,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 184175092}
   m_CullTransparentMesh: 1
---- !u!1 &187191175
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 187191176}
-  - component: {fileID: 187191177}
-  m_Layer: 0
-  m_Name: OverlayTextboxManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &187191176
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 187191175}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 472655885}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &187191177
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 187191175}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f7476d522eecc449b9aceb2fb91fb3c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canvasGroup: {fileID: 1415612044}
-  dialogueContainer:
-    root: {fileID: 1415612042}
-    nameContainer:
-      root: {fileID: 2106072599}
-      nameText: {fileID: 718219771}
-    dialogueText: {fileID: 866278179}
 --- !u!1 &195473127
 GameObject:
   m_ObjectHideFlags: 0
@@ -1160,13 +1109,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7224031601875f64f936e02f636b571b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dialogueContainer:
+    root: {fileID: 276346472}
+    nameContainer:
+      root: {fileID: 1185199845}
+      nameText: {fileID: 475160533}
+    dialogueText: {fileID: 388922320}
   namePlate: {fileID: 1185199846}
   dialoguePart: {fileID: 436797209}
+  textBoxVisible: 0
+  namePlateVisible: 0
   namePlateMoveAmount: 85
   duration: 0.3
   namePlateOriginalPos: {fileID: 629967867}
-  textBoxVisible: 0
-  namePlateVisible: 0
 --- !u!1 &313972392
 GameObject:
   m_ObjectHideFlags: 0
@@ -2217,7 +2172,6 @@ Transform:
   - {fileID: 1087552700}
   - {fileID: 1755219071}
   - {fileID: 1663971280}
-  - {fileID: 187191176}
   - {fileID: 779521025}
   - {fileID: 598747343}
   m_Father: {fileID: 2090243131}
@@ -3864,6 +3818,7 @@ MonoBehaviour:
   background: {fileID: 900237282}
   animatedImageContainer: {fileID: 1625900355}
   animatedImage: {fileID: 0}
+  overlayTextBoxAnimator: {fileID: 1415612045}
 --- !u!1 &894730223
 GameObject:
   m_ObjectHideFlags: 0
@@ -5476,12 +5431,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 0
-  defaultDialogueContainer:
-    root: {fileID: 276346472}
-    nameContainer:
-      root: {fileID: 1185199845}
-      nameText: {fileID: 475160533}
-    dialogueText: {fileID: 388922320}
+  defaultDialogueBoxAnimator: {fileID: 276346476}
   dialogueBoxAnimator: {fileID: 276346476}
   optionSelectionManager: {fileID: 417735095}
   inputButton: {fileID: 273489451}
@@ -5723,7 +5673,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1415612043}
-  - component: {fileID: 1415612044}
+  - component: {fileID: 1415612045}
   m_Layer: 5
   m_Name: Overlay Text Box
   m_TagString: Untagged
@@ -5753,18 +5703,28 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!225 &1415612044
-CanvasGroup:
+--- !u!114 &1415612045
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1415612042}
   m_Enabled: 1
-  m_Alpha: 0
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f7476d522eecc449b9aceb2fb91fb3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueContainer:
+    root: {fileID: 1415612042}
+    nameContainer:
+      root: {fileID: 2106072599}
+      nameText: {fileID: 718219771}
+    dialogueText: {fileID: 866278179}
+  namePlate: {fileID: 2106072600}
+  dialoguePart: {fileID: 1557276133}
+  textBoxVisible: 0
+  namePlateVisible: 0
 --- !u!1 &1421514483
 GameObject:
   m_ObjectHideFlags: 0
@@ -6245,7 +6205,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1557276132}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -7851,7 +7811,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2106072599}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0

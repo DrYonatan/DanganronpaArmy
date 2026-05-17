@@ -133,7 +133,7 @@ public class ComicManager : MonoBehaviour
 
     private void StartComicPuzzle()
     {
-        OverlayTextBoxManager.instance.SetAsTextBox();
+        DialogueSystem.instance.SetTextBox(ImageScript.instance.overlayTextBoxAnimator);
         animator.GeneratePuzzlePages(segment.pages);
         animator.GenerateComicPins(segment.availablePins);
         animator.SetPinsContainerStartPos();
@@ -187,7 +187,7 @@ public class ComicManager : MonoBehaviour
         ScreenShatterManager shatter = Instantiate(screenShatter);
         yield return shatter.ScreenShatter();
         animator.gameObject.SetActive(false);
-        OverlayTextBoxManager.instance.Hide();
+        DialogueSystem.instance.TextBoxDisappear();
         ImageScript.instance.UnFadeToBlack(0.4f);
         MusicManager.instance.StopSong();
 
@@ -239,7 +239,7 @@ public class ComicManager : MonoBehaviour
     {
         Stop();
         
-        OverlayTextBoxManager.instance.Show();
+        DialogueSystem.instance.TextBoxAppear();
         TrialManager.instance.barsAnimator.ShowGlobalBars(0.2f);
         
         TrialManager.instance.DecreaseHealthDefault(1f);
@@ -252,7 +252,7 @@ public class ComicManager : MonoBehaviour
         SwitchToPuzzleMode();
         currentPresentedPage.KillPanelTweens();
         Destroy(currentPresentedPage.gameObject);
-        OverlayTextBoxManager.instance.Hide();
+        DialogueSystem.instance.TextBoxDisappear();
         TrialManager.instance.barsAnimator.HideGlobalBars(0.2f);
     }
 
@@ -261,7 +261,7 @@ public class ComicManager : MonoBehaviour
         if (nodes.Count > 0)
         {
             DialogueSystem.instance.dialogueBoxAnimator.gameObject.SetActive(true);
-            OverlayTextBoxManager.instance.Show();
+            DialogueSystem.instance.TextBoxAppear();
         }
         
         foreach (DialogueNode node in nodes)
@@ -269,7 +269,7 @@ public class ComicManager : MonoBehaviour
             yield return DialogueSystem.instance.Say(node);
         }
         
-        OverlayTextBoxManager.instance.Hide();
+        DialogueSystem.instance.TextBoxDisappear();
     }
 
     private void Stop()

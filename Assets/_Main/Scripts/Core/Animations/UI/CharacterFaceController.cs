@@ -17,7 +17,6 @@ public class CharacterFaceController : MonoBehaviour
     // Offsets for aligning each character's face inside the cropped box
     public void SetFace(Sprite sprite)
     {
-
         if(sprite != faceImage.sprite)
         {
             SetDiscussionFace(sprite);

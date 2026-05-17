@@ -74,6 +74,8 @@ public class GameLoop : MonoBehaviour
     public Camera renderTextureCamera;
     public ScreenShatterManager screenShatter;
     public MinigameStartAnimation startAnimation;
+    
+    public DebateTextBoxAnimator textBoxAnimator;
 
     private float bulletMenuHoldTime;
     private Coroutine wrongEvidenceRoutine;
@@ -99,11 +101,11 @@ public class GameLoop : MonoBehaviour
 
     IEnumerator StartDebate()
     {
-        DialogueSystem.instance.SetTextBox(debateUIAnimator.dialogueContainer);
         yield return cameraController.DiscussionOutroMovement(2.5f);
         debateUIAnimator.gameObject.SetActive(true);
         debateUIAnimator.DebateUIDisappear();
         ((CourtTextBoxAnimator)DialogueSystem.instance.dialogueBoxAnimator).ChangeFace(null);
+        DialogueSystem.instance.SetTextBox(textBoxAnimator);
         yield return 0;
         ImageScript.instance.UnFadeToBlack(1f);
         MinigameStartAnimation anim = Instantiate(startAnimation, TrialManager.instance.globalUI);
@@ -206,7 +208,7 @@ public class GameLoop : MonoBehaviour
         yield return new WaitForSeconds(1f);
         yield return new WaitForEndOfFrame();
         debateUIAnimator.FadeFromAngleToAngle();
-        debateUIAnimator.ShowTextBox();
+        textBoxAnimator.TextBoxAppear();
     }
 
     IEnumerator SwitchToDebateMode()

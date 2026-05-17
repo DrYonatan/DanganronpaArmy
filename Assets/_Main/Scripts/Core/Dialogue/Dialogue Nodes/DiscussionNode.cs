@@ -71,9 +71,12 @@ public class DiscussionNode : DialogueNode
         
         stand.SetSprite(character.emotions[expressionIndex]);
             
-        CourtTextBoxAnimator animator = (CourtTextBoxAnimator)(DialogueSystem.instance.dialogueBoxAnimator);
+        IFaceable animator = DialogueSystem.instance.dialogueBoxAnimator as IFaceable;
 
-        if (!animator.characterFace.isVisible && !GameLoop.instance.isActive)
+        if (animator == null)
+            return;
+        
+        if (!animator.IsVisible() && !GameLoop.instance.isActive)
         {
             animator.FaceAppear();
         }
