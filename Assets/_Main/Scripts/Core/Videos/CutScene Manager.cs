@@ -19,9 +19,12 @@ public class CutSceneManager : MonoBehaviour
         videoPlayer.transform.parent.gameObject.SetActive(false);
 
     }
-    public void Hide()
+    public IEnumerator Hide()
     {
+        ImageScript.instance.FadeToBlack(0.2f);
+        yield return new WaitForSeconds(0.2f);
         canvasGroup.alpha = 0;
+        ImageScript.instance.UnFadeToBlack(0.1f);
     }
     public IEnumerator PlayCutscene(VideoClip clip)
     {

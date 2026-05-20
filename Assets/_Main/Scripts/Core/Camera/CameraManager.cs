@@ -51,11 +51,6 @@ public class CameraManager : MonoBehaviour
         StartCameraCoroutine(RotateCameraTo(location.rotation, duration));
     }
 
-    public void MoveToTalkPosition()
-    {
-        
-    }
-
     public void ReturnToDollyTrack()
     {
         StartCameraCoroutine(MoveCameraToDollyTrack());
@@ -71,11 +66,6 @@ public class CameraManager : MonoBehaviour
         yield return StartCameraCoroutine(MoveCameraTo(vCamPosition, duration));
         if (!DialogueSystem.instance.isActive)
             VirutalCameraManager.instance.EnableVirtualCamera();
-    }
-
-    public void ZoomCamera(string zoom)
-    {
-        StartCameraCoroutine(Zoom(zoom));
     }
 
     public IEnumerator RotateCameraTo(Quaternion rotation, float duration)
@@ -116,26 +106,6 @@ public class CameraManager : MonoBehaviour
 
         cameraTransform.position = location; // Ensure the camera reaches the exact target position
     }
-
-
-    IEnumerator Zoom(string zoom)
-    {
-        float z = 0;
-        float elapsedTime = 0;
-        if (zoom.ToLower() == "in")
-            z = 30;
-        else
-            z = 60;
-        while (Camera.main.fieldOfView != z)
-        {
-            Camera.main.fieldOfView = Mathf.MoveTowards(Camera.main.fieldOfView, z, 60 * Time.deltaTime);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-
-        Camera.main.fieldOfView = z;
-    }
-
 
     private IEnumerator StartMovingCamera(CameraLookDirection direction, float duration)
     {

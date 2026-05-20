@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class StandEffect : RoomIntroEffect
 {
-    public float delay = 0f;
     public float duration = 1f;
     public Vector3 degreesOffset = new Vector3(-90f, 0f, 0f);
     public GameObject parentObject;

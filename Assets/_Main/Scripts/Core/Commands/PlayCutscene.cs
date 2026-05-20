@@ -20,10 +20,7 @@ public class PlayCutscene : Command
         yield return CutSceneManager.instance.PlayCutscene(video);
         if (!persist)
         {
-            ImageScript.instance.FadeToBlack(0.2f);
-            yield return new WaitForSeconds(0.2f);
-            CutSceneManager.instance.Hide();
-            ImageScript.instance.UnFadeToBlack(0.1f);
+            yield return CutSceneManager.instance.Hide();
         }
         else
         {

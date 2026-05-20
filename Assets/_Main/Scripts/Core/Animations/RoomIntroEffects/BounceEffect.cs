@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class BounceEffect : RoomIntroEffect
 {
-    public float delay = 0f;
     public float duration = 1f;
     public float bounceFrequency = 2f; // number of bounces
     public float damping = 5f;         // how quickly it settles

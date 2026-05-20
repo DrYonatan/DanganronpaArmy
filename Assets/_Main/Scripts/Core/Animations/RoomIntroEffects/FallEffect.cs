@@ -5,7 +5,6 @@ public class FallEffect : RoomIntroEffect
 {
     public float height = 5f;
     public float fallSpeed = 5f;
-    public float delay = 0f;
     public AnimationCurve fallCurve = AnimationCurve.EaseInOut(0, 0, 1, 1); // for smooth falling
 
     private Vector3 targetPosition;

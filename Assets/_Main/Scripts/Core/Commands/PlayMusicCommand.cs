@@ -8,19 +8,31 @@ public class PlayMusicCommand : Command
 {
    public AudioClip music;
    public float volume = 1f;
+   public bool toggle = true;
    
    public override IEnumerator Execute()
    {
-      MusicManager.instance.PlaySong(music);
-      yield return  new WaitForSeconds(music.length);
+      if (toggle)
+      {
+         MusicManager.instance.PlaySong(music);
+         yield return  new WaitForSeconds(music.length);
+      }
+      else
+      {
+         MusicManager.instance.StopSong();
+      }
    }
 
    #if UNITY_EDITOR
    public override void DrawGUI()
    {
       base.DrawGUI();
-      music = (AudioClip)EditorGUILayout.ObjectField("Music", music, typeof(AudioClip), false);
-      volume = EditorGUILayout.Slider("Volume", volume, 0f, 1f);
+      toggle = EditorGUILayout.Toggle("Play", toggle);
+      if (toggle)
+      {
+         music = (AudioClip)EditorGUILayout.ObjectField("Music", music, typeof(AudioClip), false);
+         volume = EditorGUILayout.Slider("Volume", volume, 0f, 1f);
+      }
    }
    #endif
 }

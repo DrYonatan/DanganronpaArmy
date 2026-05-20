@@ -85,7 +85,7 @@ public class VNNodeDraw : DrawNode
             GenericMenu menu = new GenericMenu();
             menu.AddItem(new GUIContent("Play Sound Effect"), false,
                 () => AddCommand(node, new PlaySoundEffectCommand()));
-            menu.AddItem(new GUIContent("Play Music"), false, () => AddCommand(node, new PlayMusicCommand()));
+            menu.AddItem(new GUIContent("Toggle Music"), false, () => AddCommand(node, new PlayMusicCommand()));
             menu.AddItem(new GUIContent("Play Ultimate Animation"), false,
                 () => AddCommand(node, new PlayUltimateAnimation()));
             menu.AddItem(new GUIContent("Select Evidence"), false,
@@ -111,7 +111,8 @@ public class VNNodeDraw : DrawNode
             menu.AddItem(new GUIContent("Background Character Toggle"), false, () => AddCommand(node, new ToggleBackgroundCharacter()));
             menu.AddItem(new GUIContent("Ding"), false, () => AddCommand(node, new Ding()));
             menu.AddItem(new GUIContent("Move To Talk Position"), false, () => AddCommand(node, new MoveToTalkPos()));
-            menu.AddItem(new GUIContent("PlayCutscene"), false, () => AddCommand(node, new PlayCutscene()));
+            menu.AddItem(new GUIContent("Play Cutscene"), false, () => AddCommand(node, new PlayCutscene()));
+            menu.AddItem(new GUIContent("Remove Custscene"), false, () => AddCommand(node, new RemoveCutscene()));
 
             menu.ShowAsContext();
         }

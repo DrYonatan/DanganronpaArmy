@@ -32,8 +32,11 @@ public class PointAndClickRoom : Room
 
     public override IEnumerator AppearAnimation()
     {
-        if(hasStartAnimation)
-           yield return VirutalCameraManager.instance.SlideAcrossRoom(3f, GameObject.Find("World/TrackSlidingPos").transform.position);
+        if (hasStartAnimation)
+        {
+            yield return VirutalCameraManager.instance.SlideAcrossRoom(3f, GameObject.Find("World/TrackSlidingPos").transform.position);
+            yield return new WaitForSeconds(0.2f);
+        }
     }
 
     public override void MovementControl()

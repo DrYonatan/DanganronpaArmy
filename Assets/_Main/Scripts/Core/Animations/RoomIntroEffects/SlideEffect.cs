@@ -5,7 +5,6 @@ public class SlideEffect : RoomIntroEffect
 {
     public Vector3 offset = new Vector3(-3f, 0f, 0f); // Slide in from the left
     public float speed = 3f; // units per second
-    public float delay;
 
     private Vector3 targetPosition;
 
