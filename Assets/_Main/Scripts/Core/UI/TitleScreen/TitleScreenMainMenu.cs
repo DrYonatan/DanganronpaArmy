@@ -24,7 +24,7 @@ public class TitleScreenMainMenu : MonoBehaviour
     public Image bigRing;
     public Image smallRing;
     public Image blackOverlay;
-    
+
     public List<Sprite> availableFaceSprites;
 
     void Awake()
