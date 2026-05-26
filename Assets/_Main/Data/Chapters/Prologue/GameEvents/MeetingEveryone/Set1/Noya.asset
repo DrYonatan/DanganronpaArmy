@@ -102,7 +102,8 @@ MonoBehaviour:
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
         text: "\u05D0\u05E0\u05D9 \u05E0\u05D5\u05D9\u05D4 \u05E4\u05D9\u05E9\u05DE\u05DF."
-        commands: []
+        commands:
+        - rid: 7091799890995970072
     - rid: 7091799571838271510
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -112,7 +113,7 @@ MonoBehaviour:
           y: 0
           width: 0
           height: 0
-        commandsScrollPosition: {x: 0, y: 0}
+        commandsScrollPosition: {x: 0, y: 24}
         title: 
         drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
         character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
@@ -197,7 +198,7 @@ MonoBehaviour:
         drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
         character: {fileID: 11400000, guid: c6f821f9019b92c44b2eb05215b152b0, type: 2}
         displayName: 
-        expressionIndex: 0
+        expressionIndex: 2
         textData:
           rid: 7091799571838271519
     - rid: 7091799571838271519
@@ -223,7 +224,7 @@ MonoBehaviour:
         drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
         character: {fileID: 11400000, guid: c6f821f9019b92c44b2eb05215b152b0, type: 2}
         displayName: 
-        expressionIndex: 0
+        expressionIndex: 2
         textData:
           rid: 7091799571838271521
     - rid: 7091799571838271521
@@ -309,7 +310,8 @@ MonoBehaviour:
           \u05E9\u05DC \u05D4\u05D1\u05E1\u05D9\u05E1 \u05E9\u05DC\u05D9, \u05D6\u05D4
           \u05DC\u05D0 \u05D0\u05D5\u05DE\u05E8 \u05E9\u05D0\u05E0\u05D9 \u05E6\u05E8\u05D9\u05DB\u05D4
           \u05DC\u05D3\u05D1\u05E8 \u05D0\u05D9\u05EA\u05DD.\r\n"
-        commands: []
+        commands:
+        - rid: 7091799890995970073
     - rid: 7091799571838271528
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -383,3 +385,15 @@ MonoBehaviour:
         text: "(\u05D0\u05D1\u05DC \u05E2\u05D3\u05D9\u05D9\u05DF, \u05E0\u05E8\u05D0\u05D4
           \u05E9\u05D4\u05D9\u05D0 \u05D3\u05D9 \u05DE\u05EA\u05E0\u05E9\u05D0\u05EA\u2026)\r\n"
         commands: []
+    - rid: 7091799890995970072
+      type: {class: PlaySoundEffectCommand, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        clip: {fileID: 8300000, guid: c0bb6e51f37a71348a6a82273ec8e348, type: 3}
+        volume: 1
+    - rid: 7091799890995970073
+      type: {class: PlaySoundEffectCommand, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        clip: {fileID: 8300000, guid: b686914995f84ef48b120d29bad9363f, type: 3}
+        volume: 1

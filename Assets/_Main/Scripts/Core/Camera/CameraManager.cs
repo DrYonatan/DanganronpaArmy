@@ -11,12 +11,10 @@ public class CameraManager : MonoBehaviour
 
     public CharacterController player;
     public Transform cameraTransform;
-
-    public const string charactersLayerPath = "VN controller/Root/Canvas - Main/LAYERS/2 - Characters";
-
+    
     public Quaternion initialRotation;
 
-    private bool isInFinalRotation = true;
+    public bool isInFinalRotation = true;
 
     public bool conversationFinishedMoving = true;
 
@@ -37,10 +35,10 @@ public class CameraManager : MonoBehaviour
         GameStateManager.instance.sceneTransitionCamera.gameObject.SetActive(false);
     }
 
-    public void MoveCamera(CameraLookDirection direction, float duration)
+    public IEnumerator MoveCamera(CameraLookDirection direction, float duration)
     {
         if(isInFinalRotation)
-           StartCameraCoroutine(StartMovingCamera(direction, duration));
+           yield return StartCameraCoroutine(StartMovingCamera(direction, duration));
     }
 
     public void MoveCameraTo(Transform location)
@@ -98,8 +96,6 @@ public class CameraManager : MonoBehaviour
         while (elapsedTime < duration)
         {
             cameraTransform.position = Vector3.Lerp(startPos, location, elapsedTime / duration);
-
-
             elapsedTime += Time.deltaTime;
             yield return null;
         }
@@ -149,13 +145,16 @@ public class CameraManager : MonoBehaviour
         Vector2 charactersTargetPos = new Vector2(characterX, charactersStartPos.y);
 
 
-        while (elapsedTime < duration)
+        if (startRotate != targetRotate)
         {
-            cameraTransform.rotation = Quaternion.Slerp(startRotate, targetRotate, elapsedTime / duration);
-            charactersLayer.anchoredPosition =
-                Vector3.Lerp(charactersStartPos, charactersTargetPos, elapsedTime / duration);
-            elapsedTime += Time.deltaTime;
-            yield return null;
+            while (elapsedTime < duration)
+            {
+                cameraTransform.rotation = Quaternion.Slerp(startRotate, targetRotate, elapsedTime / duration);
+                charactersLayer.anchoredPosition =
+                    Vector3.Lerp(charactersStartPos, charactersTargetPos, elapsedTime / duration);
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
         }
 
         cameraTransform.rotation = targetRotate;

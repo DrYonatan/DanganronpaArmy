@@ -54,7 +54,8 @@ MonoBehaviour:
       data:
         text: "\u05E9\u05DC\u05D5\u05DD, \u05E0\u05E2\u05D9\u05DD \u05DC\u05D4\u05DB\u05D9\u05E8!
           \u05D0\u05E0\u05D9 \u05E0\u05E2\u05D4 \u05DC\u05D9\u05D1\u05D5\u05D1\u05D9\u05E5'.\r"
-        commands: []
+        commands:
+        - rid: 7091799890995970070
     - rid: 7091799571838271647
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -82,7 +83,8 @@ MonoBehaviour:
           \u05EA\"\u05E9 \u05E9\u05DC \u05D4\u05D9\u05D7\u05D9\u05D3\u05D4, \u05D0\u05D1\u05DC
           \u05D0\u05E0\u05D9 \u05EA\u05DE\u05D9\u05D3 \u05DB\u05D0\u05DF \u05D1\u05E9\u05D1\u05D9\u05DC
           \u05DB\u05D5\u05DC\u05DD!\r\n"
-        commands: []
+        commands:
+        - rid: 7091799890995970071
     - rid: 7091799571838271649
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -167,7 +169,7 @@ MonoBehaviour:
           y: 0
           width: 0
           height: 0
-        commandsScrollPosition: {x: 0, y: 24}
+        commandsScrollPosition: {x: 0, y: 0}
         title: 
         drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
         character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
@@ -321,3 +323,15 @@ MonoBehaviour:
         character: {fileID: 11400000, guid: e5e319997f8a6c943997082245a52a96, type: 2}
         nameText: "\u05E0\u05E2\u05D4 \u05DC\u05D9\u05D1\u05D5\u05D1\u05D9\u05E5'"
         descriptionText: "\u05E8\u05E2\"\u05E6\u05D9\u05EA \u05EA\"\u05E9"
+    - rid: 7091799890995970070
+      type: {class: PlaySoundEffectCommand, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        clip: {fileID: 8300000, guid: 8640878b2e048114aa4a4763c02b60b9, type: 3}
+        volume: 1
+    - rid: 7091799890995970071
+      type: {class: PlaySoundEffectCommand, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        clip: {fileID: 8300000, guid: bb3c6dcf81f370745916ed8727add25b, type: 3}
+        volume: 1

@@ -11,6 +11,7 @@ public class ScaleEffect : RoomIntroEffect
     {
         Vector3 normalScale = transform.localScale;
         transform.localScale = initialScale;
+        yield return new WaitForSeconds(delay);
         transform.DOScale(normalScale, duration);
         yield return null;
     }

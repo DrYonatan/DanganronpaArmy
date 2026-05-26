@@ -10,6 +10,5 @@ public class RemoveCutscene : Command
         DialogueSystem.instance.TextBoxDisappear();
         DialogueSystem.instance.SetTextBox(DialogueSystem.instance.defaultDialogueBoxAnimator);
         DialogueSystem.instance.TextBoxAppear();
-        VNUIAnimator.instance.Appear();
     }
 }

@@ -86,6 +86,11 @@ public class ImageScript : MonoBehaviour
     public void Flash(float duration, AudioClip sound)
     {
         SoundManager.instance.PlaySoundEffect(sound);
+        whiteFlash.DOKill();
+        Color color = whiteFlash.color;
+        color.a = 0;
+        whiteFlash.color = color;
+        
         whiteFlash.DOFade(1f, duration / 2).SetLoops(2, LoopType.Yoyo);
     }
 

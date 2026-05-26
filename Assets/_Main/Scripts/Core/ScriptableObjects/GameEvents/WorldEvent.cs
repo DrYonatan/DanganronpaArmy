@@ -97,13 +97,19 @@ public abstract class WorldEvent : GameEvent
 
         if (finishText != null && !isAfterFinishText)
         {
-            VNNodePlayer.instance.StartConversation(finishText);
-            isAfterFinishText = true;
+            WorldManager.instance.StartCoroutine(WaitAndStartFinishText());
         }
         else
         {
             ProgressManager.instance.OnEventFinished();
         }
+    }
+
+    private IEnumerator WaitAndStartFinishText()
+    {
+        yield return new WaitUntil(() => CameraManager.instance.isInFinalRotation); // Wait until camera finishes moving
+        VNNodePlayer.instance.StartConversation(finishText);
+        isAfterFinishText = true;
     }
 
     public override void OnRoomLoad()

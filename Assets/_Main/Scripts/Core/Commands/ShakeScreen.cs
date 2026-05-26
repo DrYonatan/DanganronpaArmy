@@ -1,4 +1,5 @@
 using System.Collections;
+using CHARACTERS;
 using DG.Tweening;
 using UnityEditor;
 using UnityEngine;
@@ -16,14 +17,25 @@ public class ShakeScreen : Command
     private void Shake()
     {
         CameraManager.instance.cameraTransform.DOShakePosition(
-            0.8f,
-            new Vector3(2f, 2f, 0f), // XY only
-            vibrato: 30,
-            randomness: 90,
+            duration: 0.8f,
+            strength: new Vector3(2f, 2f, 0f),
+            vibrato: 18,
+            randomness: 45,
             snapping: false,
             fadeOut: true
         );
 
+        GameObject character = VNCharacterManager.instance.GetSpeakerObject();
+
+        character.transform.DOShakePosition(
+            duration: 0.6f,
+            strength: new Vector3(26f, 23f, 0f),
+            vibrato: 50,
+            randomness: 10,
+            snapping: false,
+            fadeOut: true
+        );
+        
         ImageScript.instance.Flash(0.4f,
             Resources.Load<AudioClip>($"Audio/Sound Effects/{(isDramatic ? "shock" : "whip")}"));
     }
