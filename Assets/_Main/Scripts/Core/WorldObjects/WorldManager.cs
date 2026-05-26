@@ -111,7 +111,7 @@ public class WorldManager : MonoBehaviour
         GameObject objectsParent = GameObject.Find("World Objects");
         if (objectsParent != null)
             characterPanel = objectsParent;
-
+        
         if (room.OnLoad() != null)
             yield return StartCoroutine(room.OnLoad());
         isLoading = false;
