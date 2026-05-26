@@ -185,4 +185,9 @@ public abstract class WorldEvent : GameEvent
         charactersData = data.charactersData.ToDictionary(c => c.key, c => c.value);
         objectsData = data.objectsData.ToDictionary(c => c.key, c => c.value);
     }
+
+    protected void OnNotFinished()
+    {
+        CursorManager.instance.Show();
+    }
 }

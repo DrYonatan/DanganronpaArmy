@@ -27,6 +27,10 @@ public class PointAndClickEvent : WorldEvent
         
         if (isFinished)
             OnFinish();
+        else
+        {
+            OnNotFinished();
+        }
     }
 
     protected override void OnFinish()

@@ -25,6 +25,13 @@ public class VirutalCameraManager : MonoBehaviour
     {
         virtualCamera = GameObject.Find("World/Virtual Camera").GetComponent<CinemachineVirtualCamera>();
         pitchControl = virtualCamera.GetComponent<DollyCameraPitchControl>();
+        virtualCamera.PreviousStateIsValid = false;
+
+        // Force the virtual camera pipeline to update
+        virtualCamera.InternalUpdateCameraState(
+            Vector3.up,
+            Time.deltaTime
+        );
         if(VNNodePlayer.instance.currentConversation != null)
             virtualCamera.gameObject.SetActive(false);
     }
