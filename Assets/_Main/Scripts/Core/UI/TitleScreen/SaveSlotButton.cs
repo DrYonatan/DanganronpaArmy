@@ -18,7 +18,7 @@ public class SaveSlotButton : TitleScreenMenuButton
     public int slot;
     public TextMeshProUGUI slotText;
     public TextMeshProUGUI dateText;
-    private SaveData data;
+    protected SaveData data;
     public Mode mode;
     public AudioClip errorSound;
 
@@ -27,7 +27,7 @@ public class SaveSlotButton : TitleScreenMenuButton
         UpdateFileText();
     }
 
-    private void UpdateFileText()
+    protected virtual void UpdateFileText()
     {
         data = SaveSystem.LoadGame(slot);
         if (data != null)
@@ -48,7 +48,7 @@ public class SaveSlotButton : TitleScreenMenuButton
         }
     }
     
-    public void Save()
+    public virtual void Save()
     {
         if (ProgressManager.instance != null)
             SaveManager.instance.SaveGameVn(slot);
@@ -72,8 +72,9 @@ public class SaveSlotButton : TitleScreenMenuButton
         return true;
     }
 
-    public void Load()
+    public virtual void Load()
     {
+        SaveManager.instance.isCloud = false;
         SoundManager.instance.PlaySoundEffect(soundEffect);
         SaveManager.instance.SelectSaveSlot(slot);
 
@@ -81,17 +82,17 @@ public class SaveSlotButton : TitleScreenMenuButton
             TitleScreenMainMenu.instance.GoToGameAnimation(SaveManager.instance.LoadCurrentSave().scene);
         else
         {
-            StartCoroutine(LoadFile());
+            StartCoroutine(LoadFile(SaveManager.instance.LoadCurrentSave()));
         }
     }
 
-    private IEnumerator LoadFile()
+    protected IEnumerator LoadFile(SaveData currentSave)
     {
         Time.timeScale = 1f;
         ImageScript.instance.FadeToBlack(0.2f);
         yield return new WaitForSeconds(1f);
         DOTween.KillAll();
-        string sceneToLoad = SaveManager.instance.LoadCurrentSave().scene;
+        string sceneToLoad = currentSave.scene;
         SceneManager.LoadScene(sceneToLoad);
 
         Camera sceneTransitionCam = GameStateManager.instance.sceneTransitionCamera;

@@ -11,7 +11,13 @@ public class SaveManager : MonoBehaviour
 
     public int currentSaveSlot;
 
+    public bool isCloud = false;
+
+    public int currentCloudSaveSlot;
+
     public int saveSlotAmount;
+
+    public int cloudSaveSlotsAmount;
 
     private void Awake()
     {
@@ -26,6 +32,7 @@ public class SaveManager : MonoBehaviour
     public void StartNewGame()
     {
         currentSaveSlot = -1;
+        currentCloudSaveSlot = -1;
         TitleScreenMainMenu.instance.GoToGameAnimation(firstScene);
     }
 
@@ -34,19 +41,26 @@ public class SaveManager : MonoBehaviour
         currentSaveSlot = slot;
     }
 
-    public SaveData LoadCurrentSave()
+    public void SelectCloudSaveSlot(int slot)
     {
-        return SaveSystem.LoadGame(currentSaveSlot);
+        currentCloudSaveSlot = slot;
     }
 
-    public void SaveGameVn(int slot)
+    public SaveData LoadCurrentSave()
+    {
+        return isCloud
+            ? UserDataManager.instance.loggedInUser.saves[currentCloudSaveSlot]
+            : SaveSystem.LoadGame(currentSaveSlot);
+    }
+
+    public SaveData GetVNSaveData()
     {
         WorldEvent currentEvent = ProgressManager.instance.currentGameEvent as WorldEvent;
         Dictionary<string, ObjectData> charactersData =
             currentEvent?.charactersData;
         Dictionary<string, ObjectData> objectsData =
             currentEvent?.objectsData;
-        
+
         SaveData data = new SaveData(GameStateManager.instance.chapterIndex,
             GameStateManager.instance.chapterSegmentIndex,
             ProgressManager.instance.currentGameEventIndex,
@@ -62,20 +76,32 @@ public class SaveManager : MonoBehaviour
             CameraManager.instance.cameraTransform.localRotation.eulerAngles,
             CameraManager.instance.initialRotation.eulerAngles, WorldManager.instance.currentTime,
             GameStateManager.instance.uiState, 0, 0, DateTime.Now.ToString("o"));
-        SaveSystem.SaveGame(data, slot);
+
+        return data;
     }
 
-    public void SaveGameTrial(int slot)
+    public SaveData GetTrialSaveData()
     {
         SaveData data = new SaveData(GameStateManager.instance.chapterIndex,
-            GameStateManager.instance.chapterSegmentIndex, TrialManager.instance.currentIndex, "", true,"",
+            GameStateManager.instance.chapterSegmentIndex, TrialManager.instance.currentIndex, "", true, "",
             TrialDialogueManager.instance.currentLineIndex,
             MusicManager.instance.audioSource.clip ? MusicManager.instance.audioSource.clip.name : "", null, null,
             SceneManager.GetActiveScene().name, GameStateManager.instance.charactersRanks,
             Vector3.zero, Vector3.zero, Vector3.zero, Vector3.zero, TimeOfDay.Day, GameStateManager.instance.uiState,
             TrialManager.instance.currentIndex,
             TrialManager.instance.playerStats.hp, DateTime.Now.ToString("o"));
+        return data;
+    }
 
+    public void SaveGameVn(int slot)
+    {
+        SaveData data = GetVNSaveData();
+        SaveSystem.SaveGame(data, slot);
+    }
+
+    public void SaveGameTrial(int slot)
+    {
+        SaveData data = GetTrialSaveData();
         SaveSystem.SaveGame(data, slot);
     }
 }

@@ -1,18 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
 using Firebase;
 using Firebase.Auth;
 using UnityEngine;
+
 
 public class FirebaseManager : MonoBehaviour
 {
     public static FirebaseManager instance { get; private set; }
     FirebaseAuth auth;
     public FirebaseUser user;
+    public List<IAuthenticationListener> authenticationListeners = new List<IAuthenticationListener>();
+
     async void Awake()
     {
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
             var dependencyStatus = await FirebaseApp.CheckAndFixDependenciesAsync();
 
             if (dependencyStatus == DependencyStatus.Available)
@@ -26,12 +31,17 @@ public class FirebaseManager : MonoBehaviour
             {
                 Debug.LogError($"Could not resolve Firebase dependencies: {dependencyStatus}");
             }
-            
+
             InitializeFirebase();
         }
     }
-    
-     public void SignUp(string email, string password)
+
+    public void AddAuthenticationListener(IAuthenticationListener listener)
+    {
+        authenticationListeners.Add(listener);
+    }
+
+    public void SignUp(string email, string password, Action<string> onSuccess)
     {
         auth.CreateUserWithEmailAndPasswordAsync(email, password).ContinueWith(task =>
         {
@@ -43,18 +53,18 @@ public class FirebaseManager : MonoBehaviour
 
             if (task.IsFaulted)
             {
-                
                 Debug.LogError("CreateUserWithEmailAndPasswordAsync encountered an error: " + task.Exception);
-                
+
                 return;
             }
 
             AuthResult result = task.Result;
+            onSuccess(result.User.UserId);
             Debug.LogFormat("Firebase user created successfully: {0} ({1})",
                 result.User.DisplayName, result.User.UserId);
         });
     }
-    
+
     public void SignIn(string email, string password)
     {
         auth.SignInWithEmailAndPasswordAsync(email, password).ContinueWith(task =>
@@ -100,10 +110,19 @@ public class FirebaseManager : MonoBehaviour
             }
 
             user = auth.CurrentUser;
+            notifyAuthenticationListeners();
             if (signedIn)
             {
                 Debug.Log("Signed in " + user.UserId);
             }
+        }
+    }
+
+    void notifyAuthenticationListeners()
+    {
+        foreach (IAuthenticationListener listener in authenticationListeners)
+        {
+            listener.OnAuthentication();
         }
     }
 
@@ -112,5 +131,4 @@ public class FirebaseManager : MonoBehaviour
         auth.StateChanged -= AuthStateChanged;
         auth = null;
     }
-    
 }

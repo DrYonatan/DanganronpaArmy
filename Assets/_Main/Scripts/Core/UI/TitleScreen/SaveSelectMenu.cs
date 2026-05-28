@@ -6,6 +6,7 @@ using UnityEngine.Tilemaps;
 public class SaveSelectMenu : TitleScreenSubMenu
 {
     public SaveSlotButton buttonPrefab;
+    public CloudSaveSlotButton cloudButtonPrefab;
     public RectTransform savesContainer;
 
     public float buttonHeight = 100f;
@@ -19,9 +20,14 @@ public class SaveSelectMenu : TitleScreenSubMenu
     public bool onConfirm;
     public bool confirmPopupActive;
     public TextMeshProUGUI confirmText;
-
+    
     void Awake()
     {
+        for (int i = 0; i < SaveManager.instance.cloudSaveSlotsAmount; i++)
+        {
+            GenerateCloudSaveSlot(i);
+        }
+        
         for (int i = 1; i < SaveManager.instance.saveSlotAmount; i++)
         {
             GenerateSaveSlot(i);
@@ -127,6 +133,14 @@ public class SaveSelectMenu : TitleScreenSubMenu
         {
             button.Save();
         }
+    }
+
+    private void GenerateCloudSaveSlot(int index)
+    {
+        CloudSaveSlotButton button = Instantiate(cloudButtonPrefab, savesContainer);
+        button.mode = mode;
+        button.slot = index;
+        buttons.Add(button);
     }
 
     private void GenerateSaveSlot(int index)
