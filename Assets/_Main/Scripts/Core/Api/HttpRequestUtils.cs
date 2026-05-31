@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -21,7 +23,8 @@ public class HttpRequestUtils
                     break;
                 case UnityWebRequest.Result.Success:
                     Debug.Log("Successful Get Request");
-                    T data = JsonUtility.FromJson<T>(webRequest.downloadHandler.text);
+                    Debug.Log(webRequest.downloadHandler.text);
+                    T data = JsonConvert.DeserializeObject<T>(webRequest.downloadHandler.text);
                     callback.Invoke(data);
                     break;
             }

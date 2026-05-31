@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Newtonsoft.Json;
 
 [Serializable]
 public class ObjectDataEntry
@@ -104,5 +105,10 @@ public class SaveData
         this.hp = hp;
 
         this.saveTime = saveTime;
+    }
+
+    public SaveData()
+    {
+        
     }
 }

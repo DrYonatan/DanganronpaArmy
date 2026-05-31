@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Firebase;
 using Firebase.Auth;
+using Firebase.Extensions;
 using UnityEngine;
 
 
@@ -43,7 +44,7 @@ public class FirebaseManager : MonoBehaviour
 
     public void SignUp(string email, string password, Action<string> onSuccess)
     {
-        auth.CreateUserWithEmailAndPasswordAsync(email, password).ContinueWith(task =>
+        auth.CreateUserWithEmailAndPasswordAsync(email, password).ContinueWithOnMainThread(task =>
         {
             if (task.IsCanceled)
             {

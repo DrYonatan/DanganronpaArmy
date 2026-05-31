@@ -1,7 +1,21 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Firebase.Auth;
 using UnityEngine;
+
+[System.Serializable]
+public class UserData
+{
+    public string userId;
+    public string username;
+
+    public UserData(string userId, string username)
+    {
+        this.userId = userId;
+        this.username = username;
+    }
+}
 
 public class UserDataManager : MonoBehaviour, IAuthenticationListener
 {
@@ -25,6 +39,7 @@ public class UserDataManager : MonoBehaviour, IAuthenticationListener
         {
             StartCoroutine(FetchUserData(user.UserId));
         }
+
         FirebaseManager.instance.AddAuthenticationListener(this);
     }
 
@@ -49,30 +64,33 @@ public class UserDataManager : MonoBehaviour, IAuthenticationListener
     IEnumerator FetchUserData(string userId)
     {
         yield return HttpRequestUtils.GetRequest<User>($"{SERVER_ADDRESS}/users/{userId}",
-            (user) => { loggedInUser = new User(user); });
+            (user) =>
+            {
+                loggedInUser = new User(user);
+            });
     }
 
     IEnumerator CreateNewUser(string userId, string username)
     {
-        Dictionary<string, string> data = new Dictionary<string, string>();
-        data.Add("userId", userId);
-        data.Add("username", username);
+        UserData data = new UserData(userId, username);
         yield return HttpRequestUtils.PostRequest<User>($"{SERVER_ADDRESS}/user", data,
             (response) => { loggedInUser = response; });
     }
 
-    public void UpdateCloudSave(int slot, SaveData saveData)
+    public void UpdateCloudSave(int slot, SaveData saveData, Action onComplete)
     {
-        StartCoroutine(UpdateCloudSaveRequest(slot, saveData));
+        StartCoroutine(UpdateCloudSaveRequest(slot, saveData, onComplete));
     }
 
-    IEnumerator UpdateCloudSaveRequest(int slot, SaveData saveData)
+    IEnumerator UpdateCloudSaveRequest(int slot, SaveData saveData, Action onComplete)
     {
         yield return HttpRequestUtils.PostRequest<SaveData>($"{SERVER_ADDRESS}/saves/{loggedInUser.id}/{slot}",
             saveData,
             (response) =>
             {
                 loggedInUser.saves[slot] = response;
+                onComplete();
+                
             });
     }
 }

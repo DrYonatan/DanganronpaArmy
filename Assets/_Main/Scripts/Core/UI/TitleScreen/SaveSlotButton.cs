@@ -62,7 +62,7 @@ public class SaveSlotButton : TitleScreenMenuButton
     {
         if (mode == Mode.Load)
         {
-            if (data == null)
+            if (data == null || data.saveTime == null || data.saveTime == "")
             {
                 SoundManager.instance.PlaySoundEffect(errorSound);
                 return false;

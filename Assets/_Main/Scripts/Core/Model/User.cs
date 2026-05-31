@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Newtonsoft.Json;
 
 [Serializable]
 public class User
@@ -12,6 +13,10 @@ public class User
     public int score;
 
 
+    public User()
+    {
+        
+    }
     public User(string id, string username, List<SaveData> saves)
     {
         this.id = id;
