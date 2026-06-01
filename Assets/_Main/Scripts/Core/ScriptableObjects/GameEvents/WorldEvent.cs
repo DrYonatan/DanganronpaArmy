@@ -8,11 +8,20 @@ using UnityEngine;
 public class ObjectData
 {
     public bool isClicked;
+    public int clickCount;
 
-    public ObjectData(bool isClicked)
+    public ObjectData(bool isClicked, int clickCount)
     {
         this.isClicked = isClicked;
+        this.clickCount = clickCount;
     }
+}
+
+[Serializable]
+public class EventAdditionalObjectData
+{
+    public bool isRequired;
+    public List<VNConversationSegment> texts;
 }
 
 [Serializable]
@@ -32,6 +41,7 @@ public abstract class WorldEvent : GameEvent
     public VNConversationSegment startText;
     public VNConversationSegment finishText;
 
+    public bool isAfterStartText;
     public bool isAfterFinishText;
 
     public VNConversationSegment unallowedText;
@@ -50,9 +60,11 @@ public abstract class WorldEvent : GameEvent
     private IEnumerator OnStartRoutine()
     {
         yield return StartWithRoomLoad();
-        
-        WorldManager.instance.currentRoomData = roomDatas.Find(data => data.room.name.Equals(WorldManager.instance.currentRoom.name));
-        
+
+        WorldManager.instance.currentRoomData =
+            roomDatas.Find(data => data.room.name.Equals(WorldManager.instance.currentRoom.name));
+        isAfterStartText = true;
+
         if (startText != null)
         {
             VNNodePlayer.instance.StartConversation(startText);
@@ -79,8 +91,8 @@ public abstract class WorldEvent : GameEvent
             WorldManager.instance.currentRoom = roomToLoad;
             yield return TimeOfDayManager.instance.ChangeTimeOfDay(timeOfDay);
             yield return WorldManager.instance.LoadRoom(WorldManager.instance.currentRoom, null);
-            
         }
+
         OnRoomLoad();
         WorldManager.instance.charactersObject?
             .AnimateCharacters();
@@ -140,17 +152,20 @@ public abstract class WorldEvent : GameEvent
         {
             Transform character = ob.transform.Find(characterName);
             if (character != null)
-                character.gameObject
-                        .GetComponent<WorldCharacter>().isClicked =
-                    charactersData[characterName].isClicked;
+            {
+                WorldCharacter worldCharacter = character.GetComponent<WorldCharacter>();
+                worldCharacter.isClicked = charactersData[characterName].isClicked;
+                worldCharacter.clickCount = charactersData[characterName].clickCount;
+            }
         }
 
         WorldManager.instance.charactersObject = ob;
 
         foreach (Transform character in WorldManager.instance.charactersObject.transform)
         {
+            WorldCharacter worldCharacter = character.GetComponent<WorldCharacter>();
             charactersData[character.name] =
-                new ObjectData(character.gameObject.GetComponent<WorldCharacter>().isClicked);
+                new ObjectData(worldCharacter.isClicked, worldCharacter.clickCount);
         }
     }
 
@@ -164,17 +179,19 @@ public abstract class WorldEvent : GameEvent
         ob.SetActive(true);
         foreach (string objectName in objectsData.Keys)
         {
-            ob.transform.Find(objectName).gameObject
-                    .GetComponent<WorldObject>().isClicked =
-                objectsData[objectName].isClicked;
+            WorldObject worldObject = ob.transform.Find(objectName).GetComponent<WorldObject>();
+            worldObject.isClicked = objectsData[objectName].isClicked;
+            worldObject.clickCount = objectsData[objectName].clickCount;
         }
 
         WorldManager.instance.objectsObject = ob;
 
         foreach (Transform obj in WorldManager.instance.objectsObject.transform)
         {
+            WorldObject worldObject = obj.GetComponent<WorldObject>();
+
             objectsData[obj.name] =
-                new ObjectData(obj.gameObject.GetComponent<WorldObject>().isClicked);
+                new ObjectData(worldObject.isClicked, worldObject.clickCount);
         }
     }
 

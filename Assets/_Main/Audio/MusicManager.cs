@@ -29,6 +29,7 @@ public class MusicManager : MonoBehaviour
     public void StopSong()
     {
         audioSource.Stop();
+        audioSource.clip = null;
         if (VNUIAnimator.instance != null)
         {
             VNUIAnimator.instance.musicBoxContainer.StopBars();

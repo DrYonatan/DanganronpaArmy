@@ -51,7 +51,7 @@ public class ReportCardMenu: MenuScreen
     private List<float> originalPosYs = new List<float>();
     public GameObject normalContent;
     public GameObject protagonistContent;
-    private const string PROTAGONIST_NAME = "אלון";
+    private const string PROTAGONIST_NAME = "אלון ברגר";
     public List<string> statuses = new List<string>();
     string GetSocialStatus(int totalProgress)
     {

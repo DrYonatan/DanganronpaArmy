@@ -32,23 +32,10 @@ public class WorldManager : MonoBehaviour
 
     private void ReturningToWorld()
     {
-        StartCoroutine(ReturningToWorldInOrder());
-    }
-
-    IEnumerator ReturningToWorldInOrder()
-    {
         if (ProgressManager.instance.currentGameEvent != null)
         {
             ProgressManager.instance.currentGameEvent.CheckIfFinished();
-        }
-
-        float timeOut = 0.5f;
-        float elapsedTime = 0f;
-        while (charactersObject != null && elapsedTime < timeOut)
-        {
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
+        }    
     }
 
     public void StartLoadingRoom(Room room, [CanBeNull] string entryPoint)
