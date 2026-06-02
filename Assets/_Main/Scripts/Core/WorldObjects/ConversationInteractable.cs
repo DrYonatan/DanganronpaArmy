@@ -3,10 +3,11 @@ using UnityEngine;
 
 public abstract class ConversationInteractable : Interactable
 {
+    public string id;
     public bool isClicked = false;
     public int clickCount;
     public List<VNConversationSegment> texts = new List<VNConversationSegment>();
-
+    
     protected override void FinishInteraction()
     {
         float duration = 0.5f;

@@ -9,6 +9,7 @@ public class ObjectData
 {
     public bool isClicked;
     public int clickCount;
+    public bool isRequired;
 
     public ObjectData(bool isClicked, int clickCount)
     {
@@ -20,8 +21,10 @@ public class ObjectData
 [Serializable]
 public class EventAdditionalObjectData
 {
-    public bool isRequired;
+    public string id;
     public List<VNConversationSegment> texts;
+    public int clickCount;
+    public bool isClicked;
 }
 
 [Serializable]
@@ -32,6 +35,7 @@ public class RoomData
     public GameObject worldObjects;
     public VNConversationSegment preLoadText;
     public bool isExitable;
+    public List<EventAdditionalObjectData> additionalObjectData = new();
 }
 
 public abstract class WorldEvent : GameEvent

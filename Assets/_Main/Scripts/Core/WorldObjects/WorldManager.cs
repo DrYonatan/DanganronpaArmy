@@ -8,6 +8,7 @@ public class WorldManager : MonoBehaviour
 {
     public GameObject characterPanel = null;
     public Room currentRoom;
+    public RoomModel currentRoomModel;
     public RoomData currentRoomData;
     public bool isLoading = false;
 
@@ -46,6 +47,7 @@ public class WorldManager : MonoBehaviour
     public void UpdateRoomData(RoomData roomData)
     {
         currentRoomData = roomData;
+        currentRoom.SetInteractables(roomData.additionalObjectData);
     }
 
     public IEnumerator LoadRoom(Room room, [CanBeNull] string entryPoint)
@@ -56,10 +58,10 @@ public class WorldManager : MonoBehaviour
 
         isLoading = true;
 
-        RoomModel ob = Instantiate(room.GetTimeOfDayVersion(ProgressManager.instance.currentGameEvent.timeOfDay));
-        ob.name = "World";
-        ob.gameObject.SetActive(true);
-        talkPosition = ob.talkPosition;
+        currentRoomModel = Instantiate(room.GetTimeOfDayVersion(ProgressManager.instance.currentGameEvent.timeOfDay));
+        currentRoomModel.name = "World";
+        currentRoomModel.gameObject.SetActive(true);
+        talkPosition = currentRoomModel.talkPosition;
 
         GameObject objectsParent = GameObject.Find("World Objects");
         if (objectsParent != null)
@@ -80,7 +82,7 @@ public class WorldManager : MonoBehaviour
         ImageScript.instance.UnFadeToBlack(0.1f);
         if (room.OnLoad() != null)
             yield return StartCoroutine(room.OnLoad());
-        ob.PlayRoomIntroEffects();
+        currentRoomModel.PlayRoomIntroEffects();
         yield return room.AppearAnimation();
         isLoading = false;
         PlayerInputManager.instance.EnableInput();
@@ -88,10 +90,10 @@ public class WorldManager : MonoBehaviour
     
     private IEnumerator LoadRoomWithoutAnimation(Room room)
     {
-        RoomModel ob = Instantiate(room.GetTimeOfDayVersion(ProgressManager.instance.currentGameEvent.timeOfDay));
-        ob.name = "World";
-        ob.gameObject.SetActive(true);
-        talkPosition = ob.talkPosition;
+        currentRoomModel = Instantiate(room.GetTimeOfDayVersion(ProgressManager.instance.currentGameEvent.timeOfDay));
+        currentRoomModel.name = "World";
+        currentRoomModel.gameObject.SetActive(true);
+        talkPosition = currentRoomModel.talkPosition;
         
         ImageScript.instance.UnFadeToBlack(0.2f);
 
