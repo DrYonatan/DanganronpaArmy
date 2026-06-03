@@ -41,8 +41,6 @@ public abstract class Room : ScriptableObject
             if (data != null)
             {
                 interactable.texts = new List<VNConversationSegment>(data.texts);
-                interactable.clickCount = data.clickCount;
-                interactable.isClicked = data.isClicked;
             }
 
             else

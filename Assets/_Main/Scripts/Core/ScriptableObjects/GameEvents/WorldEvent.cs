@@ -23,8 +23,6 @@ public class EventAdditionalObjectData
 {
     public string id;
     public List<VNConversationSegment> texts;
-    public int clickCount;
-    public bool isClicked;
 }
 
 [Serializable]
@@ -175,27 +173,53 @@ public abstract class WorldEvent : GameEvent
 
     private void CreateObjects(GameObject prefab)
     {
-        if (prefab == null || WorldManager.instance.characterPanel == null)
+        if (WorldManager.instance.characterPanel == null)
             return;
 
-        GameObject ob = Instantiate(prefab, WorldManager.instance.characterPanel.transform);
-        ob.name = "Objects";
-        ob.SetActive(true);
-        foreach (string objectName in objectsData.Keys)
+        GameObject ob = null;
+        if (prefab != null)
         {
-            WorldObject worldObject = ob.transform.Find(objectName).GetComponent<WorldObject>();
-            worldObject.isClicked = objectsData[objectName].isClicked;
-            worldObject.clickCount = objectsData[objectName].clickCount;
+            ob = Instantiate(prefab, WorldManager.instance.characterPanel.transform);
+            ob.name = "Objects";
+            ob.SetActive(true);
         }
 
-        WorldManager.instance.objectsObject = ob;
-
-        foreach (Transform obj in WorldManager.instance.objectsObject.transform)
+        foreach (string objectName in objectsData.Keys)
         {
-            WorldObject worldObject = obj.GetComponent<WorldObject>();
+            Transform objectTransform = ob?.transform.Find(objectName);
 
-            objectsData[obj.name] =
-                new ObjectData(worldObject.isClicked, worldObject.clickCount);
+            if (objectTransform == null)
+                objectTransform = WorldManager.instance.currentRoomModel.interactables
+                    .Find(x => x.gameObject.name == objectName)
+                    ?.transform;
+
+            if (objectTransform != null)
+            {
+                WorldObject worldObject = objectTransform.GetComponent<WorldObject>();
+                worldObject.isClicked = objectsData[objectName].isClicked;
+                worldObject.clickCount = objectsData[objectName].clickCount;
+            }
+        }
+
+        if (ob != null)
+        {
+            WorldManager.instance.objectsObject = ob;
+
+            foreach (Transform obj in WorldManager.instance.objectsObject.transform) // Add all event objects to dictionary
+            {
+                WorldObject worldObject = obj.GetComponent<WorldObject>();
+
+                objectsData[obj.name] =
+                    new ObjectData(worldObject.isClicked, worldObject.clickCount);
+            }
+        }
+
+        foreach (ConversationInteractable interactable in
+                 WorldManager.instance.currentRoomModel
+                     .interactables) // Add all normal room interactables to the dictionary as well
+        {
+            objectsData[interactable.name] =
+                new ObjectData(interactable.isClicked, interactable.clickCount);
         }
     }
 
