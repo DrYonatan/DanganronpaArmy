@@ -31,8 +31,7 @@ public abstract class Room : ScriptableObject
     public void SetInteractables(List<EventAdditionalObjectData> additionalObjectDatas)
     {
         RoomModel roomModel = WorldManager.instance.currentRoomModel;
-        RoomModel originalModel =
-            roomVersions.Find(x => x.timeOfDay == WorldManager.instance.currentTime).prefab;
+        RoomModel originalModel = GetTimeOfDayVersion(WorldManager.instance.currentTime);
 
 
         foreach (ConversationInteractable interactable in roomModel.interactables)
