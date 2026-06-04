@@ -103,6 +103,8 @@ public class GameStateManager : MonoBehaviour
     public void MoveToNextChapterSegment()
     {
         chapterSegmentIndex++;
+        ProgressManager.instance.currentGameEventIndex = 0;
+        MusicManager.instance.StopSong();
 
         if (chapterSegmentIndex < chaptersBank.chapters[chapterIndex].chapterSegments.Count)
         {

@@ -14,5 +14,9 @@ public class DestinationEvent : WorldEvent
         
         if(isFinished)
            OnFinish();
+        else
+        {
+            OnNotFinished();
+        }
     }
 }

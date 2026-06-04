@@ -65,6 +65,7 @@ public class SaveManager : MonoBehaviour
             GameStateManager.instance.chapterSegmentIndex,
             ProgressManager.instance.currentGameEventIndex,
             WorldManager.instance.currentRoom?.name,
+            currentEvent ? currentEvent.isAfterStartText : true,
             currentEvent ? currentEvent.isAfterFinishText : true,
             VNNodePlayer.instance.currentConversation?.guid, VNNodePlayer.instance.lineIndex,
             MusicManager.instance.audioSource.clip ? MusicManager.instance.audioSource.clip.name : "",
@@ -83,7 +84,7 @@ public class SaveManager : MonoBehaviour
     public SaveData GetTrialSaveData()
     {
         SaveData data = new SaveData(GameStateManager.instance.chapterIndex,
-            GameStateManager.instance.chapterSegmentIndex, TrialManager.instance.currentIndex, "", true, "",
+            GameStateManager.instance.chapterSegmentIndex, TrialManager.instance.currentIndex, "", true, true,"",
             TrialDialogueManager.instance.currentLineIndex,
             MusicManager.instance.audioSource.clip ? MusicManager.instance.audioSource.clip.name : "", null, null,
             SceneManager.GetActiveScene().name, GameStateManager.instance.charactersRanks,

@@ -55,6 +55,7 @@ public class CameraController : MonoBehaviour
 
     public IEnumerator DiscussionIntroMovement(float duration)
     {
+        TrialDialogueManager.instance.SetTextBox();;
         float elapsedTime = 0f;
         Vector3 startPos = new Vector3(0f, 8f, -18f);
         pivot.rotation = new Quaternion(0f, 0f, 0f, 0f);

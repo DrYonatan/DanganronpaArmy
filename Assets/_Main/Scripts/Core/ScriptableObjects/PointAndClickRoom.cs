@@ -1,10 +1,9 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using DIALOGUE;
 using Cinemachine;
 
-[CreateAssetMenu(menuName="Rooms/Point and Click Room")]
+[CreateAssetMenu(menuName = "Rooms/Point and Click Room")]
 public class PointAndClickRoom : Room
 {
     public Room exitRoom;
@@ -25,65 +24,70 @@ public class PointAndClickRoom : Room
 
     public override IEnumerator OnLoad()
     {
-        base.OnLoad();
-        VirutalCameraManager.instance.AssignVirtualCamera();
-        yield return null;
+        VirutalCameraManager.instance
+            .AssignVirtualCamera(); // Important, this must happen before the call to base, because base.OnLoad() yield returns null (meaning it waits for one frame), and this is problematic when loading a save, the extra frame before the vCam is disabled causes the master camera's position to change
+        yield return base.OnLoad();
     }
 
     public override IEnumerator AppearAnimation()
     {
         if (hasStartAnimation)
         {
-            yield return VirutalCameraManager.instance.SlideAcrossRoom(3f, GameObject.Find("World/TrackSlidingPos").transform.position);
+            yield return VirutalCameraManager.instance.SlideAcrossRoom(3f,
+                GameObject.Find("World/TrackSlidingPos").transform.position);
             yield return new WaitForSeconds(0.2f);
         }
     }
 
     public override void MovementControl()
     {
-      float horizontalInput = Input.GetAxis("Horizontal");
-      float verticalInput = Input.GetAxis("Vertical");
-      
-      if (VirutalCameraManager.instance.virtualCamera == null)
-          return;
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
 
-      float position = VirutalCameraManager.instance.virtualCamera.GetCinemachineComponent<CinemachineTrackedDolly>().m_PathPosition;
-      position += (horizontalInput * cameraDollySpeed * Time.deltaTime);
-      position = Mathf.Clamp(position, 0, VirutalCameraManager.instance.virtualCamera.GetCinemachineComponent<CinemachineTrackedDolly>().m_Path.PathLength - 1);
-      VirutalCameraManager.instance.virtualCamera.GetCinemachineComponent<CinemachineTrackedDolly>().m_PathPosition = position;
+        if (VirutalCameraManager.instance.virtualCamera == null)
+            return;
 
-      pitch -= verticalInput * rotationSpeed * Time.deltaTime;
-      pitch = Mathf.Clamp(pitch, borderUp, borderDown);
+        float position = VirutalCameraManager.instance.virtualCamera.GetCinemachineComponent<CinemachineTrackedDolly>()
+            .m_PathPosition;
+        position += (horizontalInput * cameraDollySpeed * Time.deltaTime);
+        position = Mathf.Clamp(position, 0,
+            VirutalCameraManager.instance.virtualCamera.GetCinemachineComponent<CinemachineTrackedDolly>().m_Path
+                .PathLength - 1);
+        VirutalCameraManager.instance.virtualCamera.GetCinemachineComponent<CinemachineTrackedDolly>().m_PathPosition =
+            position;
 
-      // Apply the updated pitch
-      VirutalCameraManager.instance.pitchControl.pitch = pitch;
+        pitch -= verticalInput * rotationSpeed * Time.deltaTime;
+        pitch = Mathf.Clamp(pitch, borderUp, borderDown);
+
+        // Apply the updated pitch
+        VirutalCameraManager.instance.pitchControl.pitch = pitch;
 
 
-        if(Input.GetKey(KeyCode.R))
+        if (Input.GetKey(KeyCode.R))
         {
-            if(!WorldManager.instance.currentRoomData.isExitable)
+            if (!WorldManager.instance.currentRoomData.isExitable)
             {
                 WorldEvent currentEvent = ProgressManager.instance.currentGameEvent as WorldEvent;
                 if (currentEvent == null)
                     return;
-                
-                if(currentEvent.unallowedText != null)
-                   VNNodePlayer.instance.StartConversation(currentEvent.unallowedText);
+
+                if (currentEvent.unallowedText != null)
+                    VNNodePlayer.instance.StartConversation(currentEvent.unallowedText);
             }
-            
+
             else
             {
                 WorldManager.instance.StartLoadingRoom(exitRoom, exitLocation);
             }
         }
-        
+
         CursorManager.instance.ReticleAsCursor();
-        if (Input.GetMouseButtonDown(0) && !DialogueSystem.instance.isActive && WorldManager.instance.currentRoom.currentInteractable)
+        if (Input.GetMouseButtonDown(0) && !DialogueSystem.instance.isActive &&
+            WorldManager.instance.currentRoom.currentInteractable)
         {
             WorldManager.instance.currentRoom.currentInteractable.Interact();
             VirutalCameraManager.instance.virtualCamera.gameObject.SetActive(false);
         }
-      
     }
 
     public override void OnConversationEnd()

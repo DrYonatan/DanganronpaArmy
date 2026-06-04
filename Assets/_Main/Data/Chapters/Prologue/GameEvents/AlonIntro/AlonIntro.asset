@@ -97,7 +97,7 @@ MonoBehaviour:
           y: 0
           width: 0
           height: 0
-        commandsScrollPosition: {x: 0, y: 0}
+        commandsScrollPosition: {x: 0, y: 80}
         title: 
         drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
         character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
@@ -113,6 +113,7 @@ MonoBehaviour:
           \u05DC\u05E6\u05D4\"\u05DC\u2026"
         commands:
         - rid: 6274742032584409203
+        - rid: 7091799910812483584
     - rid: 6274742032584409090
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -1480,7 +1481,7 @@ MonoBehaviour:
           y: 0
           width: 0
           height: 0
-        commandsScrollPosition: {x: 0, y: 0}
+        commandsScrollPosition: {x: 0, y: 40}
         title: 
         drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
         character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
@@ -1495,6 +1496,7 @@ MonoBehaviour:
           \u05E0\u05DB\u05E0\u05E1\u05EA\u05D9 \u05DC\u05DC\u05E9\u05DB\u05EA \u05D4\u05D2\u05D9\u05D5\u05E1.)\r\n"
         commands:
         - rid: 7091799478135947265
+        - rid: 7091799910812483585
     - rid: 6274742032584409197
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -1902,7 +1904,8 @@ MonoBehaviour:
       data:
         text: "\u05D4\u05D0? \u05D0\u05D9\u05E4\u05D4 \u05D4\u05D8\u05DC\u05E4\u05D5\u05DF
           \u05E9\u05DC\u05D9?\r"
-        commands: []
+        commands:
+        - rid: 7091799890995970075
     - rid: 7091799617966440452
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -1927,3 +1930,23 @@ MonoBehaviour:
           \u05D4\u05D5\u05D0 \u05D9\u05DB\u05D5\u05DC \u05DC\u05D4\u05D9\u05D5\u05EA?
           \u05D5\u05D0\u05D9\u05DA \u05D4\u05D2\u05E2\u05EA\u05D9 \u05DC\u05E4\u05D4?)"
         commands: []
+    - rid: 7091799890995970075
+      type: {class: PlaySoundEffectCommand, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        clip: {fileID: 8300000, guid: dda477c657d386143ab0dafb6a1d5446, type: 3}
+        volume: 1
+    - rid: 7091799910812483584
+      type: {class: PlayMusicCommand, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        music: {fileID: 8300000, guid: b7609d3683759514c8e283c178437f60, type: 3}
+        volume: 1
+        toggle: 1
+    - rid: 7091799910812483585
+      type: {class: PlayMusicCommand, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        music: {fileID: 0}
+        volume: 1
+        toggle: 0

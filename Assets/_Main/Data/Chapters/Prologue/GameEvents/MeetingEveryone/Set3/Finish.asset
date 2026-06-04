@@ -924,7 +924,7 @@ MonoBehaviour:
         drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
         character: {fileID: 11400000, guid: 58c4531e17032624ca3028fd7a97de0e, type: 2}
         displayName: 
-        expressionIndex: 0
+        expressionIndex: 4
         textData:
           rid: 7091799802055229553
     - rid: 7091799802055229490
@@ -953,7 +953,7 @@ MonoBehaviour:
           y: 0
           width: 0
           height: 0
-        commandsScrollPosition: {x: 0, y: 0}
+        commandsScrollPosition: {x: 0, y: 12}
         title: 
         drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
         character: {fileID: 11400000, guid: e39824928f924f546bb4ef60c8c4f16c, type: 2}
@@ -1344,7 +1344,8 @@ MonoBehaviour:
           \u05DC\u05E9\u05E0\u05D5\u05EA \u05D0\u05EA \u05D4\u05DE\u05D5\u05E1\u05DB\u05DE\u05D5\u05EA.
           \u05D0\u05D6 \u05D9\u05DB\u05D5\u05DC \u05DE\u05D0\u05D5\u05D3 \u05DC\u05D4\u05D9\u05D5\u05EA
           \u05E9\u05D4\u05DB\u05DC \u05D4\u05D5\u05DC\u05DA \u05DB\u05DE\u05EA\u05D5\u05DB\u05E0\u05DF!"
-        commands: []
+        commands:
+        - rid: 7091799890995970081
     - rid: 7091799802055229525
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -1379,7 +1380,8 @@ MonoBehaviour:
           \u05D0\u05D1\u05DC \u05D0\u05D9\u05DF \u05E6\u05D5\u05E8\u05DA \u05DC\u05D7\u05E9\u05D5\u05E9,
           \u05D5\u05D9\u05D3\u05D0\u05EA\u05D9 \u05E9\u05D4\u05D5\u05D0 \u05D9\u05E7\u05D1\u05DC
           \u05E2\u05D5\u05E0\u05E9 \u05DB\u05E8\u05D0\u05D5\u05D9."
-        commands: []
+        commands:
+        - rid: 7091799890995970082
     - rid: 7091799802055229529
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -1482,7 +1484,8 @@ MonoBehaviour:
       data:
         text: "\u05E0\u05D5 \u05D1\u05D0\u05DE\u05EA\u2026 \u05DB\u05DB\u05D4 \u05DC\u05D0
           \u05E0\u05EA\u05E7\u05D3\u05DD \u05DC\u05E9\u05D5\u05DD \u05DE\u05E7\u05D5\u05DD."
-        commands: []
+        commands:
+        - rid: 7091799910812483586
     - rid: 7091799802055229541
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -1588,7 +1591,9 @@ MonoBehaviour:
           \u05D4\u05DE\u05E1\u05D3\u05E8 \u05D1\u05E2\u05D5\u05D3 5 \u05D3\u05E7\u05D5\u05EA!
           \u05D0\u05E0\u05D7\u05E0\u05D5 \u05E6\u05E8\u05D9\u05DB\u05D9\u05DD \u05DC\u05D4\u05EA\u05D7\u05D9\u05DC
           \u05DC\u05D6\u05D5\u05D6."
-        commands: []
+        commands:
+        - rid: 7091799890995970083
+        - rid: 7091799890995970084
     - rid: 7091799802055229556
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -1663,6 +1668,7 @@ MonoBehaviour:
           \u05E4\u05D4 \u05D1\u05D3\u05D9\u05D5\u05E7."
         commands:
         - rid: 7091799802055229580
+        - rid: 7091799890995970086
     - rid: 7091799802055229566
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -1681,7 +1687,8 @@ MonoBehaviour:
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
         text: "\u05DE\u05E9\u05D4\u05D5 \u05DB\u05D0\u05DF \u05DC\u05D0 \u05DE\u05E1\u05EA\u05D3\u05E8."
-        commands: []
+        commands:
+        - rid: 7091799890995970087
     - rid: 7091799802055229569
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -1749,3 +1756,41 @@ MonoBehaviour:
         music: {fileID: 0}
         volume: 1
         toggle: 0
+    - rid: 7091799890995970081
+      type: {class: ShakeScreen, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        isDramatic: 0
+    - rid: 7091799890995970082
+      type: {class: Ding, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+    - rid: 7091799890995970083
+      type: {class: PlaySoundEffectCommand, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        clip: {fileID: 8300000, guid: 7a89d4d1c53486c47b04b10018a48770, type: 3}
+        volume: 1
+    - rid: 7091799890995970084
+      type: {class: ShakeScreen, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        isDramatic: 0
+    - rid: 7091799890995970086
+      type: {class: PlaySoundEffectCommand, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        clip: {fileID: 8300000, guid: ded9b1a971e358447b6c5ce4a113e298, type: 3}
+        volume: 1
+    - rid: 7091799890995970087
+      type: {class: PlaySoundEffectCommand, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        clip: {fileID: 8300000, guid: 671ad944bf2cc6e4c8c6a6b7d3de530b, type: 3}
+        volume: 1
+    - rid: 7091799910812483586
+      type: {class: PlaySoundEffectCommand, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        clip: {fileID: 8300000, guid: 55b173728a04a1045b91128c3ab3d488, type: 3}
+        volume: 1

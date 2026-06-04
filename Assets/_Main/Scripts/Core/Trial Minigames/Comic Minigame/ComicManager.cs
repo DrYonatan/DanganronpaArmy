@@ -188,6 +188,7 @@ public class ComicManager : MonoBehaviour
         yield return shatter.ScreenShatter();
         animator.gameObject.SetActive(false);
         DialogueSystem.instance.TextBoxDisappear();
+        TrialDialogueManager.instance.SetTextBox();;
         ImageScript.instance.UnFadeToBlack(0.4f);
         MusicManager.instance.StopSong();
 

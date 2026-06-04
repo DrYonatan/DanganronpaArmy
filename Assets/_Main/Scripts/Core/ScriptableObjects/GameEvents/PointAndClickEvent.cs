@@ -27,10 +27,15 @@ public class PointAndClickEvent : WorldEvent
         
         if (isFinished)
             OnFinish();
+        else
+        {
+            OnNotFinished();
+        }
     }
 
     protected override void OnFinish()
     {
+        CameraManager.instance.StopAllPreviousOperations();
         CameraManager.instance.MoveCameraTo(GameObject.Find("World/CameraStartPos").transform);
         
         base.OnFinish();

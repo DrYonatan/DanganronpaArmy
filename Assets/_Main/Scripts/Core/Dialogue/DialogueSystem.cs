@@ -112,7 +112,6 @@ namespace DIALOGUE
             else
             {
                 dialogueBoxAnimator.TextBoxDisappear();
-                CursorManager.instance.Show();
                 inputButton.gameObject.SetActive(false);
             }
         }

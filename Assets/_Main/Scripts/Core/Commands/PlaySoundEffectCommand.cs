@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DIALOGUE;
 using UnityEditor;
 using UnityEngine;
 
@@ -11,8 +12,11 @@ public class PlaySoundEffectCommand : Command
     public float volume = 1f;
     public override IEnumerator Execute()
     {
-        SoundManager.instance.PlaySoundEffect(clip);
-        yield return new WaitForSeconds(clip.length);
+        if (!DialogueSystem.instance.GetIsSkip())
+        {
+            SoundManager.instance.PlaySoundEffect(clip);
+            yield return new WaitForSeconds(clip.length);
+        }
     }
 
     #if UNITY_EDITOR

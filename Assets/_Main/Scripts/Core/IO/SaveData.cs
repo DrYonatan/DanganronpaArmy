@@ -27,6 +27,7 @@ public class SaveData
     // VN stuff
     public int gameEventIndex;
     public string currentRoom;
+    public bool isAfterStartText;
     public bool isAfterFinishText;
     public string currentConversation;
     public int currentLineIndex;
@@ -48,7 +49,7 @@ public class SaveData
 
     public string saveTime;
 
-    public SaveData(int chapterIndex, int chapterSegmentIndex, int gameEventIndex, string currentRoom, bool isAfterFinishText, string currentConversation,
+    public SaveData(int chapterIndex, int chapterSegmentIndex, int gameEventIndex, string currentRoom, bool isAfterStartText, bool isAfterFinishText, string currentConversation,
         int currentLineIndex, string currentMusic, Dictionary<string, ObjectData> charactersData,
         Dictionary<string, ObjectData> objectsData,
         string scene,
@@ -60,6 +61,7 @@ public class SaveData
         this.chapterSegmentIndex = chapterSegmentIndex;
         this.gameEventIndex = gameEventIndex;
         this.currentRoom = currentRoom;
+        this.isAfterStartText = isAfterStartText;
         this.isAfterFinishText = isAfterFinishText;
         this.currentConversation = currentConversation;
         this.currentLineIndex = currentLineIndex;

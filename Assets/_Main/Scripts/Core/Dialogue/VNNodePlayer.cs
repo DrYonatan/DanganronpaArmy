@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using CHARACTERS;
+using DIALOGUE;
 using UnityEngine;
 
 public class VNNodePlayer : MonoBehaviour
@@ -43,6 +44,7 @@ public class VNNodePlayer : MonoBehaviour
         for (int i = lineIndex; i < nodes.Count; i++)
         {
             yield return RunNode(nodes[i]);
+            DialogueSystem.instance.ClearTextBox();
             lineIndex++;
         }
     }

@@ -19,6 +19,7 @@ public class SpriteAnimation<T>
     public int repeatTimes = 1;
     public float delay;
     public List<SpriteAnimationKeyFrame<T>> frames = new();
+    public Ease ease = Ease.OutQuad;
 }
 
 public class ComicAnimatedSprite : MonoBehaviour
@@ -69,7 +70,7 @@ public class ComicAnimatedSprite : MonoBehaviour
 
                 rectTransform.anchoredPosition = startKeyFrame.attribute;
 
-                rectTransform.DOAnchorPos(endKeyFrame.attribute, endKeyFrame.duration).SetEase(Ease.Linear)
+                rectTransform.DOAnchorPos(endKeyFrame.attribute, endKeyFrame.duration).SetEase(spriteAnimation.ease)
                     .SetLink(rectTransform.gameObject);
 
                 yield return new WaitForSeconds(endKeyFrame.duration);
@@ -100,8 +101,7 @@ public class ComicAnimatedSprite : MonoBehaviour
                 rectTransform.localRotation = Quaternion.Euler(new Vector3(0, 0, startKeyFrame.attribute));
 
                 rectTransform.DOLocalRotate(new Vector3(0, 0, endKeyFrame.attribute), endKeyFrame.duration)
-                    .SetLink(rectTransform.gameObject);
-                ;
+                    .SetLink(rectTransform.gameObject).SetEase(spriteAnimation.ease);
 
                 yield return new WaitForSeconds(endKeyFrame.duration);
             }
@@ -131,7 +131,7 @@ public class ComicAnimatedSprite : MonoBehaviour
                 rectTransform.localScale = startKeyFrame.attribute;
 
                 rectTransform.DOScale(endKeyFrame.attribute, endKeyFrame.duration)
-                    .SetLink(rectTransform.gameObject);
+                    .SetLink(rectTransform.gameObject).SetEase(spriteAnimation.ease);
 
                 yield return new WaitForSeconds(endKeyFrame.duration);
             }
@@ -162,7 +162,7 @@ public class ComicAnimatedSprite : MonoBehaviour
                 image.color = startKeyFrame.attribute;
 
                 image.DOColor(endKeyFrame.attribute, endKeyFrame.duration)
-                    .SetLink(image.gameObject);
+                    .SetLink(image.gameObject).SetEase(spriteAnimation.ease);
 
                 yield return new WaitForSeconds(endKeyFrame.duration);
             }

@@ -76,13 +76,18 @@ public class ProgressManager : MonoBehaviour
 
         CameraManager.instance.player.transform.position =
             new Vector3(data.playerPosition[0], data.playerPosition[1], data.playerPosition[2]);
-        ;
         CameraManager.instance.cameraTransform.localPosition =
             new Vector3(data.cameraPosition[0], data.cameraPosition[1], data.cameraPosition[2]);
         CameraManager.instance.cameraTransform.localRotation =
             Quaternion.Euler(new Vector3(data.cameraRotation[0], data.cameraRotation[1], data.cameraRotation[2]));
 
-        if(WorldManager.instance.currentRoom != null)
+        if (!data.isAfterStartText)
+        {
+            Room room = ((WorldEvent)currentGameEvent).startRoom;
+            yield return WorldManager.instance.LoadRoom(room, null);
+            currentGameEvent.OnStart();
+        }
+        else if (WorldManager.instance.currentRoom != null)
            WorldManager.instance.Initialize();
     }
 

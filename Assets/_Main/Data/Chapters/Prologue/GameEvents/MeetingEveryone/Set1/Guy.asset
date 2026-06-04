@@ -103,7 +103,8 @@ MonoBehaviour:
       data:
         text: "\u05D0\u05D6 \u05DC\u05DE\u05D4 \u05D0\u05EA\u05D4 \u05E2\u05D3\u05D9\u05D9\u05DF
           \u05DB\u05D0\u05DF?\r\n"
-        commands: []
+        commands:
+        - rid: 7091799890995970077
     - rid: 7091799571838271617
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -152,7 +153,8 @@ MonoBehaviour:
           \u05E8\u05D5\u05D6\u05E0\u05E4\u05DC\u05D3. \u05D4\u05E0\u05D4, \u05D4\u05DB\u05E8\u05E0\u05D5.
           \u05E2\u05DB\u05E9\u05D9\u05D5 \u05EA\u05EA\u05D2\u05D6\u05D2\u05D6 \u05DE\u05E4\u05D4
           \u05D1\u05D1\u05E7\u05E9\u05D4.\r\n"
-        commands: []
+        commands:
+        - rid: 7091799890995970064
     - rid: 7091799571838271621
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -176,7 +178,8 @@ MonoBehaviour:
         text: "\u05D0\u05EA\u05D4 \u05DE\u05EA\u05DB\u05D5\u05D5\u05DF \u05DC\u05D4\u05D9\u05E9\u05D0\u05E8
           \u05DB\u05D0\u05DF \u05DB\u05DC \u05D4\u05D9\u05D5\u05DD? \u05EA\u05E4\u05E1\u05D9\u05E7
           \u05DC\u05D1\u05D6\u05D1\u05D6 \u05DC\u05D9 \u05D0\u05EA \u05D4\u05D6\u05DE\u05DF."
-        commands: []
+        commands:
+        - rid: 7091799890995970065
     - rid: 7091799571838271623
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -407,3 +410,20 @@ MonoBehaviour:
         character: {fileID: 11400000, guid: e518102ea47577a499c54e7bb8334338, type: 2}
         nameText: "\u05D2\u05D9\u05D0 \u05E8\u05D5\u05D6\u05E0\u05E4\u05DC\u05D3"
         descriptionText: "\u05E8\u05E2\"\u05E6 \u05EA\u05E7\u05E9\u05D5\u05D1"
+    - rid: 7091799890995970064
+      type: {class: PlaySoundEffectCommand, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        clip: {fileID: 8300000, guid: 7d7a4dd0a5fcef7478d40bfa0c5fca64, type: 3}
+        volume: 1
+    - rid: 7091799890995970065
+      type: {class: PlaySoundEffectCommand, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        clip: {fileID: 8300000, guid: eae782ee330fc2a4fa739b9dc43b10ba, type: 3}
+        volume: 1
+    - rid: 7091799890995970077
+      type: {class: ShakeScreen, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        isDramatic: 0

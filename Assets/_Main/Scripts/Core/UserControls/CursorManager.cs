@@ -45,7 +45,7 @@ public class CursorManager : MonoBehaviour
             if (currentInteractable != null)
             {
                 actualSpeed *= 4;
-                if (!currentInteractable.isAlreadyLooking && PlayerInputManager.instance.isInputActive)
+                if (!currentInteractable.isAlreadyLooking && PlayerInputManager.instance.isInputActive && !DialogueSystem.instance.isActive)
                 {
                     SoundManager.instance.PlaySoundEffect(hoverSound);
                     

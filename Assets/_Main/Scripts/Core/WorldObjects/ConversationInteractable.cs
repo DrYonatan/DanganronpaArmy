@@ -1,11 +1,13 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public abstract class ConversationInteractable : Interactable
 {
+    public string id;
     public bool isClicked = false;
-    public VNConversationSegment text1;
-    public VNConversationSegment text2;
-
+    public int clickCount;
+    public List<VNConversationSegment> texts = new List<VNConversationSegment>();
+    
     protected override void FinishInteraction()
     {
         float duration = 0.5f;
@@ -18,15 +20,9 @@ public abstract class ConversationInteractable : Interactable
 
     private void StartConversation()
     {
-        VNConversationSegment text = ScriptableObject.CreateInstance<VNConversationSegment>();
-        if (!isClicked || text2 == null)
-        {
-            text = text1;
-        }
-        else
-        {
-            text = text2;
-        }
+        VNConversationSegment text = texts[clickCount];
+        if (clickCount < texts.Count - 1)
+            clickCount++;
 
         VNNodePlayer.instance.StartConversation(text);
         isClicked = true;
