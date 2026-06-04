@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System.Text.RegularExpressions;
+using TMPro;
 using UnityEngine;
 
 public class SignUpMenu : TitleScreenSubMenu
@@ -10,18 +11,30 @@ public class SignUpMenu : TitleScreenSubMenu
 
     public void SignUp()
     {
-        if (passwordConfirmField.text.Equals(passwordField.text))
+        if (ValidateFields(emailField.text, usernameField.text, passwordField.text, passwordConfirmField.text))
         {
-            FirebaseManager.instance.SignUp(emailField.text, passwordField.text, (userId) =>
-            {
-                UserDataManager.instance.OnSignup(userId, usernameField.text);
-            });
-            
+            FirebaseManager.instance.SignUp(emailField.text, passwordField.text,
+                (userId) => { UserDataManager.instance.OnSignup(userId, usernameField.text); });
         }
         else
         {
-            
+            NotifyValidationFailed();
         }
+    }
+
+    bool ValidateFields(string email, string username, string password, string passwordConfirm)
+    {
+        return password.Length >= 6 && password == passwordConfirm && !username.Equals("") && ValidateEmail(email);
+    }
+
+    bool ValidateEmail(string email)
+    {
+        return Regex.IsMatch(email, "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/");
+    }
+
+    void NotifyValidationFailed()
+    {
+        
     }
 
     public void FocusInput()

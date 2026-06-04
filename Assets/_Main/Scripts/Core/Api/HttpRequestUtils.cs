@@ -23,7 +23,6 @@ public class HttpRequestUtils
                     break;
                 case UnityWebRequest.Result.Success:
                     Debug.Log("Successful Get Request");
-                    Debug.Log(webRequest.downloadHandler.text);
                     T data = JsonConvert.DeserializeObject<T>(webRequest.downloadHandler.text);
                     callback.Invoke(data);
                     break;

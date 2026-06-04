@@ -144,7 +144,6 @@ public class EvidenceMenu : MenuScreen
         gameObject.SetActive(true);
         currentEvidenceIndex = 0;
         UpdateUI();
-
         bool isOpen = false;
 
         while (PlayerInputManager.instance.DefaultInput())
@@ -161,15 +160,11 @@ public class EvidenceMenu : MenuScreen
                 {
                     questionBubble.Close();
                 }
-
                 isOpen = false;
             }
-
             yield return null;
         }
-
         questionBubble.gameObject.SetActive(false);
-
         Close();
         Evidence currentEvidence = EvidenceManager.instance.evidenceList[currentEvidenceIndex];
         yield return onFinish(currentEvidence);
