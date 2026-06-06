@@ -71,7 +71,7 @@ public class VirutalCameraManager : MonoBehaviour
         while (elapsedTime < duration)
         {
             elapsedTime += Time.deltaTime;
-            position += Time.deltaTime;
+            position += 2f * Time.deltaTime / duration;
             dolly.m_PathPosition = position;
             yield return null;
         }

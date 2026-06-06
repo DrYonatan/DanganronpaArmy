@@ -10,6 +10,7 @@ public class PointAndClickRoom : Room
     public string exitLocation;
 
     [SerializeField] float cameraDollySpeed = 2f;
+    public float dollyDuration = 3f;
 
     public float rotationSpeed = 100f; // Adjust rotation speed
     public float borderUp = -10f;
@@ -33,7 +34,7 @@ public class PointAndClickRoom : Room
     {
         if (hasStartAnimation)
         {
-            yield return VirutalCameraManager.instance.SlideAcrossRoom(3f,
+            yield return VirutalCameraManager.instance.SlideAcrossRoom(dollyDuration,
                 GameObject.Find("World/TrackSlidingPos").transform.position);
             yield return new WaitForSeconds(0.2f);
         }

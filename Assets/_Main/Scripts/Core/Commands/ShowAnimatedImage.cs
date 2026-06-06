@@ -16,6 +16,7 @@ public class ShowAnimatedImage : Command
 #if UNITY_EDITOR
     public override void DrawGUI()
     {
+        base.DrawGUI();
         imageWrapper =
             (VNAnimatedImageWrapper)EditorGUILayout.ObjectField("Image", imageWrapper, typeof(VNAnimatedImageWrapper),
                 false);
