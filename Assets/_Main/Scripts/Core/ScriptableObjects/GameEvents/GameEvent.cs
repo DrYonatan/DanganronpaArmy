@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,6 +6,7 @@ public abstract class GameEvent: ScriptableObject
 {
     public TimeOfDay timeOfDay;
     public List<RoomData> roomDatas;
+    public Room startRoom;
 
     public abstract void OnStart();
 
@@ -28,5 +30,30 @@ public abstract class GameEvent: ScriptableObject
         }
         
         ImageScript.instance.UnFadeToBlack(0.1f);
+    }
+    
+    protected IEnumerator StartWithRoomLoad()
+    {
+        Room roomToLoad;
+
+        if (startRoom != null &&
+            WorldManager.instance.currentRoom?.roomName != startRoom.roomName)
+            roomToLoad = startRoom;
+        else
+        {
+            roomToLoad = WorldManager.instance.currentRoom;
+        }
+
+        if (roomToLoad != null && WorldManager.instance.currentTime != timeOfDay ||
+            roomToLoad != WorldManager.instance.currentRoom)
+        {
+            WorldManager.instance.currentRoom = roomToLoad;
+            yield return TimeOfDayManager.instance.ChangeTimeOfDay(timeOfDay);
+            yield return WorldManager.instance.LoadRoom(WorldManager.instance.currentRoom, null);
+        }
+
+        OnRoomLoad();
+        WorldManager.instance.charactersObject?
+            .AnimateCharacters();
     }
 }

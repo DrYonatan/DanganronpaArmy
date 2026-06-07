@@ -4,13 +4,14 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Game Events/Point And Click Event")]
 public class PointAndClickEvent : WorldEvent
 {
+    public List<string> requiredObjects;
     private bool AreAllClicked(Dictionary<string, ObjectData>.ValueCollection datas)
     {
         bool finished = true;
 
         foreach (ObjectData data in datas)
         {
-            if (!data.isClicked)
+            if (!data.isClicked && requiredObjects.Contains(data.id))
                 finished = false;
         }
 

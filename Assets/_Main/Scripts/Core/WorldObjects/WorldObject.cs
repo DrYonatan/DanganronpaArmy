@@ -6,7 +6,7 @@ public class WorldObject : ConversationInteractable
 
         if (ProgressManager.instance.currentGameEvent != null)
         {
-            ((WorldEvent)ProgressManager.instance.currentGameEvent).objectsData[name] = new ObjectData(isClicked, clickCount);
+            ((WorldEvent)ProgressManager.instance.currentGameEvent).objectsData[name] = new ObjectData(id, isClicked, clickCount);
         }
     }
 }

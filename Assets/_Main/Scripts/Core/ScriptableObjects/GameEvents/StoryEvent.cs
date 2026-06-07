@@ -1,4 +1,5 @@
 
+using System.Collections;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Game Events/Story Event")]
@@ -8,7 +9,13 @@ public class StoryEvent : GameEvent
     
     public override void OnStart()
     {
+        WorldManager.instance.StartCoroutine(StartRoutine());
+    }
+
+    private IEnumerator StartRoutine()
+    {
         ImageScript.instance.UnFadeToBlack(0.1f);
+        yield return StartWithRoomLoad();
         VNNodePlayer.instance.StartConversation(conversation);
     }
 

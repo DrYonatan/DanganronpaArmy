@@ -7,12 +7,13 @@ using UnityEngine;
 [Serializable]
 public class ObjectData
 {
+    public string id;
     public bool isClicked;
     public int clickCount;
-    public bool isRequired;
 
-    public ObjectData(bool isClicked, int clickCount)
+    public ObjectData(string id, bool isClicked, int clickCount)
     {
+        this.id = id;
         this.isClicked = isClicked;
         this.clickCount = clickCount;
     }
@@ -51,9 +52,7 @@ public abstract class WorldEvent : GameEvent
     public Dictionary<string, ObjectData> charactersData = new Dictionary<string, ObjectData>();
 
     public Dictionary<string, ObjectData> objectsData = new Dictionary<string, ObjectData>();
-
-    public Room startRoom;
-
+    
     public override void OnStart()
     {
         WorldManager.instance.StartCoroutine(OnStartRoutine());
@@ -73,31 +72,6 @@ public abstract class WorldEvent : GameEvent
         }
         else
             CursorManager.instance.Show();
-    }
-
-    private IEnumerator StartWithRoomLoad()
-    {
-        Room roomToLoad;
-
-        if (startRoom != null &&
-            WorldManager.instance.currentRoom?.roomName != startRoom.roomName)
-            roomToLoad = startRoom;
-        else
-        {
-            roomToLoad = WorldManager.instance.currentRoom;
-        }
-
-        if (WorldManager.instance.currentTime != timeOfDay ||
-            roomToLoad != WorldManager.instance.currentRoom)
-        {
-            WorldManager.instance.currentRoom = roomToLoad;
-            yield return TimeOfDayManager.instance.ChangeTimeOfDay(timeOfDay);
-            yield return WorldManager.instance.LoadRoom(WorldManager.instance.currentRoom, null);
-        }
-
-        OnRoomLoad();
-        WorldManager.instance.charactersObject?
-            .AnimateCharacters();
     }
 
     protected virtual void OnFinish()
@@ -167,7 +141,7 @@ public abstract class WorldEvent : GameEvent
         {
             WorldCharacter worldCharacter = character.GetComponent<WorldCharacter>();
             charactersData[character.name] =
-                new ObjectData(worldCharacter.isClicked, worldCharacter.clickCount);
+                new ObjectData(worldCharacter.id, worldCharacter.isClicked, worldCharacter.clickCount);
         }
     }
 
@@ -210,7 +184,7 @@ public abstract class WorldEvent : GameEvent
                 WorldObject worldObject = obj.GetComponent<WorldObject>();
 
                 objectsData[obj.name] =
-                    new ObjectData(worldObject.isClicked, worldObject.clickCount);
+                    new ObjectData(worldObject.id, worldObject.isClicked, worldObject.clickCount);
             }
         }
 
@@ -219,7 +193,7 @@ public abstract class WorldEvent : GameEvent
                      .interactables) // Add all normal room interactables to the dictionary as well
         {
             objectsData[interactable.name] =
-                new ObjectData(interactable.isClicked, interactable.clickCount);
+                new ObjectData(interactable.id, interactable.isClicked, interactable.clickCount);
         }
     }
 
