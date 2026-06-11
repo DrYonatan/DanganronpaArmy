@@ -22,11 +22,11 @@ public class CharacterClickEffects : MonoBehaviour
             DestroyImmediate(gameObject);
     }
 
-    public void Interact(Transform characterTransform)
+    public IEnumerator Interact(Transform characterTransform)
     {
         if (!isRunning && !DialogueSystem.instance.isActive)
         {
-            StartCoroutine(HopCharacter(characterTransform));
+            yield return HopCharacter(characterTransform);
             MakeCharactersDisappear(characterTransform.parent.GetComponent<WorldCharactersParent>(), 1f);
         }
     }

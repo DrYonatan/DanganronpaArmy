@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using CHARACTERS;
+using DG.Tweening;
 using UnityEngine;
 using DIALOGUE;
 
@@ -88,16 +89,8 @@ public class CameraManager : MonoBehaviour
 
     public IEnumerator MoveCameraTo(Vector3 location, float duration)
     {
-        Vector3 startPos = cameraTransform.position;
-
-        float elapsedTime = 0;
-
-        while (elapsedTime < duration)
-        {
-            cameraTransform.position = Vector3.Lerp(startPos, location, elapsedTime / duration);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
+        cameraTransform.DOMove(location, duration).SetEase(Ease.OutQuad);
+        yield return new WaitForSeconds(duration);
 
         cameraTransform.position = location; // Ensure the camera reaches the exact target position
     }

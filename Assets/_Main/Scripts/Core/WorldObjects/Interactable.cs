@@ -28,7 +28,7 @@ public abstract class Interactable : MonoBehaviour
 
     private IEnumerator MoveAndRotateCameraTo()
     {
-        float duration = 0.5f;
+        float duration = 0.8f;
         Quaternion targetRotation =
             Quaternion.LookRotation(transform.position - CameraManager.instance.cameraTransform.position, Vector3.up);
 
