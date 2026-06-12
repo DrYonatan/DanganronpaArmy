@@ -112,6 +112,7 @@ public class ImageScript : MonoBehaviour
     public void CreateAnimatedImage(VNAnimatedImage image)
     {
         animatedImage = Instantiate(image, animatedImageContainer.transform);
+        DialogueSystem.instance.TextBoxDisappear();
         animatedImageContainer.DOFade(1f, 0.2f).SetEase(Ease.Linear);
         GameStateManager.instance.uiState.animatedImage = new AnimatedImageState
             { prefabId = image.name, currentStateIndex = 0, visible = true };
@@ -121,10 +122,12 @@ public class ImageScript : MonoBehaviour
     {
         if (animatedImage == null)
             yield break;
-
+        
+        DialogueSystem.instance.TextBoxDisappear();
         GameStateManager.instance.uiState.animatedImage.currentStateIndex++;
 
         yield return animatedImage.ForwardSegment();
+        DialogueSystem.instance.TextBoxAppear();
     }
 
     public void RemoveAnimatedImage(float duration)
@@ -134,7 +137,7 @@ public class ImageScript : MonoBehaviour
 
         GameStateManager.instance.uiState.animatedImage = new AnimatedImageState
             { prefabId = "", currentStateIndex = 0, visible = false };
-
+        
         animatedImageContainer.DOFade(0f, duration).SetEase(Ease.Linear)
             .OnComplete(() => Destroy(animatedImage.gameObject));
     }

@@ -18,7 +18,7 @@ public abstract class ConversationInteractable : Interactable
         StartConversation();
     }
 
-    private void StartConversation()
+    protected void StartConversation()
     {
         VNConversationSegment text = texts[clickCount];
         if (clickCount < texts.Count - 1)

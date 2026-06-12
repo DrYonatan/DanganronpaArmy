@@ -144,6 +144,8 @@ public class FreeRoamRoom : Room
 
     public override void OnConversationEnd()
     {
+        verticalRotation = CameraManager.instance.cameraTransform.localRotation.eulerAngles.x;
+        horizontalRotation = CameraManager.instance.cameraTransform.localRotation.eulerAngles.y;
         CameraManager.instance.cameraTransform.DOLocalMove(Vector3.zero, 0.5f);
     }
 

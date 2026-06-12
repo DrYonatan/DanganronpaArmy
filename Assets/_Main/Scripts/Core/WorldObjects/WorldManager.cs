@@ -17,6 +17,7 @@ public class WorldManager : MonoBehaviour
 
     public TimeOfDay currentTime;
 
+    public VNConversationSegment unallowedRoomText;
     public static WorldManager instance { get; private set; }
 
     public Transform talkPosition;

@@ -19,7 +19,12 @@ public class WorldCharacter : ConversationInteractable
         CameraManager.instance.StartCameraCoroutine(CameraManager.instance.RotateCameraTo(targetRotation, 0.5f));
         CameraManager.instance.initialRotation = transform.rotation;
         
-        base.FinishInteraction();
+        float duration = 0.5f;
+        Vector3 targetPosition =
+            Vector3.Lerp(CameraManager.instance.cameraTransform.position, transform.position + Vector3.up * 0.5f, 0.75f);
+        CameraManager.instance.StartCameraCoroutine(CameraManager.instance.MoveCameraTo(targetPosition, duration));
+
+        StartConversation();
         
         if (ProgressManager.instance.currentGameEvent != null)
         {

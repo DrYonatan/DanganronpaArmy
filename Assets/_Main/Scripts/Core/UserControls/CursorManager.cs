@@ -18,6 +18,8 @@ public class CursorManager : MonoBehaviour
     public AudioClip hoverSound;
     private Coroutine fadeCoroutine;
     public bool isHovering = false;
+    public AudioSource hoverAudioSource;
+    public bool isActive;
 
 
     public static CursorManager instance { get; private set; }
@@ -25,6 +27,8 @@ public class CursorManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        hoverAudioSource = GetComponent<AudioSource>();
+        hoverAudioSource.clip = hoverSound;
         instance = this;
         canvasGroup = cursor.GetComponent<CanvasGroup>();
         Hide();
@@ -38,6 +42,8 @@ public class CursorManager : MonoBehaviour
 
     protected virtual void ManageHover()
     {
+        if (!isActive)
+            return;
         int actualSpeed = speed;
         if (WorldManager.instance != null)
         {
@@ -45,10 +51,9 @@ public class CursorManager : MonoBehaviour
             if (currentInteractable != null)
             {
                 actualSpeed *= 4;
-                if (!currentInteractable.isAlreadyLooking && PlayerInputManager.instance.isInputActive && !DialogueSystem.instance.isActive)
+                if (!currentInteractable.isAlreadyLooking)
                 {
-                    SoundManager.instance.PlaySoundEffect(hoverSound);
-                    
+                    hoverAudioSource.Play();
                 }
                 currentInteractable.OnLook();
             }
@@ -76,12 +81,14 @@ public class CursorManager : MonoBehaviour
 
     public void Hide()
     {
+        isActive = false;
         if(cursor.gameObject.activeSelf)
            canvasGroup.DOFade(0f, 0.1f).OnComplete(() => cursor.gameObject.SetActive(false));
     }
 
     public void Show()
     {
+        isActive = true;
         cursor.gameObject.SetActive(true);
         canvasGroup.DOFade(1f, 0.1f);
     }

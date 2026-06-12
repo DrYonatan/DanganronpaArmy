@@ -87,9 +87,9 @@ public class CameraManager : MonoBehaviour
         isInFinalRotation = true;
     }
 
-    public IEnumerator MoveCameraTo(Vector3 location, float duration)
+    public IEnumerator MoveCameraTo(Vector3 location, float duration, Ease ease = Ease.OutQuad)
     {
-        cameraTransform.DOMove(location, duration).SetEase(Ease.OutQuad);
+        cameraTransform.DOMove(location, duration).SetEase(ease);
         yield return new WaitForSeconds(duration);
 
         cameraTransform.position = location; // Ensure the camera reaches the exact target position

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using DIALOGUE;
 using Cinemachine;
@@ -66,16 +67,19 @@ public class PointAndClickRoom : Room
 
         if (Input.GetKey(KeyCode.R))
         {
-            if (!WorldManager.instance.currentRoomData.isExitable)
+            if (!WorldManager.instance.currentRoomData.isExitable || ProgressManager.instance.currentGameEvent.roomDatas.All(item =>
+                    item.room.roomName != exitRoom.roomName))
             {
                 WorldEvent currentEvent = ProgressManager.instance.currentGameEvent as WorldEvent;
                 if (currentEvent == null)
                     return;
 
-                if (currentEvent.unallowedText != null)
-                    VNNodePlayer.instance.StartConversation(currentEvent.unallowedText);
+                VNConversationSegment unallowed = currentEvent.unallowedText
+                    ? currentEvent.unallowedText
+                    : WorldManager.instance.unallowedRoomText;
+                
+                VNNodePlayer.instance.StartConversation(unallowed);
             }
-
             else
             {
                 WorldManager.instance.StartLoadingRoom(exitRoom, exitLocation);
