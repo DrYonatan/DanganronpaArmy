@@ -27,7 +27,6 @@ public class CursorManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        hoverAudioSource = GetComponent<AudioSource>();
         hoverAudioSource.clip = hoverSound;
         instance = this;
         canvasGroup = cursor.GetComponent<CanvasGroup>();

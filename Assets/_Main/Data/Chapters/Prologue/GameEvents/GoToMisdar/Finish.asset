@@ -218,6 +218,7 @@ MonoBehaviour:
   - rid: 7091799823152578733
   - rid: 7091799890995970048
   - rid: 7091799823152578734
+  - rid: 4526379599746564097
   references:
     version: 2
     RefIds:
@@ -226,6 +227,7 @@ MonoBehaviour:
       data:
         executeTime: 1
         imageWrapper: {fileID: 11400000, guid: 01a9dc78f3c155e409fcae60914dcb8d, type: 2}
+        duration: 0.2
     - rid: 4526379438620540929
       type: {class: ForwardAnimatedImage, ns: , asm: Assembly-CSharp}
       data:
@@ -240,6 +242,7 @@ MonoBehaviour:
       data:
         executeTime: 1
         imageWrapper: {fileID: 11400000, guid: 713d4e34293a1344f90aecc16d32998e, type: 2}
+        duration: 0.2
     - rid: 4526379457057652737
       type: {class: ForwardAnimatedImage, ns: , asm: Assembly-CSharp}
       data:
@@ -249,6 +252,54 @@ MonoBehaviour:
       data:
         executeTime: 1
         duration: 0
+    - rid: 4526379599746564097
+      type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 134}
+        title: 
+        drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
+        character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
+        displayName: 
+        expressionIndex: 0
+        textData:
+          rid: 4526379599746564098
+    - rid: 4526379599746564098
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: 
+        commands:
+        - rid: 4526379599746564102
+        - rid: 4526379599746564103
+        - rid: 4526379599746564104
+        - rid: 4526379599746564105
+    - rid: 4526379599746564102
+      type: {class: PlayMusicCommand, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 1
+        music: {fileID: 0}
+        volume: 1
+        toggle: 0
+    - rid: 4526379599746564103
+      type: {class: ShowAnimatedImage, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 1
+        imageWrapper: {fileID: 11400000, guid: 0e7d26e6876938549a119d83150a7195, type: 2}
+        duration: 0
+    - rid: 4526379599746564104
+      type: {class: ForwardAnimatedImage, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 1
+    - rid: 4526379599746564105
+      type: {class: RemoveAnimatedImage, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 1
+        duration: 0.2
     - rid: 7091799823152578562
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:

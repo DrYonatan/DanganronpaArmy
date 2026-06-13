@@ -14,6 +14,7 @@ public class SpriteAnimationSegment
 public class VNAnimatedImage : MonoBehaviour
 {
     public int currentAnimationIndex;
+    public bool isCutscene; // If it's a cutscene image, the behaviour changes slightly to make the entire UI disappear and autoplay
     public List<SpriteAnimationSegment> animationSegments;
 
     public IEnumerator ForwardSegment()

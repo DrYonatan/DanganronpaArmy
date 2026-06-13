@@ -35,6 +35,8 @@ public class TextBoxAnimator : BasicTextBoxAnimator
 
     public override void TextBoxDisappear()
     {
+        if (!textBoxVisible)
+            return;
         textBoxVisible = false;
         DialogueSystem.instance.ClearTextBox();
         dialogueBoxCanvasGroup.alpha = 1f;
