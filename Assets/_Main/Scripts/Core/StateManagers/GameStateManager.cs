@@ -178,6 +178,11 @@ public class GameStateManager : MonoBehaviour
         chapterSegmentIndex = 0;
     }
 
+    public void ResetUIState()
+    {
+        uiState.backgroundImage = new ImageState();
+    }
+
     public void SetUIState(UIState state)
     {
         uiState = state;

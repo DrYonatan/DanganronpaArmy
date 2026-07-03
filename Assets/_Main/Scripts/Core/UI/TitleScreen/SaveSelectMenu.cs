@@ -27,7 +27,9 @@ public class SaveSelectMenu : TitleScreenSubMenu
             GenerateSaveSlot(i);
         }
 
-        confirmText.text = mode == SaveSlotButton.Mode.Save ? "האם תרצה לשמור על גבי שמירה זו?" : "האם תרצה לטעון שמירה זו?";
+        confirmText.text = mode == SaveSlotButton.Mode.Save
+            ? "האם תרצה לשמור על גבי שמירה זו?"
+            : "האם תרצה לטעון שמירה זו?";
     }
 
     private void Update()
@@ -37,7 +39,7 @@ public class SaveSelectMenu : TitleScreenSubMenu
             HandleConfirmPopup();
             return;
         }
-        
+
         if (Input.GetKeyDown(KeyCode.S))
         {
             buttons[currentItemIndex].DisableHover();
@@ -57,8 +59,8 @@ public class SaveSelectMenu : TitleScreenSubMenu
             SoundManager.instance.PlaySoundEffect(selectionSound);
             UpdateScroll();
         }
-        
-        
+
+
         if ((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) && !confirmPopupActive)
         {
             bool isSlotValid = ((SaveSlotButton)buttons[currentItemIndex]).CheckValidity();
@@ -66,7 +68,7 @@ public class SaveSelectMenu : TitleScreenSubMenu
             if (isSlotValid)
             {
                 buttons[currentItemIndex].Click();
-                OpenConfirmationPopup(); 
+                OpenConfirmationPopup();
             }
         }
     }
@@ -112,10 +114,11 @@ public class SaveSelectMenu : TitleScreenSubMenu
             {
                 LoadOrSave();
             }
+
             CloseConfirmationPopup();
         }
     }
-    
+
     private void LoadOrSave()
     {
         SaveSlotButton button = (SaveSlotButton)buttons[currentItemIndex];

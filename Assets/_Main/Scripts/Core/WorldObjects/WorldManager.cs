@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using DIALOGUE;
 using JetBrains.Annotations;
@@ -63,6 +64,7 @@ public class WorldManager : MonoBehaviour
         currentRoomModel.name = "World";
         currentRoomModel.gameObject.SetActive(true);
         talkPosition = currentRoomModel.talkPosition;
+        currentRoomModel.roomIntroEffects = currentRoomModel.GetComponentsInChildren<RoomIntroEffect>().ToList();
 
         GameObject objectsParent = GameObject.Find("World Objects");
         if (objectsParent != null)

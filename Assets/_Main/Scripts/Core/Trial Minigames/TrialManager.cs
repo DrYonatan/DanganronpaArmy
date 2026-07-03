@@ -44,6 +44,7 @@ public class TrialManager : MonoBehaviour
 
     public void StartNewTrial()
     {
+        GameStateManager.instance.ResetUIState();
         GameStateManager.instance.InitiateUIState();
         StartCoroutine(StartPipeline());
     }

@@ -32,7 +32,7 @@ public class SaveSlotButton : TitleScreenMenuButton
         data = SaveSystem.LoadGame(slot);
         if (data != null)
         {
-            List<Chapter> chapters = Resources.Load<ChaptersBank>("ChaptersBank").chapters;
+            List<Chapter> chapters = TitleScreenMainMenu.instance.chaptersBank.chapters;
             slotText.text = $"{slot} - {chapters[data.chapterIndex].chapterName}";
             if (data.saveTime != null)
             {

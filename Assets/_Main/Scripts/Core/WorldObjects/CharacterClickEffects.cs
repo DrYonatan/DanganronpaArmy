@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using DIALOGUE;
 
@@ -72,30 +73,33 @@ public class CharacterClickEffects : MonoBehaviour
     {
         isRunning = true;
 
-        float elapsedTime = 0;
-        float duration = 0.25f;
-
-        Vector3 addPos = new Vector3(0, 4, 0);
+        float duration = 0.3f;
 
         Vector3 startPos = characterTransform.position;
-        Vector3 targetPos = startPos + addPos; // Adjust this vector to change the direction
 
-        while (elapsedTime < duration)
-        {
-            characterTransform.position = Vector3.Lerp(startPos, targetPos, elapsedTime / duration);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
+        Sequence seq = DOTween.Sequence();
 
-        elapsedTime = 0;
-        while (elapsedTime < duration)
-        {
-            characterTransform.position = Vector3.Lerp(targetPos, startPos, elapsedTime / duration);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
+        seq.Append(characterTransform.DOMoveY(startPos.y + 1.2f, 0.18f)
+            .SetEase(Ease.OutQuad));
 
-        characterTransform.position = startPos; // esnures it ends up in the initial position
+        seq.Append(characterTransform.DOMoveY(startPos.y, 0.12f)
+            .SetEase(Ease.InQuad));
+
+        seq.Append(characterTransform.DOMoveY(startPos.y + 0.7f, 0.12f)
+            .SetEase(Ease.OutQuad));
+
+        seq.Append(characterTransform.DOMoveY(startPos.y, 0.10f)
+            .SetEase(Ease.InQuad));
+
+        seq.Append(characterTransform.DOMoveY(startPos.y + 0.2f, 0.08f)
+            .SetEase(Ease.OutQuad));
+
+        seq.Append(characterTransform.DOMoveY(startPos.y, 0.08f)
+            .SetEase(Ease.InQuad));
+
+        yield return new WaitForSeconds(duration);
+
+        characterTransform.position = startPos;
         isRunning = false;
     }
 

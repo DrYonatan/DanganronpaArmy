@@ -13,6 +13,8 @@ public class TitleScreenMainMenu : MonoBehaviour
     public TitleScreenSubMenu activeSubMenu;
     private Stack<TitleScreenSubMenu> subMenuStack = new();
 
+    public ChaptersBank chaptersBank;
+
     public Image donkey;
     public Image konga;
     public Image underlay;
@@ -30,6 +32,7 @@ public class TitleScreenMainMenu : MonoBehaviour
     void Awake()
     {
         instance = this;
+        chaptersBank = Resources.Load<ChaptersBank>("ChaptersBank");
         subMenuStack.Push(activeSubMenu);
         Cursor.lockState = CursorLockMode.Locked;
         StartAnimation();

@@ -7,13 +7,19 @@ public abstract class ConversationInteractable : Interactable
     public bool isClicked = false;
     public int clickCount;
     public List<VNConversationSegment> texts = new List<VNConversationSegment>();
+    public Transform lookPosition;
     
     protected override void FinishInteraction()
     {
         float duration = 0.5f;
         Vector3 targetPosition =
-            Vector3.Lerp(CameraManager.instance.cameraTransform.position, transform.position, 0.75f);
+            lookPosition?.position ?? Vector3.Lerp(CameraManager.instance.cameraTransform.position, transform.position, 0.75f);
         CameraManager.instance.StartCameraCoroutine(CameraManager.instance.MoveCameraTo(targetPosition, duration));
+        if (lookPosition != null)
+        {
+            CameraManager.instance.StartCameraCoroutine(CameraManager.instance.RotateCameraTo(lookPosition.rotation, duration));
+            CameraManager.instance.initialRotation = lookPosition.rotation;
+        }
 
         StartConversation();
     }
