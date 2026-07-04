@@ -60,7 +60,7 @@ public class ProgressManager : MonoBehaviour
 
         GameStateManager.instance.UpdateChapterIndexes(data.chapterIndex, data.chapterSegmentIndex);
         VNUIAnimator.instance.chapterNameText.text = GameStateManager.instance.GetCurrentChapter().chapterName;
-        
+
         yield return TimeOfDayManager.instance.ChangeTimeOfDay(data.timeOfDay);
 
         LoadGameEvents(GameStateManager.instance.GetCurrentChapterSegment());
@@ -70,7 +70,7 @@ public class ProgressManager : MonoBehaviour
         WorldManager.instance.currentRoom = Resources.Load<Room>($"Rooms/{data.currentRoom}");
         MusicManager.instance.PlaySong(Resources.Load<AudioClip>($"Audio/Music/{data.currentMusic}"));
         currentGameEvent.LoadSave(data);
-        
+
         GameStateManager.instance.SetUIState(data.uiState);
         GameStateManager.instance.InitiateUIState();
 
@@ -80,15 +80,16 @@ public class ProgressManager : MonoBehaviour
             new Vector3(data.cameraPosition[0], data.cameraPosition[1], data.cameraPosition[2]);
         CameraManager.instance.cameraTransform.localRotation =
             Quaternion.Euler(new Vector3(data.cameraRotation[0], data.cameraRotation[1], data.cameraRotation[2]));
-
+        
         if (!data.isAfterStartText)
         {
-            Room room = ((WorldEvent)currentGameEvent).startRoom;
+            Room room = ((WorldEvent)currentGameEvent)
+                .startRoom; // To get to this point, there must be a startRoom as it means the event is in a brand new VN segment
             yield return WorldManager.instance.LoadRoom(room, null);
             currentGameEvent.OnStart();
         }
         else if (WorldManager.instance.currentRoom != null)
-           WorldManager.instance.Initialize();
+            WorldManager.instance.Initialize();
     }
 
     public IEnumerator StartNewVnSegment()

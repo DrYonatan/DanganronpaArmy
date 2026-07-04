@@ -13,7 +13,7 @@ public abstract class ConversationInteractable : Interactable
     {
         float duration = 0.5f;
         Vector3 targetPosition =
-            lookPosition?.position ?? Vector3.Lerp(CameraManager.instance.cameraTransform.position, transform.position, 0.75f);
+            lookPosition != null ? lookPosition.position : Vector3.Lerp(CameraManager.instance.cameraTransform.position, transform.position, 0.75f);
         CameraManager.instance.StartCameraCoroutine(CameraManager.instance.MoveCameraTo(targetPosition, duration));
         if (lookPosition != null)
         {

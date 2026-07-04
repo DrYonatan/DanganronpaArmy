@@ -29,6 +29,13 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: 6299373791637667951
+      type: {class: PlayMusicCommand, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        music: {fileID: 0}
+        volume: 1
+        toggle: 0
     - rid: 7091799617966440454
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -53,7 +60,8 @@ MonoBehaviour:
           \u05E7\u05E6\u05EA \u05DB\u05DE\u05D5 \u05E4\u05D9\u05E0\u05EA \u05E2\u05D9\u05E9\u05D5\u05DF.
           \u05D4\u05D9\u05D5 \u05E9\u05DD \u05E1\u05E4\u05E1\u05DC\u05D9\u05DD, \u05D3\u05E9\u05D0
           \u05E1\u05D9\u05E0\u05EA\u05D8\u05D9\u2026)\r"
-        commands: []
+        commands:
+        - rid: 6299373791637667951
     - rid: 7091799617966440457
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -276,6 +284,7 @@ MonoBehaviour:
       data:
         executeTime: 0
         imageWrapper: {fileID: 11400000, guid: 8ac83c22ccb7be248a6c88359ed1f665, type: 2}
+        duration: 0.2
     - rid: 7091799778857844739
       type: {class: ForwardAnimatedImage, ns: , asm: Assembly-CSharp}
       data:

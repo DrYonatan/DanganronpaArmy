@@ -27,7 +27,7 @@ public class ShakeScreen : Command
 
         GameObject character = VNCharacterManager.instance.GetSpeakerObject();
 
-        character.transform.DOShakePosition(
+        character?.transform.DOShakePosition(
             duration: 0.6f,
             strength: new Vector3(26f, 23f, 0f),
             vibrato: 50,

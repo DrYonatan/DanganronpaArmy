@@ -62,7 +62,9 @@ namespace CHARACTERS
 
         public GameObject GetSpeakerObject()
         {
-            return characterObjects[currentSpeaker];
+            if(currentSpeaker != null)
+               return characterObjects[currentSpeaker];
+            return null;
         }
 
         public void HideAllCharacters()

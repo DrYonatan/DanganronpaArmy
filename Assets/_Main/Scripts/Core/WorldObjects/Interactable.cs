@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using DIALOGUE;
 using UnityEngine;
 
@@ -10,7 +9,6 @@ public abstract class Interactable : MonoBehaviour
     {
         StartCoroutine(DoInteraction());
     }
-
     private IEnumerator DoInteraction()
     {
         if (!CursorManager.instance.cursor.gameObject.activeInHierarchy)

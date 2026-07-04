@@ -84,7 +84,7 @@ namespace DIALOGUE
             if (string.IsNullOrEmpty(originalText))
                 return "";
 
-            string replaced = originalText.ToLower().Replace(">", "</color>").Replace("<g", "<color=#2EF03B>")
+            string replaced = originalText.Replace(">", "</color>").Replace("<g", "<color=#2EF03B>")
                 .Replace("<o", "<color=#F0BC2E>")
                 .Replace("<b", "<color=#2EB3F0>")
                 .Replace("(", "<color=#2EB3F0>").Replace(")", "</color>");
