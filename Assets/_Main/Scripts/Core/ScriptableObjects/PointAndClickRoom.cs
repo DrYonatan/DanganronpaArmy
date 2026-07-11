@@ -26,6 +26,7 @@ public class PointAndClickRoom : Room
 
     public override IEnumerator OnLoad()
     {
+        pitch = 0;
         VirutalCameraManager.instance
             .AssignVirtualCamera(); // Important, this must happen before the call to base, because base.OnLoad() yield returns null (meaning it waits for one frame), and this is problematic when loading a save, the extra frame before the vCam is disabled causes the master camera's position to change
         yield return base.OnLoad();
@@ -67,7 +68,8 @@ public class PointAndClickRoom : Room
 
         if (Input.GetKey(KeyCode.R))
         {
-            if (!WorldManager.instance.currentRoomData.isExitable || ProgressManager.instance.currentGameEvent.roomDatas.All(item =>
+            if (!WorldManager.instance.currentRoomData.isExitable ||
+                ProgressManager.instance.currentGameEvent.roomDatas.All(item =>
                     item.room.roomName != exitRoom.roomName))
             {
                 WorldEvent currentEvent = ProgressManager.instance.currentGameEvent as WorldEvent;
@@ -77,7 +79,7 @@ public class PointAndClickRoom : Room
                 VNConversationSegment unallowed = currentEvent.unallowedText
                     ? currentEvent.unallowedText
                     : WorldManager.instance.unallowedRoomText;
-                
+
                 VNNodePlayer.instance.StartConversation(unallowed);
             }
             else

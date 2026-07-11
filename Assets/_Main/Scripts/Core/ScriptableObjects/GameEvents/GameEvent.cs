@@ -7,7 +7,7 @@ public abstract class GameEvent: ScriptableObject
     public TimeOfDay timeOfDay;
     public List<RoomData> roomDatas;
     public Room startRoom;
-
+    public AudioClip startMusic;
     public abstract void OnStart();
 
     public abstract void CheckIfFinished();
@@ -49,6 +49,10 @@ public abstract class GameEvent: ScriptableObject
         {
             WorldManager.instance.currentRoom = roomToLoad;
             yield return TimeOfDayManager.instance.ChangeTimeOfDay(timeOfDay);
+            
+            if(startMusic != null)
+                MusicManager.instance.PlaySong(startMusic);
+            
             yield return WorldManager.instance.LoadRoom(WorldManager.instance.currentRoom, null);
         }
 

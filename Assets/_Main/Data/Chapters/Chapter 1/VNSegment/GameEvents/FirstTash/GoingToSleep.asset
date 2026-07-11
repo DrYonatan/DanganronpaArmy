@@ -741,7 +741,7 @@ MonoBehaviour:
           y: 0
           width: 0
           height: 0
-        commandsScrollPosition: {x: 0, y: 0}
+        commandsScrollPosition: {x: 0, y: 40}
         title: 
         drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
         character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
@@ -826,7 +826,7 @@ MonoBehaviour:
           y: 0
           width: 0
           height: 0
-        commandsScrollPosition: {x: 0, y: 20}
+        commandsScrollPosition: {x: 0, y: 90}
         title: 
         drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
         character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
@@ -1028,6 +1028,7 @@ MonoBehaviour:
         text: "*\u05D0\u05D4\u05D4\u05D4\u05D4!!!!*"
         commands:
         - rid: 6299373791637667860
+        - rid: 6299373828777181184
     - rid: 6299373774075855044
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -1088,6 +1089,7 @@ MonoBehaviour:
         text: "(\u05D4\u05E6\u05E8\u05D7\u05D4 *\u05D4\u05E4\u05E1\u05D9\u05E7\u05D4*.)"
         commands:
         - rid: 6299373774075855112
+        - rid: 6299373938093588480
     - rid: 6299373774075855054
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -1123,6 +1125,7 @@ MonoBehaviour:
         commands:
         - rid: 6299373774075855114
         - rid: 6299373774075855115
+        - rid: 6299373938093588481
     - rid: 6299373774075855059
       type: {class: HideSpeaker, ns: , asm: Assembly-CSharp}
       data:
@@ -1215,3 +1218,20 @@ MonoBehaviour:
       data:
         executeTime: 0
         isDramatic: 1
+    - rid: 6299373828777181184
+      type: {class: PlaySoundEffectCommand, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        clip: {fileID: 8300000, guid: 6513da38d287ab546a455b018dfb0118, type: 3}
+        volume: 1
+    - rid: 6299373938093588480
+      type: {class: ShowImage, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        image: {fileID: 21300000, guid: 23ec6c5a6520d01479ba76a83750fc0f, type: 3}
+        flash: 0
+    - rid: 6299373938093588481
+      type: {class: RemoveImage, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        flash: 0

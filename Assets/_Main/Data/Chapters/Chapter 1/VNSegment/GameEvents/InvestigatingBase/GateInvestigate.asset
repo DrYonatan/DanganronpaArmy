@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e702305ac47c4740809bde9fdb0fae5, type: 3}
+  m_Name: GateInvestigate
+  m_EditorClassIdentifier: 
+  timeOfDay: 1
+  roomDatas:
+  - room: {fileID: 11400000, guid: 3fc43c3d18023d54790b9a64625db4f0, type: 2}
+    characters: {fileID: 0}
+    worldObjects: {fileID: 0}
+    preLoadText: {fileID: 0}
+    isExitable: 0
+    additionalObjectData:
+    - id: shutter
+      texts:
+      - {fileID: 11400000, guid: cfda7482494f17f40aa2a2d2f0405944, type: 2}
+    - id: carousel
+      texts:
+      - {fileID: 11400000, guid: 227e4944d643f594395e1859354b37a8, type: 2}
+    - id: booth
+      texts:
+      - {fileID: 11400000, guid: 3a28d1b27e9882b488ca093c2f04405e, type: 2}
+  startRoom: {fileID: 11400000, guid: 3fc43c3d18023d54790b9a64625db4f0, type: 2}
+  startMusic: {fileID: 0}
+  isFinished: 0
+  startText: {fileID: 11400000, guid: 5253f92b1b1297e448bb4dec2d0ede28, type: 2}
+  finishText: {fileID: 11400000, guid: 273daf72c7baf184ab2e48353cdd9d11, type: 2}
+  isAfterStartText: 0
+  isAfterFinishText: 0
+  unallowedText: {fileID: 0}
+  requiredObjects:
+  - shutter
+  - carousel
+  - booth

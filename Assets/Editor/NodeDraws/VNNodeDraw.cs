@@ -113,7 +113,8 @@ public class VNNodeDraw : DrawNode
             menu.AddItem(new GUIContent("Move To Talk Position"), false, () => AddCommand(node, new MoveToTalkPos()));
             menu.AddItem(new GUIContent("Play Cutscene"), false, () => AddCommand(node, new PlayCutscene()));
             menu.AddItem(new GUIContent("Remove Custscene"), false, () => AddCommand(node, new RemoveCutscene()));
-
+            menu.AddItem(new GUIContent("Wait"), false, () => AddCommand(node, new Wait()));
+            
             menu.ShowAsContext();
         }
     }

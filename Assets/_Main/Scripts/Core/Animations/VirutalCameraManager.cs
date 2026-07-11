@@ -8,7 +8,7 @@ public class VirutalCameraManager : MonoBehaviour
 
     public CinemachineVirtualCamera virtualCamera;
     public DollyCameraPitchControl pitchControl;
-
+    
     private void Awake()
     {
         if (instance == null)
@@ -25,13 +25,23 @@ public class VirutalCameraManager : MonoBehaviour
     {
         virtualCamera = GameObject.Find("World/Virtual Camera").GetComponent<CinemachineVirtualCamera>();
         pitchControl = virtualCamera.GetComponent<DollyCameraPitchControl>();
+        pitchControl.pitch = 0f;
         virtualCamera.PreviousStateIsValid = false;
-
+        
         // Force the virtual camera pipeline to update
         virtualCamera.InternalUpdateCameraState(
             Vector3.up,
             Time.deltaTime
         );
+        
+        // Synchronize the GameObject's transform with the evaluated camera state
+        virtualCamera.transform.SetPositionAndRotation(
+            virtualCamera.State.FinalPosition,
+            virtualCamera.State.FinalOrientation
+        );
+        
+        CameraManager.instance.initialRotation = virtualCamera.State.FinalOrientation;
+        
         if(VNNodePlayer.instance.currentConversation != null)
             virtualCamera.gameObject.SetActive(false);
     }

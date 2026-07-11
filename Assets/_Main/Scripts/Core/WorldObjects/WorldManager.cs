@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using DIALOGUE;
@@ -21,7 +22,7 @@ public class WorldManager : MonoBehaviour
     public VNConversationSegment unallowedRoomText;
     public static WorldManager instance { get; private set; }
 
-    public Transform talkPosition;
+    public List<Transform> talkPositions;
 
     void Awake()
     {
@@ -63,7 +64,7 @@ public class WorldManager : MonoBehaviour
         currentRoomModel = Instantiate(room.GetTimeOfDayVersion(ProgressManager.instance.currentGameEvent.timeOfDay));
         currentRoomModel.name = "World";
         currentRoomModel.gameObject.SetActive(true);
-        talkPosition = currentRoomModel.talkPosition;
+        talkPositions = currentRoomModel.talkPositions;
         currentRoomModel.roomIntroEffects = currentRoomModel.GetComponentsInChildren<RoomIntroEffect>().ToList();
 
         GameObject objectsParent = GameObject.Find("World Objects");
@@ -75,11 +76,11 @@ public class WorldManager : MonoBehaviour
             CameraManager.instance.initialRotation =
                 cameraStartPos
                     .rotation; // Sets only the Camera Manager's initial position value for later, not actually changing position of camera
-
-        CameraManager.instance.player.enabled = false;
+        CameraManager.instance.cameraTransform.rotation = cameraStartPos.rotation; // Actually changing rotation of camera
         CameraManager.instance.player.transform.position =
             cameraStartPos.position; // Actually changing position of player
-        CameraManager.instance.cameraTransform.rotation = cameraStartPos.rotation; // Actually changing rotation of camera
+        
+        CameraManager.instance.player.enabled = false;
         CameraManager.instance.player.enabled = true;
         
         ImageScript.instance.UnFadeToBlack(0.1f);
@@ -96,7 +97,7 @@ public class WorldManager : MonoBehaviour
         currentRoomModel = Instantiate(room.GetTimeOfDayVersion(ProgressManager.instance.currentGameEvent.timeOfDay));
         currentRoomModel.name = "World";
         currentRoomModel.gameObject.SetActive(true);
-        talkPosition = currentRoomModel.talkPosition;
+        talkPositions = currentRoomModel.talkPositions;
         
         ImageScript.instance.UnFadeToBlack(0.2f);
 

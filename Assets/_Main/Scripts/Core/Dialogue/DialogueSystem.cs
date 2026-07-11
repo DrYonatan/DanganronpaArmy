@@ -95,6 +95,7 @@ namespace DIALOGUE
         {
             if (!isActive)
                 SetIsActive(true);
+            TextBoxAppear();
             return conversationManager.PlayNodeText(node);
         }
 

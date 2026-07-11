@@ -85,6 +85,7 @@ namespace DIALOGUE
                 return "";
 
             string replaced = originalText.Replace(">", "</color>").Replace("<g", "<color=#2EF03B>")
+                .Replace("<G", "<color=#2EF03B>")
                 .Replace("<o", "<color=#F0BC2E>")
                 .Replace("<b", "<color=#2EB3F0>")
                 .Replace("(", "<color=#2EB3F0>").Replace(")", "</color>");

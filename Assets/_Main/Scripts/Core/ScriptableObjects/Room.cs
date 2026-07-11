@@ -52,7 +52,7 @@ public abstract class Room : ScriptableObject
             }
         }
     }
-
+    
     public virtual IEnumerator AppearAnimation()
     {
         yield return null;

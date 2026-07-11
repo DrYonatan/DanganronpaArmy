@@ -62,6 +62,7 @@ public class CameraManager : MonoBehaviour
         initialRotation = vCamRotation;
         StartCameraCoroutine(RotateCameraTo(vCamRotation, duration));
         yield return StartCameraCoroutine(MoveCameraTo(vCamPosition, duration));
+     
         if (!DialogueSystem.instance.isActive)
             VirutalCameraManager.instance.EnableVirtualCamera();
     }

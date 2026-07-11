@@ -113,6 +113,9 @@ public class ImageScript : MonoBehaviour
     {
         animatedImage = Instantiate(image, animatedImageContainer.transform);
         animatedImageContainer.DOFade(1f, duration).SetEase(Ease.Linear);
+        DialogueSystem.instance.TextBoxDisappear();
+        DialogueSystem.instance.SetTextBox(overlayTextBoxAnimator);
+        DialogueSystem.instance.TextBoxAppear();
         GameStateManager.instance.uiState.animatedImage = new AnimatedImageState
             { prefabId = image.name, currentStateIndex = 0, visible = true };
     }
@@ -150,8 +153,13 @@ public class ImageScript : MonoBehaviour
         GameStateManager.instance.uiState.animatedImage = new AnimatedImageState
             { prefabId = "", currentStateIndex = 0, visible = false };
 
-        animatedImageContainer.DOFade(0f, duration).SetEase(Ease.Linear)
-            .OnComplete(() => Destroy(animatedImage.gameObject));
+        DialogueSystem.instance.TextBoxDisappear();
+        DialogueSystem.instance.UseInitialDialogueContainer();
+        
+        if(DialogueSystem.instance.isActive)
+           DialogueSystem.instance.TextBoxAppear();
+        animatedImageContainer.DOFade(0f, duration).SetEase(Ease.Linear);
+        Destroy(animatedImage.gameObject, duration);
     }
 
     public void ShowCharacterOnBackground(Character character)
