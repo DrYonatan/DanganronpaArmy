@@ -17,6 +17,7 @@ public class ImageScript : MonoBehaviour
 
     public Image background;
     public Dictionary<Character, GameObject> backgroundCharacters = new();
+    public Image blackFadeUnderTextBox;
 
     public CanvasGroup animatedImageContainer;
     public VNAnimatedImage animatedImage;
@@ -102,6 +103,11 @@ public class ImageScript : MonoBehaviour
     public void UnFadeToBlack(float duration)
     {
         ShowingOrHiding(blackFade, duration, 0f);
+    }
+
+    public void FadeUnderTextBoxBlack(bool fadeIn, float duration)
+    {
+        blackFadeUnderTextBox.DOFade(fadeIn ? 1 : 0, duration);
     }
 
     private void ShowingOrHiding(CanvasGroup canvasGroupToShowOrHide, float duration, float targetAlpha)

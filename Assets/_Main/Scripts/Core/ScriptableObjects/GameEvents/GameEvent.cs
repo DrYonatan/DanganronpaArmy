@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class GameEvent: ScriptableObject
 {
+    public bool isFinished;
     public TimeOfDay timeOfDay;
     public List<RoomData> roomDatas;
     public Room startRoom;
@@ -17,6 +18,7 @@ public abstract class GameEvent: ScriptableObject
     public virtual void LoadSave(SaveData data)
     {
         VNConversationSegment currentConversation = ProgressManager.instance.conversationDatabase.Get(data.currentConversation);
+        isFinished = data.isFinished;
         if (currentConversation != null)
         {
             VNNodePlayer.instance.lineIndex = data.currentLineIndex;

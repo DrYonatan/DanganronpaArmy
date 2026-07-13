@@ -39,8 +39,6 @@ public class RoomData
 
 public abstract class WorldEvent : GameEvent
 {
-    public bool isFinished;
-
     public VNConversationSegment startText;
     public VNConversationSegment finishText;
 

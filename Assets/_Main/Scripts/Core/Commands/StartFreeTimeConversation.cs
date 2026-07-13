@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using DIALOGUE;
+using UnityEditor;
+
 public class StartFreeTimeConversation : Command
 {
+    public Character character;
     public override IEnumerator Execute()
     {
-        Character character = ((FreeTimeEvent)(ProgressManager.instance.currentGameEvent)).currentCharacter;
-
         CharacterFreeTimeEvents characterEvents =
             GameStateManager.instance.chaptersBank.charactersFreeTimeEventContainer.charactersEvents.Find((freeTime) =>
                 freeTime.character == character);
@@ -20,6 +22,15 @@ public class StartFreeTimeConversation : Command
         ((WorldEvent)ProgressManager.instance.currentGameEvent).isFinished = true;
         
         VNNodePlayer.instance.AddToQueue(currentFreeTimeEvent);
+        DialogueSystem.instance.TurnOnSingleTimeAuto();
         yield return null;
     }
+    
+    #if UNITY_EDITOR
+    public override void DrawGUI()
+    {
+        base.DrawGUI();
+        character = (Character)EditorGUILayout.ObjectField("Character", character, typeof(Character), false);
+    }
+    #endif
 }

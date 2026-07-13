@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac78edb917e5f4142b7f642498064325, type: 3}
-  m_Name: FreeTimeChoice
+  m_Name: FreeTimeChoiceKoby
   m_EditorClassIdentifier: 
   guid: 7909b101e53d06f4084583e81ae354ec
   settings:
@@ -83,8 +83,7 @@ MonoBehaviour:
           \u05D5\u05D4\u05D5\u05D0 \u05D4\u05E1\u05D1\u05D9\u05E8 \u05DC\u05D9 \u05E2\u05DC
           \u05E2\u05E8\u05DB\u05D9 \u05E6\u05D4\"\u05DC...)"
         commands:
-        - rid: 6299374001750540300
-        - rid: 6299374001750540301
+        - rid: 6299374001750540310
     - rid: 6299374001750540297
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -112,15 +111,7 @@ MonoBehaviour:
       type: {class: StartFreeTimeConversation, ns: , asm: Assembly-CSharp}
       data:
         executeTime: 1
-    - rid: 6299374001750540300
-      type: {class: HideSpeaker, ns: , asm: Assembly-CSharp}
-      data:
-        executeTime: 0
-    - rid: 6299374001750540301
-      type: {class: ChangeBackground, ns: , asm: Assembly-CSharp}
-      data:
-        executeTime: 0
-        image: {fileID: 21300000, guid: 75540ff0cbe4b404eaa5e0afb3df4b74, type: 3}
+        character: {fileID: 11400000, guid: e39824928f924f546bb4ef60c8c4f16c, type: 2}
     - rid: 6299374001750540302
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -144,7 +135,8 @@ MonoBehaviour:
         text: "\u05E9\u05DC\u05D5\u05DD \u05D0\u05DC\u05D5\u05DF. \u05D0\u05E0\u05D9
           \u05E8\u05D5\u05D0\u05D4 \u05E9\u05D0\u05EA\u05D4 \u05DE\u05E9\u05D5\u05D8\u05D8
           \u05E4\u05D4."
-        commands: []
+        commands:
+        - rid: 6299374001750540309
     - rid: 6299374001750540304
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -195,8 +187,21 @@ MonoBehaviour:
         text: "(\u05D4\u05EA\u05E7\u05E8\u05D1\u05EA\u05D9 \u05E7\u05E6\u05EA \u05DC\u05E7\u05D5\u05D1\u05D9
           \u05D4\u05D9\u05D5\u05DD.)"
         commands:
-        - rid: 6299374001750540308
-    - rid: 6299374001750540308
-      type: {class: HideBackground, ns: , asm: Assembly-CSharp}
+        - rid: 6299374001750540311
+    - rid: 6299374001750540309
+      type: {class: MarkFreeTimeCharacter, ns: , asm: Assembly-CSharp}
       data:
         executeTime: 0
+        character: {fileID: 11400000, guid: e39824928f924f546bb4ef60c8c4f16c, type: 2}
+    - rid: 6299374001750540310
+      type: {class: FadeBlackUnderTextBox, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        fadeIn: 1
+        duration: 0.2
+    - rid: 6299374001750540311
+      type: {class: FadeBlackUnderTextBox, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        fadeIn: 0
+        duration: 0.2
