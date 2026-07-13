@@ -47,9 +47,8 @@ public class ProgressManager : MonoBehaviour
             GameStateManager.instance.MoveToNextChapterSegment();
             yield break;
         }
-
+        
         currentGameEvent = Instantiate(gameEvents[currentGameEventIndex]);
-
         currentGameEvent.OnStart();
     }
 

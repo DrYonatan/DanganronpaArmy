@@ -55,7 +55,6 @@ public abstract class GameEvent: ScriptableObject
             
             yield return WorldManager.instance.LoadRoom(WorldManager.instance.currentRoom, null);
         }
-
         OnRoomLoad();
         WorldManager.instance.charactersObject?
             .AnimateCharacters();

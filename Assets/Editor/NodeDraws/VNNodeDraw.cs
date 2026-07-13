@@ -114,6 +114,7 @@ public class VNNodeDraw : DrawNode
             menu.AddItem(new GUIContent("Play Cutscene"), false, () => AddCommand(node, new PlayCutscene()));
             menu.AddItem(new GUIContent("Remove Custscene"), false, () => AddCommand(node, new RemoveCutscene()));
             menu.AddItem(new GUIContent("Wait"), false, () => AddCommand(node, new Wait()));
+            menu.AddItem(new GUIContent("Play Free Time Conversation"), false, () => AddCommand(node, new StartFreeTimeConversation()));
             
             menu.ShowAsContext();
         }

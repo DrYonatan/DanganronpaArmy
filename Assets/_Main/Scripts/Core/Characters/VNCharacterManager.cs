@@ -37,7 +37,7 @@ namespace CHARACTERS
             characterObj.transform.localPosition = new Vector3(
                 GetCharacterPosition((CameraLookDirection)characterInfo.position).x,
                 characterInfo.character.vnObjectPrefab.transform.localPosition.y, 0);
-            characterObjects.Add(characterInfo.character, characterObj);
+            characterObjects.TryAdd(characterInfo.character, characterObj);
         }
 
         public void ShowOnlySpeaker(Character character, float duration)
@@ -84,6 +84,8 @@ namespace CHARACTERS
 
         public void HideCharacter(GameObject characterObj, float duration)
         {
+            if (characterObj == null)
+                return;
             CanvasGroup canvasGroup = characterObj.GetComponent<CanvasGroup>();
             canvasGroup.DOKill();
             canvasGroup.DOFade(0f, duration).SetLink(characterObj.gameObject);

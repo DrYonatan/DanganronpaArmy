@@ -5,4 +5,5 @@ using UnityEngine;
 public class ChaptersBank : ScriptableObject
 {
     public List<Chapter> chapters;
+    public CharactersFreeTimeEventsSO charactersFreeTimeEventContainer;
 }
