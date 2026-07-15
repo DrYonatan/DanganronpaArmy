@@ -1,13 +1,21 @@
 
+using System.Collections;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Game Events/Free Time Event")]
 public class FreeTimeEvent : WorldEvent
 {
     public Character currentCharacter;
-    protected void OnFinish()
+
+    public override void OnStart()
     {
-        base.OnFinish();
+        WorldManager.instance.StartCoroutine(OnStartRoutine());
+    }
+
+    protected override IEnumerator OnStartRoutine()
+    {
+        yield return base.OnStartRoutine();
+        
     }
 
     public override void CheckIfFinished()

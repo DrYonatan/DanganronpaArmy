@@ -19,6 +19,8 @@ public class StartFreeTimeConversation : Command
             charactersRanks[
                 character.name]];
 
+        charactersRanks[character.name]++;
+
         ((WorldEvent)ProgressManager.instance.currentGameEvent).isFinished = true;
         
         VNNodePlayer.instance.AddToQueue(currentFreeTimeEvent);

@@ -1,0 +1,198 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac78edb917e5f4142b7f642498064325, type: 3}
+  m_Name: FreeTimeStartFirstTime
+  m_EditorClassIdentifier: 
+  guid: 1de75c96f003ae64da72938a0164622a
+  settings:
+    characterPositions: []
+  nodes:
+  - rid: 6299374001750540295
+  - rid: 6299374044086272002
+  - rid: 6299374021718573056
+  references:
+    version: 2
+    RefIds:
+    - rid: 6299374001750540295
+      type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
+        character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
+        displayName: 
+        expressionIndex: 0
+        textData:
+          rid: 6299374001750540296
+    - rid: 6299374001750540296
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "(\u05D8\u05D5\u05D1, \u05E0\u05E8\u05D0\u05D4 \u05E9\u05D9\u05E9 \u05DC\u05D9
+          \u05D6\u05DE\u05DF \u05E4\u05E0\u05D5\u05D9... \u05DE\u05D4 \u05DB\u05D3\u05D0\u05D9
+          \u05DC\u05D9 \u05DC\u05E2\u05E9\u05D5\u05EA?)"
+        commands: []
+    - rid: 6299374021718573056
+      type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 34}
+        title: 
+        drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
+        character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
+        displayName: 
+        expressionIndex: 0
+        textData:
+          rid: 6299374021718573057
+    - rid: 6299374021718573057
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: 
+        commands:
+        - rid: 6299374021718573058
+        - rid: 6299374021718573059
+    - rid: 6299374021718573058
+      type: {class: ApplySectionStartEffect, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 1
+        sectionTitle: "\u05D6\u05DE\u05DF \u05E4\u05E8\u05D9\u05E1\u05D4"
+    - rid: 6299374021718573059
+      type: {class: PlayMusicCommand, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 1
+        music: {fileID: 8300000, guid: b7609d3683759514c8e283c178437f60, type: 3}
+        volume: 1
+        toggle: 1
+    - rid: 6299374044086272002
+      type: {class: VNChoiceNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: 43e4e6c8d47167a40a1e714ec75c32f3, type: 2}
+        character: {fileID: 0}
+        displayName: 
+        expressionIndex: 0
+        textData:
+          rid: 6299374044086272003
+        choiceLogic:
+          options:
+          - text: "\u05DB\u05DF"
+            dialogue:
+            - rid: 6299374044086272004
+            - rid: 6299374044086272006
+            - rid: 6299374044086272008
+            isCorrect: 0
+          - text: "\u05DC\u05D0"
+            dialogue: []
+            isCorrect: 0
+          loopIfWrong: 0
+    - rid: 6299374044086272003
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "<G\u05D4\u05D5\u05DC\u05DA \u05DC\u05D4\u05EA\u05D7\u05D9\u05DC \u05D7\u05DC\u05E7
+          \u05E9\u05DC *\u05D6\u05DE\u05DF \u05E4\u05E0\u05D5\u05D9*. \u05EA\u05E8\u05E6\u05D5
+          \u05DC\u05E9\u05DE\u05D5\u05E2 \u05E2\u05D5\u05D3?>"
+        commands: []
+    - rid: 6299374044086272004
+      type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
+        character: {fileID: 0}
+        displayName: 
+        expressionIndex: 0
+        textData:
+          rid: 6299374044086272005
+    - rid: 6299374044086272005
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "<G\u05D1\u05D7\u05DC\u05E7\u05D9\u05DD \u05E9\u05DC \u05D6\u05DE\u05DF
+          \u05E4\u05E0\u05D5\u05D9, \u05EA\u05E7\u05D1\u05DC\u05D5 \u05D0\u05EA \u05D4\u05D4\u05D6\u05D3\u05DE\u05E0\u05D5\u05EA
+          \u05DC\u05D4\u05DB\u05D9\u05E8 \u05D0\u05EA \u05D4\u05D7\u05D1\u05E8\u05D9\u05DD
+          \u05D9\u05D5\u05EA\u05E8 \u05D8\u05D5\u05D1.>"
+        commands: []
+    - rid: 6299374044086272006
+      type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
+        character: {fileID: 0}
+        displayName: 
+        expressionIndex: 0
+        textData:
+          rid: 6299374044086272007
+    - rid: 6299374044086272007
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "<G\u05DB\u05DC \u05D4\u05D7\u05D1\u05E8\u05D9\u05DD \u05DC\u05D9\u05D7\u05D9\u05D3\u05D4
+          \u05DE\u05E4\u05D5\u05D6\u05E8\u05D9\u05DD \u05D1\u05D1\u05E1\u05D9\u05E1,
+          \u05D5\u05EA\u05D5\u05DB\u05DC\u05D5 \u05DC\u05D1\u05D7\u05D5\u05E8 \u05E2\u05DD
+          \u05DE\u05D9 \u05D0\u05EA\u05DD \u05E8\u05D5\u05E6\u05D9\u05DD \u05DC\u05D1\u05DC\u05D5\u05EA
+          \u05D6\u05DE\u05DF. \u05E4\u05E9\u05D5\u05D8 \u05D3\u05D1\u05E8\u05D5 \u05E2\u05DD
+          \u05DE\u05D9 \u05E9\u05DE\u05E2\u05E0\u05D9\u05D9\u05DF \u05D0\u05EA\u05DB\u05DD.>"
+        commands: []
+    - rid: 6299374044086272008
+      type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
+        character: {fileID: 0}
+        displayName: 
+        expressionIndex: 0
+        textData:
+          rid: 6299374044086272009
+    - rid: 6299374044086272009
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "<G\u05D4\u05D7\u05DC\u05E7\u05D9\u05DD \u05D4\u05D0\u05DC\u05D4 \u05DC\u05D0
+          \u05D9\u05E9\u05E4\u05D9\u05E2\u05D5 \u05E2\u05DC \u05D4\u05E1\u05D9\u05E4\u05D5\u05E8
+          \u05D4\u05DB\u05D5\u05DC\u05DC, \u05D0\u05D6 \u05EA\u05D3\u05D1\u05E8\u05D5
+          \u05E2\u05DD \u05DE\u05D9 \u05E9\u05DE\u05E2\u05E0\u05D9\u05D9\u05DF \u05D0\u05EA\u05DB\u05DD
+          \u05DC\u05D4\u05DB\u05D9\u05E8.>"
+        commands: []

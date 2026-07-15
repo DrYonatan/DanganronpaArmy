@@ -17,6 +17,8 @@ public class VNUIAnimator : MonoBehaviour
 
     private Vector2 mainContainerOriginalPos;
     private Vector2 timeContainerOriginalPos;
+    
+    public SectionStartEffect sectionStartEffect;
 
 
     void Awake()

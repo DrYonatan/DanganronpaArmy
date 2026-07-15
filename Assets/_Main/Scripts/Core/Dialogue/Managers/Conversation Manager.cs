@@ -87,7 +87,7 @@ namespace DIALOGUE
             string replaced = originalText.Replace(">", "</color>").Replace("<g", "<color=#2EF03B>")
                 .Replace("<G", "<color=#2EF03B>")
                 .Replace("<o", "<color=#F0BC2E>")
-                .Replace("<b", "<color=#2EB3F0>")
+                .Replace("<b", "<color=#2EB3F0>").Replace("<B", "<color=#2EB3F0>")
                 .Replace("(", "<color=#2EB3F0>").Replace(")", "</color>");
             int count = 0;
             return string.Concat(replaced.Select(c =>

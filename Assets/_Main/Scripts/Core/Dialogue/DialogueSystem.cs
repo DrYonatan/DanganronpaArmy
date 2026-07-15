@@ -79,7 +79,8 @@ namespace DIALOGUE
         public void HideNamePlate()
         {
             GameStateManager.instance.uiState.namePlateVisible = false;
-            dialogueBoxAnimator.HideNamePlate();
+            if(dialogueBoxAnimator.namePlateVisible)
+               dialogueBoxAnimator.HideNamePlate();
         }
 
         public void ShowNamePlate()

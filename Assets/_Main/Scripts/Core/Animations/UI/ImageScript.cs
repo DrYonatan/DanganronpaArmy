@@ -107,6 +107,7 @@ public class ImageScript : MonoBehaviour
 
     public void FadeUnderTextBoxBlack(bool fadeIn, float duration)
     {
+        GameStateManager.instance.uiState.underTextboxBlackFade = new VisibilityState {  visible = fadeIn };
         blackFadeUnderTextBox.DOFade(fadeIn ? 1 : 0, duration);
     }
 
@@ -194,7 +195,7 @@ public class ImageScript : MonoBehaviour
 
     public void CreateCharacterOnBackground(Character character)
     {
-        GameObject characterObj = Instantiate(character.vnObjectPrefab, background.transform.parent);
+        GameObject characterObj = Instantiate(character.vnObjectPrefab, overlayImage.transform);
         characterObj.transform.localPosition = Vector3.zero;
 
         characterObj.name = character.name;

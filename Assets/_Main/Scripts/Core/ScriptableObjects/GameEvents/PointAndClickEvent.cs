@@ -5,26 +5,39 @@ using UnityEngine;
 public class PointAndClickEvent : WorldEvent
 {
     public List<string> requiredObjects;
-    private bool AreAllClicked(Dictionary<string, ObjectData>.ValueCollection datas)
+
+    private bool AreAllClicked(Dictionary<string, ObjectData> datas)
     {
         bool finished = true;
-
-        foreach (ObjectData data in datas)
+        
+        foreach (string requiredObject in requiredObjects)
         {
-            if (!data.isClicked && requiredObjects.Contains(data.id))
+            if (!datas.TryGetValue(requiredObject, out var data))
+                return true;
+            
+            if (!data.isClicked)
+            {
                 finished = false;
+            }
         }
 
         return finished;
     }
 
+    private bool IsInAnyDictionary()
+    {
+        foreach (string requiredObject in requiredObjects)
+        {
+            if (!charactersData.ContainsKey(requiredObject) && !objectsData.ContainsKey(requiredObject))
+                return false;
+        }
+
+        return true;
+    }
+
     public override void CheckIfFinished()
     {
-        bool allCharactersClicked = AreAllClicked(charactersData.Values);
-
-        bool allObjectsClicked = AreAllClicked(objectsData.Values);
-
-        isFinished = allCharactersClicked && allObjectsClicked;
+        isFinished = AreAllClicked(charactersData) && AreAllClicked(objectsData) && IsInAnyDictionary();
         
         if (isFinished)
             OnFinish();

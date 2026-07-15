@@ -850,7 +850,7 @@ MonoBehaviour:
           y: 0
           width: 0
           height: 0
-        commandsScrollPosition: {x: 0, y: 14}
+        commandsScrollPosition: {x: 0, y: 150}
         title: 
         drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
         character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
@@ -866,6 +866,7 @@ MonoBehaviour:
         commands:
         - rid: 6274742032584409146
         - rid: 7091799571838271488
+        - rid: 6299374044086272233
     - rid: 6274742032584409146
       type: {class: PlaySoundEffectCommand, ns: , asm: Assembly-CSharp}
       data:
@@ -1032,6 +1033,7 @@ MonoBehaviour:
           \u05DC\u05D9 \u05D1-\u05E6063, \u05D4\u05DB\u05DC \u05D4\u05EA\u05D1\u05D4\u05E8\u2026\r\n"
         commands:
         - rid: 7091799571838271489
+        - rid: 6299374044086272234
     - rid: 6274742032584409159
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -1629,6 +1631,17 @@ MonoBehaviour:
       data:
         executeTime: 0
         duration: 0.2
+    - rid: 6299374044086272233
+      type: {class: ShowImage, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        image: {fileID: 21300000, guid: 75540ff0cbe4b404eaa5e0afb3df4b74, type: 3}
+        flash: 0
+    - rid: 6299374044086272234
+      type: {class: RemoveImage, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        flash: 0
     - rid: 7091799458981085184
       type: {class: ShowImage, ns: , asm: Assembly-CSharp}
       data:

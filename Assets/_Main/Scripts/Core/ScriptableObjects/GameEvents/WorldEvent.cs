@@ -7,13 +7,11 @@ using UnityEngine;
 [Serializable]
 public class ObjectData
 {
-    public string id;
     public bool isClicked;
     public int clickCount;
 
-    public ObjectData(string id, bool isClicked, int clickCount)
+    public ObjectData(bool isClicked, int clickCount)
     {
-        this.id = id;
         this.isClicked = isClicked;
         this.clickCount = clickCount;
     }
@@ -56,14 +54,14 @@ public abstract class WorldEvent : GameEvent
         WorldManager.instance.StartCoroutine(OnStartRoutine());
     }
 
-    private IEnumerator OnStartRoutine()
+    protected virtual IEnumerator OnStartRoutine()
     {
         yield return StartWithRoomLoad();
 
         WorldManager.instance.currentRoomData =
             roomDatas.Find(data => data.room.name.Equals(WorldManager.instance.currentRoom.name));
         isAfterStartText = true;
-
+        
         if (startText != null)
         {
             VNNodePlayer.instance.StartConversation(startText);
@@ -138,8 +136,8 @@ public abstract class WorldEvent : GameEvent
         foreach (Transform character in WorldManager.instance.charactersObject.transform)
         {
             WorldCharacter worldCharacter = character.GetComponent<WorldCharacter>();
-            charactersData[character.name] =
-                new ObjectData(worldCharacter.id, worldCharacter.isClicked, worldCharacter.clickCount);
+            charactersData[worldCharacter.id] =
+                new ObjectData(worldCharacter.isClicked, worldCharacter.clickCount);
         }
     }
 
@@ -181,8 +179,8 @@ public abstract class WorldEvent : GameEvent
             {
                 WorldObject worldObject = obj.GetComponent<WorldObject>();
 
-                objectsData[obj.name] =
-                    new ObjectData(worldObject.id, worldObject.isClicked, worldObject.clickCount);
+                objectsData[worldObject.id] =
+                    new ObjectData(worldObject.isClicked, worldObject.clickCount);
             }
         }
 
@@ -190,8 +188,8 @@ public abstract class WorldEvent : GameEvent
                  WorldManager.instance.currentRoomModel
                      .interactables) // Add all normal room interactables to the dictionary as well
         {
-            objectsData[interactable.name] =
-                new ObjectData(interactable.id, interactable.isClicked, interactable.clickCount);
+            objectsData[interactable.id] =
+                new ObjectData(interactable.isClicked, interactable.clickCount);
         }
     }
 

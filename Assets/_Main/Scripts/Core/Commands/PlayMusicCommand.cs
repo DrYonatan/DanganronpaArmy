@@ -15,7 +15,7 @@ public class PlayMusicCommand : Command
       if (toggle)
       {
          MusicManager.instance.PlaySong(music);
-         yield return  new WaitForSeconds(music.length);
+         yield return null;
       }
       else
       {

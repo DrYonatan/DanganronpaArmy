@@ -197,6 +197,8 @@ public class GameStateManager : MonoBehaviour
             DialogueSystem.instance.SetTextBox(ImageScript.instance.overlayTextBoxAnimator);
             DialogueSystem.instance.TextBoxAppear();
         }
+        
+        ImageScript.instance.blackFadeUnderTextBox?.DOFade(uiState.underTextboxBlackFade.visible ? 1f : 0f, 0f);
 
         ImageScript.instance.background.sprite = Resources.Load<Sprite>($"Images/{uiState.backgroundImage.spriteId}");
         ImageScript.instance.background.DOFade(uiState.backgroundImage.visible ? 1f : 0f, 0f);

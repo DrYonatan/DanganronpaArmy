@@ -21,14 +21,14 @@ public class WorldCharacter : ConversationInteractable
         
         float duration = 0.5f;
         Vector3 targetPosition =
-            Vector3.Lerp(CameraManager.instance.cameraTransform.position, transform.position + Vector3.up * 0.8f, 0.75f);
+            Vector3.Lerp(CameraManager.instance.cameraTransform.position, transform.position - transform.forward * 2f + Vector3.up * 0.8f, 1f);
         CameraManager.instance.StartCameraCoroutine(CameraManager.instance.MoveCameraTo(targetPosition, duration));
 
         StartConversation();
         
         if (ProgressManager.instance.currentGameEvent != null)
         {
-            ((WorldEvent)ProgressManager.instance.currentGameEvent).charactersData[name] = new ObjectData(id, isClicked, clickCount);
+            ((WorldEvent)ProgressManager.instance.currentGameEvent).charactersData[id] = new ObjectData(isClicked, clickCount);
         }
     }
 
