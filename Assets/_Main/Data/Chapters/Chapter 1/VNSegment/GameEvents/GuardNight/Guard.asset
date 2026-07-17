@@ -64,6 +64,7 @@ MonoBehaviour:
   - rid: 6299374044086272096
   - rid: 6299374044086272097
   - rid: 6299374044086272098
+  - rid: 6299374066169544704
   - rid: 6299374044086272099
   - rid: 6299374044086272100
   - rid: 6299374044086272101
@@ -1514,13 +1515,15 @@ MonoBehaviour:
           \u05EA\u05D9\u05DE\u05E0\u05E2\u05D5 \u05DE\u05D4\u05E1\u05EA\u05D5\u05D1\u05D1\u05D5\u05EA
           \u05DE\u05D9\u05D5\u05EA\u05E8\u05EA \u05D1\u05D7\u05D5\u05E5. \u05DB\u05D3\u05D0\u05D9
           \u05DC\u05DB\u05DD \u05DC\u05D6\u05DB\u05D5\u05E8 \u05D0\u05EA \u05D6\u05D4!"
-        commands: []
+        commands:
+        - rid: 6299374075982643200
     - rid: 6299374044086272164
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
         text: "(\u05DB\u05DF\u2026 \u05D0\u05E0\u05D9 \u05E4\u05E9\u05D5\u05D8 \u05DB\u05D1\u05E8
           \u05D0\u05D7\u05D6\u05D5\u05E8 \u05DC\u05D9\u05E9\u05D5\u05DF.)"
-        commands: []
+        commands:
+        - rid: 6299374075982643201
     - rid: 6299374044086272165
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -1823,3 +1826,40 @@ MonoBehaviour:
       type: {class: Ding, ns: , asm: Assembly-CSharp}
       data:
         executeTime: 0
+    - rid: 6299374066169544704
+      type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
+        character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
+        displayName: 
+        expressionIndex: 0
+        textData:
+          rid: 6299374066169544705
+    - rid: 6299374066169544705
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "(\u05E9\u05DB\u05D1\u05EA\u05D9 \u05E2\u05DC \u05D4\u05DE\u05D9\u05D8\u05D4
+          \u05E2\u05DE\u05D5\u05E7 \u05D1\u05DE\u05D7\u05E9\u05D1\u05D5\u05EA, \u05E2\u05D3
+          \u05E9\u05DC\u05D1\u05E1\u05D5\u05E3 \u05E0\u05E8\u05D3\u05DE\u05EA\u05D9.)"
+        commands: []
+    - rid: 6299374075982643200
+      type: {class: ShowAnimatedImage, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        imageWrapper: {fileID: 11400000, guid: a988d0be19b2c2f4589b677c3e877e92, type: 2}
+        duration: 0.4
+        flash: 1
+    - rid: 6299374075982643201
+      type: {class: RemoveAnimatedImage, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        duration: 0.4
+        flash: 1

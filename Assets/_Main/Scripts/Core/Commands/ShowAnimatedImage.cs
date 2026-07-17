@@ -7,10 +7,12 @@ public class ShowAnimatedImage : Command
     [SerializeField]
     private VNAnimatedImageWrapper imageWrapper;
     public float duration = 0.2f;
+    public bool flash;
+
 
     public override IEnumerator Execute()
     {
-        ImageScript.instance.CreateAnimatedImage(imageWrapper.image, duration);
+        ImageScript.instance.CreateAnimatedImage(imageWrapper.image, duration, flash);
         yield return null;
     }
 
@@ -22,6 +24,7 @@ public class ShowAnimatedImage : Command
             (VNAnimatedImageWrapper)EditorGUILayout.ObjectField("Image", imageWrapper, typeof(VNAnimatedImageWrapper),
                 false);
         duration =  EditorGUILayout.FloatField("Duration", duration);
+        flash = EditorGUILayout.Toggle("Flash", flash);
     }
 #endif
 }

@@ -116,8 +116,10 @@ public class ImageScript : MonoBehaviour
         canvasGroupToShowOrHide.DOFade(targetAlpha, duration);
     }
 
-    public void CreateAnimatedImage(VNAnimatedImage image, float duration)
+    public void CreateAnimatedImage(VNAnimatedImage image, float duration, bool flash)
     {
+        if(flash)
+            Flash(duration, flashSound);
         animatedImage = Instantiate(image, animatedImageContainer.transform);
         animatedImageContainer.DOFade(1f, duration).SetEase(Ease.Linear);
         DialogueSystem.instance.TextBoxDisappear();
@@ -152,7 +154,7 @@ public class ImageScript : MonoBehaviour
         }
     }
 
-    public void RemoveAnimatedImage(float duration)
+    public void RemoveAnimatedImage(float duration, bool flash)
     {
         if (animatedImage == null)
             return;
@@ -162,6 +164,9 @@ public class ImageScript : MonoBehaviour
 
         DialogueSystem.instance.TextBoxDisappear();
         DialogueSystem.instance.UseInitialDialogueContainer();
+        
+        if(flash)
+            Flash(duration, flashSound);
         
         if(DialogueSystem.instance.isActive)
            DialogueSystem.instance.TextBoxAppear();

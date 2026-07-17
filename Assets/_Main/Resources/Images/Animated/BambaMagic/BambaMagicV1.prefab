@@ -75,6 +75,132 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &439288623097973260
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2280894816512370735}
+  - component: {fileID: 9165221953368030542}
+  - component: {fileID: 536207151728493505}
+  - component: {fileID: 6192401583700731848}
+  m_Layer: 5
+  m_Name: Magic
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2280894816512370735
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 439288623097973260}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3336395084782039170}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 430, y: 172}
+  m_SizeDelta: {x: 800, y: 300}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &9165221953368030542
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 439288623097973260}
+  m_CullTransparentMesh: 1
+--- !u!114 &536207151728493505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 439288623097973260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 26d87ea45a658914d9458b355b1fb2df, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6192401583700731848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 439288623097973260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b251d3f16f80ac948be390d564018270, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  positionAnimation:
+    repeatTimes: 1
+    delay: 0
+    frames:
+    - attribute: {x: 430, y: 172}
+      duration: 0
+    - attribute: {x: 430, y: 172}
+      duration: 0.5
+    - attribute: {x: 430, y: 142}
+      duration: 0.2
+    - attribute: {x: 430, y: 172}
+      duration: 0.2
+    - attribute: {x: 430, y: 142}
+      duration: 0.2
+    - attribute: {x: 430, y: 172}
+      duration: 0.2
+    - attribute: {x: 430, y: 142}
+      duration: 0.2
+    - attribute: {x: 430, y: 172}
+      duration: 0.2
+    - attribute: {x: 430, y: 1110}
+      duration: 1
+    ease: 6
+  rotationAnimation:
+    repeatTimes: 1
+    delay: 0
+    frames: []
+    ease: 6
+  scaleAnimation:
+    repeatTimes: 1
+    delay: 0
+    frames: []
+    ease: 6
+  colorAnimation:
+    repeatTimes: 1
+    delay: 0
+    frames: []
+    ease: 6
 --- !u!1 &1188769485370779309
 GameObject:
   m_ObjectHideFlags: 0
@@ -299,6 +425,132 @@ Transform:
   - {fileID: 3653016926218214354}
   m_Father: {fileID: 3336395084782039170}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4074571538783900563
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3096036592743692081}
+  - component: {fileID: 5529823626463891013}
+  - component: {fileID: 3256469010735318887}
+  - component: {fileID: 3081431963854683756}
+  m_Layer: 5
+  m_Name: Bamba
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &3096036592743692081
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4074571538783900563}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3336395084782039170}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -242, y: 66}
+  m_SizeDelta: {x: 800, y: 300}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &5529823626463891013
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4074571538783900563}
+  m_CullTransparentMesh: 1
+--- !u!114 &3256469010735318887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4074571538783900563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: ab241f92f31d57048a89116788c12447, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3081431963854683756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4074571538783900563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b251d3f16f80ac948be390d564018270, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  positionAnimation:
+    repeatTimes: 1
+    delay: 0
+    frames:
+    - attribute: {x: -242, y: 66}
+      duration: 0
+    - attribute: {x: -242, y: 66}
+      duration: 0.5
+    - attribute: {x: -242, y: 100}
+      duration: 0.2
+    - attribute: {x: -242, y: 66}
+      duration: 0.2
+    - attribute: {x: -242, y: 100}
+      duration: 0.2
+    - attribute: {x: -242, y: 66}
+      duration: 0.2
+    - attribute: {x: -242, y: 100}
+      duration: 0.2
+    - attribute: {x: -242, y: 66}
+      duration: 0.2
+    - attribute: {x: -242, y: 1000}
+      duration: 1
+    ease: 6
+  rotationAnimation:
+    repeatTimes: 1
+    delay: 0
+    frames: []
+    ease: 6
+  scaleAnimation:
+    repeatTimes: 1
+    delay: 0
+    frames: []
+    ease: 6
+  colorAnimation:
+    repeatTimes: 1
+    delay: 0
+    frames: []
+    ease: 6
 --- !u!1 &4630816941018730771
 GameObject:
   m_ObjectHideFlags: 0
@@ -638,6 +890,8 @@ RectTransform:
   - {fileID: 8838887897965650159}
   - {fileID: 4949317205469279976}
   - {fileID: 104076325098340915}
+  - {fileID: 3096036592743692081}
+  - {fileID: 2280894816512370735}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -663,6 +917,8 @@ MonoBehaviour:
   - sprites:
     - {fileID: 8651940946147872918}
     - {fileID: 5597312008484211150}
+    - {fileID: 3081431963854683756}
+    - {fileID: 6192401583700731848}
     soundEffects: []
 --- !u!1 &7599404018923071434
 GameObject:
@@ -754,7 +1010,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   positionAnimation:
     repeatTimes: 1
-    delay: 0
+    delay: 2
     frames:
     - attribute: {x: 0, y: 66}
       duration: 0

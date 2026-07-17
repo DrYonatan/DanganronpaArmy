@@ -58,7 +58,7 @@ public class WorldManager : MonoBehaviour
         PlayerInputManager.instance.DisableInput();
         ImageScript.instance.HideBackground(0);
         ImageScript.instance.FadeUnderTextBoxBlack(false, 0);
-        ImageScript.instance.RemoveAnimatedImage(0);
+        ImageScript.instance.RemoveAnimatedImage(0, false);
 
         isLoading = true;
 
