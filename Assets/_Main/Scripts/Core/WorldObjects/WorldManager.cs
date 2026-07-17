@@ -67,7 +67,14 @@ public class WorldManager : MonoBehaviour
         currentRoomModel.gameObject.SetActive(true);
         talkPositions = currentRoomModel.talkPositions;
         currentRoomModel.roomIntroEffects = currentRoomModel.GetComponentsInChildren<RoomIntroEffect>().ToList();
-
+        if (currentRoomModel.hasBakedLighting)
+        {
+            currentRoomModel.ApplyLightmaps();
+        }
+        else
+        {
+            currentRoomModel.ClearLightmaps();
+        }
         GameObject objectsParent = GameObject.Find("World Objects");
         if (objectsParent != null)
             characterPanel = objectsParent;
