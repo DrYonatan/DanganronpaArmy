@@ -35,7 +35,7 @@ MonoBehaviour:
           y: 0
           width: 0
           height: 0
-        commandsScrollPosition: {x: 0, y: 60}
+        commandsScrollPosition: {x: 0, y: 0}
         title: 
         drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
         character: {fileID: 11400000, guid: 6d1cd02a2e864c64e9f8d8916a6c4267, type: 2}
@@ -116,6 +116,7 @@ MonoBehaviour:
       data:
         text: "\u05D4\u05E2\u05E0\u05D9\u05D9\u05E0\u05D9\u05DD \u05DE\u05EA\u05D7\u05DE\u05DE\u05D9\u05DD!"
         commands:
+        - rid: 6299374133661138948
         - rid: 6299374044086272231
         - rid: 6299374044086272228
         - rid: 6299374044086272229
@@ -157,6 +158,7 @@ MonoBehaviour:
         executeTime: 1
         imageWrapper: {fileID: 11400000, guid: 66552e38fcc922048a99d157465f58d4, type: 2}
         duration: 0
+        flash: 0
     - rid: 6299374044086272229
       type: {class: ForwardAnimatedImage, ns: , asm: Assembly-CSharp}
       data:
@@ -174,3 +176,8 @@ MonoBehaviour:
         music: {fileID: 8300000, guid: 14cfb27443a5538428934b85657c943f, type: 3}
         volume: 1
         toggle: 1
+    - rid: 6299374133661138948
+      type: {class: Wait, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 1
+        time: 1

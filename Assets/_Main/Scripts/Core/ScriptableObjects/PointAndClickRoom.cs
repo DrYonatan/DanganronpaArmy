@@ -68,7 +68,7 @@ public class PointAndClickRoom : Room
 
         if (Input.GetKey(KeyCode.R))
         {
-            if (!WorldManager.instance.currentRoomData.isExitable ||
+            if (
                 ProgressManager.instance.currentGameEvent.roomDatas.All(item =>
                     item.room.roomName != exitRoom.roomName))
             {

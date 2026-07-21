@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using DIALOGUE;
 using UnityEngine;
@@ -58,6 +59,7 @@ public class ProgressManager : MonoBehaviour
         SaveData data = SaveManager.instance != null ? SaveManager.instance.LoadCurrentSave() : SaveSystem.LoadGame(1);
 
         GameStateManager.instance.UpdateChapterIndexes(data.chapterIndex, data.chapterSegmentIndex);
+        GameStateManager.instance.charactersRanks = data.characterRanks.ToDictionary(e => e.key, e => e.value);
         VNUIAnimator.instance.chapterNameText.text = GameStateManager.instance.GetCurrentChapter().chapterName;
 
         yield return TimeOfDayManager.instance.ChangeTimeOfDay(data.timeOfDay);
@@ -69,7 +71,7 @@ public class ProgressManager : MonoBehaviour
         WorldManager.instance.currentRoom = Resources.Load<Room>($"Rooms/{data.currentRoom}");
         MusicManager.instance.PlaySong(Resources.Load<AudioClip>($"Audio/Music/{data.currentMusic}"));
         currentGameEvent.LoadSave(data);
-
+        
         GameStateManager.instance.SetUIState(data.uiState);
         GameStateManager.instance.InitiateUIState();
 

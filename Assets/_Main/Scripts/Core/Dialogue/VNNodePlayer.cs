@@ -64,6 +64,15 @@ public class VNNodePlayer : MonoBehaviour
         }
     }
 
+    public IEnumerator RunSpecificNodes(List<DialogueNode> nodes)
+    {
+        foreach (DialogueNode node in nodes)
+        {
+            yield return RunNode(node);
+            DialogueSystem.instance.ClearTextBox();
+        }
+    }
+
     public IEnumerator RunNode(DialogueNode node)
     {
         yield return node.Play();

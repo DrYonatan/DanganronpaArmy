@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a41efc7ec9542d42aefe87ea4a6738c, type: 3}
   m_Name: GoToMorningMisdar
   m_EditorClassIdentifier: 
+  isFinished: 0
   timeOfDay: 0
   roomDatas:
   - room: {fileID: 11400000, guid: 55447bfc884cd4340b110e2928249c70, type: 2}
@@ -33,7 +34,8 @@ MonoBehaviour:
     isExitable: 1
     additionalObjectData: []
   startRoom: {fileID: 11400000, guid: 55447bfc884cd4340b110e2928249c70, type: 2}
-  isFinished: 0
+  stopPreviousMusic: 1
+  startMusic: {fileID: 0}
   startText: {fileID: 11400000, guid: 4b56f9cb03c277b478ff696d824f2d25, type: 2}
   finishText: {fileID: 11400000, guid: a20cf546abf55774fb8775cbc1539f8f, type: 2}
   isAfterStartText: 0

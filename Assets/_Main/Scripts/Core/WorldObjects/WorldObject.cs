@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class WorldObject : ConversationInteractable
 {
     protected override void FinishInteraction()

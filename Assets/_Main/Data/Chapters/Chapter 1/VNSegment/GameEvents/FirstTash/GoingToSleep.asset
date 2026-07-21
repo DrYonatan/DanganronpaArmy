@@ -39,8 +39,6 @@ MonoBehaviour:
   - rid: 6299373774075854985
   - rid: 6299373774075854986
   - rid: 6299373774075854987
-  - rid: 6299373774075854988
-  - rid: 6299373774075854989
   - rid: 6299373774075854990
   - rid: 6299373774075854991
   - rid: 6299373774075854992
@@ -392,40 +390,6 @@ MonoBehaviour:
         expressionIndex: 0
         textData:
           rid: 6299373774075855032
-    - rid: 6299373774075854988
-      type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
-      data:
-        nodeRect:
-          serializedVersion: 2
-          x: 0
-          y: 0
-          width: 0
-          height: 0
-        commandsScrollPosition: {x: 0, y: 0}
-        title: 
-        drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
-        character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
-        displayName: "\u05D1\u05DE\u05D1\u05D4"
-        expressionIndex: 0
-        textData:
-          rid: 6299373774075855033
-    - rid: 6299373774075854989
-      type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
-      data:
-        nodeRect:
-          serializedVersion: 2
-          x: 0
-          y: 0
-          width: 0
-          height: 0
-        commandsScrollPosition: {x: 0, y: 0}
-        title: 
-        drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
-        character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
-        displayName: "\u05D1\u05DE\u05D1\u05D4"
-        expressionIndex: 0
-        textData:
-          rid: 6299373774075855034
     - rid: 6299373774075854990
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -958,29 +922,13 @@ MonoBehaviour:
           \u05D0\u05EA \u05D6\u05D4, \u05D4\u05DB\u05E8\u05D9\u05D6\u05D4 \u05D4\u05EA\u05D7\u05D9\u05DC\u05D4
           \u05DC\u05E4\u05E2\u05D5\u05DC.)"
         commands: []
-    - rid: 6299373774075855033
-      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
-      data:
-        text: "\u05E9\u05E2\u05EA \u05D4\u05D8\"\u05E9 \u05D4\u05D2\u05D9\u05E2\u05D4
-          \u05DC\u05EA\u05D5\u05DE\u05D4! \u05DB\u05D5\u05DC\u05DD, \u05D4\u05D9\u05DB\u05E0\u05E1\u05D5
-          \u05DC\u05D2\u05DC\u05E2\u05D3\u05D9\u05DD \u05E9\u05DC\u05DB\u05DD \u05D5\u05EA\u05DC\u05DB\u05D5
-          \u05DC\u05D9\u05E9\u05D5\u05DF, \u05E9\u05D9\u05D4\u05D9\u05D5 \u05DC\u05DB\u05DD
-          \u05DB\u05D5\u05D7\u05D5\u05EA \u05DC\u05DE\u05D7\u05E8!"
-        commands:
-        - rid: 6299373774075855066
-    - rid: 6299373774075855034
-      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
-      data:
-        text: "\u05DC\u05D9\u05DC\u05D4 \u05D8\u05D5\u05D1 \u05E6\u05D5\u05D5\u05EA
-          1!"
-        commands: []
     - rid: 6299373774075855035
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
         text: "\u05D8\u05D5\u05D1 \u05E9\u05D4\u05D5\u05D0 \u05DE\u05D6\u05DB\u05D9\u05E8
           \u05DC\u05E0\u05D5\u2026"
         commands:
-        - rid: 6299373774075855068
+        - rid: 6299374097614503948
     - rid: 6299373774075855036
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -1140,17 +1088,6 @@ MonoBehaviour:
       type: {class: HideSpeaker, ns: , asm: Assembly-CSharp}
       data:
         executeTime: 0
-    - rid: 6299373774075855066
-      type: {class: ShowImage, ns: , asm: Assembly-CSharp}
-      data:
-        executeTime: 0
-        image: {fileID: 21300000, guid: 11f0936d7a21e2345894c483591a0a66, type: 3}
-        flash: 0
-    - rid: 6299373774075855068
-      type: {class: RemoveImage, ns: , asm: Assembly-CSharp}
-      data:
-        executeTime: 0
-        flash: 0
     - rid: 6299373774075855111
       type: {class: ShakeScreen, ns: , asm: Assembly-CSharp}
       data:
@@ -1239,3 +1176,8 @@ MonoBehaviour:
         executeTime: 0
         fadeIn: 0
         duration: 0.2
+    - rid: 6299374097614503948
+      type: {class: PlayConversationCommand, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 1
+        segment: {fileID: 11400000, guid: 3b7240ebdeefd7a4e8c058efcaf330ae, type: 2}

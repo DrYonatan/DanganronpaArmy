@@ -2,7 +2,6 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class SectionStartEffect : MonoBehaviour
 {
     public Image background;

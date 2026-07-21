@@ -22,7 +22,6 @@ MonoBehaviour:
     - character: {fileID: 11400000, guid: 1ebf8e78ff7554e499ea44362d8afefa, type: 2}
       position: 3
   nodes:
-  - rid: 6299373791637667863
   - rid: 6299373791637667864
   - rid: 6299373791637667865
   - rid: 6299373791637667866
@@ -43,23 +42,6 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 6299373791637667863
-      type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
-      data:
-        nodeRect:
-          serializedVersion: 2
-          x: 0
-          y: 0
-          width: 0
-          height: 0
-        commandsScrollPosition: {x: 0, y: 0}
-        title: 
-        drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
-        character: {fileID: 0}
-        displayName: "\u05D1\u05DE\u05D1\u05D4"
-        expressionIndex: 0
-        textData:
-          rid: 6299373791637667880
     - rid: 6299373791637667864
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -332,17 +314,6 @@ MonoBehaviour:
         expressionIndex: 0
         textData:
           rid: 6299373791637667896
-    - rid: 6299373791637667880
-      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
-      data:
-        text: "\u05D1\u05D5\u05E7\u05E8 \u05D8\u05D5\u05D1 \u05E6\u05D5\u05D5\u05EA
-          1! \u05DE\u05D7\u05DB\u05D4 \u05DC\u05E0\u05D5 \u05E2\u05D5\u05D3 \u05D9\u05D5\u05DD
-          \u05E2\u05DE\u05D5\u05E1 \u05E9\u05DC \u05D8\u05D9\u05E8\u05D5\u05E0\u05D5\u05EA,
-          \u05D0\u05D6 \u05D6\u05D4 \u05D4\u05D6\u05DE\u05DF \u05DC\u05E9\u05E0\u05E1
-          \u05DE\u05D5\u05EA\u05E0\u05D9\u05D9\u05DD \u05D5\u05DC\u05EA\u05EA \u05D0\u05EA
-          \u05DB\u05DC \u05DB\u05D5\u05DC\u05E0\u05D5!"
-        commands:
-        - rid: 6299373791637667899
     - rid: 6299373791637667881
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -350,7 +321,7 @@ MonoBehaviour:
           \u05D5\u05E9\u05DE\u05E2\u05EA\u05D9 \u05D0\u05EA \u05D4\u05E9\u05E2\u05D5\u05DF
           \u05E9\u05DC\u05D9 \u05DE\u05E6\u05DC\u05E6\u05DC \u05D2\u05DD\u2026)"
         commands:
-        - rid: 6299373791637667900
+        - rid: 6299374097614503949
     - rid: 6299373791637667882
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -453,17 +424,6 @@ MonoBehaviour:
           \u05DC\u05E8\u05D7\u05D1\u05D4..."
         commands:
         - rid: 6299373791637667947
-    - rid: 6299373791637667899
-      type: {class: ShowImage, ns: , asm: Assembly-CSharp}
-      data:
-        executeTime: 0
-        image: {fileID: 21300000, guid: a57cf05a43f2dcc47924f44cf53de21c, type: 3}
-        flash: 0
-    - rid: 6299373791637667900
-      type: {class: RemoveImage, ns: , asm: Assembly-CSharp}
-      data:
-        executeTime: 0
-        flash: 0
     - rid: 6299373791637667901
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -518,7 +478,13 @@ MonoBehaviour:
       type: {class: MoveToTalkPos, ns: , asm: Assembly-CSharp}
       data:
         executeTime: 1
+        positionId: 
     - rid: 6299373791637667953
       type: {class: HideSpeaker, ns: , asm: Assembly-CSharp}
       data:
         executeTime: 0
+    - rid: 6299374097614503949
+      type: {class: PlayConversationCommand, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 1
+        segment: {fileID: 11400000, guid: 01e642d9b46761b4693a11e16f67bc1b, type: 2}
