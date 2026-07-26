@@ -45,7 +45,7 @@ public class CharacterClickEffects : MonoBehaviour
                 startColors[i] = renderers[i].material.color;
             }
 
-            StartCoroutine(Fade(1f, 0f, duration));
+            fadeRoutine = StartCoroutine(Fade(1f, 0f, duration));
         }
     }
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -33,8 +34,7 @@ public class SaveSlotButton : TitleScreenMenuButton
         if (data != null)
         {
             List<Chapter> chapters = TitleScreenMainMenu.instance.chaptersBank.chapters;
-            slotText.text = $"{slot} - {chapters[data.chapterIndex].chapterName}";
-            if (data.saveTime != null)
+            slotText.text = $"{new string(slot.ToString().Reverse().ToArray())} - {chapters[data.chapterIndex].chapterName}";            if (data.saveTime != null)
             {
                 DateTime time = DateTime.Parse(data.saveTime);
                 string date = time.ToString("dd/MM/yyyy HH:mm");

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 104076325098340915}
   - component: {fileID: 8391019977432475299}
   - component: {fileID: 5578254684103553232}
+  - component: {fileID: 2958420692964031684}
   m_Layer: 5
   m_Name: Filter
   m_TagString: Untagged
@@ -58,7 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.7584905, g: 0.7584905, b: 0.7584905, a: 0.23921569}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -75,6 +76,53 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2958420692964031684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 272063283846519186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b251d3f16f80ac948be390d564018270, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  positionAnimation:
+    repeatTimes: 1
+    delay: 0
+    frames: []
+    ease: 6
+  rotationAnimation:
+    repeatTimes: 1
+    delay: 0
+    frames: []
+    ease: 1
+  scaleAnimation:
+    repeatTimes: 1
+    delay: 0
+    frames: []
+    ease: 6
+  colorAnimation:
+    repeatTimes: 1
+    delay: 0
+    frames: []
+    ease: 1
+  switchSpritesAnimation:
+    repeatTimes: -1
+    delay: 0
+    frames:
+    - attribute: {fileID: 21300000, guid: 1a99f316ae605c6468b0f694d3f52cd5, type: 3}
+      duration: 0
+    - attribute: {fileID: 21300000, guid: 1a99f316ae605c6468b0f694d3f52cd5, type: 3}
+      duration: 0.1
+    - attribute: {fileID: 21300000, guid: 5816cba3743c84145b8de6371dfe86f2, type: 3}
+      duration: 0.1
+    - attribute: {fileID: 21300000, guid: 2be403f195540f648a718f2a7d22e9a2, type: 3}
+      duration: 0.1
+    - attribute: {fileID: 21300000, guid: 5816cba3743c84145b8de6371dfe86f2, type: 3}
+      duration: 0.1
+    ease: 6
 --- !u!1 &439288623097973260
 GameObject:
   m_ObjectHideFlags: 0
@@ -201,6 +249,11 @@ MonoBehaviour:
     delay: 0
     frames: []
     ease: 6
+  switchSpritesAnimation:
+    repeatTimes: 1
+    delay: 0
+    frames: []
+    ease: 6
 --- !u!1 &1188769485370779309
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,7 +311,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 62f9d4308197e45469daf0a9135eab6e, type: 2}
   m_Color: {r: 0.5849056, g: 0.16664293, b: 0.16664293, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -334,7 +387,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 62f9d4308197e45469daf0a9135eab6e, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -388,6 +441,11 @@ MonoBehaviour:
     frames: []
     ease: 6
   colorAnimation:
+    repeatTimes: 1
+    delay: 0
+    frames: []
+    ease: 6
+  switchSpritesAnimation:
     repeatTimes: 1
     delay: 0
     frames: []
@@ -551,6 +609,11 @@ MonoBehaviour:
     delay: 0
     frames: []
     ease: 6
+  switchSpritesAnimation:
+    repeatTimes: 1
+    delay: 0
+    frames: []
+    ease: 6
 --- !u!1 &4630816941018730771
 GameObject:
   m_ObjectHideFlags: 0
@@ -608,7 +671,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 62f9d4308197e45469daf0a9135eab6e, type: 2}
   m_Color: {r: 0.4188679, g: 0.40006697, b: 0.35011032, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -683,7 +746,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 62f9d4308197e45469daf0a9135eab6e, type: 2}
   m_Color: {r: 0.6830188, g: 0.67078376, b: 0.5451263, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -813,6 +876,11 @@ MonoBehaviour:
     - attribute: {r: 0, g: 0, b: 0, a: 0}
       duration: 0.5
     ease: 6
+  switchSpritesAnimation:
+    repeatTimes: 1
+    delay: 0
+    frames: []
+    ease: 6
 --- !u!1 &5449546209690584730
 GameObject:
   m_ObjectHideFlags: 0
@@ -870,7 +938,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 62f9d4308197e45469daf0a9135eab6e, type: 2}
   m_Color: {r: 0.8494767, g: 0.86415094, b: 0.7614311, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -945,7 +1013,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 62f9d4308197e45469daf0a9135eab6e, type: 2}
   m_Color: {r: 0.5849056, g: 0.16664293, b: 0.16664293, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -1001,9 +1069,9 @@ RectTransform:
   - {fileID: 5772081055174689956}
   - {fileID: 8838887897965650159}
   - {fileID: 4949317205469279976}
-  - {fileID: 104076325098340915}
   - {fileID: 3096036592743692081}
   - {fileID: 2280894816512370735}
+  - {fileID: 104076325098340915}
   - {fileID: 5951127468321559382}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1033,6 +1101,7 @@ MonoBehaviour:
     - {fileID: 3081431963854683756}
     - {fileID: 6192401583700731848}
     - {fileID: 704881486499203910}
+    - {fileID: 2958420692964031684}
     soundEffects: []
 --- !u!1 &7599404018923071434
 GameObject:
@@ -1148,6 +1217,11 @@ MonoBehaviour:
     delay: 0
     frames: []
     ease: 6
+  switchSpritesAnimation:
+    repeatTimes: 1
+    delay: 0
+    frames: []
+    ease: 6
 --- !u!1 &7838351680992403568
 GameObject:
   m_ObjectHideFlags: 0
@@ -1205,7 +1279,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 62f9d4308197e45469daf0a9135eab6e, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -1280,7 +1354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 62f9d4308197e45469daf0a9135eab6e, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -1355,7 +1429,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 62f9d4308197e45469daf0a9135eab6e, type: 2}
   m_Color: {r: 0.6830188, g: 0.67078376, b: 0.5451263, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}

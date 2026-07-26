@@ -178,7 +178,7 @@ public class WorldManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!DialogueSystem.instance.isActive && !PlayerInputManager.instance.isPaused && PlayerInputManager.instance.isInputActive && !isLoading)
+        if (!DialogueSystem.instance.isActive && !PlayerInputManager.instance.isPaused && PlayerInputManager.instance.isInputActive && !isLoading && VNNodePlayer.instance.currentConversation == null)
             currentRoom?.MovementControl();
         else
         {

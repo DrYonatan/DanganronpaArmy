@@ -729,7 +729,8 @@ MonoBehaviour:
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
         text: "\u05D4\u05D5\u05D0 \u05D4\u05DC\u05DA!"
-        commands: []
+        commands:
+        - rid: 6299374249046966272
     - rid: 6299373803432050766
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -964,6 +965,7 @@ MonoBehaviour:
       type: {class: HideSpeaker, ns: , asm: Assembly-CSharp}
       data:
         executeTime: 2
+        footStepsSound: 0
     - rid: 6299373803432050801
       type: {class: PlaySoundEffectCommand, ns: , asm: Assembly-CSharp}
       data:
@@ -1016,6 +1018,7 @@ MonoBehaviour:
       type: {class: HideSpeaker, ns: , asm: Assembly-CSharp}
       data:
         executeTime: 2
+        footStepsSound: 0
     - rid: 6299373803432050812
       type: {class: ChangeBackground, ns: , asm: Assembly-CSharp}
       data:
@@ -1026,4 +1029,10 @@ MonoBehaviour:
       data:
         executeTime: 0
         clip: {fileID: 8300000, guid: 41ad19871e346a442929b387602695ff, type: 3}
+        volume: 1
+    - rid: 6299374249046966272
+      type: {class: PlaySoundEffectCommand, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        clip: {fileID: 8300000, guid: be7e25cac5c1f5d4e802b867ca3ae226, type: 3}
         volume: 1

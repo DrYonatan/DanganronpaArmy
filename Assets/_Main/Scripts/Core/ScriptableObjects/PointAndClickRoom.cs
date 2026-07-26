@@ -66,7 +66,7 @@ public class PointAndClickRoom : Room
         VirutalCameraManager.instance.pitchControl.pitch = pitch;
 
 
-        if (Input.GetKey(KeyCode.R))
+        if (Input.GetKey(KeyCode.R) && exitRoom != null)
         {
             if (
                 ProgressManager.instance.currentGameEvent.roomDatas.All(item =>

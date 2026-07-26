@@ -30,7 +30,7 @@ public class DialogueNode
     public DialogueNode(DrawNode drawNode, DialogueNode copy)
     {
         this.drawNode = drawNode;
-        this.InitializeTextData();
+        InitializeTextData();
         character = copy.character;
         displayName = copy.displayName;
         expressionIndex = copy.expressionIndex;

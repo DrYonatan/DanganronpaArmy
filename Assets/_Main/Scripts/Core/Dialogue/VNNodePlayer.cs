@@ -21,6 +21,7 @@ public class VNNodePlayer : MonoBehaviour
     }
     public IEnumerator StartConversationPipeline(VNConversationSegment segment)
     {
+        VirutalCameraManager.instance?.DisableVirtualCamera();
         currentConversation = segment;
         VNCharacterManager.instance.characterLayer.anchoredPosition = Vector2.zero;
         foreach (CharacterPositionMapping characterInfo in segment.settings.characterPositions)

@@ -41,7 +41,7 @@ public class ListItem : MonoBehaviour
         blinkTween = background
             .DOColor(new Color(hoverColor.r, hoverColor.g, hoverColor.b, 0.2f), 0.5f)      // fade in
             .SetLoops(-1, LoopType.Yoyo) 
-            .SetEase(Ease.InOutSine).SetUpdate(true);
+            .SetEase(Ease.InOutSine).SetUpdate(true).SetLink(background.gameObject);
     }
 
     private void StopBlink()

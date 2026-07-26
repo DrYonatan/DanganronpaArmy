@@ -615,7 +615,7 @@ MonoBehaviour:
           y: 0
           width: 0
           height: 0
-        commandsScrollPosition: {x: 0, y: 0}
+        commandsScrollPosition: {x: 0, y: 14}
         title: 
         drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
         character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
@@ -695,7 +695,7 @@ MonoBehaviour:
           y: 0
           width: 0
           height: 0
-        commandsScrollPosition: {x: 0, y: 0}
+        commandsScrollPosition: {x: 0, y: 14}
         title: 
         drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
         character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
@@ -1379,11 +1379,9 @@ MonoBehaviour:
     - rid: 6274742032584409186
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
-        text: "\u05D0\u05E0\u05D9 \u05DE\u05E0\u05D9\u05D7 \u05E9\u05D4\u05D9\u05D0
-          \u05EA\u05D4\u05D9\u05D4 \u05E4\u05D7\u05D5\u05EA \u05E7\u05DC\u05D4 \u05DE\u05D8\u05D9\u05E8\u05D5\u05E0\u05D5\u05EA
-          20\u2026 \u05D0\u05D1\u05DC \u05D0\u05E0\u05D9 \u05EA\u05D5\u05D4\u05D4
-          \u05DE\u05D4 \u05D1\u05D3\u05D9\u05D5\u05E7 \u05E2\u05D5\u05E9\u05D9\u05DD
-          \u05E9\u05DD.\r\n"
+        text: "\u05D0\u05D9\u05DF \u05E9\u05D5\u05DD \u05DE\u05D9\u05D3\u05E2 \u05D1\u05D0\u05D9\u05E0\u05D8\u05E8\u05E0\u05D8
+          \u05DC\u05D2\u05D1\u05D9 \u05D4\u05D8\u05D9\u05E8\u05D5\u05E0\u05D5\u05EA
+          \u05D4\u05D6\u05D0\u05EA, \u05D6\u05D4 \u05DE\u05E1\u05D5\u05D5\u05D2 \u05DC\u05D7\u05DC\u05D5\u05D8\u05D9\u05DF.\n"
         commands: []
     - rid: 6274742032584409187
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
@@ -1604,33 +1602,37 @@ MonoBehaviour:
     - rid: 6299373953548550144
       type: {class: ShowAnimatedImage, ns: , asm: Assembly-CSharp}
       data:
-        executeTime: 0
+        executeTime: 1
         imageWrapper: {fileID: 11400000, guid: 97eab91ddb5a14e4c96742d72785801b, type: 2}
         duration: 0.2
+        flash: 0
     - rid: 6299373953548550145
       type: {class: ForwardAnimatedImage, ns: , asm: Assembly-CSharp}
       data:
-        executeTime: 0
+        executeTime: 1
     - rid: 6299373953548550146
       type: {class: RemoveAnimatedImage, ns: , asm: Assembly-CSharp}
       data:
         executeTime: 0
         duration: 0.2
+        flash: 0
     - rid: 6299373957734728097
       type: {class: ShowAnimatedImage, ns: , asm: Assembly-CSharp}
       data:
-        executeTime: 0
+        executeTime: 1
         imageWrapper: {fileID: 11400000, guid: 60b8e4b6a6b200842bf1fa5acc8eeac7, type: 2}
         duration: 0.2
+        flash: 0
     - rid: 6299373957734728098
       type: {class: ForwardAnimatedImage, ns: , asm: Assembly-CSharp}
       data:
-        executeTime: 0
+        executeTime: 1
     - rid: 6299373957734728099
       type: {class: RemoveAnimatedImage, ns: , asm: Assembly-CSharp}
       data:
         executeTime: 0
         duration: 0.2
+        flash: 0
     - rid: 6299374044086272233
       type: {class: ShowImage, ns: , asm: Assembly-CSharp}
       data:
@@ -1682,6 +1684,7 @@ MonoBehaviour:
         executeTime: 0
         imageWrapper: {fileID: 11400000, guid: a615c08549737e24fb5976a22e3eb56b, type: 2}
         duration: 0.2
+        flash: 0
     - rid: 7091799463131873286
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -1799,7 +1802,7 @@ MonoBehaviour:
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
         text: "(\u05D4\u05EA\u05E2\u05D5\u05E8\u05E8\u05EA\u05D9 \u05E2\u05DC \u05D0\u05D9\u05D6\u05D5
-          \u05DE\u05D9\u05D8\u05D4 \u05D1\u05D7\u05D3\u05E8 \u05DE\u05D5\u05D6\u05E8)"
+          \u05DE\u05D9\u05D8\u05D4 \u05D1\u05D7\u05D3\u05E8 \u05DE\u05D5\u05D6\u05E8.)"
         commands: []
     - rid: 7091799463131873297
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
