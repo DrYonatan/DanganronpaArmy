@@ -569,7 +569,7 @@ MonoBehaviour:
           y: 0
           width: 0
           height: 0
-        commandsScrollPosition: {x: 0, y: 0}
+        commandsScrollPosition: {x: 0, y: 82}
         title: 
         drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
         character: {fileID: 11400000, guid: 6d1cd02a2e864c64e9f8d8916a6c4267, type: 2}
@@ -787,7 +787,8 @@ MonoBehaviour:
       data:
         text: "\u05D9\u05E9 \u05DB\u05D0\u05DF \u05E9\u05E0\u05D9 \u05E0\u05E6\u05D9\u05D2\u05D9\u05DD
           \u05DE\u05DB\u05DC \u05D2\u05DC\u05E2\u05D3?"
-        commands: []
+        commands:
+        - rid: 6299374291077562418
     - rid: 6299374097614504168
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -831,6 +832,7 @@ MonoBehaviour:
         commands:
         - rid: 6299374115851599883
         - rid: 6299374115851599884
+        - rid: 6299374291077562419
     - rid: 6299374097614504173
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -896,3 +898,18 @@ MonoBehaviour:
       type: {class: HideSpeaker, ns: , asm: Assembly-CSharp}
       data:
         executeTime: 2
+        footStepsSound: 0
+    - rid: 6299374291077562418
+      type: {class: PlayMusicCommand, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        music: {fileID: 8300000, guid: 14cfb27443a5538428934b85657c943f, type: 3}
+        volume: 1
+        toggle: 1
+    - rid: 6299374291077562419
+      type: {class: PlayMusicCommand, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        music: {fileID: 0}
+        volume: 1
+        toggle: 0
