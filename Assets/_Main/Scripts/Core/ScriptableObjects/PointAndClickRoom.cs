@@ -68,23 +68,25 @@ public class PointAndClickRoom : Room
 
         if (Input.GetKey(KeyCode.R) && exitRoom != null)
         {
-            if (
-                ProgressManager.instance.currentGameEvent.roomDatas.All(item =>
-                    item.room.roomName != exitRoom.roomName))
+            
+            WorldEvent currentEvent = ProgressManager.instance.currentGameEvent as WorldEvent;
+            if (currentEvent == null)
+                return;
+            
+            
+            if (ProgressManager.instance.currentGameEvent.roomDatas.Any(item =>
+                    item.room.roomName == exitRoom.roomName) && currentEvent.CanExitRoom())
             {
-                WorldEvent currentEvent = ProgressManager.instance.currentGameEvent as WorldEvent;
-                if (currentEvent == null)
-                    return;
-
+                WorldManager.instance.StartLoadingRoom(exitRoom, exitLocation);
+            }
+            
+            else 
+            {
                 VNConversationSegment unallowed = currentEvent.unallowedText
                     ? currentEvent.unallowedText
                     : WorldManager.instance.unallowedRoomText;
 
                 VNNodePlayer.instance.StartConversation(unallowed);
-            }
-            else
-            {
-                WorldManager.instance.StartLoadingRoom(exitRoom, exitLocation);
             }
         }
 

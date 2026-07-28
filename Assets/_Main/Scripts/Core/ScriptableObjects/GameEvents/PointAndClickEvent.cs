@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Game Events/Point And Click Event")]
@@ -60,6 +61,14 @@ public class PointAndClickEvent : WorldEvent
         if (roomDatas.Find(room => room.room.roomName == WorldManager.instance.currentRoom.roomName).isExitable)
             return true;
 
-        return false;
+        foreach (WorldObject obj in WorldManager.instance.currentRoomModel.GetComponentsInChildren<WorldObject>()
+                     .ToList()
+                )
+        {
+            if (requiredObjects.Contains(obj.id) && !obj.isClicked)
+                return false;
+        }
+
+        return true;
     }
 }

@@ -15,7 +15,7 @@ public class WorldManager : MonoBehaviour
     public bool isLoading = false;
 
     public WorldCharactersParent charactersObject;
-    public GameObject objectsObject;
+    public WorldObjectsParent objectsObject;
 
     public TimeOfDay currentTime;
 

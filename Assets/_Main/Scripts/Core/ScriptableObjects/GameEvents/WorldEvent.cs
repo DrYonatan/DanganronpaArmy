@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [Serializable]
@@ -29,7 +30,7 @@ public class RoomData
 {
     public Room room;
     public WorldCharactersParent characters;
-    public GameObject worldObjects;
+    public WorldObjectsParent worldObjects;
     public VNConversationSegment preLoadText;
     public bool isExitable;
     public List<EventAdditionalObjectData> additionalObjectData = new();
@@ -40,7 +41,6 @@ public abstract class WorldEvent : GameEvent
     public VNConversationSegment startText;
     public VNConversationSegment finishText;
 
-    public bool isAfterStartText;
     public bool isAfterFinishText;
 
     public VNConversationSegment unallowedText;
@@ -60,7 +60,6 @@ public abstract class WorldEvent : GameEvent
 
         WorldManager.instance.currentRoomData =
             roomDatas.Find(data => data.room.name.Equals(WorldManager.instance.currentRoom.name));
-        isAfterStartText = true;
         
         if (startText != null)
         {
@@ -141,17 +140,17 @@ public abstract class WorldEvent : GameEvent
         }
     }
 
-    private void CreateObjects(GameObject prefab)
+    private void CreateObjects(WorldObjectsParent prefab)
     {
         if (WorldManager.instance.characterPanel == null)
             return;
 
-        GameObject ob = null;
+        WorldObjectsParent ob = null;
         if (prefab != null)
         {
             ob = Instantiate(prefab, WorldManager.instance.characterPanel.transform);
             ob.name = "Objects";
-            ob.SetActive(true);
+            ob.gameObject.SetActive(true);
         }
 
         foreach (string objectName in objectsData.Keys)
@@ -175,10 +174,8 @@ public abstract class WorldEvent : GameEvent
         {
             WorldManager.instance.objectsObject = ob;
 
-            foreach (Transform obj in WorldManager.instance.objectsObject.transform) // Add all event objects to dictionary
+            foreach (WorldObject worldObject in WorldManager.instance.objectsObject.objects) // Add all event objects to dictionary
             {
-                WorldObject worldObject = obj.GetComponent<WorldObject>();
-
                 if (worldObject != null)
                 {
                     objectsData[worldObject.id] =

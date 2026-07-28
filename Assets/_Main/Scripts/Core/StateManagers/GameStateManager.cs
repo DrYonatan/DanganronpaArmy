@@ -136,10 +136,12 @@ public class GameStateManager : MonoBehaviour
     private IEnumerator HandlePopup()
     {
         ImageScript.instance.UnFadeToBlack(0f);
+        ProgressManager.instance.savedInPopup = true;
         SavePopup popup = PlayerInputManager.instance.pauseMenu.generalMenu.savePopUp;
         popup.gameObject.SetActive(true);
         popup.finished = false;
         yield return popup.WaitForCompletion();
+        ProgressManager.instance.savedInPopup = false;
         ImageScript.instance.FadeToBlack(0.2f);
         yield return new WaitForSeconds(0.5f);
         popup.gameObject.SetActive(false);

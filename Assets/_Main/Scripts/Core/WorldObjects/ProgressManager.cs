@@ -17,6 +17,8 @@ public class ProgressManager : MonoBehaviour
 
     public ConversationDatabase conversationDatabase;
 
+    public bool savedInPopup;
+
     private void Awake()
     {
         instance = this;
@@ -82,7 +84,7 @@ public class ProgressManager : MonoBehaviour
         CameraManager.instance.cameraTransform.localRotation =
             Quaternion.Euler(new Vector3(data.cameraRotation[0], data.cameraRotation[1], data.cameraRotation[2]));
         
-        if (!data.isAfterStartText)
+        if (data.savedInPopup)
         {
             Room room = ((WorldEvent)currentGameEvent)
                 .startRoom; // To get to this point, there must be a startRoom as it means the event is in a brand new VN segment

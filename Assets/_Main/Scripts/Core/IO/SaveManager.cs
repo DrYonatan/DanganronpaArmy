@@ -52,7 +52,7 @@ public class SaveManager : MonoBehaviour
             ProgressManager.instance.currentGameEventIndex,
             WorldManager.instance.currentRoom?.name,
             ProgressManager.instance.currentGameEvent.isFinished,
-            !currentEvent || currentEvent.isAfterStartText,
+            ProgressManager.instance.savedInPopup,
             !currentEvent || currentEvent.isAfterFinishText,
             VNNodePlayer.instance.currentConversation?.guid, VNNodePlayer.instance.lineIndex,
             MusicManager.instance.audioSource.clip ? MusicManager.instance.audioSource.clip.name : "",
