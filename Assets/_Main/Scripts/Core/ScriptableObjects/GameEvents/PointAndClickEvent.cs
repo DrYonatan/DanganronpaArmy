@@ -9,12 +9,12 @@ public class PointAndClickEvent : WorldEvent
     private bool AreAllClicked(Dictionary<string, ObjectData> datas)
     {
         bool finished = true;
-        
+
         foreach (string requiredObject in requiredObjects)
         {
             if (!datas.TryGetValue(requiredObject, out var data))
                 return true;
-            
+
             if (!data.isClicked)
             {
                 finished = false;
@@ -38,7 +38,7 @@ public class PointAndClickEvent : WorldEvent
     public override void CheckIfFinished()
     {
         isFinished = AreAllClicked(charactersData) && AreAllClicked(objectsData) && IsInAnyDictionary();
-        
+
         if (isFinished)
             OnFinish();
         else
@@ -51,7 +51,15 @@ public class PointAndClickEvent : WorldEvent
     {
         CameraManager.instance.StopAllPreviousOperations();
         CameraManager.instance.MoveCameraTo(GameObject.Find("World/CameraStartPos").transform);
-        
+
         base.OnFinish();
+    }
+
+    public override bool CanExitRoom()
+    {
+        if (roomDatas.Find(room => room.room.roomName == WorldManager.instance.currentRoom.roomName).isExitable)
+            return true;
+
+        return false;
     }
 }

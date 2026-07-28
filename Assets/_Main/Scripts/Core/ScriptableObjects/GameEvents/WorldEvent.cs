@@ -179,8 +179,11 @@ public abstract class WorldEvent : GameEvent
             {
                 WorldObject worldObject = obj.GetComponent<WorldObject>();
 
-                objectsData[worldObject.id] =
-                    new ObjectData(worldObject.isClicked, worldObject.clickCount);
+                if (worldObject != null)
+                {
+                    objectsData[worldObject.id] =
+                        new ObjectData(worldObject.isClicked, worldObject.clickCount);
+                }
             }
         }
 
@@ -204,5 +207,10 @@ public abstract class WorldEvent : GameEvent
     protected void OnNotFinished()
     {
         CursorManager.instance.Show();
+    }
+
+    public virtual bool CanExitRoom()
+    {
+        return true;
     }
 }
