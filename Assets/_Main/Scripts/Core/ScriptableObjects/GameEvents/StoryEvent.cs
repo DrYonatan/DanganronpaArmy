@@ -25,7 +25,12 @@ public class StoryEvent : GameEvent
         ProgressManager.instance.OnEventFinished();
     }
 
-    public override void OnRoomLoad()
+    public override void OnRoomStartLoad()
     {
+    }
+
+    public override void OnRoomFinishLoad()
+    {
+        
     }
 }

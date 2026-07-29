@@ -32,6 +32,8 @@ public class RoomData
     public WorldCharactersParent characters;
     public WorldObjectsParent worldObjects;
     public VNConversationSegment preLoadText;
+    public VNConversationSegment firstTimeText;
+    public bool hasAlreadyEntered;
     public bool isExitable;
     public List<EventAdditionalObjectData> additionalObjectData = new();
 }
@@ -95,20 +97,34 @@ public abstract class WorldEvent : GameEvent
         isAfterFinishText = true;
     }
 
-    public override void OnRoomLoad()
+    public override void OnRoomStartLoad()
     {
         RoomData currentRoomData = roomDatas
             .First(roomData => roomData.room.roomName.Equals(WorldManager.instance.currentRoom.roomName));
-
-        if (WorldManager.instance.charactersObject == null)
-        {
-            CreateCharacters(currentRoomData.characters);
-        }
 
         if (WorldManager.instance.objectsObject == null)
             CreateObjects(currentRoomData.worldObjects);
 
         WorldManager.instance.UpdateRoomData(currentRoomData);
+        
+    }
+
+    public override void OnRoomFinishLoad()
+    {
+        RoomData currentRoomData = roomDatas
+            .First(roomData => roomData.room.roomName.Equals(WorldManager.instance.currentRoom.roomName));
+        
+        if (WorldManager.instance.charactersObject == null)
+        {
+            CreateCharacters(currentRoomData.characters);
+        }
+        
+        if (!currentRoomData.hasAlreadyEntered)
+        {
+            currentRoomData.hasAlreadyEntered = true;
+            if(currentRoomData.firstTimeText != null)
+                VNNodePlayer.instance.StartConversation(currentRoomData.firstTimeText);
+        }
     }
 
     private void CreateCharacters(WorldCharactersParent prefab)

@@ -66,11 +66,14 @@ public class WorldManager : MonoBehaviour
         currentRoomModel.name = "World";
         currentRoomModel.gameObject.SetActive(true);
         talkPositions = currentRoomModel.talkPositions;
-        currentRoomModel.roomIntroEffects = currentRoomModel.GetComponentsInChildren<RoomIntroEffect>().ToList();
-
+        
         GameObject objectsParent = GameObject.Find("World Objects");
         if (objectsParent != null)
             characterPanel = objectsParent;
+        
+        ProgressManager.instance.currentGameEvent.OnRoomStartLoad();
+        currentRoomModel.roomIntroEffects = currentRoomModel.GetComponentsInChildren<RoomIntroEffect>().ToList();
+        
         string cameraStartPosName = !String.IsNullOrEmpty(entryPoint) ? $":{entryPoint}" : "";
         Transform cameraStartPos = GameObject.Find($"World/CameraStartPos{cameraStartPosName}").transform;
         if (CameraManager.instance)
@@ -106,11 +109,11 @@ public class WorldManager : MonoBehaviour
         if (objectsParent != null)
             characterPanel = objectsParent;
         
+        ProgressManager.instance.currentGameEvent.OnRoomStartLoad();
+        
         if (room.OnLoad() != null)
             yield return StartCoroutine(room.OnLoad());
         isLoading = false;
-
-        ProgressManager.instance.currentGameEvent.OnRoomLoad();
         
         if (VNNodePlayer.instance.currentConversation == null)
         {
@@ -151,10 +154,10 @@ public class WorldManager : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-
+        
         yield return LoadRoom(currentRoom, entryPoint);
-
-        ProgressManager.instance.currentGameEvent.OnRoomLoad();
+        
+        ProgressManager.instance.currentGameEvent.OnRoomFinishLoad();
 
         if (charactersObject != null)
             charactersObject.AnimateCharacters();

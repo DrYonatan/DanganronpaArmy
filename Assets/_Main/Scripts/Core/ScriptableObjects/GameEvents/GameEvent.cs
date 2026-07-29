@@ -14,7 +14,9 @@ public abstract class GameEvent: ScriptableObject
 
     public abstract void CheckIfFinished();
     
-    public abstract void OnRoomLoad();
+    public abstract void OnRoomStartLoad();
+
+    public abstract void OnRoomFinishLoad();
     
     public virtual void LoadSave(SaveData data)
     {
@@ -61,7 +63,8 @@ public abstract class GameEvent: ScriptableObject
             
             yield return WorldManager.instance.LoadRoom(WorldManager.instance.currentRoom, null);
         }
-        OnRoomLoad();
+        
+        OnRoomFinishLoad();
         WorldManager.instance.charactersObject?
             .AnimateCharacters();
     }
