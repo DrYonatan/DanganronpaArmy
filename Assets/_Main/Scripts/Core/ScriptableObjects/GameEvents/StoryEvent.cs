@@ -33,4 +33,9 @@ public class StoryEvent : GameEvent
     {
         
     }
+
+    public override EventState HandleSave()
+    {
+        return new StoryEventState();
+    }
 }

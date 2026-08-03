@@ -793,7 +793,7 @@ MonoBehaviour:
           y: 0
           width: 0
           height: 0
-        commandsScrollPosition: {x: 0, y: 0}
+        commandsScrollPosition: {x: 0, y: 82}
         title: 
         drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
         character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
@@ -1241,6 +1241,8 @@ MonoBehaviour:
           \u05E9\u05DC \u05D7\u05DC\u05E7\u05DD.)"
         commands:
         - rid: 6299374179891806509
+        - rid: 6299374408152907786
+        - rid: 6299374408152907787
     - rid: 6299374179891806469
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -1260,8 +1262,7 @@ MonoBehaviour:
       data:
         text: "(\u05D0\u05D1\u05DC \u05D1\u05D6\u05DE\u05DF \u05E9\u05D4\u05D9\u05D9\u05EA\u05D9
           \u05E2\u05E1\u05D5\u05E7 \u05D1\u05DB\u05D9\u05D5\u05E8\u2026)"
-        commands:
-        - rid: 6299374179891806514
+        commands: []
     - rid: 6299374179891806472
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -1272,7 +1273,8 @@ MonoBehaviour:
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
         text: "\u05E8\u05D5\u05E2\u05D9, \u05D4\u05E4\u05DC\u05EA \u05DE\u05E9\u05D4\u05D5?"
-        commands: []
+        commands:
+        - rid: 6299374408152907777
     - rid: 6299374179891806474
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -1405,8 +1407,18 @@ MonoBehaviour:
         executeTime: 0
         fadeIn: 1
         duration: 0.2
-    - rid: 6299374179891806514
+    - rid: 6299374408152907777
+      type: {class: MoveToTalkPos, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 1
+        positionId: CameraStartPos
+    - rid: 6299374408152907786
       type: {class: HideSpeaker, ns: , asm: Assembly-CSharp}
       data:
-        executeTime: 0
+        executeTime: 1
         footStepsSound: 0
+    - rid: 6299374408152907787
+      type: {class: MoveToTalkPos, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 1
+        positionId: 

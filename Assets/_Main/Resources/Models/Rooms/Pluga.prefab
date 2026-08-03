@@ -2587,6 +2587,7 @@ Transform:
   - {fileID: 8448807544645604432}
   - {fileID: 6215820025644544476}
   - {fileID: 8491514786931558686}
+  - {fileID: 2849861650258448311}
   - {fileID: 7829112991132557549}
   - {fileID: 2119089234099596707}
   - {fileID: 9136997762950403171}
@@ -2597,6 +2598,7 @@ Transform:
   - {fileID: 7504614465292527732}
   - {fileID: 1917123588427143317}
   - {fileID: 6428084792268123804}
+  - {fileID: 7538414863226610178}
   - {fileID: 7354300559452359983}
   - {fileID: 2277411541450130617}
   - {fileID: 4499253160323805421}
@@ -4631,6 +4633,75 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4370485433323172814}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!1 &6273485636575189725
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7538414863226610178}
+  - component: {fileID: 1454064551782384363}
+  - component: {fileID: 559282466190688056}
+  m_Layer: 0
+  m_Name: GateGirlsBathroom
+  m_TagString: Interactable
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7538414863226610178
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6273485636575189725}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -128.71, y: 9.04, z: 290.15}
+  m_LocalScale: {x: 0.6368248, y: 0.6368248, z: 0.6368248}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4370485433323172814}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!65 &1454064551782384363
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6273485636575189725}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 5.8198185, y: 11.987121, z: 5.072469}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &559282466190688056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6273485636575189725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9c95be4a451b2348a08bd98fa6e5deb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isAlreadyLooking: 0
+  roomToLoad: {fileID: 11400000, guid: 062bdcfe6064e2a46b2ef801d97f4710, type: 2}
+  entryPoint: 
 --- !u!1 &6322062860263387839
 GameObject:
   m_ObjectHideFlags: 0
@@ -5698,6 +5769,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4370485433323172814}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &9145423647710458425
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2849861650258448311}
+  m_Layer: 0
+  m_Name: CameraStartPos:GirlsBathroom
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &2849861650258448311
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9145423647710458425}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -124.4, y: 8.889, z: 290.01}
+  m_LocalScale: {x: 0.6368248, y: 0.6368248, z: 0.6368248}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4370485433323172814}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1001 &67895326112916639
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7041,7 +7143,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2145857892635427064, guid: b04d02f323fcb304188a5f9509636481, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.5
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 3289791189860743905, guid: b04d02f323fcb304188a5f9509636481, type: 3}
       propertyPath: m_LocalPosition.y
@@ -7155,6 +7257,11 @@ PrefabInstance:
     - {fileID: 5766690370585552593, guid: b04d02f323fcb304188a5f9509636481, type: 3}
     - {fileID: 4130339750623898227, guid: b04d02f323fcb304188a5f9509636481, type: 3}
     - {fileID: 5675130641783797287, guid: b04d02f323fcb304188a5f9509636481, type: 3}
+    - {fileID: 7618002080245551729, guid: b04d02f323fcb304188a5f9509636481, type: 3}
+    - {fileID: 1555424076690919865, guid: b04d02f323fcb304188a5f9509636481, type: 3}
+    - {fileID: 2327972713912516980, guid: b04d02f323fcb304188a5f9509636481, type: 3}
+    - {fileID: 7894597416240826889, guid: b04d02f323fcb304188a5f9509636481, type: 3}
+    - {fileID: 9098365104769884256, guid: b04d02f323fcb304188a5f9509636481, type: 3}
     m_RemovedGameObjects:
     - {fileID: 5527200205505546280, guid: b04d02f323fcb304188a5f9509636481, type: 3}
     - {fileID: 2006312260184376226, guid: b04d02f323fcb304188a5f9509636481, type: 3}

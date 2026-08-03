@@ -18,56 +18,19 @@ public class CharacterRankEntry
 }
 
 [Serializable]
-public class SaveData
+public class EventState
 {
-    public int chapterIndex;
-    public int chapterSegmentIndex;
-    
-    // VN stuff
-    public int gameEventIndex;
-    public string currentRoom;
-    public bool savedInPopup;
-    public bool isAfterFinishText;
-    public bool isFinished;
-    public string currentConversation;
-    public int currentLineIndex;
-    public string currentMusic;
+}
+
+[Serializable]
+public class WorldEventState : EventState
+{
     public List<ObjectDataEntry> charactersData;
     public List<ObjectDataEntry> objectsData;
-    public string scene;
-    public List<CharacterRankEntry> characterRanks;
-    public float[] playerPosition;
-    public float[] cameraPosition;
-    public float[] cameraRotation;
-    public float[] conversationInitialRotation;
-    public TimeOfDay timeOfDay;
-    public UIState uiState;
-    
-    // Trial stuff
-    public int trialSegmentIndex;
-    public float hp;
+    public bool isAfterFinishText;
 
-    public string saveTime;
-
-    public SaveData(int chapterIndex, int chapterSegmentIndex, int gameEventIndex, string currentRoom, bool isFinished, bool savedInPopup, bool isAfterFinishText, string currentConversation,
-        int currentLineIndex, string currentMusic, Dictionary<string, ObjectData> charactersData,
-        Dictionary<string, ObjectData> objectsData,
-        string scene,
-        Dictionary<string, int> characterRanks, Vector3 playerPosition, Vector3 cameraPosition, Vector3 cameraRotation,
-        Vector3 conversationInitialRotation, TimeOfDay timeOfDay, UIState uiState, int trialSegmentIndex,
-        float hp, string saveTime)
+    public WorldEventState(Dictionary<string, ObjectData> objectsData, Dictionary<string, ObjectData> charactersData, bool isAfterFinishText)
     {
-        this.chapterIndex = chapterIndex;
-        this.chapterSegmentIndex = chapterSegmentIndex;
-        this.gameEventIndex = gameEventIndex;
-        this.currentRoom = currentRoom;
-        this.savedInPopup = savedInPopup;
-        this.isAfterFinishText = isAfterFinishText;
-        this.isFinished = isFinished;
-        this.currentConversation = currentConversation;
-        this.currentLineIndex = currentLineIndex;
-        this.currentMusic = currentMusic;
-        this.scene = scene;
         if (objectsData != null)
             this.objectsData = objectsData
                 .Select(kvp => new ObjectDataEntry { key = kvp.Key, value = kvp.Value })
@@ -76,6 +39,68 @@ public class SaveData
         if (charactersData != null)
             this.charactersData = charactersData.Select(kvp => new ObjectDataEntry { key = kvp.Key, value = kvp.Value })
                 .ToList();
+
+        this.isAfterFinishText = isAfterFinishText;
+    }
+}
+
+[Serializable]
+public class StoryEventState : EventState
+{
+    
+}
+
+[Serializable]
+public class SaveData
+{
+    public int chapterIndex;
+    public int chapterSegmentIndex;
+
+    // VN stuff
+    public int gameEventIndex;
+    public string currentRoom;
+    public bool savedInPopup;
+    public bool isFinished;
+    public string currentConversation;
+    public int currentLineIndex;
+    public string currentMusic;
+    public EventState eventState;
+    public string scene;
+    public List<CharacterRankEntry> characterRanks;
+    public float[] playerPosition;
+    public float[] cameraPosition;
+    public float[] cameraRotation;
+    public float[] conversationInitialRotation;
+    public TimeOfDay timeOfDay;
+    public UIState uiState;
+    public List<string> evidenceIds;
+
+    // Trial stuff
+    public int trialSegmentIndex;
+    public float hp;
+
+    public string saveTime;
+
+    public SaveData(int chapterIndex, int chapterSegmentIndex, int gameEventIndex, string currentRoom, bool isFinished,
+        bool savedInPopup, string currentConversation,
+        int currentLineIndex, string currentMusic, EventState eventState,
+        string scene,
+        Dictionary<string, int> characterRanks, Vector3 playerPosition, Vector3 cameraPosition, Vector3 cameraRotation,
+        Vector3 conversationInitialRotation, TimeOfDay timeOfDay, UIState uiState, List<string> evidenceIds,
+        int trialSegmentIndex,
+        float hp, string saveTime)
+    {
+        this.chapterIndex = chapterIndex;
+        this.chapterSegmentIndex = chapterSegmentIndex;
+        this.gameEventIndex = gameEventIndex;
+        this.currentRoom = currentRoom;
+        this.savedInPopup = savedInPopup;
+        this.isFinished = isFinished;
+        this.currentConversation = currentConversation;
+        this.currentLineIndex = currentLineIndex;
+        this.currentMusic = currentMusic;
+        this.scene = scene;
+        this.eventState = eventState;
         this.characterRanks = characterRanks
             .Select(kvp => new CharacterRankEntry { key = kvp.Key, value = kvp.Value })
             .ToList();
@@ -84,7 +109,7 @@ public class SaveData
         this.cameraPosition = new float[3];
         this.cameraRotation = new float[3];
         this.conversationInitialRotation = new float[3];
-        
+
         this.playerPosition[0] = playerPosition.x;
         this.playerPosition[1] = playerPosition.y;
         this.playerPosition[2] = playerPosition.z;
@@ -96,13 +121,15 @@ public class SaveData
         this.cameraRotation[0] = cameraRotation.x;
         this.cameraRotation[1] = cameraRotation.y;
         this.cameraRotation[2] = cameraRotation.z;
-        
+
         this.conversationInitialRotation[0] = conversationInitialRotation.x;
         this.conversationInitialRotation[1] = conversationInitialRotation.y;
         this.conversationInitialRotation[2] = conversationInitialRotation.z;
-        
+
         this.timeOfDay = timeOfDay;
         this.uiState = uiState;
+
+        this.evidenceIds = evidenceIds;
 
         this.trialSegmentIndex = trialSegmentIndex;
         this.hp = hp;

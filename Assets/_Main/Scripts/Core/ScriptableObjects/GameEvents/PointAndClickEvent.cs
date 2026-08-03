@@ -69,6 +69,12 @@ public class PointAndClickEvent : WorldEvent
                 return false;
         }
 
+        foreach (string id in WorldManager.instance.currentRoomData.additionalObjectsToExit)
+        {
+            if (!objectsData.ContainsKey(id) || !objectsData[id].isClicked)
+                return false;
+        }
+
         return true;
     }
 }

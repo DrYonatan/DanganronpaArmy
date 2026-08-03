@@ -35,6 +35,7 @@ public class RoomData
     public VNConversationSegment firstTimeText;
     public bool hasAlreadyEntered;
     public bool isExitable;
+    public List<string> additionalObjectsToExit;
     public List<EventAdditionalObjectData> additionalObjectData = new();
 }
 
@@ -50,7 +51,7 @@ public abstract class WorldEvent : GameEvent
     public Dictionary<string, ObjectData> charactersData = new Dictionary<string, ObjectData>();
 
     public Dictionary<string, ObjectData> objectsData = new Dictionary<string, ObjectData>();
-    
+
     public override void OnStart()
     {
         WorldManager.instance.StartCoroutine(OnStartRoutine());
@@ -62,7 +63,7 @@ public abstract class WorldEvent : GameEvent
 
         WorldManager.instance.currentRoomData =
             roomDatas.Find(data => data.room.name.Equals(WorldManager.instance.currentRoom.name));
-        
+
         if (startText != null)
         {
             VNNodePlayer.instance.StartConversation(startText);
@@ -106,23 +107,22 @@ public abstract class WorldEvent : GameEvent
             CreateObjects(currentRoomData.worldObjects);
 
         WorldManager.instance.UpdateRoomData(currentRoomData);
-        
     }
 
     public override void OnRoomFinishLoad()
     {
         RoomData currentRoomData = roomDatas
             .First(roomData => roomData.room.roomName.Equals(WorldManager.instance.currentRoom.roomName));
-        
+
         if (WorldManager.instance.charactersObject == null)
         {
             CreateCharacters(currentRoomData.characters);
         }
-        
+
         if (!currentRoomData.hasAlreadyEntered)
         {
             currentRoomData.hasAlreadyEntered = true;
-            if(currentRoomData.firstTimeText != null)
+            if (currentRoomData.firstTimeText != null)
                 VNNodePlayer.instance.StartConversation(currentRoomData.firstTimeText);
         }
     }
@@ -171,12 +171,9 @@ public abstract class WorldEvent : GameEvent
 
         foreach (string objectName in objectsData.Keys)
         {
-            Transform objectTransform = ob?.transform.Find(objectName);
-
-            if (objectTransform == null)
-                objectTransform = WorldManager.instance.currentRoomModel.interactables
-                    .Find(x => x.gameObject.name == objectName)
-                    ?.transform;
+            Transform objectTransform = WorldManager.instance.currentRoomModel.interactables
+                .Find(x => x.id == objectName)
+                ?.transform;
 
             if (objectTransform != null)
             {
@@ -190,7 +187,8 @@ public abstract class WorldEvent : GameEvent
         {
             WorldManager.instance.objectsObject = ob;
 
-            foreach (WorldObject worldObject in WorldManager.instance.objectsObject.objects) // Add all event objects to dictionary
+            foreach (WorldObject worldObject in
+                     WorldManager.instance.objectsObject.objects) // Add all event objects to dictionary
             {
                 if (worldObject != null)
                 {
@@ -212,9 +210,17 @@ public abstract class WorldEvent : GameEvent
     public override void LoadSave(SaveData data)
     {
         base.LoadSave(data);
-        isAfterFinishText = data.isAfterFinishText;
-        charactersData = data.charactersData.ToDictionary(c => c.key, c => c.value);
-        objectsData = data.objectsData.ToDictionary(c => c.key, c => c.value);
+
+        WorldEventState state = (WorldEventState)(data.eventState);
+        
+        isAfterFinishText = state.isAfterFinishText;
+        charactersData = state.charactersData.ToDictionary(c => c.key, c => c.value);
+        objectsData = state.objectsData.ToDictionary(c => c.key, c => c.value);
+    }
+
+    public override EventState HandleSave()
+    {
+        return new WorldEventState(objectsData, charactersData, isAfterFinishText);
     }
 
     protected void OnNotFinished()

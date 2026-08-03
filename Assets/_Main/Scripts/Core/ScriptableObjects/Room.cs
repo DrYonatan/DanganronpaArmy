@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Profiling;
 
@@ -46,12 +47,14 @@ public abstract class Room : ScriptableObject
                 ConversationInteractable originalInteractable =
                     originalModel.interactables.Find(x => x.id == interactable.id);
                 interactable.texts = originalInteractable.texts;
-                interactable.clickCount = originalInteractable.clickCount;
-                interactable.isClicked = originalInteractable.isClicked;
+                interactable.clickCount =
+                    ((WorldEvent)ProgressManager.instance.currentGameEvent).objectsData[interactable.id].clickCount;
+                interactable.isClicked = 
+                    ((WorldEvent)ProgressManager.instance.currentGameEvent).objectsData[interactable.id].isClicked;
             }
         }
     }
-    
+
     public virtual IEnumerator AppearAnimation()
     {
         yield return null;

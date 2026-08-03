@@ -20,6 +20,7 @@ MonoBehaviour:
   - rid: 6299374343484342275
   - rid: 6299374343484342276
   - rid: 6299374343484342277
+  - rid: 6299374382971355137
   references:
     version: 2
     RefIds:
@@ -124,3 +125,31 @@ MonoBehaviour:
           \u05D3\u05E8\u05DA \u05DC\u05D8\u05E4\u05E1 \u05DE\u05D1\u05D7\u05D5\u05E5
           \u05E8\u05E7 \u05DB\u05D3\u05D9 \u05DC\u05D4\u05E6\u05D9\u05E5.)"
         commands: []
+    - rid: 6299374382971355137
+      type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
+        character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
+        displayName: 
+        expressionIndex: 0
+        textData:
+          rid: 6299374382971355138
+    - rid: 6299374382971355138
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: 
+        commands:
+        - rid: 6299374382971355139
+    - rid: 6299374382971355139
+      type: {class: AddEvidence, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 1
+        evidence: {fileID: 11400000, guid: 4ba997dac63149946b503189cba49436, type: 2}

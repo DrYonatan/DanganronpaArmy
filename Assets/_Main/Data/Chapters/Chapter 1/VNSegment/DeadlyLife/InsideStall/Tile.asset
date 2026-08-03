@@ -22,6 +22,7 @@ MonoBehaviour:
   - rid: 6299374361138954257
   - rid: 6299374361138954258
   - rid: 6299374361138954259
+  - rid: 6299374382971355181
   references:
     version: 2
     RefIds:
@@ -173,3 +174,31 @@ MonoBehaviour:
       type: {class: Ding, ns: , asm: Assembly-CSharp}
       data:
         executeTime: 0
+    - rid: 6299374382971355181
+      type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
+        character: {fileID: 0}
+        displayName: 
+        expressionIndex: 0
+        textData:
+          rid: 6299374382971355182
+    - rid: 6299374382971355182
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: 
+        commands:
+        - rid: 6299374382971355183
+    - rid: 6299374382971355183
+      type: {class: AddEvidence, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 1
+        evidence: {fileID: 11400000, guid: 39789c8ebaf5da040a9001495bf1316a, type: 2}

@@ -41,40 +41,35 @@ public class SaveManager : MonoBehaviour
 
     public void SaveGameVn(int slot)
     {
-        WorldEvent currentEvent = ProgressManager.instance.currentGameEvent as WorldEvent;
-        Dictionary<string, ObjectData> charactersData =
-            currentEvent?.charactersData;
-        Dictionary<string, ObjectData> objectsData =
-            currentEvent?.objectsData;
-        
         SaveData data = new SaveData(GameStateManager.instance.chapterIndex,
             GameStateManager.instance.chapterSegmentIndex,
             ProgressManager.instance.currentGameEventIndex,
             WorldManager.instance.currentRoom?.name,
             ProgressManager.instance.currentGameEvent.isFinished,
             ProgressManager.instance.savedInPopup,
-            !currentEvent || currentEvent.isAfterFinishText,
             VNNodePlayer.instance.currentConversation?.guid, VNNodePlayer.instance.lineIndex,
             MusicManager.instance.audioSource.clip ? MusicManager.instance.audioSource.clip.name : "",
-            charactersData,
-            objectsData,
+            ProgressManager.instance.currentGameEvent.HandleSave(),
             GameStateManager.instance.GetCurrentChapterSegment().GetSceneName(),
             GameStateManager.instance.charactersRanks, CameraManager.instance.player.transform.position,
             CameraManager.instance.cameraTransform.localPosition,
             CameraManager.instance.cameraTransform.localRotation.eulerAngles,
             CameraManager.instance.initialRotation.eulerAngles, WorldManager.instance.currentTime,
-            GameStateManager.instance.uiState, 0, 0, DateTime.Now.ToString("o"));
+            GameStateManager.instance.uiState,
+            EvidenceManager.instance.evidenceList.ConvertAll(evidence => evidence.Name), 0, 0,
+            DateTime.Now.ToString("o"));
         SaveSystem.SaveGame(data, slot);
     }
 
     public void SaveGameTrial(int slot)
     {
         SaveData data = new SaveData(GameStateManager.instance.chapterIndex,
-            GameStateManager.instance.chapterSegmentIndex, TrialManager.instance.currentIndex, "", true, true, true,"",
+            GameStateManager.instance.chapterSegmentIndex, TrialManager.instance.currentIndex, "", true, true, "",
             TrialDialogueManager.instance.currentLineIndex,
-            MusicManager.instance.audioSource.clip ? MusicManager.instance.audioSource.clip.name : "", null, null,
+            MusicManager.instance.audioSource.clip ? MusicManager.instance.audioSource.clip.name : "", null,
             SceneManager.GetActiveScene().name, GameStateManager.instance.charactersRanks,
             Vector3.zero, Vector3.zero, Vector3.zero, Vector3.zero, TimeOfDay.Day, GameStateManager.instance.uiState,
+            EvidenceManager.instance.evidenceList.ConvertAll(evidence => evidence.Name),
             TrialManager.instance.currentIndex,
             TrialManager.instance.playerStats.hp, DateTime.Now.ToString("o"));
 

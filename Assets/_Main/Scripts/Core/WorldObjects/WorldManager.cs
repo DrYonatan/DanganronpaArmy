@@ -115,6 +115,8 @@ public class WorldManager : MonoBehaviour
             yield return StartCoroutine(room.OnLoad());
         isLoading = false;
         
+        ProgressManager.instance.currentGameEvent.OnRoomFinishLoad();
+        
         if (VNNodePlayer.instance.currentConversation == null)
         {
             ReturningToWorld();

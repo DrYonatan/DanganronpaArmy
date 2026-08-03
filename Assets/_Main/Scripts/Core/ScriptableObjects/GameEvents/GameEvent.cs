@@ -36,6 +36,8 @@ public abstract class GameEvent: ScriptableObject
         
         ImageScript.instance.UnFadeToBlack(0.1f);
     }
+
+    public abstract EventState HandleSave();
     
     protected IEnumerator StartWithRoomLoad()
     {
@@ -64,6 +66,7 @@ public abstract class GameEvent: ScriptableObject
             yield return WorldManager.instance.LoadRoom(WorldManager.instance.currentRoom, null);
         }
         
+        OnRoomStartLoad();
         OnRoomFinishLoad();
         WorldManager.instance.charactersObject?
             .AnimateCharacters();

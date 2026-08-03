@@ -50,7 +50,7 @@ public class ProgressManager : MonoBehaviour
             GameStateManager.instance.MoveToNextChapterSegment();
             yield break;
         }
-        
+
         currentGameEvent = Instantiate(gameEvents[currentGameEventIndex]);
         currentGameEvent.OnStart();
     }
@@ -73,7 +73,7 @@ public class ProgressManager : MonoBehaviour
         WorldManager.instance.currentRoom = Resources.Load<Room>($"Rooms/{data.currentRoom}");
         MusicManager.instance.PlaySong(Resources.Load<AudioClip>($"Audio/Music/{data.currentMusic}"));
         currentGameEvent.LoadSave(data);
-        
+
         GameStateManager.instance.SetUIState(data.uiState);
         GameStateManager.instance.InitiateUIState();
 
@@ -83,7 +83,10 @@ public class ProgressManager : MonoBehaviour
             new Vector3(data.cameraPosition[0], data.cameraPosition[1], data.cameraPosition[2]);
         CameraManager.instance.cameraTransform.localRotation =
             Quaternion.Euler(new Vector3(data.cameraRotation[0], data.cameraRotation[1], data.cameraRotation[2]));
-        
+
+        EvidenceManager.instance.Initialize(GameStateManager.instance.GetCurrentChapter().evidenceList
+            .FindAll(evidence => data.evidenceIds.Contains(evidence.Name)));
+
         if (data.savedInPopup)
         {
             Room room = ((WorldEvent)currentGameEvent)
