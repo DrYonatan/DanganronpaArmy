@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [Serializable]
@@ -216,11 +215,17 @@ public abstract class WorldEvent : GameEvent
         isAfterFinishText = state.isAfterFinishText;
         charactersData = state.charactersData.ToDictionary(c => c.key, c => c.value);
         objectsData = state.objectsData.ToDictionary(c => c.key, c => c.value);
+        foreach (RoomDataSave roomData in state.roomsDatas)
+        {
+            RoomData matchingRoomData = roomDatas.Find(data => data.room.name.Equals(roomData.roomName));
+            if(matchingRoomData != null)
+                matchingRoomData.hasAlreadyEntered =  roomData.hasAlreadyEntered;
+        }
     }
 
     public override EventState HandleSave()
     {
-        return new WorldEventState(objectsData, charactersData, isAfterFinishText);
+        return new WorldEventState(isFinished, objectsData, charactersData, isAfterFinishText, roomDatas);
     }
 
     protected void OnNotFinished()

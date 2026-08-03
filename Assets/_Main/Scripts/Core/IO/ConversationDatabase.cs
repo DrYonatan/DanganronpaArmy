@@ -14,6 +14,9 @@ public class ConversationDatabase : ScriptableObject
         if (lookup == null)
             lookup = conversations.ToDictionary(c => c.guid, c => c);
 
+        if (guid == null)
+            return null;
+        
         if (lookup.TryGetValue(guid, out var segment))
             return segment;
 

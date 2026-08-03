@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 using UnityEngine;
 
 [Serializable]
@@ -20,6 +21,12 @@ public class CharacterRankEntry
 [Serializable]
 public class EventState
 {
+    public bool isFinished;
+
+    public EventState(bool isFinished)
+    {
+        this.isFinished = isFinished;
+    }
 }
 
 [Serializable]
@@ -28,8 +35,11 @@ public class WorldEventState : EventState
     public List<ObjectDataEntry> charactersData;
     public List<ObjectDataEntry> objectsData;
     public bool isAfterFinishText;
+    public List<RoomDataSave> roomsDatas;
 
-    public WorldEventState(Dictionary<string, ObjectData> objectsData, Dictionary<string, ObjectData> charactersData, bool isAfterFinishText)
+    public WorldEventState(bool isFinished, Dictionary<string, ObjectData> objectsData,
+        Dictionary<string, ObjectData> charactersData, bool isAfterFinishText,
+        List<RoomData> roomDatas) : base(isFinished)
     {
         if (objectsData != null)
             this.objectsData = objectsData
@@ -41,13 +51,30 @@ public class WorldEventState : EventState
                 .ToList();
 
         this.isAfterFinishText = isAfterFinishText;
+
+        this.roomsDatas = roomDatas.ConvertAll(data => new RoomDataSave(data.room.name, data.hasAlreadyEntered));
+    }
+
+    [JsonConstructor]
+    public WorldEventState(bool isFinished) : base(isFinished)
+    {
+        charactersData = new List<ObjectDataEntry>();
+        objectsData = new List<ObjectDataEntry>();
+        roomsDatas = new List<RoomDataSave>();
     }
 }
 
 [Serializable]
-public class StoryEventState : EventState
+public class RoomDataSave
 {
-    
+    public string roomName;
+    public bool hasAlreadyEntered;
+
+    public RoomDataSave(string roomName, bool hasAlreadyEntered)
+    {
+        this.roomName = roomName;
+        this.hasAlreadyEntered = hasAlreadyEntered;
+    }
 }
 
 [Serializable]
@@ -135,5 +162,51 @@ public class SaveData
         this.hp = hp;
 
         this.saveTime = saveTime;
+    }
+
+    public SaveData()
+    {
+        chapterIndex = 0;
+        chapterSegmentIndex = 0;
+        gameEventIndex = 0;
+        currentRoom = "";
+        savedInPopup = false;
+        currentConversation = "";
+        currentLineIndex = 0;
+        currentMusic = "";
+        scene = "";
+        eventState = null;
+        characterRanks = new List<CharacterRankEntry>();
+
+        playerPosition = new float[3];
+        cameraPosition = new float[3];
+        cameraRotation = new float[3];
+        conversationInitialRotation = new float[3];
+
+        playerPosition[0] = 0;
+        playerPosition[1] = 0;
+        playerPosition[2] = 0;
+
+        cameraPosition[0] = 0;
+        cameraPosition[1] = 0;
+        cameraPosition[2] = 0;
+
+        cameraRotation[0] = 0;
+        cameraRotation[1] = 0;
+        cameraRotation[2] = 0;
+
+        conversationInitialRotation[0] = 0;
+        conversationInitialRotation[1] = 0;
+        conversationInitialRotation[2] = 0;
+
+        timeOfDay = 0;
+        uiState = null;
+
+        evidenceIds = null;
+
+        trialSegmentIndex = 0;
+        hp = 0;
+
+        saveTime = "";
     }
 }
