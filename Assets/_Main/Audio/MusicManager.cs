@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class MusicManager : MonoBehaviour
@@ -28,7 +29,13 @@ public class MusicManager : MonoBehaviour
 
     public void StopSong()
     {
-        audioSource.Stop();
+        audioSource.DOFade(0f, 0.2f)
+            .OnComplete(() =>
+            {
+                audioSource.Stop();
+                audioSource.volume = 1f; // Reset for next time it plays
+            });
+        
         audioSource.clip = null;
         if (VNUIAnimator.instance != null)
         {

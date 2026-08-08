@@ -219,7 +219,7 @@ public abstract class WorldEvent : GameEvent
         {
             RoomData matchingRoomData = roomDatas.Find(data => data.room.name.Equals(roomData.roomName));
             if(matchingRoomData != null)
-                matchingRoomData.hasAlreadyEntered =  roomData.hasAlreadyEntered;
+                matchingRoomData.hasAlreadyEntered = roomData.hasAlreadyEntered;
         }
     }
 

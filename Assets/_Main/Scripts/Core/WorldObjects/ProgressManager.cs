@@ -89,8 +89,7 @@ public class ProgressManager : MonoBehaviour
 
         if (data.savedInPopup)
         {
-            Room room = ((WorldEvent)currentGameEvent)
-                .startRoom; // To get to this point, there must be a startRoom as it means the event is in a brand new VN segment
+            Room room = currentGameEvent.startRoom; // To get to this point, there must be a startRoom as it means the event is in a brand new VN segment
             yield return WorldManager.instance.LoadRoom(room, null);
             currentGameEvent.OnStart();
         }
