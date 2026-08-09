@@ -30,6 +30,8 @@ public class CameraSettingsPopUp : PopupWindowContent
         }
         GUILayout.Label(bigPreview, GUILayout.Width(bigPreviewWidth), GUILayout.Height(bigPreviewHeight));
 
+        DrawPresetSettings(node);
+
         node.positionOffset = EditorGUILayout.Vector3Field("Position Offset", node.positionOffset);
         
         node.rotationOffset = EditorGUILayout.Vector3Field("Rotation Offset", node.rotationOffset);
@@ -38,6 +40,51 @@ public class CameraSettingsPopUp : PopupWindowContent
         
         ShowCameraEffects(ref node.cameraEffects, ref node);
     }
+
+    private void DrawPresetSettings(DiscussionNode node)
+    {
+        node.cameraPreset = (CameraPreset)EditorGUILayout.ObjectField("Camera Preset", node.cameraPreset, typeof(CameraPreset), false);
+
+        GUILayout.BeginHorizontal();
+        if (node.cameraPreset != null && GUILayout.Button("Apply to Node"))
+        {
+            ApplyPresetToNode(node);
+            node.nodeRect.height += 20;
+        }
+        if (node.cameraPreset != null && GUILayout.Button("Remove Preset"))
+        {
+            node.cameraPreset = null;
+        }
+        if (GUILayout.Button("Save as Preset"))
+        {
+            SaveNodeAsPreset(node);
+        }
+        GUILayout.EndHorizontal();
+    }
+
+    private void ApplyPresetToNode(DiscussionNode node)
+    {
+        node.positionOffset = node.cameraPreset.positionOffset;
+        node.rotationOffset = node.cameraPreset.rotationOffset;
+        node.fovOffset = node.cameraPreset.fovOffset;
+        node.cameraEffects = new List<CameraEffect>(node.cameraPreset.cameraEffects);
+    }
+
+    private void SaveNodeAsPreset(DiscussionNode node)
+    {
+        CameraPreset preset = ScriptableObject.CreateInstance<CameraPreset>();
+        preset.positionOffset = node.EffectivePositionOffset;
+        preset.rotationOffset = node.EffectiveRotationOffset;
+        preset.fovOffset = node.EffectiveFovOffset;
+        preset.cameraEffects = new List<CameraEffect>(node.EffectiveCameraEffects);
+
+        string path = EditorUtility.SaveFilePanelInProject("Save Camera Preset", "New CameraPreset", "asset", "Save the current camera settings as a preset.");
+        if (path.Length > 0)
+        {
+            AssetDatabase.CreateAsset(preset, path);
+            AssetDatabase.SaveAssets();
+        }
+    }
     
     private void UpdatePreview(DiscussionNode b)
     {
@@ -45,9 +92,9 @@ public class CameraSettingsPopUp : PopupWindowContent
             return;
         b.previewPivot.transform.rotation = Quaternion.LookRotation(new Vector3(b.characterStand.transform.position.x, 0f, b.characterStand.transform.position.z));
         
-        b.previewCamera.transform.localPosition = new Vector3(0f, b.characterStand.heightPivot.position.y, -1.65f) + b.positionOffset;
-        b.previewCamera.transform.localRotation = Quaternion.Euler(b.rotationOffset);
-        b.previewCamera.fieldOfView = 15f + b.fovOffset;
+        b.previewCamera.transform.localPosition = new Vector3(0f, b.characterStand.heightPivot.position.y, -1.65f) + b.EffectivePositionOffset;
+        b.previewCamera.transform.localRotation = Quaternion.Euler(b.EffectiveRotationOffset);
+        b.previewCamera.fieldOfView = 15f + b.EffectiveFovOffset;
     
         b.previewCamera.Render();
     }
@@ -158,9 +205,9 @@ public class DiscussionNodeDraw : VNNodeDraw
             return;
         b.previewPivot.transform.rotation = Quaternion.LookRotation(new Vector3(b.characterStand.transform.position.x, 0f, b.characterStand.transform.position.z));
         
-        b.previewCamera.transform.localPosition = new Vector3(0f, b.characterStand.heightPivot.position.y, -1.65f) + b.positionOffset;
-        b.previewCamera.transform.localRotation = Quaternion.Euler(b.rotationOffset);
-        b.previewCamera.fieldOfView = 15f + b.fovOffset;
+        b.previewCamera.transform.localPosition = new Vector3(0f, b.characterStand.heightPivot.position.y, -1.65f) + b.EffectivePositionOffset;
+        b.previewCamera.transform.localRotation = Quaternion.Euler(b.EffectiveRotationOffset);
+        b.previewCamera.fieldOfView = 15f + b.EffectiveFovOffset;
     
         b.previewCamera.Render();
     }

@@ -485,9 +485,9 @@ public class GameLoop : MonoBehaviour
             debateUIAnimator.UpdateName(nextNode.character.displayName);
         debateUIAnimator.HighlightNode(textIndex);
         yield return cameraController.SpinToTarget(characterStand.transform, characterStand.heightPivot,
-            nextNode.positionOffset, nextNode.rotationOffset, nextNode.fovOffset);
+            nextNode.EffectivePositionOffset, nextNode.EffectiveRotationOffset, nextNode.EffectiveFovOffset);
 
-        foreach (CameraEffect cameraEffect in nextNode.cameraEffects)
+        foreach (CameraEffect cameraEffect in nextNode.EffectiveCameraEffects)
         {
             effectController.StartEffect(cameraEffect);
         }
