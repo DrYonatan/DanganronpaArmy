@@ -1,4 +1,4 @@
-using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 
 public enum Direction {
@@ -8,13 +8,11 @@ public enum Direction {
     Down,
 }
 
-[CreateAssetMenu(menuName ="Behaviour Editor/Camera Effect/Slide/Big Slide")]
+[CreateAssetMenu(menuName = "Behaviour Editor/Camera Effect/Slide/Big Slide")]
 public class BigSlideCameraEffect : CameraEffect
 {
     public Direction fromDirection;
     [SerializeField] private float amount = 1f;
-    [SerializeField] private float speed = 1f;
-    private Vector3 originalPosition;
 
     public void TeleportToFromDirection(CameraEffectController effectController)
     {
@@ -34,22 +32,11 @@ public class BigSlideCameraEffect : CameraEffect
                 break;
         }
     }
-    public override IEnumerator Apply(CameraEffectController effectController)
+
+    public override void Apply(CameraEffectController effectController)
     {
-        originalPosition = effectController.cameraTransform.position;
+        Vector3 originalPosition = effectController.cameraTransform.position;
         TeleportToFromDirection(effectController);
-
-        float elapsedTime = 0f;
-
-        float originalSpeed = speed;
-        speed = 3f;
-        while(elapsedTime < timeLimit)
-        {
-            if(elapsedTime > 0.3f)
-            speed = originalSpeed;
-            effectController.cameraTransform.position = Vector3.MoveTowards(effectController.cameraTransform.position, originalPosition, Time.deltaTime * speed);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
+        effectController.cameraTransform.DOMove(originalPosition, timeLimit).SetEase(Ease.OutCubic);
     }
 }
