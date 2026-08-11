@@ -5,10 +5,7 @@ using UnityEngine;
 
 public class DiscussionImportPopup : PopupWindowContent
 {
-    private const string EffectsFolder = "Assets/_Main/Data/Effects/Camera Effects";
     private const string PresetsFolder = "Assets/_Main/Data/Effects/Camera Presets";
-
-    private const float PresetChance = 0.15f;
 
     private readonly ConversationEditor editor;
     private Vector2 scroll;
@@ -35,7 +32,7 @@ public class DiscussionImportPopup : PopupWindowContent
         );
 
         EditorGUILayout.HelpBox(
-            "Each node gets a random camera effect and random offsets (15% chance to apply a random camera preset instead, which handles all offsets and effects). Zoom effects will not apply a y offset.",
+            "Each node gets a random camera preset, which handles all offsets and effects. Consecutive lines from the same character will reuse the previous camera.",
             MessageType.Info
         );
 
@@ -75,13 +72,6 @@ public class DiscussionImportPopup : PopupWindowContent
             .Where(character => character != null)
             .ToArray();
 
-        CameraEffect[] allEffects = AssetDatabase
-            .FindAssets("t:CameraEffect", new[] { EffectsFolder })
-            .Select(guid => AssetDatabase.GUIDToAssetPath(guid))
-            .Select(path => AssetDatabase.LoadAssetAtPath<CameraEffect>(path))
-            .Where(effect => effect != null)
-            .ToArray();
-
         CameraPreset[] allPresets = AssetDatabase
             .FindAssets("t:CameraPreset", new[] { PresetsFolder })
             .Select(guid => AssetDatabase.GUIDToAssetPath(guid))
@@ -93,6 +83,7 @@ public class DiscussionImportPopup : PopupWindowContent
             new[] { "\r\n\r\n", "\n\n" },
             System.StringSplitOptions.RemoveEmptyEntries
         );
+        DiscussionNode previousNode = null;
         foreach (string rawBlock in blocks)
         {
             string block = rawBlock.Trim();
@@ -113,6 +104,10 @@ public class DiscussionImportPopup : PopupWindowContent
 
             node.character = matchingCharacter;
 
+            node.usePrevCamera = previousNode != null &&
+                previousNode.character != null &&
+                previousNode.character == matchingCharacter;
+
             VNTextData data = node.textData as VNTextData;
 
             if (data != null)
@@ -120,16 +115,13 @@ public class DiscussionImportPopup : PopupWindowContent
                 data.text = dialogueText;
             }
 
-            if (Random.value < PresetChance && allPresets.Length > 0)
+            if (!node.usePrevCamera && allPresets.Length > 0)
             {
                 node.cameraPreset = allPresets[Random.Range(0, allPresets.Length)];
             }
-            else
-            {
-                AssignRandomCamera(node, allEffects);
-            }
 
             editor.discussionNodes.Add(node);
+            previousNode = node;
         }
 
         EditorUtility.SetDirty(editor.segment);
@@ -137,37 +129,5 @@ public class DiscussionImportPopup : PopupWindowContent
 
         editor.Repaint();
         editorWindow?.Close();
-    }
-
-    private void AssignRandomCamera(DiscussionNode node, CameraEffect[] allEffects)
-    {
-        node.rotationOffset = new Vector3(
-            Random.Range(-6f, 6f),
-            Random.Range(-10f, 10f),
-            Random.Range(-25f, 25f)
-        );
-
-        node.fovOffset = Random.Range(-5f, 15f);
-
-        if (allEffects.Length == 0)
-        {
-            node.positionOffset = new Vector3(
-                Random.Range(-1f, 1f),
-                Random.Range(-1f, 1f),
-                Random.Range(-12f, 4f)
-            );
-            return;
-        }
-
-        CameraEffect effect = allEffects[Random.Range(0, allEffects.Length)];
-        node.cameraEffects = new List<CameraEffect> { effect };
-
-        bool isZoom = effect is ZoomCameraEffect;
-
-        node.positionOffset = new Vector3(
-            Random.Range(-1f, 1f),
-            isZoom ? 0f : Random.Range(-1f, 1f),
-            Random.Range(-12f, 4f)
-        );
     }
 }
