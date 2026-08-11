@@ -10,6 +10,6 @@ public class ZoomCameraEffect : CameraEffect
     {
         Vector3 targetPosition =
             effectController.cameraTransform.position + effectController.cameraTransform.forward * zoom;
-        effectController.cameraTransform.DOMove(targetPosition, timeLimit);
+        effectController.cameraTransform.DOMove(targetPosition, timeLimit).SetEase(Ease.Linear);
     }
 }

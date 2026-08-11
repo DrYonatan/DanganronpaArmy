@@ -9,6 +9,6 @@ public class SlideCameraEffect : CameraEffect
     public override void Apply(CameraEffectController effectController)
     {
         Vector3 targetPos = effectController.cameraTransform.localPosition + direction;
-        effectController.cameraTransform.DOLocalMove(targetPos, timeLimit);
+        effectController.cameraTransform.DOLocalMove(targetPos, timeLimit).SetEase(Ease.Linear);
     }
 }

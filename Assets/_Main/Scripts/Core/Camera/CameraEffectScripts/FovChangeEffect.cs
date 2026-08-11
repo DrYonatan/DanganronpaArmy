@@ -9,6 +9,7 @@ public class FovChangeEffect : CameraEffect
     public override void Apply(CameraEffectController effectController)
     {
         DOTween.To(() => effectController.camera.fieldOfView, x => effectController.camera.fieldOfView = x, targetFov, timeLimit)
+            .SetEase(Ease.Linear)
             .SetTarget(effectController.cameraTransform);
     }
 }

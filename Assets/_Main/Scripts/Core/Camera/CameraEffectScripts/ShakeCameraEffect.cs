@@ -9,6 +9,7 @@ public class ShakeCameraEffect : CameraEffect
 
     public override void Apply(CameraEffectController effectController)
     {
-        effectController.cameraTransform.DOShakePosition(timeLimit, limits / 100f, intensity, 90);
+        effectController.cameraTransform.DOShakePosition(timeLimit, limits / 100f, intensity, 90)
+            .SetLoops(-1, LoopType.Restart).SetEase(Ease.Linear);
     }
 }

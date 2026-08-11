@@ -9,6 +9,6 @@ public class RotateCameraEffect : CameraEffect
     public override void Apply(CameraEffectController effectController)
     {
         Quaternion targetRotation = effectController.cameraTransform.rotation * Quaternion.Euler(rotationLimit);
-        effectController.cameraTransform.DORotateQuaternion(targetRotation, timeLimit);
+        effectController.cameraTransform.DORotateQuaternion(targetRotation, timeLimit).SetEase(Ease.Linear);
     }
 }
