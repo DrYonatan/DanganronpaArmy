@@ -177,6 +177,7 @@ public abstract class WorldEvent : GameEvent
             if (objectTransform != null)
             {
                 WorldObject worldObject = objectTransform.GetComponent<WorldObject>();
+
                 worldObject.isClicked = objectsData[objectName].isClicked;
                 worldObject.clickCount = objectsData[objectName].clickCount;
             }
@@ -211,14 +212,14 @@ public abstract class WorldEvent : GameEvent
         base.LoadSave(data);
 
         WorldEventState state = (WorldEventState)(data.eventState);
-        
+
         isAfterFinishText = state.isAfterFinishText;
         charactersData = state.charactersData.ToDictionary(c => c.key, c => c.value);
         objectsData = state.objectsData.ToDictionary(c => c.key, c => c.value);
         foreach (RoomDataSave roomData in state.roomsDatas)
         {
             RoomData matchingRoomData = roomDatas.Find(data => data.room.name.Equals(roomData.roomName));
-            if(matchingRoomData != null)
+            if (matchingRoomData != null)
                 matchingRoomData.hasAlreadyEntered = roomData.hasAlreadyEntered;
         }
     }

@@ -103,4 +103,9 @@ public class PointAndClickRoom : Room
     {
         CameraManager.instance.ReturnToDollyTrack();
     }
+
+    public override void OnEventFinished()
+    {
+        CameraManager.instance.MoveCameraTo(GameObject.Find("World/CameraStartPos").transform);
+    }
 }

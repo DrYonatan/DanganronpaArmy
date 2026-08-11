@@ -12,18 +12,27 @@ public class MoveToTalkPos : Command
 
         if (talkPosition == null)
             talkPosition = WorldManager.instance.talkPositions[0];
-        
+
         if (talkPosition == null)
             yield break;
-        
+
+        if (positionId.Equals("CameraStartPos"))
+        {
+            CharacterClickEffects.instance.MakeCharactersReappear(WorldManager.instance.charactersObject?.gameObject);
+        }
+        else
+        {
+            CharacterClickEffects.instance.MakeCharactersDisappear(WorldManager.instance.charactersObject, 1f);
+        }
+
         DialogueSystem.instance.TextBoxDisappear();
         CameraManager.instance.StartCoroutine(
             CameraManager.instance.RotateCameraTo(talkPosition.rotation, 0.5f));
         yield return CameraManager.instance.MoveCameraTo(talkPosition.position, 0.5f);
         CameraManager.instance.initialRotation = talkPosition.rotation;
     }
-    
-    #if UNITY_EDITOR
+
+#if UNITY_EDITOR
     public override void DrawGUI()
     {
         base.DrawGUI();

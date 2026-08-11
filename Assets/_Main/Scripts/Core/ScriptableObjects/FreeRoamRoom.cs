@@ -223,4 +223,9 @@ public class FreeRoamRoom : Room
 
         wasMoving = isMoving;
     }
+
+    public override void OnEventFinished()
+    {
+        
+    }
 }
