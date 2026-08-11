@@ -9,6 +9,7 @@ public class CameraSettingsPopUp : PopupWindowContent
     private RenderTexture bigPreview;
     private int bigPreviewHeight = 360;
     private int bigPreviewWidth = 640;
+    private string presetName = "New Camera Preset";
     public CameraSettingsPopUp(DiscussionNode node)
     {
         this.node = node;
@@ -55,11 +56,14 @@ public class CameraSettingsPopUp : PopupWindowContent
         {
             node.cameraPreset = null;
         }
+        GUILayout.EndHorizontal();
+
+        presetName = EditorGUILayout.TextField("Preset Name", presetName);
+
         if (GUILayout.Button("Save as Preset"))
         {
             SaveNodeAsPreset(node);
         }
-        GUILayout.EndHorizontal();
     }
 
     private void ApplyPresetToNode(DiscussionNode node)
@@ -78,12 +82,10 @@ public class CameraSettingsPopUp : PopupWindowContent
         preset.fovOffset = node.EffectiveFovOffset;
         preset.cameraEffects = new List<CameraEffect>(node.EffectiveCameraEffects);
 
-        string path = EditorUtility.SaveFilePanelInProject("Save Camera Preset", "New CameraPreset", "asset", "Save the current camera settings as a preset.");
-        if (path.Length > 0)
-        {
-            AssetDatabase.CreateAsset(preset, path);
-            AssetDatabase.SaveAssets();
-        }
+        string name = string.IsNullOrWhiteSpace(presetName) ? "New Camera Preset" : presetName;
+        string path = AssetDatabase.GenerateUniqueAssetPath($"Assets/_Main/Data/Effects/Camera Presets/{name}.asset");
+        AssetDatabase.CreateAsset(preset, path);
+        AssetDatabase.SaveAssets();
     }
     
     private void UpdatePreview(DiscussionNode b)
