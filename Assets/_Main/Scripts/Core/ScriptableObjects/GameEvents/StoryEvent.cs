@@ -44,7 +44,7 @@ public class StoryEvent : GameEvent
 
     public override void OnRoomFinishLoad()
     {
-        if (WorldManager.instance.characterPanel == null)
+        if (WorldManager.instance.characterPanel == null || roomDatas == null || roomDatas.Count == 0)
             return;
         
         RoomData currentRoomData = roomDatas

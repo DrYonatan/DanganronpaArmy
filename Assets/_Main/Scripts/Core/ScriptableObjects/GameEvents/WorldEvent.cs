@@ -150,8 +150,11 @@ public abstract class WorldEvent : GameEvent
         foreach (Transform character in WorldManager.instance.charactersObject.transform)
         {
             WorldCharacter worldCharacter = character.GetComponent<WorldCharacter>();
-            charactersData[worldCharacter.id] =
-                new ObjectData(worldCharacter.isClicked, worldCharacter.clickCount);
+            if (!charactersData.ContainsKey(worldCharacter.id))
+            {
+                charactersData[worldCharacter.id] =
+                    new ObjectData(worldCharacter.isClicked, worldCharacter.clickCount);
+            }
         }
     }
 
@@ -188,12 +191,18 @@ public abstract class WorldEvent : GameEvent
             WorldManager.instance.objectsObject = ob;
 
             foreach (WorldObject worldObject in
-                     WorldManager.instance.objectsObject.objects) // Add all event objects to dictionary
+                     WorldManager.instance.objectsObject.objects) // Add all event objects to dictionary and update ones that are already in the dictionary to be up to date with their dictionary state
             {
-                if (worldObject != null)
+                if (worldObject != null && !objectsData.ContainsKey(worldObject.id))
                 {
                     objectsData[worldObject.id] =
                         new ObjectData(worldObject.isClicked, worldObject.clickCount);
+                }
+
+                else if (worldObject != null)
+                {
+                    worldObject.clickCount = objectsData[worldObject.id].clickCount;
+                    worldObject.isClicked = objectsData[worldObject.id].isClicked;
                 }
             }
         }
