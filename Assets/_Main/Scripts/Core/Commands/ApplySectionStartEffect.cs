@@ -12,8 +12,9 @@ public class ApplySectionStartEffect : Command
     {
         VNUIAnimator.instance.sectionStartEffect.background.color = color;
         VNUIAnimator.instance.sectionStartEffect.Animate(sectionTitle);
+        DialogueSystem.instance.TextBoxDisappear();
         DialogueSystem.instance.TurnOnSingleTimeAuto();
-        yield return null;
+        yield return new WaitForSeconds(2f);
     }
 
 #if UNITY_EDITOR
