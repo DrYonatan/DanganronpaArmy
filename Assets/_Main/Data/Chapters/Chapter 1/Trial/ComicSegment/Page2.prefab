@@ -563,14 +563,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteAnimations:
   - {fileID: 89785039045041205}
-  soundEffects:
-  - soundEffect: {fileID: 8300000, guid: 51fa52834f6aecc4d952cb965c3a5b5a, type: 3}
-    delay: 0
+  soundEffects: []
   textBeforePanel: []
-  textAfterPanel: []
+  textAfterPanel:
+  - nodeRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    commandsScrollPosition: {x: 0, y: 0}
+    title: 
+    drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
+    character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
+    displayName: 
+    expressionIndex: 0
+    textData:
+      rid: 6008430052872814601
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 6008430052872814601
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "\u05D4\u05E8\u05D5\u05E6\u05D7 \u05E0\u05E4\u05D2\u05E9 \u05E2\u05DD
+          \u05E0\u05D5\u05D9\u05D4, \u05D5\u05D4\u05DD \u05E2\u05D6\u05D1\u05D5,
+          \u05D1\u05DE\u05D7\u05E9\u05D1\u05D4 \u05E9\u05D4\u05DD \u05DC\u05D0 \u05DE\u05E6\u05D0\u05D5
+          \u05E9\u05D5\u05DD \u05D3\u05D1\u05E8 \u05D9\u05D5\u05EA\u05E8 \u05DE\u05D3\u05D9
+          \u05D7\u05E9\u05D5\u05D1."
+        commands: []
 --- !u!225 &619558881595073730
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1074,9 +1095,7 @@ MonoBehaviour:
   spriteAnimations:
   - {fileID: 2216584039943755460}
   - {fileID: 2616174531893796126}
-  soundEffects:
-  - soundEffect: {fileID: 8300000, guid: 51fa52834f6aecc4d952cb965c3a5b5a, type: 3}
-    delay: 0
+  soundEffects: []
   textBeforePanel: []
   textAfterPanel: []
   references:
@@ -1745,7 +1764,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteAnimations:
   - {fileID: 2639592850442223929}
-  soundEffects: []
+  soundEffects:
+  - soundEffect: {fileID: 8300000, guid: 418284306325c0f478ba5d2782bb2431, type: 3}
+    delay: 0
   textBeforePanel: []
   textAfterPanel: []
   references:
@@ -2002,7 +2023,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
       propertyPath: truePin.pinName
-      value: killer-entering
+      value: killer-pipes
       objectReference: {fileID: 0}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
       propertyPath: selectedPin.pinName
@@ -2018,7 +2039,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
       propertyPath: textAfterPanel.Array.size
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
       propertyPath: textBeforePanel.Array.size
@@ -2046,7 +2067,15 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
       propertyPath: textAfterPanel.Array.data[0].textData
-      value: 4653703359911690241
+      value: 6008430052872814599
+      objectReference: {fileID: 0}
+    - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
+      propertyPath: textAfterPanel.Array.data[1].drawNode
+      value: 
+      objectReference: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
+    - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
+      propertyPath: textAfterPanel.Array.data[1].textData
+      value: 6008430052872814600
       objectReference: {fileID: 0}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
       propertyPath: managedReferences[4653703359911690240]
@@ -2057,11 +2086,27 @@ PrefabInstance:
       value: Assembly-CSharp VNTextData
       objectReference: {fileID: 0}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
+      propertyPath: managedReferences[6008430052872814598]
+      value: Assembly-CSharp VNTextData
+      objectReference: {fileID: 0}
+    - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
+      propertyPath: managedReferences[6008430052872814599]
+      value: Assembly-CSharp VNTextData
+      objectReference: {fileID: 0}
+    - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
+      propertyPath: managedReferences[6008430052872814600]
+      value: Assembly-CSharp VNTextData
+      objectReference: {fileID: 0}
+    - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
       propertyPath: managedReferences[6060276353684209665]
       value: Assembly-CSharp VNTextData
       objectReference: {fileID: 0}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
       propertyPath: textAfterPanel.Array.data[0].character
+      value: 
+      objectReference: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
+    - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
+      propertyPath: textAfterPanel.Array.data[1].character
       value: 
       objectReference: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
@@ -2087,8 +2132,25 @@ PrefabInstance:
       value: "\u05D5\u05DC\u05D0\u05D7\u05E8 \u05DE\u05DB\u05DF \u05D4\u05E8\u05D5\u05E6\u05D7"
       objectReference: {fileID: 0}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
+      propertyPath: managedReferences[6008430052872814598].text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
+      propertyPath: managedReferences[6008430052872814599].text
+      value: "\u05DB\u05E9\u05D4\u05D5\u05D0 \u05E4\u05EA\u05D7 \u05D0\u05EA \u05D4\u05E8\u05DB\u05D6\u05EA,
+        \u05D4\u05D5\u05D0 \u05D2\u05D9\u05DC\u05D4 \u05D4\u05DE\u05D5\u05DF \u05E6\u05D9\u05E0\u05D5\u05E8\u05D5\u05EA."
+      objectReference: {fileID: 0}
+    - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
+      propertyPath: managedReferences[6008430052872814600].text
+      value: "\u05D0\u05E0\u05D9 \u05DC\u05D0 \u05D9\u05D5\u05D3\u05E2 \u05D0\u05DD
+        \u05D6\u05D4 \u05D0\u05DE\u05E8 \u05DC\u05D5 \u05DE\u05E9\u05D4\u05D5 \u05D0\u05D6\u2026
+        \u05D0\u05D1\u05DC \u05D6\u05D4 \u05E0\u05D7\u05E7\u05E7 \u05D1\u05D6\u05D9\u05DB\u05E8\u05D5\u05DF
+        \u05E9\u05DC \u05D4\u05E8\u05D5\u05E6\u05D7."
+      objectReference: {fileID: 0}
+    - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
       propertyPath: managedReferences[6060276353684209665].text
-      value: "\u05E7\u05D5\u05D3\u05DD \u05DB\u05DC \u05D4\u05E8\u05D5\u05E6\u05D7..."
+      value: "\u05D1\u05EA\u05D5\u05DA \u05D4\u05E8\u05DB\u05D6\u05EA, \u05D4\u05E8\u05D5\u05E6\u05D7
+        \u05E8\u05D0\u05D4..."
       objectReference: {fileID: 0}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
       propertyPath: managedReferences[4653703359911690240].commands.Array.size
@@ -2096,6 +2158,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
       propertyPath: managedReferences[4653703359911690241].commands.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
+      propertyPath: managedReferences[6008430052872814598].commands.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
+      propertyPath: managedReferences[6008430052872814599].commands.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
+      propertyPath: managedReferences[6008430052872814600].commands.Array.size
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}

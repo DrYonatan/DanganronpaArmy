@@ -70,13 +70,35 @@ MonoBehaviour:
   spriteAnimations:
   - {fileID: 3850638080597634924}
   soundEffects:
-  - soundEffect: {fileID: 8300000, guid: 51fa52834f6aecc4d952cb965c3a5b5a, type: 3}
+  - soundEffect: {fileID: 8300000, guid: c6f4ce175651818429c3bc6b885aee86, type: 3}
     delay: 0
   textBeforePanel: []
-  textAfterPanel: []
+  textAfterPanel:
+  - nodeRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    commandsScrollPosition: {x: 0, y: 0}
+    title: 
+    drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
+    character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
+    displayName: 
+    expressionIndex: 0
+    textData:
+      rid: 6008430052872814604
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 6008430052872814604
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "\u05D0\u05DC\u05D5\u05DF: \u05D4\u05D5\u05D0 \u05D7\u05D9\u05E4\u05E9
+          \u05D1\u05E9\u05E8\u05D8\u05D5\u05D8\u05D9\u05DD \u05E9\u05DC \u05D4\u05D1\u05E1\u05D9\u05E1,
+          \u05E2\u05D3 \u05E9\u05D4\u05D5\u05D0 \u05DE\u05E6\u05D0 \u05D0\u05EA \u05D4\u05E9\u05E8\u05D8\u05D5\u05D8
+          \u05E9\u05DC \u05D4\u05E9\u05D9\u05E8\u05D5\u05EA\u05D9\u05DD.\r\n"
+        commands: []
 --- !u!225 &8459959383623204068
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -259,7 +281,7 @@ MonoBehaviour:
     - attribute: {x: 19, y: -118}
       duration: 0
     - attribute: {x: 19, y: -234}
-      duration: 0.8
+      duration: 1.2
     ease: 6
   rotationAnimation:
     repeatTimes: 1
@@ -424,7 +446,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteAnimations:
   - {fileID: 4047481522216157792}
-  soundEffects: []
+  soundEffects:
+  - soundEffect: {fileID: 8300000, guid: 0e905fcf55c8ac34d8d2eefab12e271d, type: 3}
+    delay: 0
   textBeforePanel: []
   textAfterPanel: []
   references:
@@ -630,7 +654,7 @@ MonoBehaviour:
     frames:
     - attribute: {r: 1, g: 1, b: 1, a: 0}
       duration: 0
-    - attribute: {r: 1, g: 1, b: 1, a: 0}
+    - attribute: {r: 1, g: 1, b: 1, a: 1}
       duration: 0.5
     ease: 6
   switchSpritesAnimation:
@@ -781,11 +805,53 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteAnimations: []
   soundEffects: []
-  textBeforePanel: []
-  textAfterPanel: []
+  textBeforePanel:
+  - nodeRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    commandsScrollPosition: {x: 0, y: 0}
+    title: 
+    drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
+    character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
+    displayName: 
+    expressionIndex: 0
+    textData:
+      rid: 6008430052872814602
+  textAfterPanel:
+  - nodeRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    commandsScrollPosition: {x: 0, y: 0}
+    title: 
+    drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
+    character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
+    displayName: 
+    expressionIndex: 0
+    textData:
+      rid: 6008430052872814603
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 6008430052872814602
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "\u05D0\u05D1\u05DC \u05DB\u05E9\u05D4\u05E8\u05D5\u05E6\u05D7 \u05D4\u05EA\u05D7\u05D9\u05DC
+          \u05DC\u05EA\u05DB\u05E0\u05DF \u05D0\u05EA \u05D4\u05E8\u05E6\u05D7\u2026
+          \u05D6\u05D4 \u05E0\u05D4\u05D9\u05D4 \u05DE\u05D0\u05D5\u05D3 \u05D7\u05E9\u05D5\u05D1."
+        commands: []
+    - rid: 6008430052872814603
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "\u05DB\u05D3\u05D9 \u05DC\u05DE\u05E6\u05D5\u05D0 \u05E2\u05D5\u05D3
+          \u05E2\u05DC \u05D4\u05DE\u05D1\u05E0\u05D4 \u05E9\u05DC \u05D4\u05E9\u05D9\u05E8\u05D5\u05EA\u05D9\u05DD,
+          \u05D4\u05E8\u05D5\u05E6\u05D7 \u05D4\u05DC\u05DA \u05DC\u05D9\u05D5\u05D0\u05D1.\r\n"
+        commands: []
 --- !u!225 &7686392164320062186
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1106,7 +1172,7 @@ MonoBehaviour:
     - attribute: {x: 0, y: -57.858}
       duration: 0
     - attribute: {x: 0, y: 39}
-      duration: 0.8
+      duration: 1.2
     ease: 6
   rotationAnimation:
     repeatTimes: 1
@@ -1541,7 +1607,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
       propertyPath: textAfterPanel.Array.size
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
       propertyPath: textBeforePanel.Array.size
@@ -1569,7 +1635,15 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
       propertyPath: textAfterPanel.Array.data[0].textData
-      value: 4653703359911690241
+      value: 6008430052872814605
+      objectReference: {fileID: 0}
+    - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
+      propertyPath: textAfterPanel.Array.data[1].drawNode
+      value: 
+      objectReference: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
+    - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
+      propertyPath: textAfterPanel.Array.data[1].textData
+      value: 6008430052872814606
       objectReference: {fileID: 0}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
       propertyPath: managedReferences[4653703359911690240]
@@ -1580,11 +1654,23 @@ PrefabInstance:
       value: Assembly-CSharp VNTextData
       objectReference: {fileID: 0}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
+      propertyPath: managedReferences[6008430052872814605]
+      value: Assembly-CSharp VNTextData
+      objectReference: {fileID: 0}
+    - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
+      propertyPath: managedReferences[6008430052872814606]
+      value: Assembly-CSharp VNTextData
+      objectReference: {fileID: 0}
+    - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
       propertyPath: managedReferences[6060276353684209665]
       value: Assembly-CSharp VNTextData
       objectReference: {fileID: 0}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
       propertyPath: textAfterPanel.Array.data[0].character
+      value: 
+      objectReference: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
+    - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
+      propertyPath: textAfterPanel.Array.data[1].character
       value: 
       objectReference: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
@@ -1610,8 +1696,24 @@ PrefabInstance:
       value: "\u05D5\u05DC\u05D0\u05D7\u05E8 \u05DE\u05DB\u05DF \u05D4\u05E8\u05D5\u05E6\u05D7"
       objectReference: {fileID: 0}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
+      propertyPath: managedReferences[6008430052872814605].text
+      value: "\u05E9\u05DD \u05D4\u05D5\u05D0 \u05DE\u05E6\u05D0 \u05E9\u05E8\u05D8\u05D5\u05D8
+        \u05E9\u05DC \u05DE\u05D1\u05E0\u05D4 \u05D4\u05E6\u05D9\u05E0\u05D5\u05E8\u05D5\u05EA,
+        \u05D5\u05E4\u05EA\u05E7\u05D9\u05DD \u05DC\u05D2\u05D1\u05D9 \u05D4\u05E8\u05DB\u05D6\u05EA.\r\n"
+      objectReference: {fileID: 0}
+    - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
+      propertyPath: managedReferences[6008430052872814606].text
+      value: "\u05D4\u05D5\u05D0 \u05E8\u05D0\u05D4 \u05E9\u05D0\u05E4\u05E9\u05E8
+        \u05DC\u05E9\u05E0\u05D5\u05EA \u05D0\u05EA \u05DB\u05D9\u05D5\u05D5\u05DF
+        \u05D4\u05D6\u05E8\u05D9\u05DE\u05D4 \u05E9\u05DC \u05D4\u05E6\u05D9\u05E0\u05D5\u05E8\u05D5\u05EA,
+        \u05D5\u05D2\u05DD \u05DC\u05D2\u05E8\u05D5\u05DD \u05DC\u05E8\u05D8\u05D8
+        \u05D1\u05E6\u05D9\u05E0\u05D5\u05E8 \u05D1\u05DE\u05E7\u05E8\u05D4 \u05E9\u05DC
+        \u05E2\u05D5\u05DE\u05E1 \u05DE\u05D9\u05DD.\r\n"
+      objectReference: {fileID: 0}
+    - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
       propertyPath: managedReferences[6060276353684209665].text
-      value: "\u05E7\u05D5\u05D3\u05DD \u05DB\u05DC \u05D4\u05E8\u05D5\u05E6\u05D7..."
+      value: "\u05E2\u05DC \u05D0\u05D9\u05D6\u05D4 \u05E2\u05DE\u05D5\u05D3 \u05D4\u05E8\u05D5\u05E6\u05D7
+        \u05E2\u05E6\u05E8?"
       objectReference: {fileID: 0}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
       propertyPath: managedReferences[4653703359911690240].commands.Array.size
@@ -1619,6 +1721,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
       propertyPath: managedReferences[4653703359911690241].commands.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
+      propertyPath: managedReferences[6008430052872814605].commands.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
+      propertyPath: managedReferences[6008430052872814606].commands.Array.size
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}

@@ -445,9 +445,9 @@ MonoBehaviour:
     - attribute: {x: 92, y: -201}
       duration: 0
     - attribute: {x: 92, y: -220}
-      duration: 0.6
+      duration: 0.4
     - attribute: {x: 92, y: -201}
-      duration: 0.6
+      duration: 0.4
     ease: 6
   rotationAnimation:
     repeatTimes: 1
@@ -537,10 +537,32 @@ MonoBehaviour:
   spriteAnimations: []
   soundEffects: []
   textBeforePanel: []
-  textAfterPanel: []
+  textAfterPanel:
+  - nodeRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    commandsScrollPosition: {x: 0, y: 0}
+    title: 
+    drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
+    character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
+    displayName: 
+    expressionIndex: 0
+    textData:
+      rid: 6008430052872814592
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 6008430052872814592
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "\u05D4\u05DB\u05DC \u05D4\u05EA\u05D7\u05D9\u05DC \u05DB\u05E9\u05D7\u05E7\u05E8\u05E0\u05D5
+          \u05D0\u05EA \u05D4\u05D1\u05E1\u05D9\u05E1. \u05D4\u05EA\u05E4\u05E6\u05DC\u05E0\u05D5
+          \u05DC\u05E7\u05D1\u05D5\u05E6\u05D5\u05EA, \u05D5\u05DB\u05DC \u05E7\u05D1\u05D5\u05E6\u05D4
+          \u05D7\u05E7\u05E8\u05D4 \u05D0\u05D9\u05D6\u05D5\u05E8 \u05D0\u05D7\u05E8."
+        commands: []
 --- !u!225 &7686392164320062186
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -832,14 +854,76 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteAnimations:
   - {fileID: 2538318910497380458}
-  soundEffects:
-  - soundEffect: {fileID: 8300000, guid: 51fa52834f6aecc4d952cb965c3a5b5a, type: 3}
-    delay: 0
+  soundEffects: []
   textBeforePanel: []
-  textAfterPanel: []
+  textAfterPanel:
+  - nodeRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    commandsScrollPosition: {x: 0, y: 0}
+    title: 
+    drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
+    character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
+    displayName: 
+    expressionIndex: 0
+    textData:
+      rid: 6008430052872814593
+  - nodeRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    commandsScrollPosition: {x: 0, y: 0}
+    title: 
+    drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
+    character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
+    displayName: 
+    expressionIndex: 0
+    textData:
+      rid: 6008430052872814594
+  - nodeRect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    commandsScrollPosition: {x: 0, y: 0}
+    title: 
+    drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
+    character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
+    displayName: 
+    expressionIndex: 0
+    textData:
+      rid: 6008430052872814595
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 6008430052872814593
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "\u05D4\u05E8\u05D5\u05E6\u05D7 \u05D5\u05E0\u05D5\u05D9\u05D4 \u05D7\u05E7\u05E8\u05D5
+          \u05D0\u05EA \u05D4\u05E9\u05D9\u05E8\u05D5\u05EA\u05D9\u05DD \u05E9\u05DC
+          \u05D4\u05E4\u05DC\u05D5\u05D2\u05D4."
+        commands: []
+    - rid: 6008430052872814594
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "\u05D4\u05E8\u05D5\u05E6\u05D7 \u05D7\u05E7\u05E8 \u05D1\u05E6\u05D5\u05E8\u05D4
+          \u05D9\u05E1\u05D5\u05D3\u05D9\u05EA \u05DB\u05DC \u05E4\u05D9\u05E0\u05D4
+          \u05E9\u05DC \u05D4\u05E9\u05D9\u05E8\u05D5\u05EA\u05D9\u05DD."
+        commands: []
+    - rid: 6008430052872814595
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "\u05E9\u05DD \u05D4\u05D5\u05D0 \u05D2\u05DD \u05E9\u05DD \u05DC\u05D1
+          \u05E9\u05DB\u05DC \u05D4\u05D0\u05E8\u05D9\u05D7\u05D9\u05DD \u05D1\u05E9\u05D9\u05E8\u05D5\u05EA\u05D9\u05DD
+          \u05DE\u05D7\u05D5\u05D1\u05E8\u05D9\u05DD \u05DC\u05EA\u05E7\u05E8\u05D4
+          \u05D1\u05E2\u05D6\u05E8\u05EA \u05D1\u05E8\u05D2\u05D9\u05DD."
+        commands: []
 --- !u!225 &5208749672772322458
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1060,8 +1144,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
+      propertyPath: soundEffects.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
       propertyPath: textAfterPanel.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
       propertyPath: textBeforePanel.Array.size
@@ -1093,7 +1181,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
       propertyPath: textAfterPanel.Array.data[0].textData
-      value: 4653703359911690241
+      value: 6008430052872814597
       objectReference: {fileID: 0}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
       propertyPath: managedReferences[4653703359911690240]
@@ -1104,9 +1192,21 @@ PrefabInstance:
       value: Assembly-CSharp VNTextData
       objectReference: {fileID: 0}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
+      propertyPath: managedReferences[6008430052872814596]
+      value: Assembly-CSharp VNTextData
+      objectReference: {fileID: 0}
+    - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
+      propertyPath: managedReferences[6008430052872814597]
+      value: Assembly-CSharp VNTextData
+      objectReference: {fileID: 0}
+    - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
       propertyPath: managedReferences[6060276353684209665]
       value: Assembly-CSharp VNTextData
       objectReference: {fileID: 0}
+    - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
+      propertyPath: soundEffects.Array.data[0].soundEffect
+      value: 
+      objectReference: {fileID: 8300000, guid: 41ad19871e346a442929b387602695ff, type: 3}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
       propertyPath: textAfterPanel.Array.data[0].character
       value: 
@@ -1134,8 +1234,19 @@ PrefabInstance:
       value: "\u05D5\u05DC\u05D0\u05D7\u05E8 \u05DE\u05DB\u05DF \u05D4\u05E8\u05D5\u05E6\u05D7"
       objectReference: {fileID: 0}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
+      propertyPath: managedReferences[6008430052872814596].text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
+      propertyPath: managedReferences[6008430052872814597].text
+      value: "\u05D1\u05DE\u05D4\u05DC\u05DA \u05D4\u05D7\u05E7\u05D9\u05E8\u05D4,
+        \u05D4\u05D5\u05D0 \u05D4\u05D2\u05D9\u05E2 *\u05DC\u05E8\u05DB\u05D6\u05EA
+        \u05D4\u05DE\u05D9\u05DD* \u05E9\u05DE\u05D7\u05D5\u05E5 \u05DC\u05E9\u05D9\u05E8\u05D5\u05EA\u05D9\u05DD."
+      objectReference: {fileID: 0}
+    - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
       propertyPath: managedReferences[6060276353684209665].text
-      value: "\u05E7\u05D5\u05D3\u05DD \u05DB\u05DC \u05D4\u05E8\u05D5\u05E6\u05D7..."
+      value: "\u05D1\u05D6\u05DE\u05DF \u05D4\u05D7\u05E7\u05D9\u05E8\u05D4, \u05D4\u05E8\u05D5\u05E6\u05D7
+        \u05DE\u05E6\u05D0..."
       objectReference: {fileID: 0}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
       propertyPath: managedReferences[4653703359911690240].commands.Array.size
@@ -1143,6 +1254,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
       propertyPath: managedReferences[4653703359911690241].commands.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
+      propertyPath: managedReferences[6008430052872814596].commands.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
+      propertyPath: managedReferences[6008430052872814597].commands.Array.size
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4001896305243938522, guid: b4a154d09faa93c45a74f3653102fc7a, type: 3}
