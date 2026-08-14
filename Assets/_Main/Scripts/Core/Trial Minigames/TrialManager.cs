@@ -144,6 +144,7 @@ public class TrialManager : MonoBehaviour
         TrialDialogueManager.instance.currentLineIndex = data.currentLineIndex;
         playerStats.hp = data.hp;
         barsAnimator.UpdateHp(playerStats.hp);
+        EvidenceManager.instance.Initialize(GameStateManager.instance.GetCurrentChapter().evidenceList);
         MusicManager.instance.PlaySong(Resources.Load<AudioClip>($"Audio/Music/{data.currentMusic}"));
         GameStateManager.instance.GetCurrentChapterSegment().Load();
         GameStateManager.instance.SetUIState(data.uiState);

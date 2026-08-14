@@ -11,7 +11,7 @@ public class EvidenceManager : MonoBehaviour
     
     public EvidenceMenu evidenceMenu;
 
-    void Start()
+    void Awake()
     {
         instance = this;
     }
