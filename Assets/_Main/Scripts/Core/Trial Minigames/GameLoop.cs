@@ -80,6 +80,8 @@ public class GameLoop : MonoBehaviour
     private float bulletMenuHoldTime;
     private Coroutine wrongEvidenceRoutine;
 
+    public AudioSource audioSource;
+
     public void PlayDebate(DebateSegment debate)
     {
         isActive = true;
@@ -189,7 +191,12 @@ public class GameLoop : MonoBehaviour
     {
         yield return SwitchToTextBoxMode();
         yield return TrialDialogueManager.instance.RunNodes(finishNodes);
-        yield return SwitchToDebateMode();
+        if (debateSegment.isLooping)
+           yield return SwitchToDebateMode();
+        else
+        {
+            yield return FinishDebate();
+        }
     }
 
     IEnumerator SwitchToTextBoxMode()
@@ -423,9 +430,14 @@ public class GameLoop : MonoBehaviour
         cameraController.camera.targetTexture = null;
         ScreenShatterManager shatter = Instantiate(screenShatter);
         yield return StartCoroutine(shatter.ScreenShatter());
+        yield return FinishDebate();
+    }
+
+    IEnumerator FinishDebate()
+    {
         ImageScript.instance.FadeToBlack(0.01f);
         yield return new WaitForSeconds(0.01f);
-
+        debateUIAnimator.gameObject.SetActive(false);
         ImageScript.instance.UnFadeToBlack(0.5f);
         yield return cameraController.DiscussionIntroMovement(1f);
         musicManager.StopSong();
@@ -490,6 +502,18 @@ public class GameLoop : MonoBehaviour
         foreach (CameraEffect cameraEffect in nextNode.EffectiveCameraEffects)
         {
             effectController.StartEffect(cameraEffect);
+        }
+
+
+        if (debateSegment.isLooping)
+        {
+            audioSource.Stop();
+            audioSource.clip = nextNode.voiceLine;
+            audioSource.Play();
+        }
+        else
+        {
+            SoundManager.instance.PlaySoundEffect(nextNode.voiceLine);
         }
     }
 

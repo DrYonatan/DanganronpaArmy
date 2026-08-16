@@ -30,14 +30,12 @@ MonoBehaviour:
   - rid: 2649295592630780015
   - rid: 2649295592630780016
   - rid: 2649295592630780017
-  - rid: 2649295592630780128
   - rid: 2649295592630780018
   - rid: 2649295592630780019
   - rid: 2649295592630780020
   - rid: 2649295592630780021
   - rid: 2649295592630780022
   - rid: 2649295592630780023
-  - rid: 2649295592630780134
   - rid: 2649295592630780024
   - rid: 2649295592630780025
   - rid: 2649295592630780026
@@ -51,7 +49,6 @@ MonoBehaviour:
   - rid: 2649295592630780034
   - rid: 2649295592630780035
   - rid: 2649295592630780036
-  - rid: 2649295592630780131
   - rid: 2649295592630780037
   - rid: 2649295592630780038
   - rid: 2649295592630780039
@@ -610,7 +607,7 @@ MonoBehaviour:
         expressionIndex: 2
         textData:
           rid: 2649295592630780066
-        usePrevCamera: 1
+        usePrevCamera: 0
         characterStand: {fileID: 0}
         cameraPreset: {fileID: 11400000, guid: e06d75d8a34e8bf409b2e2e1523dcca3, type: 2}
         cameraEffects: []
@@ -1225,7 +1222,8 @@ MonoBehaviour:
         text: "(\u05D0\u05D9\u05DA \u05D4\u05D5\u05D0 \u05E0\u05D9\u05EA\u05E7 \u05D0\u05EA
           \u05D4\u05D0\u05E8\u05D9\u05D7? \u05E0\u05E8\u05D0\u05D4 \u05DC\u05D9 \u05E9\u05D0\u05E0\u05D7\u05E0\u05D5
           \u05D9\u05DB\u05D5\u05DC\u05D9\u05DD \u05DC\u05D3\u05E2\u05EA\u2026)"
-        commands: []
+        commands:
+        - rid: 2649295592630780139
     - rid: 2649295592630780061
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -1277,7 +1275,8 @@ MonoBehaviour:
         text: "(\u05D6\u05D4 \u05D3\u05D5\u05D5\u05E7\u05D0 \u05E4\u05E9\u05D5\u05D8\u2026
           \u05D4\u05D5\u05D0 \u05E4\u05E9\u05D5\u05D8 \u05D4\u05E9\u05EA\u05DE\u05E9
           \u05D1\u2026)"
-        commands: []
+        commands:
+        - rid: 2649295592630780140
     - rid: 2649295592630780067
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -1378,7 +1377,8 @@ MonoBehaviour:
         text: "(\u05D4\u05D0\u05DD \u05D4\u05D9\u05D9\u05EA\u05D4 \u05D3\u05E8\u05DA
           \u05E9\u05DE\u05D9\u05E9\u05D4\u05D5 \u05D9\u05D2\u05D9\u05E2 \u05DC\u05D2\u05D5\u05D1\u05D4
           \u05D4\u05D6\u05D4? \u05D0\u05D5\u05DC\u05D9 \u05D1\u05E2\u05D6\u05E8\u05EA\u2026)"
-        commands: []
+        commands:
+        - rid: 2649295592630780142
     - rid: 2649295592630780080
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -1607,7 +1607,7 @@ MonoBehaviour:
       type: {class: PlaySoundEffectCommand, ns: , asm: Assembly-CSharp}
       data:
         executeTime: 0
-        clip: {fileID: 8300000, guid: 4e070e10f0c19c646a60e44c0d7f4ca6, type: 3}
+        clip: {fileID: 8300000, guid: f5a4e26788c97fe4c9055476360bbef8, type: 3}
         volume: 1
     - rid: 2649295592630780122
       type: {class: PlaySoundEffectCommand, ns: , asm: Assembly-CSharp}
@@ -1639,118 +1639,28 @@ MonoBehaviour:
         executeTime: 0
         clip: {fileID: 8300000, guid: 671ad944bf2cc6e4c8c6a6b7d3de530b, type: 3}
         volume: 1
-    - rid: 2649295592630780128
-      type: {class: DiscussionNode, ns: , asm: Assembly-CSharp}
-      data:
-        nodeRect:
-          serializedVersion: 2
-          x: 0
-          y: 0
-          width: 0
-          height: 0
-        commandsScrollPosition: {x: 0, y: 0}
-        title: 
-        drawNode: {fileID: 11400000, guid: 6344f4092040cbd4183fc5d6dc877647, type: 2}
-        character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
-        displayName: 
-        expressionIndex: 5
-        textData:
-          rid: 2649295592630780129
-        usePrevCamera: 1
-        characterStand: {fileID: 0}
-        cameraPreset: {fileID: 0}
-        cameraEffects: []
-        fovOffset: 0
-        positionOffset: {x: 0, y: 0, z: 0}
-        rotationOffset: {x: 0, y: 0, z: 0}
-    - rid: 2649295592630780129
-      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
-      data:
-        text: 
-        commands:
-        - rid: 2649295592630780130
-    - rid: 2649295592630780130
+    - rid: 2649295592630780139
       type: {class: PromptEvidenceSelection, ns: , asm: Assembly-CSharp}
       data:
-        executeTime: 1
+        executeTime: 2
         correctEvidence: {fileID: 11400000, guid: de624cf533346974b82ab1ec86cb93cc, type: 2}
         question: "\u05D0\u05D9\u05DA \u05D4\u05D5\u05D0 \u05E0\u05D9\u05EA\u05E7
           \u05D0\u05EA \u05D4\u05D0\u05E8\u05D9\u05D7? \u05E0\u05E8\u05D0\u05D4 \u05DC\u05D9
           \u05E9\u05D0\u05E0\u05D7\u05E0\u05D5 \u05D9\u05DB\u05D5\u05DC\u05D9\u05DD
           \u05DC\u05D3\u05E2\u05EA\u2026"
-    - rid: 2649295592630780131
-      type: {class: DiscussionNode, ns: , asm: Assembly-CSharp}
-      data:
-        nodeRect:
-          serializedVersion: 2
-          x: 0
-          y: 0
-          width: 0
-          height: 0
-        commandsScrollPosition: {x: 0, y: 0}
-        title: 
-        drawNode: {fileID: 11400000, guid: 6344f4092040cbd4183fc5d6dc877647, type: 2}
-        character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
-        displayName: 
-        expressionIndex: 5
-        textData:
-          rid: 2649295592630780132
-        usePrevCamera: 1
-        characterStand: {fileID: 0}
-        cameraPreset: {fileID: 0}
-        cameraEffects: []
-        fovOffset: 0
-        positionOffset: {x: 0, y: 0, z: 0}
-        rotationOffset: {x: 0, y: 0, z: 0}
-    - rid: 2649295592630780132
-      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
-      data:
-        text: 
-        commands:
-        - rid: 2649295592630780133
-    - rid: 2649295592630780133
+    - rid: 2649295592630780140
       type: {class: PromptEvidenceSelection, ns: , asm: Assembly-CSharp}
       data:
-        executeTime: 1
-        correctEvidence: {fileID: 11400000, guid: 43c1f4a9004b22f4aaaef3a7dfeaa7a8, type: 2}
-        question: "\u05D0\u05D9\u05DA \u05D4\u05E8\u05D5\u05E6\u05D7 \u05D4\u05D9\u05D4
-          \u05D9\u05DB\u05D5\u05DC \u05DC\u05D4\u05D2\u05D9\u05E2 \u05D0\u05DC \u05D4\u05D7\u05DC\u05D5\u05DF
-          \u05DE\u05D1\u05D7\u05D5\u05E5?"
-    - rid: 2649295592630780134
-      type: {class: DiscussionNode, ns: , asm: Assembly-CSharp}
-      data:
-        nodeRect:
-          serializedVersion: 2
-          x: 0
-          y: 0
-          width: 0
-          height: 360
-        commandsScrollPosition: {x: 0, y: 0}
-        title: 
-        drawNode: {fileID: 11400000, guid: 6344f4092040cbd4183fc5d6dc877647, type: 2}
-        character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
-        displayName: 
-        expressionIndex: 2
-        textData:
-          rid: 2649295592630780135
-        usePrevCamera: 1
-        characterStand: {fileID: 0}
-        cameraPreset: {fileID: 0}
-        cameraEffects: []
-        fovOffset: 0
-        positionOffset: {x: 0, y: 0, z: 0}
-        rotationOffset: {x: 0, y: 0, z: 0}
-    - rid: 2649295592630780135
-      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
-      data:
-        text: 
-        commands:
-        - rid: 2649295592630780138
-    - rid: 2649295592630780138
-      type: {class: PromptEvidenceSelection, ns: , asm: Assembly-CSharp}
-      data:
-        executeTime: 1
+        executeTime: 2
         correctEvidence: {fileID: 11400000, guid: 8591184b602155744a6cbc1354805c89, type: 2}
         question: "\u05D1\u05DE\u05D4 \u05D4\u05E9\u05EA\u05DE\u05E9\u05D5\u05D4\u05E8\u05D5\u05E6\u05D7
           \u05D4\u05E9\u05EA\u05DE\u05E9 \u05DB\u05D3\u05D9 \u05DC\u05D4\u05D5\u05E6\u05D9\u05D0
           \u05D0\u05EA \u05D4\u05D1\u05E8\u05D2\u05D9\u05DD?"
+    - rid: 2649295592630780142
+      type: {class: PromptEvidenceSelection, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 2
+        correctEvidence: {fileID: 11400000, guid: 43c1f4a9004b22f4aaaef3a7dfeaa7a8, type: 2}
+        question: "\u05D0\u05D9\u05DA \u05D4\u05E8\u05D5\u05E6\u05D7 \u05D4\u05D9\u05D4
+          \u05D9\u05DB\u05D5\u05DC \u05DC\u05D4\u05D2\u05D9\u05E2 \u05D0\u05DC \u05D4\u05D7\u05DC\u05D5\u05DF
+          \u05DE\u05D1\u05D7\u05D5\u05E5?"
