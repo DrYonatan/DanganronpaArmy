@@ -14,6 +14,7 @@ public class PromptEvidenceSelection : Command
     {
         PlayerInputManager.instance.isPaused = true;
         PlayerInputManager.instance.isDialogueInputActive = false;
+        yield return new WaitForSeconds(1f);
         yield return EvidenceManager.instance.evidenceMenu.SelectEvidence(question, OnEvidenceSelected);
         DialogueSystem.instance.TurnOnSingleTimeAuto();
     }
