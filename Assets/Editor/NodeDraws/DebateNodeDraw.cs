@@ -61,7 +61,6 @@ public class DebateNodeDraw : DiscussionNodeDraw
         }
         
         GUILayout.BeginHorizontal(GUILayout.Width(1000));
-        
         for (int i = node.textLinesPage * 2; i < Mathf.Min(node.textLinesPage * 2 + 2, textData.textLines.Count); i++)
         {
             ShowSingleTextData(node, textData, i, style);
@@ -92,6 +91,7 @@ public class DebateNodeDraw : DiscussionNodeDraw
         debateText.rotationOffset = DrawCustomVector3Input(debateText.rotationOffset, 140, "Rotation Offset");
         GUILayout.Space(5);
         debateText.scale = DrawCustomVector3Input(debateText.scale, 140, "Scale");
+        debateText.delay = EditorGUILayout.FloatField("Delay", debateText.delay);
         debateText.ttl = EditorGUILayout.FloatField("Time", debateText.ttl);
         GUILayout.EndVertical();
             

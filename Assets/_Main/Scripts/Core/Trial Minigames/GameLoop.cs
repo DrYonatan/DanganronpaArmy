@@ -14,18 +14,20 @@ public class FloatingText : MonoBehaviour
     public TextEffect introEffect;
     public TextEffect outroEffect;
     public List<TextEffect> textEffects;
+    public float delay;
     public float ttl;
     public List<TextMeshPro> linesTextMeshPros = new();
     public Evidence correctEvidence;
     public int correctCharacterIndexBegin, correctCharacterIndexEnd;
 
     public void Initialize(List<TextEffect> textEffects, TextEffect introEffect, TextEffect outroEffect,
-        float ttl,
+        float delay, float ttl,
         Evidence correctEvidence, int correctCharacterIndexBegin, int correctCharacterIndexEnd)
     {
         this.textEffects = textEffects;
         this.introEffect = introEffect;
         this.outroEffect = outroEffect;
+        this.delay = delay;
         this.ttl = ttl;
         this.correctEvidence = correctEvidence;
         this.correctCharacterIndexBegin = correctCharacterIndexBegin;
@@ -79,6 +81,8 @@ public class GameLoop : MonoBehaviour
 
     private float bulletMenuHoldTime;
     private Coroutine wrongEvidenceRoutine;
+
+    public AudioSource audioSource;
 
     public void PlayDebate(DebateSegment debate)
     {
@@ -159,7 +163,7 @@ public class GameLoop : MonoBehaviour
             int index = 0;
             while (index < debateTexts.Count)
             {
-                if (debateTexts[index].ttl < timer)
+                if (debateTexts[index].ttl + debateTexts[index].delay < timer)
                 {
                     StartCoroutine(DestroyText(debateTexts[index]));
                     debateTexts.RemoveAt(index);
@@ -189,7 +193,12 @@ public class GameLoop : MonoBehaviour
     {
         yield return SwitchToTextBoxMode();
         yield return TrialDialogueManager.instance.RunNodes(finishNodes);
-        yield return SwitchToDebateMode();
+        if (debateSegment.isLooping)
+           yield return SwitchToDebateMode();
+        else
+        {
+            yield return FinishDebate();
+        }
     }
 
     IEnumerator SwitchToTextBoxMode()
@@ -423,9 +432,14 @@ public class GameLoop : MonoBehaviour
         cameraController.camera.targetTexture = null;
         ScreenShatterManager shatter = Instantiate(screenShatter);
         yield return StartCoroutine(shatter.ScreenShatter());
+        yield return FinishDebate();
+    }
+
+    IEnumerator FinishDebate()
+    {
         ImageScript.instance.FadeToBlack(0.01f);
         yield return new WaitForSeconds(0.01f);
-
+        debateUIAnimator.gameObject.SetActive(false);
         ImageScript.instance.UnFadeToBlack(0.5f);
         yield return cameraController.DiscussionIntroMovement(1f);
         musicManager.StopSong();
@@ -485,11 +499,23 @@ public class GameLoop : MonoBehaviour
             debateUIAnimator.UpdateName(nextNode.character.displayName);
         debateUIAnimator.HighlightNode(textIndex);
         yield return cameraController.SpinToTarget(characterStand.transform, characterStand.heightPivot,
-            nextNode.positionOffset, nextNode.rotationOffset, nextNode.fovOffset);
+            nextNode.EffectivePositionOffset, nextNode.EffectiveRotationOffset, nextNode.EffectiveFovOffset);
 
-        foreach (CameraEffect cameraEffect in nextNode.cameraEffects)
+        foreach (CameraEffect cameraEffect in nextNode.EffectiveCameraEffects)
         {
             effectController.StartEffect(cameraEffect);
+        }
+
+
+        if (debateSegment.isLooping)
+        {
+            audioSource.Stop();
+            audioSource.clip = nextNode.voiceLine;
+            audioSource.Play();
+        }
+        else
+        {
+            SoundManager.instance.PlaySoundEffect(nextNode.voiceLine);
         }
     }
 
@@ -557,6 +583,7 @@ public class GameLoop : MonoBehaviour
         floatingText.Initialize(nodeDebateText.textEffects,
             nodeDebateText.introEffect,
             nodeDebateText.outroEffect,
+            nodeDebateText.delay,
             nodeDebateText.ttl,
             nodeDebateText.correctEvidence,
             correctCharacterIndexBegin,
@@ -577,11 +604,19 @@ public class GameLoop : MonoBehaviour
         floatingText.linesTextMeshPros = floatingText.linesGameObjects.ConvertAll(x => x.GetComponent<TextMeshPro>());
 
         debateTexts.Add(floatingText);
+        if (floatingText.delay > 0)
+        {
+            floatingText.gameObject.SetActive(false);
+        }
+        
+        
         StartCoroutine(StartTextEffects(floatingText));
     }
 
     IEnumerator StartTextEffects(FloatingText floatingText)
     {
+        yield return new WaitForSeconds(floatingText.delay);
+        floatingText.gameObject.SetActive(true);
         if (floatingText.introEffect != null)
             yield return floatingText.introEffect.Apply(floatingText.transform);
         foreach (TextEffect textEffect in floatingText.textEffects)

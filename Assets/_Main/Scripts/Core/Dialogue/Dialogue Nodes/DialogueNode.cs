@@ -21,6 +21,8 @@ public class DialogueNode
 
     [SerializeReference] public TextData textData;
 
+    public AudioClip voiceLine;
+
     public DialogueNode(DrawNode drawNode)
     {
         this.drawNode = drawNode;
@@ -66,6 +68,11 @@ public class DialogueNode
             VNCharacterManager.instance.ShowOnlySpeaker(character, DialogueSystem.instance.GetIsSkip() ? 0 : 0.25f);
             VNCharacterManager.instance.SwitchEmotion(character, character.emotions[expressionIndex]);
             yield return CameraManager.instance.MoveCamera((CameraLookDirection)info.position, DialogueSystem.instance.GetIsSkip() ? 0 : 0.2f);
+        }
+        
+        if (!DialogueSystem.instance.GetIsSkip())
+        {
+            SoundManager.instance.PlaySoundEffect(voiceLine);
         }
         
         yield return DialogueSystem.instance.Say(this);

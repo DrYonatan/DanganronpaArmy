@@ -8,7 +8,6 @@ namespace _Main.Scripts.Court
     public class DebateNode : DiscussionNode
     {
         public string statement;
-        public AudioClip voiceLine;
         public int textLinesPage;
 
         public DebateNode(DrawNode _drawNode) : base(_drawNode)

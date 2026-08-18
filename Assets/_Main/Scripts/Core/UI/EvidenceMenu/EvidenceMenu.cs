@@ -147,7 +147,7 @@ public class EvidenceMenu : MenuScreen
 
         bool isOpen = false;
 
-        while (PlayerInputManager.instance.DefaultInput())
+        while (!Input.GetMouseButtonDown(1)) 
         {
             if (Input.GetKey(KeyCode.Tab))
             {

@@ -35,6 +35,7 @@ public class VNNodeDraw : DrawNode
         }
 
         ShowPreviewImage(b);
+        b.voiceLine = (AudioClip)EditorGUILayout.ObjectField(b.voiceLine, typeof(AudioClip), false);
         GUILayout.EndVertical();
 
         ShowTextData(b, windowWidth * 0.5f);

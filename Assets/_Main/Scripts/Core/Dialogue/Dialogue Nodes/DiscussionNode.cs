@@ -10,10 +10,17 @@ public class DiscussionNode : DialogueNode
     public bool usePrevCamera;
     public CharacterStand characterStand;
     
+    public CameraPreset cameraPreset;
+    
     public List<CameraEffect> cameraEffects = new List<CameraEffect>();
     public float fovOffset;
     public Vector3 positionOffset;
     public Vector3 rotationOffset;
+
+    public Vector3 EffectivePositionOffset => cameraPreset != null ? cameraPreset.positionOffset : positionOffset;
+    public Vector3 EffectiveRotationOffset => cameraPreset != null ? cameraPreset.rotationOffset : rotationOffset;
+    public float EffectiveFovOffset => cameraPreset != null ? cameraPreset.fovOffset : fovOffset;
+    public List<CameraEffect> EffectiveCameraEffects => cameraPreset != null ? cameraPreset.cameraEffects : cameraEffects;
 
     #if UNITY_EDITOR
     [NonSerialized] public GameObject previewPivot;
@@ -54,11 +61,16 @@ public class DiscussionNode : DialogueNode
         }
 
         
-        foreach (CameraEffect cameraEffect in cameraEffects)
+        foreach (CameraEffect cameraEffect in EffectiveCameraEffects)
         {
             TrialDialogueManager.instance.effectController.StartEffect(cameraEffect);
         }
 
+        if (!DialogueSystem.instance.GetIsSkip())
+        {
+            SoundManager.instance.PlaySoundEffect(voiceLine);
+        }
+        
         yield return DialogueSystem.instance.Say(this);
     }
 
@@ -66,7 +78,7 @@ public class DiscussionNode : DialogueNode
     {
         if (!usePrevCamera)
         {
-            TrialDialogueManager.instance.cameraController.TeleportToTarget(stand.transform, stand.heightPivot, positionOffset, rotationOffset, fovOffset);
+            TrialDialogueManager.instance.cameraController.TeleportToTarget(stand.transform, stand.heightPivot, EffectivePositionOffset, EffectiveRotationOffset, EffectiveFovOffset);
         }
         
         stand.SetSprite(character.emotions[expressionIndex]);
