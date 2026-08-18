@@ -61,7 +61,6 @@ public class DebateNodeDraw : DiscussionNodeDraw
         }
         
         GUILayout.BeginHorizontal(GUILayout.Width(1000));
-        node.voiceLine = (AudioClip)EditorGUILayout.ObjectField(node.voiceLine, typeof(AudioClip), false);
         for (int i = node.textLinesPage * 2; i < Mathf.Min(node.textLinesPage * 2 + 2, textData.textLines.Count); i++)
         {
             ShowSingleTextData(node, textData, i, style);

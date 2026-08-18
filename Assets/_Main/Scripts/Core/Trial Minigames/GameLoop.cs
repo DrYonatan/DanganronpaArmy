@@ -163,7 +163,7 @@ public class GameLoop : MonoBehaviour
             int index = 0;
             while (index < debateTexts.Count)
             {
-                if (debateTexts[index].ttl < timer)
+                if (debateTexts[index].ttl + debateTexts[index].delay < timer)
                 {
                     StartCoroutine(DestroyText(debateTexts[index]));
                     debateTexts.RemoveAt(index);

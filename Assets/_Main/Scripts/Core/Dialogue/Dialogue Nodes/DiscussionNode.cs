@@ -66,6 +66,11 @@ public class DiscussionNode : DialogueNode
             TrialDialogueManager.instance.effectController.StartEffect(cameraEffect);
         }
 
+        if (!DialogueSystem.instance.GetIsSkip())
+        {
+            SoundManager.instance.PlaySoundEffect(voiceLine);
+        }
+        
         yield return DialogueSystem.instance.Say(this);
     }
 
