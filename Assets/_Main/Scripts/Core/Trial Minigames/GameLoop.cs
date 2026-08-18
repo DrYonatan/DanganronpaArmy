@@ -14,18 +14,20 @@ public class FloatingText : MonoBehaviour
     public TextEffect introEffect;
     public TextEffect outroEffect;
     public List<TextEffect> textEffects;
+    public float delay;
     public float ttl;
     public List<TextMeshPro> linesTextMeshPros = new();
     public Evidence correctEvidence;
     public int correctCharacterIndexBegin, correctCharacterIndexEnd;
 
     public void Initialize(List<TextEffect> textEffects, TextEffect introEffect, TextEffect outroEffect,
-        float ttl,
+        float delay, float ttl,
         Evidence correctEvidence, int correctCharacterIndexBegin, int correctCharacterIndexEnd)
     {
         this.textEffects = textEffects;
         this.introEffect = introEffect;
         this.outroEffect = outroEffect;
+        this.delay = delay;
         this.ttl = ttl;
         this.correctEvidence = correctEvidence;
         this.correctCharacterIndexBegin = correctCharacterIndexBegin;
@@ -581,6 +583,7 @@ public class GameLoop : MonoBehaviour
         floatingText.Initialize(nodeDebateText.textEffects,
             nodeDebateText.introEffect,
             nodeDebateText.outroEffect,
+            nodeDebateText.delay,
             nodeDebateText.ttl,
             nodeDebateText.correctEvidence,
             correctCharacterIndexBegin,
@@ -601,11 +604,19 @@ public class GameLoop : MonoBehaviour
         floatingText.linesTextMeshPros = floatingText.linesGameObjects.ConvertAll(x => x.GetComponent<TextMeshPro>());
 
         debateTexts.Add(floatingText);
+        if (floatingText.delay > 0)
+        {
+            floatingText.gameObject.SetActive(false);
+        }
+        
+        
         StartCoroutine(StartTextEffects(floatingText));
     }
 
     IEnumerator StartTextEffects(FloatingText floatingText)
     {
+        yield return new WaitForSeconds(floatingText.delay);
+        floatingText.gameObject.SetActive(true);
         if (floatingText.introEffect != null)
             yield return floatingText.introEffect.Apply(floatingText.transform);
         foreach (TextEffect textEffect in floatingText.textEffects)
