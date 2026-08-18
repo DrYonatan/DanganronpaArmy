@@ -66,6 +66,7 @@ public class ComicManager : MonoBehaviour
     {
         ImageScript.instance.FadeToBlack(0.1f);
         yield return new WaitForSeconds(0.5f);
+        MusicManager.instance.StopSong();
         ImageScript.instance.UnFadeToBlack(0.1f);
         animator.gameObject.SetActive(true);
         yield return animator.Intro();

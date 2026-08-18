@@ -70,4 +70,6 @@ public abstract class Room : ScriptableObject
 
         return model;
     }
+
+    public abstract void OnEventFinished();
 }

@@ -51,8 +51,8 @@ public class PointAndClickEvent : WorldEvent
     protected override void OnFinish()
     {
         CameraManager.instance.StopAllPreviousOperations();
-        CameraManager.instance.MoveCameraTo(GameObject.Find("World/CameraStartPos").transform);
-
+        WorldManager.instance.currentRoom.OnEventFinished();
+        
         base.OnFinish();
     }
 

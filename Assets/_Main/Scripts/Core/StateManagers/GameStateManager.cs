@@ -142,7 +142,7 @@ public class GameStateManager : MonoBehaviour
         popup.finished = false;
         yield return popup.WaitForCompletion();
         ProgressManager.instance.savedInPopup = false;
-        ImageScript.instance.FadeToBlack(0.2f);
+        ImageScript.instance.FadeToBlack(0f);
         yield return new WaitForSeconds(0.5f);
         popup.gameObject.SetActive(false);
     }
