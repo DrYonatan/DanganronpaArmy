@@ -591,6 +591,7 @@ public class GameLoop : MonoBehaviour
 
         floatingText.transform.SetParent(statementsCamera.transform.parent);
         floatingText.transform.position = textStartPosition.position + nodeDebateText.spawnOffset;
+        floatingText.transform.rotation = Quaternion.Euler(nodeDebateText.rotationOffset);
         floatingText.transform.localScale = nodeDebateText.scale;
 
         for (int i = 0; i < results.Length; i++)
