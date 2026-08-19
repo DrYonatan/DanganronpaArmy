@@ -12,13 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e702305ac47c4740809bde9fdb0fae5, type: 3}
   m_Name: GateInvestigate
   m_EditorClassIdentifier: 
+  isFinished: 0
   timeOfDay: 1
   roomDatas:
   - room: {fileID: 11400000, guid: 3fc43c3d18023d54790b9a64625db4f0, type: 2}
     characters: {fileID: 0}
     worldObjects: {fileID: 0}
     preLoadText: {fileID: 0}
+    firstTimeText: {fileID: 0}
+    hasAlreadyEntered: 0
     isExitable: 0
+    additionalObjectsToExit: []
     additionalObjectData:
     - id: shutter
       texts:
@@ -30,11 +34,10 @@ MonoBehaviour:
       texts:
       - {fileID: 11400000, guid: 3a28d1b27e9882b488ca093c2f04405e, type: 2}
   startRoom: {fileID: 11400000, guid: 3fc43c3d18023d54790b9a64625db4f0, type: 2}
-  startMusic: {fileID: 0}
-  isFinished: 0
+  stopPreviousMusic: 0
+  startMusic: {fileID: 8300000, guid: a2014492460b5124caceb6b0010cd983, type: 3}
   startText: {fileID: 11400000, guid: 5253f92b1b1297e448bb4dec2d0ede28, type: 2}
   finishText: {fileID: 11400000, guid: 273daf72c7baf184ab2e48353cdd9d11, type: 2}
-  isAfterStartText: 0
   isAfterFinishText: 0
   unallowedText: {fileID: 0}
   requiredObjects:

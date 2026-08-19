@@ -734,7 +734,7 @@ MonoBehaviour:
         expressionIndex: 0
         textData:
           rid: 4526379485963747428
-        voiceLine: {fileID: 0}
+        voiceLine: {fileID: 8300000, guid: e9262563faef7ec4a8fe19b92119328c, type: 3}
     - rid: 4526379485963747371
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -806,7 +806,7 @@ MonoBehaviour:
         expressionIndex: 0
         textData:
           rid: 4526379485963747432
-        voiceLine: {fileID: 0}
+        voiceLine: {fileID: 8300000, guid: 71b6d5799288fed42a52031f3b6c8269, type: 3}
     - rid: 4526379485963747375
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -857,7 +857,7 @@ MonoBehaviour:
         drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
         character: {fileID: 11400000, guid: 95d3e48687d854942aea31b2cf9a8ff1, type: 2}
         displayName: 
-        expressionIndex: 0
+        expressionIndex: 1
         textData:
           rid: 4526379485963747435
         voiceLine: {fileID: 8300000, guid: 4879d2cc4cb93914bb3a46ecf122c587, type: 3}
@@ -1403,12 +1403,14 @@ MonoBehaviour:
           \u05DC\u05D4\u05E1\u05EA\u05D3\u05E8 \u05D1\u05E9\u05E0\u05D9 \u05D8\u05D5\u05E8\u05D9\u05DD
           \u05D1\u05DC\u05D9 \u05DE\u05E6\"\u05DC. \u05D7\u05D9\u05DB\u05D9\u05E0\u05D5
           \u05E7\u05E6\u05EA\u2026)"
-        commands: []
+        commands:
+        - rid: 6008430166336864289
     - rid: 4526379485963747428
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
         text: "\u05E2\u05E9\u05E8 \u05E9\u05E0\u05D9\u05D5\u05EA!"
-        commands: []
+        commands:
+        - rid: 6008430166336864290
     - rid: 4526379485963747429
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -1441,13 +1443,15 @@ MonoBehaviour:
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
         text: "(\u05D7\u05D9\u05DB\u05D9\u05E0\u05D5 \u05DB\u05DE\u05D4 \u05D3\u05E7\u05D5\u05EA\u2026)"
-        commands: []
+        commands:
+        - rid: 6008430166336864292
     - rid: 4526379485963747435
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
         text: "\u05DE\u05D4 \u05D9\u05D4\u05D9\u05D4? \u05DB\u05DE\u05D4 \u05D6\u05DE\u05DF
           \u05E0\u05E2\u05DE\u05D5\u05D3 \u05E4\u05D4 \u05DB\u05DE\u05D5 \u05D6\u05D5\u05E0\u05D5\u05EA?"
-        commands: []
+        commands:
+        - rid: 6008430166336864291
     - rid: 4526379485963747436
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -1654,3 +1658,26 @@ MonoBehaviour:
         music: {fileID: 0}
         volume: 1
         toggle: 0
+    - rid: 6008430166336864289
+      type: {class: FadeBlackUnderTextBox, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        fadeIn: 1
+        duration: 0.2
+    - rid: 6008430166336864290
+      type: {class: ShowImage, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        image: {fileID: 21300000, guid: e76c568891afaee46901bb2b586db1ff, type: 3}
+        flash: 0
+    - rid: 6008430166336864291
+      type: {class: RemoveImage, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 1
+        flash: 0
+    - rid: 6008430166336864292
+      type: {class: FadeBlackUnderTextBox, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        fadeIn: 0
+        duration: 0.2

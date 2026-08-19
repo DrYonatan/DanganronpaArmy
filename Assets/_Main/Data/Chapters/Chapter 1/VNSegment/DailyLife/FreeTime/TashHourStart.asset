@@ -21,6 +21,13 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: 6008430166336864306
+      type: {class: PlayMusicCommand, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        music: {fileID: 8300000, guid: 41af871bc0532f24bbe4d64c09b681e7, type: 3}
+        volume: 1
+        toggle: 1
     - rid: 6299374044086272017
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -38,6 +45,7 @@ MonoBehaviour:
         expressionIndex: 0
         textData:
           rid: 6299374044086272018
+        voiceLine: {fileID: 0}
     - rid: 6299374044086272018
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -54,7 +62,7 @@ MonoBehaviour:
           y: 0
           width: 0
           height: 0
-        commandsScrollPosition: {x: 0, y: 0}
+        commandsScrollPosition: {x: 84, y: 67}
         title: 
         drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
         character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
@@ -62,12 +70,14 @@ MonoBehaviour:
         expressionIndex: 0
         textData:
           rid: 6299374044086272020
+        voiceLine: {fileID: 0}
     - rid: 6299374044086272020
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
         text: 
         commands:
         - rid: 6299374044086272021
+        - rid: 6008430166336864306
     - rid: 6299374044086272021
       type: {class: ApplySectionStartEffect, ns: , asm: Assembly-CSharp}
       data:
