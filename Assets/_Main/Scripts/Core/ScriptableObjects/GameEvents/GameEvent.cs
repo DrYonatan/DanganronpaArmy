@@ -21,7 +21,7 @@ public abstract class GameEvent: ScriptableObject
     public virtual void LoadSave(SaveData data)
     {
         VNConversationSegment currentConversation = ProgressManager.instance.conversationDatabase.Get(data.currentConversation);
-        isFinished = data.isFinished;
+        isFinished = data.eventState.isFinished;
         if (currentConversation != null)
         {
             VNNodePlayer.instance.lineIndex = data.currentLineIndex;
@@ -42,7 +42,7 @@ public abstract class GameEvent: ScriptableObject
     protected IEnumerator StartWithRoomLoad()
     {
         Room roomToLoad;
-
+        
         if (startRoom != null &&
             WorldManager.instance.currentRoom?.roomName != startRoom.roomName)
             roomToLoad = startRoom;
@@ -51,8 +51,8 @@ public abstract class GameEvent: ScriptableObject
             roomToLoad = WorldManager.instance.currentRoom;
         }
 
-        if (roomToLoad != null && WorldManager.instance.currentTime != timeOfDay ||
-            roomToLoad != WorldManager.instance.currentRoom)
+        if (roomToLoad != null && (WorldManager.instance.currentTime != timeOfDay ||
+            roomToLoad != WorldManager.instance.currentRoom))
         {
             WorldManager.instance.currentRoom = roomToLoad;
             yield return TimeOfDayManager.instance.ChangeTimeOfDay(timeOfDay);

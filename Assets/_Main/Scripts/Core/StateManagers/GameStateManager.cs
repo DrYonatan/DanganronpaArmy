@@ -123,6 +123,14 @@ public class GameStateManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         DOTween.KillAll();
 
+        if (ProgressManager.instance != null)
+        {
+            ProgressManager.instance.currentGameEvent =
+                ((VNChapterSegment)chaptersBank.chapters[chapterIndex].chapterSegments[chapterSegmentIndex])
+                ?.gameEvents[0];
+            WorldManager.instance.currentRoom = null;
+        }
+
         yield return HandlePopup();
 
         sceneTransitionCamera.gameObject.SetActive(true);
@@ -199,7 +207,7 @@ public class GameStateManager : MonoBehaviour
             DialogueSystem.instance.SetTextBox(ImageScript.instance.overlayTextBoxAnimator);
             DialogueSystem.instance.TextBoxAppear();
         }
-        
+
         ImageScript.instance.blackFadeUnderTextBox?.DOFade(uiState.underTextboxBlackFade.visible ? 1f : 0f, 0f);
 
         ImageScript.instance.background.sprite = Resources.Load<Sprite>($"Images/{uiState.backgroundImage.spriteId}");

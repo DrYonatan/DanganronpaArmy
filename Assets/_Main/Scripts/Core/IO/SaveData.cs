@@ -87,7 +87,6 @@ public class SaveData
     public int gameEventIndex;
     public string currentRoom;
     public bool savedInPopup;
-    public bool isFinished;
     public string currentConversation;
     public int currentLineIndex;
     public string currentMusic;
@@ -108,7 +107,7 @@ public class SaveData
 
     public string saveTime;
 
-    public SaveData(int chapterIndex, int chapterSegmentIndex, int gameEventIndex, string currentRoom, bool isFinished,
+    public SaveData(int chapterIndex, int chapterSegmentIndex, int gameEventIndex, string currentRoom,
         bool savedInPopup, string currentConversation,
         int currentLineIndex, string currentMusic, EventState eventState,
         string scene,
@@ -122,7 +121,6 @@ public class SaveData
         this.gameEventIndex = gameEventIndex;
         this.currentRoom = currentRoom;
         this.savedInPopup = savedInPopup;
-        this.isFinished = isFinished;
         this.currentConversation = currentConversation;
         this.currentLineIndex = currentLineIndex;
         this.currentMusic = currentMusic;
