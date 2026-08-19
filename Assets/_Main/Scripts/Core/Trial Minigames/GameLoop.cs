@@ -109,7 +109,6 @@ public class GameLoop : MonoBehaviour
         yield return cameraController.DiscussionOutroMovement(2.5f);
         debateUIAnimator.gameObject.SetActive(true);
         debateUIAnimator.DebateUIDisappear();
-        ((CourtTextBoxAnimator)DialogueSystem.instance.dialogueBoxAnimator).ChangeFace(null);
         DialogueSystem.instance.SetTextBox(textBoxAnimator);
         yield return 0;
         ImageScript.instance.UnFadeToBlack(1f);
@@ -752,7 +751,7 @@ public class GameLoop : MonoBehaviour
             orangeHitbox.transform.localScale = Vector3.one;
             boxCollider = orangeHitbox.AddComponent<BoxCollider>();
             orangeHitbox.tag = "OrangeHitBox";
-            z = 0.2f;
+            z = 0.35f;
         }
         else
             boxCollider = textGameObject.AddComponent<BoxCollider>();

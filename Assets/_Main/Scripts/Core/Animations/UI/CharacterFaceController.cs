@@ -14,7 +14,6 @@ public class CharacterFaceController : MonoBehaviour
 
     public bool isVisible;
 
-    // Offsets for aligning each character's face inside the cropped box
     public void SetFace(Sprite sprite)
     {
         if(sprite != faceImage.sprite)

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using DIALOGUE;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -225,6 +226,7 @@ public class LogicShootManager : MonoBehaviour
     {
         ImageScript.instance.FadeToBlack(0.2f);
         yield return CameraController.instance.DiscussionOutroMovement(2.5f);
+        ((CourtTextBoxAnimator)DialogueSystem.instance.dialogueBoxAnimator).ChangeFace(null);
         animator.gameObject.SetActive(true);
         animator.Initialize();
 

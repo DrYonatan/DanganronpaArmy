@@ -113,7 +113,10 @@ public class ImageScript : MonoBehaviour
 
     private void ShowingOrHiding(CanvasGroup canvasGroupToShowOrHide, float duration, float targetAlpha)
     {
-        canvasGroupToShowOrHide.DOFade(targetAlpha, duration);
+        if (duration == 0f)
+            canvasGroupToShowOrHide.alpha = targetAlpha;
+        else
+           canvasGroupToShowOrHide.DOFade(targetAlpha, duration);
     }
 
     public void CreateAnimatedImage(VNAnimatedImage image, float duration, bool flash)
