@@ -126,7 +126,7 @@ public class GameStateManager : MonoBehaviour
         if (ProgressManager.instance != null)
         {
             ProgressManager.instance.currentGameEvent =
-                ((VNChapterSegment)chaptersBank.chapters[chapterIndex].chapterSegments[chapterSegmentIndex])
+                (chaptersBank.chapters[chapterIndex].chapterSegments[chapterSegmentIndex] as VNChapterSegment)
                 ?.gameEvents[0];
             WorldManager.instance.currentRoom = null;
         }

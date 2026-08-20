@@ -598,7 +598,7 @@ MonoBehaviour:
         expressionIndex: 2
         textData:
           rid: 6008429867673059665
-        voiceLine: {fileID: 8300000, guid: 711e61374d290574e9bcff258e82adfa, type: 3}
+        voiceLine: {fileID: 0}
     - rid: 6008429867673059574
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -1426,7 +1426,7 @@ MonoBehaviour:
         expressionIndex: 5
         textData:
           rid: 6008429867673059711
-        voiceLine: {fileID: 8300000, guid: 63fec0637197efd499874050e91d4406, type: 3}
+        voiceLine: {fileID: 0}
     - rid: 6008429867673059620
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -2071,7 +2071,8 @@ MonoBehaviour:
         text: "\u05D3\u05D1\u05E8 \u05D0\u05D7\u05E8\u05D5\u05DF. \u05D0\u05E0\u05D9
           \u05E2\u05DB\u05E9\u05D9\u05D5 \u05D0\u05E2\u05E0\u05D9\u05E7 \u05DC\u05DB\u05DD,
           \u05D0\u05EA *\u05EA\u05E7\u05D9\u05D9\u05EA \u05D4\u05D1\u05DE\u05D1\u05D4*!"
-        commands: []
+        commands:
+        - rid: 6008430184854716689
     - rid: 6008429867673059703
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -2087,6 +2088,7 @@ MonoBehaviour:
           \u05D0\u05E0\u05D9 \u05D0\u05D5\u05D3\u05D9\u05E2 \u05DC\u05DB\u05DD \u05D1\u05DB\u05E8\u05D9\u05D6\u05D4."
         commands:
         - rid: 6008429988146839560
+        - rid: 6008430184854716690
     - rid: 6008429867673059705
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -2120,7 +2122,8 @@ MonoBehaviour:
           \u05E7\u05D5\u05E8\u05D4 \u05DB\u05D0\u05DF, \u05D0\u05D9 \u05D0\u05E4\u05E9\u05E8
           \u05DC\u05EA\u05EA \u05DC\u05DE\u05D5\u05D5\u05EA \u05E9\u05DC\u05D5 \u05DC\u05D4\u05D9\u05D5\u05EA
           \u05D7\u05E1\u05E8 \u05EA\u05D5\u05E2\u05DC\u05EA."
-        commands: []
+        commands:
+        - rid: 6008430184854716720
     - rid: 6008429867673059710
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -2287,3 +2290,19 @@ MonoBehaviour:
       data:
         executeTime: 0
         isDramatic: 0
+    - rid: 6008430184854716689
+      type: {class: ShowPopup, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        image: {fileID: 21300000, guid: 61cd30f0106f7ee4a92b53f45885325f, type: 3}
+    - rid: 6008430184854716690
+      type: {class: RemovePopup, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+    - rid: 6008430184854716720
+      type: {class: PlayMusicCommand, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        music: {fileID: 0}
+        volume: 1
+        toggle: 0
