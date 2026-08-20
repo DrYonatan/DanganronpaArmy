@@ -58,6 +58,14 @@ public abstract class GameEvent: ScriptableObject
             
             yield return WorldManager.instance.LoadRoom(WorldManager.instance.currentRoom, null);
         }
+        else
+        {
+            if(stopPreviousMusic)
+                MusicManager.instance.StopSong();
+            
+            if(startMusic != null)
+                MusicManager.instance.PlaySong(startMusic);
+        }
         
         OnRoomStartLoad();
         OnRoomFinishLoad();
