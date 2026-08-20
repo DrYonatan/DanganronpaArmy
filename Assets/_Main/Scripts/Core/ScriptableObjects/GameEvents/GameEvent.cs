@@ -8,6 +8,7 @@ public abstract class GameEvent: ScriptableObject
     public TimeOfDay timeOfDay;
     public List<RoomData> roomDatas;
     public Room startRoom;
+    public bool alwaysDoLoadAnimation;
     public bool stopPreviousMusic;
     public AudioClip startMusic;
     public abstract void OnStart();
@@ -41,18 +42,10 @@ public abstract class GameEvent: ScriptableObject
     
     protected IEnumerator StartWithRoomLoad()
     {
-        Room roomToLoad;
-        
-        if (startRoom != null &&
-            WorldManager.instance.currentRoom?.roomName != startRoom.roomName)
-            roomToLoad = startRoom;
-        else
-        {
-            roomToLoad = WorldManager.instance.currentRoom;
-        }
+        Room roomToLoad = startRoom != null ? startRoom : WorldManager.instance.currentRoom;
 
         if (roomToLoad != null && (WorldManager.instance.currentTime != timeOfDay ||
-            roomToLoad != WorldManager.instance.currentRoom))
+            roomToLoad != WorldManager.instance.currentRoom || alwaysDoLoadAnimation))
         {
             WorldManager.instance.currentRoom = roomToLoad;
             yield return TimeOfDayManager.instance.ChangeTimeOfDay(timeOfDay);
