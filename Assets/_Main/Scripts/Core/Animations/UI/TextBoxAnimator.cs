@@ -37,6 +37,7 @@ public class TextBoxAnimator : BasicTextBoxAnimator
     {
         if (!textBoxVisible)
             return;
+        
         textBoxVisible = false;
         DialogueSystem.instance.ClearTextBox();
         dialogueBoxCanvasGroup.alpha = 1f;
@@ -48,6 +49,8 @@ public class TextBoxAnimator : BasicTextBoxAnimator
 
     public override void ShowNamePlate()
     {
+        if (namePlateVisible)
+            return;
         namePlateVisible = true;
         namePlateCanvasGroup.DOFade(1f, duration).SetEase(Ease.InOutQuad);
         namePlate.anchoredPosition -= new Vector2(0, namePlateMoveAmount);
@@ -55,6 +58,9 @@ public class TextBoxAnimator : BasicTextBoxAnimator
     }
     public override void HideNamePlate()
     {
+        if (!namePlateVisible)
+            return;
+        
         namePlateVisible = false;
         namePlateCanvasGroup.alpha = 1f;
         namePlateCanvasGroup.DOFade(0f, duration).SetEase(Ease.InOutQuad);

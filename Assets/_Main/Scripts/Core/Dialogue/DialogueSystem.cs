@@ -96,7 +96,11 @@ namespace DIALOGUE
         {
             if (!isActive)
                 SetIsActive(true);
-            TextBoxAppear();
+            if (((VNTextData)node.textData).text != "")
+            {
+                TextBoxAppear();
+            }
+               
             return conversationManager.PlayNodeText(node);
         }
 
