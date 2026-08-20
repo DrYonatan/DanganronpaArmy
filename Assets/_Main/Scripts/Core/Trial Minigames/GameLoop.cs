@@ -732,6 +732,16 @@ public class GameLoop : MonoBehaviour
             max = Vector3.Max(max, tr);
         }
 
+        if (float.IsPositiveInfinity(min.x) ||
+            float.IsPositiveInfinity(min.y) ||
+            float.IsPositiveInfinity(min.z) ||
+            float.IsNegativeInfinity(max.x) ||
+            float.IsNegativeInfinity(max.y) ||
+            float.IsNegativeInfinity(max.z))
+        {
+            return;
+        }
+
         Vector3 center = (min + max) / 2;
         Vector3 size = max - min;
 
