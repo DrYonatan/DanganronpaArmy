@@ -30,6 +30,13 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: 6008430184854716524
+      type: {class: PlayMusicCommand, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        music: {fileID: 8300000, guid: 4cc209b2235e1ab4885c934268c53aa1, type: 3}
+        volume: 1
+        toggle: 1
     - rid: 6299374133661139487
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -39,7 +46,7 @@ MonoBehaviour:
           y: 0
           width: 0
           height: 0
-        commandsScrollPosition: {x: 0, y: 0}
+        commandsScrollPosition: {x: 117, y: 0}
         title: 
         drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
         character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
@@ -47,6 +54,7 @@ MonoBehaviour:
         expressionIndex: 0
         textData:
           rid: 6299374133661139492
+        voiceLine: {fileID: 0}
     - rid: 6299374133661139488
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -64,6 +72,7 @@ MonoBehaviour:
         expressionIndex: 1
         textData:
           rid: 6299374133661139493
+        voiceLine: {fileID: 8300000, guid: 495bfce0e6644ed49ae4af634721c39c, type: 3}
     - rid: 6299374133661139489
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -81,6 +90,7 @@ MonoBehaviour:
         expressionIndex: 4
         textData:
           rid: 6299374133661139494
+        voiceLine: {fileID: 0}
     - rid: 6299374133661139490
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -98,6 +108,7 @@ MonoBehaviour:
         expressionIndex: 3
         textData:
           rid: 6299374133661139495
+        voiceLine: {fileID: 8300000, guid: a6f18473bf085bc40992a40508784285, type: 3}
     - rid: 6299374133661139491
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -115,13 +126,15 @@ MonoBehaviour:
         expressionIndex: 0
         textData:
           rid: 6299374133661139496
+        voiceLine: {fileID: 0}
     - rid: 6299374133661139492
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
         text: "(\u05D4\u05D2\u05DC\u05E2\u05D3 \u05D4\u05D9\u05D4 \u05E8\u05D9\u05E7
           \u05DC\u05D2\u05DE\u05E8\u05D9, \u05D7\u05D5\u05E5 \u05DE\u05D3\u05D1\u05E8
           \u05D0\u05D7\u05D3 \u05E9\u05D9\u05E9\u05D1 \u05D1\u05D0\u05DE\u05E6\u05E2.)"
-        commands: []
+        commands:
+        - rid: 6008430184854716524
     - rid: 6299374133661139493
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
