@@ -13,8 +13,12 @@ public class FallEffect : RoomIntroEffect
     {
         targetPosition = transform.position;
         transform.position += new Vector3(0f, height, 0f);
+        Vector3 originalScale = transform.localScale;
+        transform.localScale = Vector3.zero;
 
         yield return new WaitForSeconds(delay);
+        
+        transform.localScale = originalScale;
 
         float duration = height / fallSpeed; // simple approximation
         float elapsed = 0f;
