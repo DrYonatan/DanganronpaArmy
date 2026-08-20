@@ -14,7 +14,10 @@ public class PointAndClickEvent : WorldEvent
         foreach (string requiredObject in requiredObjects)
         {
             if (!datas.TryGetValue(requiredObject, out var data))
-                return true;
+            {
+                continue;
+            }
+               
 
             if (!data.isClicked)
             {
