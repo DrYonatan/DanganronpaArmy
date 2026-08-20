@@ -15,7 +15,9 @@ public class MusicManager : MonoBehaviour
     {
         if (song == null)
             return;
-        
+
+        audioSource.DOKill();
+        audioSource.volume = 1f;
         audioSource.Stop();
         audioSource.clip = song;
         audioSource.Play();
