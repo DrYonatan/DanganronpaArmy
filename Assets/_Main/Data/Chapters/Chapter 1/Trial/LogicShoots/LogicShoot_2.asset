@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 932397d8267b4ad418236f71aaf040c5, type: 3}
+  m_Name: LogicShoot_2
+  m_EditorClassIdentifier: 
+  stages:
+  - cameraStartPosition: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0}
+    emotion: angry
+    targets:
+    - question: "\u05D0\u05D9\u05DF \u05DC\u05DA \u05E9\u05D5\u05DD \u05D4\u05D5\u05DB\u05D7\u05D5\u05EA!"
+      answers:
+      - answer: "\u05DC\u05D0 \u05E0\u05DB\u05D5\u05DF"
+        isCorrect: 1
+      - answer: "\u05E0\u05DB\u05D5\u05DF"
+        isCorrect: 0
+      timeOut: 5
+      spawnPosition: {x: 0, y: 0}
+      targetPosition: {x: 0, y: 0}
+      movementTime: 0
+    voiceLine: {fileID: 8300000, guid: 81dabde711710814694eca1ce3c55f77, type: 3}
+  finalTarget:
+    question: "\u05D1\u05D0\u05D9\u05D6\u05D4 \u05D4\u05E7\u05E9\u05E8 \u05D0\u05E0\u05D9
+      \u05D0\u05EA\u05E2\u05DE\u05E7 \u05D1\u05DE\u05D1\u05E0\u05D4 \u05E9\u05DC
+      \u05D4\u05E9\u05D9\u05E8\u05D5\u05EA\u05D9\u05DD?"
+    answers:
+    - answer: "\u05DB\u05E9\u05D7\u05E7\u05E8\u05E0\u05D5 \u05D0\u05EA \u05D4\u05D1\u05E1\u05D9\u05E1"
+      isCorrect: 1
+    - answer: "\u05DB\u05E9\u05D4\u05D9\u05D4 \u05DC\u05DA \u05DE\u05E9\u05E2\u05DE\u05DD"
+      isCorrect: 0
+    - answer: "\u05DB\u05E9\u05D4\u05D9\u05D4 \u05DC\u05DA \u05E4\u05D9\u05E4\u05D9"
+      isCorrect: 0
+    - answer: "\u05D1\u05D6\u05DE\u05DF \u05D4\u05D0\u05DC\"\u05D1"
+      isCorrect: 0
+    timeOut: 2
+    spawnPosition: {x: 0, y: 0}
+    targetPosition: {x: 0, y: 0}
+    movementTime: 10
+  finalVoiceLine: {fileID: 8300000, guid: 0b9b6286599c9e749bd0b795c0d45560, type: 3}
+  character: {fileID: 11400000, guid: 27db78e54ab1d1b44a0c42052e83d620, type: 2}
