@@ -15,10 +15,10 @@ MonoBehaviour:
   guid: ed00c609da66514478143a16319b3580
   settings:
     characterPositions:
-    - character: {fileID: 11400000, guid: 6d1cd02a2e864c64e9f8d8916a6c4267, type: 2}
-      position: 2
     - character: {fileID: 11400000, guid: 86ac77b9ffadf3643938e479c302689d, type: 2}
       position: 3
+    - character: {fileID: 11400000, guid: 6d1cd02a2e864c64e9f8d8916a6c4267, type: 2}
+      position: 2
     - character: {fileID: 11400000, guid: 063a8cb255e41924cbe145ef29975e6f, type: 2}
       position: 0
     - character: {fileID: 11400000, guid: e518102ea47577a499c54e7bb8334338, type: 2}
@@ -28,6 +28,7 @@ MonoBehaviour:
     - character: {fileID: 11400000, guid: 86e5d76ba3ee672418475e122385e821, type: 2}
       position: 0
   nodes:
+  - rid: 6008430213963448320
   - rid: 6008430184854716749
   - rid: 6008430184854716750
   - rid: 6008430184854716751
@@ -62,7 +63,7 @@ MonoBehaviour:
         expressionIndex: 2
         textData:
           rid: 6008430184854716763
-        voiceLine: {fileID: 8300000, guid: e223f59f5cb1e72499031ca0bfc822b1, type: 3}
+        voiceLine: {fileID: 0}
     - rid: 6008430184854716750
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -302,7 +303,8 @@ MonoBehaviour:
       data:
         text: "\u05D1\u05E8\u05D5\u05DB\u05D9\u05DD \u05D4\u05D1\u05D0\u05D9\u05DD
           \u05DC\u05D1\u05D5\u05E8!"
-        commands: []
+        commands:
+        - rid: 6008430213963448322
     - rid: 6008430184854716764
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -405,3 +407,39 @@ MonoBehaviour:
       data:
         executeTime: 0
         footStepsSound: 0
+    - rid: 6008430213963448320
+      type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
+        character: {fileID: 0}
+        displayName: "\u05D1\u05DE\u05D1\u05D4"
+        expressionIndex: 2
+        textData:
+          rid: 6008430213963448321
+        voiceLine: {fileID: 8300000, guid: e223f59f5cb1e72499031ca0bfc822b1, type: 3}
+    - rid: 6008430213963448321
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "\u05E1\u05D5\u05E3 \u05E1\u05D5\u05E3 \u05D4\u05D2\u05E2\u05E0\u05D5!"
+        commands:
+        - rid: 6008430213963448362
+    - rid: 6008430213963448322
+      type: {class: MoveToTalkPos, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 1
+        positionId: 
+    - rid: 6008430213963448362
+      type: {class: PlayMusicCommand, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        music: {fileID: 8300000, guid: 63d89ea8db5c63a4089d36b06c29f5c0, type: 3}
+        volume: 1
+        toggle: 1

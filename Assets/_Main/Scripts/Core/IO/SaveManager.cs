@@ -48,7 +48,7 @@ public class SaveManager : MonoBehaviour
             ProgressManager.instance.savedInPopup,
             VNNodePlayer.instance.currentConversation?.guid, VNNodePlayer.instance.lineIndex,
             MusicManager.instance.audioSource.clip ? MusicManager.instance.audioSource.clip.name : "",
-            ProgressManager.instance.currentGameEvent.HandleSave(),
+            ProgressManager.instance.currentGameEvent?.HandleSave(),
             GameStateManager.instance.GetCurrentChapterSegment().GetSceneName(),
             GameStateManager.instance.charactersRanks, CameraManager.instance.player.transform.position,
             CameraManager.instance.cameraTransform.localPosition,
