@@ -573,7 +573,7 @@ MonoBehaviour:
           y: 0
           width: 0
           height: 0
-        commandsScrollPosition: {x: 0, y: 0}
+        commandsScrollPosition: {x: 0, y: 20}
         title: 
         drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
         character: {fileID: 11400000, guid: 6d1cd02a2e864c64e9f8d8916a6c4267, type: 2}
@@ -589,6 +589,7 @@ MonoBehaviour:
           \u05E1\u05E4\u05D5\u05D2 \u05D4\u05E4\u05DC\u05D0 0003!"
         commands:
         - rid: 6008429896134033435
+        - rid: 6008430232473436176
     - rid: 6008429896134033435
       type: {class: Ding, ns: , asm: Assembly-CSharp}
       data:
@@ -722,7 +723,8 @@ MonoBehaviour:
           \u05D4\u05E0\u05D9\u05E7\u05D9\u05D5\u05DF \u05E2\u05DB\u05E9\u05D9\u05D5
           \u05E9\u05D0\u05EA\u05DD \u05DE\u05E6\u05D5\u05D9\u05D3\u05D9\u05DD \u05D1\u05DB\u05DC\u05D9
           \u05DB\u05DC \u05DB\u05DA \u05E2\u05D5\u05E6\u05DE\u05EA\u05D9!\r\n"
-        commands: []
+        commands:
+        - rid: 6008430232473436178
     - rid: 6008429896134033446
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -1067,6 +1069,15 @@ MonoBehaviour:
         executeTime: 0
         clip: {fileID: 8300000, guid: 794a6cbb8122d434a8bfdcba1755fb80, type: 3}
         volume: 1
+    - rid: 6008430232473436176
+      type: {class: ShowPopup, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        image: {fileID: 21300000, guid: 494f01da0fa415f4a86c2c591d6d994a, type: 3}
+    - rid: 6008430232473436178
+      type: {class: RemovePopup, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
     - rid: 6299374179891806376
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
