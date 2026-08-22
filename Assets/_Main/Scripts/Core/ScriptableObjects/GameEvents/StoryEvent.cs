@@ -39,6 +39,7 @@ public class StoryEvent : GameEvent
             WorldObjectsParent ob = Instantiate(currentRoomData.worldObjects, WorldManager.instance.characterPanel.transform);
             ob.name = "Objects";
             ob.gameObject.SetActive(true);
+            WorldManager.instance.objectsObject = ob;
         }
     }
 
@@ -55,6 +56,7 @@ public class StoryEvent : GameEvent
             WorldCharactersParent ob = Instantiate(currentRoomData.characters, WorldManager.instance.characterPanel.transform);
             ob.name = "Characters";
             ob.gameObject.SetActive(true);
+            WorldManager.instance.charactersObject = ob;
         }
     }
 

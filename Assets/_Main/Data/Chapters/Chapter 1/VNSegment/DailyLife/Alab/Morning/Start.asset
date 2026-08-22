@@ -34,6 +34,13 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: 6008430184854716431
+      type: {class: PlayMusicCommand, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        music: {fileID: 8300000, guid: 4b472251a32f8ce4ea9a6faf5f78a08d, type: 3}
+        volume: 1
+        toggle: 1
     - rid: 6299374097614503955
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -51,6 +58,7 @@ MonoBehaviour:
         expressionIndex: 0
         textData:
           rid: 6299374097614503972
+        voiceLine: {fileID: 0}
     - rid: 6299374097614503956
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -68,6 +76,7 @@ MonoBehaviour:
         expressionIndex: 0
         textData:
           rid: 6299374097614503973
+        voiceLine: {fileID: 0}
     - rid: 6299374097614503957
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -85,6 +94,7 @@ MonoBehaviour:
         expressionIndex: 0
         textData:
           rid: 6299374097614503974
+        voiceLine: {fileID: 0}
     - rid: 6299374097614503958
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -102,6 +112,7 @@ MonoBehaviour:
         expressionIndex: 0
         textData:
           rid: 6299374097614503975
+        voiceLine: {fileID: 0}
     - rid: 6299374097614503959
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -119,6 +130,7 @@ MonoBehaviour:
         expressionIndex: 1
         textData:
           rid: 6299374097614503976
+        voiceLine: {fileID: 0}
     - rid: 6299374097614503960
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -136,6 +148,7 @@ MonoBehaviour:
         expressionIndex: 4
         textData:
           rid: 6299374097614503977
+        voiceLine: {fileID: 0}
     - rid: 6299374097614503961
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -153,6 +166,7 @@ MonoBehaviour:
         expressionIndex: 0
         textData:
           rid: 6299374097614503978
+        voiceLine: {fileID: 0}
     - rid: 6299374097614503962
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -170,6 +184,7 @@ MonoBehaviour:
         expressionIndex: 0
         textData:
           rid: 6299374097614503979
+        voiceLine: {fileID: 0}
     - rid: 6299374097614503963
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -187,6 +202,7 @@ MonoBehaviour:
         expressionIndex: 0
         textData:
           rid: 6299374097614503980
+        voiceLine: {fileID: 0}
     - rid: 6299374097614503964
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -204,6 +220,7 @@ MonoBehaviour:
         expressionIndex: 0
         textData:
           rid: 6299374097614503981
+        voiceLine: {fileID: 0}
     - rid: 6299374097614503972
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -307,7 +324,7 @@ MonoBehaviour:
           y: 0
           width: 0
           height: 0
-        commandsScrollPosition: {x: 0, y: 0}
+        commandsScrollPosition: {x: 0, y: 54}
         title: 
         drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
         character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
@@ -315,6 +332,7 @@ MonoBehaviour:
         expressionIndex: 0
         textData:
           rid: 6299374097614503994
+        voiceLine: {fileID: 0}
     - rid: 6299374097614503994
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -322,6 +340,7 @@ MonoBehaviour:
           \u05DC\u05E8\u05D7\u05D1\u05D4..."
         commands:
         - rid: 6299374097614503995
+        - rid: 6008430184854716431
     - rid: 6299374097614503995
       type: {class: FadeBlackUnderTextBox, ns: , asm: Assembly-CSharp}
       data:
@@ -332,3 +351,4 @@ MonoBehaviour:
       type: {class: HideSpeaker, ns: , asm: Assembly-CSharp}
       data:
         executeTime: 0
+        footStepsSound: 0

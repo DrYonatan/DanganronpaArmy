@@ -359,7 +359,7 @@ GameObject:
   - component: {fileID: 275899119137040636}
   - component: {fileID: 3566639734017315606}
   - component: {fileID: 5842690282451133261}
-  - component: {fileID: 527056765250301201}
+  - component: {fileID: 3846067682885400732}
   m_Layer: 0
   m_Name: Bush (2)
   m_TagString: Untagged
@@ -454,7 +454,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &527056765250301201
+--- !u!114 &3846067682885400732
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -463,12 +463,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2153969921097975935}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88618a4c3155a52458e1bb38348fef87, type: 3}
+  m_Script: {fileID: 11500000, guid: b909fc5c0267da14dac570aa4faf985f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delay: 1.5
-  offset: {x: 5, y: 0, z: 0}
-  duration: 0.5
+  delay: 1.2
+  duration: 1
+  bounceFrequency: 2
+  damping: 5
 --- !u!1 &2517818700843379351
 GameObject:
   m_ObjectHideFlags: 0
@@ -918,7 +919,7 @@ GameObject:
   - component: {fileID: 2893814929524137927}
   - component: {fileID: 4634371140434135778}
   - component: {fileID: 7028777903409068946}
-  - component: {fileID: 4986588231893427971}
+  - component: {fileID: 65999924576762201}
   m_Layer: 0
   m_Name: Bush (1)
   m_TagString: Untagged
@@ -1013,7 +1014,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &4986588231893427971
+--- !u!114 &65999924576762201
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1022,12 +1023,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 5175487434649251279}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88618a4c3155a52458e1bb38348fef87, type: 3}
+  m_Script: {fileID: 11500000, guid: b909fc5c0267da14dac570aa4faf985f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   delay: 1
-  offset: {x: -10, y: 0, z: 0}
-  duration: 0.5
+  duration: 1
+  bounceFrequency: 2
+  damping: 5
 --- !u!1 &5260109939009019627
 GameObject:
   m_ObjectHideFlags: 0
@@ -1774,9 +1776,9 @@ MonoBehaviour:
   - {fileID: 2720998243967190020}
   - {fileID: 7205467701788369094}
   - {fileID: 3350359726442731498}
-  - {fileID: 6780339539318596222}
-  - {fileID: 4986588231893427971}
-  - {fileID: 527056765250301201}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 4070546671704377629}
   - {fileID: 2988024201676969852}
   - {fileID: 6692985596489518470}
@@ -1833,7 +1835,7 @@ GameObject:
   - component: {fileID: 1364799924351072813}
   - component: {fileID: 4044127568146716235}
   - component: {fileID: 2461811407720036244}
-  - component: {fileID: 6780339539318596222}
+  - component: {fileID: 2895487739691650109}
   m_Layer: 0
   m_Name: Bush
   m_TagString: Untagged
@@ -1928,7 +1930,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &6780339539318596222
+--- !u!114 &2895487739691650109
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1937,12 +1939,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 8062346154196035631}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88618a4c3155a52458e1bb38348fef87, type: 3}
+  m_Script: {fileID: 11500000, guid: b909fc5c0267da14dac570aa4faf985f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delay: 0
-  offset: {x: -10, y: 0, z: 0}
-  duration: 0.5
+  delay: 0.8
+  duration: 1
+  bounceFrequency: 2
+  damping: 5
 --- !u!1 &8671948382081941212
 GameObject:
   m_ObjectHideFlags: 0

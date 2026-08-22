@@ -8,6 +8,7 @@ public abstract class GameEvent: ScriptableObject
     public TimeOfDay timeOfDay;
     public List<RoomData> roomDatas;
     public Room startRoom;
+    public bool alwaysDoLoadAnimation;
     public bool stopPreviousMusic;
     public AudioClip startMusic;
     public abstract void OnStart();
@@ -21,7 +22,7 @@ public abstract class GameEvent: ScriptableObject
     public virtual void LoadSave(SaveData data)
     {
         VNConversationSegment currentConversation = ProgressManager.instance.conversationDatabase.Get(data.currentConversation);
-        isFinished = data.isFinished;
+        isFinished = data.eventState.isFinished;
         if (currentConversation != null)
         {
             VNNodePlayer.instance.lineIndex = data.currentLineIndex;
@@ -41,18 +42,10 @@ public abstract class GameEvent: ScriptableObject
     
     protected IEnumerator StartWithRoomLoad()
     {
-        Room roomToLoad;
+        Room roomToLoad = startRoom != null ? startRoom : WorldManager.instance.currentRoom;
 
-        if (startRoom != null &&
-            WorldManager.instance.currentRoom?.roomName != startRoom.roomName)
-            roomToLoad = startRoom;
-        else
-        {
-            roomToLoad = WorldManager.instance.currentRoom;
-        }
-
-        if (roomToLoad != null && WorldManager.instance.currentTime != timeOfDay ||
-            roomToLoad != WorldManager.instance.currentRoom)
+        if (roomToLoad != null && (WorldManager.instance.currentTime != timeOfDay ||
+            roomToLoad != WorldManager.instance.currentRoom || alwaysDoLoadAnimation))
         {
             WorldManager.instance.currentRoom = roomToLoad;
             yield return TimeOfDayManager.instance.ChangeTimeOfDay(timeOfDay);
@@ -64,6 +57,14 @@ public abstract class GameEvent: ScriptableObject
                 MusicManager.instance.PlaySong(startMusic);
             
             yield return WorldManager.instance.LoadRoom(WorldManager.instance.currentRoom, null);
+        }
+        else
+        {
+            if(stopPreviousMusic)
+                MusicManager.instance.StopSong();
+            
+            if(startMusic != null)
+                MusicManager.instance.PlaySong(startMusic);
         }
         
         OnRoomStartLoad();

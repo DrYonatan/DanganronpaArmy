@@ -21,7 +21,7 @@ public class WorldCharacter : ConversationInteractable
         
         float duration = 0.5f;
         Vector3 targetPosition =
-            Vector3.Lerp(CameraManager.instance.cameraTransform.position, transform.position - transform.forward * 2f + Vector3.up * 0.8f, 1f);
+            Vector3.Lerp(CameraManager.instance.cameraTransform.position, transform.position - (2f * 60f/WorldManager.instance.currentRoom.fov * transform.forward) + Vector3.up * 0.8f, 1f);
         CameraManager.instance.StartCameraCoroutine(CameraManager.instance.MoveCameraTo(targetPosition, duration));
 
         StartConversation();

@@ -71,6 +71,7 @@ public class GameLoop : MonoBehaviour
     public float shootForce = 10f;
     public Transform shootOrigin;
     public Transform textStartPosition;
+    public float textPlaneDistance = 4.5f;
     public Camera statementsCamera;
     public TrialHoverable currentAimedText;
     public Camera renderTextureCamera;
@@ -108,7 +109,6 @@ public class GameLoop : MonoBehaviour
         yield return cameraController.DiscussionOutroMovement(2.5f);
         debateUIAnimator.gameObject.SetActive(true);
         debateUIAnimator.DebateUIDisappear();
-        ((CourtTextBoxAnimator)DialogueSystem.instance.dialogueBoxAnimator).ChangeFace(null);
         DialogueSystem.instance.SetTextBox(textBoxAnimator);
         yield return 0;
         ImageScript.instance.UnFadeToBlack(1f);
@@ -281,16 +281,21 @@ public class GameLoop : MonoBehaviour
         {
             isShooting = true;
             Ray ray = statementsCamera.ScreenPointToRay(Input.mousePosition);
-
+            
             // Create a plane in front of the firePoint (facing the same way as the camera)
-            Plane plane = new Plane(statementsCamera.transform.forward,
-                shootOrigin.position + statementsCamera.transform.forward * 4f);
-
+            Plane plane = new Plane(
+                statementsCamera.transform.forward,
+                statementsCamera.transform.position + statementsCamera.transform.forward * textPlaneDistance
+            );
+            
+            
+            
             if (plane.Raycast(ray, out float distance))
             {
                 Vector3 targetPoint = ray.GetPoint(distance);
+                
                 Vector3 direction = (targetPoint - shootOrigin.position).normalized;
-
+            
                 Quaternion rotation = Quaternion.LookRotation(direction, statementsCamera.transform.up) *
                                       Quaternion.Euler(0, 90f, 0);
                 bulletManager.ShootBullet();
@@ -298,7 +303,7 @@ public class GameLoop : MonoBehaviour
                 TextMeshPro bulletText = bullet.GetComponent<TextMeshPro>();
                 bulletText.text = bulletManager.GetSelectedEvidence();
                 CreateColliderAroundTextRange(bullet, 0, bulletText.text.Length-1);
-                StartCoroutine(MoveBullet(bullet, direction, 1f));
+                StartCoroutine(MoveBullet(bullet, direction, 1.5f));
                 debateUIAnimator.MoveCylinder();
                 debateUIAnimator.GrowAndShrinkCircles();
             }
@@ -745,6 +750,8 @@ public class GameLoop : MonoBehaviour
         Vector3 center = (min + max) / 2;
         Vector3 size = max - min;
 
+        float z = 0f;
+
         if (createChildObject)
         {
             // Create the new GameObject
@@ -755,12 +762,13 @@ public class GameLoop : MonoBehaviour
             orangeHitbox.transform.localScale = Vector3.one;
             boxCollider = orangeHitbox.AddComponent<BoxCollider>();
             orangeHitbox.tag = "OrangeHitBox";
+            z = 0.35f;
         }
         else
             boxCollider = textGameObject.AddComponent<BoxCollider>();
 
         boxCollider.center = center;
-        boxCollider.size = size;
+        boxCollider.size = new Vector3(size.x, size.y, z);
     }
 
     public int GetSelectedEvidenceIndex()

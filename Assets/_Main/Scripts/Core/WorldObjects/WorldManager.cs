@@ -132,6 +132,7 @@ public class WorldManager : MonoBehaviour
         CameraManager.instance.footStepsSource.Stop();
         CursorManager.instance.ShowOrHideConversationIcon(false);
         CursorManager.instance.ShowOrHideInteractableName(false, "");
+        CursorManager.instance.Hide();
 
         CameraManager.instance?.StopAllPreviousOperations();
 

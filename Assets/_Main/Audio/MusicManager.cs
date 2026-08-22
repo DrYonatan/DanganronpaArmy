@@ -15,7 +15,9 @@ public class MusicManager : MonoBehaviour
     {
         if (song == null)
             return;
-        
+
+        audioSource.DOKill();
+        audioSource.volume = 1f;
         audioSource.Stop();
         audioSource.clip = song;
         audioSource.Play();
@@ -29,14 +31,15 @@ public class MusicManager : MonoBehaviour
 
     public void StopSong()
     {
-        audioSource.DOFade(0f, 0.2f)
+        audioSource.DOFade(0f, 1f)
             .OnComplete(() =>
             {
                 audioSource.Stop();
                 audioSource.volume = 1f; // Reset for next time it plays
+                audioSource.clip = null;
             });
         
-        audioSource.clip = null;
+        
         if (VNUIAnimator.instance != null)
         {
             VNUIAnimator.instance.musicBoxContainer.StopBars();

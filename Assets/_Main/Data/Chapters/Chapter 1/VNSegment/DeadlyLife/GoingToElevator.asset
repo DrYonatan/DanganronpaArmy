@@ -14,12 +14,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFinished: 0
   timeOfDay: 1
-  roomDatas: []
-  startRoom: {fileID: 0}
+  roomDatas:
+  - room: {fileID: 11400000, guid: 8a4c5efd9e4191f499ef7d70b10738c9, type: 2}
+    characters: {fileID: 3528334116580608484, guid: 9d7d1828d1fb4344b82675695c960168, type: 3}
+    worldObjects: {fileID: 0}
+    preLoadText: {fileID: 0}
+    firstTimeText: {fileID: 0}
+    hasAlreadyEntered: 0
+    isExitable: 0
+    additionalObjectsToExit: []
+    additionalObjectData:
+    - id: elevator
+      texts:
+      - {fileID: 11400000, guid: 9b057f0e7dc525b4bb9d888d3c707512, type: 2}
+  startRoom: {fileID: 11400000, guid: 8a4c5efd9e4191f499ef7d70b10738c9, type: 2}
+  alwaysDoLoadAnimation: 0
   stopPreviousMusic: 0
-  startMusic: {fileID: 0}
-  startText: {fileID: 0}
-  finishText: {fileID: 11400000, guid: 4d89522a93691054696711713e2ce288, type: 2}
+  startMusic: {fileID: 8300000, guid: ed9a103f23e176f4aa83ec12099bcc2f, type: 3}
+  startText: {fileID: 11400000, guid: 4d89522a93691054696711713e2ce288, type: 2}
+  finishText: {fileID: 0}
   isAfterFinishText: 0
   unallowedText: {fileID: 0}
-  requiredObjects: []
+  requiredObjects:
+  - elevator

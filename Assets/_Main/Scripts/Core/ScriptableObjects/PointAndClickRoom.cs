@@ -29,6 +29,8 @@ public class PointAndClickRoom : Room
         pitch = 0;
         VirutalCameraManager.instance
             .AssignVirtualCamera(); // Important, this must happen before the call to base, because base.OnLoad() yield returns null (meaning it waits for one frame), and this is problematic when loading a save, the extra frame before the vCam is disabled causes the master camera's position to change
+        VirutalCameraManager.instance.virtualCamera.m_Lens.FieldOfView = fov;
+
         yield return base.OnLoad();
     }
 
