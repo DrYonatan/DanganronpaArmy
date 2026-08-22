@@ -596,6 +596,7 @@ public class GameLoop : MonoBehaviour
 
         floatingText.transform.SetParent(statementsCamera.transform.parent);
         floatingText.transform.position = textStartPosition.position + nodeDebateText.spawnOffset;
+        floatingText.transform.rotation = Quaternion.Euler(nodeDebateText.rotationOffset);
         floatingText.transform.localScale = nodeDebateText.scale;
 
         for (int i = 0; i < results.Length; i++)
@@ -734,6 +735,16 @@ public class GameLoop : MonoBehaviour
 
             min = Vector3.Min(min, bl);
             max = Vector3.Max(max, tr);
+        }
+
+        if (float.IsPositiveInfinity(min.x) ||
+            float.IsPositiveInfinity(min.y) ||
+            float.IsPositiveInfinity(min.z) ||
+            float.IsNegativeInfinity(max.x) ||
+            float.IsNegativeInfinity(max.y) ||
+            float.IsNegativeInfinity(max.z))
+        {
+            return;
         }
 
         Vector3 center = (min + max) / 2;
