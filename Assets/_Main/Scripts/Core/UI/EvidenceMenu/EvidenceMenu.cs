@@ -46,6 +46,13 @@ public class EvidenceMenu : MenuScreen
 
     public void Initialize()
     {
+        foreach (ListItem instantiated in evidenceListUI)
+        {
+            Destroy(instantiated.gameObject);
+        }
+        
+        evidenceListUI.Clear();
+        
         foreach (Evidence evidence in EvidenceManager.instance.evidenceList)
         {
             AddEvidenceToList(evidence);

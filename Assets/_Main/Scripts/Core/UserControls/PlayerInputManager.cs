@@ -12,16 +12,19 @@ namespace DIALOGUE
 
         public bool isPaused;
 
+        public bool pauseAvailable;
+
         public bool isInputActive;
 
         public bool isDialogueInputActive;
 
-        void Start()
+        void Awake()
         {
             isPaused = false;
             instance = this;
             isDialogueInputActive = true;
             isInputActive = true;
+            pauseAvailable = true;
         }
 
         void Update()
@@ -49,9 +52,9 @@ namespace DIALOGUE
                 }
                 
             }
-            if (Input.GetKeyDown(KeyCode.Alpha1) && !pauseMenu.isSubmenuOpen && isInputActive)
+            if (Input.GetKeyDown(KeyCode.Alpha1) && !pauseMenu.isSubmenuOpen && isInputActive && pauseAvailable)
             {
-                TogglePause();
+                TogglePauseAndMenu();
             }
         }
 
@@ -78,21 +81,29 @@ namespace DIALOGUE
             }
         }
 
-        public void TogglePause()
+        public void TogglePauseAndMenu()
         {
-            isPaused = !isPaused;
+            TogglePause();
             if (isPaused)
             {
-                MusicManager.instance.LowerVolume();
-                Time.timeScale = 0f;
                 pauseMenu.OpenGeneralMenu();
             }
             else
             {
-                MusicManager.instance.RaiseVolume();
-                Time.timeScale = 1f;
                 pauseMenu.CloseGeneralMenu();
             }
+        }
+
+        public void TogglePause()
+        {
+            isPaused = !isPaused;
+
+            Time.timeScale = isPaused ? 0f : 1f;
+            if(isPaused)
+                MusicManager.instance.LowerVolume();
+            else
+                MusicManager.instance.RaiseVolume();
+            
         }
     }
 }

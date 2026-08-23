@@ -4117,8 +4117,8 @@ Transform:
   m_GameObject: {fileID: 322249862}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.747, y: -0.357, z: -0.321}
+  m_LocalScale: {x: 2.234018, y: 2.234018, z: 2.234018}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 490771918}
@@ -4164,7 +4164,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e5788c9908feb77428e5569f41f78307, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 96c0f0ff50cde124cbc4c6a7418180da, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -7952,7 +7952,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 612266540}
-  - component: {fileID: 612266541}
   m_Layer: 8
   m_Name: Roey
   m_TagString: Untagged
@@ -7969,7 +7968,7 @@ Transform:
   m_GameObject: {fileID: 612266539}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.38050723, z: -0, w: 0.924778}
-  m_LocalPosition: {x: 3.91, y: 2.811, z: 3.87}
+  m_LocalPosition: {x: 3.91, y: 2.811, z: 4.14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7977,22 +7976,6 @@ Transform:
   - {fileID: 490771918}
   m_Father: {fileID: 836655249}
   m_LocalEulerAnglesHint: {x: 0, y: 44.73, z: 0}
---- !u!114 &612266541
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 612266539}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af689065a1af8364f90706f298b93932, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  character: {fileID: 11400000, guid: 11df9d1edd221104e8f4d68aa54ef7d9, type: 2}
-  spriteRenderer: {fileID: 322249864}
-  silhouetteRenderer: {fileID: 1097241589}
-  heightPivot: {fileID: 508916852}
 --- !u!1 &612566353
 GameObject:
   m_ObjectHideFlags: 0
@@ -14969,8 +14952,8 @@ Transform:
   m_GameObject: {fileID: 1097241587}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.03}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.747, y: -0.357, z: -0.255}
+  m_LocalScale: {x: 2.234018, y: 2.234018, z: 2.234018}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 490771918}
@@ -15016,7 +14999,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e5788c9908feb77428e5569f41f78307, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 96c0f0ff50cde124cbc4c6a7418180da, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -19823,6 +19806,10 @@ PrefabInstance:
     - target: {fileID: 6971377367529313600, guid: 80613f21647875b46b6edf1d8eef1059, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7526570521704120299, guid: 80613f21647875b46b6edf1d8eef1059, type: 3}
+      propertyPath: disabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -26785,7 +26772,6 @@ MonoBehaviour:
   - {fileID: 66366025}
   - {fileID: 1293946264}
   - {fileID: 1142983464}
-  - {fileID: 612266541}
   - {fileID: 1869341973}
   - {fileID: 1829181448}
   - {fileID: 387703067}
@@ -27740,7 +27726,7 @@ PrefabInstance:
     - target: {fileID: 8309603348950177392, guid: f3c3c0f81946b3944a91edc1321502c0, type: 3}
       propertyPath: characterStands.Array.data[11]
       value: 
-      objectReference: {fileID: 612266541}
+      objectReference: {fileID: 0}
     - target: {fileID: 8309603348950177392, guid: f3c3c0f81946b3944a91edc1321502c0, type: 3}
       propertyPath: characterStands.Array.data[12]
       value: 

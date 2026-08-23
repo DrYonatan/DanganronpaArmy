@@ -72,7 +72,7 @@ public class GeneralMenu : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            PlayerInputManager.instance.TogglePause();
+            PlayerInputManager.instance.TogglePauseAndMenu();
         }
     }
 

@@ -16,7 +16,7 @@ public class MenuScreenContainer : MonoBehaviour
     public void ClosePauseScreen()
     {
         CloseCurrentMenu();
-        PlayerInputManager.instance.TogglePause();
+        PlayerInputManager.instance.TogglePauseAndMenu();
     }
 
     public void OpenGeneralMenu()
