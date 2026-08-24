@@ -36,7 +36,8 @@ MonoBehaviour:
   - rid: 2649295747132948572
   - rid: 2649295747132948573
   - rid: 2649295747132948574
-  - rid: 2649295747132948575
+  - rid: 6008430280376320103
+  - rid: 6008430280376320105
   settings:
     characterPositions: []
   references:
@@ -617,31 +618,6 @@ MonoBehaviour:
         fovOffset: 0
         positionOffset: {x: 0, y: 0, z: 0}
         rotationOffset: {x: 0, y: 0, z: 0}
-    - rid: 2649295747132948575
-      type: {class: DiscussionNode, ns: , asm: Assembly-CSharp}
-      data:
-        nodeRect:
-          serializedVersion: 2
-          x: 0
-          y: 0
-          width: 0
-          height: 0
-        commandsScrollPosition: {x: 0, y: 0}
-        title: 
-        drawNode: {fileID: 11400000, guid: 6344f4092040cbd4183fc5d6dc877647, type: 2}
-        character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
-        displayName: 
-        expressionIndex: 2
-        textData:
-          rid: 2649295747132948599
-        voiceLine: {fileID: 0}
-        usePrevCamera: 1
-        characterStand: {fileID: 0}
-        cameraPreset: {fileID: 0}
-        cameraEffects: []
-        fovOffset: 0
-        positionOffset: {x: 0, y: 0, z: 0}
-        rotationOffset: {x: 0, y: 0, z: 0}
     - rid: 2649295747132948576
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -734,7 +710,8 @@ MonoBehaviour:
           \u05DE\u05D0\u05D9\u05D4 \u05D4\u05E1\u05EA\u05DB\u05DC\u05D4 \u05D1\u05DB\u05DC
           \u05E4\u05D9\u05E0\u05D4 \u05D1\u05E9\u05D9\u05E8\u05D5\u05EA\u05D9\u05DD
           \u05D4\u05D0\u05DC\u05D4."
-        commands: []
+        commands:
+        - rid: 6008430280376320098
     - rid: 2649295747132948590
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -744,7 +721,8 @@ MonoBehaviour:
           \u05D8\u05D5\u05D1. \u05E8\u05D0\u05D9\u05E0\u05D5 \u05E9\u05DD \u05D2\u05DD
           \u05D0\u05EA \u05D4\u05E8\u05DB\u05D6\u05EA, \u05D5\u05D0\u05D9\u05DA \u05E9\u05D4\u05E6\u05D9\u05E0\u05D5\u05E8\u05D5\u05EA
           \u05DE\u05D7\u05D5\u05D1\u05E8\u05D9\u05DD \u05E9\u05DD."
-        commands: []
+        commands:
+        - rid: 6008430280376320100
     - rid: 2649295747132948591
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -807,12 +785,6 @@ MonoBehaviour:
           \u05D5\u05E2\u05D3 \u05D4\u05E1\u05D5\u05E3."
         commands:
         - rid: 2649295747132948601
-    - rid: 2649295747132948599
-      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
-      data:
-        text: "(\u05DB\u05E9\u05D0\u05E0\u05D9 \u05D0\u05E2\u05E9\u05D4 \u05D0\u05EA
-          \u05D6\u05D4, \u05D4\u05DB\u05DC \u05D9\u05EA\u05D1\u05D4\u05E8!)"
-        commands: []
     - rid: 2649295747132948600
       type: {class: PlaySoundEffectCommand, ns: , asm: Assembly-CSharp}
       data:
@@ -825,3 +797,335 @@ MonoBehaviour:
         executeTime: 0
         clip: {fileID: 8300000, guid: 29f5783d31dc71648bc50d5c6bb667ad, type: 3}
         volume: 1
+    - rid: 6008430280376320098
+      type: {class: ShowAnimatedImage, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        imageWrapper: {fileID: 11400000, guid: e2465388f3443474dac3be87cad4c6a7, type: 2}
+        duration: 0.5
+        flash: 1
+    - rid: 6008430280376320100
+      type: {class: RemoveAnimatedImage, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        duration: 0.5
+        flash: 1
+    - rid: 6008430280376320103
+      type: {class: DiscussionNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: 6344f4092040cbd4183fc5d6dc877647, type: 2}
+        character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
+        displayName: 
+        expressionIndex: 1
+        textData:
+          rid: 6008430280376320104
+        voiceLine: {fileID: 0}
+        usePrevCamera: 1
+        characterStand: {fileID: 0}
+        cameraPreset: {fileID: 0}
+        cameraEffects: []
+        fovOffset: 0
+        positionOffset: {x: 0, y: 0, z: 0}
+        rotationOffset: {x: 0, y: 0, z: 0}
+    - rid: 6008430280376320104
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "(\u05DB\u05E9\u05D0\u05E0\u05D9 \u05D0\u05E2\u05E9\u05D4 \u05D0\u05EA
+          \u05D6\u05D4... \u05D4\u05DB\u05DC \u05D9\u05D4\u05D9\u05D4 \u05D1\u05E8\u05D5\u05E8.)"
+        commands: []
+    - rid: 6008430280376320105
+      type: {class: DiscussionChoiceNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: 76846e25f3c59c8469f240cc5205a8fd, type: 2}
+        character: {fileID: 11400000, guid: 7f6de77c1138bc04ebd203d76d1545a7, type: 2}
+        displayName: 
+        expressionIndex: 0
+        textData:
+          rid: 6008430280376320106
+        voiceLine: {fileID: 0}
+        usePrevCamera: 0
+        characterStand: {fileID: 0}
+        cameraPreset: {fileID: 0}
+        cameraEffects:
+        - {fileID: 11400000, guid: b44409174ae70cd4e8ca817780c1b019, type: 2}
+        fovOffset: 0
+        positionOffset: {x: 0, y: 0, z: 0}
+        rotationOffset: {x: 0, y: 0, z: 0}
+        isHp: 0
+        choiceLogic:
+          options:
+          - text: "\u05DB\u05DF"
+            dialogue:
+            - rid: 6008430280376320107
+            - rid: 6008430280376320109
+            - rid: 6008430280376320111
+            - rid: 6008430280376320113
+            - rid: 6008430280376320115
+            - rid: 6008430280376320119
+            - rid: 6008430280376320117
+            isCorrect: 0
+          - text: "\u05DC\u05D0"
+            dialogue: []
+            isCorrect: 0
+          loopIfWrong: 0
+    - rid: 6008430280376320106
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "<G\u05D4\u05D5\u05DC\u05DA \u05DC\u05D4\u05EA\u05D7\u05D9\u05DC \u05D7\u05DC\u05E7
+          \u05E9\u05DC *\u05D8\u05D9\u05E2\u05D5\u05E0\u05D9\u05DD \u05DE\u05E1\u05DB\u05DE\u05D9\u05DD*.
+          \u05EA\u05E8\u05E6\u05D5 \u05DC\u05E9\u05DE\u05D5\u05E2 \u05D4\u05D3\u05E8\u05DB\u05D4?"
+        commands: []
+    - rid: 6008430280376320107
+      type: {class: DiscussionNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: 6344f4092040cbd4183fc5d6dc877647, type: 2}
+        character: {fileID: 11400000, guid: 7f6de77c1138bc04ebd203d76d1545a7, type: 2}
+        displayName: 
+        expressionIndex: 0
+        textData:
+          rid: 6008430280376320108
+        voiceLine: {fileID: 0}
+        usePrevCamera: 1
+        characterStand: {fileID: 0}
+        cameraPreset: {fileID: 0}
+        cameraEffects: []
+        fovOffset: 0
+        positionOffset: {x: 0, y: 0, z: 0}
+        rotationOffset: {x: 0, y: 0, z: 0}
+    - rid: 6008430280376320108
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "<G\u05D1\u05D7\u05DC\u05E7\u05D9\u05DD \u05E9\u05DC *\u05D8\u05D9\u05E2\u05D5\u05E0\u05D9\u05DD
+          \u05DE\u05E1\u05DB\u05DE\u05D9\u05DD*, \u05DB\u05DC \u05DE\u05D4 \u05E9\u05E7\u05E8\u05D4
+          \u05D1\u05EA\u05D9\u05E7 \u05D9\u05E1\u05D5\u05DB\u05DD \u05D1\u05E6\u05D5\u05E8\u05D4
+          \u05E9\u05DC *\u05E7\u05D5\u05DE\u05D9\u05E7\u05E1*.>"
+        commands: []
+    - rid: 6008430280376320109
+      type: {class: DiscussionNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: 6344f4092040cbd4183fc5d6dc877647, type: 2}
+        character: {fileID: 11400000, guid: 7f6de77c1138bc04ebd203d76d1545a7, type: 2}
+        displayName: 
+        expressionIndex: 0
+        textData:
+          rid: 6008430280376320110
+        voiceLine: {fileID: 0}
+        usePrevCamera: 1
+        characterStand: {fileID: 0}
+        cameraPreset: {fileID: 0}
+        cameraEffects: []
+        fovOffset: 0
+        positionOffset: {x: 0, y: 0, z: 0}
+        rotationOffset: {x: 0, y: 0, z: 0}
+    - rid: 6008430280376320110
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "<G\u05D0\u05EA\u05DD \u05EA\u05E8\u05D0\u05D5 \u05D0\u05EA \u05DB\u05DC
+          \u05D0\u05D9\u05E8\u05D5\u05E2\u05D9 \u05D4\u05EA\u05D9\u05E7 \u05DE\u05D5\u05E6\u05D2\u05D9\u05DD
+          \u05D1\u05E6\u05D5\u05E8\u05D4 \u05E9\u05DC \u05D4\u05E7\u05D5\u05DE\u05D9\u05E7\u05E1,
+          \u05D0\u05D1\u05DC \u05D7\u05DC\u05E7 \u05DE\u05D4\u05DE\u05E9\u05D1\u05E6\u05D5\u05EA
+          \u05D9\u05D4\u05D9\u05D5 *\u05D7\u05E1\u05E8\u05D5\u05EA*.>"
+        commands: []
+    - rid: 6008430280376320111
+      type: {class: DiscussionNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: 6344f4092040cbd4183fc5d6dc877647, type: 2}
+        character: {fileID: 11400000, guid: 7f6de77c1138bc04ebd203d76d1545a7, type: 2}
+        displayName: 
+        expressionIndex: 0
+        textData:
+          rid: 6008430280376320112
+        voiceLine: {fileID: 0}
+        usePrevCamera: 1
+        characterStand: {fileID: 0}
+        cameraPreset: {fileID: 0}
+        cameraEffects: []
+        fovOffset: 0
+        positionOffset: {x: 0, y: 0, z: 0}
+        rotationOffset: {x: 0, y: 0, z: 0}
+    - rid: 6008430280376320112
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "<G\u05DC\u05DE\u05D8\u05D4, \u05D9\u05D4\u05D9\u05D5 \u05DC\u05DB\u05DD
+          *\u05EA\u05DE\u05D5\u05E0\u05D5\u05EA* \u05E9\u05D0\u05D5\u05EA\u05DF \u05EA\u05D5\u05DB\u05DC\u05D5
+          \u05DC\u05D2\u05E8\u05D5\u05E8 \u05DC\u05DE\u05E9\u05D1\u05E6\u05D5\u05EA
+          \u05D4\u05D7\u05E1\u05E8\u05D5\u05EA. \u05D1\u05E2\u05E6\u05DD \u05EA\u05E6\u05D8\u05E8\u05DB\u05D5
+          \u05DC\u05D4\u05EA\u05D0\u05D9\u05DD \u05DB\u05DC \u05EA\u05DE\u05D5\u05E0\u05D4
+          \u05DC\u05DE\u05E7\u05D5\u05DD \u05E9\u05DC\u05D4.>"
+        commands: []
+    - rid: 6008430280376320113
+      type: {class: DiscussionNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: 6344f4092040cbd4183fc5d6dc877647, type: 2}
+        character: {fileID: 11400000, guid: 7f6de77c1138bc04ebd203d76d1545a7, type: 2}
+        displayName: 
+        expressionIndex: 0
+        textData:
+          rid: 6008430280376320114
+        voiceLine: {fileID: 0}
+        usePrevCamera: 1
+        characterStand: {fileID: 0}
+        cameraPreset: {fileID: 0}
+        cameraEffects: []
+        fovOffset: 0
+        positionOffset: {x: 0, y: 0, z: 0}
+        rotationOffset: {x: 0, y: 0, z: 0}
+    - rid: 6008430280376320114
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "<G\u05DB\u05E9\u05EA\u05E1\u05D9\u05D9\u05DE\u05D5 \u05DC\u05E9\u05D9\u05DD
+          \u05D0\u05EA \u05D4\u05EA\u05DE\u05D5\u05E0\u05D5\u05EA \u05D0\u05D9\u05E4\u05D4
+          \u05E9\u05D0\u05EA\u05DD \u05D7\u05D5\u05E9\u05D1\u05D9\u05DD \u05E9\u05D4\u05DF
+          \u05DE\u05D2\u05D9\u05E2\u05D5\u05EA \u05D1\u05E7\u05D5\u05DE\u05D9\u05E7\u05E1,
+          \u05EA\u05D5\u05DB\u05DC\u05D5 \u05DC\u05E0\u05E1\u05D5\u05EA *\u05DC\u05E1\u05DB\u05DD*,
+          \u05D1\u05DE\u05E7\u05E8\u05D4 \u05E9\u05D1\u05D0\u05D7\u05EA \u05D4\u05DE\u05E9\u05D1\u05E6\u05D5\u05EA
+          \u05D4\u05D7\u05E1\u05E8\u05D5\u05EA \u05E9\u05DE\u05EA\u05DD \u05EA\u05DE\u05D5\u05E0\u05D4
+          \u05E9\u05DC\u05D0 \u05DE\u05EA\u05D0\u05D9\u05DE\u05D4, \u05EA\u05D0\u05D1\u05D3\u05D5
+          \u05E7\u05E6\u05EA \u05D7\u05D9\u05D9\u05DD \u05D5\u05EA\u05E0\u05E1\u05D5
+          \u05E9\u05D5\u05D1.>"
+        commands: []
+    - rid: 6008430280376320115
+      type: {class: DiscussionNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: 6344f4092040cbd4183fc5d6dc877647, type: 2}
+        character: {fileID: 11400000, guid: 7f6de77c1138bc04ebd203d76d1545a7, type: 2}
+        displayName: 
+        expressionIndex: 0
+        textData:
+          rid: 6008430280376320116
+        voiceLine: {fileID: 0}
+        usePrevCamera: 1
+        characterStand: {fileID: 0}
+        cameraPreset: {fileID: 0}
+        cameraEffects: []
+        fovOffset: 0
+        positionOffset: {x: 0, y: 0, z: 0}
+        rotationOffset: {x: 0, y: 0, z: 0}
+    - rid: 6008430280376320116
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "<G\u05D0\u05DD \u05EA\u05DC\u05D7\u05E6\u05D5 \u05E2\u05DC \u05DE\u05E9\u05D1\u05E6\u05EA
+          \u05D7\u05E1\u05E8\u05D4, \u05EA\u05D5\u05DB\u05DC\u05D5 \u05DC\u05E8\u05D0\u05D5\u05EA
+          \u05EA\u05D9\u05D0\u05D5\u05E8 \u05E7\u05D8\u05DF \u05E9\u05DE\u05E1\u05D1\u05D9\u05E8
+          \u05DE\u05D4 \u05E6\u05E8\u05D9\u05DA \u05DC\u05D4\u05D9\u05D5\u05EA \u05D1\u05DE\u05E9\u05D1\u05E6\u05EA.>"
+        commands: []
+    - rid: 6008430280376320117
+      type: {class: DiscussionNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: 6344f4092040cbd4183fc5d6dc877647, type: 2}
+        character: {fileID: 11400000, guid: 7f6de77c1138bc04ebd203d76d1545a7, type: 2}
+        displayName: 
+        expressionIndex: 0
+        textData:
+          rid: 6008430280376320118
+        voiceLine: {fileID: 0}
+        usePrevCamera: 1
+        characterStand: {fileID: 0}
+        cameraPreset: {fileID: 0}
+        cameraEffects: []
+        fovOffset: 0
+        positionOffset: {x: 0, y: 0, z: 0}
+        rotationOffset: {x: 0, y: 0, z: 0}
+    - rid: 6008430280376320118
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "<G\u05D6\u05D4 \u05D4\u05DB\u05DC... \u05D1\u05D4\u05E6\u05DC\u05D7\u05D4,
+          \u05D5\u05EA\u05D4\u05E0\u05D5!>"
+        commands: []
+    - rid: 6008430280376320119
+      type: {class: DiscussionNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: 6344f4092040cbd4183fc5d6dc877647, type: 2}
+        character: {fileID: 11400000, guid: 7f6de77c1138bc04ebd203d76d1545a7, type: 2}
+        displayName: 
+        expressionIndex: 0
+        textData:
+          rid: 6008430280376320120
+        voiceLine: {fileID: 0}
+        usePrevCamera: 1
+        characterStand: {fileID: 0}
+        cameraPreset: {fileID: 0}
+        cameraEffects: []
+        fovOffset: 0
+        positionOffset: {x: 0, y: 0, z: 0}
+        rotationOffset: {x: 0, y: 0, z: 0}
+    - rid: 6008430280376320120
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "<G\u05E9\u05D9\u05DE\u05D5 \u05DC\u05D1 \u05E9\u05DB\u05D9\u05D5\u05D5\u05DF
+          \u05D4\u05DE\u05E9\u05D1\u05E6\u05D5\u05EA \u05D1\u05E7\u05D5\u05DE\u05D9\u05E7\u05E1
+          \u05D4\u05D5\u05D0 \u05DE\u05DC\u05DE\u05E2\u05DC\u05D4 \u05DC\u05DE\u05D8\u05D4,
+          \u05D5\u05D0\u05D6 \u05D9\u05DE\u05D9\u05DF \u05DC\u05E9\u05DE\u05D0\u05DC.>"
+        commands: []

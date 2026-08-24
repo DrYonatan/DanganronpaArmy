@@ -97,8 +97,11 @@ public class DiscussionNode : DialogueNode
 
     private void HandleNonVisibleCharacter()
     {
-        CourtTextBoxAnimator animator = (CourtTextBoxAnimator)(DialogueSystem.instance.dialogueBoxAnimator);
+        CourtTextBoxAnimator animator = DialogueSystem.instance.dialogueBoxAnimator as CourtTextBoxAnimator;
 
+        if (animator == null)
+            return;
+        
         if(animator.characterFace.isVisible)
            animator.characterFace.DiscussionFaceContainerDisappear(animator.duration);
     }

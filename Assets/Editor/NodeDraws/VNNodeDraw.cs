@@ -119,6 +119,7 @@ public class VNNodeDraw : DrawNode
             menu.AddItem(new GUIContent("Toggle Under-text-box Black fade"), false, () => AddCommand(node, new FadeBlackUnderTextBox()));
             menu.AddItem(new GUIContent("Section Start Effect"), false, () => AddCommand(node, new ApplySectionStartEffect()));
             menu.AddItem(new GUIContent("Play Nodes"), false, () => AddCommand(node, new PlayConversationCommand()));
+            menu.AddItem(new GUIContent("Single Time Auto"), false, () => AddCommand(node, new SingleTimeAuto()));
 
             menu.ShowAsContext();
         }

@@ -34,6 +34,8 @@ public class LogicShootManager : MonoBehaviour
     public bool isActive;
     public bool isInFinish;
 
+    private Coroutine timerRoutine;
+    
     private Coroutine finalTargetRoutine;
     private bool isFinishedTargets;
 
@@ -79,13 +81,13 @@ public class LogicShootManager : MonoBehaviour
         Time.timeScale = 0f;
         rifleManager.RaiseRifle();
         MusicManager.instance.LowerVolume();
-        animator.RaiseRifleAnimation();
-        StartCoroutine(RifleCountDown());
+        animator.RaiseRifleAnimation(segment.stopGameTime);
+        timerRoutine = StartCoroutine(RifleCountDown());
     }
 
     private IEnumerator RifleCountDown()
     {
-        yield return new WaitForSecondsRealtime(5f);
+        yield return new WaitForSecondsRealtime(segment.stopGameTime);
         if (isRifleUp)
             PutDownRifle();
     }
@@ -93,6 +95,7 @@ public class LogicShootManager : MonoBehaviour
     private void PutDownRifle()
     {
         isRifleUp = false;
+        StopCoroutine(timerRoutine);
         Time.timeScale = 1f;
         rifleManager.PutRifleDown();
         MusicManager.instance.RaiseVolume();

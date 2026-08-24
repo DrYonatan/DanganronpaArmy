@@ -26,7 +26,7 @@ MonoBehaviour:
   - rid: 2649295747132948614
   - rid: 2649295747132948615
   - rid: 2649295747132948616
-  - rid: 6008430257998659584
+  - rid: 6008430280376320128
   settings:
     characterPositions: []
   references:
@@ -435,7 +435,7 @@ MonoBehaviour:
       data:
         text: "\u05D0\u05D9\u05D6\u05D4 \u05DE\u05EA\u05D7!"
         commands: []
-    - rid: 6008430257998659584
+    - rid: 6008430280376320128
       type: {class: DiscussionNode, ns: , asm: Assembly-CSharp}
       data:
         nodeRect:
@@ -447,11 +447,11 @@ MonoBehaviour:
         commandsScrollPosition: {x: 0, y: 0}
         title: 
         drawNode: {fileID: 11400000, guid: 6344f4092040cbd4183fc5d6dc877647, type: 2}
-        character: {fileID: 0}
+        character: {fileID: 11400000, guid: 7f6de77c1138bc04ebd203d76d1545a7, type: 2}
         displayName: 
         expressionIndex: 0
         textData:
-          rid: 6008430257998659585
+          rid: 6008430280376320129
         voiceLine: {fileID: 0}
         usePrevCamera: 0
         characterStand: {fileID: 0}
@@ -460,15 +460,20 @@ MonoBehaviour:
         fovOffset: 0
         positionOffset: {x: 0, y: 0, z: 0}
         rotationOffset: {x: 0, y: 0, z: 0}
-    - rid: 6008430257998659585
+    - rid: 6008430280376320129
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
         text: 
         commands:
-        - rid: 6008430257998659586
-    - rid: 6008430257998659586
+        - rid: 6008430280376320132
+        - rid: 6008430280376320134
+    - rid: 6008430280376320132
       type: {class: PlayCutscene, ns: , asm: Assembly-CSharp}
       data:
         executeTime: 1
         video: {fileID: 32900000, guid: 81fda37d484ee4949a286b010c3d6449, type: 3}
-        persist: 0
+        persist: 1
+    - rid: 6008430280376320134
+      type: {class: SingleTimeAuto, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0

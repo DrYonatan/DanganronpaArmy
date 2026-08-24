@@ -38,6 +38,7 @@ public class LogicShootSegment : TrialSegment
     public ShootTargetData finalTarget;
     public AudioClip finalVoiceLine;
     public Character character;
+    public float stopGameTime;
     
     public override void Play()
     {

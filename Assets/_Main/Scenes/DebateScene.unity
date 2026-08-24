@@ -9795,7 +9795,7 @@ MonoBehaviour:
   failExplosion: {fileID: 6494760122707493966, guid: 5a4064a288f80fc4683b9d574617e043, type: 3}
   music: {fileID: 8300000, guid: f4ccadbe7565a0b46a76a8e8db988088, type: 3}
   finalTargetSound: {fileID: 8300000, guid: 51fa52834f6aecc4d952cb965c3a5b5a, type: 3}
-  finalTargetMusic: {fileID: 8300000, guid: e5c9836c3030c41478733178b081f139, type: 3}
+  finalTargetMusic: {fileID: 8300000, guid: 69b25ad2f244f9247b3057d5f8633689, type: 3}
   stopGameSound: {fileID: 8300000, guid: 7fe1e3f26b6d5b04c85a0f97e3b152a3, type: 3}
   playerBar: {fileID: 1090660581}
   playerHp: {fileID: 1729788908}
@@ -10749,8 +10749,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6470861120533348515, guid: cfe64189ab241e94286001b89b7c640b, type: 3}
       propertyPath: duration
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 6470861120533348515, guid: cfe64189ab241e94286001b89b7c640b, type: 3}
+      propertyPath: voiceLine
+      value: 
+      objectReference: {fileID: 8300000, guid: 3874c33071980ae429549b7b3c2743de, type: 3}
     - target: {fileID: 6470861120533348515, guid: cfe64189ab241e94286001b89b7c640b, type: 3}
       propertyPath: glowFinalScale
       value: 5
@@ -24814,6 +24818,7 @@ MonoBehaviour:
   shooter: {fileID: 0}
   pauseMenu: {fileID: 1442559742}
   isPaused: 0
+  pauseAvailable: 0
   isInputActive: 0
   isDialogueInputActive: 0
 --- !u!4 &1891043990

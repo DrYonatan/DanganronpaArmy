@@ -103,7 +103,8 @@ public class GameStateManager : MonoBehaviour
     public void MoveToNextChapterSegment()
     {
         chapterSegmentIndex++;
-        ProgressManager.instance.currentGameEventIndex = 0;
+        if(ProgressManager.instance != null)
+           ProgressManager.instance.currentGameEventIndex = 0;
         MusicManager.instance.StopSong();
 
         if (chapterSegmentIndex < chaptersBank.chapters[chapterIndex].chapterSegments.Count)
@@ -144,12 +145,14 @@ public class GameStateManager : MonoBehaviour
     private IEnumerator HandlePopup()
     {
         ImageScript.instance.UnFadeToBlack(0f);
-        ProgressManager.instance.savedInPopup = true;
+        if(ProgressManager.instance != null)
+           ProgressManager.instance.savedInPopup = true;
         SavePopup popup = PlayerInputManager.instance.pauseMenu.generalMenu.savePopUp;
         popup.gameObject.SetActive(true);
         popup.finished = false;
         yield return popup.WaitForCompletion();
-        ProgressManager.instance.savedInPopup = false;
+        if(ProgressManager.instance != null)
+           ProgressManager.instance.savedInPopup = false;
         ImageScript.instance.FadeToBlack(0f);
         yield return new WaitForSeconds(0.5f);
         popup.gameObject.SetActive(false);

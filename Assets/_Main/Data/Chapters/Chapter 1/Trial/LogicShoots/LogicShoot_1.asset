@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: LogicShoot_1
   m_EditorClassIdentifier: 
   stages:
-  - cameraStartPosition: {x: 0, y: 0, z: 0}
+  - cameraStartPosition: {x: 0, y: 0, z: -0.5}
     rotation: {x: 0, y: 0, z: 0}
     emotion: angry
     targets:
@@ -24,11 +24,85 @@ MonoBehaviour:
         isCorrect: 1
       - answer: "\u05E0\u05DB\u05D5\u05DF"
         isCorrect: 0
-      timeOut: 5
+      timeOut: 7
       spawnPosition: {x: 0, y: 0}
       targetPosition: {x: 0, y: 0}
       movementTime: 0
     voiceLine: {fileID: 8300000, guid: 711e61374d290574e9bcff258e82adfa, type: 3}
+  - cameraStartPosition: {x: 1, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: -20}
+    emotion: default
+    targets:
+    - question: "\u05DC\u05D0 \u05D4\u05D9\u05D4 \u05D0\u05E4\u05E9\u05E8 \u05DC\u05E8\u05E6\u05D5\u05D7
+        \u05D0\u05D5\u05EA\u05D5 \u05DE\u05D1\u05D7\u05D5\u05E5"
+      answers:
+      - answer: "\u05DC\u05D0 \u05E0\u05DB\u05D5\u05DF"
+        isCorrect: 1
+      - answer: "\u05E0\u05DB\u05D5\u05DF"
+        isCorrect: 0
+      timeOut: 7
+      spawnPosition: {x: -100, y: 0}
+      targetPosition: {x: 100, y: 0}
+      movementTime: 2
+    voiceLine: {fileID: 8300000, guid: 4e6b651dd96ac7344848277139525c79, type: 3}
+  - cameraStartPosition: {x: 0, y: -1, z: 0}
+    rotation: {x: 0, y: 0, z: 0}
+    emotion: scared
+    targets:
+    - question: "\u05D0\u05E0\u05D9 \u05D4\u05DC\u05DB\u05EA\u05D9 \u05DC\u05D4\u05D1\u05D9\u05D0
+        \u05E6\u05D9\u05D5\u05D3..."
+      answers:
+      - answer: "\u05DC\u05D0 \u05E0\u05DB\u05D5\u05DF"
+        isCorrect: 0
+      - answer: "\u05E0\u05DB\u05D5\u05DF"
+        isCorrect: 1
+      timeOut: 10
+      spawnPosition: {x: -300, y: 100}
+      targetPosition: {x: -300, y: -100}
+      movementTime: 2
+    - question: "\u05D7\u05D6\u05E8\u05EA\u05D9 \u05DC\u05D2\u05DC\u05E2\u05D3 \u05E2\u05DD
+        \u05D4\u05E6\u05D9\u05D5\u05D3!"
+      answers:
+      - answer: "\u05DC\u05D0 \u05E0\u05DB\u05D5\u05DF"
+        isCorrect: 1
+      - answer: "\u05E0\u05DB\u05D5\u05DF"
+        isCorrect: 0
+      timeOut: 10
+      spawnPosition: {x: 300, y: 100}
+      targetPosition: {x: 300, y: -100}
+      movementTime: 2
+    voiceLine: {fileID: 8300000, guid: dfc29146f60218a45a53c1b48c4d7fb0, type: 3}
+  - cameraStartPosition: {x: 0, y: 0, z: 1}
+    rotation: {x: 0, y: 0, z: 30}
+    emotion: angry
+    targets:
+    - question: "\u05D1\u05E8\u05D2\u05E8 \u05D4\u05D5\u05D0 \u05D6\u05D4 \u05E9\u05D4\u05D9\u05D4
+        \u05D0\u05D9\u05EA\u05D5 \u05D1\u05E9\u05D9\u05E8\u05D5\u05EA\u05D9\u05DD!"
+      answers:
+      - answer: "\u05DC\u05D0 \u05E0\u05DB\u05D5\u05DF"
+        isCorrect: 0
+      - answer: "\u05E0\u05DB\u05D5\u05DF"
+        isCorrect: 1
+      timeOut: 7
+      spawnPosition: {x: -100, y: 100}
+      targetPosition: {x: 100, y: -100}
+      movementTime: 2
+    voiceLine: {fileID: 8300000, guid: 4e6b651dd96ac7344848277139525c79, type: 3}
+  - cameraStartPosition: {x: 0, y: 1, z: 0}
+    rotation: {x: 0, y: 0, z: 0}
+    emotion: scared
+    targets:
+    - question: "\u05D9\u05E9 \u05DC\u05D9 \u05D0\u05DC\u05D9\u05D1\u05D9!"
+      answers:
+      - answer: "\u05DC\u05D0 \u05E0\u05DB\u05D5\u05DF"
+        isCorrect: 1
+      - answer: "\u05E0\u05DB\u05D5\u05DF"
+        isCorrect: 0
+      timeOut: 7
+      spawnPosition: {x: 0, y: 200}
+      targetPosition: {x: 0, y: -200}
+      movementTime: 3
+    voiceLine: {fileID: 8300000, guid: cc1bfe74fe2c0ba40ace16def36a1f56, type: 3}
   finalTarget:
     question: "\u05D0\u05D9\u05E4\u05D4 \u05D0\u05EA\u05D4 \u05D0\u05D5\u05DE\u05E8
       \u05E9\u05D4\u05D9\u05D9\u05EA\u05D9?"
@@ -41,9 +115,10 @@ MonoBehaviour:
       isCorrect: 1
     - answer: "\u05D1\u05D2\u05DC\u05E2\u05D3"
       isCorrect: 0
-    timeOut: 2
+    timeOut: 7
     spawnPosition: {x: 0, y: 0}
     targetPosition: {x: 0, y: 0}
     movementTime: 10
   finalVoiceLine: {fileID: 8300000, guid: 4e6b651dd96ac7344848277139525c79, type: 3}
   character: {fileID: 11400000, guid: 95d3e48687d854942aea31b2cf9a8ff1, type: 2}
+  stopGameTime: 15

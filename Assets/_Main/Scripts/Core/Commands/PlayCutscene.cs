@@ -11,7 +11,8 @@ public class PlayCutscene : Command
     public override IEnumerator Execute()
     {
         DialogueSystem.instance.dialogueBoxAnimator.TextBoxDisappear();
-        VNUIAnimator.instance.Disappear();
+        if(ProgressManager.instance != null)
+           VNUIAnimator.instance.Disappear();
         
         ImageScript.instance.FadeToBlack(0.2f);
         yield return new WaitForSeconds(0.7f);
@@ -28,7 +29,8 @@ public class PlayCutscene : Command
         }
         
         DialogueSystem.instance.TextBoxAppear();
-        VNUIAnimator.instance.Appear();
+        if(ProgressManager.instance != null)
+           VNUIAnimator.instance.Appear();
     }
     
     #if UNITY_EDITOR

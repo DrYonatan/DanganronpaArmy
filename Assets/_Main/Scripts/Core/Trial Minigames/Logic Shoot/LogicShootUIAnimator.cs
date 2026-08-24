@@ -242,13 +242,14 @@ public class LogicShootUIAnimator : MonoBehaviour
         timersContainer.DOLocalRotate(new Vector3(0, angle, 0), 0.4f).SetUpdate(true);
     }
 
-    private void StopGameTimer()
+    private void StopGameTimer(float duration)
     {
+        stopGameTimer.DOKill();
         stopGameTimer.color = Color.green;
         stopGameTimer.fillAmount = 1f;
-        stopGameTimer.DOFillAmount(0f, 7f).SetUpdate(true);
-        stopGameTimer.DOColor(Color.yellow, 3.5f).SetEase(Ease.Linear).SetUpdate(true).OnComplete(() =>
-            stopGameTimer.DOColor(Color.red, 3.5f).SetEase(Ease.Linear).SetUpdate(true));
+        stopGameTimer.DOFillAmount(0f, duration).SetUpdate(true);
+        stopGameTimer.DOColor(Color.yellow, duration/2).SetEase(Ease.Linear).SetUpdate(true).OnComplete(() =>
+            stopGameTimer.DOColor(Color.red, duration/2).SetEase(Ease.Linear).SetUpdate(true));
     }
 
     public void StopGameCooldown()
@@ -310,13 +311,13 @@ public class LogicShootUIAnimator : MonoBehaviour
         seq.SetUpdate(true);
     }
 
-    public void RaiseRifleAnimation()
+    public void RaiseRifleAnimation(float duration)
     {
         SoundManager.instance.PlaySoundEffect(stopGameSound);
         HaloAnimation();
         StartCoroutine(StopGameColorGrading(0.5f));
         RotateTimersContainer(90);
-        StopGameTimer();
+        StopGameTimer(duration);
         stopGamePostProcessing.SetActive(true);
     }
 

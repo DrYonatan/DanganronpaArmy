@@ -465,7 +465,8 @@ MonoBehaviour:
       data:
         text: "(\u05E8\u05D2\u05E2 \u05D0\u05D7\u05D3. \u05D6\u05D4 \u05D0\u05D5\u05DE\u05E8
           \u05E9\u2026)"
-        commands: []
+        commands:
+        - rid: 6008430280376320086
     - rid: 2649295605456438037
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -540,7 +541,8 @@ MonoBehaviour:
           \u05E0\u05D9\u05E7\u05EA\u05D4 \u05DB\u05DE\u05D4 \u05DE\u05D4\u05EA\u05D0\u05D9\u05DD\u2026
           \u05DC\u05D0 \u05D4\u05E1\u05E4\u05E7\u05E0\u05D5 \u05DC\u05E9\u05D8\u05D5\u05E3
           \u05D0\u05EA \u05D4\u05E8\u05E6\u05E4\u05D4 \u05E2\u05D3\u05D9\u05D9\u05DF."
-        commands: []
+        commands:
+        - rid: 6008430280376320088
     - rid: 2649295605456438048
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -551,7 +553,8 @@ MonoBehaviour:
           \u05D4\u05E8\u05E6\u05D7. \u05D0\u05D6 \u05D4\u05D9\u05D0 \u05D4\u05D9\u05D7\u05D9\u05D3\u05D4
           \u05E9\u05D9\u05DB\u05DC\u05D4 \u05DC\u05D4\u05D5\u05E8\u05D9\u05D3 \u05D0\u05EA
           \u05D4\u05DE\u05D9\u05DD!"
-        commands: []
+        commands:
+        - rid: 6008430280376320089
     - rid: 2649295605456438049
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -588,3 +591,23 @@ MonoBehaviour:
         executeTime: 0
         clip: {fileID: 8300000, guid: 29f5783d31dc71648bc50d5c6bb667ad, type: 3}
         volume: 1
+    - rid: 6008430280376320086
+      type: {class: PlayMusicCommand, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        music: {fileID: 8300000, guid: 69b25ad2f244f9247b3057d5f8633689, type: 3}
+        volume: 1
+        toggle: 1
+    - rid: 6008430280376320088
+      type: {class: ShowAnimatedImage, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        imageWrapper: {fileID: 11400000, guid: 351ddbb0b09eeb84cbb5245f8a847585, type: 2}
+        duration: 0.5
+        flash: 1
+    - rid: 6008430280376320089
+      type: {class: RemoveAnimatedImage, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        duration: 0.5
+        flash: 1
