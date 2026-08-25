@@ -19,11 +19,11 @@ public class StartFreeTimeConversation : Command
             charactersRanks[
                 character.name]];
 
-        charactersRanks[character.name]++;
 
         ((WorldEvent)ProgressManager.instance.currentGameEvent).isFinished = true;
         
         yield return VNNodePlayer.instance.RunSpecificNodes(currentFreeTimeEvent.nodes);
+        charactersRanks[character.name]++;
         DialogueSystem.instance.TurnOnSingleTimeAuto();
     }
     
