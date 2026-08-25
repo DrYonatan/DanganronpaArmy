@@ -8,8 +8,9 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [Serializable]
-public class CharacterInfo 
+public class CharacterInfo
 {
+    public string englishName;
     public string name;
     public Sprite faceIcon;
     public Sprite largeIcon;
@@ -91,12 +92,19 @@ public class ReportCardMenu: MenuScreen
             AddCharacterToList(characterInfo);
         }
         
-        socialStatus.text = GetSocialStatus(characterInfoList.Sum((characterInfo) => characterInfo.progressionLevel));
-
         foreach (RectTransform block in blocks)
         {
             originalPosYs.Add(block.anchoredPosition.y);
         }
+    }
+
+    void InitializeUI()
+    {
+        foreach (CharacterInfo characterInfo in characterInfoList)
+        {
+            characterInfo.progressionLevel = GameStateManager.instance.charactersRanks.GetValueOrDefault(characterInfo.englishName);
+        }
+        socialStatus.text = GetSocialStatus(characterInfoList.Sum((characterInfo) => characterInfo.progressionLevel));
     }
     void AddCharacterToList(CharacterInfo characterInfo)
     {
@@ -108,6 +116,7 @@ public class ReportCardMenu: MenuScreen
     public override void Open()
     {
         base.Open();
+        InitializeUI();
         currentCharacterIndex = 0;
         UpdateUI();
     } 
