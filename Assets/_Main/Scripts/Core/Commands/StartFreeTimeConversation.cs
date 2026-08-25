@@ -23,9 +23,8 @@ public class StartFreeTimeConversation : Command
 
         ((WorldEvent)ProgressManager.instance.currentGameEvent).isFinished = true;
         
-        VNNodePlayer.instance.AddToQueue(currentFreeTimeEvent);
+        yield return VNNodePlayer.instance.RunSpecificNodes(currentFreeTimeEvent.nodes);
         DialogueSystem.instance.TurnOnSingleTimeAuto();
-        yield return null;
     }
     
     #if UNITY_EDITOR
