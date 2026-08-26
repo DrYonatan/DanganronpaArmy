@@ -10,4 +10,5 @@ public class Evidence : ScriptableObject
     public string description;
 
     public Sprite icon;
+    public Sprite closeup;
 }
