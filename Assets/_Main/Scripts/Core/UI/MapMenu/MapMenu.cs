@@ -26,6 +26,7 @@ public struct MapRoom
 public struct Region
 {
     public string name;
+    public Sprite map;
     public List<MapRoom> rooms;
 }
 
@@ -60,6 +61,7 @@ public class MapMenu : MenuScreen
     public RectTransform dialogueContainer;
     public GameObject noPeopleMessage;
     public CanvasGroup mainContainerCanvasGroup;
+    public Image displayedMap;
 
 
     void Start()
@@ -234,6 +236,7 @@ public class MapMenu : MenuScreen
     void UpdateRegion()
     {
         regionText.text = regions[currentRegionIndex].name;
+        displayedMap.sprite = regions[currentRegionIndex].map;
         SetRooms(regions[currentRegionIndex].rooms);
         int index = regions[currentRegionIndex].rooms
             .FindIndex((curr) => curr.name.Equals(WorldManager.instance.currentRoom.roomName));
@@ -266,7 +269,7 @@ public class MapMenu : MenuScreen
             roomListUI[currentRoomIndex].SetHovered(true);
             OnRoomHovered(currentRoom);
 
-            roomListTransform.DOAnchorPosY(Mathf.Max((currentRoomIndex - 5) * 91, 0), 0f);
+            roomListTransform.DOAnchorPosY(Mathf.Max((currentRoomIndex - 3) * 91, 0), 0f).SetUpdate(true);
         }
     }
 
