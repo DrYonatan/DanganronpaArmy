@@ -191,7 +191,7 @@ public class GameLoop : MonoBehaviour
             EvidenceManager.instance.evidenceMenu.Open();
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape) && PlayerInputManager.instance.isPaused)
+        if (Input.GetKeyDown(KeyCode.Escape) && !EvidenceManager.instance.evidenceMenu.isCloseupOpen && PlayerInputManager.instance.isPaused)
         {
             PlayerInputManager.instance.TogglePause();
             EvidenceManager.instance.evidenceMenu.Close();
