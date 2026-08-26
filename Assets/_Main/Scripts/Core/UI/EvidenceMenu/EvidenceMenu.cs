@@ -27,6 +27,8 @@ public class EvidenceMenu : MenuScreen
     public CanvasGroup mainContainerCanvasGroup;
     public RectTransform infoContainerTransform;
     public RectTransform evidenceContainerTransform;
+    public Image presentGuide;
+    public Image closeupGuide;
     public Image closeupImage;
     public Image blackOverlay;
     public bool isCloseupOpen;
@@ -51,6 +53,8 @@ public class EvidenceMenu : MenuScreen
     public void Initialize()
     {
         finishedTransition = true;
+        presentGuide.gameObject.SetActive(false);
+        closeupGuide.gameObject.SetActive(false);
         
         foreach (ListItem instantiated in evidenceListUI)
         {
@@ -179,6 +183,8 @@ public class EvidenceMenu : MenuScreen
                 {
                     item.SetHovered(false);
                 }
+                
+                closeupGuide.gameObject.SetActive(currentEvidence.closeup != null);
 
                 if (evidenceListUI.Count > 0)
                     evidenceListUI[currentEvidenceIndex].SetHovered(true);
@@ -197,6 +203,7 @@ public class EvidenceMenu : MenuScreen
         logo.alpha = 0f;
         gameObject.SetActive(true);
         currentEvidenceIndex = 0;
+        presentGuide.gameObject.SetActive(true);
         UpdateUI();
 
         bool isOpen = false;
@@ -225,6 +232,7 @@ public class EvidenceMenu : MenuScreen
         questionBubble.gameObject.SetActive(false);
 
         Close();
+        presentGuide.gameObject.SetActive(false);
         Evidence currentEvidence = EvidenceManager.instance.evidenceList[currentEvidenceIndex];
         yield return onFinish(currentEvidence);
     }
