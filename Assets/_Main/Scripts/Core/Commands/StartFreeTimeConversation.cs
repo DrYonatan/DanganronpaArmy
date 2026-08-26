@@ -18,12 +18,10 @@ public class StartFreeTimeConversation : Command
         VNConversationSegment currentFreeTimeEvent = characterEvents.events[
             charactersRanks[
                 character.name]];
-
-
-        ((WorldEvent)ProgressManager.instance.currentGameEvent).isFinished = true;
         
         yield return VNNodePlayer.instance.RunSpecificNodes(currentFreeTimeEvent.nodes);
         charactersRanks[character.name]++;
+        ((WorldEvent)ProgressManager.instance.currentGameEvent).isFinished = true;
         DialogueSystem.instance.TurnOnSingleTimeAuto();
     }
     
