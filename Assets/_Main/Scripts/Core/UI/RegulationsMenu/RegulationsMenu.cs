@@ -41,7 +41,7 @@ public class RegulationsMenu : MenuScreen
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.D) && currentRegulationIndex < regulations.Count-1)
         {
             currentRegulationIndex =
                 currentRegulationIndex = Math.Clamp(currentRegulationIndex + 1, 0, regulations.Count - 1);
@@ -49,7 +49,7 @@ public class RegulationsMenu : MenuScreen
             GlowArrow(rightArrow);
             SoundManager.instance.PlaySoundEffect(moveSelectionSound);
         }
-        else if (Input.GetKeyDown(KeyCode.A))
+        else if (Input.GetKeyDown(KeyCode.A) && currentRegulationIndex > 0)
         {
             currentRegulationIndex = Math.Clamp(currentRegulationIndex - 1, 0, regulations.Count - 1);
             UpdateUI();
@@ -66,8 +66,14 @@ public class RegulationsMenu : MenuScreen
     {
         ruleDescriptionContainer.DOKill();
         ruleDescriptionContainer.localScale = new Vector3(0, 1, 1);
-        ruleDescriptionContainer.DOScaleX(1f, 1f).SetUpdate(true);
-        ruleNumber.text = currentRegulationIndex + 1 + "";
+        ruleDescription.DOKill();
+
+        Sequence sequence = DOTween.Sequence();
+        sequence.Append(ruleDescription.DOFade(0f, 0f).SetUpdate(true));
+        sequence.Append(ruleDescriptionContainer.DOScaleX(1f, 0.4f).SetUpdate(true));
+        sequence.Append(ruleDescription.DOFade(1f, 0.2f).SetUpdate(true));
+        sequence.SetUpdate(true);
+        ruleNumber.text = currentRegulationIndex + 1 + "#";
         ruleDescription.text = regulations[currentRegulationIndex];
     }
 

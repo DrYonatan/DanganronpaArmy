@@ -17,7 +17,7 @@ namespace DIALOGUE
         public bool isInputActive;
 
         public bool isDialogueInputActive;
-
+        
         void Awake()
         {
             isPaused = false;
