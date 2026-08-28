@@ -120,7 +120,7 @@ public class VNNodeDraw : DrawNode
             menu.AddItem(new GUIContent("Section Start Effect"), false, () => AddCommand(node, new ApplySectionStartEffect()));
             menu.AddItem(new GUIContent("Play Nodes"), false, () => AddCommand(node, new PlayConversationCommand()));
             menu.AddItem(new GUIContent("Single Time Auto"), false, () => AddCommand(node, new SingleTimeAuto()));
-
+            menu.AddItem(new GUIContent("Return to title screen"), false, () => AddCommand(node, new ReturnToTitleScreen()));
             menu.ShowAsContext();
         }
     }

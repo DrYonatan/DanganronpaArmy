@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using DIALOGUE;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameStateManager : MonoBehaviour
 {
@@ -235,5 +236,18 @@ public class GameStateManager : MonoBehaviour
         {
             DialogueSystem.instance.HideNamePlate();
         }
+    }
+    
+    public IEnumerator GoToTitleScreenPipeline()
+    {
+        ImageScript.instance.FadeToBlack(0.5f);
+        yield return new WaitForSecondsRealtime(0.5f);
+        Time.timeScale = 1f;
+        DOTween.KillAll();
+        Destroy(SaveManager.instance.gameObject);
+        SceneManager.LoadScene("TitleScreen");
+        yield return new WaitForSecondsRealtime(0.5f);
+        Destroy(persistentObject);
+        Destroy(gameObject);
     }
 }
