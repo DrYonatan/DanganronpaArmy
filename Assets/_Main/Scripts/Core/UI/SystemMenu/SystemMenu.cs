@@ -119,18 +119,7 @@ public class SystemMenu : MenuScreen
 
     public void GoToTitleScreen()
     {
-        StartCoroutine(GoToTitleScreenPipeline());
-    }
-
-    private IEnumerator GoToTitleScreenPipeline()
-    {
-        yield return new WaitForSecondsRealtime(0.5f);
-        Time.timeScale = 1f;
-        DOTween.KillAll();
-        SceneManager.LoadScene("TitleScreen");
-        yield return new WaitForSecondsRealtime(0.1f);
-        Destroy(GameStateManager.instance.persistentObject);
-        Destroy(GameStateManager.instance.gameObject);
+        GameStateManager.instance.StartCoroutine(GameStateManager.instance.GoToTitleScreenPipeline());
     }
 
     protected override void LoadContent()

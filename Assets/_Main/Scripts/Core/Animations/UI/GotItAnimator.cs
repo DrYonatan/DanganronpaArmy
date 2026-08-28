@@ -11,7 +11,6 @@ public class GotItAnimator : MonoBehaviour
     public RectTransform backgroundRect;
     public Image face;
     public AudioClip voiceLine;
-    public AudioClip soundEffect;
 
     public float appearDuration;
     public float growFactor = 1.5f;
@@ -20,7 +19,6 @@ public class GotItAnimator : MonoBehaviour
     public IEnumerator Show()
     {
         SoundManager.instance.PlaySoundEffect(voiceLine);
-        SoundManager.instance.PlaySoundEffect(soundEffect);
         DialogueSystem.instance.ClearTextBox();
         container.localScale = new Vector3(growFactor, 0f, growFactor);
         container.GetComponent<CanvasGroup>().alpha = 0f;

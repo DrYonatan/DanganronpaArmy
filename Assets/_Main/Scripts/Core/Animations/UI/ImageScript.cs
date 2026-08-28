@@ -116,7 +116,7 @@ public class ImageScript : MonoBehaviour
         if (duration == 0f)
             canvasGroupToShowOrHide.alpha = targetAlpha;
         else
-           canvasGroupToShowOrHide.DOFade(targetAlpha, duration);
+           canvasGroupToShowOrHide.DOFade(targetAlpha, duration).SetUpdate(true);
     }
 
     public void CreateAnimatedImage(VNAnimatedImage image, float duration, bool flash)

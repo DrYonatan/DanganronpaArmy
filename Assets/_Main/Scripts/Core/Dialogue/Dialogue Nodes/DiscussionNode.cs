@@ -102,8 +102,11 @@ public class DiscussionNode : DialogueNode
         if (animator == null)
             return;
         
+        
+        
         if(animator.characterFace.isVisible)
            animator.characterFace.DiscussionFaceContainerDisappear(animator.duration);
+        animator.ChangeFace(null);
     }
     
 }

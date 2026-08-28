@@ -30,7 +30,7 @@ public class PlayerBarsAnimator : MonoBehaviour
     {
         globalHealthMeter.DOKill();
         debateHealthMeter.DOKill();
-
+        
         float newFillAmount = (TrialManager.instance.playerStats.hp + amount) / fullHpImageDivideAmount;
 
         GlowMeter(globalHealthMeter, Color.green, duration);

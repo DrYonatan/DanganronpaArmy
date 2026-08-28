@@ -36,6 +36,7 @@ public class TrialManager : MonoBehaviour
 
     public RectTransform failedScreen;
     public Image failedTextImage;
+    public AudioClip healSound;
 
     void Awake()
     {
@@ -96,6 +97,8 @@ public class TrialManager : MonoBehaviour
 
     public void IncreaseHealth(float amount)
     {
+        SoundManager.instance.PlaySoundEffect(healSound);
+
         if (playerStats.hp < playerStats.maxHP)
         {
             barsAnimator.IncreaseHealth(Math.Min(amount, playerStats.maxHP - playerStats.hp),
