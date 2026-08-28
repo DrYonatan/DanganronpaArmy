@@ -84,6 +84,7 @@ public class GameStateManager : MonoBehaviour
     {
         if (TrialManager.instance != null)
         {
+            InitiateUIState();
             TrialManager.instance.preTrialPrepMenu.Appear();
         }
 
