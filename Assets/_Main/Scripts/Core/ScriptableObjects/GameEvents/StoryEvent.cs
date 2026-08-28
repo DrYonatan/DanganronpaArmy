@@ -15,7 +15,6 @@ public class StoryEvent : GameEvent
 
     private IEnumerator StartRoutine()
     {
-        ImageScript.instance.UnFadeToBlack(0.1f);
         yield return StartWithRoomLoad();
         VNNodePlayer.instance.StartConversation(conversation);
     }

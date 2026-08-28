@@ -128,7 +128,12 @@ public class EvidenceMenu : MenuScreen
 
     void HandleCloseup()
     {
-        if (EvidenceManager.instance.evidenceList[currentEvidenceIndex].closeup != null && !isCloseupOpen &&
+        if (EvidenceManager.instance.evidenceList.Count == 0)
+        {
+            finishedTransition = true;
+            return;
+        }
+        if (EvidenceManager.instance.evidenceList[currentEvidenceIndex]?.closeup != null && !isCloseupOpen &&
             finishedTransition &&
             PlayerInputManager.instance.DefaultInput())
         {

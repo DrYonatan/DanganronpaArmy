@@ -31,6 +31,7 @@ MonoBehaviour:
   - rid: 6008429843967377489
   - rid: 6008429843967377491
   - rid: 6008429843967377493
+  - rid: 6008430368518569997
   references:
     version: 2
     RefIds:
@@ -454,3 +455,32 @@ MonoBehaviour:
       data:
         executeTime: 0
         flash: 0
+    - rid: 6008430368518569997
+      type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
+        character: {fileID: 0}
+        displayName: 
+        expressionIndex: 0
+        textData:
+          rid: 6008430368518569998
+        voiceLine: {fileID: 0}
+    - rid: 6008430368518569998
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: 
+        commands:
+        - rid: 6008430368518569999
+    - rid: 6008430368518569999
+      type: {class: AddEvidence, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 1
+        evidence: {fileID: 11400000, guid: b958e0ae1bb15f34690bd157cc768aef, type: 2}

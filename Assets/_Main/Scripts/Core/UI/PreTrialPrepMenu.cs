@@ -56,9 +56,17 @@ public class PreTrialPrepMenu : MonoBehaviour
         cylinder.rectTransform.DOAnchorPosX(cylinder.rectTransform.anchoredPosition.x - 500f, 0.2f);
         itemsContainer.DOAnchorPosX(itemsContainer.anchoredPosition.x + 500f, 0.4f);
     }
-
+    
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape) && !EvidenceManager.instance.evidenceMenu.isCloseupOpen)
+        {
+            EvidenceManager.instance.evidenceMenu.Close();
+        }
+
+        if (EvidenceManager.instance.evidenceMenu.gameObject.activeInHierarchy)
+            return;
+        
         if (Input.GetKeyDown(KeyCode.S))
         {
             items[currentItemIndex].DisableHover();

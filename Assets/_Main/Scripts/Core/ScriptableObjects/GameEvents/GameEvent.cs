@@ -60,6 +60,8 @@ public abstract class GameEvent: ScriptableObject
         }
         else
         {
+            ImageScript.instance.UnFadeToBlack(0.2f);
+
             if(stopPreviousMusic)
                 MusicManager.instance.StopSong();
             

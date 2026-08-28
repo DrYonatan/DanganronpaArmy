@@ -57,7 +57,6 @@ public class TimeOfDayManager : MonoBehaviour
         
         WorldManager.instance.currentTime = timeOfDay;
         SceneManager.LoadScene(GetTimeScene(timeOfDay));
-        
         yield return new WaitForSeconds(0.1f);
         
         VNUIAnimator.instance.Appear();

@@ -26,11 +26,14 @@ public class TitleScreenMainMenu : MonoBehaviour
     public Image bigRing;
     public Image smallRing;
     public Image blackOverlay;
+
+    public AudioSource musicPlayer;
     
     public List<Sprite> availableFaceSprites;
 
     void Awake()
     {
+        musicPlayer.Stop();
         instance = this;
         chaptersBank = Resources.Load<ChaptersBank>("ChaptersBank");
         subMenuStack.Push(activeSubMenu);
@@ -117,6 +120,7 @@ public class TitleScreenMainMenu : MonoBehaviour
 
     private void InitializeFirstMenu()
     {
+        musicPlayer.Play();
         activeSubMenu.gameObject.SetActive(true);
         activeSubMenu.Initialize();
 
