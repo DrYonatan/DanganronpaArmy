@@ -171,7 +171,7 @@ public class ImageScript : MonoBehaviour
         if(flash)
             Flash(duration, flashSound);
         
-        if(DialogueSystem.instance.isActive)
+        if(DialogueSystem.instance.isActive && !animatedImage.isCutscene)
            DialogueSystem.instance.TextBoxAppear();
         animatedImageContainer.DOFade(0f, duration).SetEase(Ease.Linear);
         Destroy(animatedImage.gameObject, duration);

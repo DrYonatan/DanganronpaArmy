@@ -265,7 +265,7 @@ MonoBehaviour:
           y: 0
           width: 0
           height: 0
-        commandsScrollPosition: {x: 0, y: 134}
+        commandsScrollPosition: {x: 0, y: 84}
         title: 
         drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
         character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
@@ -282,7 +282,6 @@ MonoBehaviour:
         - rid: 4526379599746564102
         - rid: 4526379599746564103
         - rid: 4526379599746564104
-        - rid: 4526379599746564105
     - rid: 4526379599746564102
       type: {class: PlayMusicCommand, ns: , asm: Assembly-CSharp}
       data:
@@ -301,12 +300,13 @@ MonoBehaviour:
       type: {class: ForwardAnimatedImage, ns: , asm: Assembly-CSharp}
       data:
         executeTime: 1
-    - rid: 4526379599746564105
-      type: {class: RemoveAnimatedImage, ns: , asm: Assembly-CSharp}
+    - rid: 6008430325051687029
+      type: {class: PlayMusicCommand, ns: , asm: Assembly-CSharp}
       data:
-        executeTime: 1
-        duration: 0.2
-        flash: 0
+        executeTime: 0
+        music: {fileID: 0}
+        volume: 1
+        toggle: 0
     - rid: 7091799823152578562
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -3437,6 +3437,7 @@ MonoBehaviour:
           \u05D0\u05E3 \u05D0\u05D7\u05D3\u2026"
         commands:
         - rid: 7091799847106248706
+        - rid: 6008430325051687029
     - rid: 7091799823152578737
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:

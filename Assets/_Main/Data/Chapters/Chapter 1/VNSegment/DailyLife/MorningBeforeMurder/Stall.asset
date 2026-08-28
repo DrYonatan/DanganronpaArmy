@@ -26,6 +26,7 @@ MonoBehaviour:
   - rid: 6008429867673059382
   - rid: 6008429867673059385
   - rid: 6008429867673059387
+  - rid: 6008430368518569986
   references:
     version: 2
     RefIds:
@@ -185,6 +186,47 @@ MonoBehaviour:
         executeTime: 1
         video: {fileID: 32900000, guid: 42583ececea054c4fa66a1eb5d008904, type: 3}
         persist: 1
+    - rid: 6008430368518569986
+      type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 64}
+        title: 
+        drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
+        character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
+        displayName: 
+        expressionIndex: 0
+        textData:
+          rid: 6008430368518569987
+        voiceLine: {fileID: 0}
+    - rid: 6008430368518569987
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: 
+        commands:
+        - rid: 6008430368518569991
+        - rid: 6008430368518569988
+        - rid: 6008430368518569989
+    - rid: 6008430368518569988
+      type: {class: ShowAnimatedImage, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 1
+        imageWrapper: {fileID: 11400000, guid: 1b85be06b43095f4bae47bcf076d3631, type: 2}
+        duration: 0
+        flash: 0
+    - rid: 6008430368518569989
+      type: {class: ForwardAnimatedImage, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 1
+    - rid: 6008430368518569991
+      type: {class: RemoveCutscene, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 1
     - rid: 6299374408152907778
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:

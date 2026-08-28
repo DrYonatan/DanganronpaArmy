@@ -10,7 +10,7 @@ public class MoveToTalkPos : Command
     {
         Transform talkPosition = WorldManager.instance.talkPositions.Find((x) => x.name.Equals(positionId));
 
-        if (talkPosition == null)
+        if (talkPosition == null && WorldManager.instance.talkPositions.Count > 0)
             talkPosition = WorldManager.instance.talkPositions[0];
 
         if (talkPosition == null)

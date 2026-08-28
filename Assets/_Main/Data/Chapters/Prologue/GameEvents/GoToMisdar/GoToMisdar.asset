@@ -12,27 +12,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a41efc7ec9542d42aefe87ea4a6738c, type: 3}
   m_Name: GoToMisdar
   m_EditorClassIdentifier: 
+  isFinished: 0
   timeOfDay: 1
   roomDatas:
   - room: {fileID: 11400000, guid: cc576664b62f7344ca4917a0f09898e4, type: 2}
     characters: {fileID: 7873874312301981123, guid: cf850ca38b7770b4ea296ae4430dee48, type: 3}
     worldObjects: {fileID: 0}
     preLoadText: {fileID: 0}
+    firstTimeText: {fileID: 0}
+    hasAlreadyEntered: 0
     isExitable: 1
+    additionalObjectsToExit: []
+    additionalObjectData: []
   - room: {fileID: 11400000, guid: dc4e3f530df2ac24091189b6de8cde23, type: 2}
     characters: {fileID: 0}
     worldObjects: {fileID: 0}
     preLoadText: {fileID: 0}
+    firstTimeText: {fileID: 0}
+    hasAlreadyEntered: 0
     isExitable: 1
+    additionalObjectsToExit: []
+    additionalObjectData: []
   - room: {fileID: 11400000, guid: 40597d29d5789e9418c6dbb44a9a381c, type: 2}
     characters: {fileID: 0}
     worldObjects: {fileID: 0}
     preLoadText: {fileID: 0}
+    firstTimeText: {fileID: 0}
+    hasAlreadyEntered: 0
     isExitable: 0
-  isFinished: 0
+    additionalObjectsToExit: []
+    additionalObjectData: []
+  startRoom: {fileID: 0}
+  alwaysDoLoadAnimation: 0
+  stopPreviousMusic: 0
+  startMusic: {fileID: 8300000, guid: ed9a103f23e176f4aa83ec12099bcc2f, type: 3}
   startText: {fileID: 0}
   finishText: {fileID: 11400000, guid: ae83bd06ceec5fc40a37d2ea1ede1007, type: 2}
   isAfterFinishText: 0
   unallowedText: {fileID: 0}
-  startRoom: {fileID: 0}
   targetRoom: {fileID: 11400000, guid: 40597d29d5789e9418c6dbb44a9a381c, type: 2}
