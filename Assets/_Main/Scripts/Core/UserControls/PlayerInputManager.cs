@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 namespace DIALOGUE
@@ -10,6 +11,10 @@ namespace DIALOGUE
 
         public MenuScreenContainer pauseMenu;
 
+        public GameObject guideScreen;
+
+        public bool guideOpen;
+
         public bool isPaused;
 
         public bool pauseAvailable;
@@ -17,7 +22,7 @@ namespace DIALOGUE
         public bool isInputActive;
 
         public bool isDialogueInputActive;
-        
+
         void Awake()
         {
             isPaused = false;
@@ -50,12 +55,42 @@ namespace DIALOGUE
                         DialogueSystem.instance.SetSkip(false);
                     }
                 }
-                
             }
+
             if (Input.GetKeyDown(KeyCode.Alpha1) && !pauseMenu.isSubmenuOpen && isInputActive && pauseAvailable)
             {
                 TogglePauseAndMenu();
             }
+
+            if (Input.GetKeyDown(KeyCode.Escape) && isInputActive && !isPaused)
+            {
+                ToggleGuide();
+            }
+        }
+
+        private void ToggleGuide()
+        {
+            if (guideOpen)
+                GuideDisappear();
+            else
+                GuideAppear();
+        }
+
+        private void GuideAppear()
+        {
+            guideOpen = true;
+            guideScreen.SetActive(true);
+            guideScreen.transform.DOKill();
+            guideScreen.transform.localPosition = new Vector3(0, 1080, 0);
+            guideScreen.transform.DOLocalMoveY(0f, 0.2f);
+        }
+
+        private void GuideDisappear()
+        {
+            guideOpen = false;
+            guideScreen.transform.DOKill();
+            guideScreen.transform.localPosition = new Vector3(0, 0, 0);
+            guideScreen.transform.DOLocalMoveY(1080, 0.2f).OnComplete(() => guideScreen.SetActive(false));
         }
 
         public void EnableInput()
@@ -99,11 +134,10 @@ namespace DIALOGUE
             isPaused = !isPaused;
 
             Time.timeScale = isPaused ? 0f : 1f;
-            if(isPaused)
+            if (isPaused)
                 MusicManager.instance.LowerVolume();
             else
                 MusicManager.instance.RaiseVolume();
-            
         }
     }
 }
