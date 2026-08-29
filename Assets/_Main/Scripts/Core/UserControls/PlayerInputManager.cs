@@ -62,7 +62,7 @@ namespace DIALOGUE
                 TogglePauseAndMenu();
             }
 
-            if (Input.GetKeyDown(KeyCode.Escape) && isInputActive && !isPaused)
+            if (Input.GetKeyDown(KeyCode.Escape) && isInputActive && !pauseMenu.isOpen && pauseAvailable)
             {
                 ToggleGuide();
             }
@@ -79,18 +79,20 @@ namespace DIALOGUE
         private void GuideAppear()
         {
             guideOpen = true;
+            TogglePause();
             guideScreen.SetActive(true);
             guideScreen.transform.DOKill();
             guideScreen.transform.localPosition = new Vector3(0, 1080, 0);
-            guideScreen.transform.DOLocalMoveY(0f, 0.2f);
+            guideScreen.transform.DOLocalMoveY(0f, 0.2f).SetUpdate(true);
         }
 
         private void GuideDisappear()
         {
             guideOpen = false;
+            TogglePause();
             guideScreen.transform.DOKill();
             guideScreen.transform.localPosition = new Vector3(0, 0, 0);
-            guideScreen.transform.DOLocalMoveY(1080, 0.2f).OnComplete(() => guideScreen.SetActive(false));
+            guideScreen.transform.DOLocalMoveY(1080, 0.2f).SetUpdate(true).OnComplete(() => guideScreen.SetActive(false));
         }
 
         public void EnableInput()

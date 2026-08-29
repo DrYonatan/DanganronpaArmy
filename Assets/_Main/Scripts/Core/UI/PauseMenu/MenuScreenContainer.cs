@@ -5,6 +5,7 @@ public class MenuScreenContainer : MonoBehaviour
 {
     public MenuScreen currentOpenMenu;
     public GeneralMenu generalMenu;
+    public bool isOpen;
     public bool isSubmenuOpen;
 
     private void CloseCurrentMenu()
@@ -21,11 +22,13 @@ public class MenuScreenContainer : MonoBehaviour
 
     public void OpenGeneralMenu()
     {
+        isOpen = true;
         generalMenu.OpenMenu();
     }
 
     public void CloseGeneralMenu()
     {
+        isOpen = false;
         generalMenu.CloseMenu();
     }
 
