@@ -123,18 +123,17 @@ public class LogicShootManager : MonoBehaviour
         if (rifleManager.rifleErrorCooldown)
             return;
 
-        int number = Random.Range(1, 30);
+        int number = Random.Range(1, 101); // 1–100
 
-        switch (number)
+        if (number <= segment.firstStuckTypeProbability)
         {
-            case 1:
-                rifleManager.RifleStuckTypeOne();
-                rifleManager.rifleErrorCooldown = true;
-                break;
-            case 2:
-                rifleManager.RifleStuckTypeTwo();
-                rifleManager.rifleErrorCooldown = true;
-                break;
+            rifleManager.RifleStuckTypeOne();
+            rifleManager.rifleErrorCooldown = true;
+        }
+        else if (number <= segment.firstStuckTypeProbability + segment.secondStuckTypeProbability)
+        {
+            rifleManager.RifleStuckTypeTwo();
+            rifleManager.rifleErrorCooldown = true;
         }
     }
 
@@ -221,6 +220,8 @@ public class LogicShootManager : MonoBehaviour
         animator.UpdatePlayerHp(TrialManager.instance.playerStats.hp);
         animator.UpdateAmmo(rifleManager.ammo);
         rifleManager.PutRifleDown();
+
+        PlayerInputManager.instance.pauseAvailable = false;
 
         StartCoroutine(PlayGame());
     }

@@ -64,6 +64,7 @@ public class ComicManager : MonoBehaviour
 
     private IEnumerator StartPipeline()
     {
+        PlayerInputManager.instance.pauseAvailable = false;
         ImageScript.instance.FadeToBlack(0.1f);
         yield return new WaitForSeconds(0.5f);
         MusicManager.instance.StopSong();

@@ -39,6 +39,8 @@ public class LogicShootSegment : TrialSegment
     public AudioClip finalVoiceLine;
     public Character character;
     public float stopGameTime;
+    public int firstStuckTypeProbability = 3;
+    public int secondStuckTypeProbability = 3;
     
     public override void Play()
     {

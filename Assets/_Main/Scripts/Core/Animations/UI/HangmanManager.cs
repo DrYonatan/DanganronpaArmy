@@ -62,6 +62,7 @@ public class HangmanManager : MonoBehaviour
     }
     IEnumerator StartGame()
     {
+        PlayerInputManager.instance.pauseAvailable = false;
         yield return CameraController.instance.DiscussionOutroMovement(2.5f);
         SetCharacter();
         ImageScript.instance.UnFadeToBlack(1f);
