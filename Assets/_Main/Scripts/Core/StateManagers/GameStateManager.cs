@@ -169,6 +169,21 @@ public class GameStateManager : MonoBehaviour
         {
             StartCoroutine(MoveToNextChapterPipeline());
         }
+        else
+        {
+            StartCoroutine(ThankYouForPlaying());
+        }
+            
+    }
+
+    private IEnumerator ThankYouForPlaying()
+    {
+        Time.timeScale = 1f;
+        DOTween.KillAll();
+        SceneManager.LoadScene("_Main/Scenes/ThankYouForPlaying");
+        yield return new WaitForSeconds(0.1f);
+        Destroy(persistentObject);
+        Destroy(gameObject); 
     }
 
     private IEnumerator MoveToNextChapterPipeline()

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class CompanySplash : MonoBehaviour
 {
     public Image companyLogo;
+    public string sceneToLoad;
     void Start()
     {
         Sequence seq = DOTween.Sequence();
@@ -20,6 +21,6 @@ public class CompanySplash : MonoBehaviour
 
     void LoadTitleScreen()
     {
-        SceneManager.LoadScene("TitleScreen");
+        SceneManager.LoadScene(sceneToLoad);
     }
 }
