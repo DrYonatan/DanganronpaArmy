@@ -247,7 +247,7 @@ public class LogicShootUIAnimator : MonoBehaviour
         stopGameTimer.DOKill();
         stopGameTimer.color = Color.green;
         stopGameTimer.fillAmount = 1f;
-        stopGameTimer.DOFillAmount(0f, duration).SetUpdate(true);
+        stopGameTimer.DOFillAmount(0f, duration).SetEase(Ease.Linear).SetUpdate(true);
         stopGameTimer.DOColor(Color.yellow, duration/2).SetEase(Ease.Linear).SetUpdate(true).OnComplete(() =>
             stopGameTimer.DOColor(Color.red, duration/2).SetEase(Ease.Linear).SetUpdate(true));
     }

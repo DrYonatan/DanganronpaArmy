@@ -59,6 +59,10 @@ namespace DIALOGUE
             DialogueSystem.instance.ShowSpeakerName(node);
 
             string text = TranslateColorTags(textData.text);
+
+            if (node.character != null)
+               text = $"<color=#{ColorUtility.ToHtmlStringRGB(node.character.textColor)}>" + text + "</color>";
+            
             yield return BuildDialogue(text);
 
             yield return Line_RunCommands(afterCommands);

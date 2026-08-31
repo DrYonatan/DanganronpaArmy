@@ -20,6 +20,7 @@ public class Character : ScriptableObject
     public Sprite faceSprite;
     public bool notVisible;
     public bool noNameTag;
+    public Color textColor = Color.white;
     
     public CharacterState FindStateByName(string stateName)
     {
