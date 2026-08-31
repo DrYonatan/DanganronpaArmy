@@ -67,7 +67,7 @@ namespace DIALOGUE
                 ToggleGuide();
             }
 
-            if (Input.GetKeyDown(KeyCode.Tab) && isInputActive && !pauseMenu.isOpen && DialogueSystem.instance.isActive)
+            if (Input.GetKeyDown(KeyCode.Tab) && isInputActive && !pauseMenu.isOpen && DialogueSystem.instance.isActive && !pauseMenu.isSubmenuOpen)
             {
                 DialogueSystem.instance.dialogueBoxAnimator.ToggleUI();
             }

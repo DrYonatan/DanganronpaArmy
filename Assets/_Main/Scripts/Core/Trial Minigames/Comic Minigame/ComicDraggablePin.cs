@@ -110,7 +110,7 @@ public class ComicDraggablePin : MonoBehaviour, IDragHandler, IBeginDragHandler,
     {
         glow.DOFade(1f, 0.1f);
         glow.rectTransform.localScale = Vector3.one;
-        glow.rectTransform.DOScale(1.1f, 0.2f).SetLoops(-1, LoopType.Yoyo);
+        glow.rectTransform.DOScale(1.1f, 0.2f).SetLoops(-1, LoopType.Yoyo).SetLink(glow.gameObject);
     }
 
     private void StopGlowing()

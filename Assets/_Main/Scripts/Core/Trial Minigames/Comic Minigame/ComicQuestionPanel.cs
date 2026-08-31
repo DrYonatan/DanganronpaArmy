@@ -44,7 +44,7 @@ public class ComicQuestionPanel : ComicPanel, IDropHandler, IPointerClickHandler
         glowSequence.Append(glow.rectTransform.DOScale(1.1f, 0.2f).SetLoops(2, LoopType.Yoyo));
         glowSequence.AppendInterval(1f);
         glowSequence.SetLoops(-1);
-        glowSequence.SetTarget(this);
+        glowSequence.SetLink(gameObject);
     }
     public override void StartUpAnimation()
     {

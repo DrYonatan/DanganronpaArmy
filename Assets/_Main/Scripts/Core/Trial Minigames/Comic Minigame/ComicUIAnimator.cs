@@ -98,6 +98,9 @@ public class ComicUIAnimator : MonoBehaviour
         RectTransform pinsContainerTransform = pinsContainer.GetComponent<RectTransform>();
         pinsContainerTransform.DOAnchorPosX(pinsContainerOriginalPos.x, 0f);
         puzzlePagesContainer.DOAnchorPosX(-900, 0);
+
+        solutionCanvasGroup.alpha = 0;
+        puzzleCanvasGroup.alpha = 1;
     }
 
     public void GeneratePuzzlePages(List<ComicPage> pages)
@@ -231,9 +234,9 @@ public class ComicUIAnimator : MonoBehaviour
 
     private void AnimatePuzzleBackground()
     {
-        Vector2 originalPos = movingMist.rectTransform.anchoredPosition;
+        float originalX = 573.7f;
 
-        movingMist.rectTransform.DOAnchorPosX(-originalPos.x, 8f).SetEase(Ease.Linear)
+        movingMist.rectTransform.DOAnchorPosX(-originalX, 8f).SetEase(Ease.Linear)
             .SetLoops(-1, LoopType.Restart);
 
         Color color = movingMist.color;
@@ -358,7 +361,7 @@ public class ComicUIAnimator : MonoBehaviour
     public void BlinkReEnact()
     {
         SoundManager.instance.PlaySoundEffect(readyToPresentSound);
-        reEnactIcon.DOFade(1f, 0.2f).SetLoops(-1, LoopType.Yoyo);
+        reEnactIcon.DOFade(1f, 0.2f).SetLoops(-1, LoopType.Yoyo).SetLink(reEnactIcon.gameObject);
     }
 
     public void StopBlinkingReEnact()

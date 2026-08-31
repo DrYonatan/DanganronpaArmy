@@ -140,6 +140,7 @@ public class ComicManager : MonoBehaviour
         animator.GenerateComicPins(segment.availablePins);
         animator.UpdatePinsVisibility(0);
         currentPageIndex = 0;
+        isReadyToPresent = false;
         MinigameStartAnimation startAnimation = Instantiate(animator.minigameStartAnimation, TrialManager.instance.globalUI);
         startAnimation.Animate(0f);
         SwitchToPuzzleMode();
@@ -274,6 +275,8 @@ public class ComicManager : MonoBehaviour
         animator.gameObject.SetActive(false);
         animator.DestroyComicPins();
         animator.DestroyPuzzlePages();
+        animator.movingMist.DOKill();
+        animator.frontMist.DOKill();
         Destroy(currentPresentedPage.gameObject);
         MusicManager.instance.StopSong();
         TrialDialogueManager.instance.SetTextBox();

@@ -245,6 +245,8 @@ public class CameraController : MonoBehaviour
     public IEnumerator FovOutro()
     {
         cameraTransform.localPosition = new Vector3(0, 4, -4.7f);
+        cameraTransform.localRotation = Quaternion.identity;
+        pivot.localRotation = Quaternion.identity;
         StartCoroutine(ChangeFov(25f, 1.5f));
         StartCoroutine(MoveAndRotate(new Vector3(0f, 0f, 2f), new Vector3(0f, 0f, 0f), 1.5f));
         yield return new WaitForSeconds(1f);
