@@ -13,6 +13,12 @@ public abstract class BasicTextBoxAnimator : MonoBehaviour
     
     public bool textBoxVisible;
     public bool namePlateVisible;
+
+    public bool uiEnabled = true;
+    public RectTransform uiContainer;
+    public RectTransform choicesPart;
+
+    public RectTransform tabGuide;
     
     public abstract void TextBoxAppear();
     
@@ -35,6 +41,13 @@ public abstract class BasicTextBoxAnimator : MonoBehaviour
         namePlateVisible = false;
 
     }
-    
 
+    public void ToggleUI()
+    {
+        if (uiContainer == null)
+            return;
+        uiEnabled = !uiEnabled;
+        uiContainer.gameObject.SetActive(uiEnabled);
+        choicesPart.gameObject.SetActive(uiEnabled);
+    }
 }

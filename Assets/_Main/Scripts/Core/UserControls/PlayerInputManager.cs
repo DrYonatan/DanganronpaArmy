@@ -66,6 +66,11 @@ namespace DIALOGUE
             {
                 ToggleGuide();
             }
+
+            if (Input.GetKeyDown(KeyCode.Tab) && isInputActive && !pauseMenu.isOpen)
+            {
+                DialogueSystem.instance.dialogueBoxAnimator.ToggleUI();
+            }
         }
 
         private void ToggleGuide()
@@ -112,7 +117,7 @@ namespace DIALOGUE
 
         public void PromptAdvance()
         {
-            if (!CutSceneManager.instance.isPlaying && !isPaused)
+            if (!CutSceneManager.instance.isPlaying && !isPaused && DialogueSystem.instance.dialogueBoxAnimator.uiEnabled)
             {
                 DialogueSystem.instance.OnUserPrompt_Next();
             }
