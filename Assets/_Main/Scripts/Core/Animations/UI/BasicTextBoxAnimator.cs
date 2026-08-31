@@ -14,9 +14,9 @@ public abstract class BasicTextBoxAnimator : MonoBehaviour
     public bool textBoxVisible;
     public bool namePlateVisible;
 
-    public bool uiEnabled = true;
     public RectTransform uiContainer;
     public RectTransform choicesPart;
+    public bool uiEnabled = true;
 
     public RectTransform tabGuide;
     

@@ -119,12 +119,12 @@ public class ComicUIAnimator : MonoBehaviour
         {
             Destroy(page.gameObject);
         }
+
         pageObjects.Clear();
     }
 
     public void GenerateComicPins(List<ComicPin> pins)
     {
-        
         foreach (ComicPin pin in pins)
         {
             GameObject parent = GeneratePinParent();
@@ -235,6 +235,7 @@ public class ComicUIAnimator : MonoBehaviour
     private void AnimatePuzzleBackground()
     {
         float originalX = 573.7f;
+        movingMist.rectTransform.anchoredPosition = new Vector2(originalX, 0f);
 
         movingMist.rectTransform.DOAnchorPosX(-originalX, 8f).SetEase(Ease.Linear)
             .SetLoops(-1, LoopType.Restart);
