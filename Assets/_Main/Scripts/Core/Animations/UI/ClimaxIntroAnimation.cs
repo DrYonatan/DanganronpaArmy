@@ -94,9 +94,17 @@ public class ClimaxIntroAnimation : MonoBehaviour
 
     private void Initialize()
     {
+        Color color = frame1.color;
+        color.a = 1f;
+        frame1.color = color;
+        frame2.color = color;
+        frame3.color = color;
+
+        frame3.rectTransform.localScale = Vector3.one;
+        
         explosion.rectTransform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
         
-        Color color = Color.white;
+        color = Color.white;
         color.a = 0f;
         
         closing.color = color;

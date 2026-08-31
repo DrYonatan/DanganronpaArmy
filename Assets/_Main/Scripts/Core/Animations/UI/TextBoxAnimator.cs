@@ -21,6 +21,8 @@ public class TextBoxAnimator : BasicTextBoxAnimator
         if (textBoxVisible)
             return;
         
+        if(tabGuide != null)
+           tabGuide.gameObject.SetActive(true);
         textBoxVisible = true;
         dialogueBoxCanvasGroup.DOKill();
         namePlateCanvasGroup.DOKill();
@@ -38,6 +40,8 @@ public class TextBoxAnimator : BasicTextBoxAnimator
         if (!textBoxVisible)
             return;
         
+        if(tabGuide != null)
+           tabGuide.gameObject.SetActive(false);
         textBoxVisible = false;
         DialogueSystem.instance.ClearTextBox();
         dialogueBoxCanvasGroup.alpha = 1f;

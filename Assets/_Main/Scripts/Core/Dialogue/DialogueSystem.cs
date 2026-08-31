@@ -114,13 +114,11 @@ namespace DIALOGUE
                 dialogueBoxAnimator.TextBoxAppear();
                 CursorManager.instance.Hide();
                 inputButton.gameObject.SetActive(true);
-                dialogueBoxAnimator.tabGuide.gameObject.SetActive(true);
             }
             else
             {
                 dialogueBoxAnimator.TextBoxDisappear();
                 inputButton.gameObject.SetActive(false);
-                dialogueBoxAnimator.tabGuide.gameObject.SetActive(false);
             }
         }
 

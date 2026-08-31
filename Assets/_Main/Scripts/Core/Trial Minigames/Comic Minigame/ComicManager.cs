@@ -138,8 +138,8 @@ public class ComicManager : MonoBehaviour
         DialogueSystem.instance.SetTextBox(ImageScript.instance.overlayTextBoxAnimator);
         animator.GeneratePuzzlePages(segment.pages);
         animator.GenerateComicPins(segment.availablePins);
-        animator.SetPinsContainerStartPos();
         animator.UpdatePinsVisibility(0);
+        currentPageIndex = 0;
         MinigameStartAnimation startAnimation = Instantiate(animator.minigameStartAnimation, TrialManager.instance.globalUI);
         startAnimation.Animate(0f);
         SwitchToPuzzleMode();
@@ -251,14 +251,37 @@ public class ComicManager : MonoBehaviour
             yield return DialogueSystem.instance.Say(node);
         }
 
-        isReadyToPresent = false;
-        SwitchToPuzzleMode();
-        currentPresentedPage.KillPanelTweens();
-        Destroy(currentPresentedPage.gameObject);
-        DialogueSystem.instance.TextBoxDisappear();
-        TrialManager.instance.barsAnimator.HideGlobalBars(0.2f);
+        if (TrialManager.instance.playerStats.hp <= 0)
+        {
+            StartCoroutine(GameOverPipeline());
+        }
+        else
+        {
+            isReadyToPresent = false;
+            SwitchToPuzzleMode();
+            currentPresentedPage.KillPanelTweens();
+            Destroy(currentPresentedPage.gameObject);
+            DialogueSystem.instance.TextBoxDisappear();
+            TrialManager.instance.barsAnimator.HideGlobalBars(0.2f);
+        }
     }
 
+    private IEnumerator GameOverPipeline()
+    {
+        DialogueSystem.instance.TextBoxDisappear();
+        TrialManager.instance.barsAnimator.HideGlobalBars(0.2f);
+        yield return TrialManager.instance.ShowFailedScreen();
+        animator.gameObject.SetActive(false);
+        animator.DestroyComicPins();
+        animator.DestroyPuzzlePages();
+        Destroy(currentPresentedPage.gameObject);
+        MusicManager.instance.StopSong();
+        TrialDialogueManager.instance.SetTextBox();
+        ImageScript.instance.UnFadeToBlack(0.2f);
+        yield return CameraController.instance.FovOutro();
+        StartCoroutine(TrialManager.instance.GameOver());
+    }
+    
     public IEnumerator PlayComicNodes(List<DialogueNode> nodes)
     {
         if (nodes.Count > 0)

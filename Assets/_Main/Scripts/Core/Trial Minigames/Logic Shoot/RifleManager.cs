@@ -40,6 +40,9 @@ public class RifleManager : MonoBehaviour
         flyingBullet.anchoredPosition -= new Vector2(0, 1000);
         stacksLeft = 5;
         ammo = 30;
+        isStackIn = true;
+        bulletsInChamber = 1;
+        isSwitchingStacks = false;
     }
 
     public void RaiseRifle()
