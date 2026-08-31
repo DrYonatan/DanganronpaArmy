@@ -67,7 +67,9 @@ public class DialogueNode
             VNCharacterManager.instance.SetSpeaker(character);
             VNCharacterManager.instance.ShowOnlySpeaker(character, DialogueSystem.instance.GetIsSkip() ? 0 : 0.25f);
             VNCharacterManager.instance.SwitchEmotion(character, character.emotions[expressionIndex]);
+            PlayerInputManager.instance.isInputActive = false;
             yield return CameraManager.instance.MoveCamera((CameraLookDirection)info.position, DialogueSystem.instance.GetIsSkip() ? 0 : 0.2f);
+            PlayerInputManager.instance.isInputActive = true;
         }
         
         if (!DialogueSystem.instance.GetIsSkip())
