@@ -121,6 +121,8 @@ public class VNNodeDraw : DrawNode
             menu.AddItem(new GUIContent("Play Nodes"), false, () => AddCommand(node, new PlayConversationCommand()));
             menu.AddItem(new GUIContent("Single Time Auto"), false, () => AddCommand(node, new SingleTimeAuto()));
             menu.AddItem(new GUIContent("Return to title screen"), false, () => AddCommand(node, new ReturnToTitleScreen()));
+            menu.AddItem(new GUIContent("Toggle Pause Availability"), false, () => AddCommand(node, new TogglePauseAvailability()));
+
             menu.ShowAsContext();
         }
     }
