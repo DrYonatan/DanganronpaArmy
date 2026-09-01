@@ -27,6 +27,7 @@ public class ProgressManager : MonoBehaviour
     public void StartNewGame()
     {
         GameStateManager.instance.ResetChapters();
+        PlayerInputManager.instance.pauseAvailable = false;
         StartCoroutine(StartNewVnSegment());
     }
 

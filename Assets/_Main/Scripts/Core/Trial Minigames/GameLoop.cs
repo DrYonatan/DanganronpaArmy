@@ -107,6 +107,7 @@ public class GameLoop : MonoBehaviour
     IEnumerator StartDebate()
     {
         PlayerInputManager.instance.pauseAvailable = false;
+        PlayerInputManager.instance.isInputActive = false;
         yield return cameraController.DiscussionOutroMovement(2.5f);
         debateUIAnimator.gameObject.SetActive(true);
         debateUIAnimator.DebateUIDisappear();
@@ -117,6 +118,7 @@ public class GameLoop : MonoBehaviour
         anim.Animate(1f);
         yield return StartCoroutine(cameraController.DebateStartCameraMovement(3f));
         isDebateActive = true;
+        PlayerInputManager.instance.isInputActive = true;
         TimeManipulationManager.instance.isInputActive = true;
         TimerManager.instance.SetTimer(300);
     }
@@ -188,6 +190,7 @@ public class GameLoop : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1) && !PlayerInputManager.instance.isPaused)
         {
             PlayerInputManager.instance.TogglePause();
+            PlayerInputManager.instance.pauseMenu.isSubmenuOpen = true;
             EvidenceManager.instance.evidenceMenu.Open();
         }
 
@@ -195,6 +198,8 @@ public class GameLoop : MonoBehaviour
         {
             PlayerInputManager.instance.TogglePause();
             EvidenceManager.instance.evidenceMenu.Close();
+            PlayerInputManager.instance.pauseMenu.StartCoroutine(PlayerInputManager.instance.pauseMenu
+                .CloseSubMenuCooldown());
         }
     }
 

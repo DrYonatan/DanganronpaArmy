@@ -1,4 +1,6 @@
+using System.Collections;
 using DIALOGUE;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MenuScreenContainer : MonoBehaviour
@@ -11,6 +13,12 @@ public class MenuScreenContainer : MonoBehaviour
     private void CloseCurrentMenu()
     {
         currentOpenMenu?.Close();
+        isSubmenuOpen = false;
+    }
+
+    public IEnumerator CloseSubMenuCooldown()
+    {
+        yield return new WaitForSecondsRealtime(2f);
         isSubmenuOpen = false;
     }
 

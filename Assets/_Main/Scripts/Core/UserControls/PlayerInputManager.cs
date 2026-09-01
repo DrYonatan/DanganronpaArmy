@@ -16,8 +16,9 @@ namespace DIALOGUE
         public bool guideOpen;
 
         public bool isPaused;
-
+        
         public bool pauseAvailable;
+        public bool guideAvailable;
 
         public bool isInputActive;
 
@@ -30,10 +31,14 @@ namespace DIALOGUE
             isDialogueInputActive = true;
             isInputActive = true;
             pauseAvailable = true;
+            guideAvailable = true;
         }
 
         void Update()
         {
+            if (!isInputActive)
+                return;
+            
             if (isDialogueInputActive)
             {
                 Cursor.visible = false;
@@ -57,17 +62,17 @@ namespace DIALOGUE
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.Alpha1) && !pauseMenu.isSubmenuOpen && isInputActive && pauseAvailable)
+            if (Input.GetKeyDown(KeyCode.Alpha1) && !pauseMenu.isSubmenuOpen && pauseAvailable)
             {
                 TogglePauseAndMenu();
             }
 
-            if (Input.GetKeyDown(KeyCode.Escape) && isInputActive && !pauseMenu.isOpen && pauseAvailable)
+            if (Input.GetKeyDown(KeyCode.Escape) && isInputActive && !pauseMenu.isOpen && !pauseMenu.isSubmenuOpen && guideAvailable)
             {
                 ToggleGuide();
             }
 
-            if (Input.GetKeyDown(KeyCode.Tab) && isInputActive && !pauseMenu.isOpen && DialogueSystem.instance.isActive && !pauseMenu.isSubmenuOpen && pauseAvailable)
+            if (Input.GetKeyDown(KeyCode.Tab) && !pauseMenu.isOpen && DialogueSystem.instance.isActive && !pauseMenu.isSubmenuOpen && pauseAvailable)
             {
                 DialogueSystem.instance.dialogueBoxAnimator.ToggleUI();
             }
