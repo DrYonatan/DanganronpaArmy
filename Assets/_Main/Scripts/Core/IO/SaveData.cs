@@ -105,6 +105,9 @@ public class SaveData
     public int trialSegmentIndex;
     public float hp;
 
+    // Pause
+    public bool pauseAvailable;
+
     public string saveTime;
 
     public SaveData(int chapterIndex, int chapterSegmentIndex, int gameEventIndex, string currentRoom,
@@ -114,7 +117,7 @@ public class SaveData
         Dictionary<string, int> characterRanks, Vector3 playerPosition, Vector3 cameraPosition, Vector3 cameraRotation,
         Vector3 conversationInitialRotation, TimeOfDay timeOfDay, UIState uiState, List<string> evidenceIds,
         int trialSegmentIndex,
-        float hp, string saveTime)
+        float hp, bool pauseAvailable, string saveTime)
     {
         this.chapterIndex = chapterIndex;
         this.chapterSegmentIndex = chapterSegmentIndex;
@@ -158,6 +161,7 @@ public class SaveData
 
         this.trialSegmentIndex = trialSegmentIndex;
         this.hp = hp;
+        this.pauseAvailable = pauseAvailable;
 
         this.saveTime = saveTime;
     }
@@ -204,6 +208,7 @@ public class SaveData
 
         trialSegmentIndex = 0;
         hp = 0;
+        pauseAvailable = true;
 
         saveTime = "";
     }

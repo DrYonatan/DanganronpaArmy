@@ -1,5 +1,6 @@
 using System.IO;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using UnityEngine;
 
 public class SaveSystem
@@ -33,6 +34,23 @@ public class SaveSystem
       
 
         string json = File.ReadAllText(path);
-        return JsonConvert.DeserializeObject<SaveData>(json, settings);
+        SaveData data = JsonConvert.DeserializeObject<SaveData>(json, settings);
+
+        if (data != null && !HasPauseAvailable(json))
+            data.pauseAvailable = true;
+
+        return data;
+    }
+
+    private static bool HasPauseAvailable(string json)
+    {
+        try
+        {
+            return JObject.Parse(json).ContainsKey(nameof(SaveData.pauseAvailable));
+        }
+        catch
+        {
+            return false;
+        }
     }
 }

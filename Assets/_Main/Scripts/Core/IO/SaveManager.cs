@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DIALOGUE;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -49,13 +50,14 @@ public class SaveManager : MonoBehaviour
             VNNodePlayer.instance.currentConversation?.guid, VNNodePlayer.instance.lineIndex,
             MusicManager.instance.audioSource.clip ? MusicManager.instance.audioSource.clip.name : "",
             ProgressManager.instance.currentGameEvent?.HandleSave(),
-            GameStateManager.instance.GetCurrentChapterSegment().GetSceneName(),
+            GameStateManager.instance.GetCurrentChapterSegment() ? GameStateManager.instance.GetCurrentChapterSegment().GetSceneName() : "VisualNovelCore",
             GameStateManager.instance.charactersRanks, CameraManager.instance.player.transform.position,
             CameraManager.instance.cameraTransform.localPosition,
             CameraManager.instance.cameraTransform.localRotation.eulerAngles,
             CameraManager.instance.initialRotation.eulerAngles, WorldManager.instance.currentTime,
             GameStateManager.instance.uiState,
             EvidenceManager.instance.evidenceList.ConvertAll(evidence => evidence.Name), 0, 0,
+            PlayerInputManager.instance.pauseAvailable,
             DateTime.Now.ToString("o"));
         SaveSystem.SaveGame(data, slot);
     }
@@ -70,7 +72,8 @@ public class SaveManager : MonoBehaviour
             Vector3.zero, Vector3.zero, Vector3.zero, Vector3.zero, TimeOfDay.Day, GameStateManager.instance.uiState,
             EvidenceManager.instance.evidenceList.ConvertAll(evidence => evidence.Name),
             TrialManager.instance.currentIndex,
-            TrialManager.instance.playerStats.hp, DateTime.Now.ToString("o"));
+            TrialManager.instance.playerStats.hp, PlayerInputManager.instance.pauseAvailable,
+            DateTime.Now.ToString("o"));
 
         SaveSystem.SaveGame(data, slot);
     }

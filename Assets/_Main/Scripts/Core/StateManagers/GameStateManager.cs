@@ -133,14 +133,18 @@ public class GameStateManager : MonoBehaviour
                 ?.gameEvents[0];
             WorldManager.instance.currentRoom = null;
         }
+        bool pauseAvailable = PlayerInputManager.instance.pauseAvailable;
 
-        yield return HandlePopup();
+        if(GetLastChapterSegment().saveAfter)
+           yield return HandlePopup();
 
         sceneTransitionCamera.gameObject.SetActive(true);
         chaptersBank.chapters[chapterIndex].chapterSegments[chapterSegmentIndex].LoadScene();
         if (persistentObject != null)
             Destroy(persistentObject);
         yield return new WaitForSeconds(0.5f);
+        PlayerInputManager.instance.pauseAvailable = pauseAvailable;
+
         StartNewSegment();
     }
 
@@ -152,11 +156,14 @@ public class GameStateManager : MonoBehaviour
         SavePopup popup = PlayerInputManager.instance.pauseMenu.generalMenu.savePopUp;
         popup.gameObject.SetActive(true);
         popup.finished = false;
+        PlayerInputManager.instance.guideAvailable = false;
+        PlayerInputManager.instance.pauseAvailable = false;
         yield return popup.WaitForCompletion();
         if(ProgressManager.instance != null)
            ProgressManager.instance.savedInPopup = false;
         ImageScript.instance.FadeToBlack(0f);
         yield return new WaitForSeconds(0.5f);
+        PlayerInputManager.instance.guideAvailable = true;
         popup.gameObject.SetActive(false);
     }
 
@@ -171,12 +178,17 @@ public class GameStateManager : MonoBehaviour
         }
         else
         {
-            StartCoroutine(ThankYouForPlaying());
+            StartCoroutine(FinishGame());
         }
             
     }
 
-    private IEnumerator ThankYouForPlaying()
+    private IEnumerator FinishGame()
+    {
+        yield return HandlePopup();
+        yield return ThankYouForPlaying();
+    }
+    public IEnumerator ThankYouForPlaying()
     {
         Time.timeScale = 1f;
         DOTween.KillAll();
@@ -194,12 +206,19 @@ public class GameStateManager : MonoBehaviour
 
     public Chapter GetCurrentChapter()
     {
-        return chaptersBank.chapters[chapterIndex];
+        if (chapterIndex < chaptersBank.chapters.Count)
+            return chaptersBank.chapters[chapterIndex]; 
+        return null;
     }
 
     public ChapterSegment GetCurrentChapterSegment()
     {
-        return GetCurrentChapter().chapterSegments[chapterSegmentIndex];
+        return GetCurrentChapter()?.chapterSegments[chapterSegmentIndex];
+    }
+    
+    public ChapterSegment GetLastChapterSegment()
+    {
+        return GetCurrentChapter()?.chapterSegments[chapterSegmentIndex-1];
     }
 
     public void ResetChapters()

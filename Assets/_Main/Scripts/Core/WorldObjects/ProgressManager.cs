@@ -62,6 +62,13 @@ public class ProgressManager : MonoBehaviour
         SaveData data = SaveManager.instance != null ? SaveManager.instance.LoadCurrentSave() : SaveSystem.LoadGame(1);
 
         GameStateManager.instance.UpdateChapterIndexes(data.chapterIndex, data.chapterSegmentIndex);
+
+        if (GameStateManager.instance.chapterIndex >= GameStateManager.instance.chaptersBank.chapters.Count)
+        {
+            yield return GameStateManager.instance.ThankYouForPlaying();
+            yield break;
+        }
+            
         GameStateManager.instance.charactersRanks = data.characterRanks.ToDictionary(e => e.key, e => e.value);
         VNUIAnimator.instance.chapterNameText.text = GameStateManager.instance.GetCurrentChapter().chapterName;
 
@@ -87,6 +94,8 @@ public class ProgressManager : MonoBehaviour
 
         EvidenceManager.instance.Initialize(GameStateManager.instance.GetCurrentChapter().evidenceList
             .FindAll(evidence => data.evidenceIds.Contains(evidence.Name)));
+
+        PlayerInputManager.instance.pauseAvailable = data.pauseAvailable;
 
         if (data.savedInPopup)
         {

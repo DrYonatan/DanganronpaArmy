@@ -47,6 +47,7 @@ MonoBehaviour:
   - rid: 2649295605456437839
   - rid: 2649295605456437840
   - rid: 2649295605456437934
+  - rid: 3680544836189945867
   - rid: 2649295605456437936
   - rid: 2649295605456437842
   - rid: 2649295605456437843
@@ -1757,7 +1758,10 @@ MonoBehaviour:
         text: "(\u05D0\u05D5\u05E8 \u05D9\u05E8\u05D5\u05E7 \u05D0\u05D5\u05DE\u05E8
           \u05E9\u05D4\u05E9\u05E2\u05E8 \u05E4\u05EA\u05D5\u05D7\u2026 \u05D1\u05DE\u05E7\u05E8\u05D4
           \u05D4\u05D6\u05D4, \u05D4\u05E6\u05D9\u05E0\u05D5\u05E8 *4-UG* \u05DE\u05EA\u05D7\u05D1\u05E8
-          \u05DC\u2026)"
+          \u05DC\u2026)\n<G]\u05EA\u05D5\u05DB\u05DC\u05D5 \u05DC\u05DC\u05D7\u05D5\u05E5
+          baT \u05DB\u05D3\u05D9 \u05DC\u05D4\u05E2\u05DC\u05D9\u05DD \u05D0\u05EA
+          \u05D4\u05D0\u05E4\u05E9\u05E8\u05D5\u05D9\u05D5\u05EA \u05D5\u05DC\u05E7\u05D1\u05DC
+          \u05DE\u05D1\u05D8 \u05D9\u05D5\u05EA\u05E8 \u05D8\u05D5\u05D1[>"
         commands:
         - rid: 6008430280376320074
     - rid: 2649295605456437918
@@ -2027,7 +2031,13 @@ MonoBehaviour:
         text: "(\u05DC\u05D0\u2026 \u05D4\u05D9\u05D0 \u05E6\u05D5\u05D3\u05E7\u05EA.
           \u05D9\u05E9 \u05E2\u05D5\u05D3 \u05E6\u05D9\u05E0\u05D5\u05E8 \u05E9\u05D0\u05E0\u05D7\u05E0\u05D5
           \u05D9\u05DB\u05D5\u05DC\u05D9\u05DD \u05DC\u05E9\u05E2\u05E8 \u05E9\u05E6\u05D9\u05E0\u05D5\u05E8
-          *4-UG* \u05DC\u05D0 \u05DE\u05EA\u05D7\u05D1\u05E8 \u05D0\u05DC\u05D9\u05D5\u2026)"
+          *4-UG* \u05DC\u05D0 \u05DE\u05EA\u05D7\u05D1\u05E8 \u05D0\u05DC\u05D9\u05D5\u2026
+          \u05D0\u05D5 \u05D9\u05D5\u05EA\u05E8 \u05E0\u05DB\u05D5\u05DF, \u05D0\u05E0\u05D7\u05E0\u05D5
+          \u05D9\u05D5\u05D3\u05E2\u05D9\u05DD \u05E9\u05D4\u05E6\u05D9\u05E0\u05D5\u05E8
+          *4-UG* \u05DE\u05EA\u05D7\u05D1\u05E8 \u05DC\u05E6\u05D9\u05E0\u05D5\u05E8
+          *01-BB*. \u05D9\u05E9 \u05E6\u05D9\u05E0\u05D5\u05E8 \u05DE\u05E1\u05D5\u05D9\u05D9\u05DD
+          \u05E9\u05DC\u05D0 \u05D9\u05DB\u05D5\u05DC \u05DC\u05D4\u05D9\u05D5\u05EA
+          *01-BB*.)"
         commands: []
     - rid: 2649295605456437936
       type: {class: DiscussionChoiceNode, ns: , asm: Assembly-CSharp}
@@ -2071,11 +2081,10 @@ MonoBehaviour:
     - rid: 2649295605456437937
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
-        text: "(\u05D0\u05D5 \u05D9\u05D5\u05EA\u05E8 \u05E0\u05DB\u05D5\u05DF, \u05D9\u05E9
-          \u05E6\u05D9\u05E0\u05D5\u05E8 \u05DE\u05E1\u05D5\u05D9\u05DD \u05E9\u05E8\u05D5\u05D1
-          \u05D4\u05E1\u05D9\u05DB\u05D5\u05D9\u05D9\u05DD \u05E9\u05D4\u05D5\u05D0
-          \u05DC\u05D0 *01-BB*.)"
-        commands: []
+        text: "(\u05D4\u05E6\u05D9\u05E0\u05D5\u05E8 \u05E9\u05E8\u05D5\u05D1 \u05D4\u05E1\u05D9\u05DB\u05D5\u05D9\u05D9\u05DD
+          \u05E9\u05D4\u05D5\u05D0 \u05DC\u05D0 *01-BB*...)"
+        commands:
+        - rid: 3680544836189945870
     - rid: 2649295605456437938
       type: {class: DiscussionNode, ns: , asm: Assembly-CSharp}
       data:
@@ -2138,6 +2147,51 @@ MonoBehaviour:
           \u05D9\u05E9 \u05DC\u05DA \u05E1\u05D9\u05D1\u05D4 \u05DC\u05D7\u05E9\u05D5\u05D1
           \u05DB\u05DB\u05D4?"
         commands: []
+    - rid: 3680544836189945867
+      type: {class: DiscussionNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: 6344f4092040cbd4183fc5d6dc877647, type: 2}
+        character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
+        displayName: 
+        expressionIndex: 0
+        textData:
+          rid: 3680544836189945868
+        voiceLine: {fileID: 0}
+        usePrevCamera: 1
+        characterStand: {fileID: 0}
+        cameraPreset: {fileID: 0}
+        cameraEffects: []
+        fovOffset: 0
+        positionOffset: {x: 0, y: 0, z: 0}
+        rotationOffset: {x: 0, y: 0, z: 0}
+    - rid: 3680544836189945868
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "(\u05D9\u05E9 \u05E9\u05DD \u05E6\u05D9\u05E0\u05D5\u05E8\u05D5\u05EA
+          *\u05D9\u05D5\u05E6\u05D0\u05D9 \u05D3\u05D5\u05E4\u05DF*. \u05E6\u05E8\u05D9\u05DA
+          \u05DC\u05D4\u05D1\u05D9\u05DF \u05DE\u05D4 \u05D4\u05DE\u05E9\u05DE\u05E2\u05D5\u05EA
+          \u05E9\u05DC\u05D4\u05DD.)"
+        commands:
+        - rid: 3680544836189945869
+    - rid: 3680544836189945869
+      type: {class: ShowImage, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        image: {fileID: 21300000, guid: 66a35cd300c67574f9bf9758848d9805, type: 3}
+        flash: 0
+    - rid: 3680544836189945870
+      type: {class: RemoveImage, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        flash: 0
     - rid: 6008430280376320068
       type: {class: PlayMusicCommand, ns: , asm: Assembly-CSharp}
       data:

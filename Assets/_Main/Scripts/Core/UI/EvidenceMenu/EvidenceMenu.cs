@@ -201,6 +201,7 @@ public class EvidenceMenu : MenuScreen
 
     public IEnumerator SelectEvidence(string question, Func<Evidence, IEnumerator> onFinish)
     {
+        PlayerInputManager.instance.pauseAvailable = false;
         transform.localScale = Vector3.zero;
         transform.DOScale(Vector3.one, 0.3f)
             .SetEase(Ease.OutBack).SetUpdate(true);
@@ -240,5 +241,6 @@ public class EvidenceMenu : MenuScreen
         presentGuide.gameObject.SetActive(false);
         Evidence currentEvidence = EvidenceManager.instance.evidenceList[currentEvidenceIndex];
         yield return onFinish(currentEvidence);
+        PlayerInputManager.instance.pauseAvailable = true;
     }
 }

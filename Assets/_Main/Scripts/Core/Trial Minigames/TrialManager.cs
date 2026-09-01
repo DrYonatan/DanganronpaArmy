@@ -152,7 +152,9 @@ public class TrialManager : MonoBehaviour
         GameStateManager.instance.GetCurrentChapterSegment().Load();
         GameStateManager.instance.SetUIState(data.uiState);
         GameStateManager.instance.InitiateUIState();
-        
+
+        PlayerInputManager.instance.pauseAvailable = data.pauseAvailable;
+
         if(data.trialSegmentIndex == 0 && data.currentLineIndex == 0)
             preTrialPrepMenu.Appear();
         else
