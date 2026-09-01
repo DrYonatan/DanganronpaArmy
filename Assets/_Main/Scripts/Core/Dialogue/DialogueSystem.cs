@@ -114,11 +114,13 @@ namespace DIALOGUE
                 dialogueBoxAnimator.TextBoxAppear();
                 CursorManager.instance.Hide();
                 inputButton.gameObject.SetActive(true);
+                PlayerInputManager.instance.pauseMenu.generalMenu.menuItems[0].UpdateVisibility(false);
             }
             else
             {
                 dialogueBoxAnimator.TextBoxDisappear();
                 inputButton.gameObject.SetActive(false);
+                PlayerInputManager.instance.pauseMenu.generalMenu.menuItems[0].UpdateVisibility(true);
             }
         }
 

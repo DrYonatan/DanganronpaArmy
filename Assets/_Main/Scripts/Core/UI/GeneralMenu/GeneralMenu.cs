@@ -58,7 +58,7 @@ public class GeneralMenu : MonoBehaviour
             }
             else if (PlayerInputManager.instance.DefaultInput())
             {
-                if (menuItems[currentItemIndex].disabled)
+                if (!menuItems[currentItemIndex].isEnabled)
                 {
                     SoundManager.instance.PlaySoundEffect(menuFail);
                 }
@@ -85,7 +85,7 @@ public class GeneralMenu : MonoBehaviour
 
         SoundManager.instance.PlaySoundEffect(menuMove);
 
-        if (!menuItems[currentItemIndex].disabled)
+        if (menuItems[currentItemIndex].isEnabled)
             menuItems[currentItemIndex].StartHover();
     }
 
@@ -116,7 +116,7 @@ public class GeneralMenu : MonoBehaviour
             mainPartCanvasGroup.DOFade(1f, 0.8f).SetUpdate(true);
             mainPart.DOAnchorPosY(originalPosY, 0.8f).SetUpdate(true).OnComplete(() =>
             {
-                if (!menuItems[currentItemIndex].disabled)
+                if (menuItems[currentItemIndex].isEnabled)
                     menuItems[currentItemIndex].StartHover();
                 isInputActive = true;
             });
