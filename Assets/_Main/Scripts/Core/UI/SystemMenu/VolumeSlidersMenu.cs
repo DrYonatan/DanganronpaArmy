@@ -7,21 +7,19 @@ using UnityEngine.UI;
 public class VolumeSlidersMenu : MonoBehaviour
 {
     public bool isActive;
-    
-    [Header("UI")]
-    public Slider musicSlider;
+
+    [Header("UI")] public Slider musicSlider;
     public Slider sfxSlider;
     public TitleScreenActionButton applyButton;
 
     public Image musicFrame;
     public Image sfxFrame;
 
-    [Header("Navigation")]
-    public float changeSpeed = 0.5f;
+    [Header("Navigation")] public float changeSpeed = 0.5f;
 
     public AudioMixer mixer;
 
-    private int currentIndex = 0; 
+    private int currentIndex = 0;
 
     private Slider[] sliders;
     private Image[] frames;
@@ -36,7 +34,7 @@ public class VolumeSlidersMenu : MonoBehaviour
         sliders = new Slider[] { musicSlider, sfxSlider };
         frames = new Image[] { musicFrame, sfxFrame };
 
-    musicSlider.value = PlayerPrefs.GetFloat("MusicVolume", 0.75f);
+        musicSlider.value = PlayerPrefs.GetFloat("MusicVolume", 0.75f);
         sfxSlider.value = PlayerPrefs.GetFloat("SFXVolume", 0.75f);
 
         applyButton.button.onClick.AddListener(ApplySettings);
@@ -48,8 +46,8 @@ public class VolumeSlidersMenu : MonoBehaviour
     {
         if (isActive)
         {
-            if(isConcentrating)
-               HandleSliderChange();
+            if (isConcentrating)
+                HandleSliderChange();
             else
             {
                 HandleNavigation();
@@ -72,13 +70,13 @@ public class VolumeSlidersMenu : MonoBehaviour
             SoundManager.instance.PlaySoundEffect(moveSound);
         }
 
-        if (PlayerInputManager.instance.DefaultInput())
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
         {
             if (currentIndex == sliders.Length)
             {
                 applyButton.Click();
             }
-            
+
             else if (!isConcentrating)
             {
                 SoundManager.instance.PlaySoundEffect(chooseSound);
@@ -104,7 +102,7 @@ public class VolumeSlidersMenu : MonoBehaviour
                 current.value + input * changeSpeed * Time.unscaledDeltaTime
             );
         }
-        
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             var colors = sliders[currentIndex].colors;
@@ -152,11 +150,16 @@ public class VolumeSlidersMenu : MonoBehaviour
 
     private void SetMusicVolume(float value)
     {
-        mixer.SetFloat("MusicVolume", Mathf.Log10(value) * 20f);
+        mixer.SetFloat(
+            "MusicVolume",
+            value <= 0.0001f ? -80f : Mathf.Log10(value) * 20f
+        );
     }
 
     private void SetSfxVolume(float value)
     {
-        mixer.SetFloat("SFXVolume", Mathf.Log10(value) * 20f);
-    }
+        mixer.SetFloat(
+            "SFXVolume",
+            value <= 0.0001f ? -80f : Mathf.Log10(value) * 20f
+        );    }
 }
