@@ -43,10 +43,20 @@ public class VNUIAnimator : MonoBehaviour
         seq.Append(mainContainer.DOAnchorPosX(mainContainerOriginalPos.x, duration));
         seq.Append(timeContainer.rectTransform.DOAnchorPosY(timeContainerOriginalPos.y, duration));
         seq.Append(musicBoxContainer.rectTransform.DOAnchorPosX(0, duration / 2));
-
-        musicName.rectTransform.anchoredPosition = new Vector2(-460, 0);
-        musicName.rectTransform.DOAnchorPosX(470, 5f).SetEase(Ease.Linear).SetLoops(-1).SetLink(musicName.gameObject);
+        
+        SetMusic();
     }
+
+    public void SetMusic(string songName = "")
+    {
+        musicName.rectTransform.DOKill();
+        if(!songName.Equals(""))
+          musicName.text = $"עכשיו מתנגן: {songName}";
+        float textWidth = musicName.preferredWidth;
+        musicName.rectTransform.anchoredPosition = new Vector2(-200-textWidth, 0);
+        musicName.rectTransform.DOAnchorPosX(320, 5f).SetEase(Ease.Linear).SetLoops(-1).SetLink(musicName.gameObject);  
+    }
+    
 
     public void Disappear(float duration = 0.3f)
     {

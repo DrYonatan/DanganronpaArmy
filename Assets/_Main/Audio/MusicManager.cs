@@ -25,7 +25,7 @@ public class MusicManager : MonoBehaviour
         if (VNUIAnimator.instance != null)
         {
             VNUIAnimator.instance.musicBoxContainer.StartBars();
-            VNUIAnimator.instance.musicName.text = $"עכשיו מתנגן: {song?.name}";
+            VNUIAnimator.instance.SetMusic(song.name);
         }
     }
 

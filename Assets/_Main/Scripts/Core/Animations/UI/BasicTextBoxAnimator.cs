@@ -19,6 +19,7 @@ public abstract class BasicTextBoxAnimator : MonoBehaviour
     public bool uiEnabled = true;
 
     public RectTransform tabGuide;
+    public RectTransform helpGuide;
     
     public abstract void TextBoxAppear();
     

@@ -135,7 +135,7 @@ public class GameStateManager : MonoBehaviour
         }
         bool pauseAvailable = PlayerInputManager.instance.pauseAvailable;
 
-        if(GetLastChapterSegment().saveAfter)
+        if(chapterSegmentIndex == 0 || GetLastChapterSegment().saveAfter)
            yield return HandlePopup();
 
         sceneTransitionCamera.gameObject.SetActive(true);

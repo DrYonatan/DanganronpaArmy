@@ -22,6 +22,10 @@ public class PlayUltimateAnimation : Command
     {
         DialogueSystem.instance.TextBoxDisappear();
         VNUIAnimator.instance.Disappear(0.2f);
+        DialogueSystem.instance.dialogueBoxAnimator.helpGuide.gameObject.SetActive(false);
+        bool pauseAvailable = PlayerInputManager.instance.pauseAvailable;
+        PlayerInputManager.instance.pauseAvailable = false;
+        PlayerInputManager.instance.guideAvailable = false;
 
         yield return new WaitForSeconds(0.2f);
 
@@ -36,6 +40,9 @@ public class PlayUltimateAnimation : Command
         Object.Destroy(ultimateAnimation.gameObject);
         DialogueSystem.instance.TextBoxAppear();
         VNUIAnimator.instance.Appear();
+        PlayerInputManager.instance.pauseAvailable = pauseAvailable;
+        PlayerInputManager.instance.guideAvailable = true;
+        DialogueSystem.instance.dialogueBoxAnimator.helpGuide.gameObject.SetActive(true);
 
     }
 
