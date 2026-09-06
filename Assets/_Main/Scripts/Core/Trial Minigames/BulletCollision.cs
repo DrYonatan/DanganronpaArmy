@@ -8,7 +8,7 @@ public class BulletCollision : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (!didHit)
+        if (!didHit && GameLoop.instance.isDebateActive)
         {
             if (CheckHitLocation(collision))
             {
