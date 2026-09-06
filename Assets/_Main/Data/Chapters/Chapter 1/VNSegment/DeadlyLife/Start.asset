@@ -41,6 +41,19 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: 3680544952040554498
+      type: {class: ShowAnimatedImage, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        imageWrapper: {fileID: 11400000, guid: ad0fbac315b2e8742ba4c2eafdd3a8c2, type: 2}
+        duration: 0.5
+        flash: 1
+    - rid: 3680544952040554499
+      type: {class: RemoveAnimatedImage, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        duration: 0.5
+        flash: 1
     - rid: 6008429867673059725
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -412,14 +425,16 @@ MonoBehaviour:
         text: "\u05DC\u05D0 \u05D9\u05D5\u05D3\u05E2 \u05DE\u05D4 \u05D6\u05D4 \u05D4\u05E9\u05D8\u05D5\u05D9\u05D5\u05EA
           \u05D4\u05D0\u05DC\u05D4! \u05D4\u05EA\u05D0 \u05D4\u05D6\u05D4 \u05DB\u05DE\u05D5
           \u05D7\u05D3\u05E9!"
-        commands: []
+        commands:
+        - rid: 3680544952040554498
     - rid: 6008429867673059753
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
         text: "\u05D0\u05DD \u05DB\u05DB\u05D4, \u05DC\u05DE\u05D4 \u05E9\u05D9\u05D4\u05D9\u05D4
           \u05DB\u05D0\u05DF \u05E9\u05DC\u05D8 \u05E9\u05D0\u05D5\u05DE\u05E8 \u05E9\u05D4\u05EA\u05D0
           \u05DC\u05D0 \u05EA\u05E7\u05D9\u05DF?"
-        commands: []
+        commands:
+        - rid: 3680544952040554499
     - rid: 6008429867673059754
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
