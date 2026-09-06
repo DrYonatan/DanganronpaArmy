@@ -76,6 +76,7 @@ public class GameStateManager : MonoBehaviour
             TrialManager.instance.LoadValuesFromSave(SaveManager.instance.currentSaveSlot);
         else
         {
+            EvidenceManager.instance.Initialize(GetCurrentChapter().evidenceList);
             TrialManager.instance.preTrialPrepMenu.Appear();
         }
     }

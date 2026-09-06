@@ -24,6 +24,7 @@ public class PreTrialPrepMenu : MonoBehaviour
         chapterName.text = GameStateManager.instance.chaptersBank.chapters[GameStateManager.instance.chapterIndex].chapterName;
         MusicManager.instance.PlaySong(music);
         ImageScript.instance.UnFadeToBlack(0.1f);
+        PlayerInputManager.instance.guideAvailable = false;
         
         UpdateScrollingText();
         
@@ -55,6 +56,7 @@ public class PreTrialPrepMenu : MonoBehaviour
         cylinder.rectTransform.DOKill();
         cylinder.rectTransform.DOAnchorPosX(cylinder.rectTransform.anchoredPosition.x - 500f, 0.2f);
         itemsContainer.DOAnchorPosX(itemsContainer.anchoredPosition.x + 500f, 0.4f);
+        PlayerInputManager.instance.guideAvailable = true;
     }
     
     private void Update()
