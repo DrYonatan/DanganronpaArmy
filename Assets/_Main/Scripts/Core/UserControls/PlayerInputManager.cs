@@ -72,7 +72,7 @@ namespace DIALOGUE
                 ToggleGuide();
             }
 
-            if (Input.GetKeyDown(KeyCode.Tab) && !pauseMenu.isOpen && DialogueSystem.instance.isActive && !pauseMenu.isSubmenuOpen && pauseAvailable)
+            if (Input.GetKeyDown(KeyCode.Tab) && !pauseMenu.isOpen && DialogueSystem.instance.isActive && !pauseMenu.isSubmenuOpen && guideAvailable && !guideOpen)
             {
                 DialogueSystem.instance.dialogueBoxAnimator.ToggleUI();
             }
@@ -125,6 +125,10 @@ namespace DIALOGUE
             if (!CutSceneManager.instance.isPlaying && !isPaused && DialogueSystem.instance.dialogueBoxAnimator.uiEnabled)
             {
                 DialogueSystem.instance.OnUserPrompt_Next();
+            }
+            else if(!CutSceneManager.instance.isPlaying && !isPaused && !DialogueSystem.instance.dialogueBoxAnimator.uiEnabled)
+            {
+                DialogueSystem.instance.dialogueBoxAnimator.ToggleUI();
             }
         }
 
