@@ -218,7 +218,7 @@ public class EvidenceMenu : MenuScreen
 
         bool isOpen = false;
 
-        while (!Input.GetMouseButtonDown(1))
+        while (!Input.GetMouseButtonDown(1) || isCloseupOpen)
         {
             if (Input.GetKey(KeyCode.Tab))
             {
