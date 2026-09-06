@@ -21,6 +21,8 @@ public class PreTrialPrepMenu : MonoBehaviour
 
     public void Appear()
     {
+        EvidenceManager.instance.Initialize(GameStateManager.instance.GetCurrentChapter().evidenceList);
+
         chapterName.text = GameStateManager.instance.chaptersBank.chapters[GameStateManager.instance.chapterIndex].chapterName;
         MusicManager.instance.PlaySong(music);
         ImageScript.instance.UnFadeToBlack(0.1f);

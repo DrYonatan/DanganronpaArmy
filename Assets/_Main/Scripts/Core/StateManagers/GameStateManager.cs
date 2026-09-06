@@ -157,14 +157,13 @@ public class GameStateManager : MonoBehaviour
         SavePopup popup = PlayerInputManager.instance.pauseMenu.generalMenu.savePopUp;
         popup.gameObject.SetActive(true);
         popup.finished = false;
-        PlayerInputManager.instance.guideAvailable = false;
-        PlayerInputManager.instance.pauseAvailable = false;
+        PlayerInputManager.instance.isInputActive = false;
         yield return popup.WaitForCompletion();
         if(ProgressManager.instance != null)
            ProgressManager.instance.savedInPopup = false;
         ImageScript.instance.FadeToBlack(0f);
         yield return new WaitForSeconds(0.5f);
-        PlayerInputManager.instance.guideAvailable = true;
+        PlayerInputManager.instance.isInputActive = true;
         popup.gameObject.SetActive(false);
     }
 
