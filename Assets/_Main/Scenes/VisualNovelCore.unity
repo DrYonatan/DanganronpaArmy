@@ -1299,8 +1299,8 @@ MonoBehaviour:
   dialoguePart: {fileID: 436797209}
   textBoxVisible: 0
   namePlateVisible: 0
-  uiContainer: {fileID: 1499816035}
-  choicesPart: {fileID: 417735094}
+  uiContainer: {fileID: 1499816039}
+  choicesPart: {fileID: 417735096}
   uiEnabled: 1
   tabGuide: {fileID: 1357377875}
   helpGuide: {fileID: 344488097}
@@ -1934,6 +1934,7 @@ GameObject:
   m_Component:
   - component: {fileID: 417735094}
   - component: {fileID: 417735095}
+  - component: {fileID: 417735096}
   m_Layer: 5
   m_Name: OptionsSelectionMenu
   m_TagString: Untagged
@@ -1980,6 +1981,18 @@ MonoBehaviour:
   moveSelectionSound: {fileID: 8300000, guid: 9ea6ec063fde8524d8adad660d374b40, type: 3}
   isActive: 0
   hasStartedSelection: 0
+--- !u!225 &417735096
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 417735093}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &419077834
 GameObject:
   m_ObjectHideFlags: 0
@@ -6696,6 +6709,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1415612043}
   - component: {fileID: 1415612045}
+  - component: {fileID: 1415612046}
   m_Layer: 5
   m_Name: Overlay Text Box
   m_TagString: Untagged
@@ -6747,11 +6761,23 @@ MonoBehaviour:
   dialoguePart: {fileID: 1557276133}
   textBoxVisible: 0
   namePlateVisible: 0
-  uiContainer: {fileID: 1415612043}
-  choicesPart: {fileID: 417735094}
+  uiContainer: {fileID: 1415612046}
+  choicesPart: {fileID: 417735096}
   uiEnabled: 1
-  tabGuide: {fileID: 0}
-  helpGuide: {fileID: 0}
+  tabGuide: {fileID: 1357377875}
+  helpGuide: {fileID: 344488097}
+--- !u!225 &1415612046
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1415612042}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1421514483
 GameObject:
   m_ObjectHideFlags: 0

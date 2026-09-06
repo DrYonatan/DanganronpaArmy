@@ -1,4 +1,5 @@
 
+using DG.Tweening;
 using DIALOGUE;
 using UnityEngine;
 
@@ -14,8 +15,8 @@ public abstract class BasicTextBoxAnimator : MonoBehaviour
     public bool textBoxVisible;
     public bool namePlateVisible;
 
-    public RectTransform uiContainer;
-    public RectTransform choicesPart;
+    public CanvasGroup uiContainer;
+    public CanvasGroup choicesPart;
     public bool uiEnabled = true;
 
     public RectTransform tabGuide;
@@ -45,10 +46,11 @@ public abstract class BasicTextBoxAnimator : MonoBehaviour
 
     public void ToggleUI()
     {
-        if (uiContainer == null)
+        if (uiContainer == null || choicesPart == null)
             return;
         uiEnabled = !uiEnabled;
-        uiContainer.gameObject.SetActive(uiEnabled);
-        choicesPart.gameObject.SetActive(uiEnabled);
+        float opacity = uiEnabled ? 1f : 0f;
+        uiContainer.alpha = opacity;
+        choicesPart.alpha = opacity;
     }
 }
