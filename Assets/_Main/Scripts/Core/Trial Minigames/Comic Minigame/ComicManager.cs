@@ -232,7 +232,9 @@ public class ComicManager : MonoBehaviour
             foreach(ComicPanel panel in page.panels)
             {
                 if (!panel.IsReady())
+                {
                     return false;
+                }
             }
         }
 

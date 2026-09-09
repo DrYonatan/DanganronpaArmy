@@ -89,6 +89,7 @@ public class ComicDraggablePin : MonoBehaviour, IDragHandler, IBeginDragHandler,
     public void ResetParent()
     {
         rectTransform.SetParent(parent);
+        assignedPanel = null;
         rectTransform.localPosition = Vector3.zero;
     }
 
