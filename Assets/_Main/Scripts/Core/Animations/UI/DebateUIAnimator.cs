@@ -36,7 +36,7 @@ public class DebateUIAnimator : MonoBehaviour
     public float moveAmountX = 150f;
 
     public float duration = 0.2f;
-    public float reloadDuration = 0.2f;
+    public const float reloadDuration = 0.2f;
 
     public void DebateUIAppear()
     {
@@ -97,7 +97,6 @@ public class DebateUIAnimator : MonoBehaviour
         namePart.anchoredPosition = namePartOriginalPos.anchoredPosition + new Vector2(0, -moveAmountY);
         facePart.anchoredPosition = facePartOriginalPos.anchoredPosition + new Vector2(moveAmountX, 0);
         timePart.anchoredPosition = timePartOriginalPos.anchoredPosition + new Vector2(0, moveAmountY);
-        bullet.DOAnchorPosX(bulletOriginalPos.anchoredPosition.x - 600f, 0).SetEase(Ease.OutQuad);
         HideCylinderAndCircles(0f);
         TrialCursorManager.instance.Hide();
     }
@@ -153,9 +152,9 @@ public class DebateUIAnimator : MonoBehaviour
         dialogueContainer.nameContainer.Show(characterName);
     }
 
-    void UnLoadBullet()
+    void UnLoadBullet(float duration = reloadDuration)
     {
-        bullet.DOAnchorPosX(bulletOriginalPos.anchoredPosition.x - 650f, reloadDuration).SetEase(Ease.OutQuad);
+        bullet.DOAnchorPosX(bulletOriginalPos.anchoredPosition.x - 800f, duration).SetEase(Ease.OutQuad);
     }
 
     public void LoadBullet()
@@ -197,7 +196,7 @@ public class DebateUIAnimator : MonoBehaviour
     {
         cylinder.DOAnchorPosX(-400, hideDuration).SetUpdate(true);
         circles.DOAnchorPosX(-500, hideDuration).SetUpdate(true);
-        UnLoadBullet();
+        UnLoadBullet(hideDuration);
     }
 
     public void ShowTextBox()

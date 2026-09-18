@@ -63,7 +63,7 @@ public class NoThatsWrongAnimator : MonoBehaviour
         
         faceRect.DOScaleY(1, appearDuration);
         faceRect.DORotate(new Vector3(0f, 0f, 0f), appearDuration);
-        faceRect.DOAnchorPos(new Vector2(500, -56), appearDuration);
+        faceRect.DOAnchorPos(new Vector2(500, 0), appearDuration);
         
         yield return new WaitForSeconds(appearDuration);
         
@@ -71,7 +71,7 @@ public class NoThatsWrongAnimator : MonoBehaviour
         counterImage.color = Color.white;
         
         backgroundRect.DOAnchorPosY(10f, 0.05f).SetLoops(-1, LoopType.Yoyo);
-        faceRect.DOAnchorPos(new Vector2(350, -20), 2f).SetEase(Ease.Linear);
+        faceRect.DOAnchorPos(new Vector2(350, 20), 2f).SetEase(Ease.Linear);
         counterRect.DOAnchorPos(new Vector2(-16f, 15f), 0.2f).SetEase(Ease.Linear);
 
         yield return new WaitForSeconds(0.2f);
