@@ -796,12 +796,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterPanel: {fileID: 0}
   currentRoom: {fileID: 11400000, guid: 55447bfc884cd4340b110e2928249c70, type: 2}
+  currentRoomModel: {fileID: 0}
   currentRoomData:
     room: {fileID: 0}
     characters: {fileID: 0}
     worldObjects: {fileID: 0}
     preLoadText: {fileID: 0}
     isExitable: 0
+    additionalObjectData: []
   isLoading: 0
   charactersObject: {fileID: 0}
   objectsObject: {fileID: 0}
@@ -5483,6 +5485,7 @@ MonoBehaviour:
   player: {fileID: 1411524846}
   cameraTransform: {fileID: 963194228}
   initialRotation: {x: 0, y: 0, z: 0, w: 0}
+  isInFinalRotation: 1
   conversationFinishedMoving: 1
   footStepsSound: {fileID: 8300000, guid: 41ad19871e346a442929b387602695ff, type: 3}
   fastFootStepsSound: {fileID: 8300000, guid: ae8250aaa1881424e8449fbfa4988a36, type: 3}
@@ -6822,7 +6825,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e4daf285e1979d4197b0e2ab7347153, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  evidenceList: []
+  evidenceList:
+  - {fileID: 11400000, guid: 61f792b87e669574793f5e93b1753771, type: 2}
+  - {fileID: 11400000, guid: 55f6c2af98b373c458b3a6a909f35b54, type: 2}
+  - {fileID: 11400000, guid: 4ba997dac63149946b503189cba49436, type: 2}
+  - {fileID: 11400000, guid: 39789c8ebaf5da040a9001495bf1316a, type: 2}
+  - {fileID: 11400000, guid: 6e9dfc624e849c647b7de3c59779d356, type: 2}
+  - {fileID: 11400000, guid: 4ba997dac63149946b503189cba49436, type: 2}
   evidenceMenu: {fileID: 803883968}
 --- !u!1 &1770170937
 GameObject:

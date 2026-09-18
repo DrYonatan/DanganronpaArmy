@@ -23,9 +23,12 @@ public class SaveSelectMenu : TitleScreenSubMenu
     
     void Awake()
     {
-        for (int i = 0; i < SaveManager.instance.cloudSaveSlotsAmount; i++)
+        if (UserDataManager.instance.loggedInUser != null)
         {
-            GenerateCloudSaveSlot(i);
+            for (int i = 0; i < SaveManager.instance.cloudSaveSlotsAmount; i++)
+            {
+                GenerateCloudSaveSlot(i);
+            }
         }
         
         for (int i = 1; i < SaveManager.instance.saveSlotAmount; i++)

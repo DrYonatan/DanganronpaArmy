@@ -50,7 +50,7 @@ public class TitleScreenMainMenu : MonoBehaviour
         activeSubMenu = menu;
     }
 
-    private void ReturnToPrevMenu()
+    public void ReturnToPrevMenu()
     {
         StartCoroutine(SwitchMenusAnimation(subMenuStack.Pop(), subMenuStack.Peek()));
         activeSubMenu = subMenuStack.Peek();

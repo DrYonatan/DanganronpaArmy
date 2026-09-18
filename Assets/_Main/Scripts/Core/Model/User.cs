@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Newtonsoft.Json;
 
-[Serializable]
 public class User
 {
     public string id;

@@ -17,7 +17,7 @@ public class TitleScreenSubMenu : MonoBehaviour
         AppearAnimation();
     }
 
-    private void Update()
+    void Update()
     {
         if (menuNavigationActive)
         {
@@ -25,6 +25,10 @@ public class TitleScreenSubMenu : MonoBehaviour
             {
                 buttons[currentItemIndex].DisableHover();
                 currentItemIndex = Math.Min(currentItemIndex + 1, buttons.Count - 1);
+                if (!buttons[currentItemIndex].gameObject.activeInHierarchy)
+                {
+                    currentItemIndex = Math.Min(currentItemIndex + 1, buttons.Count - 1);
+                }
                 buttons[currentItemIndex].HoverButtonAnimation();
                 SoundManager.instance.PlaySoundEffect(selectionSound);
             }
@@ -33,6 +37,10 @@ public class TitleScreenSubMenu : MonoBehaviour
             {
                 buttons[currentItemIndex].DisableHover();
                 currentItemIndex = Math.Max(currentItemIndex - 1, 0);
+                if (!buttons[currentItemIndex].gameObject.activeInHierarchy)
+                {
+                    currentItemIndex = Math.Max(currentItemIndex - 1, 0);
+                }
                 buttons[currentItemIndex].HoverButtonAnimation();
                 SoundManager.instance.PlaySoundEffect(selectionSound);
             }

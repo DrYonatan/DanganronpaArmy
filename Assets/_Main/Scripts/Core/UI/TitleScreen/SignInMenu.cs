@@ -4,10 +4,14 @@ public class SignInMenu : TitleScreenSubMenu
 {
     public TMP_InputField emailField;
     public TMP_InputField passwordField;
+    public TitleScreenMainMenu mainMenu;
     
     public void SignIn()
     {
-        FirebaseManager.instance.SignIn(emailField.text, passwordField.text);
+        FirebaseManager.instance.SignIn(emailField.text, passwordField.text, () =>
+        {
+            mainMenu.ReturnToPrevMenu();
+        });
     }
 
     public void SignOut()

@@ -66,7 +66,7 @@ public class FirebaseManager : MonoBehaviour
         });
     }
 
-    public void SignIn(string email, string password)
+    public void SignIn(string email, string password, Action onSucess)
     {
         auth.SignInWithEmailAndPasswordAsync(email, password).ContinueWith(task =>
         {
@@ -83,6 +83,7 @@ public class FirebaseManager : MonoBehaviour
             }
 
             AuthResult result = task.Result;
+            onSucess.Invoke();
             Debug.LogFormat("User signed in successfully: {0} ({1})",
                 result.User.DisplayName, result.User.UserId);
         });
