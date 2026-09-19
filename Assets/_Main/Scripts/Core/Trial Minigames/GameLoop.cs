@@ -14,18 +14,20 @@ public class FloatingText : MonoBehaviour
     public TextEffect introEffect;
     public TextEffect outroEffect;
     public List<TextEffect> textEffects;
+    public float delay;
     public float ttl;
     public List<TextMeshPro> linesTextMeshPros = new();
     public Evidence correctEvidence;
     public int correctCharacterIndexBegin, correctCharacterIndexEnd;
 
     public void Initialize(List<TextEffect> textEffects, TextEffect introEffect, TextEffect outroEffect,
-        float ttl,
+        float delay, float ttl,
         Evidence correctEvidence, int correctCharacterIndexBegin, int correctCharacterIndexEnd)
     {
         this.textEffects = textEffects;
         this.introEffect = introEffect;
         this.outroEffect = outroEffect;
+        this.delay = delay;
         this.ttl = ttl;
         this.correctEvidence = correctEvidence;
         this.correctCharacterIndexBegin = correctCharacterIndexBegin;
@@ -69,6 +71,7 @@ public class GameLoop : MonoBehaviour
     public float shootForce = 10f;
     public Transform shootOrigin;
     public Transform textStartPosition;
+    public float textPlaneDistance = 4.5f;
     public Camera statementsCamera;
     public TrialHoverable currentAimedText;
     public Camera renderTextureCamera;
@@ -79,6 +82,8 @@ public class GameLoop : MonoBehaviour
 
     private float bulletMenuHoldTime;
     private Coroutine wrongEvidenceRoutine;
+
+    public AudioSource audioSource;
 
     public void PlayDebate(DebateSegment debate)
     {
@@ -101,10 +106,11 @@ public class GameLoop : MonoBehaviour
 
     IEnumerator StartDebate()
     {
+        PlayerInputManager.instance.pauseAvailable = false;
+        PlayerInputManager.instance.isInputActive = false;
         yield return cameraController.DiscussionOutroMovement(2.5f);
         debateUIAnimator.gameObject.SetActive(true);
         debateUIAnimator.DebateUIDisappear();
-        ((CourtTextBoxAnimator)DialogueSystem.instance.dialogueBoxAnimator).ChangeFace(null);
         DialogueSystem.instance.SetTextBox(textBoxAnimator);
         yield return 0;
         ImageScript.instance.UnFadeToBlack(1f);
@@ -112,6 +118,7 @@ public class GameLoop : MonoBehaviour
         anim.Animate(1f);
         yield return StartCoroutine(cameraController.DebateStartCameraMovement(3f));
         isDebateActive = true;
+        PlayerInputManager.instance.isInputActive = true;
         TimeManipulationManager.instance.isInputActive = true;
         TimerManager.instance.SetTimer(300);
     }
@@ -121,6 +128,8 @@ public class GameLoop : MonoBehaviour
     {
         if (isDebateActive)
         {
+            HandlePause();
+            
             if (PlayerInputManager.instance.isPaused || !isDebateActive)
             {
                 return;
@@ -159,7 +168,7 @@ public class GameLoop : MonoBehaviour
             int index = 0;
             while (index < debateTexts.Count)
             {
-                if (debateTexts[index].ttl < timer)
+                if (debateTexts[index].ttl + debateTexts[index].delay < timer)
                 {
                     StartCoroutine(DestroyText(debateTexts[index]));
                     debateTexts.RemoveAt(index);
@@ -176,6 +185,24 @@ public class GameLoop : MonoBehaviour
         }
     }
 
+    private void HandlePause()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1) && !PlayerInputManager.instance.isPaused)
+        {
+            PlayerInputManager.instance.TogglePause();
+            PlayerInputManager.instance.pauseMenu.isSubmenuOpen = true;
+            EvidenceManager.instance.evidenceMenu.Open();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape) && !EvidenceManager.instance.evidenceMenu.isCloseupOpen && PlayerInputManager.instance.isPaused && !PlayerInputManager.instance.guideOpen)
+        {
+            PlayerInputManager.instance.TogglePause();
+            EvidenceManager.instance.evidenceMenu.Close();
+            PlayerInputManager.instance.pauseMenu.StartCoroutine(PlayerInputManager.instance.pauseMenu
+                .CloseSubMenuCooldown());
+        }
+    }
+
     private void DeactivateDebate()
     {
         TrialCursorManager.instance.Hide();
@@ -189,7 +216,12 @@ public class GameLoop : MonoBehaviour
     {
         yield return SwitchToTextBoxMode();
         yield return TrialDialogueManager.instance.RunNodes(finishNodes);
-        yield return SwitchToDebateMode();
+        if (debateSegment.isLooping)
+           yield return SwitchToDebateMode();
+        else
+        {
+            yield return FinishDebate();
+        }
     }
 
     IEnumerator SwitchToTextBoxMode()
@@ -272,16 +304,21 @@ public class GameLoop : MonoBehaviour
         {
             isShooting = true;
             Ray ray = statementsCamera.ScreenPointToRay(Input.mousePosition);
-
+            
             // Create a plane in front of the firePoint (facing the same way as the camera)
-            Plane plane = new Plane(statementsCamera.transform.forward,
-                shootOrigin.position + statementsCamera.transform.forward * 4f);
-
+            Plane plane = new Plane(
+                statementsCamera.transform.forward,
+                statementsCamera.transform.position + statementsCamera.transform.forward * textPlaneDistance
+            );
+            
+            
+            
             if (plane.Raycast(ray, out float distance))
             {
                 Vector3 targetPoint = ray.GetPoint(distance);
+                
                 Vector3 direction = (targetPoint - shootOrigin.position).normalized;
-
+            
                 Quaternion rotation = Quaternion.LookRotation(direction, statementsCamera.transform.up) *
                                       Quaternion.Euler(0, 90f, 0);
                 bulletManager.ShootBullet();
@@ -289,7 +326,7 @@ public class GameLoop : MonoBehaviour
                 TextMeshPro bulletText = bullet.GetComponent<TextMeshPro>();
                 bulletText.text = bulletManager.GetSelectedEvidence();
                 CreateColliderAroundTextRange(bullet, 0, bulletText.text.Length-1);
-                StartCoroutine(MoveBullet(bullet, direction, 1f));
+                StartCoroutine(MoveBullet(bullet, direction, 1.5f));
                 debateUIAnimator.MoveCylinder();
                 debateUIAnimator.GrowAndShrinkCircles();
             }
@@ -423,9 +460,14 @@ public class GameLoop : MonoBehaviour
         cameraController.camera.targetTexture = null;
         ScreenShatterManager shatter = Instantiate(screenShatter);
         yield return StartCoroutine(shatter.ScreenShatter());
+        yield return FinishDebate();
+    }
+
+    IEnumerator FinishDebate()
+    {
         ImageScript.instance.FadeToBlack(0.01f);
         yield return new WaitForSeconds(0.01f);
-
+        debateUIAnimator.gameObject.SetActive(false);
         ImageScript.instance.UnFadeToBlack(0.5f);
         yield return cameraController.DiscussionIntroMovement(1f);
         musicManager.StopSong();
@@ -485,11 +527,23 @@ public class GameLoop : MonoBehaviour
             debateUIAnimator.UpdateName(nextNode.character.displayName);
         debateUIAnimator.HighlightNode(textIndex);
         yield return cameraController.SpinToTarget(characterStand.transform, characterStand.heightPivot,
-            nextNode.positionOffset, nextNode.rotationOffset, nextNode.fovOffset);
+            nextNode.EffectivePositionOffset, nextNode.EffectiveRotationOffset, nextNode.EffectiveFovOffset);
 
-        foreach (CameraEffect cameraEffect in nextNode.cameraEffects)
+        foreach (CameraEffect cameraEffect in nextNode.EffectiveCameraEffects)
         {
             effectController.StartEffect(cameraEffect);
+        }
+
+
+        if (debateSegment.isLooping)
+        {
+            audioSource.Stop();
+            audioSource.clip = nextNode.voiceLine;
+            audioSource.Play();
+        }
+        else
+        {
+            SoundManager.instance.PlaySoundEffect(nextNode.voiceLine);
         }
     }
 
@@ -557,6 +611,7 @@ public class GameLoop : MonoBehaviour
         floatingText.Initialize(nodeDebateText.textEffects,
             nodeDebateText.introEffect,
             nodeDebateText.outroEffect,
+            nodeDebateText.delay,
             nodeDebateText.ttl,
             nodeDebateText.correctEvidence,
             correctCharacterIndexBegin,
@@ -564,6 +619,7 @@ public class GameLoop : MonoBehaviour
 
         floatingText.transform.SetParent(statementsCamera.transform.parent);
         floatingText.transform.position = textStartPosition.position + nodeDebateText.spawnOffset;
+        floatingText.transform.rotation = Quaternion.Euler(nodeDebateText.rotationOffset);
         floatingText.transform.localScale = nodeDebateText.scale;
 
         for (int i = 0; i < results.Length; i++)
@@ -577,11 +633,19 @@ public class GameLoop : MonoBehaviour
         floatingText.linesTextMeshPros = floatingText.linesGameObjects.ConvertAll(x => x.GetComponent<TextMeshPro>());
 
         debateTexts.Add(floatingText);
+        if (floatingText.delay > 0)
+        {
+            floatingText.gameObject.SetActive(false);
+        }
+        
+        
         StartCoroutine(StartTextEffects(floatingText));
     }
 
     IEnumerator StartTextEffects(FloatingText floatingText)
     {
+        yield return new WaitForSeconds(floatingText.delay);
+        floatingText.gameObject.SetActive(true);
         if (floatingText.introEffect != null)
             yield return floatingText.introEffect.Apply(floatingText.transform);
         foreach (TextEffect textEffect in floatingText.textEffects)
@@ -696,8 +760,20 @@ public class GameLoop : MonoBehaviour
             max = Vector3.Max(max, tr);
         }
 
+        if (float.IsPositiveInfinity(min.x) ||
+            float.IsPositiveInfinity(min.y) ||
+            float.IsPositiveInfinity(min.z) ||
+            float.IsNegativeInfinity(max.x) ||
+            float.IsNegativeInfinity(max.y) ||
+            float.IsNegativeInfinity(max.z))
+        {
+            return;
+        }
+
         Vector3 center = (min + max) / 2;
         Vector3 size = max - min;
+
+        float z = 0f;
 
         if (createChildObject)
         {
@@ -709,12 +785,13 @@ public class GameLoop : MonoBehaviour
             orangeHitbox.transform.localScale = Vector3.one;
             boxCollider = orangeHitbox.AddComponent<BoxCollider>();
             orangeHitbox.tag = "OrangeHitBox";
+            z = 0.35f;
         }
         else
             boxCollider = textGameObject.AddComponent<BoxCollider>();
 
         boxCollider.center = center;
-        boxCollider.size = size;
+        boxCollider.size = new Vector3(size.x, size.y, z);
     }
 
     public int GetSelectedEvidenceIndex()

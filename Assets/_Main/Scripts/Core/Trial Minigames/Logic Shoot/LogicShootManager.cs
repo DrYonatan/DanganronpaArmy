@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using DIALOGUE;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -33,6 +34,8 @@ public class LogicShootManager : MonoBehaviour
     public bool isActive;
     public bool isInFinish;
 
+    private Coroutine timerRoutine;
+    
     private Coroutine finalTargetRoutine;
     private bool isFinishedTargets;
 
@@ -78,13 +81,13 @@ public class LogicShootManager : MonoBehaviour
         Time.timeScale = 0f;
         rifleManager.RaiseRifle();
         MusicManager.instance.LowerVolume();
-        animator.RaiseRifleAnimation();
-        StartCoroutine(RifleCountDown());
+        animator.RaiseRifleAnimation(segment.stopGameTime);
+        timerRoutine = StartCoroutine(RifleCountDown());
     }
 
     private IEnumerator RifleCountDown()
     {
-        yield return new WaitForSecondsRealtime(5f);
+        yield return new WaitForSecondsRealtime(segment.stopGameTime);
         if (isRifleUp)
             PutDownRifle();
     }
@@ -92,6 +95,7 @@ public class LogicShootManager : MonoBehaviour
     private void PutDownRifle()
     {
         isRifleUp = false;
+        StopCoroutine(timerRoutine);
         Time.timeScale = 1f;
         rifleManager.PutRifleDown();
         MusicManager.instance.RaiseVolume();
@@ -119,18 +123,17 @@ public class LogicShootManager : MonoBehaviour
         if (rifleManager.rifleErrorCooldown)
             return;
 
-        int number = Random.Range(1, 30);
+        int number = Random.Range(1, 101); // 1–100
 
-        switch (number)
+        if (number <= segment.firstStuckTypeProbability)
         {
-            case 1:
-                rifleManager.RifleStuckTypeOne();
-                rifleManager.rifleErrorCooldown = true;
-                break;
-            case 2:
-                rifleManager.RifleStuckTypeTwo();
-                rifleManager.rifleErrorCooldown = true;
-                break;
+            rifleManager.RifleStuckTypeOne();
+            rifleManager.rifleErrorCooldown = true;
+        }
+        else if (number <= segment.firstStuckTypeProbability + segment.secondStuckTypeProbability)
+        {
+            rifleManager.RifleStuckTypeTwo();
+            rifleManager.rifleErrorCooldown = true;
         }
     }
 
@@ -218,6 +221,8 @@ public class LogicShootManager : MonoBehaviour
         animator.UpdateAmmo(rifleManager.ammo);
         rifleManager.PutRifleDown();
 
+        PlayerInputManager.instance.pauseAvailable = false;
+
         StartCoroutine(PlayGame());
     }
 
@@ -225,6 +230,7 @@ public class LogicShootManager : MonoBehaviour
     {
         ImageScript.instance.FadeToBlack(0.2f);
         yield return CameraController.instance.DiscussionOutroMovement(2.5f);
+        ((CourtTextBoxAnimator)DialogueSystem.instance.dialogueBoxAnimator).ChangeFace(null);
         animator.gameObject.SetActive(true);
         animator.Initialize();
 

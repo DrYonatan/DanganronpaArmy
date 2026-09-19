@@ -16,7 +16,10 @@ public class TitleScreenSubMenu : MonoBehaviour
             buttons[currentItemIndex].HoverButtonAnimation();
         AppearAnimation();
     }
-
+    public virtual bool CanExit()
+    {
+        return true;
+    }
     void Update()
     {
         if (menuNavigationActive)
@@ -52,7 +55,7 @@ public class TitleScreenSubMenu : MonoBehaviour
         }
     }
 
-    private void AppearAnimation()
+    public virtual void AppearAnimation()
     {
         int index = 0;
 
@@ -60,7 +63,7 @@ public class TitleScreenSubMenu : MonoBehaviour
         {
             RectTransform buttonTransform = button.GetComponent<RectTransform>();
             Vector3 targetRotation = Vector3.zero;
-            
+
             if (index % 2 == 0)
             {
                 buttonTransform.rotation = Quaternion.Euler(0f, -80f, 0f);
@@ -76,7 +79,7 @@ public class TitleScreenSubMenu : MonoBehaviour
         }
     }
 
-    public void OutroAnimation()
+    public virtual void OutroAnimation()
     {
         int index = 0;
 
@@ -84,7 +87,7 @@ public class TitleScreenSubMenu : MonoBehaviour
         {
             RectTransform buttonTransform = button.GetComponent<RectTransform>();
             Vector3 targetRotation = Vector3.zero;
-            
+
             if (index % 2 == 0)
             {
                 targetRotation = new Vector3(0f, -80f, 0f);

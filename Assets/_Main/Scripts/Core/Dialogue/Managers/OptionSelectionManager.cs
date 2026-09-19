@@ -70,6 +70,7 @@ namespace DIALOGUE
         public void OpenMenu<T>(List<Option<T>> options) where T : DialogueNode
         {
             isActive = true;
+            selectedIndex = 0;
             hasStartedSelection = false;
             gameObject.SetActive(true);
             GenerateUIOptions(options);

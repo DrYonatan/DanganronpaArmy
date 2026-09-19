@@ -1,10 +1,13 @@
+using System.Collections;
 using DIALOGUE;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MenuScreenContainer : MonoBehaviour
 {
     public MenuScreen currentOpenMenu;
     public GeneralMenu generalMenu;
+    public bool isOpen;
     public bool isSubmenuOpen;
 
     private void CloseCurrentMenu()
@@ -13,19 +16,27 @@ public class MenuScreenContainer : MonoBehaviour
         isSubmenuOpen = false;
     }
 
+    public IEnumerator CloseSubMenuCooldown()
+    {
+        yield return new WaitForSecondsRealtime(2f);
+        isSubmenuOpen = false;
+    }
+
     public void ClosePauseScreen()
     {
         CloseCurrentMenu();
-        PlayerInputManager.instance.TogglePause();
+        PlayerInputManager.instance.TogglePauseAndMenu();
     }
 
     public void OpenGeneralMenu()
     {
+        isOpen = true;
         generalMenu.OpenMenu();
     }
 
     public void CloseGeneralMenu()
     {
+        isOpen = false;
         generalMenu.CloseMenu();
     }
 

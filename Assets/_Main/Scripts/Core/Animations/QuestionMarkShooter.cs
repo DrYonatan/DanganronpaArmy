@@ -20,8 +20,7 @@ public class QuestionMarkShooter : MonoBehaviour
         
         // Choose control points for a wavy arc
         Vector3 mid = Vector3.Lerp(start, target, 0.5f);
-        Vector3 right = Vector3.Cross((target - start).normalized, Vector3.up);
-        mid += right * curveAmount; // Add side offset to curve
+        mid += Vector3.up * curveAmount;// Add upward offset to curve
 
         GameObject qm = Instantiate(questionMarkPrefab, start, mainCamera.transform.rotation);
         float elapsed = 0;
@@ -34,14 +33,14 @@ public class QuestionMarkShooter : MonoBehaviour
             Vector3 p1 = Vector3.Lerp(start, mid, t);
             Vector3 p2 = Vector3.Lerp(mid, target, t);
             qm.transform.position = Vector3.Lerp(p1, p2, t);
-            qm.transform.Rotate(Vector3.forward * 360f * Time.deltaTime);
+            qm.transform.Rotate(Vector3.forward * (360f * 3f * Time.deltaTime));
             
             elapsed += Time.deltaTime;
             yield return null;
         }
 
         qm.transform.position = target;
-        Vector3 directionToCamera = (Camera.main.transform.position - target).normalized;
+        Vector3 directionToCamera = (CameraManager.instance.cameraTransform.position - target).normalized;
         GameObject effect = Instantiate(hitEffectPrefab, target + directionToCamera * hitEffectOffset, Quaternion.identity);
         effect.transform.localScale = new Vector3(2f, 2f, 2f);
         Destroy(effect, 2f);

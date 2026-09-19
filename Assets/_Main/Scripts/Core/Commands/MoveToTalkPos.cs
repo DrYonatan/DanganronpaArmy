@@ -1,9 +1,42 @@
 using System.Collections;
+using DIALOGUE;
+using UnityEngine;
 
 public class MoveToTalkPos : Command
 {
+    public string positionId;
+
     public override IEnumerator Execute()
     {
-        yield return CameraManager.instance.MoveCameraTo(WorldManager.instance.talkPosition.position, 0.5f);
+        Transform talkPosition = WorldManager.instance.talkPositions.Find((x) => x.name.Equals(positionId));
+
+        if (talkPosition == null && WorldManager.instance.talkPositions.Count > 0)
+            talkPosition = WorldManager.instance.talkPositions[0];
+
+        if (talkPosition == null)
+            yield break;
+
+        if (positionId.Equals("CameraStartPos"))
+        {
+            CharacterClickEffects.instance.MakeCharactersReappear(WorldManager.instance.charactersObject?.gameObject);
+        }
+        else
+        {
+            CharacterClickEffects.instance.MakeCharactersDisappear(WorldManager.instance.charactersObject, 1f);
+        }
+
+        DialogueSystem.instance.TextBoxDisappear();
+        CameraManager.instance.StartCoroutine(
+            CameraManager.instance.RotateCameraTo(talkPosition.rotation, 0.5f));
+        yield return CameraManager.instance.MoveCameraTo(talkPosition.position, 0.5f);
+        CameraManager.instance.initialRotation = talkPosition.rotation;
     }
+
+#if UNITY_EDITOR
+    public override void DrawGUI()
+    {
+        base.DrawGUI();
+        positionId = GUILayout.TextField(positionId);
+    }
+#endif
 }

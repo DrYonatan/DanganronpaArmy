@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DIALOGUE;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -53,56 +54,41 @@ public class SaveManager : MonoBehaviour
             : SaveSystem.LoadGame(currentSaveSlot);
     }
 
-    public SaveData GetVNSaveData()
+    public void SaveGameVn(int slot)
     {
-        WorldEvent currentEvent = ProgressManager.instance.currentGameEvent as WorldEvent;
-        Dictionary<string, ObjectData> charactersData =
-            currentEvent?.charactersData;
-        Dictionary<string, ObjectData> objectsData =
-            currentEvent?.objectsData;
-
         SaveData data = new SaveData(GameStateManager.instance.chapterIndex,
             GameStateManager.instance.chapterSegmentIndex,
             ProgressManager.instance.currentGameEventIndex,
             WorldManager.instance.currentRoom?.name,
-            currentEvent ? currentEvent.isAfterStartText : true,
-            currentEvent ? currentEvent.isAfterFinishText : true,
+            ProgressManager.instance.savedInPopup,
             VNNodePlayer.instance.currentConversation?.guid, VNNodePlayer.instance.lineIndex,
             MusicManager.instance.audioSource.clip ? MusicManager.instance.audioSource.clip.name : "",
-            charactersData,
-            objectsData,
-            GameStateManager.instance.GetCurrentChapterSegment().GetSceneName(),
+            ProgressManager.instance.currentGameEvent?.HandleSave(),
+            GameStateManager.instance.GetCurrentChapterSegment() ? GameStateManager.instance.GetCurrentChapterSegment().GetSceneName() : "VisualNovelCore",
             GameStateManager.instance.charactersRanks, CameraManager.instance.player.transform.position,
             CameraManager.instance.cameraTransform.localPosition,
             CameraManager.instance.cameraTransform.localRotation.eulerAngles,
             CameraManager.instance.initialRotation.eulerAngles, WorldManager.instance.currentTime,
-            GameStateManager.instance.uiState, 0, 0, DateTime.Now.ToString("o"));
-
-        return data;
-    }
-
-    public SaveData GetTrialSaveData()
-    {
-        SaveData data = new SaveData(GameStateManager.instance.chapterIndex,
-            GameStateManager.instance.chapterSegmentIndex, TrialManager.instance.currentIndex, "", true, true,"",
-            TrialDialogueManager.instance.currentLineIndex,
-            MusicManager.instance.audioSource.clip ? MusicManager.instance.audioSource.clip.name : "", null, null,
-            SceneManager.GetActiveScene().name, GameStateManager.instance.charactersRanks,
-            Vector3.zero, Vector3.zero, Vector3.zero, Vector3.zero, TimeOfDay.Day, GameStateManager.instance.uiState,
-            TrialManager.instance.currentIndex,
-            TrialManager.instance.playerStats.hp, DateTime.Now.ToString("o"));
-        return data;
-    }
-
-    public void SaveGameVn(int slot)
-    {
-        SaveData data = GetVNSaveData();
+            GameStateManager.instance.uiState,
+            EvidenceManager.instance.evidenceList.ConvertAll(evidence => evidence.Name), 0, 0,
+            PlayerInputManager.instance.pauseAvailable,
+            DateTime.Now.ToString("o"));
         SaveSystem.SaveGame(data, slot);
     }
 
     public void SaveGameTrial(int slot)
     {
-        SaveData data = GetTrialSaveData();
+        SaveData data = new SaveData(GameStateManager.instance.chapterIndex,
+            GameStateManager.instance.chapterSegmentIndex, TrialManager.instance.currentIndex, "", true, "",
+            TrialDialogueManager.instance.currentLineIndex,
+            MusicManager.instance.audioSource.clip ? MusicManager.instance.audioSource.clip.name : "", null,
+            SceneManager.GetActiveScene().name, GameStateManager.instance.charactersRanks,
+            Vector3.zero, Vector3.zero, Vector3.zero, Vector3.zero, TimeOfDay.Day, GameStateManager.instance.uiState,
+            EvidenceManager.instance.evidenceList.ConvertAll(evidence => evidence.Name),
+            TrialManager.instance.currentIndex,
+            TrialManager.instance.playerStats.hp, PlayerInputManager.instance.pauseAvailable,
+            DateTime.Now.ToString("o"));
+
         SaveSystem.SaveGame(data, slot);
     }
 }

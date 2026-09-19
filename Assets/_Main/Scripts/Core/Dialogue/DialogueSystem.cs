@@ -79,7 +79,8 @@ namespace DIALOGUE
         public void HideNamePlate()
         {
             GameStateManager.instance.uiState.namePlateVisible = false;
-            dialogueBoxAnimator.HideNamePlate();
+            if(dialogueBoxAnimator.namePlateVisible)
+               dialogueBoxAnimator.HideNamePlate();
         }
 
         public void ShowNamePlate()
@@ -95,6 +96,11 @@ namespace DIALOGUE
         {
             if (!isActive)
                 SetIsActive(true);
+            if (((VNTextData)node.textData).text != "")
+            {
+                TextBoxAppear();
+            }
+               
             return conversationManager.PlayNodeText(node);
         }
 
@@ -108,11 +114,13 @@ namespace DIALOGUE
                 dialogueBoxAnimator.TextBoxAppear();
                 CursorManager.instance.Hide();
                 inputButton.gameObject.SetActive(true);
+                PlayerInputManager.instance.pauseMenu.generalMenu.menuItems[0].UpdateVisibility(false);
             }
             else
             {
                 dialogueBoxAnimator.TextBoxDisappear();
                 inputButton.gameObject.SetActive(false);
+                PlayerInputManager.instance.pauseMenu.generalMenu.menuItems[0].UpdateVisibility(true);
             }
         }
 

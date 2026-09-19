@@ -12,7 +12,7 @@ public class NameAndEvent
 }
 
 [CreateAssetMenu(menuName = "Game Events/Free Roam Event/Investigation Event")]
-public class InvestigationEvent : FreeRoamEvent
+public class InvestigationEvent : FreeTimeEvent
 {
     [SerializeField] public List<NameAndEvent> assetEvents;
 

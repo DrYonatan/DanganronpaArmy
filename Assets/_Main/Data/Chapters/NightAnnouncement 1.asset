@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac78edb917e5f4142b7f642498064325, type: 3}
+  m_Name: NightAnnouncement 1
+  m_EditorClassIdentifier: 
+  guid: 03324a4453efb3145806eac4cb37cb07
+  settings:
+    characterPositions: []
+  nodes:
+  - rid: 6299374097614503941
+  - rid: 6299374097614503944
+  references:
+    version: 2
+    RefIds:
+    - rid: 6299374097614503941
+      type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 80}
+        title: 
+        drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
+        character: {fileID: 0}
+        displayName: "\u05D1\u05DE\u05D1\u05D4"
+        expressionIndex: 0
+        textData:
+          rid: 6299374097614503942
+    - rid: 6299374097614503942
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "\u05E9\u05E2\u05EA \u05D4\u05D8\"\u05E9 \u05D4\u05D2\u05D9\u05E2\u05D4
+          \u05DC\u05EA\u05D5\u05DE\u05D4! \u05DB\u05D5\u05DC\u05DD, \u05D4\u05D9\u05DB\u05E0\u05E1\u05D5
+          \u05DC\u05D2\u05DC\u05E2\u05D3\u05D9\u05DD \u05E9\u05DC\u05DB\u05DD \u05D5\u05EA\u05DC\u05DB\u05D5
+          \u05DC\u05D9\u05E9\u05D5\u05DF, \u05E9\u05D9\u05D4\u05D9\u05D5 \u05DC\u05DB\u05DD
+          \u05DB\u05D5\u05D7\u05D5\u05EA \u05DC\u05DE\u05D7\u05E8!\r\n"
+        commands:
+        - rid: 6299374097614503943
+        - rid: 6299374097614503946
+    - rid: 6299374097614503943
+      type: {class: ShowImage, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 1
+        image: {fileID: 21300000, guid: 11f0936d7a21e2345894c483591a0a66, type: 3}
+        flash: 0
+    - rid: 6299374097614503944
+      type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
+      data:
+        nodeRect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 0
+          height: 0
+        commandsScrollPosition: {x: 0, y: 0}
+        title: 
+        drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
+        character: {fileID: 0}
+        displayName: "\u05D1\u05DE\u05D1\u05D4"
+        expressionIndex: 0
+        textData:
+          rid: 6299374097614503945
+    - rid: 6299374097614503945
+      type: {class: VNTextData, ns: , asm: Assembly-CSharp}
+      data:
+        text: "\u05DC\u05D9\u05DC\u05D4 \u05D8\u05D5\u05D1 \u05E6\u05D5\u05D5\u05EA
+          1!"
+        commands: []
+    - rid: 6299374097614503946
+      type: {class: PlaySoundEffectCommand, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        clip: {fileID: 8300000, guid: 0657e935f2a96f94aa97a9e2fa62431d, type: 3}
+        volume: 1

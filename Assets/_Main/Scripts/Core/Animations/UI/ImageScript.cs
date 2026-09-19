@@ -17,10 +17,11 @@ public class ImageScript : MonoBehaviour
 
     public Image background;
     public Dictionary<Character, GameObject> backgroundCharacters = new();
+    public Image blackFadeUnderTextBox;
 
     public CanvasGroup animatedImageContainer;
     public VNAnimatedImage animatedImage;
-    
+
     public OverlayTextBoxAnimator overlayTextBoxAnimator;
 
     private void Awake()
@@ -33,9 +34,9 @@ public class ImageScript : MonoBehaviour
     {
         GameStateManager.instance.uiState.overlayImage = new ImageState { spriteId = image.name, visible = true };
         overlayImage.sprite = image;
-        DialogueSystem.instance.SetTextBox(overlayTextBoxAnimator); 
+        DialogueSystem.instance.SetTextBox(overlayTextBoxAnimator);
         DialogueSystem.instance.TextBoxAppear();
-        
+
         ShowingOrHiding(canvasGroup, duration, 1f);
 
         if (flash)
@@ -62,7 +63,7 @@ public class ImageScript : MonoBehaviour
     {
         if (sprite == null)
             return;
-        
+
         GameStateManager.instance.uiState.backgroundImage = new ImageState { spriteId = sprite.name, visible = true };
         Image oldBackground = background;
         Image newBackground = Instantiate(background, background.transform.parent);
@@ -70,8 +71,8 @@ public class ImageScript : MonoBehaviour
 
         Sequence seq = DOTween.Sequence();
 
-        if(duration != 0)
-           seq.Append(newBackground.DOFade(0f, 0f)); // Avoid stutters if the background should appear immediately
+        if (duration != 0)
+            seq.Append(newBackground.DOFade(0f, 0f)); // Avoid stutters if the background should appear immediately
         seq.Append(newBackground.DOFade(1f, duration).SetEase(Ease.Linear));
         seq.AppendCallback(() => Destroy(oldBackground.gameObject));
         seq.AppendCallback(() => background = newBackground);
@@ -90,7 +91,7 @@ public class ImageScript : MonoBehaviour
         Color color = whiteFlash.color;
         color.a = 0;
         whiteFlash.color = color;
-        
+
         whiteFlash.DOFade(1f, duration / 2).SetLoops(2, LoopType.Yoyo);
     }
 
@@ -104,15 +105,29 @@ public class ImageScript : MonoBehaviour
         ShowingOrHiding(blackFade, duration, 0f);
     }
 
-    private void ShowingOrHiding(CanvasGroup canvasGroupToShowOrHide, float duration, float targetAlpha)
+    public void FadeUnderTextBoxBlack(bool fadeIn, float duration)
     {
-        canvasGroupToShowOrHide.DOFade(targetAlpha, duration);
+        GameStateManager.instance.uiState.underTextboxBlackFade = new VisibilityState {  visible = fadeIn };
+        blackFadeUnderTextBox.DOFade(fadeIn ? 1 : 0, duration);
     }
 
-    public void CreateAnimatedImage(VNAnimatedImage image)
+    private void ShowingOrHiding(CanvasGroup canvasGroupToShowOrHide, float duration, float targetAlpha)
     {
+        if (duration == 0f)
+            canvasGroupToShowOrHide.alpha = targetAlpha;
+        else
+           canvasGroupToShowOrHide.DOFade(targetAlpha, duration).SetUpdate(true);
+    }
+
+    public void CreateAnimatedImage(VNAnimatedImage image, float duration, bool flash)
+    {
+        if(flash)
+            Flash(duration, flashSound);
         animatedImage = Instantiate(image, animatedImageContainer.transform);
-        animatedImageContainer.DOFade(1f, 0.2f).SetEase(Ease.Linear);
+        animatedImageContainer.DOFade(1f, duration).SetEase(Ease.Linear);
+        DialogueSystem.instance.TextBoxDisappear();
+        DialogueSystem.instance.SetTextBox(overlayTextBoxAnimator);
+        DialogueSystem.instance.TextBoxAppear();
         GameStateManager.instance.uiState.animatedImage = new AnimatedImageState
             { prefabId = image.name, currentStateIndex = 0, visible = true };
     }
@@ -122,12 +137,27 @@ public class ImageScript : MonoBehaviour
         if (animatedImage == null)
             yield break;
 
+        DialogueSystem.instance.TextBoxDisappear();
+        if (animatedImage.isCutscene)
+        {
+            VNUIAnimator.instance?.Disappear();
+        }
+
         GameStateManager.instance.uiState.animatedImage.currentStateIndex++;
 
         yield return animatedImage.ForwardSegment();
+
+        if (animatedImage.isCutscene)
+        {
+            DialogueSystem.instance.TurnOnSingleTimeAuto();
+        }
+        else
+        {
+            DialogueSystem.instance.TextBoxAppear();
+        }
     }
 
-    public void RemoveAnimatedImage(float duration)
+    public void RemoveAnimatedImage(float duration, bool flash)
     {
         if (animatedImage == null)
             return;
@@ -135,8 +165,16 @@ public class ImageScript : MonoBehaviour
         GameStateManager.instance.uiState.animatedImage = new AnimatedImageState
             { prefabId = "", currentStateIndex = 0, visible = false };
 
-        animatedImageContainer.DOFade(0f, duration).SetEase(Ease.Linear)
-            .OnComplete(() => Destroy(animatedImage.gameObject));
+        DialogueSystem.instance.TextBoxDisappear();
+        DialogueSystem.instance.UseInitialDialogueContainer();
+        
+        if(flash)
+            Flash(duration, flashSound);
+        
+        if(DialogueSystem.instance.isActive && !animatedImage.isCutscene)
+           DialogueSystem.instance.TextBoxAppear();
+        animatedImageContainer.DOFade(0f, duration).SetEase(Ease.Linear);
+        Destroy(animatedImage.gameObject, duration);
     }
 
     public void ShowCharacterOnBackground(Character character)
@@ -165,7 +203,7 @@ public class ImageScript : MonoBehaviour
 
     public void CreateCharacterOnBackground(Character character)
     {
-        GameObject characterObj = Instantiate(character.vnObjectPrefab, background.transform.parent);
+        GameObject characterObj = Instantiate(character.vnObjectPrefab, overlayImage.transform);
         characterObj.transform.localPosition = Vector3.zero;
 
         characterObj.name = character.name;
@@ -174,7 +212,7 @@ public class ImageScript : MonoBehaviour
             character.vnObjectPrefab.transform.localPosition.y, 0);
         CanvasGroup canvas = characterObj.GetComponent<CanvasGroup>();
         canvas.alpha = 0f;
-        
+
         backgroundCharacters.Add(character, characterObj);
     }
 

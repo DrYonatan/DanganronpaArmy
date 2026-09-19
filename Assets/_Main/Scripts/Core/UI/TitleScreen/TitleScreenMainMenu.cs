@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -12,6 +13,8 @@ public class TitleScreenMainMenu : MonoBehaviour
     public List<TitleScreenSubMenu> subMenus;
     public TitleScreenSubMenu activeSubMenu;
     private Stack<TitleScreenSubMenu> subMenuStack = new();
+
+    public ChaptersBank chaptersBank;
 
     public Image donkey;
     public Image konga;
@@ -25,19 +28,44 @@ public class TitleScreenMainMenu : MonoBehaviour
     public Image smallRing;
     public Image blackOverlay;
 
+    public AudioSource musicPlayer;
+    
     public List<Sprite> availableFaceSprites;
+
+    public AudioMixer audioMixer;
 
     void Awake()
     {
+        musicPlayer.Stop();
         instance = this;
+        chaptersBank = Resources.Load<ChaptersBank>("ChaptersBank");
         subMenuStack.Push(activeSubMenu);
         Cursor.lockState = CursorLockMode.Locked;
         StartAnimation();
     }
 
+    void Start()
+    {
+        InitializeAudioMixerGroups();
+    }
+    
+    private void InitializeAudioMixerGroups()
+    {
+        float musicVolume = PlayerPrefs.GetFloat("MusicVolume", 1f);
+        float sfxVolume = PlayerPrefs.GetFloat("SFXVolume", 1f);
+
+        audioMixer.SetFloat("MusicVolume", LinearToDecibel(musicVolume));
+        audioMixer.SetFloat("SFXVolume", LinearToDecibel(sfxVolume));
+    }
+
+    private float LinearToDecibel(float volume)
+    {
+        return volume <= 0.0001f ? -80f : Mathf.Log10(volume) * 20f;
+    }
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && subMenuStack.Count > 1)
+        if (Input.GetKeyDown(KeyCode.Escape) && subMenuStack.Count > 1 && activeSubMenu.CanExit())
         {
             ReturnToPrevMenu();
         }
@@ -114,6 +142,7 @@ public class TitleScreenMainMenu : MonoBehaviour
 
     private void InitializeFirstMenu()
     {
+        musicPlayer.Play();
         activeSubMenu.gameObject.SetActive(true);
         activeSubMenu.Initialize();
 

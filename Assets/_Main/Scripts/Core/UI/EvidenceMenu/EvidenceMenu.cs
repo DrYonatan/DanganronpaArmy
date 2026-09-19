@@ -27,6 +27,13 @@ public class EvidenceMenu : MenuScreen
     public CanvasGroup mainContainerCanvasGroup;
     public RectTransform infoContainerTransform;
     public RectTransform evidenceContainerTransform;
+    public Image presentGuide;
+    public Image closeupGuide;
+    public Image seeQuestionGuide;
+    public Image closeupImage;
+    public Image blackOverlay;
+    public bool isCloseupOpen;
+    public bool finishedTransition;
     private int infoContainerStartPosX;
     private int evidenceContainerStartPosY;
 
@@ -46,6 +53,18 @@ public class EvidenceMenu : MenuScreen
 
     public void Initialize()
     {
+        finishedTransition = true;
+        presentGuide.gameObject.SetActive(false);
+        seeQuestionGuide.gameObject.SetActive(false);
+        closeupGuide.gameObject.SetActive(false);
+        
+        foreach (ListItem instantiated in evidenceListUI)
+        {
+            Destroy(instantiated.gameObject);
+        }
+
+        evidenceListUI.Clear();
+
         foreach (Evidence evidence in EvidenceManager.instance.evidenceList)
         {
             AddEvidenceToList(evidence);
@@ -79,6 +98,13 @@ public class EvidenceMenu : MenuScreen
 
     void Update()
     {
+        HandleCloseup();
+
+        if (isCloseupOpen || !finishedTransition)
+        {
+            return;
+        }
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             PlayerInputManager.instance.pauseMenu.GoBackToGeneral();
@@ -99,6 +125,45 @@ public class EvidenceMenu : MenuScreen
                 UpdateUI();
                 SoundManager.instance.PlaySoundEffect(moveSelectionSound);
             }
+        }
+    }
+
+    void HandleCloseup()
+    {
+        if (EvidenceManager.instance.evidenceList.Count == 0)
+        {
+            finishedTransition = true;
+            return;
+        }
+        if (EvidenceManager.instance.evidenceList[currentEvidenceIndex]?.closeup != null && !isCloseupOpen &&
+            finishedTransition &&
+            PlayerInputManager.instance.DefaultInput())
+        {
+            isCloseupOpen = true;
+            finishedTransition = false;
+            blackOverlay.DOKill();
+            closeupImage.DOKill();
+            closeupImage.sprite = EvidenceManager.instance.evidenceList[currentEvidenceIndex].closeup;
+            Sequence sequence = DOTween.Sequence();
+            sequence.Append(blackOverlay.DOFade(1f, 0.2f).SetUpdate(true));
+            sequence.Append(closeupImage.DOFade(1f, 0f).SetUpdate(true));
+            sequence.Append(blackOverlay.DOFade(0f, 0.2f).SetUpdate(true));
+            sequence.OnComplete(() => finishedTransition = true);
+            sequence.SetUpdate(true);
+        }
+
+        else if (isCloseupOpen && finishedTransition && Input.GetKeyDown(KeyCode.Escape))
+        {
+            isCloseupOpen = false;
+            finishedTransition = false;
+            blackOverlay.DOKill();
+            closeupImage.DOKill();
+            Sequence sequence = DOTween.Sequence();
+            sequence.Append(blackOverlay.DOFade(1f, 0.2f).SetUpdate(true));
+            sequence.Append(closeupImage.DOFade(0f, 0f).SetUpdate(true));
+            sequence.Append(blackOverlay.DOFade(0f, 0.2f).SetUpdate(true));
+            sequence.OnComplete(() => finishedTransition = true);
+            sequence.SetUpdate(true);
         }
     }
 
@@ -125,17 +190,21 @@ public class EvidenceMenu : MenuScreen
                 {
                     item.SetHovered(false);
                 }
+                
+                closeupGuide.gameObject.SetActive(currentEvidence.closeup != null);
 
                 if (evidenceListUI.Count > 0)
                     evidenceListUI[currentEvidenceIndex].SetHovered(true);
 
-                evidenceListTransform.anchoredPosition = new Vector2(0, Mathf.Max((currentEvidenceIndex - 4) * 152, 0)) ;
+                evidenceListTransform.anchoredPosition = new Vector2(0, Mathf.Max((currentEvidenceIndex - 4) * 152, 0));
             }
         }
     }
 
     public IEnumerator SelectEvidence(string question, Func<Evidence, IEnumerator> onFinish)
     {
+        PlayerInputManager.instance.pauseAvailable = false;
+        PlayerInputManager.instance.guideAvailable = false;
         transform.localScale = Vector3.zero;
         transform.DOScale(Vector3.one, 0.3f)
             .SetEase(Ease.OutBack).SetUpdate(true);
@@ -143,10 +212,12 @@ public class EvidenceMenu : MenuScreen
         logo.alpha = 0f;
         gameObject.SetActive(true);
         currentEvidenceIndex = 0;
+        presentGuide.gameObject.SetActive(true);
+        seeQuestionGuide.gameObject.SetActive(true);
         UpdateUI();
         bool isOpen = false;
 
-        while (PlayerInputManager.instance.DefaultInput())
+        while (!Input.GetMouseButtonDown(1) || isCloseupOpen)
         {
             if (Input.GetKey(KeyCode.Tab))
             {
@@ -166,7 +237,11 @@ public class EvidenceMenu : MenuScreen
         }
         questionBubble.gameObject.SetActive(false);
         Close();
+        presentGuide.gameObject.SetActive(false);
+        seeQuestionGuide.gameObject.SetActive(false);
         Evidence currentEvidence = EvidenceManager.instance.evidenceList[currentEvidenceIndex];
         yield return onFinish(currentEvidence);
+        PlayerInputManager.instance.pauseAvailable = true;
+        PlayerInputManager.instance.guideAvailable = true;
     }
 }

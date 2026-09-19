@@ -21,6 +21,8 @@ public class DialogueNode
 
     [SerializeReference] public TextData textData;
 
+    public AudioClip voiceLine;
+
     public DialogueNode(DrawNode drawNode)
     {
         this.drawNode = drawNode;
@@ -30,7 +32,7 @@ public class DialogueNode
     public DialogueNode(DrawNode drawNode, DialogueNode copy)
     {
         this.drawNode = drawNode;
-        this.InitializeTextData();
+        InitializeTextData();
         character = copy.character;
         displayName = copy.displayName;
         expressionIndex = copy.expressionIndex;
@@ -57,15 +59,22 @@ public class DialogueNode
             yield break;
 
         yield return DialogueSystem.instance.RunBeforeCommands(data.commands);
-            
-        if (character != null && VNNodePlayer.instance.currentConversation.settings != null && !character.notVisible)
+        
+        if (character != null && VNNodePlayer.instance.currentConversation?.settings != null && !character.notVisible)
         {
             CharacterPositionMapping info = VNNodePlayer.instance.currentConversation.settings.characterPositions.Find(characterInfo =>
                 characterInfo.character == character);
             VNCharacterManager.instance.SetSpeaker(character);
             VNCharacterManager.instance.ShowOnlySpeaker(character, DialogueSystem.instance.GetIsSkip() ? 0 : 0.25f);
             VNCharacterManager.instance.SwitchEmotion(character, character.emotions[expressionIndex]);
+            PlayerInputManager.instance.isInputActive = false;
             yield return CameraManager.instance.MoveCamera((CameraLookDirection)info.position, DialogueSystem.instance.GetIsSkip() ? 0 : 0.2f);
+            PlayerInputManager.instance.isInputActive = true;
+        }
+        
+        if (!DialogueSystem.instance.GetIsSkip())
+        {
+            SoundManager.instance.PlaySoundEffect(voiceLine);
         }
         
         yield return DialogueSystem.instance.Say(this);

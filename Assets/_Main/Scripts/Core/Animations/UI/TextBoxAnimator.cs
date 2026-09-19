@@ -21,6 +21,8 @@ public class TextBoxAnimator : BasicTextBoxAnimator
         if (textBoxVisible)
             return;
         
+        if(tabGuide != null)
+           tabGuide.gameObject.SetActive(true);
         textBoxVisible = true;
         dialogueBoxCanvasGroup.DOKill();
         namePlateCanvasGroup.DOKill();
@@ -35,6 +37,11 @@ public class TextBoxAnimator : BasicTextBoxAnimator
 
     public override void TextBoxDisappear()
     {
+        if (!textBoxVisible)
+            return;
+        
+        if(tabGuide != null)
+           tabGuide.gameObject.SetActive(false);
         textBoxVisible = false;
         DialogueSystem.instance.ClearTextBox();
         dialogueBoxCanvasGroup.alpha = 1f;
@@ -53,6 +60,9 @@ public class TextBoxAnimator : BasicTextBoxAnimator
     }
     public override void HideNamePlate()
     {
+        if (!namePlateVisible)
+            return;
+
         namePlateVisible = false;
         namePlateCanvasGroup.alpha = 1f;
         namePlateCanvasGroup.DOFade(0f, duration).SetEase(Ease.InOutQuad);

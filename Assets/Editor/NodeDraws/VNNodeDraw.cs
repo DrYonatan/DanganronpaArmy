@@ -35,6 +35,7 @@ public class VNNodeDraw : DrawNode
         }
 
         ShowPreviewImage(b);
+        b.voiceLine = (AudioClip)EditorGUILayout.ObjectField(b.voiceLine, typeof(AudioClip), false);
         GUILayout.EndVertical();
 
         ShowTextData(b, windowWidth * 0.5f);
@@ -113,6 +114,14 @@ public class VNNodeDraw : DrawNode
             menu.AddItem(new GUIContent("Move To Talk Position"), false, () => AddCommand(node, new MoveToTalkPos()));
             menu.AddItem(new GUIContent("Play Cutscene"), false, () => AddCommand(node, new PlayCutscene()));
             menu.AddItem(new GUIContent("Remove Custscene"), false, () => AddCommand(node, new RemoveCutscene()));
+            menu.AddItem(new GUIContent("Wait"), false, () => AddCommand(node, new Wait()));
+            menu.AddItem(new GUIContent("Play Free Time Conversation"), false, () => AddCommand(node, new StartFreeTimeConversation()));
+            menu.AddItem(new GUIContent("Toggle Under-text-box Black fade"), false, () => AddCommand(node, new FadeBlackUnderTextBox()));
+            menu.AddItem(new GUIContent("Section Start Effect"), false, () => AddCommand(node, new ApplySectionStartEffect()));
+            menu.AddItem(new GUIContent("Play Nodes"), false, () => AddCommand(node, new PlayConversationCommand()));
+            menu.AddItem(new GUIContent("Single Time Auto"), false, () => AddCommand(node, new SingleTimeAuto()));
+            menu.AddItem(new GUIContent("Return to title screen"), false, () => AddCommand(node, new ReturnToTitleScreen()));
+            menu.AddItem(new GUIContent("Toggle Pause Availability"), false, () => AddCommand(node, new TogglePauseAvailability()));
 
             menu.ShowAsContext();
         }

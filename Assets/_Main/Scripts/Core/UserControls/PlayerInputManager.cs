@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 namespace DIALOGUE
@@ -10,22 +11,34 @@ namespace DIALOGUE
 
         public MenuScreenContainer pauseMenu;
 
+        public GameObject guideScreen;
+
+        public bool guideOpen;
+
         public bool isPaused;
+        
+        public bool pauseAvailable;
+        public bool guideAvailable;
 
         public bool isInputActive;
 
         public bool isDialogueInputActive;
 
-        void Start()
+        void Awake()
         {
             isPaused = false;
             instance = this;
             isDialogueInputActive = true;
             isInputActive = true;
+            pauseAvailable = true;
+            guideAvailable = true;
         }
 
         void Update()
         {
+            if (!isInputActive)
+                return;
+            
             if (isDialogueInputActive)
             {
                 Cursor.visible = false;
@@ -47,12 +60,49 @@ namespace DIALOGUE
                         DialogueSystem.instance.SetSkip(false);
                     }
                 }
-                
             }
-            if (Input.GetKeyDown(KeyCode.Alpha1) && !pauseMenu.isSubmenuOpen && isInputActive)
+
+            if (Input.GetKeyDown(KeyCode.Alpha1) && !pauseMenu.isSubmenuOpen && pauseAvailable)
             {
-                TogglePause();
+                TogglePauseAndMenu();
             }
+
+            if (Input.GetKeyDown(KeyCode.Escape) && isInputActive && !pauseMenu.isOpen && !pauseMenu.isSubmenuOpen && guideAvailable)
+            {
+                ToggleGuide();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Tab) && !pauseMenu.isOpen && DialogueSystem.instance.isActive && !pauseMenu.isSubmenuOpen && guideAvailable && !guideOpen)
+            {
+                DialogueSystem.instance.dialogueBoxAnimator.ToggleUI();
+            }
+        }
+
+        private void ToggleGuide()
+        {
+            if (guideOpen)
+                GuideDisappear();
+            else
+                GuideAppear();
+        }
+
+        private void GuideAppear()
+        {
+            guideOpen = true;
+            TogglePause();
+            guideScreen.SetActive(true);
+            guideScreen.transform.DOKill();
+            guideScreen.transform.localPosition = new Vector3(0, 1080, 0);
+            guideScreen.transform.DOLocalMoveY(0f, 0.2f).SetUpdate(true);
+        }
+
+        private void GuideDisappear()
+        {
+            guideOpen = false;
+            TogglePause();
+            guideScreen.transform.DOKill();
+            guideScreen.transform.localPosition = new Vector3(0, 0, 0);
+            guideScreen.transform.DOLocalMoveY(1080, 0.2f).SetUpdate(true).OnComplete(() => guideScreen.SetActive(false));
         }
 
         public void EnableInput()
@@ -72,27 +122,38 @@ namespace DIALOGUE
 
         public void PromptAdvance()
         {
-            if (!CutSceneManager.instance.isPlaying && !isPaused)
+            if (!CutSceneManager.instance.isPlaying && !isPaused && DialogueSystem.instance.dialogueBoxAnimator.uiEnabled)
             {
                 DialogueSystem.instance.OnUserPrompt_Next();
+            }
+            else if(!CutSceneManager.instance.isPlaying && !isPaused && !DialogueSystem.instance.dialogueBoxAnimator.uiEnabled)
+            {
+                DialogueSystem.instance.dialogueBoxAnimator.ToggleUI();
+            }
+        }
+
+        public void TogglePauseAndMenu()
+        {
+            TogglePause();
+            if (isPaused)
+            {
+                pauseMenu.OpenGeneralMenu();
+            }
+            else
+            {
+                pauseMenu.CloseGeneralMenu();
             }
         }
 
         public void TogglePause()
         {
             isPaused = !isPaused;
+
+            Time.timeScale = isPaused ? 0f : 1f;
             if (isPaused)
-            {
                 MusicManager.instance.LowerVolume();
-                Time.timeScale = 0f;
-                pauseMenu.OpenGeneralMenu();
-            }
             else
-            {
                 MusicManager.instance.RaiseVolume();
-                Time.timeScale = 1f;
-                pauseMenu.CloseGeneralMenu();
-            }
         }
     }
 }

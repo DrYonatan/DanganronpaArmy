@@ -21,9 +21,12 @@ public class PreTrialPrepMenu : MonoBehaviour
 
     public void Appear()
     {
+        EvidenceManager.instance.Initialize(GameStateManager.instance.GetCurrentChapter().evidenceList);
+
         chapterName.text = GameStateManager.instance.chaptersBank.chapters[GameStateManager.instance.chapterIndex].chapterName;
         MusicManager.instance.PlaySong(music);
         ImageScript.instance.UnFadeToBlack(0.1f);
+        PlayerInputManager.instance.guideAvailable = false;
         
         UpdateScrollingText();
         
@@ -55,10 +58,19 @@ public class PreTrialPrepMenu : MonoBehaviour
         cylinder.rectTransform.DOKill();
         cylinder.rectTransform.DOAnchorPosX(cylinder.rectTransform.anchoredPosition.x - 500f, 0.2f);
         itemsContainer.DOAnchorPosX(itemsContainer.anchoredPosition.x + 500f, 0.4f);
+        PlayerInputManager.instance.guideAvailable = true;
     }
-
+    
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape) && !EvidenceManager.instance.evidenceMenu.isCloseupOpen)
+        {
+            EvidenceManager.instance.evidenceMenu.Close();
+        }
+
+        if (EvidenceManager.instance.evidenceMenu.gameObject.activeInHierarchy)
+            return;
+        
         if (Input.GetKeyDown(KeyCode.S))
         {
             items[currentItemIndex].DisableHover();

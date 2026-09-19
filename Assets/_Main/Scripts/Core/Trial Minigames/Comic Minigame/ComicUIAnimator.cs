@@ -32,9 +32,10 @@ public class ComicUIAnimator : MonoBehaviour
     public ComicDraggablePin pinPrefab;
 
     public List<ComicPage> pageObjects = new List<ComicPage>();
+    public List<GameObject> pinParents;
     public List<ComicDraggablePin> draggablePins = new List<ComicDraggablePin>();
 
-    private Vector2 pinsContainerOriginalPos;
+    public Vector2 pinsContainerOriginalPos;
 
     public ComicDraggablePin currentDraggedPin;
 
@@ -89,6 +90,17 @@ public class ComicUIAnimator : MonoBehaviour
         sideBars.DOFade(0f, 0f);
         mouseL.DOFade(0f, 0f);
         mouseR.DOFade(0f, 0f);
+
+        firstPinNumber = 0;
+        pageNumber = 0;
+        UpdatePinsVisibility(0);
+
+        RectTransform pinsContainerTransform = pinsContainer.GetComponent<RectTransform>();
+        pinsContainerTransform.DOAnchorPosX(pinsContainerOriginalPos.x, 0f);
+        puzzlePagesContainer.DOAnchorPosX(-900, 0);
+
+        solutionCanvasGroup.alpha = 0;
+        puzzleCanvasGroup.alpha = 1;
     }
 
     public void GeneratePuzzlePages(List<ComicPage> pages)
@@ -101,11 +113,24 @@ public class ComicUIAnimator : MonoBehaviour
         }
     }
 
+    public void DestroyPuzzlePages()
+    {
+        foreach (ComicPage page in pageObjects)
+        {
+            Destroy(page.gameObject);
+        }
+
+        pageObjects.Clear();
+    }
+
     public void GenerateComicPins(List<ComicPin> pins)
     {
         foreach (ComicPin pin in pins)
         {
             GameObject parent = GeneratePinParent();
+
+            pinParents.Add(parent);
+
             ComicDraggablePin draggablePin = Instantiate(pinPrefab, parent.transform);
             draggablePin.SetPin(pin);
             draggablePin.parent = parent.GetComponent<RectTransform>();
@@ -122,6 +147,17 @@ public class ComicUIAnimator : MonoBehaviour
 
             draggablePins.Add(draggablePin);
         }
+    }
+
+    public void DestroyComicPins()
+    {
+        foreach (GameObject pin in pinParents)
+        {
+            Destroy(pin);
+        }
+
+        pinParents.Clear();
+        draggablePins.Clear();
     }
 
     public ComicPage GenerateSolutionPage(int index)
@@ -198,9 +234,10 @@ public class ComicUIAnimator : MonoBehaviour
 
     private void AnimatePuzzleBackground()
     {
-        Vector2 originalPos = movingMist.rectTransform.anchoredPosition;
+        float originalX = 573.7f;
+        movingMist.rectTransform.anchoredPosition = new Vector2(originalX, 0f);
 
-        movingMist.rectTransform.DOAnchorPosX(-originalPos.x, 8f).SetEase(Ease.Linear)
+        movingMist.rectTransform.DOAnchorPosX(-originalX, 8f).SetEase(Ease.Linear)
             .SetLoops(-1, LoopType.Restart);
 
         Color color = movingMist.color;
@@ -322,15 +359,10 @@ public class ComicUIAnimator : MonoBehaviour
         }
     }
 
-    public void SetPinsContainerStartPos()
-    {
-        pinsContainerOriginalPos = pinsContainer.transform.localPosition;
-    }
-
     public void BlinkReEnact()
     {
         SoundManager.instance.PlaySoundEffect(readyToPresentSound);
-        reEnactIcon.DOFade(1f, 0.2f).SetLoops(-1, LoopType.Yoyo);
+        reEnactIcon.DOFade(1f, 0.2f).SetLoops(-1, LoopType.Yoyo).SetLink(reEnactIcon.gameObject);
     }
 
     public void StopBlinkingReEnact()

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class MenuButton : MonoBehaviour
 {
     public MenuScreen menuToOpen;
-    public bool disabled;
+    public bool isEnabled;
     public MenuScreenContainer menuScreenContainer;
     public RectTransform rectTransform;
     public float originalPosY;
@@ -15,7 +15,18 @@ public class MenuButton : MonoBehaviour
     void Start()
     {
         originalPosY = rectTransform.anchoredPosition.y;
-        if (disabled)
+        UpdateVisibility(isEnabled);
+    }
+
+    public void UpdateVisibility(bool enable)
+    {
+        isEnabled = enable;
+        
+        if (isEnabled)
+        {
+            icon.DOFade(1f, 0f).SetUpdate(true);
+        }
+        else
         {
             icon.DOFade(0.3f, 0f).SetUpdate(true);
         }

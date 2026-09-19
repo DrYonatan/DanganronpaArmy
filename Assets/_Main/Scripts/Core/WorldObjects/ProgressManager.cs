@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using DIALOGUE;
 using UnityEngine;
@@ -16,6 +17,8 @@ public class ProgressManager : MonoBehaviour
 
     public ConversationDatabase conversationDatabase;
 
+    public bool savedInPopup;
+
     private void Awake()
     {
         instance = this;
@@ -24,6 +27,7 @@ public class ProgressManager : MonoBehaviour
     public void StartNewGame()
     {
         GameStateManager.instance.ResetChapters();
+        PlayerInputManager.instance.pauseAvailable = false;
         StartCoroutine(StartNewVnSegment());
     }
 
@@ -49,7 +53,6 @@ public class ProgressManager : MonoBehaviour
         }
 
         currentGameEvent = Instantiate(gameEvents[currentGameEventIndex]);
-
         currentGameEvent.OnStart();
     }
 
@@ -59,8 +62,16 @@ public class ProgressManager : MonoBehaviour
         SaveData data = SaveManager.instance != null ? SaveManager.instance.LoadCurrentSave() : SaveSystem.LoadGame(1);
 
         GameStateManager.instance.UpdateChapterIndexes(data.chapterIndex, data.chapterSegmentIndex);
+
+        if (GameStateManager.instance.chapterIndex >= GameStateManager.instance.chaptersBank.chapters.Count)
+        {
+            yield return GameStateManager.instance.ThankYouForPlaying();
+            yield break;
+        }
+            
+        GameStateManager.instance.charactersRanks = data.characterRanks.ToDictionary(e => e.key, e => e.value);
         VNUIAnimator.instance.chapterNameText.text = GameStateManager.instance.GetCurrentChapter().chapterName;
-        
+
         yield return TimeOfDayManager.instance.ChangeTimeOfDay(data.timeOfDay);
 
         LoadGameEvents(GameStateManager.instance.GetCurrentChapterSegment());
@@ -70,7 +81,7 @@ public class ProgressManager : MonoBehaviour
         WorldManager.instance.currentRoom = Resources.Load<Room>($"Rooms/{data.currentRoom}");
         MusicManager.instance.PlaySong(Resources.Load<AudioClip>($"Audio/Music/{data.currentMusic}"));
         currentGameEvent.LoadSave(data);
-        
+
         GameStateManager.instance.SetUIState(data.uiState);
         GameStateManager.instance.InitiateUIState();
 
@@ -81,14 +92,17 @@ public class ProgressManager : MonoBehaviour
         CameraManager.instance.cameraTransform.localRotation =
             Quaternion.Euler(new Vector3(data.cameraRotation[0], data.cameraRotation[1], data.cameraRotation[2]));
 
-        if (!data.isAfterStartText)
+        EvidenceManager.instance.Initialize(GameStateManager.instance.GetCurrentChapter().evidenceList
+            .FindAll(evidence => data.evidenceIds.Contains(evidence.Name)));
+
+        PlayerInputManager.instance.pauseAvailable = data.pauseAvailable;
+
+        if (data.savedInPopup)
         {
-            Room room = ((WorldEvent)currentGameEvent).startRoom;
-            yield return WorldManager.instance.LoadRoom(room, null);
             currentGameEvent.OnStart();
         }
         else if (WorldManager.instance.currentRoom != null)
-           WorldManager.instance.Initialize();
+            WorldManager.instance.Initialize();
     }
 
     public IEnumerator StartNewVnSegment()

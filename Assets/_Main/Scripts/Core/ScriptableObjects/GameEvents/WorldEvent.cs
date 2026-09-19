@@ -9,7 +9,6 @@ public class ObjectData
 {
     public bool isClicked;
     public int clickCount;
-    public bool isRequired;
 
     public ObjectData(bool isClicked, int clickCount)
     {
@@ -30,20 +29,20 @@ public class RoomData
 {
     public Room room;
     public WorldCharactersParent characters;
-    public GameObject worldObjects;
+    public WorldObjectsParent worldObjects;
     public VNConversationSegment preLoadText;
+    public VNConversationSegment firstTimeText;
+    public bool hasAlreadyEntered;
     public bool isExitable;
+    public List<string> additionalObjectsToExit;
     public List<EventAdditionalObjectData> additionalObjectData = new();
 }
 
 public abstract class WorldEvent : GameEvent
 {
-    public bool isFinished;
-
     public VNConversationSegment startText;
     public VNConversationSegment finishText;
 
-    public bool isAfterStartText;
     public bool isAfterFinishText;
 
     public VNConversationSegment unallowedText;
@@ -52,20 +51,17 @@ public abstract class WorldEvent : GameEvent
 
     public Dictionary<string, ObjectData> objectsData = new Dictionary<string, ObjectData>();
 
-    public Room startRoom;
-
     public override void OnStart()
     {
         WorldManager.instance.StartCoroutine(OnStartRoutine());
     }
 
-    private IEnumerator OnStartRoutine()
+    protected virtual IEnumerator OnStartRoutine()
     {
         yield return StartWithRoomLoad();
 
         WorldManager.instance.currentRoomData =
             roomDatas.Find(data => data.room.name.Equals(WorldManager.instance.currentRoom.name));
-        isAfterStartText = true;
 
         if (startText != null)
         {
@@ -73,31 +69,6 @@ public abstract class WorldEvent : GameEvent
         }
         else
             CursorManager.instance.Show();
-    }
-
-    private IEnumerator StartWithRoomLoad()
-    {
-        Room roomToLoad;
-
-        if (startRoom != null &&
-            WorldManager.instance.currentRoom?.roomName != startRoom.roomName)
-            roomToLoad = startRoom;
-        else
-        {
-            roomToLoad = WorldManager.instance.currentRoom;
-        }
-
-        if (WorldManager.instance.currentTime != timeOfDay ||
-            roomToLoad != WorldManager.instance.currentRoom)
-        {
-            WorldManager.instance.currentRoom = roomToLoad;
-            yield return TimeOfDayManager.instance.ChangeTimeOfDay(timeOfDay);
-            yield return WorldManager.instance.LoadRoom(WorldManager.instance.currentRoom, null);
-        }
-
-        OnRoomLoad();
-        WorldManager.instance.charactersObject?
-            .AnimateCharacters();
     }
 
     protected virtual void OnFinish()
@@ -126,7 +97,18 @@ public abstract class WorldEvent : GameEvent
         isAfterFinishText = true;
     }
 
-    public override void OnRoomLoad()
+    public override void OnRoomStartLoad()
+    {
+        RoomData currentRoomData = roomDatas
+            .First(roomData => roomData.room.roomName.Equals(WorldManager.instance.currentRoom.roomName));
+
+        if (WorldManager.instance.objectsObject == null)
+            CreateObjects(currentRoomData.worldObjects);
+
+        WorldManager.instance.UpdateRoomData(currentRoomData);
+    }
+
+    public override void OnRoomFinishLoad()
     {
         RoomData currentRoomData = roomDatas
             .First(roomData => roomData.room.roomName.Equals(WorldManager.instance.currentRoom.roomName));
@@ -136,10 +118,12 @@ public abstract class WorldEvent : GameEvent
             CreateCharacters(currentRoomData.characters);
         }
 
-        if (WorldManager.instance.objectsObject == null)
-            CreateObjects(currentRoomData.worldObjects);
-
-        WorldManager.instance.UpdateRoomData(currentRoomData);
+        if (!currentRoomData.hasAlreadyEntered)
+        {
+            currentRoomData.hasAlreadyEntered = true;
+            if (currentRoomData.firstTimeText != null)
+                VNNodePlayer.instance.StartConversation(currentRoomData.firstTimeText);
+        }
     }
 
     private void CreateCharacters(WorldCharactersParent prefab)
@@ -166,36 +150,37 @@ public abstract class WorldEvent : GameEvent
         foreach (Transform character in WorldManager.instance.charactersObject.transform)
         {
             WorldCharacter worldCharacter = character.GetComponent<WorldCharacter>();
-            charactersData[character.name] =
-                new ObjectData(worldCharacter.isClicked, worldCharacter.clickCount);
+            if (!charactersData.ContainsKey(worldCharacter.id))
+            {
+                charactersData[worldCharacter.id] =
+                    new ObjectData(worldCharacter.isClicked, worldCharacter.clickCount);
+            }
         }
     }
 
-    private void CreateObjects(GameObject prefab)
+    private void CreateObjects(WorldObjectsParent prefab)
     {
         if (WorldManager.instance.characterPanel == null)
             return;
 
-        GameObject ob = null;
+        WorldObjectsParent ob = null;
         if (prefab != null)
         {
             ob = Instantiate(prefab, WorldManager.instance.characterPanel.transform);
             ob.name = "Objects";
-            ob.SetActive(true);
+            ob.gameObject.SetActive(true);
         }
 
         foreach (string objectName in objectsData.Keys)
         {
-            Transform objectTransform = ob?.transform.Find(objectName);
-
-            if (objectTransform == null)
-                objectTransform = WorldManager.instance.currentRoomModel.interactables
-                    .Find(x => x.gameObject.name == objectName)
-                    ?.transform;
+            Transform objectTransform = WorldManager.instance.currentRoomModel.interactables
+                .Find(x => x.id == objectName)
+                ?.transform;
 
             if (objectTransform != null)
             {
                 WorldObject worldObject = objectTransform.GetComponent<WorldObject>();
+
                 worldObject.isClicked = objectsData[objectName].isClicked;
                 worldObject.clickCount = objectsData[objectName].clickCount;
             }
@@ -205,12 +190,20 @@ public abstract class WorldEvent : GameEvent
         {
             WorldManager.instance.objectsObject = ob;
 
-            foreach (Transform obj in WorldManager.instance.objectsObject.transform) // Add all event objects to dictionary
+            foreach (WorldObject worldObject in
+                     WorldManager.instance.objectsObject.objects) // Add all event objects to dictionary and update ones that are already in the dictionary to be up to date with their dictionary state
             {
-                WorldObject worldObject = obj.GetComponent<WorldObject>();
+                if (worldObject != null && !objectsData.ContainsKey(worldObject.id))
+                {
+                    objectsData[worldObject.id] =
+                        new ObjectData(worldObject.isClicked, worldObject.clickCount);
+                }
 
-                objectsData[obj.name] =
-                    new ObjectData(worldObject.isClicked, worldObject.clickCount);
+                else if (worldObject != null)
+                {
+                    worldObject.clickCount = objectsData[worldObject.id].clickCount;
+                    worldObject.isClicked = objectsData[worldObject.id].isClicked;
+                }
             }
         }
 
@@ -218,7 +211,7 @@ public abstract class WorldEvent : GameEvent
                  WorldManager.instance.currentRoomModel
                      .interactables) // Add all normal room interactables to the dictionary as well
         {
-            objectsData[interactable.name] =
+            objectsData[interactable.id] =
                 new ObjectData(interactable.isClicked, interactable.clickCount);
         }
     }
@@ -226,13 +219,32 @@ public abstract class WorldEvent : GameEvent
     public override void LoadSave(SaveData data)
     {
         base.LoadSave(data);
-        isAfterFinishText = data.isAfterFinishText;
-        charactersData = data.charactersData.ToDictionary(c => c.key, c => c.value);
-        objectsData = data.objectsData.ToDictionary(c => c.key, c => c.value);
+
+        WorldEventState state = (WorldEventState)(data.eventState);
+
+        isAfterFinishText = state.isAfterFinishText;
+        charactersData = state.charactersData.ToDictionary(c => c.key, c => c.value);
+        objectsData = state.objectsData.ToDictionary(c => c.key, c => c.value);
+        foreach (RoomDataSave roomData in state.roomsDatas)
+        {
+            RoomData matchingRoomData = roomDatas.Find(data => data.room.name.Equals(roomData.roomName));
+            if (matchingRoomData != null)
+                matchingRoomData.hasAlreadyEntered = roomData.hasAlreadyEntered;
+        }
+    }
+
+    public override EventState HandleSave()
+    {
+        return new WorldEventState(isFinished, objectsData, charactersData, isAfterFinishText, roomDatas);
     }
 
     protected void OnNotFinished()
     {
         CursorManager.instance.Show();
+    }
+
+    public virtual bool CanExitRoom()
+    {
+        return true;
     }
 }

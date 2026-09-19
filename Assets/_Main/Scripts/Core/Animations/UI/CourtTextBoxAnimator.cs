@@ -1,5 +1,6 @@
 using DG.Tweening;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CourtTextBoxAnimator : TextBoxAnimator, IFaceable
@@ -25,6 +26,7 @@ public class CourtTextBoxAnimator : TextBoxAnimator, IFaceable
         backgroundTextContainer.DOKill();
         backgroundTextContainer.GetComponent<CanvasGroup>().DOFade(0f, 0.2f);
         characterFace.DiscussionFaceContainerDisappear(duration);
+        ChangeFace(null);
     }
 
     public void ChangeFace(Sprite sprite)

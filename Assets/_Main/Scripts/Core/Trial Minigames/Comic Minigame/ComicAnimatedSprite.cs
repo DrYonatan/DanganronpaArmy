@@ -30,6 +30,7 @@ public class ComicAnimatedSprite : MonoBehaviour
     public SpriteAnimation<float> rotationAnimation = new();
     public SpriteAnimation<Vector3> scaleAnimation = new();
     public SpriteAnimation<Color> colorAnimation = new();
+    public SpriteAnimation<Sprite> switchSpritesAnimation = new();
 
     void Awake()
     {
@@ -39,7 +40,7 @@ public class ComicAnimatedSprite : MonoBehaviour
 
     public IEnumerator PlayFrames()
     {
-        int running = 4;
+        int running = 5;
 
         StartCoroutine(AnimatePosition(positionAnimation, () => running--));
 
@@ -48,6 +49,8 @@ public class ComicAnimatedSprite : MonoBehaviour
         StartCoroutine(AnimateScale(scaleAnimation, () => running--));
 
         StartCoroutine(AnimateColor(colorAnimation, () => running--));
+
+        StartCoroutine(AnimateSwitchingSprites(switchSpritesAnimation, () => running--));
 
         while (running > 0)
             yield return null;
@@ -164,7 +167,35 @@ public class ComicAnimatedSprite : MonoBehaviour
                 image.DOColor(endKeyFrame.attribute, endKeyFrame.duration)
                     .SetLink(image.gameObject).SetEase(spriteAnimation.ease);
 
-                yield return new WaitForSeconds(endKeyFrame.duration);
+                if(endKeyFrame.duration > 0)
+                   yield return new WaitForSeconds(endKeyFrame.duration);
+            }
+
+            repeat++;
+        }
+
+        onFinish?.Invoke();
+    }
+
+    IEnumerator AnimateSwitchingSprites(SpriteAnimation<Sprite> spriteAnimation, Action onFinish)
+    {
+        if (spriteAnimation.repeatTimes == -1)
+            onFinish?.Invoke();
+
+        yield return new WaitForSeconds(spriteAnimation.delay);
+
+        int repeat = 0;
+
+        while (repeat < spriteAnimation.repeatTimes || spriteAnimation.repeatTimes == -1)
+        {
+            for (int i = 0; i < spriteAnimation.frames.Count - 1; i++)
+            {
+                SpriteAnimationKeyFrame<Sprite> endKeyFrame = spriteAnimation.frames[i + 1];
+
+                image.sprite = endKeyFrame.attribute;
+
+                if(endKeyFrame.duration > 0)
+                    yield return new WaitForSeconds(endKeyFrame.duration);
             }
 
             repeat++;

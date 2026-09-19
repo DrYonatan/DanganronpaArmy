@@ -94,11 +94,22 @@ public class ClimaxIntroAnimation : MonoBehaviour
 
     private void Initialize()
     {
+        Color color = frame1.color;
+        color.a = 1f;
+        frame1.color = color;
+        frame2.color = color;
+        frame3.color = color;
+        
+        color = Color.white;
+        color.a = 1f;
+        
+        frame3.rectTransform.localScale = Vector3.one;
+        
         explosion.rectTransform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+        explosion.color = color;
         
-        Color color = Color.white;
         color.a = 0f;
-        
+
         closing.color = color;
         
         closing.rectTransform.localRotation = Quaternion.Euler(0f, 0f, 180f);
@@ -121,6 +132,7 @@ public class ClimaxIntroAnimation : MonoBehaviour
         beginGlow.color = color;
         
         beginBlur.rectTransform.localScale = Vector3.one;
+        beginGlow.rectTransform.localScale = Vector3.one;
         begin.rectTransform.localScale = Vector3.one * 1.4f;
 
         start.color = color;

@@ -18,6 +18,7 @@ public class DebateSegment : TrialSegment
     
     public List<DiscussionNode> finishNodes;
     public DebateSettings settings = new ();
+    public bool isLooping = true;
 
     public override void Play()
     {

@@ -37,6 +37,8 @@ public class TrialDialogueManager : MonoBehaviour
         animator.ChangeFace(null);
         animator.FaceAppear();
         animator.AnimateBackgroundText();
+        PlayerInputManager.instance.pauseAvailable = true;
+        PlayerInputManager.instance.isInputActive = true;
         
         runningNodesRoutine = StartCoroutine(RunDiscussion(discussion));
     }

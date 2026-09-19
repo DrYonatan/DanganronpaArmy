@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DIALOGUE;
 using System.Linq;
+using DG.Tweening;
 
 
 public class RoomGate : Interactable
@@ -22,8 +23,11 @@ public class RoomGate : Interactable
         else
         {
             // if the room is unallowed, read the "you can't go into this room" text
-            VNNodePlayer.instance.StartConversation(((WorldEvent)ProgressManager.instance.currentGameEvent)
-                .unallowedText);
+            VNConversationSegment conversation = ((WorldEvent)ProgressManager.instance.currentGameEvent)
+                .unallowedText;
+            if (conversation == null)
+                conversation = WorldManager.instance.unallowedRoomText;
+            VNNodePlayer.instance.StartConversation(conversation);
         }
     }
 
@@ -37,7 +41,8 @@ public class RoomGate : Interactable
             CameraManager.instance.RotateCameraTo(Quaternion.LookRotation(transform.forward * -1), 0.5f));
         yield return CameraManager.instance.MoveCameraTo(targetPosition, 0.5f);
         ImageScript.instance.FadeToBlack(1f);
-        yield return CameraManager.instance.MoveCameraTo(targetPosition + -5 * transform.forward, 1.5f);
+        SoundManager.instance.PlaySoundEffect(CameraManager.instance.footStepsSound);
+        yield return CameraManager.instance.MoveCameraTo(targetPosition + -5 * transform.forward, 1.5f, Ease.Linear);
 
         RoomData data =
             ProgressManager.instance.currentGameEvent.roomDatas.Find(roomData =>

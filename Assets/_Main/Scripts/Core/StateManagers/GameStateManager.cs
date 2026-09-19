@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using DIALOGUE;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameStateManager : MonoBehaviour
 {
@@ -75,6 +76,7 @@ public class GameStateManager : MonoBehaviour
             TrialManager.instance.LoadValuesFromSave(SaveManager.instance.currentSaveSlot);
         else
         {
+            EvidenceManager.instance.Initialize(GetCurrentChapter().evidenceList);
             TrialManager.instance.preTrialPrepMenu.Appear();
         }
     }
@@ -83,6 +85,7 @@ public class GameStateManager : MonoBehaviour
     {
         if (TrialManager.instance != null)
         {
+            InitiateUIState();
             TrialManager.instance.preTrialPrepMenu.Appear();
         }
 
@@ -103,7 +106,8 @@ public class GameStateManager : MonoBehaviour
     public void MoveToNextChapterSegment()
     {
         chapterSegmentIndex++;
-        ProgressManager.instance.currentGameEventIndex = 0;
+        if(ProgressManager.instance != null)
+           ProgressManager.instance.currentGameEventIndex = 0;
         MusicManager.instance.StopSong();
 
         if (chapterSegmentIndex < chaptersBank.chapters[chapterIndex].chapterSegments.Count)
@@ -123,25 +127,43 @@ public class GameStateManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         DOTween.KillAll();
 
-        yield return HandlePopup();
+        if (ProgressManager.instance != null)
+        {
+            ProgressManager.instance.currentGameEvent =
+                (chaptersBank.chapters[chapterIndex].chapterSegments[chapterSegmentIndex] as VNChapterSegment)
+                ?.gameEvents[0];
+            WorldManager.instance.currentRoom = null;
+        }
+        bool pauseAvailable = PlayerInputManager.instance.pauseAvailable;
+
+        if(chapterSegmentIndex == 0 || GetLastChapterSegment().saveAfter)
+           yield return HandlePopup();
 
         sceneTransitionCamera.gameObject.SetActive(true);
         chaptersBank.chapters[chapterIndex].chapterSegments[chapterSegmentIndex].LoadScene();
         if (persistentObject != null)
             Destroy(persistentObject);
         yield return new WaitForSeconds(0.5f);
+        PlayerInputManager.instance.pauseAvailable = pauseAvailable;
+
         StartNewSegment();
     }
 
     private IEnumerator HandlePopup()
     {
         ImageScript.instance.UnFadeToBlack(0f);
+        if(ProgressManager.instance != null)
+           ProgressManager.instance.savedInPopup = true;
         SavePopup popup = PlayerInputManager.instance.pauseMenu.generalMenu.savePopUp;
         popup.gameObject.SetActive(true);
         popup.finished = false;
+        PlayerInputManager.instance.isInputActive = false;
         yield return popup.WaitForCompletion();
-        ImageScript.instance.FadeToBlack(0.2f);
+        if(ProgressManager.instance != null)
+           ProgressManager.instance.savedInPopup = false;
+        ImageScript.instance.FadeToBlack(0f);
         yield return new WaitForSeconds(0.5f);
+        PlayerInputManager.instance.isInputActive = true;
         popup.gameObject.SetActive(false);
     }
 
@@ -154,6 +176,26 @@ public class GameStateManager : MonoBehaviour
         {
             StartCoroutine(MoveToNextChapterPipeline());
         }
+        else
+        {
+            StartCoroutine(FinishGame());
+        }
+            
+    }
+
+    private IEnumerator FinishGame()
+    {
+        yield return HandlePopup();
+        yield return ThankYouForPlaying();
+    }
+    public IEnumerator ThankYouForPlaying()
+    {
+        Time.timeScale = 1f;
+        DOTween.KillAll();
+        SceneManager.LoadScene("_Main/Scenes/ThankYouForPlaying");
+        yield return new WaitForSeconds(0.1f);
+        Destroy(persistentObject);
+        Destroy(gameObject); 
     }
 
     private IEnumerator MoveToNextChapterPipeline()
@@ -164,18 +206,30 @@ public class GameStateManager : MonoBehaviour
 
     public Chapter GetCurrentChapter()
     {
-        return chaptersBank.chapters[chapterIndex];
+        if (chapterIndex < chaptersBank.chapters.Count)
+            return chaptersBank.chapters[chapterIndex]; 
+        return null;
     }
 
     public ChapterSegment GetCurrentChapterSegment()
     {
-        return GetCurrentChapter().chapterSegments[chapterSegmentIndex];
+        return GetCurrentChapter()?.chapterSegments[chapterSegmentIndex];
+    }
+    
+    public ChapterSegment GetLastChapterSegment()
+    {
+        return GetCurrentChapter()?.chapterSegments[chapterSegmentIndex-1];
     }
 
     public void ResetChapters()
     {
         chapterIndex = 0;
         chapterSegmentIndex = 0;
+    }
+
+    public void ResetUIState()
+    {
+        uiState.backgroundImage = new ImageState();
     }
 
     public void SetUIState(UIState state)
@@ -192,6 +246,8 @@ public class GameStateManager : MonoBehaviour
             DialogueSystem.instance.SetTextBox(ImageScript.instance.overlayTextBoxAnimator);
             DialogueSystem.instance.TextBoxAppear();
         }
+
+        ImageScript.instance.blackFadeUnderTextBox?.DOFade(uiState.underTextboxBlackFade.visible ? 1f : 0f, 0f);
 
         ImageScript.instance.background.sprite = Resources.Load<Sprite>($"Images/{uiState.backgroundImage.spriteId}");
         ImageScript.instance.background.DOFade(uiState.backgroundImage.visible ? 1f : 0f, 0f);
@@ -215,5 +271,18 @@ public class GameStateManager : MonoBehaviour
         {
             DialogueSystem.instance.HideNamePlate();
         }
+    }
+    
+    public IEnumerator GoToTitleScreenPipeline()
+    {
+        ImageScript.instance.FadeToBlack(0.5f);
+        yield return new WaitForSecondsRealtime(0.5f);
+        Time.timeScale = 1f;
+        DOTween.KillAll();
+        Destroy(SaveManager.instance.gameObject);
+        SceneManager.LoadScene("TitleScreen");
+        yield return new WaitForSecondsRealtime(0.5f);
+        Destroy(persistentObject);
+        Destroy(gameObject);
     }
 }

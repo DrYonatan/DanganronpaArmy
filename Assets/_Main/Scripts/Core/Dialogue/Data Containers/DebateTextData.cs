@@ -12,6 +12,7 @@ public class DebateText
     public Vector3 spawnOffset;
     public Vector3 rotationOffset;
     public Vector3 scale = Vector3.one;
+    public float delay;
     public float ttl = 1f;
     public Vector2 textLineScrollPosition;
     public Evidence correctEvidence;

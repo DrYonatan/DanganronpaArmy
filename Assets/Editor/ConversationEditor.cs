@@ -89,6 +89,15 @@ public class ConversationEditor : EditorWindow
       if (discussionNodes != null)
       {
          EditorGUILayout.Space(20);
+
+         if (GUILayout.Button("Import Discussion", GUILayout.Width(200), GUILayout.Height(30)))
+         {
+            PopupWindow.Show(
+               new Rect(Event.current.mousePosition, Vector2.zero),
+               new DiscussionImportPopup(this)
+            );
+         }
+
          for (int i = 0; i < discussionNodes.Count; i++)
          {
             GUILayout.BeginHorizontal();

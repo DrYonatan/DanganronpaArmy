@@ -38,6 +38,12 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
+    - rid: 4526379599746564096
+      type: {class: PlaySoundEffectCommand, ns: , asm: Assembly-CSharp}
+      data:
+        executeTime: 0
+        clip: {fileID: 8300000, guid: 2b59b4e24c123c647870db5c70f798cd, type: 3}
+        volume: 1
     - rid: 7091799617966440514
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -55,6 +61,7 @@ MonoBehaviour:
         expressionIndex: 0
         textData:
           rid: 7091799617966440530
+        voiceLine: {fileID: 0}
     - rid: 7091799617966440515
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -72,6 +79,7 @@ MonoBehaviour:
         expressionIndex: 0
         textData:
           rid: 7091799617966440531
+        voiceLine: {fileID: 0}
     - rid: 7091799617966440516
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -89,6 +97,7 @@ MonoBehaviour:
         expressionIndex: 0
         textData:
           rid: 7091799617966440532
+        voiceLine: {fileID: 8300000, guid: 59b0554f0e6b3584b89312ecdd835a42, type: 3}
     - rid: 7091799617966440517
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -106,6 +115,7 @@ MonoBehaviour:
         expressionIndex: 0
         textData:
           rid: 7091799617966440533
+        voiceLine: {fileID: 0}
     - rid: 7091799617966440518
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -123,6 +133,7 @@ MonoBehaviour:
         expressionIndex: 0
         textData:
           rid: 7091799617966440534
+        voiceLine: {fileID: 0}
     - rid: 7091799617966440519
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -140,6 +151,7 @@ MonoBehaviour:
         expressionIndex: 0
         textData:
           rid: 7091799617966440535
+        voiceLine: {fileID: 0}
     - rid: 7091799617966440520
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -157,6 +169,7 @@ MonoBehaviour:
         expressionIndex: 0
         textData:
           rid: 7091799617966440536
+        voiceLine: {fileID: 0}
     - rid: 7091799617966440521
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -174,6 +187,7 @@ MonoBehaviour:
         expressionIndex: 0
         textData:
           rid: 7091799617966440537
+        voiceLine: {fileID: 0}
     - rid: 7091799617966440522
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -191,6 +205,7 @@ MonoBehaviour:
         expressionIndex: 0
         textData:
           rid: 7091799617966440538
+        voiceLine: {fileID: 0}
     - rid: 7091799617966440523
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -208,6 +223,7 @@ MonoBehaviour:
         expressionIndex: 0
         textData:
           rid: 7091799617966440539
+        voiceLine: {fileID: 0}
     - rid: 7091799617966440524
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -225,6 +241,7 @@ MonoBehaviour:
         expressionIndex: 0
         textData:
           rid: 7091799617966440540
+        voiceLine: {fileID: 0}
     - rid: 7091799617966440525
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -242,6 +259,7 @@ MonoBehaviour:
         expressionIndex: 0
         textData:
           rid: 7091799617966440541
+        voiceLine: {fileID: 0}
     - rid: 7091799617966440526
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -259,6 +277,7 @@ MonoBehaviour:
         expressionIndex: 0
         textData:
           rid: 7091799617966440542
+        voiceLine: {fileID: 0}
     - rid: 7091799617966440527
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -276,6 +295,7 @@ MonoBehaviour:
         expressionIndex: 0
         textData:
           rid: 7091799617966440543
+        voiceLine: {fileID: 0}
     - rid: 7091799617966440528
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -293,6 +313,7 @@ MonoBehaviour:
         expressionIndex: 0
         textData:
           rid: 7091799617966440544
+        voiceLine: {fileID: 0}
     - rid: 7091799617966440529
       type: {class: DialogueNode, ns: , asm: Assembly-CSharp}
       data:
@@ -307,15 +328,17 @@ MonoBehaviour:
         drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
         character: {fileID: 11400000, guid: 95d3e48687d854942aea31b2cf9a8ff1, type: 2}
         displayName: 
-        expressionIndex: 0
+        expressionIndex: 3
         textData:
           rid: 7091799617966440545
+        voiceLine: {fileID: 0}
     - rid: 7091799617966440530
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
         text: "\u05DE\u05D4 \u05D0\u05D5\u05DE\u05E8 \u05D0\u05D7\u05D9? \u05D0\u05E0\u05D9
           \u05DB\u05E4\u05D9\u05E8 \u05DB\u05D4\u05DF.\r"
-        commands: []
+        commands:
+        - rid: 4526379599746564096
     - rid: 7091799617966440531
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:
@@ -416,7 +439,7 @@ MonoBehaviour:
           y: 0
           width: 0
           height: 0
-        commandsScrollPosition: {x: 0, y: 0}
+        commandsScrollPosition: {x: 0, y: 24}
         title: 
         drawNode: {fileID: 11400000, guid: e8ef9dd2e30c22e498ad73736604ef92, type: 2}
         character: {fileID: 11400000, guid: 235232026b4a7bf40963d1fad9818aac, type: 2}
@@ -424,6 +447,7 @@ MonoBehaviour:
         expressionIndex: 0
         textData:
           rid: 7091799617966440547
+        voiceLine: {fileID: 0}
     - rid: 7091799617966440547
       type: {class: VNTextData, ns: , asm: Assembly-CSharp}
       data:

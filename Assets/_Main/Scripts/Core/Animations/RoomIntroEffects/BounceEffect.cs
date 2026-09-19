@@ -6,24 +6,18 @@ public class BounceEffect : RoomIntroEffect
     public float duration = 1f;
     public float bounceFrequency = 2f; // number of bounces
     public float damping = 5f;         // how quickly it settles
-    private Renderer renderer;
-    void Awake()
-    {
-        renderer = GetComponent<Renderer>();
-    }
 
     public override IEnumerator PlayEffect()
     {
         Vector3 originalScale = transform.localScale;
-        Vector3 startScale = new Vector3(originalScale.x, 0.1f, originalScale.z);
+        Vector3 startScale = Vector3.zero;
         transform.localScale = startScale;
 
         // Store the original bottom position
         float baseY = transform.position.y - (originalScale.y / 2f);
-        renderer.enabled = false;
         yield return new WaitForSeconds(delay);
-        renderer.enabled = true;
 
+        transform.localScale = new Vector3(originalScale.x, 0, originalScale.z);
         float elapsed = 0f;
         while (elapsed < duration)
         {

@@ -10,14 +10,16 @@ public abstract class MenuScreen : MonoBehaviour
     {
         content.SetActive(false);
         gameObject.SetActive(true);
+        enabled = false;
         logo.alpha = 1f;
         logo
             .DOFade(0.2f, 0.5f)
-            .SetLoops(3, LoopType.Yoyo) 
+            .SetLoops(3, LoopType.Yoyo)
             .SetEase(Ease.InOutSine).SetUpdate(true).OnComplete(() =>
             {
                 logo.alpha = 0f;
                 LoadContent();
+                enabled = true;
             });
     }
 

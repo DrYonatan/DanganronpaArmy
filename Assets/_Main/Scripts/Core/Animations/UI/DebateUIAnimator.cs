@@ -36,7 +36,7 @@ public class DebateUIAnimator : MonoBehaviour
     public float moveAmountX = 150f;
 
     public float duration = 0.2f;
-    public float reloadDuration = 0.2f;
+    public const float reloadDuration = 0.2f;
 
     public void DebateUIAppear()
     {
@@ -97,7 +97,6 @@ public class DebateUIAnimator : MonoBehaviour
         namePart.anchoredPosition = namePartOriginalPos.anchoredPosition + new Vector2(0, -moveAmountY);
         facePart.anchoredPosition = facePartOriginalPos.anchoredPosition + new Vector2(moveAmountX, 0);
         timePart.anchoredPosition = timePartOriginalPos.anchoredPosition + new Vector2(0, moveAmountY);
-        bullet.DOAnchorPosX(bulletOriginalPos.anchoredPosition.x - 300f, 0).SetEase(Ease.OutQuad);
         HideCylinderAndCircles(0f);
         TrialCursorManager.instance.Hide();
     }
@@ -153,15 +152,15 @@ public class DebateUIAnimator : MonoBehaviour
         dialogueContainer.nameContainer.Show(characterName);
     }
 
-    void UnLoadBullet()
+    void UnLoadBullet(float duration = reloadDuration)
     {
-        bullet.DOAnchorPosX(bulletOriginalPos.anchoredPosition.x - 300f, reloadDuration).SetEase(Ease.OutQuad);
+        bullet.DOAnchorPosX(bulletOriginalPos.anchoredPosition.x - 800f, duration).SetEase(Ease.OutQuad);
     }
 
     public void LoadBullet()
     {
         bullet.GetComponent<UIBullet>().UnWhitenBullet();
-        bullet.anchoredPosition = bulletOriginalPos.anchoredPosition - new Vector2(500f, 0);
+        bullet.anchoredPosition = bulletOriginalPos.anchoredPosition - new Vector2(650f, 0);
         bullet.DOAnchorPosX(bulletOriginalPos.anchoredPosition.x, reloadDuration).SetEase(Ease.OutQuad).SetUpdate(true);
     }
 
@@ -195,15 +194,15 @@ public class DebateUIAnimator : MonoBehaviour
 
     public void HideCylinderAndCircles(float hideDuration)
     {
-        cylinder.DOAnchorPosX(-200f, hideDuration).SetUpdate(true);
-        circles.DOAnchorPosX(-252f, hideDuration).SetUpdate(true);
-        UnLoadBullet();
+        cylinder.DOAnchorPosX(-400, hideDuration).SetUpdate(true);
+        circles.DOAnchorPosX(-500, hideDuration).SetUpdate(true);
+        UnLoadBullet(hideDuration);
     }
 
     public void ShowTextBox()
     {
         namePart.DOAnchorPosY(0, 0.3f);
-        facePart.DOAnchorPos(new Vector2(30f, 125), 0.3f);
+        facePart.DOAnchorPos(new Vector2(82, 305), 0.3f);
     }
 
     public void HideTextBox()

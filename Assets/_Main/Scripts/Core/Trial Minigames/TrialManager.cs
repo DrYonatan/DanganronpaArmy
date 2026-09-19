@@ -36,6 +36,7 @@ public class TrialManager : MonoBehaviour
 
     public RectTransform failedScreen;
     public Image failedTextImage;
+    public AudioClip healSound;
 
     void Awake()
     {
@@ -44,7 +45,8 @@ public class TrialManager : MonoBehaviour
 
     public void StartNewTrial()
     {
-        GameStateManager.instance.InitiateUIState();
+        EvidenceManager.instance.Initialize(GameStateManager.instance.GetCurrentChapter().evidenceList);
+        GameStateManager.instance.ResetUIState();
         StartCoroutine(StartPipeline());
     }
 
@@ -94,6 +96,8 @@ public class TrialManager : MonoBehaviour
 
     public void IncreaseHealth(float amount)
     {
+        SoundManager.instance.PlaySoundEffect(healSound);
+
         if (playerStats.hp < playerStats.maxHP)
         {
             barsAnimator.IncreaseHealth(Math.Min(amount, playerStats.maxHP - playerStats.hp),
@@ -143,11 +147,14 @@ public class TrialManager : MonoBehaviour
         TrialDialogueManager.instance.currentLineIndex = data.currentLineIndex;
         playerStats.hp = data.hp;
         barsAnimator.UpdateHp(playerStats.hp);
+        EvidenceManager.instance.Initialize(GameStateManager.instance.GetCurrentChapter().evidenceList);
         MusicManager.instance.PlaySong(Resources.Load<AudioClip>($"Audio/Music/{data.currentMusic}"));
         GameStateManager.instance.GetCurrentChapterSegment().Load();
         GameStateManager.instance.SetUIState(data.uiState);
         GameStateManager.instance.InitiateUIState();
-        
+
+        PlayerInputManager.instance.pauseAvailable = data.pauseAvailable;
+
         if(data.trialSegmentIndex == 0 && data.currentLineIndex == 0)
             preTrialPrepMenu.Appear();
         else

@@ -10,8 +10,10 @@ public class PlayCutscene : Command
     public bool persist;
     public override IEnumerator Execute()
     {
+        PlayerInputManager.instance.isInputActive = false;
         DialogueSystem.instance.dialogueBoxAnimator.TextBoxDisappear();
-        VNUIAnimator.instance.Disappear();
+        if(ProgressManager.instance != null)
+           VNUIAnimator.instance.Disappear();
         
         ImageScript.instance.FadeToBlack(0.2f);
         yield return new WaitForSeconds(0.7f);
@@ -27,8 +29,11 @@ public class PlayCutscene : Command
             DialogueSystem.instance.SetTextBox(ImageScript.instance.overlayTextBoxAnimator);
         }
         
+        PlayerInputManager.instance.isInputActive = true;
+        
         DialogueSystem.instance.TextBoxAppear();
-        VNUIAnimator.instance.Appear();
+        if(ProgressManager.instance != null)
+           VNUIAnimator.instance.Appear();
     }
     
     #if UNITY_EDITOR

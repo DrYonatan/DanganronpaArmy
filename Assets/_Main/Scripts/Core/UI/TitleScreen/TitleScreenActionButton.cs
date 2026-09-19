@@ -1,4 +1,3 @@
-using DG.Tweening;
 using UnityEngine.UI;
 
 public class TitleScreenActionButton : TitleScreenMenuButton

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class MusicManager : MonoBehaviour
@@ -14,7 +15,9 @@ public class MusicManager : MonoBehaviour
     {
         if (song == null)
             return;
-        
+
+        audioSource.DOKill();
+        audioSource.volume = 1f;
         audioSource.Stop();
         audioSource.clip = song;
         audioSource.Play();
@@ -22,14 +25,21 @@ public class MusicManager : MonoBehaviour
         if (VNUIAnimator.instance != null)
         {
             VNUIAnimator.instance.musicBoxContainer.StartBars();
-            VNUIAnimator.instance.musicName.text = $"עכשיו מתנגן: {song?.name}";
+            VNUIAnimator.instance.SetMusic(song.name);
         }
     }
 
     public void StopSong()
     {
-        audioSource.Stop();
-        audioSource.clip = null;
+        audioSource.DOFade(0f, 1f)
+            .OnComplete(() =>
+            {
+                audioSource.Stop();
+                audioSource.volume = 1f; // Reset for next time it plays
+                audioSource.clip = null;
+            });
+        
+        
         if (VNUIAnimator.instance != null)
         {
             VNUIAnimator.instance.musicBoxContainer.StopBars();

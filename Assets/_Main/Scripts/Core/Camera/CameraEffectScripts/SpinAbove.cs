@@ -1,19 +1,19 @@
-using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Behaviour Editor/Camera Effect/Spin Above")]
 public class SpinAbove : CameraEffect
 {
-    public override IEnumerator Apply(CameraEffectController effectController)
+    public override void Apply(CameraEffectController effectController)
     {
         effectController.cameraTransform.localPosition = new Vector3(0, 10, -8);
         effectController.cameraTransform.localRotation = Quaternion.Euler(33, 0, 0);
         effectController.camera.fieldOfView = 35f;
 
-        while (true)
-        {
-            CameraController.instance.pivot.Rotate(0f, -0.03f, 0f);
-            yield return null;
-        }
+        CameraController.instance.pivot
+            .DORotate(CameraController.instance.pivot.eulerAngles + Vector3.up * -360f, 40, RotateMode.FastBeyond360)
+            .SetLoops(-1, LoopType.Restart)
+            .SetEase(Ease.Linear)
+            .SetTarget(effectController.cameraTransform);
     }
 }

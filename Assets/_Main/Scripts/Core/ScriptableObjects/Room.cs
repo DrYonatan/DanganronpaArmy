@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Profiling;
 
@@ -20,11 +21,14 @@ public abstract class Room : ScriptableObject
 
     public bool isInside = false;
 
+    public float fov = 60;
+
     public abstract void MovementControl();
 
     public virtual IEnumerator OnLoad()
     {
-        CameraManager.instance?.ChangeCameraBackground(isInside);
+        CameraManager.instance.ChangeCameraBackground(isInside);
+        CameraManager.instance.cameraTransform.GetComponent<Camera>().fieldOfView = fov;
         return null;
     }
 
@@ -32,8 +36,7 @@ public abstract class Room : ScriptableObject
     {
         RoomModel roomModel = WorldManager.instance.currentRoomModel;
         RoomModel originalModel = GetTimeOfDayVersion(WorldManager.instance.currentTime);
-
-
+        
         foreach (ConversationInteractable interactable in roomModel.interactables)
         {
             EventAdditionalObjectData data = additionalObjectDatas.Find(x => x.id == interactable.id);
@@ -47,8 +50,10 @@ public abstract class Room : ScriptableObject
                 ConversationInteractable originalInteractable =
                     originalModel.interactables.Find(x => x.id == interactable.id);
                 interactable.texts = originalInteractable.texts;
-                interactable.clickCount = originalInteractable.clickCount;
-                interactable.isClicked = originalInteractable.isClicked;
+                interactable.clickCount =
+                    ((WorldEvent)ProgressManager.instance.currentGameEvent).objectsData[interactable.id].clickCount;
+                interactable.isClicked = 
+                    ((WorldEvent)ProgressManager.instance.currentGameEvent).objectsData[interactable.id].isClicked;
             }
         }
     }
@@ -68,4 +73,6 @@ public abstract class Room : ScriptableObject
 
         return model;
     }
+
+    public abstract void OnEventFinished();
 }

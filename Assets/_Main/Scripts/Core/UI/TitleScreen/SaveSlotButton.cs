@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -32,13 +33,14 @@ public class SaveSlotButton : TitleScreenMenuButton
         data = SaveSystem.LoadGame(slot);
         if (data != null)
         {
-            List<Chapter> chapters = Resources.Load<ChaptersBank>("ChaptersBank").chapters;
-            slotText.text = $"{slot} - {chapters[data.chapterIndex].chapterName}";
+            List<Chapter> chapters = TitleScreenMainMenu.instance.chaptersBank.chapters;
+            string chapterName = data.chapterIndex < chapters.Count ? chapters[data.chapterIndex].chapterName : "סיים פרק 1";
+            slotText.text = $"{new string(slot.ToString().Reverse().ToArray())} - {chapterName}";
             if (data.saveTime != null)
             {
                 DateTime time = DateTime.Parse(data.saveTime);
                 string date = time.ToString("dd/MM/yyyy HH:mm");
-                dateText.text = date; 
+                dateText.text = date;
             }
         }
         else
@@ -66,7 +68,7 @@ public class SaveSlotButton : TitleScreenMenuButton
             {
                 SoundManager.instance.PlaySoundEffect(errorSound);
                 return false;
-            }  
+            }
         }
 
         return true;
@@ -97,7 +99,7 @@ public class SaveSlotButton : TitleScreenMenuButton
 
         Camera sceneTransitionCam = GameStateManager.instance.sceneTransitionCamera;
         sceneTransitionCam.gameObject.SetActive(true);
-        
+
         sceneTransitionCam.transform.SetParent(GameStateManager.instance.transform.parent);
         if (GameStateManager.instance.persistentObject != null)
             Destroy(GameStateManager.instance.persistentObject);

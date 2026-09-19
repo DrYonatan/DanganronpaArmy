@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using DIALOGUE;
 using JetBrains.Annotations;
@@ -13,13 +15,14 @@ public class WorldManager : MonoBehaviour
     public bool isLoading = false;
 
     public WorldCharactersParent charactersObject;
-    public GameObject objectsObject;
+    public WorldObjectsParent objectsObject;
 
     public TimeOfDay currentTime;
 
+    public VNConversationSegment unallowedRoomText;
     public static WorldManager instance { get; private set; }
 
-    public Transform talkPosition;
+    public List<Transform> talkPositions;
 
     void Awake()
     {
@@ -54,29 +57,34 @@ public class WorldManager : MonoBehaviour
     {
         PlayerInputManager.instance.DisableInput();
         ImageScript.instance.HideBackground(0);
-        ImageScript.instance.RemoveAnimatedImage(0);
+        ImageScript.instance.FadeUnderTextBoxBlack(false, 0);
+        ImageScript.instance.RemoveAnimatedImage(0, false);
 
         isLoading = true;
 
         currentRoomModel = Instantiate(room.GetTimeOfDayVersion(ProgressManager.instance.currentGameEvent.timeOfDay));
         currentRoomModel.name = "World";
         currentRoomModel.gameObject.SetActive(true);
-        talkPosition = currentRoomModel.talkPosition;
-
+        talkPositions = currentRoomModel.talkPositions;
+        
         GameObject objectsParent = GameObject.Find("World Objects");
         if (objectsParent != null)
             characterPanel = objectsParent;
+        
+        ProgressManager.instance.currentGameEvent.OnRoomStartLoad();
+        currentRoomModel.roomIntroEffects = currentRoomModel.GetComponentsInChildren<RoomIntroEffect>().ToList();
+        
         string cameraStartPosName = !String.IsNullOrEmpty(entryPoint) ? $":{entryPoint}" : "";
         Transform cameraStartPos = GameObject.Find($"World/CameraStartPos{cameraStartPosName}").transform;
         if (CameraManager.instance)
             CameraManager.instance.initialRotation =
                 cameraStartPos
                     .rotation; // Sets only the Camera Manager's initial position value for later, not actually changing position of camera
-
-        CameraManager.instance.player.enabled = false;
+        CameraManager.instance.cameraTransform.rotation = cameraStartPos.rotation; // Actually changing rotation of camera
         CameraManager.instance.player.transform.position =
             cameraStartPos.position; // Actually changing position of player
-        CameraManager.instance.cameraTransform.rotation = cameraStartPos.rotation; // Actually changing rotation of camera
+        
+        CameraManager.instance.player.enabled = false;
         CameraManager.instance.player.enabled = true;
         
         ImageScript.instance.UnFadeToBlack(0.1f);
@@ -93,7 +101,7 @@ public class WorldManager : MonoBehaviour
         currentRoomModel = Instantiate(room.GetTimeOfDayVersion(ProgressManager.instance.currentGameEvent.timeOfDay));
         currentRoomModel.name = "World";
         currentRoomModel.gameObject.SetActive(true);
-        talkPosition = currentRoomModel.talkPosition;
+        talkPositions = currentRoomModel.talkPositions;
         
         ImageScript.instance.UnFadeToBlack(0.2f);
 
@@ -101,11 +109,13 @@ public class WorldManager : MonoBehaviour
         if (objectsParent != null)
             characterPanel = objectsParent;
         
+        ProgressManager.instance.currentGameEvent.OnRoomStartLoad();
+        
         if (room.OnLoad() != null)
             yield return StartCoroutine(room.OnLoad());
         isLoading = false;
-
-        ProgressManager.instance.currentGameEvent.OnRoomLoad();
+        
+        ProgressManager.instance.currentGameEvent.OnRoomFinishLoad();
         
         if (VNNodePlayer.instance.currentConversation == null)
         {
@@ -122,6 +132,7 @@ public class WorldManager : MonoBehaviour
         CameraManager.instance.footStepsSource.Stop();
         CursorManager.instance.ShowOrHideConversationIcon(false);
         CursorManager.instance.ShowOrHideInteractableName(false, "");
+        CursorManager.instance.Hide();
 
         CameraManager.instance?.StopAllPreviousOperations();
 
@@ -146,10 +157,10 @@ public class WorldManager : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-
+        
         yield return LoadRoom(currentRoom, entryPoint);
-
-        ProgressManager.instance.currentGameEvent.OnRoomLoad();
+        
+        ProgressManager.instance.currentGameEvent.OnRoomFinishLoad();
 
         if (charactersObject != null)
             charactersObject.AnimateCharacters();
@@ -173,7 +184,7 @@ public class WorldManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!DialogueSystem.instance.isActive && !PlayerInputManager.instance.isPaused && PlayerInputManager.instance.isInputActive && !isLoading)
+        if (!DialogueSystem.instance.isActive && !PlayerInputManager.instance.isPaused && PlayerInputManager.instance.isInputActive && !isLoading && VNNodePlayer.instance.currentConversation == null)
             currentRoom?.MovementControl();
         else
         {

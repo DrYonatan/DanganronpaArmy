@@ -12,4 +12,6 @@ public class WorldCharactersParent : MonoBehaviour
             worldCharacter.AppearAnimation();
         }
     }
+    
+    
 }

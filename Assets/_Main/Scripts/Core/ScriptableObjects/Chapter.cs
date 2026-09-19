@@ -7,4 +7,5 @@ public class Chapter : ScriptableObject
     public string chapterName;
     public List<ChapterSegment> chapterSegments;
     public string preTrialPrepText;
+    public List<Evidence> evidenceList;
 }

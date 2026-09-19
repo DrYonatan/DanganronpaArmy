@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using DIALOGUE;
 using UnityEngine;
 
@@ -10,12 +9,12 @@ public abstract class Interactable : MonoBehaviour
     {
         StartCoroutine(DoInteraction());
     }
-
     private IEnumerator DoInteraction()
     {
         if (!CursorManager.instance.cursor.gameObject.activeInHierarchy)
             yield break;
-        
+
+        CameraManager.instance.footStepsSource.Stop();
         PlayerInputManager.instance.DisableInput();
         StartCoroutine(MoveAndRotateCameraTo());
         CursorManager.instance.Hide();
@@ -28,7 +27,7 @@ public abstract class Interactable : MonoBehaviour
 
     private IEnumerator MoveAndRotateCameraTo()
     {
-        float duration = 0.5f;
+        float duration = 0.8f;
         Quaternion targetRotation =
             Quaternion.LookRotation(transform.position - CameraManager.instance.cameraTransform.position, Vector3.up);
 

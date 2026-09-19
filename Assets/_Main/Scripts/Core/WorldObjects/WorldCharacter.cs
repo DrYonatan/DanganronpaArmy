@@ -9,16 +9,26 @@ public class WorldCharacter : ConversationInteractable
 
     protected override void FinishInteraction()
     {
-        CharacterClickEffects.instance.Interact(transform);
+        WorldManager.instance.StartCoroutine(FinishInteractionPipeline());
+    }
+
+    private IEnumerator FinishInteractionPipeline()
+    {
+        yield return CharacterClickEffects.instance.Interact(transform);
         Quaternion targetRotation = Quaternion.LookRotation(transform.forward);
         CameraManager.instance.StartCameraCoroutine(CameraManager.instance.RotateCameraTo(targetRotation, 0.5f));
         CameraManager.instance.initialRotation = transform.rotation;
         
-        base.FinishInteraction();
+        float duration = 0.5f;
+        Vector3 targetPosition =
+            Vector3.Lerp(CameraManager.instance.cameraTransform.position, transform.position - (2f * 60f/WorldManager.instance.currentRoom.fov * transform.forward) + Vector3.up * 0.8f, 1f);
+        CameraManager.instance.StartCameraCoroutine(CameraManager.instance.MoveCameraTo(targetPosition, duration));
+
+        StartConversation();
         
         if (ProgressManager.instance.currentGameEvent != null)
         {
-            ((WorldEvent)ProgressManager.instance.currentGameEvent).charactersData[name] = new ObjectData(isClicked, clickCount);
+            ((WorldEvent)ProgressManager.instance.currentGameEvent).charactersData[id] = new ObjectData(isClicked, clickCount);
         }
     }
 
@@ -37,19 +47,6 @@ public class WorldCharacter : ConversationInteractable
         isAlreadyLooking = false;
         CursorManager.instance.ShowOrHideConversationIcon(false);
         CursorManager.instance.ShowOrHideInteractableName(false, "");
-    }
-
-    private IEnumerator MoveAndRotateCameraTo()
-    {
-        float duration = 0.5f;
-        Vector3 targetPosition = transform.position + transform.forward + Vector3.up;
-        Quaternion targetRotation = Quaternion.LookRotation(transform.forward);
-        yield return CameraManager.instance.StartCameraCoroutine(CameraManager.instance.RotateCameraTo(
-            Quaternion.LookRotation(transform.position - Camera.main.transform.position, Vector3.up), duration));
-        CameraManager.instance.StartCameraCoroutine(CameraManager.instance.MoveCameraTo(targetPosition, duration));
-        CameraManager.instance.StartCameraCoroutine(CameraManager.instance.RotateCameraTo(targetRotation, duration));
-        CameraManager.instance.initialRotation = targetRotation;
-        FinishInteraction();
     }
 
     public void AppearAnimation()

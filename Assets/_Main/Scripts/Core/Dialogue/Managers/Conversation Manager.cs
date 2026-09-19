@@ -59,6 +59,10 @@ namespace DIALOGUE
             DialogueSystem.instance.ShowSpeakerName(node);
 
             string text = TranslateColorTags(textData.text);
+
+            if (node.character != null)
+               text = $"<color=#{ColorUtility.ToHtmlStringRGB(node.character.textColor)}>" + text + "</color>";
+            
             yield return BuildDialogue(text);
 
             yield return Line_RunCommands(afterCommands);
@@ -84,9 +88,10 @@ namespace DIALOGUE
             if (string.IsNullOrEmpty(originalText))
                 return "";
 
-            string replaced = originalText.ToLower().Replace(">", "</color>").Replace("<g", "<color=#2EF03B>")
+            string replaced = originalText.Replace(">", "</color>").Replace("<g", "<color=#2EF03B>")
+                .Replace("<G", "<color=#2EF03B>")
                 .Replace("<o", "<color=#F0BC2E>")
-                .Replace("<b", "<color=#2EB3F0>")
+                .Replace("<b", "<color=#2EB3F0>").Replace("<B", "<color=#2EB3F0>")
                 .Replace("(", "<color=#2EB3F0>").Replace(")", "</color>");
             int count = 0;
             return string.Concat(replaced.Select(c =>

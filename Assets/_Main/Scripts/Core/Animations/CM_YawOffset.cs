@@ -15,8 +15,8 @@ public class CM_YawOffset : CinemachineExtension
         if (stage == CinemachineCore.Stage.Body)
         {
             // rotate around the 'up' axis of the camera
-            state.RawOrientation = state.RawOrientation
-                * Quaternion.Euler(0, yawOffset, 0);
+            state.RawOrientation *=
+                Quaternion.Euler(0, yawOffset, 0);
         }
     }
 }

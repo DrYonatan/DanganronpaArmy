@@ -9,6 +9,13 @@ public class UIState
     public ImageState backgroundImage;
     public AnimatedImageState animatedImage;
     public List<BackgroundCharacterState> characterStates = new List<BackgroundCharacterState>();
+    public VisibilityState underTextboxBlackFade;
+}
+
+[Serializable]
+public class VisibilityState
+{
+    public bool visible;
 }
 
 [Serializable]

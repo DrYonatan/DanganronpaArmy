@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using DIALOGUE;
 using Cinemachine;
@@ -10,6 +11,7 @@ public class PointAndClickRoom : Room
     public string exitLocation;
 
     [SerializeField] float cameraDollySpeed = 2f;
+    public float dollyDuration = 3f;
 
     public float rotationSpeed = 100f; // Adjust rotation speed
     public float borderUp = -10f;
@@ -24,8 +26,11 @@ public class PointAndClickRoom : Room
 
     public override IEnumerator OnLoad()
     {
+        pitch = 0;
         VirutalCameraManager.instance
             .AssignVirtualCamera(); // Important, this must happen before the call to base, because base.OnLoad() yield returns null (meaning it waits for one frame), and this is problematic when loading a save, the extra frame before the vCam is disabled causes the master camera's position to change
+        VirutalCameraManager.instance.virtualCamera.m_Lens.FieldOfView = fov;
+
         yield return base.OnLoad();
     }
 
@@ -33,7 +38,7 @@ public class PointAndClickRoom : Room
     {
         if (hasStartAnimation)
         {
-            yield return VirutalCameraManager.instance.SlideAcrossRoom(3f,
+            yield return VirutalCameraManager.instance.SlideAcrossRoom(dollyDuration,
                 GameObject.Find("World/TrackSlidingPos").transform.position);
             yield return new WaitForSeconds(0.2f);
         }
@@ -63,21 +68,27 @@ public class PointAndClickRoom : Room
         VirutalCameraManager.instance.pitchControl.pitch = pitch;
 
 
-        if (Input.GetKey(KeyCode.R))
+        if (Input.GetKey(KeyCode.R) && exitRoom != null)
         {
-            if (!WorldManager.instance.currentRoomData.isExitable)
-            {
-                WorldEvent currentEvent = ProgressManager.instance.currentGameEvent as WorldEvent;
-                if (currentEvent == null)
-                    return;
-
-                if (currentEvent.unallowedText != null)
-                    VNNodePlayer.instance.StartConversation(currentEvent.unallowedText);
-            }
-
-            else
+            
+            WorldEvent currentEvent = ProgressManager.instance.currentGameEvent as WorldEvent;
+            if (currentEvent == null)
+                return;
+            
+            
+            if (ProgressManager.instance.currentGameEvent.roomDatas.Any(item =>
+                    item.room.roomName == exitRoom.roomName) && currentEvent.CanExitRoom())
             {
                 WorldManager.instance.StartLoadingRoom(exitRoom, exitLocation);
+            }
+            
+            else 
+            {
+                VNConversationSegment unallowed = currentEvent.unallowedText
+                    ? currentEvent.unallowedText
+                    : WorldManager.instance.unallowedRoomText;
+
+                VNNodePlayer.instance.StartConversation(unallowed);
             }
         }
 
@@ -93,5 +104,10 @@ public class PointAndClickRoom : Room
     public override void OnConversationEnd()
     {
         CameraManager.instance.ReturnToDollyTrack();
+    }
+
+    public override void OnEventFinished()
+    {
+        CameraManager.instance.MoveCameraTo(GameObject.Find("World/CameraStartPos").transform);
     }
 }

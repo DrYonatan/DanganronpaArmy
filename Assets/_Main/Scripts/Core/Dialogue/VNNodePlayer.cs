@@ -9,7 +9,7 @@ public class VNNodePlayer : MonoBehaviour
     public static VNNodePlayer instance { get; private set; }
     public VNConversationSegment currentConversation;
     public int lineIndex;
-
+    private VNConversationSegment queuedConversation;
     private void Awake()
     {
         instance = this;
@@ -19,9 +19,9 @@ public class VNNodePlayer : MonoBehaviour
     {
         StartCoroutine(StartConversationPipeline(segment));
     }
-
     public IEnumerator StartConversationPipeline(VNConversationSegment segment)
     {
+        VirutalCameraManager.instance?.DisableVirtualCamera();
         currentConversation = segment;
         VNCharacterManager.instance.characterLayer.anchoredPosition = Vector2.zero;
         foreach (CharacterPositionMapping characterInfo in segment.settings.characterPositions)
@@ -32,10 +32,26 @@ public class VNNodePlayer : MonoBehaviour
         yield return RunConversation(segment);
     }
 
+    public void AddToQueue(VNConversationSegment segment)
+    {
+        queuedConversation = segment;
+    }
+
     IEnumerator RunConversation(VNConversationSegment segment)
     {
         yield return RunNodes(segment.nodes);
-        HandleConversationEnd();
+        if (queuedConversation != null)
+        {
+            lineIndex = 0;
+            VNCharacterManager.instance.DestroyCharacters();
+            
+            var next = queuedConversation;
+            queuedConversation = null;
+
+            StartConversation(next);
+        }
+        else
+           HandleConversationEnd();
     }
 
     private IEnumerator RunNodes(List<DialogueNode> nodes)
@@ -46,6 +62,15 @@ public class VNNodePlayer : MonoBehaviour
             yield return RunNode(nodes[i]);
             DialogueSystem.instance.ClearTextBox();
             lineIndex++;
+        }
+    }
+
+    public IEnumerator RunSpecificNodes(List<DialogueNode> nodes)
+    {
+        foreach (DialogueNode node in nodes)
+        {
+            yield return RunNode(node);
+            DialogueSystem.instance.ClearTextBox();
         }
     }
 
