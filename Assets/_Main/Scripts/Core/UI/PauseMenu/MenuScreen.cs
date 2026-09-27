@@ -18,8 +18,8 @@ public abstract class MenuScreen : MonoBehaviour
             .SetEase(Ease.InOutSine).SetUpdate(true).OnComplete(() =>
             {
                 logo.alpha = 0f;
-                LoadContent();
                 enabled = true;
+                LoadContent();
             });
     }
 

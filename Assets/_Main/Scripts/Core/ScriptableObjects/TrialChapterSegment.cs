@@ -15,6 +15,7 @@ public class TrialChapterSegment : ChapterSegment
     public override void LoadScene()
     {
         SceneManager.LoadScene("DebateScene");
+        GameStateManager.instance.DestroyCurrentPersistent();
     }
 
     public override string GetSceneName()

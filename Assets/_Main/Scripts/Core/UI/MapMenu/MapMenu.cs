@@ -64,7 +64,7 @@ public class MapMenu : MenuScreen
     public Image displayedMap;
 
 
-    void Start()
+    void Awake()
     {
         roomListOriginalPosX = roomsContainerTransform.anchoredPosition.x;
         charactersOriginalPosX = charactersContainerTransform.anchoredPosition.x;

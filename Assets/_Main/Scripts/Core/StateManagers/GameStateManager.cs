@@ -141,12 +141,17 @@ public class GameStateManager : MonoBehaviour
 
         sceneTransitionCamera.gameObject.SetActive(true);
         chaptersBank.chapters[chapterIndex].chapterSegments[chapterSegmentIndex].LoadScene();
-        if (persistentObject != null)
-            Destroy(persistentObject);
+        
         yield return new WaitForSeconds(0.5f);
         PlayerInputManager.instance.pauseAvailable = pauseAvailable;
 
         StartNewSegment();
+    }
+
+    public void DestroyCurrentPersistent()
+    {
+        if (persistentObject != null)
+            Destroy(persistentObject);
     }
 
     private IEnumerator HandlePopup()

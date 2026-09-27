@@ -14,7 +14,11 @@ public class VNChapterSegment: ChapterSegment
 
     public override void LoadScene()
     {
-        SceneManager.LoadScene("VisualNovelCore");
+        if(ProgressManager.instance == null)
+        {
+            SceneManager.LoadScene("VisualNovelCore");
+            GameStateManager.instance.DestroyCurrentPersistent();
+        }
     }
     
     public override string GetSceneName()
