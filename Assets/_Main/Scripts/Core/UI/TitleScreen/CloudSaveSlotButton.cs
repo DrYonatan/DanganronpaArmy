@@ -7,7 +7,7 @@ public class CloudSaveSlotButton : SaveSlotButton
     protected override void UpdateFileText()
     {
         User user = UserDataManager.instance.loggedInUser;
-        data = user.saves[slot];
+        data = slot < user.saves?.Count ? user.saves[slot] : null;
         if (data?.saveTime != null && data.saveTime != "")
         {
             List<Chapter> chapters = Resources.Load<ChaptersBank>("ChaptersBank").chapters;
@@ -35,7 +35,7 @@ public class CloudSaveSlotButton : SaveSlotButton
         }
         else if (TrialManager.instance != null)
         {
-            data = SaveManager.instance.GetVNSaveData();
+            data = SaveManager.instance.GetTrialSaveData();
         }
 
         UserDataManager.instance.UpdateCloudSave(slot, data, UpdateFileText);

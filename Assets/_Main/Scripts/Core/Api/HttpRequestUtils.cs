@@ -23,7 +23,11 @@ public class HttpRequestUtils
                     break;
                 case UnityWebRequest.Result.Success:
                     Debug.Log("Successful Get Request");
-                    T data = JsonConvert.DeserializeObject<T>(webRequest.downloadHandler.text);
+                    JsonSerializerSettings settings = new JsonSerializerSettings
+                    {
+                        TypeNameHandling = TypeNameHandling.Auto
+                    };
+                    T data = JsonConvert.DeserializeObject<T>(webRequest.downloadHandler.text, settings);
                     callback.Invoke(data);
                     break;
             }
@@ -32,7 +36,12 @@ public class HttpRequestUtils
 
     public static IEnumerator PostRequest<T>(string url, object body, Action<T> callback)
     {
-        string json = JsonUtility.ToJson(body);
+        JsonSerializerSettings settings = new JsonSerializerSettings
+        {
+            TypeNameHandling = TypeNameHandling.Auto
+        };
+
+        string json = JsonConvert.SerializeObject(body, settings);
 
         byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(json);
 
@@ -59,7 +68,7 @@ public class HttpRequestUtils
                 case UnityWebRequest.Result.Success:
                     Debug.Log("Successful Post Request");
 
-                    T data = JsonUtility.FromJson<T>(webRequest.downloadHandler.text);
+                    T data = JsonConvert.DeserializeObject<T>(webRequest.downloadHandler.text, settings);
                     callback?.Invoke(data);
                     break;
             }

@@ -219,8 +219,9 @@ public abstract class WorldEvent : GameEvent
     public override void LoadSave(SaveData data)
     {
         base.LoadSave(data);
-
-        WorldEventState state = (WorldEventState)(data.eventState);
+        
+        Debug.Log(data.eventState);
+        WorldEventState state = (data.eventState) as WorldEventState;
 
         isAfterFinishText = state.isAfterFinishText;
         charactersData = state.charactersData.ToDictionary(c => c.key, c => c.value);

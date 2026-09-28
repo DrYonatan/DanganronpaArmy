@@ -93,7 +93,7 @@ public class ProgressManager : MonoBehaviour
             Quaternion.Euler(new Vector3(data.cameraRotation[0], data.cameraRotation[1], data.cameraRotation[2]));
 
         EvidenceManager.instance.Initialize(GameStateManager.instance.GetCurrentChapter().evidenceList
-            .FindAll(evidence => data.evidenceIds.Contains(evidence.Name)));
+            .FindAll(evidence => data.evidenceIds != null && data.evidenceIds.Contains(evidence.Name)));
 
         PlayerInputManager.instance.pauseAvailable = data.pauseAvailable;
 

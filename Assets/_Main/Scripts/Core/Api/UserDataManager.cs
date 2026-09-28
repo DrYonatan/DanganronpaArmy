@@ -88,6 +88,10 @@ public class UserDataManager : MonoBehaviour, IAuthenticationListener
             saveData,
             (response) =>
             {
+                if (loggedInUser.saves == null)
+                {
+                    loggedInUser.saves = new List<SaveData>();
+                }
                 loggedInUser.saves[slot] = response;
                 onComplete();
                 

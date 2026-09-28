@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using UnityEngine;
 using Newtonsoft.Json;
 
@@ -32,10 +33,10 @@ public class EventState
 [Serializable]
 public class WorldEventState : EventState
 {
-    public List<ObjectDataEntry> charactersData;
-    public List<ObjectDataEntry> objectsData;
+    [CanBeNull]public List<ObjectDataEntry> charactersData;
+    [CanBeNull] public List<ObjectDataEntry> objectsData;
     public bool isAfterFinishText;
-    public List<RoomDataSave> roomsDatas;
+    [CanBeNull]public List<RoomDataSave> roomsDatas;
 
     public WorldEventState(bool isFinished, Dictionary<string, ObjectData> objectsData,
         Dictionary<string, ObjectData> charactersData, bool isAfterFinishText,

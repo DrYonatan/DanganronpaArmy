@@ -54,7 +54,7 @@ public class SaveManager : MonoBehaviour
             : SaveSystem.LoadGame(currentSaveSlot);
     }
 
-    public void SaveGameVn(int slot)
+    public SaveData GetVNSaveData()
     {
         SaveData data = new SaveData(GameStateManager.instance.chapterIndex,
             GameStateManager.instance.chapterSegmentIndex,
@@ -73,10 +73,11 @@ public class SaveManager : MonoBehaviour
             EvidenceManager.instance.evidenceList.ConvertAll(evidence => evidence.Name), 0, 0,
             PlayerInputManager.instance.pauseAvailable,
             DateTime.Now.ToString("o"));
-        SaveSystem.SaveGame(data, slot);
+
+        return data;
     }
 
-    public void SaveGameTrial(int slot)
+    public SaveData GetTrialSaveData()
     {
         SaveData data = new SaveData(GameStateManager.instance.chapterIndex,
             GameStateManager.instance.chapterSegmentIndex, TrialManager.instance.currentIndex, "", true, "",
@@ -89,6 +90,18 @@ public class SaveManager : MonoBehaviour
             TrialManager.instance.playerStats.hp, PlayerInputManager.instance.pauseAvailable,
             DateTime.Now.ToString("o"));
 
+        return data;
+    }
+
+    public void SaveGameVn(int slot)
+    {
+        SaveData data = GetVNSaveData();
+        SaveSystem.SaveGame(data, slot);
+    }
+
+    public void SaveGameTrial(int slot)
+    {
+        SaveData data = GetTrialSaveData();
         SaveSystem.SaveGame(data, slot);
     }
 }
