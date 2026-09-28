@@ -101,6 +101,9 @@ public class Leaderboard : TitleScreenSubMenu
 
         if (startIndex == 0)
         {
+            Canvas.ForceUpdateCanvases();
+            scrollRect.verticalNormalizedPosition = 1f;
+
             User user = UserDataManager.instance.loggedInUser;
             if (user != null)
                 StartCoroutine(FetchUserRank(user));
