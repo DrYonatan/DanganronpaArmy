@@ -19,12 +19,17 @@ public class Leaderboard : TitleScreenSubMenu
     public List<GameObject> rows = new List<GameObject>();
     const string SERVER_ADDRESS = "http://localhost:3000/api";
     private const int BATCH_AMOUNT = 20;
+    private const float SCROLL_THRESHOLD = 0.1f;
     public ScrollRect scrollRect;
     public float speed = 1f;
+
+    private bool isFetching = false;
+    private bool hasMoreData = true;
 
     void OnEnable()
     {
         userRow.gameObject.SetActive(false);
+        scrollRect.onValueChanged.AddListener(OnScroll);
         StartCoroutine(FetchScores(0, BATCH_AMOUNT));
     }
     
@@ -46,11 +51,18 @@ public class Leaderboard : TitleScreenSubMenu
 
     IEnumerator FetchScores(int startIndex, int endIndex)
     {
+        isFetching = true;
         yield return HttpRequestUtils.GetRequest<List<UserScore>>($"{SERVER_ADDRESS}/userscores/{startIndex}/{endIndex}",
             (scores) =>
             {
-                userScores = scores;
-                UpdateTable();
+                isFetching = false;
+
+                if (scores == null || scores.Count < BATCH_AMOUNT)
+                    hasMoreData = false;
+
+                int previousCount = userScores.Count;
+                userScores.AddRange(scores);
+                UpdateTable(previousCount);
             });
     }
 
@@ -65,17 +77,21 @@ public class Leaderboard : TitleScreenSubMenu
 
     void FetchMoreScores()
     {
-        StartCoroutine(FetchScores(rows.Count, rows.Count + BATCH_AMOUNT));
+        if (!hasMoreData || isFetching)
+            return;
+
+        StartCoroutine(FetchScores(userScores.Count, userScores.Count + BATCH_AMOUNT));
     }
 
-    void OnScroll()
+    void OnScroll(Vector2 scrollPosition)
     {
-        FetchMoreScores();
+        if (scrollRect.verticalNormalizedPosition <= SCROLL_THRESHOLD)
+            FetchMoreScores();
     }
 
-    void UpdateTable()
+    void UpdateTable(int startIndex = 0)
     {
-        for (int i = 0; i < userScores.Count; i++)
+        for (int i = startIndex; i < userScores.Count; i++)
         {
             UserScore scoring = userScores[i];
             LeaderboardRow row = Instantiate(leaderboardRowPrefab, container);
@@ -83,16 +99,18 @@ public class Leaderboard : TitleScreenSubMenu
             row.UpdateValues(i + 1, scoring.username, scoring.score);
         }
 
-        User user = UserDataManager.instance.loggedInUser;
-        if (user != null)
+        if (startIndex == 0)
         {
-            StartCoroutine(FetchUserRank(user));
+            User user = UserDataManager.instance.loggedInUser;
+            if (user != null)
+                StartCoroutine(FetchUserRank(user));
         }
-
     }
 
     void OnDisable()
     {
+        scrollRect.onValueChanged.RemoveListener(OnScroll);
+
         foreach (GameObject row in rows)
         {
             Destroy(row);
@@ -100,5 +118,7 @@ public class Leaderboard : TitleScreenSubMenu
 
         rows.Clear();
         userScores.Clear();
+        isFetching = false;
+        hasMoreData = true;
     }
 }
