@@ -25,7 +25,7 @@ public abstract class TitleScreenMenuButton : MonoBehaviour
     public void HoverButtonAnimation()
     {
         image.DOKill();
-        image.color = Color.black;
+        image.color = defaultColor;
 
         image.DOColor(selectedColor, 0.2f)
             .SetLoops(-1, LoopType.Yoyo)
