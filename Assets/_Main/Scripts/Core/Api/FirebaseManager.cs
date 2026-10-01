@@ -5,6 +5,11 @@ using Firebase.Auth;
 using Firebase.Extensions;
 using UnityEngine;
 
+public enum ErrorTypes
+{
+    NETWORK,
+    INCORRECT_DATA
+}
 
 public class FirebaseManager : MonoBehaviour
 {
@@ -66,19 +71,21 @@ public class FirebaseManager : MonoBehaviour
         });
     }
 
-    public void SignIn(string email, string password, Action onSucess)
+    public void SignIn(string email, string password, Action onSucess, Action<ErrorTypes> onError)
     {
-        auth.SignInWithEmailAndPasswordAsync(email, password).ContinueWith(task =>
+        auth.SignInWithEmailAndPasswordAsync(email, password).ContinueWithOnMainThread(task =>
         {
             if (task.IsCanceled)
             {
                 Debug.LogError("SignInWithEmailAndPasswordAsync was canceled.");
+                onError.Invoke(ErrorTypes.NETWORK);
                 return;
             }
 
             if (task.IsFaulted)
             {
                 Debug.LogError("SignInWithEmailAndPasswordAsync encountered an error: " + task.Exception);
+                onError.Invoke(ErrorTypes.INCORRECT_DATA);
                 return;
             }
 

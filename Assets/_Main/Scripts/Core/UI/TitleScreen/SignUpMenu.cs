@@ -19,9 +19,21 @@ public class SignUpMenu : TitleScreenSubMenu
                 {
                     UserDataManager.instance.OnSignup(userId, usernameField.text); 
                     mainMenu.ReturnToPrevMenu();
+                    mainMenu.ReturnToPrevMenu();
                 });
         }
     }
+    
+    public override void AppearAnimation()
+    {
+        base.AppearAnimation();
+        menuNavigationActive = true;
+        emailField.text = "";
+        passwordField.text = "";
+        passwordConfirmField.text = "";
+        usernameField.text = "";
+    }
+
 
     bool ValidatePassword(string password, string passwordConfirm)
     {
