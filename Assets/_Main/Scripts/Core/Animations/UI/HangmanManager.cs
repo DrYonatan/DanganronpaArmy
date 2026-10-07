@@ -29,6 +29,7 @@ public class HangmanManager : MonoBehaviour
     }
     public void Play(HangmansGambit game)
     {
+        game.mistakes = 0;
         this.game = game;
         isActive = false;
         MusicManager.instance.PlaySong(music);

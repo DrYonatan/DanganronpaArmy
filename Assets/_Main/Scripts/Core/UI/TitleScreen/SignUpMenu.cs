@@ -1,6 +1,8 @@
 ﻿using System.Text.RegularExpressions;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SignUpMenu : TitleScreenSubMenu
 {
@@ -9,6 +11,10 @@ public class SignUpMenu : TitleScreenSubMenu
     public TMP_InputField passwordConfirmField;
     public TMP_InputField usernameField;
     public TitleScreenMainMenu mainMenu;
+    public CanvasGroup passwordError;
+    public CanvasGroup emailError;
+    public CanvasGroup passwordConfirmError;
+    public CanvasGroup usernameError;
 
     public void SignUp()
     {
@@ -32,31 +38,47 @@ public class SignUpMenu : TitleScreenSubMenu
         passwordField.text = "";
         passwordConfirmField.text = "";
         usernameField.text = "";
+        FadeOutError(emailError);
+        FadeOutError(passwordError);
+        FadeOutError(passwordConfirmError);
+        FadeOutError(usernameError);
     }
 
 
-    bool ValidatePassword(string password, string passwordConfirm)
+    bool ValidatePassword(string password)
     {
-        return password.Length >= 6 && password.Equals(passwordConfirm);
+        return password.Length >= 6;
+    }
+
+    bool ValidatePasswordConfirm(string password, string passwordConfirm)
+    {
+        return password.Equals(passwordConfirm);
     }
 
     bool ValidateFields(string email, string username, string password, string passwordConfirm)
     {
-        if (!ValidatePassword(password, passwordConfirm))
-        {
-            NotifyPasswordValidationFailed();
-            return false;
-        }
 
         if (!ValidateEmail(email))
         {
             NotifyEmailValidationFailed();
             return false;
         }
-
+        
         if (!ValidateUsername(username))
         {
             NotifyUsernameValidationFailed();
+            return false;
+        }
+        
+        if (!ValidatePassword(password))
+        {
+            NotifyPasswordValidationFailed();
+            return false;
+        }
+        
+        if (!ValidatePasswordConfirm(password, passwordConfirm))
+        {
+            NotifyPasswordConfirmValidationFailed();
             return false;
         }
 
@@ -75,17 +97,30 @@ public class SignUpMenu : TitleScreenSubMenu
 
     void NotifyPasswordValidationFailed()
     {
+        passwordError.DOKill();
+        passwordError.DOFade(1f, 0.1f);
+        Debug.Log("PASSWORD IS NOT VALID");
+    }
+    
+    void NotifyPasswordConfirmValidationFailed()
+    {
+        passwordConfirmError.DOKill();
+        passwordConfirmError.DOFade(1f, 0.1f);
         Debug.Log("PASSWORD IS NOT VALID");
     }
 
     void NotifyUsernameValidationFailed()
     {
+        usernameError.DOKill();
+        usernameError.DOFade(1f, 0.1f);
         Debug.Log("USERNAME IS NOT VALID");
 
     }
 
     void NotifyEmailValidationFailed()
     {
+        emailError.DOKill();
+        emailError.DOFade(1f, 0.1f);
         Debug.Log("EMAIL IS NOT VALID");
 
     }
@@ -98,5 +133,19 @@ public class SignUpMenu : TitleScreenSubMenu
     public void UnFocusInput()
     {
         menuNavigationActive = true;
+    }
+
+    void Awake()
+    {
+        emailField.onValueChanged.AddListener(_ => FadeOutError(emailError));
+        passwordField.onValueChanged.AddListener(_ => FadeOutError(passwordError));
+        passwordConfirmField.onValueChanged.AddListener(_ => FadeOutError(passwordConfirmError));
+        usernameField.onValueChanged.AddListener(_ => FadeOutError(usernameError));
+    }
+
+    void FadeOutError(CanvasGroup errorImage)
+    {
+        errorImage.DOKill();
+        errorImage.DOFade(0f, 0.1f);
     }
 }

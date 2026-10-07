@@ -74,7 +74,6 @@ public class ComicManager : MonoBehaviour
         TimerManager.instance.SetTimer(600);
         StartComicPuzzle();
     }
-
     public void UpdateIsReadyToPresent()
     {
         isReadyToPresent = CheckQuestionPanelsPins();
@@ -249,6 +248,7 @@ public class ComicManager : MonoBehaviour
         TrialManager.instance.barsAnimator.ShowGlobalBars(0.2f);
         
         TrialManager.instance.DecreaseHealthDefault(1f);
+        segment.mistakes++;
         foreach (DialogueNode node in UtilityNodesRuntimeBank.instance.nodesCollection.wrongComicNodes)
         {
             yield return DialogueSystem.instance.Say(node);

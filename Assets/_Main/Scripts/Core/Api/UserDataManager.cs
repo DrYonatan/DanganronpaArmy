@@ -17,6 +17,16 @@ public class UserData
     }
 }
 
+public class Score
+{
+    public int score;
+
+    public Score(int score)
+    {
+        this.score = score;
+    }
+}
+
 public class UserDataManager : MonoBehaviour, IAuthenticationListener
 {
     const string SERVER_ADDRESS = "http://localhost:3000/api";
@@ -97,6 +107,28 @@ public class UserDataManager : MonoBehaviour, IAuthenticationListener
                 }
                 loggedInUser.saves[slot] = response;
                 onComplete();
+                
+            });
+    }
+
+    public void UpdateUserScore(int score)
+    {
+        loggedInUser.score += score;
+        PostScore();
+    }
+
+    void PostScore()
+    {
+        Score score = new Score(loggedInUser.score);
+        StartCoroutine(PostScoreRequest(score));
+    }
+
+    IEnumerator PostScoreRequest(Score score)
+    {
+        yield return HttpRequestUtils.PostRequest<Score>($"{SERVER_ADDRESS}/userscores/{loggedInUser.id}",
+            score,
+            (response) =>
+            {
                 
             });
     }

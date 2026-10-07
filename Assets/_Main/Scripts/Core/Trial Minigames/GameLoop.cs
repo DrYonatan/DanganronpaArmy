@@ -87,6 +87,7 @@ public class GameLoop : MonoBehaviour
 
     public void PlayDebate(DebateSegment debate)
     {
+        debate.mistakes = 0;
         isActive = true;
         isGameOvering = false;
         debateSegment = debate;
@@ -426,6 +427,7 @@ public class GameLoop : MonoBehaviour
         yield return TrialDialogueManager.instance.RunNodes(wrongNodes);
         yield return new WaitForEndOfFrame();
         debateUIAnimator.FadeFromAngleToAngle();
+        debateSegment.mistakes++;
         TrialManager.instance.DecreaseHealthDefault(1f);
         yield return TrialDialogueManager.instance.RunNodes(UtilityNodesRuntimeBank.instance.nodesCollection
             .debateWrongEvidence);

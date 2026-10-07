@@ -117,7 +117,6 @@ public class LogicShootManager : MonoBehaviour
 
         RandomizeRifleStuck();
     }
-
     private void RandomizeRifleStuck()
     {
         if (rifleManager.rifleErrorCooldown)
@@ -328,6 +327,7 @@ public class LogicShootManager : MonoBehaviour
 
     public void DamagePlayer(float amount)
     {
+        segment.mistakes++;
         SoundManager.instance.PlaySoundEffect(TrialManager.instance.barsAnimator.damageSound);
         TrialManager.instance.DecreaseHealthFromMeter(animator.playerHp, amount);
     }

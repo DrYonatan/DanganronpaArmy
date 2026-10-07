@@ -28,5 +28,6 @@ public class User
         id = user.id;
         username = user.username;
         saves = user.saves;
+        score = user.score;
     }
 }
