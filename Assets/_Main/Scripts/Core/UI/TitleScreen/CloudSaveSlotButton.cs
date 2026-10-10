@@ -26,6 +26,11 @@ public class CloudSaveSlotButton : SaveSlotButton
         }
     }
 
+    private void OnEnable()
+    {
+        UpdateFileText();
+    }
+
     public override void Save()
     {
         SaveData data = null;

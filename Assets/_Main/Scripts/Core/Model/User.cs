@@ -27,7 +27,7 @@ public class User
     {
         id = user.id;
         username = user.username;
-        saves = user.saves;
+        saves = user.saves != null ? user.saves : new List<SaveData>();
         score = user.score;
     }
 }
