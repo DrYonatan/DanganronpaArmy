@@ -8,7 +8,12 @@
         FirebaseManager.instance.AddAuthenticationListener(this);
         OnAuthentication();
     }
-    
+
+    private void OnDestroy()
+    {
+        FirebaseManager.instance.RemoveAuthenticationListener(this);
+    }
+
     public void OnAuthentication()
     {
         if (FirebaseManager.instance.user != null)

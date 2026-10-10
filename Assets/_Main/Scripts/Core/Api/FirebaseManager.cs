@@ -47,6 +47,11 @@ public class FirebaseManager : MonoBehaviour
         authenticationListeners.Add(listener);
     }
 
+    public void RemoveAuthenticationListener(IAuthenticationListener listener)
+    {
+        authenticationListeners.Remove(listener);
+    }
+
     public void SignUp(string email, string password, Action<string> onSuccess)
     {
         auth.CreateUserWithEmailAndPasswordAsync(email, password).ContinueWithOnMainThread(task =>

@@ -1,4 +1,5 @@
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +12,8 @@ public class PopupAnimator : MonoBehaviour
     private bool isInitialized;
     public AudioClip showPopupSound;
     public AudioClip hidePopupSound;
+
+    public TextMeshProUGUI scoreToast;
     public static PopupAnimator instance { get; private set; }
     
     public void Awake()
@@ -42,5 +45,15 @@ public class PopupAnimator : MonoBehaviour
             imageContainer.gameObject.SetActive(false);
         });
         SoundManager.instance.PlaySoundEffect(hidePopupSound);
+    }
+
+    public void ShowScorePopup(int score)
+    {
+        scoreToast.text = $"+{score}";
+        Sequence seq = DOTween.Sequence();
+        seq.Append(scoreToast.DOFade(1f, 0.2f).SetEase(Ease.Linear));
+        seq.AppendInterval(1.5f);
+        seq.Append(scoreToast.DOFade(0f, 0.2f).SetEase(Ease.Linear));
+        
     }
 }

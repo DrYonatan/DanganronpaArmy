@@ -74,10 +74,7 @@ public class UserDataManager : MonoBehaviour, IAuthenticationListener
     IEnumerator FetchUserData(string userId)
     {
         yield return HttpRequestUtils.GetRequest<User>($"{SERVER_ADDRESS}/users/{userId}",
-            (user) =>
-            {
-                loggedInUser = new User(user);
-            });
+            (user) => { loggedInUser = new User(user); });
     }
 
     IEnumerator CreateNewUser(string userId, string username)
@@ -98,16 +95,13 @@ public class UserDataManager : MonoBehaviour, IAuthenticationListener
             saveData,
             (response) =>
             {
-                if (loggedInUser.saves.Count < slot)
+                for (int i = loggedInUser.saves.Count - 1; i < slot; i++)
                 {
-                    for (int i = loggedInUser.saves.Count - 1; i < slot; i++)
-                    {
-                        loggedInUser.saves.Add(null);
-                    }
+                    loggedInUser.saves.Add(null);
                 }
+
                 loggedInUser.saves[slot] = response;
                 onComplete();
-                
             });
     }
 
@@ -120,6 +114,7 @@ public class UserDataManager : MonoBehaviour, IAuthenticationListener
     void PostScore()
     {
         Score score = new Score(loggedInUser.score);
+        PopupAnimator.instance?.ShowScorePopup(loggedInUser.score);
         StartCoroutine(PostScoreRequest(score));
     }
 
@@ -127,9 +122,6 @@ public class UserDataManager : MonoBehaviour, IAuthenticationListener
     {
         yield return HttpRequestUtils.PostRequest<Score>($"{SERVER_ADDRESS}/userscores/{loggedInUser.id}",
             score,
-            (response) =>
-            {
-                
-            });
+            (response) => { });
     }
 }
