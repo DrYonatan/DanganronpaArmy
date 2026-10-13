@@ -124,7 +124,7 @@ public class FirebaseManager : MonoBehaviour
             }
 
             user = auth.CurrentUser;
-            notifyAuthenticationListeners();
+            NotifyAuthenticationListeners();
             if (signedIn)
             {
                 Debug.Log("Signed in " + user.UserId);
@@ -132,7 +132,7 @@ public class FirebaseManager : MonoBehaviour
         }
     }
 
-    void notifyAuthenticationListeners()
+    void NotifyAuthenticationListeners()
     {
         foreach (IAuthenticationListener listener in authenticationListeners)
         {
@@ -142,6 +142,7 @@ public class FirebaseManager : MonoBehaviour
 
     void OnDestroy()
     {
+        if (auth == null) return;
         auth.StateChanged -= AuthStateChanged;
         auth = null;
     }

@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class SaveSelectMenu : TitleScreenSubMenu
+public class SaveSelectMenu : TitleScreenSubMenu, IUserListener
 {
     public SaveSlotButton buttonPrefab;
     public CloudSaveSlotButton cloudButtonPrefab;
@@ -20,8 +20,18 @@ public class SaveSelectMenu : TitleScreenSubMenu
     public bool onConfirm;
     public bool confirmPopupActive;
     public TextMeshProUGUI confirmText;
-    
-    void Awake()
+
+    public void OnLogin()
+    {
+        foreach (TitleScreenMenuButton button in buttons)
+        {
+            Destroy(button.gameObject);
+        }
+        buttons.Clear();
+        InitializeSaves();
+    }
+
+    void InitializeSaves()
     {
         if (UserDataManager.instance.loggedInUser != null)
         {
@@ -35,10 +45,19 @@ public class SaveSelectMenu : TitleScreenSubMenu
         {
             GenerateSaveSlot(i);
         }
-
+    }
+    void Awake()
+    {
+        UserDataManager.instance.AddUserListener(this);
+        InitializeSaves();
         confirmText.text = mode == SaveSlotButton.Mode.Save
             ? "האם תרצה לשמור על גבי שמירה זו?"
             : "האם תרצה לטעון שמירה זו?";
+    }
+
+    void OnDestroy()
+    {
+        UserDataManager.instance.RemoveUserListener(this);
     }
 
     private void Update()

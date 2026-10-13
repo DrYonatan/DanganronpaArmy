@@ -32,6 +32,25 @@ public class UserDataManager : MonoBehaviour, IAuthenticationListener
     const string SERVER_ADDRESS = "http://localhost:3000/api";
     public User loggedInUser;
     public static UserDataManager instance { get; private set; }
+    public List<IUserListener> listeners = new List<IUserListener>();
+
+    public void AddUserListener(IUserListener listener)
+    {
+        listeners.Add(listener);
+    }
+
+    public void RemoveUserListener(IUserListener listener)
+    {
+        listeners.Remove(listener);
+    }
+
+    void NotifyUserListeners()
+    {
+        foreach (IUserListener listener in listeners)
+        {
+            listener.OnLogin();
+        }
+    }
 
     void Awake()
     {
@@ -63,6 +82,7 @@ public class UserDataManager : MonoBehaviour, IAuthenticationListener
         else
         {
             loggedInUser = null;
+            NotifyUserListeners();
         }
     }
 
@@ -74,7 +94,11 @@ public class UserDataManager : MonoBehaviour, IAuthenticationListener
     IEnumerator FetchUserData(string userId)
     {
         yield return HttpRequestUtils.GetRequest<User>($"{SERVER_ADDRESS}/users/{userId}",
-            (user) => { loggedInUser = new User(user); });
+            (user) =>
+            {
+                loggedInUser = new User(user);
+                NotifyUserListeners();
+            });
     }
 
     IEnumerator CreateNewUser(string userId, string username)
@@ -123,5 +147,10 @@ public class UserDataManager : MonoBehaviour, IAuthenticationListener
         yield return HttpRequestUtils.PostRequest<Score>($"{SERVER_ADDRESS}/userscores/{loggedInUser.id}",
             score,
             (response) => { });
+    }
+
+    void OnDestroy()
+    {
+        FirebaseManager.instance.RemoveAuthenticationListener(this);
     }
 }
